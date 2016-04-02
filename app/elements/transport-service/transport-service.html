@@ -1,0 +1,363 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="transport-service">
+  <template>
+<iron-ajax
+        method="post"
+        id="getrouteajax"
+        url="{{getrouteurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getrouteResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getroutedetailajax"
+        url="{{getroutedetailurl}}"
+        params="{{getroutedetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getroutedetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="insertpointajax"
+        url="{{insertpointurl}}"
+        params="{{insertpointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertpointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="routeidajax"
+        url="{{routeidurl}}"
+        params="{{routeidparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routeidResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+ </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="sequenceajax"
+        url="{{sequenceurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="sequenceResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <iron-ajax
+        method="post"
+        id="getzoneajax"
+        url="{{getzoneurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getzoneResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getfeeajax"
+        url="{{getfeeurl}}"
+        params="{{getfeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfeeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+ <iron-ajax
+        method="post"
+        id="setzoneajax"
+        url="{{setzoneurl}}"
+        params="{{setzoneparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="setzoneResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+<iron-ajax
+        method="post"
+        id="getstdajax"
+        url="{{getstdurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstdResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getsecajax"
+        url="{{getsecurl}}"
+        params="{{getsecparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getsecResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getnameajax"
+        url="{{getnameurl}}"
+        params="{{getnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getstudetailajax"
+        url="{{getstudetailurl}}"
+        params="{{getstudetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstudetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getrouteajax"
+        url="{{getrouteurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getrouteResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="genereportajax"
+        url="{{genereporturl}}"
+        params="{{genereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="genereportResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  
+    </template>
+
+  <script>
+  (function() {
+    var point;
+    var trip;
+    var pick;
+    var drop;
+    var routeidd;
+
+
+    Polymer({
+      is: "transport-service",
+     
+       getroute:function()
+      {
+        this.getrouteurl="http://localhost:8081/getroute";
+        this.$.getrouteajax.generateRequest();
+      },
+      getrouteResponse:function(e1)
+      {
+         a2=e1.detail.response.returnval;
+        document.querySelector('mappointtoroute-card').routearr=a2;
+      },
+       getroutedetail:function(routename)
+      {
+        //alert('Hi');
+        this.getroutedetailurl="http://localhost:8081/getroutedetail";
+        var obj={"routename":""};
+        obj.routename=routename;
+        this.getroutedetailparam=obj;
+        //alert(obj);
+        this.$.getroutedetailajax.generateRequest();
+      },
+      getroutedetailResponse:function(e1)
+          { 
+            //alert('i m back');
+          var routedetails=e1.detail.response.returnval;
+          //alert(JSON.stringify(routedetails));
+          document.querySelector('mappointtoroute-card').itemarr=routedetails;
+      },
+
+      insertpoint:function(route,pt,tripp,pickuptime,droptime)
+      {
+        point=pt;
+        trip=tripp;
+        pick=pickuptime;
+        drop=droptime;
+        this.routeidurl="http://localhost:8081/routeid";
+        var obj={"routename":""};
+        obj.routename=route;
+        this.routeidparam=obj;
+        this.$.routeidajax.generateRequest();
+      },
+      routeidResponse:function(e)
+      {
+        routeidd=e.detail.response.returnval[0].id;
+         this.sequenceurl="http://localhost:8081/sequence";
+         this.$.sequenceajax.generateRequest();
+
+      },
+      sequenceResponse:function(e)
+      {
+        var seq=(e.detail.response.returnval[0].count)+1;
+        alert(seq);
+        var obj={"id":"","routes":"","points":"","trip":"","pick":"","drop":""};
+        obj.id="p"+seq;
+        obj.routes=routeidd;
+        obj.points=point;
+        obj.trip=trip;
+        obj.pick=pick;
+        obj.drop=drop;
+        this.insertpointparam=obj;
+        this.insertpointurl="http://localhost:8081/insertpoint";
+        this.$.insertpointajax.generateRequest();
+
+      },
+         getzone:function()
+
+      {
+        this.getzoneurl="http://localhost:8081/getzone";
+        this.$.getzoneajax.generateRequest();
+      },
+      getzoneResponse:function(e1)
+          {
+            var zoneitem=e1.detail.response.returnval;
+            document.querySelector('zonetostudent-card').itemarr=zoneitem;
+      },
+      getfee:function(zone)
+      {
+        this.getfeeurl = "http://localhost:8081/getfee";
+        var obj={"zone":""}
+        obj.zone=zone;
+        this.getfeeparam=obj;
+        this.$.getfeeajax.generateRequest();
+      },
+      getfeeResponse:function(e){
+         var fee=e.detail.response.returnval[0].fees;
+        document.querySelector('zonetostudent-card').fee=fee;
+      },
+      setzone:function(studid,zone,fee)
+      {
+        this.setzoneurl = "http://localhost:8081/setzone";
+        var obj={"studid":"","zone":"","fee":""};
+        obj.studid=studid;
+        obj.zone=zone;
+        obj.fee=fee;
+        this.setzoneparam=obj;
+        this.$.setzoneajax.generateRequest();
+      },
+      setzoneResponse:function(e){
+         var result=e.detail.response.returnval;
+         //alert(result);
+         if(result=="success")
+         {
+          alert('The data is inserted successfully');
+         }
+         else
+         {
+          alert('The data is not inserted');
+         }
+      },
+
+      getstd:function()
+      {
+        this.getstdurl="http://localhost:8081/getstd";
+        this.$.getstdajax.generateRequest();
+      },
+      getstdResponse:function(e1)
+      {
+            var a1=e1.detail.response.returnval;
+            document.querySelector('zonetostudent-card').stdarr=a1;
+      },
+      getsec:function(std)
+      {
+        this.getsecurl="http://localhost:8081/getsec";
+        var obj={"std":""};
+        obj.std=std;
+        this.getsecparam=obj;
+        this.$.getsecajax.generateRequest();
+      },
+      getsecResponse:function(e1)
+          {
+            var secitem=e1.detail.response.returnval;
+            document.querySelector('zonetostudent-card').secarr=secitem;
+      },
+       getname:function(std,sec)
+      {
+        this.getnameurl="http://localhost:8081/getname";
+        var obj={"std":"","sec":""};
+        obj.std=std;
+        obj.sec=sec;
+        this.getnameparam=obj;
+        this.$.getnameajax.generateRequest();
+      },
+      getnameResponse:function(e1)
+          {
+            var iditem=e1.detail.response.returnval;
+            document.querySelector('zonetostudent-card').studentidarr=iditem;
+            //alert(JSON.stringify(document.querySelector('zonetostudent-card').namearr));
+      },
+
+      getstudetail:function(studid)
+      {
+        this.getstudetailurl="http://localhost:8081/getstudetail";
+        var obj={"studid":""};
+        obj.studid=studid;
+        this.getstudetailparam=obj;
+        this.$.getstudetailajax.generateRequest();
+      },
+      getstudetailResponse:function(e1)
+          {
+            var profilename=e1.detail.response.returnval[0].student_name;
+            var fathername=e1.detail.response.returnval[0].class_id;
+            var dob=e1.detail.response.returnval[0].dob;
+            document.querySelector('zonetostudent-card').name=profilename;
+            document.querySelector('zonetostudent-card').fathername=fathername;
+            document.querySelector('zonetostudent-card').date=dob;
+      },
+         generatereport:function(studid)
+     {
+      
+      this.genereporturl="http://localhost:8081/report-card";
+        var obj={"studid":""}
+        obj.studid=studid;
+        this.genereportparam=obj;
+        this.$.genereportajax.generateRequest();
+     },
+     genereportResponse:function(e)
+     {
+      
+      alert(JSON.stringify(e.detail.response.returnval));
+      var reportresult=e.detail.response.returnval;
+       document.querySelector('genestureport-card').reportarr=reportresult;
+     }
+      
+    
+
+
+
+    });
+ })();
+  </script>
+
+</dom-module>
+

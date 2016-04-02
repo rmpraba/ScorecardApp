@@ -1,0 +1,172 @@
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../transport-service/transport-service.html">
+<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+<dom-module id="zonetostudent-card">
+<template>  
+  <body>
+    <div>
+    <table style="table-layout: auto; margin-left: 30%; margin-top: 7%;">
+      <tr>
+        <td>
+          <paper-item label="Class">Class<paper-item>
+        </td>
+        <td>
+          <div class="class-drop">
+          <paper-dropdown-menu >
+            <paper-menu class="dropdown-content" on-iron-select="std" valueattr="value" >
+              <template  is="dom-repeat" items="{{stdarr}}" as="view">
+              <paper-item value="{{view.class}}">{{view.class}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </td>
+      <td>
+      <div class="class-drop">
+        <paper-dropdown-menu label="Section">
+          <paper-menu class="dropdown-content" on-iron-select="sec" valueattr="value" >
+            <template  is="dom-repeat" items="{{secarr}}" as="view">
+              <paper-item value="{{view.section}}">{{view.section}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+        </td>
+      <tr>
+        <tr>
+        <td>
+          <paper-item label="Student ID">Student ID<paper-item>
+        </td>
+        <td>
+            <div class="class-drop">
+        <paper-dropdown-menu>
+          <paper-menu class="dropdown-content" on-iron-select="studetail" valueattr="value" >
+            <template  is="dom-repeat" items="{{studentidarr}}" as="view">
+              <paper-item value="{{view.id}}">{{view.id}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+        </td>
+        <!--<td>
+          <paper-input class="field" is="" id="dob" value="{{date}}"></paper-input>
+        </td>-->
+      <tr>
+      <tr>
+        <td>
+          <paper-item label="Student name">Student Name<paper-item>
+        </td>
+        <td>
+          <!--<paper-input-autocomplete lable="Select State" id="input-local" remote-source="true" ></paper-input-autocomplete>-->
+          <paper-input class="field" is="" value="{{name}}"></paper-input>
+        </td>
+        <!--<td>
+          <paper-input class="field" is="" id="dad" value="{{fathername}}"></paper-input>
+        </td>-->
+      <tr>
+
+    
+        <td>
+          <paper-item label="Zone">Zone<paper-item>
+        </td>
+        <td>
+      <div class="drop-down">
+        <paper-dropdown-menu>
+          <paper-menu class="dropdown-content" on-iron-select="zone" valueattr="value" >
+            <template  is="dom-repeat" items="{{itemarr}}" as="view">
+              <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+      
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <paper-item label="Fee">Fee<paper-item>
+        </td>
+        <td>
+          <paper-input class="field" label="" value="{{fee}}"></paper-input>
+        </td>
+      </tr>
+      <tr><td style="width: 10px; height: 20px;"></td></tr>
+      <tr>
+      <td></td>
+        <td>
+          <paper-button id="button" class="button" on-click="click">Add</paper-button>
+        </td>
+        <td>
+          <paper-button id="button" class="button" style="margin-left: -25%;">Cancel</paper-button>
+        </td>
+      </tr>
+    </table>
+      
+
+    </div>
+
+
+    
+  </body>
+    <transport-service id="root"></transport-service>
+</template>
+<script>
+  Polymer({
+
+    is: "zonetostudent-card",
+    
+      ready: function() {
+        this.$.root.getzone();
+        this.$.root.getstd();
+        //this.$.dad.disabled=true;
+        //this.$.dob.disabled=true;
+        },
+        std:function(e){
+      this.std = (e.target.selectedItem.textContent).trim();
+      this.$.root.getsec(this.std);
+    },
+    sec:function(e){
+      this.sec = (e.target.selectedItem.textContent).trim();
+      this.$.root.getname(this.std,this.sec);
+
+    },
+    zone:function(e){
+      this.zone_id=e.target.selectedItem.value;
+      this.zone = (e.target.selectedItem.textContent).trim();
+      this.$.root.getfee(this.zone);
+    },
+    studetail:function(e)
+    {
+      this.studentid=(e.target.selectedItem.textContent).trim();
+      this.$.root.getstudetail(this.studentid);
+      //this.$.dad.disabled=false;
+      //this.$.dob.disabled=false;
+    },
+
+    click:function(e)
+    {
+      //alert(this.studentid+this.zone_id+this.fee);
+      this.$.root.setzone(this.studentid,this.zone_id,this.fee);
+
+    },
+    setInput:function(namearr){
+      var inputlocal=document.querySelector('#input-local');
+      //alert(inputlocal);
+      //alert(JSON.stringify(namearr));
+      inputlocal.source=namearr;
+
+      alert(JSON.stringify(inputlocal.source));
+    }
+
+  });
+</script>
+</dom-module>

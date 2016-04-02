@@ -1,0 +1,179 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<dom-module id="studenttopoint-item-card">
+<template>
+ <style is="custom-style">
+ .card{
+ @apply(--layout-horizontal);
+ @apply(--layout-center);
+ position: relative;
+ width: auto;
+ margin-left: 3%;
+ }
+    .detail{
+ width: 35%;
+ @apply(--layout-vertical);
+ border-spacing: 20px;
+ margin-left: 2%;
+ }
+   .detail1{
+ width: 35%;
+ @apply(--layout-vertical);
+ border-spacing: 20px;
+ margin-left: 2%;
+ }
+ .field{
+  
+  text-align: center;
+  border-radius: 2px;
+  
+  
+ }
+ paper-input{
+  
+ }
+  </style>
+ 
+  <legend align="center"></legend>
+  <div class="card">
+  <div class="detail1" >
+    <paper-input  style="width:50%;" class="field" value="{{studentid}}"></paper-input>
+  </div>
+    <div class="detail" style="margin-left: -5%;">
+    <paper-input  class="field" value="{{studentname}}"></paper-input>
+    </div>
+    <div class="detail">
+      <paper-dropdown-menu label="Select Pick-up Route">
+      <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
+        <template  is="dom-repeat" items="{{routearr}}" as="view">
+          <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    </div>
+    <div class="detail">
+      <paper-dropdown-menu label="Select Drop Route">
+      <paper-menu class="dropdown-content" on-iron-select="droproute" attr-for-selected="value" >
+        <template  is="dom-repeat" items="{{routearr}}" as="view">
+          <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    </div>
+    <div class="detail">
+      <paper-dropdown-menu label="Select Pick-up Point">
+      <paper-menu class="dropdown-content" on-iron-select="pickpoints" attr-for-selected="value" >
+        <template  is="dom-repeat" items="{{pointarr}}" as="view">
+          <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    </div>
+    <div class="detail">
+      <paper-dropdown-menu label="Select Drop Point">
+      <paper-menu class="dropdown-content" on-iron-select="droppoints" attr-for-selected="value" >
+        <template  is="dom-repeat" items="{{droparr}}" as="view">
+          <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    </div>
+    <paper-checkbox id="box" on-change="changeHandler" style="margin-top: 1%;margin-left: 1%;"></paper-checkbox>
+    <mapstudenttopoint-services id="mapstud"></mapstudenttopoint-services>
+  <iron-ajax
+    auto
+    method="post"
+    id="selectpointajax"
+    url="{{selectpointurl}}"
+    handle-as="json"
+    content-type="application/json"
+    params="{{routepickpointparam}}"
+    on-response="pickpointsResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+    auto
+    method="post"
+    id="routedroppoint"
+    url="{{routedroppointurl}}"
+    handle-as="json"
+    content-type="application/json"
+    params="{{routedroppointparam}}"
+    on-response="droppointsResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="routepoint"
+        url="{{routepointurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routepointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: "studenttopoint-item-card",
+      ready:function(){
+        this.routepointurl = "http://localhost:8081/routepoint";
+        this.$.routepoint.generateRequest();
+      }, 
+      routepointResponse:function(e){
+        var route=e.detail.response.returnval;
+        this.routearr=route;
+      },
+      pickroute:function(e){
+        this.pickroute = (e.target.selectedItem.value);
+        this.selectpointurl = "http://localhost:8081/pickpoints";
+        var obj={"routept":""};
+        obj.routept=this.pickroute;
+        this.routepickpointparam=obj;
+        this.$.selectpointajax.generateRequest();
+      },
+      droproute:function(e){
+        this.droproute = (e.target.selectedItem.value);
+        this.routedroppointurl = "http://localhost:8081/routedroppoint";
+        var obj={"routedroppt":""};
+        obj.routedroppt=this.droproute;
+        this.routedroppointparam=obj;
+        this.$.routedroppoint.generateRequest();
+      },
+      pickpointsResponse:function(e){
+        var points=e.detail.response.returnval;
+        this.pointarr=points;
+      },
+      droppointsResponse:function(e){
+        var points=e.detail.response.returnval;
+        this.droparr=points;
+      },
+      pickpoints:function(e){
+        this.pickpoint = (e.target.selectedItem.value);
+      },
+      droppoints:function(e){
+        this.droppoint = (e.target.selectedItem.value);
+      }, 
+      changeHandler:function(event){ 
+        var box = document.querySelector("#box");
+        if(box.checked==true){ 
+        document.querySelector('mapstudenttopoint-card').FnGetItems(this.studentid,this.pickroute,this.droproute,this.pickpoint,this.droppoint); 
+        }
+    }
+  });
+  })();
+  </script>
+
+</dom-module>

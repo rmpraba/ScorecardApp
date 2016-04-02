@@ -1,0 +1,92 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../login-card/login-card.html">
+<link rel="import" href="../timepicker-card/timepicker-card.html">
+<link rel="import" href="../timepicker1-card/timepicker1-card.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<dom-module id="fetch-card">
+<template>
+ <style is="custom-style">
+ .card{
+  margin-left: 10%;
+ @apply(--layout-horizontal);
+ @apply(--layout-center);
+ position: relative;
+ }
+    .detail{
+ width: 35%;
+ @apply(--layout-vertical);
+ margin-left: -10%;
+ }
+ .r1,.r2{
+ @apply(--layout-horizontal);
+ }
+ .field{
+  margin-left: 20%;
+  text-align: center;
+  border-radius: 2px;
+  width: 70%;
+  margin-top : 2px;
+ }
+ 
+ .iconbutton{
+  height: 15px;
+  width: 15px;
+  border-radius: 2px;
+  box-shadow: 5px;
+ }
+ .checkbox{
+padding: 30px;
+ }
+ </style>
+  <legend align="center"></legend>
+  <div class="card">
+  <div class="detail">
+   <paper-input id="point" class="field" value={{points}}></paper-input>
+   </div>
+   <div>
+     <paper-input id="trip" class="field" label="Trip" value={{trip}}></paper-input>
+   </div>
+  <div>
+    <paper-input id="point" class="field" value={{picktime}}></paper-input>
+  </div>
+  <div>
+    <paper-input id="point" class="field" value={{droptime}}></paper-input>
+  </div>
+   <paper-checkbox id="box" class="checkbox" on-change="changeHandler"></paper-checkbox>
+   <!--<paper-input id="routename" value={{route}}></paper-input>-->
+   </div>
+ 
+  
+
+  </template>
+  <script>
+
+  (function() {
+    var n=0;
+      var itemarr=[];
+      
+    Polymer({
+      is: "fetch-card",
+      ready:function()
+      {
+        n=n+1;
+        this.$.point.readonly=true;
+        this.$.trip.readonly=true;
+        //this.$.routename.hidden=true;
+        
+      }
+      
+     
+    });
+     })();
+  </script>
+
+</dom-module>

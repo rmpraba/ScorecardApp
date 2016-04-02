@@ -1,0 +1,100 @@
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../zonetostudent-card/zonetostudent-card.html">
+<link rel="import" href="../mappointtoroute-card/mappointtoroute-card.html">
+<link rel="import" href="../genestureport-card/genestureport-card.html">
+<link rel="import" href="../item-card/item-card.html">
+<link rel="import" href="../accountsadmin-card/accountsadmin-card.html">
+<link rel="import" href="../transportadmin-card/transportadmin-card.html">
+<link rel="import" href="../login-card/login-card.html">
+<link rel="import" href="../mapstudenttopoint-card/mapstudenttopoint-card.html">
+<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+  <dom-module id="transport-app">
+  <template>
+  <style>
+  .in
+  {
+  float:right;
+  font-size:12px;
+  }
+  .bottomicon
+  {
+    width: 15%;
+  }
+  .backbutton
+  {
+    float:left;
+    width: 4%;
+  }
+  </style>
+
+  <div class="head">
+  <paper-icon-button class="backbutton" src="../../images/home.png" on-click="home"></paper-icon-button>
+      <label>{{title}}</label>
+      <paper-button class="in" on-click="signout">Sign Out</paper-button>
+    </div>
+
+      <div class="content">
+        <iron-pages selected="{{page}}" attr-for-selected="data-category">
+
+        <section data-category="loginpage">
+              <login-card></login-card>
+           </section>
+            <section data-category="accountadmin">
+              <accountsadmin-card></accountsadmin-card>
+           </section>
+            <section data-category="transportadmin">
+              <transportadmin-card></transportadmin-card>
+           </section>
+          <section data-category="zonetostudent">
+              <zonetostudent-card></zonetostudent-card>
+           </section>
+           <section data-category="mappointtoroute">
+              <mappointtoroute-card></mappointtoroute-card>
+           </section>
+            <section data-category="mapstudenttopoint">
+              <mapstudenttopoint-card></mapstudenttopoint-card>
+           </section>
+            <section data-category="generatereport">
+              <genestureport-card></genestureport-card>
+           </section>
+          </iron-pages>
+       </div>
+
+       <div class="footer">
+  </template>
+  <script>
+
+  Polymer({
+    is: "transport-app",
+    ready: function() {
+    
+  },
+  setPage:function(page,title)
+    {
+     this.page=page;
+     this.title=title;
+ },
+ signout:function()
+ {
+  window.location.href="index.html";
+   //document.querySelector('app-card').setPage("loginpage");
+ },
+ home:function()
+ {
+  var name=sessionStorage.getItem("userinfo");
+  if(name=="Transport Admin")
+  {
+     document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+  }
+  else if(name=="Accounts Admin")
+  {
+     document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+  }
+ }
+  });
+
+  </script>
+</dom-module>

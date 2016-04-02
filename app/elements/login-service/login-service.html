@@ -1,0 +1,486 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="login-service">
+  <template>
+  <!--pass the user name and password for signin-->
+  <iron-ajax
+        method="post"
+        id="loginajax"
+        url="{{loginurl}}"
+        params="{{loginparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="loginResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!--fetch the route to map the point to the student-->
+  <iron-ajax
+        auto
+        method="post"
+        id="routeajax"
+        url="{{routeurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!--fetch the route pickuppoint  to the student-->
+  <iron-ajax
+        method="post"
+        id="routepickuppointajax"
+        url="{{routepickuppointurl}}"
+        params="{{routepickuppointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routepickuppointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!--fetch the route droppoint  to the student-->
+  <iron-ajax
+        method="post"
+        id="routedroppointajax"
+        url="{{routedroppointurl}}"
+        params="{{routedroppointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routedroppointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!--fetch the bus number to the student route-->
+     <iron-ajax
+            method="post"
+            id="studbusajax"
+            url="{{studbusurl}}"
+            params="{{studbusparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="studbusResponse"
+            debounce-duration="300"
+            >
+  </iron-ajax>
+  <!--insert the pickup, droppoint,fee andbus number of student to the student route table-->
+  <iron-ajax
+        method="post"
+        id="studrouteajax"
+        url="{{studrouteurl}}"
+        params="{{studrouteparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studrouteResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!--insert the zone information into zone master table-->
+  <iron-ajax
+          method="post"
+          id="createzoneajax"
+          url="{{createzoneurl}}"
+          params="{{createzoneparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="createzoneResponse"
+          debounce-duration="300"
+          >
+  </iron-ajax>
+<!--fetch the zone from zone table to create a new route -->
+  <iron-ajax
+          method="post"
+          id="zonepoint"
+          url="{{zonepointurl}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="zonepointResponse"
+          debounce-duration="300"
+          >
+  </iron-ajax>
+  <!--insert the new route information into the route table-->
+  <iron-ajax
+          method="post"
+          id="rootajax"
+          url="{{rooturl}}"
+          params="{{rootparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="rootResponse"
+          debounce-duration="300"
+          >
+  </iron-ajax>
+
+<!--fetch the zone id to create new point-->
+<iron-ajax
+        method="post"
+        id="getzoneajax"
+        url="{{getzoneurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getzoneResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!--fetch the route to creta the neew point-->
+  <iron-ajax
+        method="post"
+        id="selectrouteajax"
+        url="{{selectrouteurl}}"
+        params="{{selectrouteparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="selectrouteResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!--insert new point information into the point table-->
+   <iron-ajax
+          method="post"
+          id="newrouteajax"
+          url="{{newrouteurl}}"
+          params="{{newrouteparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="newrouteResponse"
+          debounce-duration="300"
+          >
+  </iron-ajax>
+  <!--fetch the point information to assign bus to the point-->
+  <iron-ajax
+        method="post"
+        id="getpointajax"
+        url="{{getpointurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getpointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+<!--create a bus information and assign point-->
+<iron-ajax
+        method="post"
+        id="mapbusajax"
+        url="{{mapbusurl}}"
+        params="{{mapbusparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="mapbusResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+
+<iron-ajax
+        method="post"
+        id="maxlimitajax"
+        url="{{maxlimiturl}}"
+        params="{{maxlimitparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="maxlimitResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  </template>
+
+  <script>
+  (function() {
+    var pzone_fee="";
+       var dzone_fee="";
+       var fee="";
+       var pickpoint="";
+       var droppoint="";
+    var studid="";
+    var disid="";
+    var username="";
+    Polymer({
+      is: "login-service",
+
+     //fetch the username and password from logincard and pass to the loginajax
+      logincheck:function(uname,pass)
+      {
+        username=uname;
+        this.loginurl="http://localhost:8081/login-card";
+        var obj={"username":"","password":""}
+        obj.username=uname;
+        obj.password=pass;
+        this.loginparam=obj;
+        this.$.loginajax.generateRequest();
+      },
+
+     //loginResponse from the loginajax
+      loginResponse:function(e)
+      {
+
+        var role=e.detail.response.returnval[0].role_name;
+        alert(role);
+       if(role=="Transport Admin")
+      {
+        sessionStorage.setItem("userinfo",role);
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+        }
+    else if(role=="Accounts Admin")
+    {
+       sessionStorage.setItem("userinfo",role);
+       document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+    
+      else if(role=="invalid")
+      {
+        alert('invalid username or password');
+      }
+      },
+
+      //fetch the route from routeajax and bind the route-card
+      routeResponse:function(e)
+      {
+        var routepickupitem=e.detail.response.returnval;
+        document.querySelector('app-card').setPage("routelist","Map Point to Student");
+        document.querySelector('route-card').itemarr=routepickupitem;
+
+      },
+      //fetch the pick up route from route card and pass to the routepointajax to find the pickup point of the student
+      routepickuppoint:function(routeptt)
+      {
+        this.routepickuppointurl = "http://localhost:8081/routepoint";
+        var obj={"routept":""}
+        obj.routept=routeptt;
+        this.routepickuppointparam=obj;
+        this.$.routepickuppointajax.generateRequest();
+      },
+      //fetch the pickup point and pass the route card
+      routepickuppointResponse:function(e){
+        pzone_fee=e.detail.response.returnval[0].fees;
+        //alert(pzone_fee);
+         var routepickuppoint=e.detail.response.returnval
+         document.querySelector('app-card').setPage("routelist","Map Point to Student");
+        document.querySelector('route-card').pickarr=routepickuppoint;
+      },
+      //fetch the drop route from route card and pass to the routedroppointajax to find the droppoint point of the student
+      routedroppoint:function(routedropptt)
+      {
+        this.routedroppointurl = "http://localhost:8081/routedroppoint";
+        var obj={"routedroppt":""}
+        obj.routedroppt=routedropptt;
+        this.routedroppointparam=obj;
+        this.$.routedroppointajax.generateRequest();
+      },
+
+      //fetch the drop point and pass the route card
+      routedroppointResponse:function(e)
+      {
+         dzone_fee=e.detail.response.returnval[0].fees;
+         //alert(dzone_fee);
+         var routedroppoint=e.detail.response.returnval
+         document.querySelector('app-card').setPage("routelist","Map Point to Student");
+        document.querySelector('route-card').droparr=routedroppoint;
+      },
+
+      //fetch the pickuppoint,droppoint and stud id from route and find the fee and bind to the student route table
+      studroute:function(studidd,pickpt,droppt)
+      {
+      studid=studidd;
+          pickpoint=pickpt;
+      droppoint=droppt;
+        if(pzone_fee!=dzone_fee)
+        {
+          if(pzone_fee>dzone_fee)
+          {
+            fee=pzone_fee;
+          }
+          else
+          {
+            fee=dzone_fee;
+          }
+        }
+        else
+        {
+          fee=pzone_fee;
+        }
+        alert(fee);
+       this.studbusurl="http://localhost:8081/studbusroute"
+                   var obj={"pickpt":"","droppt":""}
+                obj.pickpt=pickpt;
+                     obj.droppt=droppt;
+                    this.studbusparam=obj;
+                   this.$.studbusajax.generateRequest();
+             },
+             //find the bus for pickup and drop bind to the student route table
+             studbusResponse:function(e)
+             {
+             var pickbus="";
+             var dropbus="";
+             if(pickpoint==droppoint)
+             {
+             pickbus=e.detail.response.returnval[0].bus_no;
+             dropbus=e.detail.response.returnval[0].bus_no;
+             }
+             else
+             {
+              pickbus=e.detail.response.returnval[0].bus_no;
+              dropbus=e.detail.response.returnval[1].bus_no;
+             }
+             this.studrouteurl="http://localhost:8081/studroute";
+             var obj={"studid":"","pickpt":"","droppt":"","fee":"","pickbus":"","dropbus":""}
+             obj.studid=studid;
+             obj.pickpt=pickpoint;
+             obj.droppt=droppoint;
+             obj.fee=fee;
+             obj.pickbus=pickbus;
+             obj.dropbus=dropbus;
+             this.studrouteparam=obj;
+        this.$.studrouteajax.generateRequest();
+      },
+      studrouteResponse:function(e)
+      {
+      },
+      //fetch the zone,distance and fee from zone card and insert into the zone table
+       createzone:function(zone)
+       {
+            this.createzoneurl="http://localhost:8081/createzone";
+            var obj={"zone":"", "disid":""}
+            obj.zone=zone;
+            
+            obj.disid=disid;
+            
+            this.createzoneparam=obj;
+            
+            this.$.createzoneajax.generateRequest();
+      },
+       createzoneResponse:function(e)
+       {
+          var result=e.detail.response.returnval;
+          if(result=='success')
+            {alert('Zone Created sucessfully');}
+          
+       },
+      //to get the zone information to create new route
+          zone:function(){
+
+            this.zonepointurl = "http://localhost:8081/zonepoint";
+            this.$.zonepoint.generateRequest();
+          },
+          //fetch the zone id from zonepointajax and pass to the create route card
+           zonepointResponse:function(e){
+                  var zonepoint=e.detail.response.returnval;
+                  document.querySelector('app-card').setPage("createrootcard","create Route");
+                  document.querySelector('root-card').zonearr=zonepoint;
+          },
+          //fetch the zone and route from route card and create new route
+          studroot:function(zone, route){
+            this.rooturl="http://localhost:8081/studroot";
+            var obj={"zone":"", "route":""}
+            obj.zone=zone;
+            obj.route=route;
+            this.rootparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.rootajax.generateRequest();
+      },
+
+      getroute:function()
+      {
+        this.routeurl="http://localhost:8081/route-card";
+       this.$.routeajax.generateRequest();
+      },
+      //get the zone id to create new point
+       getzone:function()
+
+      {
+
+        this.getzoneurl="http://localhost:8081/getzone";
+        this.$.getzoneajax.generateRequest();
+
+      },
+      //fetch the zone id and bind to the create point card
+      getzoneResponse:function(e1)
+          {
+
+            var zoneitem=e1.detail.response.returnval;
+            document.querySelector('app-card').setPage("createpointcard","Create Point To Route");
+            document.querySelector('newpoint-card').itemarr=zoneitem;
+
+      },
+      //to feetch the route of the selecte zone to create new point card
+      selectroute:function(zone)
+      {
+        this.selectrouteurl="http://localhost:8081/selectroute";
+        var obj={"zone":""}
+        obj.zone=zone;
+        this.selectrouteparam=obj;
+        this.$.selectrouteajax.generateRequest();
+      },
+      //fetch the route id and bind to the create new point card
+       selectrouteResponse:function(e2)
+      {
+
+        var selectrouteitem=e2.detail.response.returnval;
+        document.querySelector('app-card').setPage("createpointcard","Create Point To Route");
+        document.querySelector('newpoint-card').pickarr=selectrouteitem;
+
+      },
+      //create new point and insert into the point table
+      newroute:function(route,newPickpnt)
+      {
+        this.newrouteurl="http://localhost:8081/newroute";
+        var obj={"route":"","newPickpnt":""};
+        obj.route=route;
+        obj.newPickpnt=newPickpnt;
+        this.newrouteparam=obj;
+        this.$.newrouteajax.generateRequest();
+      },
+    //to get point info and bind to the bus
+      getpoint:function()
+      {
+
+        this.getpointurl="http://localhost:8081/getpoint";
+        this.$.getpointajax.generateRequest();
+      },
+//fetch the point info and bind to the map bus to route card
+      getpointResponse:function(e1)
+      {
+
+        var pointitem=e1.detail.response.returnval;
+        document.querySelector('app-card').setPage("mapping","Map Bus to Point");
+        document.querySelector('mapping-card').pointarr=pointitem;
+
+      },
+//fetch the bus id,time mode of travel and insert the data to the bus data
+      mapbus:function(busid,point,modeval,time)
+      {
+        this.mapbusurl="http://localhost:8081/mapbus";
+        var obj={"busid":"","point":"","modeval":"","time":""};
+        obj.busid=busid;
+        obj.point=point;
+        obj.modeval=modeval;
+        obj.time=time;
+        this.mapbusparam=obj;
+        this.$.mapbusajax.generateRequest();
+      },
+  
+      maxlimit:function(mindis,maxdis)
+      {
+       this.maxlimiturl="http://localhost:8081/maxlimit";
+        var obj={"mindis":"","maxdis":""};
+        obj.mindis=mindis;
+        obj.maxdis=maxdis;
+        this.maxlimitparam=obj;
+        this.$.maxlimitajax.generateRequest();
+      },
+      maxlimitResponse:function(e)
+      {
+        disid=e.detail.response.returnval[0].distance_id;
+          var fee=e.detail.response.returnval[0].fees;
+          alert(fee);
+        document.querySelector('app-card').setPage("createzonecard","createzone");
+        document.querySelector('zone-card').fee=fee;        
+      },
+       });
+      
+      
+      })();
+  </script>
+
+</dom-module>
+

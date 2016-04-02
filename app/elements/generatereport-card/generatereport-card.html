@@ -1,0 +1,122 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<dom-module id="generatereport-card">
+<template>
+ <style>
+ 
+ 
+ .detail1
+ {
+@apply(--layout-horizontal);
+height: 40%
+
+ }
+ .collapse
+ {
+ padding: 10px 15px;
+        margin-top: 20px;
+        background-color: #B2C2F0;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 100%;
+        text-align: left;
+        }
+        .imag{
+          height: 30%;
+ width : 20%;
+ }
+ img{
+ width : 60%;
+ 
+ }
+ .layout
+ {
+  @apply(--layout-horizontal);
+ }
+ .hor
+ {
+  margin-top: 5%;
+@apply(--layout-vertical);
+ }
+ #lb
+ {
+  font-weight: bold;
+  
+ }
+ paper-item{
+  width: 150px;
+ }
+ </style>
+ <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
+<iron-collapse id="{{studid}}">
+  <div class="field">
+  <div class="detail1">
+ <div class="imag"><img src="images/{{studid}}.jpg"/></div>
+ <div class="hor">
+  <div  class="layout"><paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
+   <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item></div>
+  <div  class="layout"> <paper-item id="lb">class:</paper-item><paper-item>{{classes}}</paper-item>
+  <paper-item id="lb">zone:</paper-item> <paper-item  >{{zone}}</paper-item></div>
+  <div  class="layout"><paper-item id="lb" >Date of Birth: </paper-item><paper-item >{{dob}}</paper-item>
+   <paper-item id="lb">Bus Fee:</paper-item><paper-item >{{fee}}</paper-item></div>
+ <div  class="layout"><paper-item id="lb" >Paid: </paper-item><paper-item >{{paid}}</paper-item>
+   <paper-item id="lb">Remaining Fee:</paper-item><paper-item >{{due}}</paper-item></div>
+   <div  class="layout"><paper-item id="lb" >Pick Up Place: </paper-item><paper-item >{{pick}}</paper-item>
+   <paper-item id="lb">Drop Place:</paper-item><paper-item >{{drop}}</paper-item></div>
+   </div>
+   </div>
+  </div>
+  <hr/>
+  </iron-collapse>
+  </template>
+  <script>
+
+  
+ (function() {
+   
+   var idd="0";
+    Polymer({
+      is: "generatereport-card",
+      ready:function()
+      {
+      
+      },
+      toggle: function(e)
+      {
+      if(idd=="0")
+      {
+      idd= document.querySelector("#"+this.studid);
+       idd.toggle()
+      }
+      else
+      {
+      if(idd!=document.querySelector("#"+this.studid))
+      {
+            idd.opened=false;
+      }
+       idd= document.querySelector("#"+this.studid);
+          idd.toggle()
+
+      }
+
+}
+      
+    });
+    })();
+     
+  </script>
+
+</dom-module>

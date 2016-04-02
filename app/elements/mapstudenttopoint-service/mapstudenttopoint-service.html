@@ -1,0 +1,118 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="mapstudenttopoint-service">
+  <template>
+  <!--pass the user name and password for signin-->
+  <!--fetch the route to map the point to the student-->
+  <iron-ajax
+    auto
+    method="post"
+    id="selectclassajax"
+    url="{{selectclassurl}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="selectclassResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+  <iron-ajax
+    auto
+    method="post"
+    id="classpickpointajax"
+    url="{{classpickurl}}"
+    params="{{classpickparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="classpickResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+  <iron-ajax
+    auto
+    method="post"
+    id="selectpointajax"
+    url="{{selectpointurl}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="pointsResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="routepoint"
+        url="{{routepointurl}}"
+        params="{{routepointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routepointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="routedroppoint"
+        url="{{routedroppointurl}}"
+        params="{{routedroppointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routedroppointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="studentpointajax"
+        url="{{studentpointurl}}"
+        params="{{studentpointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentpointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: "mapstudenttopoint-service",
+      selectclass:function(){
+        this.selectclassurl = "http://localhost:8081/selectclass";
+        this.$.selectclassajax.generateRequest();
+      },
+      selectclassResponse:function(e){
+        var classdetail=e.detail.response.returnval;
+        document.querySelector('mapstudenttopoint-card').classarr=classdetail;
+      },
+      classpick:function(cla){
+        this.classpickurl = "http://localhost:8081/classpick";
+        var obj={"classes":""}
+        obj.classes=cla;
+        this.classpickparam=obj;
+        this.$.classpickpointajax.generateRequest();
+      },
+      classpickResponse:function(e){
+        var student=e.detail.response.returnval;
+        document.querySelector('mapstudenttopoint-card').studentarr=student;
+      },
+      submit:function(itemarr){
+          len=itemarr.length;
+          alert(JSON.stringify(itemarr));
+          for(var i=0;i<itemarr.length;i++){
+            var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":""};
+            obj.studentid=itemarr[i].studentid;
+            obj.class_id=itemarr[i].class_id;
+            obj.pickroute=itemarr[i].pickroute;
+            obj.droproute=itemarr[i].droproute;
+            obj.pickpoint=itemarr[i].pickpoint;
+            obj.droppoint=itemarr[i].droppoint;
+            this.studentpointurl="http://localhost:8081/submiturl";
+                 this.studentpointparam=obj;
+            this.$.studentpointajax.generateRequest();
+          }
+    }
+    });
+  })();
+  </script>
+</dom-module>

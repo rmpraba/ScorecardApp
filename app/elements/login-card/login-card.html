@@ -1,0 +1,52 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../login-service/login-service.html">
+<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<dom-module id="login-card">
+<template>
+    <iron-a11y-keys target="[[_target]]" keys="enter" on-keys-pressed="_test"></iron-a11y-keys>
+    <div class="logindialog">
+        <div class="card-img">
+            <img src="../../images/student_login.png" height="80px" width="90px"></img>
+        </div>
+        <div class="content">
+            <div class="field">
+                <paper-input label="Username" value="{{uname}}" required auto-validate error-message="needs username!"></paper-input>
+            </div>
+            <div class="field">
+                <paper-input label="Password" type="password" value="{{pass}}" required auto-validate error-message="needs password!"></paper-input>
+            </div>
+            <div class="button">
+                <paper-button class="in" on-click="login">Sign in</paper-button>
+            </div>
+        </div>
+    </div>
+  <login-service id="loginservice"></login-service>
+  </template>
+  <script>
+
+    Polymer({
+      is: "login-card",
+      ready:function()
+      {
+       this.uname="";
+       this.password="";
+      },
+      login:function()
+      {
+        alert(this.$.loginservice);
+      this.$.loginservice.logincheck(this.uname,this.pass);
+      }
+    });
+
+  </script>
+
+</dom-module>

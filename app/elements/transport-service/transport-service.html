@@ -154,6 +154,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="gettripajax"
+        url="{{gettripurl}}"
+        params="{{gettripparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="gettripResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   
     </template>
 
@@ -164,6 +175,7 @@
     var pick;
     var drop;
     var routeidd;
+    var routetrip="";
 
 
     Polymer({
@@ -179,14 +191,15 @@
          a2=e1.detail.response.returnval;
         document.querySelector('mappointtoroute-card').routearr=a2;
       },
-       getroutedetail:function(routename)
+       getroutedetail:function(tripno)
       {
-        //alert('Hi');
+        //alert('Hi  ...   '+routetrip);
         this.getroutedetailurl="http://localhost:8081/getroutedetail";
-        var obj={"routename":""};
-        obj.routename=routename;
+        var obj={"routename":"","tripnos":""};
+        obj.routename=routetrip;
+        obj.tripnos=tripno;
         this.getroutedetailparam=obj;
-        //alert(obj);
+        //alert(JSON.stringify(obj));
         this.$.getroutedetailajax.generateRequest();
       },
       getroutedetailResponse:function(e1)
@@ -219,7 +232,7 @@
       sequenceResponse:function(e)
       {
         var seq=(e.detail.response.returnval[0].count)+1;
-        alert(seq);
+        //alert(seq);
         var obj={"id":"","routes":"","points":"","trip":"","pick":"","drop":""};
         obj.id="p"+seq;
         obj.routes=routeidd;
@@ -349,8 +362,26 @@
       alert(JSON.stringify(e.detail.response.returnval));
       var reportresult=e.detail.response.returnval;
        document.querySelector('genestureport-card').reportarr=reportresult;
-     }
-      
+     },
+     gettrip:function(routename)
+      {
+        routetrip=routename;
+        alert('name of route'+routetrip);
+        alert('Hi');
+        this.gettripurl="http://localhost:8081/gettrip";
+        var obj={"triproute":""};
+        obj.triproute=routename;
+        this.gettripparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.gettripajax.generateRequest();
+      },
+      gettripResponse:function(e1)
+          { 
+            //alert('i m back');
+          var tripdetails=e1.detail.response.returnval;
+          //alert(JSON.stringify(routedetails));
+          document.querySelector('mappointtoroute-card').triparr=tripdetails;
+      }
     
 
 

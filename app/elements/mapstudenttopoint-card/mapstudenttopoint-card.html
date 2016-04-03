@@ -28,14 +28,14 @@
       <table >
         <tr>
         <td style="width: 17%;"></td>
-          <td>  <paper-item label="">CLass</paper-item>
+          <td>  <paper-item label="">Grade</paper-item>
           </td>
           <td>
         <div class="select-class">
-          <paper-dropdown-menu label="Select Class">
+          <paper-dropdown-menu label="Select Grade">
             <paper-menu class="dropdown-content" on-iron-select="classes1" attr-for-selected="value" >
               <template  is="dom-repeat" items="{{classarr}}" as="view">
-                <paper-item value="{{view.id}}">{{view.class}} - {{view.section}}</paper-item>
+                <paper-item value="{{view.school_type}}">{{view.school_type}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -69,8 +69,9 @@
           this.$.maps.selectclass();
         },
         classes1:function(e){
-          this.class = (e.target.selectedItem.value);
-          this.$.maps.classpick(this.class);
+                    this.class = (e.target.selectedItem.value);
+                     alert('The select grade is..'+this.class);
+                     this.$.maps.classpick(this.class);
         },
         click:function()
         {

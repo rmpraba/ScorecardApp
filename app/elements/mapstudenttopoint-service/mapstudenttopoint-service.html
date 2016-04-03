@@ -19,7 +19,7 @@
   <iron-ajax
     auto
     method="post"
-    id="classpickpointajax"
+    id="classpickajax"
     url="{{classpickurl}}"
     params="{{classpickparam}}"
     handle-as="json"
@@ -90,7 +90,7 @@
         var obj={"classes":""}
         obj.classes=cla;
         this.classpickparam=obj;
-        this.$.classpickpointajax.generateRequest();
+        this.$.classpickajax.generateRequest();
       },
       classpickResponse:function(e){
         var student=e.detail.response.returnval;
@@ -98,7 +98,6 @@
       },
       submit:function(itemarr){
           len=itemarr.length;
-          alert(JSON.stringify(itemarr));
           for(var i=0;i<itemarr.length;i++){
             var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":""};
             obj.studentid=itemarr[i].studentid;
@@ -111,6 +110,14 @@
                  this.studentpointparam=obj;
             this.$.studentpointajax.generateRequest();
           }
+    },
+    studentpointResponse:function(e){
+      var result=e.detail.response.returnval;
+      if(result=='success'){
+        alert('inserted successfully');
+      } else {
+      alert('insertion failed');
+      }
     }
     });
   })();

@@ -30,6 +30,20 @@
               </template>
                 </paper-menu>
             </paper-dropdown-menu>
+          </div>
+          </td>
+          <td>
+            <paper-item label="">Trip<paper-item>
+          </td>
+          <td>
+          <div class="drop-down">
+           <paper-dropdown-menu label="---Select the Trip---">
+               <paper-menu class="dropdown-content"  on-iron-select="tripnum" valueattr="value" >
+                   <template  is="dom-repeat" items="{{triparr}}" as="view">
+              <paper-item value="{{view.trip}}">{{view.trip}}</paper-item>
+              </template>
+                </paper-menu>
+            </paper-dropdown-menu>
           </div>    
           </td>
           <td style="width: 70px;"></td>
@@ -71,26 +85,28 @@
       { 
         this.hide=true;
         this.$.select.getroute();
-        //this.$.cardnew.hidden=true;
        },
        rootname:function(e)
        {
         routename = (e.target.selectedItem.textContent).trim();
-        alert('selected route = '+routename);
-        this.$.select.getroutedetail(routename);
+        //alert('selected route = '+routename);
+        this.$.select.gettrip(routename);
         
         sessionStorage.setItem("route",routename);
        },
+       tripnum:function(e)
+       {
+        var tripno = (e.target.selectedItem.textContent).trim();
+        this.$.select.getroutedetail(tripno);
+
+         sessionStorage.setItem("trip",tripno);
+       },
        click:function()
        {
-
-        //alert('clicked');
-        //alert(JSON.stringify(itemarray));
         this.$.select.mappoint(itemarray);
        },
        clickfn:function(){
         this.hide=false;
-        //  this.$.cardnew.hidden=false;
        },
        FnGetItems:function(route,point,pickup,drop){
         var obj={"route":"","point":"","pickuptime":"","droptime":""};
@@ -99,7 +115,6 @@
         obj.pickuptime=pickup;
         obj.droptime=drop;
         itemarray.push(obj);
-        //alert(JSON.stringify(itemarray));
        }
 
         

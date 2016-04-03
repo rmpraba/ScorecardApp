@@ -28,8 +28,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-
-      console.log(rows);
+      	//console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -51,7 +50,7 @@ app.post('/getroute' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				console.log(rows);
+				//console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -70,41 +69,33 @@ app.post('/getroute' ,  urlencodedParser,function (req, res)
 
 app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
 {
-		
-		 var routename={"route_name":req.query.routename};
-		 console.log('in server...');
-		 //console.log(routename);
-	    connection.query('select * from point where route_id=(select id from route where ?)',[routename],
-       	function(err, rows)
-       	{
-		if(!err)
-		{
-			if(rows.length>0)
-			{
-				console.log(rows);
-			res.status(200).json({'returnval': rows});
+	var routename={"route_name":req.query.routename};
+	var trip={"trip":req.query.tripnos};
+	//console.log('in server...');
+	//console.log('hello route'+routename);
+	//console.log('hello trip...'+trip);
+	connection.query('select * from point where route_id=(select id from route where ?) and ?',[routename,trip],
+   	function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				res.status(200).json({'returnval': 'invalid'});
 			}
-			else
-			{
-			res.status(200).json({'returnval': 'invalid'});
+		} else{
+				console.log('No data Fetched'+err);
 			}
-		}
-		else
-		{
-			console.log('No data Fetched'+err);
-		}
-		
-	
+		});
 });
-	});
 
 
 app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 {
 		
-		 var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop};
-		 //console.log('in server...'+routename);
-		 console.log(rouname);
+		var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop};
+		//console.log('in server...'+routename);
+		//console.log(rouname);
 	    connection.query('insert into point set ?',[rouname],
        	function(err, rows)
        	{
@@ -418,7 +409,7 @@ console.log(rows);
 app.post('/selectclass',  urlencodedParser,function (req, res)
 {
 
-       connection.query('SELECT * from class_details',
+       connection.query('SELECT distinct school_type from student_details',
        	function(err, rows)
        	{
 		if(!err)
@@ -436,8 +427,9 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 	});
 app.post('/classpick',  urlencodedParser,function (req, res)
 {
-	var class_id={"class_id":req.query.classes};
+	var class_id={"school_type":req.query.classes};
 	var trans_req={"transport_required":"yes"};
+	//console.log('in server...');
        connection.query('SELECT id, student_name from student_details where ? and ?',[class_id,trans_req],
        	function(err, rows)
        	{ 
@@ -445,6 +437,7 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
+			//console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -518,8 +511,8 @@ app.post('/routepoint',  urlencodedParser,function (req, res)
 
 app.post('/submiturl',  urlencodedParser,function (req, res)
 {
-		var mappointtostudent={"student_id":req.query.studentid,"class_id":req.query.class_id,"pickup_route_id":req.query.pickroute,"pickup_point":req.query.pickpoint,"drop_route_id":req.query.droproute, "drop_point":req.query.droppoint};
-		console.log(mappointtostudent);
+		var mappointtostudent={"student_id":req.query.studentid,"school_type":req.query.class_id,"pickup_route_id":req.query.pickroute,"pickup_point":req.query.pickpoint,"drop_route_id":req.query.droproute, "drop_point":req.query.droppoint};
+		//console.log(mappointtostudent);
 	    connection.query('insert into student_point set ?',[mappointtostudent],
        	function(err, rows) 
        	{
@@ -529,12 +522,45 @@ app.post('/submiturl',  urlencodedParser,function (req, res)
 		}
 		else
 		{
-			console.log(err);
+			//console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
 	
 });    
 	});
+
+
+app.post('/gettrip' ,  urlencodedParser,function (req, res)
+{
+		
+		 var routen={"route_name":req.query.triproute};
+		 //console.log('in server...');
+		 //console.log(routen);
+	    connection.query('select distinct trip from point where route_id=(select id from route where ?)',[routen],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+		
+	
+});
+	});
+
+
 
 function setvalue()
 {

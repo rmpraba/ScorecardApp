@@ -9,8 +9,8 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../login-card/login-card.html">
-<link rel="import" href="../timepicker-card/timepicker-card.html">
-<link rel="import" href="../timepicker1-card/timepicker1-card.html">
+<link rel="import" href="../../timepicker-card/timepicker-card.html">
+<link rel="import" href="../../timepicker1-card/timepicker1-card.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <dom-module id="item-card">
@@ -54,16 +54,7 @@ padding: 30px;
   <div class="detail">
    <paper-input  class="field" value={{points}}></paper-input>
    </div>
-   <div>
-    <div class="drop-down">
-            <paper-dropdown-menu label="---Select the trip---">
-                <paper-menu class="dropdown-content"  on-iron-select="trip" valueattr="value" >
-                   <paper-item value="1">1</paper-item>
-              <paper-item value="2">2</paper-item>
-                </paper-menu>
-            </paper-dropdown-menu>
-          </div>    
-   </div>
+   
   <div>
     <timepicker-card></timepicker-card>
   </div>
@@ -91,37 +82,23 @@ padding: 30px;
       ready:function()
       {
         n=n+1;
-        //this.$.point.readonly=true;
-        //this.$.trip.readonly=true;
-        //this.$.routename.hidden=true;
-        
       },
       
       changeHandler:function(event)
       { 
         var box = document.querySelector("#box");
-        alert("hi..."+box.checked);
         if(box.checked==true)
         { 
 
         document.querySelector('mappointtoroute-card').FnGetItems(this.route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"));  
-          //alert("coming....");
-        
-        //alert(localStorage.getItem("curr_sess_pickuptime"));
-        //alert(this.points);
         }
       },
-      trip:function(e)
-      {
-   this.trip =(e.target.selectedItem.textContent).trim();
-      },
+    
       insert:function()
       {
         var route=sessionStorage.getItem("route");
-        //alert(route);
-        //alert(sessionStorage.getItem("route")+this.points+this.trip+localStorage.getItem("curr_sess_pickuptime")+localStorage.getItem("curr_sess_droptime"));
-
-        this.$.insert.insertpoint(route,this.points,this.trip,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"));
+        var tripn=sessionStorage.getItem("trip");
+        this.$.insert.insertpoint(route,this.points,tripn,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"));
       }
      
 

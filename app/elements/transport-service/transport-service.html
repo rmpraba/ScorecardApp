@@ -165,6 +165,28 @@
         debounce-duration="300"
         >
   </iron-ajax>
+     <iron-ajax
+        method="post"
+        id="gradediscountajax"
+        url="{{gradediscounturl}}"
+        params="{{gradediscountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="gradediscountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+     <iron-ajax
+        method="post"
+        id="addcalcajax"
+        url="{{addcalcurl}}"
+        params="{{addcalcparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="addcalcResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   
     </template>
 
@@ -176,6 +198,10 @@
     var drop;
     var routeidd;
     var routetrip="";
+    var gradedis="";
+    var totalfee;
+    var finalfee;
+    var calcfee;
 
 
     Polymer({
@@ -265,8 +291,47 @@
         this.$.getfeeajax.generateRequest();
       },
       getfeeResponse:function(e){
-         var fee=e.detail.response.returnval[0].fees;
-        document.querySelector('zonetostudent-card').fee=fee;
+         totalfee=e.detail.response.returnval[0].fees;
+         alert('the discount percent is....'+gradedis);
+                  alert('the total fee is....'+totalfee);
+         finalfee=totalfee-((totalfee/100)*gradedis);
+         alert('the discounted fee...'+finalfee);
+        //document.querySelector('zonetostudent-card').fee=finalfee;
+      },
+      calc:function(values){
+        if(values=='ifterm1'){
+        var term1fee=finalfee/2;
+        document.querySelector('zonetostudent-card').fee=term1fee;  
+        }         
+        
+      if(values=='ifterm2'){
+        var term2fee=finalfee/2;
+        document.querySelector('zonetostudent-card').fee=term2fee;
+      }
+      if(values=='foryear'){
+        var yearlyfee=finalfee;
+        document.querySelector('zonetostudent-card').fee=yearlyfee;
+      }
+      
+        
+      },
+      addcalc:function(temp,fee){
+        calcfee=fee;
+        this.addcalcurl="http://localhost:8081/addcalc";
+        var obj={"id":""}
+        obj.id=temp;
+        this.addcalcparam=obj;
+        alert('Calculated fee is...'+calcfee);
+        alert(JSON.stringify(obj));
+
+        this.$.addcalcajax.generateRequest();
+      },
+      addcalcResponse:function(e){
+        var gotdis=e.detail.response.returnval[0].discount_percent;
+        alert(gotdis);
+        var finalcalc=calcfee-((calcfee/100)*gotdis);
+        alert('very final fee......'+finalcalc);
+        document.querySelector('zonetostudent-card').fee=finalcalc;
       },
       setzone:function(studid,zone,fee)
       {
@@ -327,6 +392,7 @@
           {
             var iditem=e1.detail.response.returnval;
             document.querySelector('zonetostudent-card').studentidarr=iditem;
+            document.querySelector('zonetostudent-card').autocompletearr(iditem);
             //alert(JSON.stringify(document.querySelector('zonetostudent-card').namearr));
       },
 
@@ -341,11 +407,22 @@
       getstudetailResponse:function(e1)
           {
             var profilename=e1.detail.response.returnval[0].student_name;
-            var fathername=e1.detail.response.returnval[0].class_id;
+            var gradename=e1.detail.response.returnval[0].school_type;
             var dob=e1.detail.response.returnval[0].dob;
             document.querySelector('zonetostudent-card').name=profilename;
-            document.querySelector('zonetostudent-card').fathername=fathername;
+            document.querySelector('zonetostudent-card').grade=gradename;
             document.querySelector('zonetostudent-card').date=dob;
+
+            this.gradediscounturl="http://localhost:8081/gradediscount";
+            var obj={"grade":""}
+            obj.grade=gradename;
+            this.gradediscountparam=obj;
+            this.$.gradediscountajax.generateRequest();
+      },
+      gradediscountResponse:function(e){
+        gradedis=e.detail.response.returnval[0].discount_percent;
+        alert('discount percent is'+gradedis);
+
       },
          generatereport:function(studid)
      {

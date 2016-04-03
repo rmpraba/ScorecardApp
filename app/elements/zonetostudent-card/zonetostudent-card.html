@@ -1,26 +1,32 @@
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
-<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../transport-service/transport-service.html">
-<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
-<dom-module id="zonetostudent-card">
+
+ <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+   <link rel="import" href="../bower_components/paper-input/paper-input.html">
+       <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+       <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+       <link rel="import" href="bower_components/paper-item/paper-item.html">
+       <link rel="import" href="bower_components/paper-button/paper-button.html">
+       <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+       <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+       <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+       <link rel="import" href="../bower_components/paper-input-autocomplete/paper-input-autocomplete.html">
+       <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+        <link rel="import" href="bower_components/iron-pages/iron-pages.html">
+    <link rel="import" href="transport-service.html">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+        <dom-module id="zonetostudent-card">
+
 <template>  
   <body>
-    <div>
-    <table style="table-layout: auto; margin-left: 30%; margin-top: 7%;">
+    
+
+    <div class="layframe">
+
+    <table>
       <tr>
-        <td>
-          <paper-item label="Class">Class<paper-item>
-        </td>
+        
         <td>
           <div class="class-drop">
-          <paper-dropdown-menu >
+          <paper-dropdown-menu label="Standard">
             <paper-menu class="dropdown-content" on-iron-select="std" valueattr="value" >
               <template  is="dom-repeat" items="{{stdarr}}" as="view">
               <paper-item value="{{view.class}}">{{view.class}}</paper-item>
@@ -43,11 +49,8 @@
       <tr>
         <tr>
         <td>
-          <paper-item label="Student ID">Student ID<paper-item>
-        </td>
-        <td>
             <div class="class-drop">
-        <paper-dropdown-menu>
+        <paper-dropdown-menu label="Student ID">
           <paper-menu class="dropdown-content" on-iron-select="studetail" valueattr="value" >
             <template  is="dom-repeat" items="{{studentidarr}}" as="view">
               <paper-item value="{{view.id}}">{{view.id}}</paper-item>
@@ -56,30 +59,27 @@
         </paper-dropdown-menu>
       </div>
         </td>
-        <!--<td>
+        <td>
           <paper-input class="field" is="" id="dob" value="{{date}}"></paper-input>
-        </td>-->
+        </td>
       <tr>
       <tr>
         <td>
-          <paper-item label="Student name">Student Name<paper-item>
+          <paper-input-autocomplete label="Student Name" id="input-local" remote-source="true" ></paper-input-autocomplete>
+          <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+      <paper-listbox class="dropdown-content" on-iron-select="FnItemSelected">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <paper-item>{{item.itemdes}}</paper-item>
+        </template>
+      </paper-listbox>
         </td>
         <td>
-          <!--<paper-input-autocomplete lable="Select State" id="input-local" remote-source="true" ></paper-input-autocomplete>-->
-          <paper-input class="field" is="" value="{{name}}"></paper-input>
+          <paper-input class="field" is="" id="dad" value="{{grade}}"></paper-input>
         </td>
-        <!--<td>
-          <paper-input class="field" is="" id="dad" value="{{fathername}}"></paper-input>
-        </td>-->
       <tr>
-
-    
-        <td>
-          <paper-item label="Zone">Zone<paper-item>
-        </td>
         <td>
       <div class="drop-down">
-        <paper-dropdown-menu>
+        <paper-dropdown-menu label="Select the Zone">
           <paper-menu class="dropdown-content" on-iron-select="zone" valueattr="value" >
             <template  is="dom-repeat" items="{{itemarr}}" as="view">
               <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
@@ -90,13 +90,62 @@
       
         </td>
       </tr>
-      
+      </table>
+                <div>
+      <table>
+        
+          <paper-item>Transport Requirement Period</paper-item>
+        
+        <tr>
+          <td>
+            Term I
+            <paper-checkbox id="term1" class="checkbox" on-change="changeHandler"></paper-checkbox>
+          </td>
+          <td>
+            Term II
+            <paper-checkbox id="term2" class="checkbox" on-change="changeHandler"></paper-checkbox>
+          </td>
+          <td>
+            Complete Year
+            <paper-checkbox id="term3" class="checkbox" on-change="changeHandler"></paper-checkbox>
+          </td>
+          
+        </tr>
+      </table>
+
+
+       <table>
+        
+          <paper-item>Other Necessary discounts</paper-item>
+        
+        <tr>
+          <td>
+            Physically Challenged
+            <paper-checkbox id="phychal" class="checkbox" on-change="changeHandler"></paper-checkbox>
+          </td>
+          <td>
+            Teacher's Child
+            <paper-checkbox id="teachild" class="checkbox" on-change="changeHandler"></paper-checkbox>
+          </td>
+          <td>
+            Slam / Needy Peoples
+            <paper-checkbox id="slam" class="checkbox" on-change="changeHandler"></paper-checkbox>
+          </td>
+          <td>
+            Not needed
+            <paper-checkbox id="non" class="checkbox" on-change="changeHandler"></paper-checkbox>
+          </td>
+        </tr>
+      </table>
+
+
+
+    </div>  
+      <table>
       <tr>
+        
         <td>
-          <paper-item label="Fee">Fee<paper-item>
-        </td>
-        <td>
-          <paper-input class="field" label="" value="{{fee}}"></paper-input>
+          <paper-input style="width: 100px;" class="field" label="Fees" value="{{fee}}"></paper-input>
         </td>
       </tr>
       <tr><td style="width: 10px; height: 20px;"></td></tr>
@@ -114,12 +163,14 @@
 
     </div>
 
-
+    
     
   </body>
     <transport-service id="root"></transport-service>
 </template>
 <script>
+ (function() {
+    var item=[];
   Polymer({
 
     is: "zonetostudent-card",
@@ -127,6 +178,7 @@
       ready: function() {
         this.$.root.getzone();
         this.$.root.getstd();
+        this.querySelector('paper-listbox').style.visibility='hidden';
         //this.$.dad.disabled=true;
         //this.$.dob.disabled=true;
         },
@@ -158,15 +210,127 @@
       this.$.root.setzone(this.studentid,this.zone_id,this.fee);
 
     },
-    setInput:function(namearr){
+    autocompletearr:function(autocompletearr)
+    {
+         item=autocompletearr;
+    },
+   
+    FnInputChanged:function(e){
+     //alert(e.keyCode);
+      if(e.keyCode==13|| e.keyCode==40)
+        this.querySelector('paper-listbox').focus();
+      var arr=[];
+      arr.push({"itemdes":"-----Select-----"});
+      this.querySelector('paper-listbox').style.visibility='visible';
+      if(e.keyCode==8){
+        this.itemflag="true";
+        this.itemval="";
+        //alert('yes');
+        var len=(this.value).length;
+        if(len<=1){
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.itemArray="";
+          this.itemval="";
+        }
+        if(len>1){
+          this.querySelector('paper-listbox').style.visibility='visible';
+          var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+          for(var i=0;i<item.length;i++)
+          {
+            var subval=((item[i].student_name).trim()).substring(0,backsubval.length);
+            if((subval).toUpperCase()==(backsubval).toUpperCase())
+            {
+              var obj={"itemdes":""};
+              obj.itemdes=item[i].student_name;
+              arr.push(obj);
+            }
+          }
+          this.itemArray=arr;
+        }
+      }
+      if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+        if(this.itemflag=="true") {
+          this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+          this.itemflag="false";
+        }
+        else
+        this.itemval = this.itemval +String.fromCharCode((e.keyCode));
+        if(this.itemval.length>0)
+        {
+          for(var i=0;i<item.length;i++){
+            var subval=((item[i].student_name).trim()).substring(0,this.itemval.length);
+            if((subval).toUpperCase()==(this.itemval).toUpperCase())
+            {
+              var obj={"itemdes":""};
+              obj.itemdes=item[i].student_name;
+              arr.push(obj);
+            }
+          }
+          if(arr.length>0)
+            this.itemArray=arr;
+          else
+          {
+            var obj={"itemdes":""};
+            obj.itemdes="No items found";
+            arr.push(obj);
+            this.itemArray=arr;
+          }
+        }
+      }
+    },
+    setInput:function(namearr)
+    {
       var inputlocal=document.querySelector('#input-local');
       //alert(inputlocal);
       //alert(JSON.stringify(namearr));
       inputlocal.source=namearr;
 
       alert(JSON.stringify(inputlocal.source));
-    }
-
+    },
+    changeHandler:function(event){ 
+        var term1 = document.querySelector("#term1");
+        var term2 = document.querySelector("#term2");
+        var term3 = document.querySelector("#term3");
+        var phychal = document.querySelector("#phychal");
+        var teachild = document.querySelector("#teachild");
+        var slam = document.querySelector("#slam");
+        var non = document.querySelector("#non");
+        if(term1.checked==true){ 
+        alert('Term I is selected');
+        var temp='ifterm1';
+        this.$.root.calc(temp);
+        }
+        if(term2.checked==true){ 
+        alert('Term II is selected');
+        var temp='ifterm2';
+        this.$.root.calc(temp);
+        }
+        if(term3.checked==true){ 
+        alert('Complete Year is selected');
+        var temp='foryear';
+        this.$.root.calc(temp);
+        }
+        if(phychal.checked==true){ 
+        alert('Physically Challenged is selected');
+        var tempid=5;
+        this.$.root.addcalc(tempid,this.fee);
+        }
+        if(teachild.checked==true){ 
+        alert('Teacher Child is selected');
+        var tempid=6;
+        this.$.root.addcalc(tempid,this.fee);
+        }
+        if(slam.checked==true){ 
+          var tempid=7;
+        alert('slam is selected');
+        this.$.root.addcalc(tempid,this.fee);
+        }
+        /*if(non.checked==true){ 
+         alert('No change is selected');
+        this.$.root.addcalc(tempid,this.fee);
+        }*/
+}
   });
+   })();
 </script>
 </dom-module>

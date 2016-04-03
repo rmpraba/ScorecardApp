@@ -147,6 +147,38 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 	});
 
 
+app.post('/gradediscount' ,  urlencodedParser,function (req, res)
+{
+		
+		 var gradename={"grade_type":req.query.grade};
+		 console.log(gradename);
+	    connection.query('select discount_percent from md_discount where ?',[gradename], 
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+		
+		
+	
+});
+	});
+
+
+
 
 
 
@@ -210,6 +242,33 @@ app.post('/getfee' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+
+
+app.post('/addcalc' ,  urlencodedParser,function (req, res)
+{
+	var gradeid={"grade_id":req.query.id};
+	console.log(gradeid);
+	    connection.query('select * from md_discount where ? ',[gradeid],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+				console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -303,7 +362,7 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 		var std={"class":req.query.std};
 		var sec={"section":req.query.sec};
 		var trans_req={"transport_required":"yes"};
-	    connection.query('select id from student_details where class_id=(select id from class_details where ? and ?) and? ',[std,sec,trans_req],
+	    connection.query('select id,student_name from student_details where class_id=(select id from class_details where ? and ?) and? ',[std,sec,trans_req],
        	function(err, rows)
        	{
       	if(!err)
@@ -329,7 +388,7 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 app.post('/getstudetail' ,  urlencodedParser,function (req, res)
 {
 		var id={"id":req.query.studid};
-	    connection.query('select student_name, class_id,dob from student_details where ?',[id],
+	    connection.query('select * from student_details where ?',[id],
        	function(err, rows)
        	{
       	if(!err)

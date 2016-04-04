@@ -176,12 +176,6 @@ app.post('/gradediscount' ,  urlencodedParser,function (req, res)
 	
 });
 	});
-
-
-
-
-
-
 app.post('/sequence' ,  urlencodedParser,function (req, res)
 {
 	

@@ -187,7 +187,50 @@
         debounce-duration="300"
         >
   </iron-ajax>
-  
+   <iron-ajax
+        method="post"
+        id="cancellationajax"
+        url="{{cancellationurl}}"
+        params="{{cancellationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="cancellationResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="cancelajax"
+        url="{{cancelurl}}"
+        params="{{cancelparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="cancelResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="proceedcancelajax"
+        url="{{proceedcancelurl}}"
+        params="{{proceedcancelparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="proceedcancelResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="transportrequiredstatusajax"
+        url="{{transportrequiredstatusurl}}"
+        params="{{transportrequiredstatusparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="transportrequiredstatusResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -424,22 +467,18 @@
         alert('discount percent is'+gradedis);
 
       },
-         generatereport:function(studid)
-     {
-      
-      this.genereporturl="http://localhost:8081/report-card";
+      generatereport:function(studid){
+        this.genereporturl="http://localhost:8081/report-card";
         var obj={"studid":""}
         obj.studid=studid;
         this.genereportparam=obj;
         this.$.genereportajax.generateRequest();
-     },
-     genereportResponse:function(e)
-     {
-      
-      alert(JSON.stringify(e.detail.response.returnval));
-      var reportresult=e.detail.response.returnval;
-       document.querySelector('genestureport-card').reportarr=reportresult;
-     },
+      },
+      genereportResponse:function(e){
+        alert(JSON.stringify(e.detail.response.returnval));
+        var reportresult=e.detail.response.returnval;
+        document.querySelector('genestureport-card').reportarr=reportresult;
+      },
      gettrip:function(routename)
       {
         routetrip=routename;
@@ -458,11 +497,71 @@
           var tripdetails=e1.detail.response.returnval;
           //alert(JSON.stringify(routedetails));
           document.querySelector('mappointtoroute-card').triparr=tripdetails;
+      },
+      //cancellation
+      cancellation:function(studid){
+        this.cancellationurl="http://localhost:8081/cancellation";
+        var obj={"studid":""}
+        obj.studid=studid;
+        this.cancellationparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.cancellationajax.generateRequest();
+      },
+      cancellationResponse:function(e){
+        alert(JSON.stringify(e.detail.response.returnval));
+        var reportresult=e.detail.response.returnval;
+        document.querySelector('cancellation-card').cancellationarr=reportresult;
+      }, 
+      cancel:function(school_type, student_id){
+        this.cancelurl="http://localhost:8081/cancel";
+        var obj={"school_type":""}
+        var obj={"student_id":""}
+        obj.school_type=school_type;
+        obj.student_id=student_id;
+        this.cancelparam=obj;
+        this.$.cancelajax.generateRequest();
+      },
+      cancelResponse:function(e){
+        var days_used = JSON.stringify(e.detail.response.returnval[0].Days_used);
+        var total_days = JSON.stringify(e.detail.response.returnval[0].Total_days);
+        var monthsused = days_used/30;
+        var totalmonths = total_days/30;
+        var months_used = Math.ceil(monthsused);
+        var total_months = Math.ceil(totalmonths);
+        var fees = JSON.stringify(e.detail.response.returnval[0].fees);
+        var positive = total_months - months_used;
+        var percent = (positive / total_months)*100;
+        var refund_amount = (fees/100)*percent;
+        document.querySelector('cancellation-item-card').months_used=months_used;
+        document.querySelector('cancellation-item-card').total_months=total_months;
+        document.querySelector('cancellation-item-card').refund_amount=refund_amount;
+      },
+      proceedcancellation:function(student_id, student_name, months_used, refund_amount){
+        this.student_id=student_id;
+        this.proceedcancelurl="http://localhost:8081/proceedcancel";
+        var obj={"student_id":""}
+        var obj={"student_name":""}
+        var obj={"months_used":""}
+        var obj={"refund_amount":""}
+        obj.student_id=student_id;
+        obj.student_name=student_name;
+        obj.months_used=months_used;
+        obj.refund_amount=refund_amount;
+        this.proceedcancelparam=obj;
+        this.$.proceedcancelajax.generateRequest();
+      }, 
+      proceedcancelResponse:function(e){
+        var reportresult=e.detail.response.returnval;
+        var obj={"student_id":""};
+        obj.student_id=this.student_id;
+        this.transportrequiredstatusparam=obj;
+        alert(JSON.stringify(obj));
+        this.transportrequiredstatusurl="http://localhost:8081/transportrequiredstatus";
+        this.$.transportrequiredstatusajax.generateRequest();
+      },
+      transportrequiredstatusResponse:function(e){
+
       }
-    
-
-
-
     });
  })();
   </script>

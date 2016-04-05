@@ -5,7 +5,6 @@
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../transport-service/transport-service.html">
 <link rel="import" href="../generatereport-card/generatereport-card.html">
-<link rel="import" href="../transport-service/transport-service.html">
 <dom-module id="genestureport-card">
   <template>  
   <style>
@@ -23,9 +22,7 @@
     padding-right: 10%;
   }
   </style>
-      
-      
-          <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{studid}}" on-change="finddata">
+    <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{studid}}" on-change="finddata">
           </paper-input>
           <template  is="dom-repeat" items="{{reportarr}}" as="view">
            <generatereport-card studid="{{view.id}}" name="{{view.student_name}}" classes="{{view.class_id}}" dob="{{view.dob}}" zone="{{view.zone_id}}" fee="{{view.fees}}" photo="{{view.photo}}" paid="{{view.total}}" due="{{view.due}}" pick="{{view.pick}}" drop="{{view.drop1}}">
@@ -42,7 +39,6 @@
    },
    finddata:function()
    {
-    alert(this.studid);
     this.$.service.generatereport(this.studid);
    }
 

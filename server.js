@@ -612,9 +612,98 @@ app.post('/gettrip' ,  urlencodedParser,function (req, res)
 	
 });
 	});
+app.post('/cancellation',  urlencodedParser,function (req, res)
+{
 
+	var stu_id={"id":req.query.studid};
+	var class_id={"class_id":req.query.studid};
+	var stu_name={"student_name":req.query.studid};
+       connection.query('SELECT s.id,s.student_name,s.class_id,s.school_type,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2 as total, z.fees-z.installment_1+z.installment_2 as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
 
+app.post('/cancel',  urlencodedParser,function (req, res)
+{
 
+	var school_type={"school_type":req.query.school_type};
+	var student_id={"student_id":req.query.student_id};
+    connection.query('SELECT DATEDIFF(CURDATE(),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days, fees FROM transport_details join student_fee where ? and  ?',[school_type, student_id],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
+app.post('/proceedcancel',  urlencodedParser,function (req, res)
+{
+	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount};
+    connection.query('insert into cancellation set ?',[collection],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+
+		
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
+app.post('/transportrequiredstatus',  urlencodedParser,function (req, res)
+{
+	var student_id = {"id":req.query.student_id};
+	var transport_required = {"transport_required":'no'};
+    connection.query('update student_details set ? where ? ',[transport_required,student_id],
+       	function(err, rows)
+       	{
+       	if(err){
+       		console.log(err);
+       	}
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
 function setvalue()
 {
 	console.log("calling setvalue.....");

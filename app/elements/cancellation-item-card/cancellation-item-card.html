@@ -1,17 +1,18 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
 
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="generatereport-card">
-<template>
- <style>
+<dom-module id="cancellation-item-card">
+  <template>
+   <style>
  
  
  .detail1
@@ -69,6 +70,7 @@ height: 40%
   <div  class="layout"><paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
    <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item></div>
   <div  class="layout"> <paper-item id="lb">class:</paper-item><paper-item>{{classes}}</paper-item>
+  <paper-item id="lb">School Type:</paper-item><paper-item >{{school}}</paper-item></div>
   <paper-item id="lb">zone:</paper-item> <paper-item  >{{zone}}</paper-item></div>
   <div  class="layout"><paper-item id="lb" >Date of Birth: </paper-item><paper-item >{{dob}}</paper-item>
    <paper-item id="lb">Bus Fee:</paper-item><paper-item >{{fee}}</paper-item></div>
@@ -80,13 +82,28 @@ height: 40%
    </div>
   </div>
   <hr/>
+  <paper-checkbox on-change="cancel" >Cancel Transport</paper-checkbox>
+    <paper-button id="button" class="button" on-click="click">Submit</paper-button>
   </iron-collapse>
+  <transport-service id="service"></transport-service>
+    <paper-dialog id="confirm">
+      <h2>Confirm Cancel</h2>
+      <paper-dialog-scrollable>
+        <paper-item>Total months of transport :{{total_months}}</paper-item><br>
+        <paper-item>Months used :{{months_used}}</paper-item><br>
+        <paper-item>Refund Amount : {{refund_amount}}</paper-item>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button on-click="accept">Accept</paper-button>
+      </div>
+    </paper-dialog>
   </template>
   <script>
     (function() {
      var idd="0";
       Polymer({
-        is: "generatereport-card",
+        is: 'cancellation-item-card',
         ready:function()
         {
         
@@ -102,6 +119,15 @@ height: 40%
             idd= document.querySelector("#"+this.studid);
             idd.toggle()
           }
+        },
+        cancel: function(e){
+          this.$.service.cancel(this.school, this.studid);
+        },
+        click:function(){
+          document.querySelector('#confirm').open();
+        },
+        accept:function(){
+          this.$.service.proceedcancellation(this.studid, this.name, this.months_used, this.refund_amount);
         }
       });
     })();

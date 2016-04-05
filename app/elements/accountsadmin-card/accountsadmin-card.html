@@ -24,6 +24,7 @@
     <div class="frontpage">
       <paper-icon-button class="iconbutton" src="../../images/zone.png" on-click="zone"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/reports.png" on-click="report"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
     </div>
   </body>
     
@@ -43,6 +44,10 @@ document.querySelector('transport-app').setPage("zonetostudent","zone to student
       report:function()
       {
 document.querySelector('transport-app').setPage("generatereport","Generate Report");
+      },
+      cancel:function()
+      {
+        document.querySelector('transport-app').setPage("cancellation","Transport Cancellation");
       }
       
 

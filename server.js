@@ -3,7 +3,7 @@ var express    = require("express");
  var connection = mysql.createConnection({
    host     : 'localhost',
    user     : 'root',
-   password : 'root',
+   password : 'admin',
    database : 'transport'
  });
 var bodyParser = require('body-parser');
@@ -120,7 +120,6 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 {
 		
 		 var routename={"route_name":req.query.routename};
-		 console.log(routename);
 	    connection.query('select * from route where ?',[routename], 
        	function(err, rows)
        	{
@@ -151,7 +150,6 @@ app.post('/gradediscount' ,  urlencodedParser,function (req, res)
 {
 		
 		 var gradename={"grade_type":req.query.grade};
-		 console.log(gradename);
 	    connection.query('select discount_percent from md_discount where ?',[gradename], 
        	function(err, rows)
        	{
@@ -254,7 +252,6 @@ app.post('/getfee' ,  urlencodedParser,function (req, res)
 app.post('/addcalc' ,  urlencodedParser,function (req, res)
 {
 	var gradeid={"grade_id":req.query.id};
-	console.log(gradeid);
 	    connection.query('select * from md_discount where ? ',[gradeid],
        	function(err, rows)
        	{
@@ -435,7 +432,6 @@ app.post('/report-card',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-	console.log(stu_id);
        connection.query('SELECT s.id,s.student_name,s.class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2 as total, z.fees-z.installment_1+z.installment_2 as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
@@ -634,51 +630,42 @@ app.post('/cancellation',  urlencodedParser,function (req, res)
 		}
 	}
 });
-	});
-
-app.post('/cancel',  urlencodedParser,function (req, res)
-{
-
+});
+app.post('/cancel',  urlencodedParser,function (req, res){
 	var school_type={"school_type":req.query.school_type};
 	var student_id={"student_id":req.query.student_id};
-    connection.query('SELECT DATEDIFF(CURDATE(),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days, fees FROM transport_details join student_fee where ? and  ?',[school_type, student_id],
-       	function(err, rows)
-       	{
-		if(!err)
-		{
-		if(rows.length>0)
-		{
-			res.status(200).json({'returnval': rows});
-		}
-		else
-		{
-			console.log(err);
-			res.status(200).json({'returnval': 'invalid'});
-		}
-	}
+	var end_transport=req.query.end_date;
+
+	var queryy="SELECT DATEDIFF(STR_TO_DATE('"+end_transport+"', '%m/%d/%Y'),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days, fees FROM transport_details join student_fee where ? and  ?";
+    connection.query(queryy,[end_transport,school_type, student_id],
+		function(err, rows){
+       	if(err){
+       		console.log(err);
+       	}
+			if(!err){
+				if(rows.length>0){
+					console.log(JSON.stringify(rows));
+					res.status(200).json({'returnval': rows});
+				} else {
+					console.log(err);
+					res.status(200).json({'returnval': 'invalid'});
+				}
+			}
+		});
 });
-	});
-app.post('/proceedcancel',  urlencodedParser,function (req, res)
-{
+app.post('/proceedcancel',  urlencodedParser,function (req, res){
 	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount};
     connection.query('insert into cancellation set ?',[collection],
-       	function(err, rows)
-       	{
-		if(!err)
-		{
-		if(rows.length>0)
-		{
-
-		
-			res.status(200).json({'returnval': rows});
+	function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
 		}
-		else
-		{
-			console.log(err);
-			res.status(200).json({'returnval': 'invalid'});
-		}
-	}
-});
+	});
 	});
 app.post('/transportrequiredstatus',  urlencodedParser,function (req, res)
 {
@@ -712,7 +699,6 @@ app.post('/reportfee-card',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-	console.log(stu_id);
        connection.query('SELECT s.id,s.student_name,s.class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2,z.installment_1+z.installment_2 as total, z.fees-(z.installment_1+z.installment_2) as due,z.fees/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
@@ -720,7 +706,6 @@ app.post('/reportfee-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -745,7 +730,6 @@ app.post('/getnameofstu-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -765,7 +749,6 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 		var mode={"modeofpayment1":req.query.paytype};
 		var install1={"installment_1":req.query.installfee};
 		var install1date={"installment_1Date":d}
-		console.log(studid);
 	    connection.query('update  student_fee set ?,?,? where ?',[mode,install1,install1date,studid],
        	function(err, rows) 
        	{
@@ -785,7 +768,6 @@ app.post('/chequedetails',  urlencodedParser,function (req, res)
 {
 		
 		var studid={"student_id":req.query.studid,"name":req.query.name,"cheque_no":req.query.chequenum,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate};
-		console.log(studid);
 	    connection.query('insert into cheque_details  set ?',[studid],
        	function(err, rows) 
        	{
@@ -812,7 +794,6 @@ app.post('/payfee2-card',  urlencodedParser,function (req, res)
 		var mode={"modeofpayment2":req.query.paytype};
 		var install1={"installment_2":req.query.installfee};
 		var install1date={"installment_2Date":d}
-		console.log(studid);
 	    connection.query('update  student_fee set ?,?,? where ?',[mode,install1,install1date,studid],
        	function(err, rows) 
        	{
@@ -832,7 +813,6 @@ app.post('/chequedetails2',  urlencodedParser,function (req, res)
 {
 		
 		var studid={"student_id":req.query.studid,"name":req.query.name,"cheque_no":req.query.chequenum,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate};
-		console.log(studid);
 	    connection.query('insert into cheque_details  set ?',[studid],
        	function(err, rows) 
        	{

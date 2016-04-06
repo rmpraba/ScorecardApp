@@ -476,20 +476,20 @@
         this.$.genereportajax.generateRequest();
       },
       genereportResponse:function(e){
-        alert(JSON.stringify(e.detail.response.returnval));
+        //alert(JSON.stringify(e.detail.response.returnval));
         var reportresult=e.detail.response.returnval;
         document.querySelector('genestureport-card').reportarr=reportresult;
       },
      gettrip:function(routename)
       {
         routetrip=routename;
-        alert('name of route'+routetrip);
-        alert('Hi');
+        //alert('name of route'+routetrip);
+        //alert('Hi');
         this.gettripurl="http://localhost:8081/gettrip";
         var obj={"triproute":""};
         obj.triproute=routename;
         this.gettripparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.gettripajax.generateRequest();
       },
       gettripResponse:function(e1)
@@ -505,20 +505,21 @@
         var obj={"studid":""}
         obj.studid=studid;
         this.cancellationparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.cancellationajax.generateRequest();
       },
       cancellationResponse:function(e){
-        alert(JSON.stringify(e.detail.response.returnval));
+        //alert(JSON.stringify(e.detail.response.returnval));
         var reportresult=e.detail.response.returnval;
         document.querySelector('cancellation-card').cancellationarr=reportresult;
       }, 
       cancel:function(school_type, student_id){
         this.cancelurl="http://localhost:8081/cancel";
-        var obj={"school_type":""}
-        var obj={"student_id":""}
+        var end_date = localStorage.getItem("localsess_curr_date",this.showdate);
+        var obj={"school_type":"","student_id":"","end_date":""};
         obj.school_type=school_type;
         obj.student_id=student_id;
+        obj.end_date=end_date;
         this.cancelparam=obj;
         this.$.cancelajax.generateRequest();
       },
@@ -556,7 +557,7 @@
         var obj={"student_id":""};
         obj.student_id=this.student_id;
         this.transportrequiredstatusparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.transportrequiredstatusurl="http://localhost:8081/transportrequiredstatus";
         this.$.transportrequiredstatusajax.generateRequest();
       },

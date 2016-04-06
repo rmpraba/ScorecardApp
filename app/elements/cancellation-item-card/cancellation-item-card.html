@@ -65,24 +65,37 @@ height: 40%
 <iron-collapse id="{{studid}}">
   <div class="field">
   <div class="detail1">
- <div class="imag"><img src="images/{{studid}}.jpg"/></div>
- <div class="hor">
-  <div  class="layout"><paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
-   <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item></div>
-  <div  class="layout"> <paper-item id="lb">class:</paper-item><paper-item>{{classes}}</paper-item>
-  <paper-item id="lb">School Type:</paper-item><paper-item >{{school}}</paper-item></div>
-  <paper-item id="lb">zone:</paper-item> <paper-item  >{{zone}}</paper-item></div>
-  <div  class="layout"><paper-item id="lb" >Date of Birth: </paper-item><paper-item >{{dob}}</paper-item>
-   <paper-item id="lb">Bus Fee:</paper-item><paper-item >{{fee}}</paper-item></div>
- <div  class="layout"><paper-item id="lb" >Paid: </paper-item><paper-item >{{paid}}</paper-item>
-   <paper-item id="lb">Remaining Fee:</paper-item><paper-item >{{due}}</paper-item></div>
-   <div  class="layout"><paper-item id="lb" >Pick Up Place: </paper-item><paper-item >{{pick}}</paper-item>
-   <paper-item id="lb">Drop Place:</paper-item><paper-item >{{drop}}</paper-item></div>
-   </div>
-   </div>
+  <div class="imag"><img src="images/{{studid}}.jpg"/></div>
+  <div class="hor">
+    <div class="layout">
+      <paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
+      <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item>
+    </div>
+    <div class="layout">
+      <paper-item id="lb">class:</paper-item><paper-item>{{classes}}</paper-item>
+      <paper-item id="lb">School Type:</paper-item><paper-item >{{school}}</paper-item>
+    </div>
+    <div class="layout">
+      <paper-item id="lb">zone:</paper-item> <paper-item  >{{zone}}</paper-item>
+      <paper-item id="lb" >Date of Birth: </paper-item><paper-item >{{dob}}</paper-item>
+    </div>
+    <div class="layout">
+     <paper-item id="lb">Bus Fee:</paper-item><paper-item >{{fee}}</paper-item>
+      <paper-item id="lb" >Paid: </paper-item><paper-item >{{paid}}</paper-item>
+    </div>
+    <div class="layout">
+      <paper-item id="lb">Remaining Fee:</paper-item><paper-item >{{due}}</paper-item>
+      <paper-item id="lb" >Pick Up Place: </paper-item><paper-item >{{pick}}</paper-item>
+    </div>
+    <div class="layout">
+      <paper-item id="lb">Drop Place:</paper-item><paper-item >{{drop}}</paper-item>
+    </div>
+  </div>
+</div>
   </div>
   <hr/>
   <paper-checkbox on-change="cancel" >Cancel Transport</paper-checkbox>
+  <datepicker-card></datepicker-card>
     <paper-button id="button" class="button" on-click="click">Submit</paper-button>
   </iron-collapse>
   <transport-service id="service"></transport-service>
@@ -127,7 +140,7 @@ height: 40%
           document.querySelector('#confirm').open();
         },
         accept:function(){
-          this.$.service.proceedcancellation(this.studid, this.name, this.months_used, this.refund_amount);
+          this.$.service.proceedcancellation(this.studid, this.name, this.months_used,this.refund_amount);
         }
       });
     })();

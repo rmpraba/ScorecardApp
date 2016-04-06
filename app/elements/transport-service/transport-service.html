@@ -224,6 +224,7 @@
     var totalfee;
     var finalfee;
     var calcfee;
+    var months;
 
 
     Polymer({
@@ -314,10 +315,7 @@
       },
       getfeeResponse:function(e){
          totalfee=e.detail.response.returnval[0].fees;
-         alert('the discount percent is....'+gradedis);
-                  alert('the total fee is....'+totalfee);
-         finalfee=totalfee-((totalfee/100)*gradedis);
-         alert('the discounted fee...'+finalfee);
+         
         //document.querySelector('zonetostudent-card').fee=finalfee;
       },
       calc:function(values){
@@ -338,13 +336,15 @@
         
       },
       
-      setzone:function(studid,zone,fee)
+      setzone:function(studid,zone,fee,fromdate,todate)
       {
         this.setzoneurl = "http://localhost:8081/setzone";
-        var obj={"studid":"","zone":"","fee":""};
+        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":""};
         obj.studid=studid;
         obj.zone=zone;
         obj.fee=fee;
+        obj.fromdate=fromdate;
+        obj.todate=todate;
         this.setzoneparam=obj;
         this.$.setzoneajax.generateRequest();
       },
@@ -513,6 +513,22 @@
         alert(JSON.stringify(obj));
         this.transportrequiredstatusurl="http://localhost:8081/transportrequiredstatus";
         this.$.transportrequiredstatusajax.generateRequest();
+      },
+      monthdiff:function(fromdate,todate){
+        //alert('flow');
+        var froms =fromdate;
+        var to=todate;
+          var d1 = new Date(froms);
+          var d2=new Date(to);
+          //alert('hi..'+d1+'   dvfa.. '+d2);
+          months = (d2.getFullYear() - d1.getFullYear()) * 12;
+          months -= d1.getMonth() + 1;
+          months += d2.getMonth();
+          var month=months+2;
+          //alert(totalfee+'   '+month);
+          var cusfee=parseInt((totalfee/12)*month);
+          //alert(cusfee);
+          document.querySelector('zonetostudent-card').fee=cusfee;
       },
       transportrequiredstatusResponse:function(e){
 

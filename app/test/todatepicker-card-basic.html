@@ -10,32 +10,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <html>
-
 <head>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>Elements Test Runner</title>
-  <meta charset="UTF-8">
+  <title>todatepicker-card</title>
 
-  <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../bower_components/web-component-tester/browser.js"></script>
-</head>
 
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../elements/todatepicker-card/todatepicker-card.html">
+
+</head>
 <body>
 
-  <script>
-    WCT.loadSuites([
-      'my-greeting-basic.html',
-      'my-greeting-basic.html?dom=shadow',
-      'my-list-basic.html',
-      'my-list-basic.html?dom=shadow',
-      'fromdatepicker-card-basic.html',
-      'fromdatepicker-card-basic.html?dom=shadow',
-      'todatepicker-card-basic.html',
-      'todatepicker-card-basic.html?dom=shadow'
-    ]);
-  </script>
+<test-fixture id="basic">
+  <template>
+    <todatepicker-card></todatepicker-card>
+  </template>
+</test-fixture>
 
+<script>
+  describe('todatepicker-card tests', function() {
+    var element;
+
+    before(function() {
+      element = fixture('basic');
+    });
+
+    it('', function() {
+
+    });
+
+  });
+</script>
 
 </body>
-
 </html>

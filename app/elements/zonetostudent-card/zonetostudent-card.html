@@ -12,6 +12,8 @@
        <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
         <link rel="import" href="bower_components/iron-pages/iron-pages.html">
     <link rel="import" href="transport-service.html">
+    <link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
+    <link rel="import" href="../todatepicker-card/todatepicker-card.html">
     <link rel="stylesheet" type="text/css" href="styles.css">
         <dom-module id="zonetostudent-card">
 
@@ -105,7 +107,9 @@
             Complete Year
             <paper-checkbox id="term3" class="checkbox" on-change="changeHandler"></paper-checkbox>
           </td>
-          
+          <td>
+            <paper-button class="button" on-click="clickdate">Custom</paper-button>
+          </td>
         </tr>
       </table>
 
@@ -117,6 +121,15 @@
         
         <td>
           <paper-input style="width: 100px;" class="field" label="Fees" value="{{fee}}"></paper-input>
+        </td>
+        <td>
+            <fromdatepicker-card id="date1"></fromdatepicker-card>
+        </td>
+        <td>
+            <todatepicker-card id="date2"></todatepicker-card>
+        </td>
+        <td>
+          <paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
         </td>
       </tr>
      
@@ -143,6 +156,8 @@
 <script>
  (function() {
     var item=[];
+    var fromdate='';
+    var todate='';
   Polymer({
 
     is: "zonetostudent-card",
@@ -151,8 +166,9 @@
         this.$.root.getzone();
         this.$.root.getstd();
         this.querySelector('paper-listbox').style.visibility='hidden';
-        //this.$.dad.disabled=true;
-        //this.$.dob.disabled=true;
+        this.$.date1.hidden=true;
+        this.$.date2.hidden=true;
+        this.$.datebox.hidden=true;
         },
         std:function(e){
       this.std = (e.target.selectedItem.textContent).trim();
@@ -179,7 +195,7 @@
     click:function(e)
     {
       //alert(this.studentid+this.zone_id+this.fee);
-      this.$.root.setzone(this.id,this.zone_id,this.fee);
+      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate);
 
     },
     autocompletearr:function(autocompletearr)
@@ -273,7 +289,8 @@
         var term1 = document.querySelector("#term1");
         var term2 = document.querySelector("#term2");
         var term3 = document.querySelector("#term3");
-
+        var datebox = document.querySelector("#datebox");
+        
         if(term1.checked==true){ 
         alert('Term I is selected');
         var temp='ifterm1';
@@ -289,17 +306,25 @@
         var temp='foryear';
         this.$.root.calc(temp);
         }
-        if((term1.checked==false)&(term2.checked==false)&(term3.checked==false)){ 
+        if((term1.checked==false)&(term2.checked==false)&(term3.checked==false)&(datebox.checked==false)){ 
         alert('Option is de-selected');
         var temp='';
         this.fee=temp;
         }
-        
+        if(datebox.checked==true){
+          alert('date check is selected');
+          var fromdate = localStorage.getItem("localsess_from_date");
+          var todate = localStorage.getItem("localsess_to_date");
+          this.$.root.monthdiff(fromdate,todate);
+        }
+
         
 },
-add:function()
+clickdate:function()
 {
-
+    this.$.date1.hidden=false;
+        this.$.date2.hidden=false;
+        this.$.datebox.hidden=false;
 }
   });
    })();

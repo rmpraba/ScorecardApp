@@ -1,0 +1,78 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html">
+<link rel="import" href="../../bower_components/paper-styles/demo-pages.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<dom-module id="todatepicker-card">
+ <template>
+    <style is="custom-style" include="paper-date-picker-dialog-style">
+      .card {
+        width: 100%;
+        text-align: center;
+        margin-left:20%;
+      }
+      paper-input{
+        width: 65%;
+      }
+    </style>
+    <!--component which invokes the predefined date picker control-->
+    <div class="card">
+      <paper-input class="btn" label="End Date" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+      <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button dialog-dismiss>Cancel</paper-button>
+          <paper-button dialog-confirm>OK</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+    <dialog-page id="ID_Show_Dialog"></dialog-page>
+  </template>
+  <!--Calling dialog control-->
+
+  <!--JS file import-->
+  <script>
+    Polymer({
+  is: "todatepicker-card",
+  ready:function()
+  {
+    //this.showdate=moment(new Date()).format('L');
+    //localStorage.setItem("localsess_curr_date",this.showdate);
+  },
+  FnShowDialog:function(){
+    this.date=new Date();
+    this.$.dialog.toggle();
+  },
+  FnDismissDialog:function(e)
+  {
+    if (e.detail.confirmed)
+     {
+      var pickdate=moment(this.$.picker.date).format('L');
+      var dd1=new Date();
+      var dd2=new Date(pickdate);
+      var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
+          this.showdate = moment(this.$.picker.date).format('L');
+          localStorage.setItem("localsess_to_date",this.showdate);
+          
+      }
+      
+    }
+  
+
+});
+  </script>
+</dom-module>

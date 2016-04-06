@@ -3,7 +3,7 @@ var express    = require("express");
  var connection = mysql.createConnection({
    host     : 'localhost',
    user     : 'root',
-   password : 'root',
+   password : 'admin',
    database : 'transport'
  });
 var bodyParser = require('body-parser');
@@ -147,35 +147,7 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 	});
 
 
-app.post('/gradediscount' ,  urlencodedParser,function (req, res)
-{
-		
-		 var gradename={"grade_type":req.query.grade};
-		 console.log(gradename);
-	    connection.query('select discount_percent from md_discount where ?',[gradename], 
-       	function(err, rows)
-       	{
-		if(!err)
-		{
-			if(rows.length>0)
-			{
-				console.log(rows);
-			res.status(200).json({'returnval': rows});
-			}
-			else
-			{
-			res.status(200).json({'returnval': 'invalid'});
-			}
-		}
-		else
-		{
-			console.log('No data Fetched'+err);
-		}
-		
-		
-	
-});
-	});
+
 app.post('/sequence' ,  urlencodedParser,function (req, res)
 {
 	
@@ -251,31 +223,6 @@ app.post('/getfee' ,  urlencodedParser,function (req, res)
 	});
 
 
-app.post('/addcalc' ,  urlencodedParser,function (req, res)
-{
-	var gradeid={"grade_id":req.query.id};
-	console.log(gradeid);
-	    connection.query('select * from md_discount where ? ',[gradeid],
-       	function(err, rows)
-       	{
-      	if(!err)
-		{
-			if(rows.length>0)
-			{
-				console.log(rows);
-			res.status(200).json({'returnval': rows});
-			}
-			else
-			{
-			res.status(200).json({'returnval': 'invalid'});
-			}
-		}
-		else
-		{
-			console.log('No data Fetched'+err);
-		}
-});
-	});
 
 
 

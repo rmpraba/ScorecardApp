@@ -110,32 +110,7 @@
       </table>
 
 
-       <table>
-        
-          <paper-item>Other Necessary discounts</paper-item>
-        
-        <tr>
-          <td>
-            Physically Challenged
-            <paper-checkbox id="phychal" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-          <td>
-            Teacher's Child
-            <paper-checkbox id="teachild" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-          <td>
-            Slam / Needy Peoples
-            <paper-checkbox id="slam" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-          <td>
-            Not needed
-            <paper-checkbox id="non" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-        </tr>
-      </table>
-
-
-
+      
     </div>  
       <table>
       <tr>
@@ -144,6 +119,7 @@
           <paper-input style="width: 100px;" class="field" label="Fees" value="{{fee}}"></paper-input>
         </td>
       </tr>
+     
       <tr><td style="width: 10px; height: 20px;"></td></tr>
       <tr>
       <td></td>
@@ -297,10 +273,7 @@
         var term1 = document.querySelector("#term1");
         var term2 = document.querySelector("#term2");
         var term3 = document.querySelector("#term3");
-        var phychal = document.querySelector("#phychal");
-        var teachild = document.querySelector("#teachild");
-        var slam = document.querySelector("#slam");
-        var non = document.querySelector("#non");
+
         if(term1.checked==true){ 
         alert('Term I is selected');
         var temp='ifterm1';
@@ -316,25 +289,13 @@
         var temp='foryear';
         this.$.root.calc(temp);
         }
-        if(phychal.checked==true){ 
-        alert('Physically Challenged is selected');
-        var tempid=5;
-        this.$.root.addcalc(tempid,this.fee);
+        if((term1.checked==false)&(term2.checked==false)&(term3.checked==false)){ 
+        alert('Option is de-selected');
+        var temp='';
+        this.fee=temp;
         }
-        if(teachild.checked==true){ 
-        alert('Teacher Child is selected');
-        var tempid=6;
-        this.$.root.addcalc(tempid,this.fee);
-        }
-        if(slam.checked==true){ 
-          var tempid=7;
-        alert('slam is selected');
-        this.$.root.addcalc(tempid,this.fee);
-        }
-        /*if(non.checked==true){ 
-         alert('No change is selected');
-        this.$.root.addcalc(tempid,this.fee);
-        }*/
+        
+        
 },
 add:function()
 {

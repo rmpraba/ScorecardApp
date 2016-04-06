@@ -165,28 +165,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
-     <iron-ajax
-        method="post"
-        id="gradediscountajax"
-        url="{{gradediscounturl}}"
-        params="{{gradediscountparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="gradediscountResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-     <iron-ajax
-        method="post"
-        id="addcalcajax"
-        url="{{addcalcurl}}"
-        params="{{addcalcparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="addcalcResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+ 
    <iron-ajax
         method="post"
         id="cancellationajax"
@@ -358,24 +337,7 @@
       
         
       },
-      addcalc:function(temp,fee){
-        calcfee=fee;
-        this.addcalcurl="http://localhost:8081/addcalc";
-        var obj={"id":""}
-        obj.id=temp;
-        this.addcalcparam=obj;
-        alert('Calculated fee is...'+calcfee);
-        alert(JSON.stringify(obj));
-
-        this.$.addcalcajax.generateRequest();
-      },
-      addcalcResponse:function(e){
-        var gotdis=e.detail.response.returnval[0].discount_percent;
-        alert(gotdis);
-        var finalcalc=calcfee-((calcfee/100)*gotdis);
-        alert('very final fee......'+finalcalc);
-        document.querySelector('zonetostudent-card').fee=finalcalc;
-      },
+      
       setzone:function(studid,zone,fee)
       {
         this.setzoneurl = "http://localhost:8081/setzone";
@@ -457,17 +419,9 @@
             document.querySelector('zonetostudent-card').grade=gradename;
            document.querySelector('zonetostudent-card').date=dob;
  document.querySelector('zonetostudent-card').id=stdid;
-            this.gradediscounturl="http://localhost:8081/gradediscount";
-            var obj={"grade":""}
-            obj.grade=gradename;
-            this.gradediscountparam=obj;
-            this.$.gradediscountajax.generateRequest();
+           
       },
-      gradediscountResponse:function(e){
-        gradedis=e.detail.response.returnval[0].discount_percent;
-        alert('discount percent is'+gradedis);
-
-      },
+     
       generatereport:function(studid){
         this.genereporturl="http://localhost:8081/report-card";
         var obj={"studid":""}

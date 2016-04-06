@@ -452,10 +452,11 @@
             var profilename=e1.detail.response.returnval[0].student_name;
             var gradename=e1.detail.response.returnval[0].school_type;
             var dob=e1.detail.response.returnval[0].dob;
+            var stdid=e1.detail.response.returnval[0].id;
             document.querySelector('zonetostudent-card').name=profilename;
             document.querySelector('zonetostudent-card').grade=gradename;
-            document.querySelector('zonetostudent-card').date=dob;
-
+           document.querySelector('zonetostudent-card').date=dob;
+ document.querySelector('zonetostudent-card').id=stdid;
             this.gradediscounturl="http://localhost:8081/gradediscount";
             var obj={"grade":""}
             obj.grade=gradename;

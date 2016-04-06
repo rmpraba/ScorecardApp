@@ -46,26 +46,10 @@
         </paper-dropdown-menu>
       </div>
         </td>
-      <tr>
-        <tr>
+      </tr>
+       <tr>
         <td>
-            <div class="class-drop">
-        <paper-dropdown-menu label="Student ID">
-          <paper-menu class="dropdown-content" on-iron-select="studetail" valueattr="value" >
-            <template  is="dom-repeat" items="{{studentidarr}}" as="view">
-              <paper-item value="{{view.id}}">{{view.id}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </div>
-        </td>
-        <td>
-          <paper-input class="field" is="" id="dob" value="{{date}}"></paper-input>
-        </td>
-      <tr>
-      <tr>
-        <td>
-          <paper-input-autocomplete label="Student Name" id="input-local" remote-source="true" ></paper-input-autocomplete>
+        
           <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -74,9 +58,21 @@
       </paper-listbox>
         </td>
         <td>
-          <paper-input class="field" is="" id="dad" value="{{grade}}"></paper-input>
+          <paper-input class="field" label="School Type" is="" id="dad" value="{{grade}}"></paper-input>
         </td>
-      <tr>
+      </tr>
+        <tr>
+        <td>
+         
+             <paper-input class="field" label="Student ID" is="" id="idd" value="{{id}}"></paper-input>
+           
+      
+        </td>
+        <td>
+          <paper-input class="field" label="Date Of Birth" is="" id="dob" value="{{date}}"></paper-input>
+        </td>
+      </tr>
+     <tr>
         <td>
       <div class="drop-down">
         <paper-dropdown-menu label="Select the Zone">
@@ -207,12 +203,13 @@
     click:function(e)
     {
       //alert(this.studentid+this.zone_id+this.fee);
-      this.$.root.setzone(this.studentid,this.zone_id,this.fee);
+      this.$.root.setzone(this.id,this.zone_id,this.fee);
 
     },
     autocompletearr:function(autocompletearr)
     {
          item=autocompletearr;
+         alert(item);
     },
    
     FnInputChanged:function(e){
@@ -278,6 +275,15 @@
         }
       }
     },
+     FnItemSelected:function(e)
+   {
+       this.querySelector('paper-listbox').style.visibility='hidden';
+    this.studid = e.target.selectedItem.textContent.trim();
+    this.itemArray=[];
+    this.value=this.studid;
+    alert(this.studid);
+     this.$.root.getstudetail(this.studid);
+  },
     setInput:function(namearr)
     {
       var inputlocal=document.querySelector('#input-local');
@@ -329,8 +335,13 @@
          alert('No change is selected');
         this.$.root.addcalc(tempid,this.fee);
         }*/
+},
+add:function()
+{
+
 }
   });
    })();
+
 </script>
 </dom-module>

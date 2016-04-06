@@ -1,0 +1,325 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../transportfee-service/transportfee-service.html">
+<link rel="import" href="../datepicker-card/datepicker-card.html">
+
+<dom-module id="transportfee-list">
+<template>
+ <style>
+ 
+ 
+ .detail1
+ {
+  width: 100%;
+  padding-top: 2%;
+@apply(--layout-horizontal);
+height: 40%
+
+ }
+ .collapse
+ {
+ padding: 10px 15px;
+        margin-top: 20px;
+        background-color: #B2C2F0;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 100%;
+        text-align: left;
+        }
+        .imag{
+          height: 30%;
+ width : 20%;
+ }
+ img{
+ width : 60%;
+ 
+ }
+ .layout
+ {
+  @apply(--layout-horizontal);
+ }
+ .vlayout
+ {
+  width: 100%;
+  border: 1px solid #dedede;
+  @apply(--layout-vertical);
+ }
+ .hor
+ {
+  margin-top: 5%;
+@apply(--layout-vertical);
+ }
+ #lb
+ {
+  font-weight: bold;
+  
+ }
+
+ paper-item{
+  width: 150px;
+ }
+ #pay1button{
+  margin: 0 auto;
+  width: 50%;
+  background-color: #252626;
+    color: #ffffff;
+}
+#pay2button{
+  margin:0 auto;
+  width: 50%;
+  background-color: #252626;
+    color: #ffffff;
+}
+#box
+{
+  padding: 2%;
+}
+ </style>
+ <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
+<iron-collapse id="{{studid}}">
+  <div class="field">
+  <div class="detail1">
+ <div class="imag"><img src="images/{{studid}}.jpg"/></div>
+ <div class="hor">
+  <div  class="layout"><paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
+   <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item></div>
+  <div  class="layout"> <paper-item id="lb">class:</paper-item><paper-item>{{classes}}</paper-item>
+  <paper-item id="lb">zone:</paper-item> <paper-item  >{{zone}}</paper-item></div>
+  <div  class="layout"><paper-item id="lb" >Date of Birth: </paper-item><paper-item >{{dob}}</paper-item>
+   <paper-item id="lb">Bus Fee:</paper-item><paper-item >{{fee}}</paper-item></div>
+ <div  class="layout"><paper-item id="lb" >Paid: </paper-item><paper-item >{{paid}}</paper-item>
+   <paper-item id="lb">Remaining Fee:</paper-item><paper-item >{{due}}</paper-item></div>
+   <div  class="layout"><paper-item id="lb" >Pick Up Place: </paper-item><paper-item >{{pick}}</paper-item>
+   <paper-item id="lb">Drop Place:</paper-item><paper-item >{{drop}}</paper-item></div>
+   </div>
+   </div>
+  </div>
+  <hr/>
+  </iron-collapse>
+   <button  class="collapse" on-click="toggle1">Transport Fee</button>
+<iron-collapse id="s1">
+ <button  class="collapse" on-click="installment1">Installment 1</button>
+<iron-collapse id="install1">
+<div class="vlayout">
+  <div  class="layout"><paper-item id="lb" >Fee:</paper-item>
+  <paper-input  value="{{value1}}" disabled> </paper-input>
+  <div>
+   <paper-checkbox id="box" class="checkbox" on-change="changeHandler">PAY FULLY</paper-checkbox></div>
+  </div>
+   <div  class="layout"><paper-item id="lb" >Mode of Payment:</paper-item>
+    <div class="drop-down">
+            <paper-dropdown-menu  class="hide1" label="---Select the Mode of Payment---">
+                <paper-menu class="dropdown-content" id="paymodemenu"  on-iron-select="payment" valueattr="value" >
+                   <paper-item value="cheque">Cheque</paper-item>
+                    <paper-item value="cash">Cash</paper-item>
+                </paper-menu>
+            </paper-dropdown-menu>
+          </div> </div>
+
+          <div  class="layout"><paper-item class="ldate1" id="lb" >Paid DATE:</paper-item><paper-item class="date1" id="lb" >{{paiddate1}}</paper-item></div>
+<paper-button class="hide1" id="pay1button" on-click="pay1">pay</paper-button>
+             </div>
+   </iron-collapse>
+ <button  class="collapse" on-click="installment2">Installment 2</button>
+<iron-collapse id="install2">
+<div class="vlayout">
+  <div  class="layout"><paper-item id="lb" >Fee:</paper-item>
+  <paper-input  value="{{value2}}" disabled> </paper-input></div>
+   <div  class="layout"><paper-item id="lb" >Mode of Payment:</paper-item>
+    <div class="drop-down">
+            <paper-dropdown-menu  id="paymode2" label="---Select the Mode of Payment---">
+                <paper-menu class="dropdown-content" id="paymodemenu"  on-iron-select="payment" valueattr="value" >
+                   <paper-item value="cheque">Cheque</paper-item>
+                    <paper-item value="cash">Other</paper-item>
+                </paper-menu>
+            </paper-dropdown-menu>
+          </div> </div>
+ <div  class="layout"><paper-item class="ldate2" id="lb" >Paid DATE:</paper-item><paper-item class="date2" id="lb" >{{paiddate2}}</paper-item></div>
+<paper-button  class="hide2" id="pay2button" on-click="pay2">pay</paper-button>
+             </div>
+   </iron-collapse>
+  <hr/>
+  </iron-collapse>
+
+
+
+<paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+<h4>ADD CHEQUE DETAILS</h4>
+ <div  class="layout"> <paper-input class="hide2"  id="chequenum" label="Enter the Cheque No:" value="{{chequenum}}"> </paper-input></div>
+ <div  class="layout"> <paper-input class="hide2"  id="bankname" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>
+ <datepicker-card></datepicker-card>
+ 
+<paper-button on-click="add">ADD</paper-button>
+</paper-dialog>
+        <transportfee-service id="service"></transportfee-service>
+  </template>
+  <script>
+
+  
+ (function() {
+   
+   var idd="0";
+   var val;
+   var paytype;
+    Polymer({
+      is: "transportfee-list",
+      ready:function()
+      {
+  this.querySelector('.ldate1').style.visibility='hidden';
+   this.querySelector('.date1').style.visibility='hidden';
+    this.querySelector('.ldate2').style.visibility='hidden';
+   this.querySelector('.date2').style.visibility='hidden';
+      },
+      toggle: function(e)
+      {
+      if(idd=="0")
+      {
+      idd= document.querySelector("#"+this.studid);
+       idd.toggle()
+      }
+      else
+      {
+      if(idd!=document.querySelector("#"+this.studid))
+      {
+            idd.opened=false;
+      }
+       idd= document.querySelector("#"+this.studid);
+          idd.toggle()
+
+      }
+
+},
+toggle1: function(e)
+      {
+       var s=document.querySelector("#s1"); 
+       s.toggle();
+
+      },
+      installment1: function(e)
+      {
+        if(this.install1>0)
+        {
+          this.value1=this.install1;
+          document.querySelector(".hide1").disabled=true;
+          document.querySelector("#pay1button").disabled=true;
+          document.querySelector("#box").disabled=true;
+          this.querySelector('.ldate1').style.visibility='visible';
+          this.querySelector('.date1').style.visibility='visible';
+          if(this.modeofpay1=="Cheque")
+          {
+            //document.querySelector("#paymodemenu").selected=0;
+          }
+        }
+
+        else
+        {
+          this.value1=this.install;
+        }
+       var s=document.querySelector("#install1"); 
+       s.toggle();
+
+      },
+      installment2: function(e)
+      {
+        if(this.install1=="0")
+        {
+       document.querySelector(".hide2").disabled=true;
+       document.querySelector("#paymode2").disabled=true;
+        }
+        if(this.due=="0")
+        {
+       this.value2=this.install2;
+       document.querySelector(".hide2").disabled=true;
+       document.querySelector("#paymode2").disabled=true;
+        }
+        else
+        {
+          this.value2=this.due;
+        }
+        if(this.install2>0)
+        {
+          this.value2=this.install2;
+          this.querySelector('.ldate2').style.visibility='visible';
+          this.querySelector('.date2').style.visibility='visible';
+          document.querySelector(".hide2").disabled=true;
+       document.querySelector("#paymode2").disabled=true;
+        }
+       var s=document.querySelector("#install2"); 
+       s.toggle();
+
+      },
+      payment:function(e)
+      {
+        paytype = (e.target.selectedItem.textContent).trim();
+        if(paytype=="Cheque")
+        {
+        var id = 'animated';
+        var dialog = document.getElementById(id);
+        dialog.open();
+       }
+      
+    
+    },
+    add:function()
+    {
+       var id = 'animated';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+    changeHandler:function(e)
+    {
+ 
+    if(e.target.checked==true)
+    {
+      val=this.value1;
+     //alert(e.target.checked);
+     this.value1=this.fee;
+    }
+    else
+    {
+this.value1=val;
+    }
+    },
+    pay1:function()
+    {
+      if(paytype=="Cheque")
+      {
+        this.chequedate=localStorage.getItem("localsess_curr_date");
+       this.$.service.payfee(this.value1,this.studid,paytype);
+       this.$.service.chequeinfo(this.studid,this.name,this.chequenum,this.bankname,this.chequedate);
+      }
+      else
+      {
+        
+        this.$.service.payfee(this.install,this.studid,paytype);
+      }
+    },
+    pay2:function()
+    {
+      this.chequedate=localStorage.getItem("localsess_curr_date");
+      this.$.service.payfee2(this.value2,this.studid,"PDC");
+       this.$.service.chequeinfo2(this.studid,this.name,this.chequenum,this.bankname,this.chequedate);
+    }
+
+      
+    });
+    })();
+     
+  </script>
+
+</dom-module>

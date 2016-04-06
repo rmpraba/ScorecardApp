@@ -1,0 +1,132 @@
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../transportfee-service/transportfee-service.html">
+<link rel="import" href="../transportfee-list/transportfee-list.html">
+
+<dom-module id="transportfee-card">
+
+  <template>  
+  <style>
+  .tb
+  {
+    
+    border-color: #B2C2F0;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+  margin-top : 10px;
+  width: 100%
+  }
+  .sp
+  {
+    padding-right: 10%;
+  }
+  </style>
+      
+      
+          <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+      <paper-listbox class="dropdown-content" on-iron-select="FnItemSelected">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <paper-item>{{item.itemdes}}</paper-item>
+        </template>
+      </paper-listbox>
+          <template  is="dom-repeat" items="{{feearr}}" as="view">
+           <transportfee-list studid="{{view.id}}" name="{{view.student_name}}" classes="{{view.class_id}}" dob="{{view.dob}}" zone="{{view.zone_id}}" fee="{{view.fees}}" photo="{{view.photo}}" paid="{{view.total}}" due="{{view.due}}" pick="{{view.pick}}" drop="{{view.drop1}}" install="{{view.install}}" install1="{{view.installment_1}}" install2="{{view.installment_2}}" paiddate1="{{view.installment_1Date}}" paiddate2="{{view.installment_2Date}}" modeofpay1="{{view.modeofpayment1}}" modeofpay2="{{view.modeofpayment2}}">
+                 </transportfee-list>
+          </template>
+        
+      <transportfee-service id="service"></transportfee-service>
+  </template>
+  <script>
+   (function() {
+    var namearr=[];
+    Polymer({
+      is: "transportfee-card",
+      ready: function() {
+        this.$.service.getnameofstu();
+        this.querySelector('paper-listbox').style.visibility='hidden';
+        
+   },
+   autocompletename(nameitem)
+   {
+namearr=nameitem;
+   },
+   FnInputChanged:function(e){
+    // alert(e.keyCode);
+      if(e.keyCode==13|| e.keyCode==40)
+        this.querySelector('paper-listbox').focus();
+      var arr=[];
+      arr.push({"itemdes":"-----Select-----"});
+      this.querySelector('paper-listbox').style.visibility='visible';
+      if(e.keyCode==8){
+        this.itemflag="true";
+        this.itemval="";
+        //alert('yes');
+        var len=(this.value).length;
+        if(len<=1){
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.itemArray="";
+          this.itemval="";
+        }
+        if(len>1){
+          this.querySelector('paper-listbox').style.visibility='visible';
+          var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+          for(var i=0;i<namearr.length;i++)
+          {
+            var subval=((namearr[i].student_name).trim()).substring(0,backsubval.length);
+            if((subval).toUpperCase()==(backsubval).toUpperCase())
+            {
+              var obj={"itemdes":""};
+              obj.itemdes=namearr[i].student_name;
+              arr.push(obj);
+            }
+          }
+          this.itemArray=arr;
+        }
+      }
+      if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+        if(this.itemflag=="true") {
+          this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+          this.itemflag="false";
+        }
+        else
+        this.itemval = this.itemval +String.fromCharCode((e.keyCode));
+        if(this.itemval.length>0)
+        {
+          for(var i=0;i<namearr.length;i++){
+            var subval=((namearr[i].student_name).trim()).substring(0,this.itemval.length);
+            if((subval).toUpperCase()==(this.itemval).toUpperCase())
+            {
+              var obj={"itemdes":""};
+              obj.itemdes=namearr[i].student_name;
+              arr.push(obj);
+            }
+          }
+          if(arr.length>0)
+            this.itemArray=arr;
+          else
+          {
+            var obj={"itemdes":""};
+            obj.itemdes="No items found";
+            arr.push(obj);
+            this.itemArray=arr;
+          }
+        }
+      }
+    },
+   FnItemSelected:function(e)
+   {
+       this.querySelector('paper-listbox').style.visibility='hidden';
+    this.studid = e.target.selectedItem.textContent.trim();
+    this.itemArray=[];
+    alert(this.studid);
+    this.$.service.generatefee(this.studid);
+   }
+
+    });
+    })();
+  </script>
+</dom-module>

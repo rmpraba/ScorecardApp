@@ -1,0 +1,170 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="transportfee-service">
+  <template>
+    <iron-ajax
+        method="post"
+        id="generatefeeajax"
+        url="{{generatefeeurl}}"
+        params="{{generatefeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="generatefeeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+   <iron-ajax
+        method="post"
+        id="getnameofstuajax"
+        url="{{getnameofstuurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getnameofstuResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="payfeeajax"
+        url="{{payfeeurl}}"
+         params="{{payfeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="payfeeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="chequedetailsajax"
+        url="{{chequedetailsurl}}"
+         params="{{chequedetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="chequedetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+   <iron-ajax
+        method="post"
+        id="payfee2ajax"
+        url="{{payfee2url}}"
+         params="{{payfee2param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="payfee2Response"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="chequedetails2ajax"
+        url="{{chequedetails2url}}"
+         params="{{chequedetails2param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="chequedetails2Response"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+    </template>
+
+     <script>
+  (function() {
+  
+
+
+    Polymer({
+      is: "transportfee-service",
+        generatefee:function(studid)
+     {
+      
+      this.generatefeeurl="http://localhost:8081/reportfee-card";
+        var obj={"studid":""}
+        obj.studid=studid;
+        this.generatefeeparam=obj;
+        this.$.generatefeeajax.generateRequest();
+     },
+     generatefeeResponse:function(e)
+     {
+      
+      alert(JSON.stringify(e.detail.response.returnval));
+      var feeresult=e.detail.response.returnval;
+       document.querySelector('transportfee-card').feearr=feeresult;
+     },
+     getnameofstu:function()
+     {
+      //alert('hi');
+      this.getnameofstuurl="http://localhost:8081/getnameofstu-card";
+       this.$.getnameofstuajax.generateRequest();
+     },
+     getnameofstuResponse:function(e)
+     {
+
+      var nameitem=e.detail.response.returnval;
+      document.querySelector('transportfee-card').autocompletename(nameitem);
+     },
+     payfee:function(install,studid,paytype)
+     {
+      
+       this.payfeeurl="http://localhost:8081/payfee-card";
+        var obj={"studid":"","installfee":"","paytype":""}
+        obj.studid=studid;
+        obj.installfee=install;
+        obj.paytype=paytype;
+        this.payfeeparam=obj;
+        this.$.payfeeajax.generateRequest();
+     },
+     chequeinfo:function(stdid,name,chequenum,bankname,chequedate)
+     {
+      this.chequedetailsurl="http://localhost:8081/chequedetails";
+        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":""}
+        obj.studid=stdid;
+        obj.name=name;
+        obj.chequenum=chequenum;
+        obj.bankname=bankname;
+        obj.chequedate=chequedate;
+        this.chequedetailsparam=obj;
+        this.$.chequedetailsajax.generateRequest();
+
+     },
+     payfee2:function(install,studid,paytype)
+     {
+      
+       this.payfee2url="http://localhost:8081/payfee2-card";
+        var obj={"studid":"","installfee":"","paytype":""}
+        obj.studid=studid;
+        obj.installfee=install;
+        obj.paytype=paytype;
+        this.payfee2param=obj;
+        this.$.payfee2ajax.generateRequest();
+     },
+     chequeinfo2:function(stdid,name,chequenum,bankname,chequedate)
+     {
+      this.chequedetails2url="http://localhost:8081/chequedetails2";
+        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":""}
+        obj.studid=stdid;
+        obj.name=name;
+        obj.chequenum=chequenum;
+        obj.bankname=bankname;
+        obj.chequedate=chequedate;
+        this.chequedetails2param=obj;
+        this.$.chequedetails2ajax.generateRequest();
+
+     }
+
+      
+    
+
+
+
+    });
+ })();
+  </script>
+
+</dom-module>
+
+
+     

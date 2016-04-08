@@ -798,6 +798,55 @@ app.post('/chequedetails2',  urlencodedParser,function (req, res)
 });    
 	});
 
+
+app.post('/refund-card',  urlencodedParser,function (req, res)
+{
+
+       connection.query('SELECT * from  cancellation where confirmation="no"',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+console.log(rows);
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
+
+
+app.post('/approval-card',  urlencodedParser,function (req, res)
+{
+		
+
+
+		var studid={"student_id":req.query.studid};
+		console.log(studid);
+	    connection.query('update  cancellation set confirmation="yes" where ?',[studid],
+       	function(err, rows) 
+       	{
+		if(!err)
+		{
+			console.log("success");
+			res.status(200).json({'returnval': 'success'});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});    
+	});
+
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

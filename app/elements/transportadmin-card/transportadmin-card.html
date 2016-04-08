@@ -26,6 +26,7 @@
       <paper-icon-button class="iconbutton" src="../../images/points.png" on-click="pointallocation"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/allocation.png" on-click="routeallocation"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/reports.png" on-click="report"></paper-icon-button>
+       <paper-icon-button class="iconbutton" src="../../images/approval.jpg" on-click="approval"></paper-icon-button>
     </div>
   </body>
 </template>
@@ -48,6 +49,10 @@
       report:function()
       {
       document.querySelector('transport-app').setPage("generatereport","Generate Report");
+      },
+       approval:function()
+      {
+      document.querySelector('transport-app').setPage("approval","Refund Approval");
       }
       
 

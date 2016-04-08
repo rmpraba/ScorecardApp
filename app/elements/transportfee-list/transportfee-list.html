@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
@@ -112,14 +113,18 @@ height: 40%
   <hr/>
   </iron-collapse>
    <button  class="collapse" on-click="toggle1">Transport Fee</button>
+   
 <iron-collapse id="s1">
- <button  class="collapse" on-click="installment1">Installment 1</button>
-<iron-collapse id="install1">
-<div class="vlayout">
+ <paper-checkbox id="box" class="checkbox" on-change="Fninstall1">Installment1</paper-checkbox>
+     <paper-checkbox id="box" class="checkbox" on-change="Fninstall2">Installment2</paper-checkbox>
+      <paper-checkbox id="box" class="checkbox" on-change="FnPayfully">Pay Fully</paper-checkbox>
+       <iron-pages selected="{{page}}" attr-for-selected="data-category">
+       
+       <section data-category="install1">
+       <div class="vlayout">
   <div  class="layout"><paper-item id="lb" >Fee:</paper-item>
   <paper-input  value="{{value1}}" disabled> </paper-input>
-  <div>
-   <paper-checkbox id="box" class="checkbox" on-change="changeHandler">PAY FULLY</paper-checkbox></div>
+ 
   </div>
    <div  class="layout"><paper-item id="lb" >Mode of Payment:</paper-item>
     <div class="drop-down">
@@ -134,10 +139,9 @@ height: 40%
           <div  class="layout"><paper-item class="ldate1" id="lb" >Paid DATE:</paper-item><paper-item class="date1" id="lb" >{{paiddate1}}</paper-item></div>
 <paper-button class="hide1" id="pay1button" on-click="pay1">pay</paper-button>
              </div>
-   </iron-collapse>
- <button  class="collapse" on-click="installment2">Installment 2</button>
-<iron-collapse id="install2">
-<div class="vlayout">
+              </section>
+            <section data-category="install2">
+            <div class="vlayout">
   <div  class="layout"><paper-item id="lb" >Fee:</paper-item>
   <paper-input  value="{{value2}}" disabled> </paper-input></div>
    <div  class="layout"><paper-item id="lb" >Mode of Payment:</paper-item>
@@ -152,11 +156,10 @@ height: 40%
  <div  class="layout"><paper-item class="ldate2" id="lb" >Paid DATE:</paper-item><paper-item class="date2" id="lb" >{{paiddate2}}</paper-item></div>
 <paper-button  class="hide2" id="pay2button" on-click="pay2">pay</paper-button>
              </div>
-   </iron-collapse>
-  <hr/>
+             </section>
+ </iron-pages>
+
   </iron-collapse>
-
-
 
 <paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
 <h4>ADD CHEQUE DETAILS</h4>
@@ -210,8 +213,13 @@ toggle1: function(e)
        s.toggle();
 
       },
-      installment1: function(e)
+      Fninstall1: function(e)
       {
+        alert('ew');
+         if(e.target.checked==true)
+    {
+      alert('d');
+        this.page="install1";
         if(this.install1>0)
         {
           this.value1=this.install1;
@@ -230,18 +238,20 @@ toggle1: function(e)
         {
           this.value1=this.install;
         }
-       var s=document.querySelector("#install1"); 
-       s.toggle();
-
+      
+}
       },
-      installment2: function(e)
+      Fninstall2: function(e)
       {
+         if(e.target.checked==true)
+    {
+        this.page="install2";
         if(this.install1=="0")
         {
        document.querySelector(".hide2").disabled=true;
        document.querySelector("#paymode2").disabled=true;
         }
-        if(this.due=="0")
+        else if(this.due=="0")
         {
        this.value2=this.install2;
        document.querySelector(".hide2").disabled=true;
@@ -259,9 +269,8 @@ toggle1: function(e)
           document.querySelector(".hide2").disabled=true;
        document.querySelector("#paymode2").disabled=true;
         }
-       var s=document.querySelector("#install2"); 
-       s.toggle();
-
+      
+}
       },
       payment:function(e)
       {

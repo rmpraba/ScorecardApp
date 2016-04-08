@@ -28,7 +28,7 @@
       
       
           <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
-      <paper-listbox class="dropdown-content" on-iron-select="FnItemSelected">
+      <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item>{{item.itemdes}}</paper-item>
         </template>
@@ -120,8 +120,10 @@ namearr=nameitem;
    FnItemSelected:function(e)
    {
        this.querySelector('paper-listbox').style.visibility='hidden';
+
     this.studid = e.target.selectedItem.textContent.trim();
     this.itemArray=[];
+    document.querySelector("#itemlist").selected=-1;
     alert(this.studid);
     this.$.service.generatefee(this.studid);
    }

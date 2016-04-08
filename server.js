@@ -870,6 +870,105 @@ app.post('/name',  urlencodedParser,function (req, res){
 });
 	});
 
+app.post('/getfeedata' ,  urlencodedParser,function (req, res)
+{	
+		var studid={"student_id":req.query.studid};
+	    connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where ?',[studid],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+
+
+app.post('/getfeezone' ,  urlencodedParser,function (req, res)
+{	
+		var zoneid={"id":req.query.zone};
+	    connection.query('select zone_name from md_zone where ?',[zoneid],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+
+
+app.post('/getfeename' ,  urlencodedParser,function (req, res)
+{	
+		var stid={"id":req.query.sid};
+	    connection.query('select student_name,school_type from student_details where ?',[stid],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+
+app.post('/sendrequest',  urlencodedParser,function (req, res)
+{
+	
+    var queryyz="insert into md_discount values('"+req.query.stid+"','"+req.query.stname+"','"+req.query.schooltypezx+"','"+req.query.zoname+"',"+req.query.feesx+",STR_TO_DATE('"+req.query.fromdatx+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todatx+"','%Y/%m/%d'),'"+req.query.disamtx+"','"+req.query.reasonx+"','Requested',3,STR_TO_DATE('"+req.query.todayx+"','%Y/%m/%d'))";
+	    console.log(queryyz);
+	    connection.query(queryyz,
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			res.status(200).json({'returnval': 'success'});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});
+	});
+
+
+
+
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

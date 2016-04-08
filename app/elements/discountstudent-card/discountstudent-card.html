@@ -9,30 +9,101 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../transportfee-service/transportfee-service.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+       <link rel="import" href="../bower_components/paper-button/paper-button.html">
+       <link rel="import" href="../bower_components/paper-input/paper-input.html">
+       <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 <dom-module id="discountstudent-card">
   <template>
     <style>
-      :host {
-        display: block;
+      .disframe{
+          @apply(--layout-horizontal);
+          margin-top: 10%;
+          margin-left: 40%
+      }
+      #hidet{
+         @apply(--layout-horizontal);
+         margin-left: 40%
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="disframe"><div>
+        <paper-input style="width: 90%;" class="field" label="Student ID" value="{{id}}"></paper-input>
+    </div>
+    <div>
+      <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+    </div>
+    </div>
+
+    <div id="hidet">
+      <table>
+        <tr>
+          <td>
+            <paper-input class="field" label="Student Name" value="{{studname}}"></paper-input>
+          </td>
+          <td>
+            <paper-input class="field" label="School type" value="{{schooltype}}"></paper-input>
+          </td>
+         
+        </tr>
+        <tr>
+          <td>
+            <paper-input class="field" label="Zone Name" value="{{zonename}}"></paper-input>
+          </td>
+          <td>
+            <paper-input class="field" label="Fees" value="{{fees}}"></paper-input>
+          </td>
+         
+        </tr>
+        <tr>
+          <td>
+            <paper-input class="field" label="From Date" value="{{fromdate}}"></paper-input>
+          </td>
+          <td>
+            <paper-input class="field" label="To Date" value="{{todate}}"></paper-input>
+          </td>
+          </tr>
+          <tr>
+          <td>
+            <paper-input class="field" label="Discount Amount" value="{{disamt}}"></paper-input>
+          </td>
+          <td>
+            <paper-input class="field" label="Reason" value="{{reason}}"></paper-input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <paper-button id="button" class="button" on-click="clicksend">Send</paper-button>
+          </td>
+          <td>
+            <paper-button id="button" class="button" on-click="clickcan">Discard</paper-button>
+          </td>
+        </tr>
+        </table>
+    </div>
+    <transportfee-service id="service"></transportfee-service>
   </template>
+
   <script>
   (function() {
     'use strict';
 
     Polymer({
       is: 'discountstudent-card',
+      ready:function(){
+        this.$.hidet.hidden=true;
+      },
+      click:function(e){
+          this.$.hidet.hidden=false;
+          this.$.service.getfeedata(this.id);
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'discountstudent-card',
-          notify: true
-        }
+      },
+      clicksend:function(e){
+        this.$.service.sendrequest(this.id,this.studname,this.schooltype,this.zonename,this.fees,this.fromdate,this.todate,this.schooltype,this.disamt,this.reason);
       }
+
+
+
     });
   })();
   </script>

@@ -69,12 +69,61 @@
         debounce-duration="300"
         >
   </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="getfeedataajax"
+        url="{{getfeedataurl}}"
+         params="{{getfeedataparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfeedataResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="getfeezoneajax"
+        url="{{getfeezoneurl}}"
+         params="{{getfeezoneparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfeezoneResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getfeenameajax"
+        url="{{getfeenameurl}}"
+         params="{{getfeenameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfeenameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="sendrequestajax"
+        url="{{sendrequesturl}}"
+         params="{{sendrequestparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="sendrequestResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
   (function() {
   
-
+    var zonename;
+    var stuid;
+    var feez="";
+    var fromd;
+    var tod;
+    var studname;
 
     Polymer({
       is: "transportfee-service",
@@ -104,6 +153,7 @@
      {
 
       var nameitem=e.detail.response.returnval;
+      
       document.querySelector('transportfee-card').autocompletename(nameitem);
      },
      payfee:function(install,studid,paytype)
@@ -153,6 +203,86 @@
         this.chequedetails2param=obj;
         this.$.chequedetails2ajax.generateRequest();
 
+     },
+     getfeedata:function(id)
+     {
+       this.getfeedataurl="http://localhost:8081/getfeedata";
+        var obj={"studid":""}
+        obj.studid=id;
+        this.getfeedataparam=obj;
+        this.$.getfeedataajax.generateRequest(); 
+     },
+     getfeedataResponse:function(e){
+        stuid=e.detail.response.returnval[0].student_id;
+        var zonid=e.detail.response.returnval[0].zone_id,
+        feez=e.detail.response.returnval[0].fees;
+        document.querySelector('discountstudent-card').fees=feez;
+        fromd=e.detail.response.returnval[0].from_date;
+        tod=e.detail.response.returnval[0].to_date;
+        
+        this.getfeezoneurl="http://localhost:8081/getfeezone";
+        var obj={"zone":""}
+        obj.zone=zonid;
+        this.getfeezoneparam=obj;
+        this.$.getfeezoneajax.generateRequest(); 
+
+       //document.querySelector('transportfee-card').feearr=feeresult;
+     },
+     getfeezoneResponse:function(e){
+        zonenam=e.detail.response.returnval[0].zone_name;
+
+        this.getfeenameurl="http://localhost:8081/getfeename";
+        var obj={"sid":""}
+        obj.sid=stuid;
+        this.getfeenameparam=obj;
+        this.$.getfeenameajax.generateRequest(); 
+     },
+     getfeenameResponse:function(e){
+
+        var studnam=e.detail.response.returnval[0].student_name;
+        var schooltyp=e.detail.response.returnval[0].school_type; 
+            
+        document.querySelector('discountstudent-card').studname=studnam;
+        document.querySelector('discountstudent-card').zonename=zonenam;
+        document.querySelector('discountstudent-card').schooltype=schooltyp;
+        
+        document.querySelector('discountstudent-card').fromdate=fromd;
+        document.querySelector('discountstudent-card').todate=tod;
+
+     },
+     sendrequest:function(id,stuname,schooltypez,zonname,feesz,fromdatez,todatez,schooltypez,disamtz,reason){
+        var toda=new Date();
+        var fromdat=new Date(fromdatez);
+         var todat =new Date(todatez);
+        var fromdatey=fromdat.getFullYear()+"/"+(fromdat.getMonth()+1)+"/"+fromdat.getDate();
+        var todatey=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
+        var today=toda.getFullYear()+"/"+(toda.getMonth()+1)+"/"+toda.getDate();
+       this.sendrequesturl="http://localhost:8081/sendrequest";
+        var obj={"stid":"","stname":"","schooltypezx":"","zoname":"","feesx":"","fromdatx":"","todatx":"","schooltypex":"","disamtx":"","reasonx":"","todayx":""}
+        obj.stid=id;
+        obj.stname=stuname;
+        obj.schooltypezx=schooltypez;
+        obj.zoname=zonname;
+        obj.feesx=feesz;
+        obj.fromdatx=fromdatey;
+        obj.todatx=todatey;
+        obj.schooltypex=schooltypez;
+        obj.disamtx=disamtz;
+        obj.reasonx=reason;
+        obj.todayx=today;
+        this.sendrequestparam=obj;
+        this.$.sendrequestajax.generateRequest();  
+     },
+     sendrequestResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result=='success')
+        {
+            alert('Request sent');
+        }
+        else
+        {
+            alert('Request failed');
+        }
      }
 
       

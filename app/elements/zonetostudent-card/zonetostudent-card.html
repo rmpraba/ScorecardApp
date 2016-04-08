@@ -12,6 +12,8 @@
        <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
         <link rel="import" href="bower_components/iron-pages/iron-pages.html">
     <link rel="import" href="transport-service.html">
+    <link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
+    <link rel="import" href="../todatepicker-card/todatepicker-card.html">
     <link rel="stylesheet" type="text/css" href="styles.css">
         <dom-module id="zonetostudent-card">
 
@@ -85,6 +87,9 @@
       </div>
       
         </td>
+        <td>
+          <paper-input id="zdate1" style="width: 10%;" value="{{zfromdate}}"></paper-input> 
+        </td>
       </tr>
       </table>
                 <div>
@@ -93,49 +98,22 @@
           <paper-item>Transport Requirement Period</paper-item>
         
         <tr>
-          <td>
-            Term I
-            <paper-checkbox id="term1" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-          <td>
-            Term II
-            <paper-checkbox id="term2" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-          <td>
+                    <td>
             Complete Year
-            <paper-checkbox id="term3" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-          
-        </tr>
-      </table>
-
-
-       <table>
-        
-          <paper-item>Other Necessary discounts</paper-item>
-        
-        <tr>
-          <td>
-            Physically Challenged
-            <paper-checkbox id="phychal" class="checkbox" on-change="changeHandler"></paper-checkbox>
+            <paper-checkbox id="yearly" class="checkbox" on-change="changeHandler"></paper-checkbox>
           </td>
           <td>
-            Teacher's Child
-            <paper-checkbox id="teachild" class="checkbox" on-change="changeHandler"></paper-checkbox>
+            <paper-button class="button" on-click="clickdate">Custom</paper-button>
           </td>
           <td>
-            Slam / Needy Peoples
-            <paper-checkbox id="slam" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-          <td>
-            Not needed
-            <paper-checkbox id="non" class="checkbox" on-change="changeHandler"></paper-checkbox>
+               
+             <paper-input id="zdate" style="width: 10%;" value="{{ztodate}}"></paper-input> 
           </td>
         </tr>
       </table>
 
 
-
+      
     </div>  
       <table>
       <tr>
@@ -143,7 +121,17 @@
         <td>
           <paper-input style="width: 100px;" class="field" label="Fees" value="{{fee}}"></paper-input>
         </td>
+        <td>
+            <fromdatepicker-card id="date1"></fromdatepicker-card>
+        </td>
+        <td>
+            <todatepicker-card id="date2"></todatepicker-card>
+        </td>
+        <td>
+          <paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
+        </td>
       </tr>
+     
       <tr><td style="width: 10px; height: 20px;"></td></tr>
       <tr>
       <td></td>
@@ -167,6 +155,10 @@
 <script>
  (function() {
     var item=[];
+    var fromdate;
+    var todate;
+    var fromdat;
+var todat;
   Polymer({
 
     is: "zonetostudent-card",
@@ -175,8 +167,11 @@
         this.$.root.getzone();
         this.$.root.getstd();
         this.querySelector('paper-listbox').style.visibility='hidden';
-        //this.$.dad.disabled=true;
-        //this.$.dob.disabled=true;
+        this.$.date1.hidden=true;
+        this.$.date2.hidden=true;
+        this.$.datebox.hidden=true;
+        this.$.zdate.hidden=true;
+        this.$.zdate1.hidden=true;
         },
         std:function(e){
       this.std = (e.target.selectedItem.textContent).trim();
@@ -191,21 +186,11 @@
       this.zone_id=e.target.selectedItem.value;
       this.zone = (e.target.selectedItem.textContent).trim();
       this.$.root.getfee(this.zone);
+      var id=1;
+        this.$.root.gettermdate(id);
     },
-    studetail:function(e)
-    {
-      this.studentid=(e.target.selectedItem.textContent).trim();
-      this.$.root.getstudetail(this.studentid);
-      //this.$.dad.disabled=false;
-      //this.$.dob.disabled=false;
-    },
-
-    click:function(e)
-    {
-      //alert(this.studentid+this.zone_id+this.fee);
-      this.$.root.setzone(this.id,this.zone_id,this.fee);
-
-    },
+   
+    
     autocompletearr:function(autocompletearr)
     {
          item=autocompletearr;
@@ -294,51 +279,55 @@
       alert(JSON.stringify(inputlocal.source));
     },
     changeHandler:function(event){ 
-        var term1 = document.querySelector("#term1");
-        var term2 = document.querySelector("#term2");
-        var term3 = document.querySelector("#term3");
-        var phychal = document.querySelector("#phychal");
-        var teachild = document.querySelector("#teachild");
-        var slam = document.querySelector("#slam");
-        var non = document.querySelector("#non");
-        if(term1.checked==true){ 
-        alert('Term I is selected');
-        var temp='ifterm1';
-        this.$.root.calc(temp);
-        }
-        if(term2.checked==true){ 
-        alert('Term II is selected');
-        var temp='ifterm2';
-        this.$.root.calc(temp);
-        }
-        if(term3.checked==true){ 
+        
+        var yearly = document.querySelector("#yearly");
+        var datebox = document.querySelector("#datebox");
+        
+       
+        if(yearly.checked==true){ 
         alert('Complete Year is selected');
         var temp='foryear';
+         
+        fromdat=new Date(this.zfromdate);
+        todat=new Date(this.ztodate);
         this.$.root.calc(temp);
+       
+        alert(fromdat+'   '+todat);
         }
-        if(phychal.checked==true){ 
-        alert('Physically Challenged is selected');
-        var tempid=5;
-        this.$.root.addcalc(tempid,this.fee);
+        if((yearly.checked==false)&(datebox.checked==false)){ 
+        alert('Option is de-selected');
+        var temp='';
+        this.fee=temp;
+        fromdat=temp;
+        todat=temp;
         }
-        if(teachild.checked==true){ 
-        alert('Teacher Child is selected');
-        var tempid=6;
-        this.$.root.addcalc(tempid,this.fee);
+        if(datebox.checked==true){
+          alert('date check is selected');
+          var fromd = localStorage.getItem("localsess_from_date");
+          var tod = localStorage.getItem("localsess_to_date");
+          fromdat=new Date(fromd);
+          todat =new Date(tod);
+          this.$.root.monthdiff(fromdat,todat);
+          alert(fromdat+'   '+todat);
         }
-        if(slam.checked==true){ 
-          var tempid=7;
-        alert('slam is selected');
-        this.$.root.addcalc(tempid,this.fee);
-        }
-        /*if(non.checked==true){ 
-         alert('No change is selected');
-        this.$.root.addcalc(tempid,this.fee);
-        }*/
-},
-add:function()
-{
 
+         
+},
+click:function(e)
+    {
+      
+        fromdate=fromdat.getFullYear()+"/"+(fromdat.getMonth()+1)+"/"+fromdat.getDate();
+        todate=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
+        alert(fromdate+'   '+todate);
+      //alert(this.studentid+this.zone_id+this.fee);
+      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate);
+
+    },
+clickdate:function()
+{
+    this.$.date1.hidden=false;
+        this.$.date2.hidden=false;
+        this.$.datebox.hidden=false;
 }
   });
    })();

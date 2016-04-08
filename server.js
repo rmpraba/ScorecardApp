@@ -146,34 +146,6 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 	});
 
 
-app.post('/gradediscount' ,  urlencodedParser,function (req, res)
-{
-		
-		 var gradename={"grade_type":req.query.grade};
-	    connection.query('select discount_percent from md_discount where ?',[gradename], 
-       	function(err, rows)
-       	{
-		if(!err)
-		{
-			if(rows.length>0)
-			{
-				console.log(rows);
-			res.status(200).json({'returnval': rows});
-			}
-			else
-			{
-			res.status(200).json({'returnval': 'invalid'});
-			}
-		}
-		else
-		{
-			console.log('No data Fetched'+err);
-		}
-		
-		
-	
-});
-	});
 app.post('/sequence' ,  urlencodedParser,function (req, res)
 {
 	
@@ -248,18 +220,16 @@ app.post('/getfee' ,  urlencodedParser,function (req, res)
 });
 	});
 
-
-app.post('/addcalc' ,  urlencodedParser,function (req, res)
+app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 {
-	var gradeid={"grade_id":req.query.id};
-	    connection.query('select * from md_discount where ? ',[gradeid],
+	var idz={"id":req.query.idb};
+	    connection.query('select from_date,to_date from dates where ?',[idz],
        	function(err, rows)
        	{
       	if(!err)
 		{
 			if(rows.length>0)
 			{
-				console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -274,12 +244,11 @@ app.post('/addcalc' ,  urlencodedParser,function (req, res)
 });
 	});
 
-
-
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-	var stdzone={"student_id":req.query.studid,"zone_id":req.query.zone,"installment_1":0,"installment_2":0,"fees":req.query.fee};
-	    connection.query('insert into student_fee set ? ',[stdzone],
+	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'))";
+	    console.log(queryy);
+	    connection.query(queryy,
        	function(err, rows)
        	{
       	

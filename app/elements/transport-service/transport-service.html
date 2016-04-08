@@ -231,6 +231,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="gettermdateajax"
+        url="{{gettermdateurl}}"
+        params="{{gettermdateparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="gettermdateResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -335,55 +346,41 @@
       },
       getfeeResponse:function(e){
          totalfee=e.detail.response.returnval[0].fees;
-         alert('the discount percent is....'+gradedis);
-                  alert('the total fee is....'+totalfee);
-         finalfee=totalfee-((totalfee/100)*gradedis);
-         alert('the discounted fee...'+finalfee);
-        //document.querySelector('zonetostudent-card').fee=finalfee;
       },
       calc:function(values){
-        if(values=='ifterm1'){
-        var term1fee=finalfee/2;
-        document.querySelector('zonetostudent-card').fee=term1fee;  
-        }         
-        
-      if(values=='ifterm2'){
-        var term2fee=finalfee/2;
-        document.querySelector('zonetostudent-card').fee=term2fee;
-      }
       if(values=='foryear'){
-        var yearlyfee=finalfee;
+        var yearlyfee=totalfee;
+       
         document.querySelector('zonetostudent-card').fee=yearlyfee;
-      }
       
-        
+   }
       },
-      addcalc:function(temp,fee){
-        calcfee=fee;
-        this.addcalcurl="http://localhost:8081/addcalc";
-        var obj={"id":""}
-        obj.id=temp;
-        this.addcalcparam=obj;
-        alert('Calculated fee is...'+calcfee);
-        alert(JSON.stringify(obj));
+      gettermdate:function(id){
+         this.gettermdateurl="http://localhost:8081/gettermdate";
+         var obj={"idb":""}
+         obj.idb=id;
+         this.gettermdateparam=obj;
+        this.$.gettermdateajax.generateRequest();
+      },
+         gettermdateResponse:function(e1)
+          {
+            var fromdate1=e1.detail.response.returnval[0].from_date;
+            var todate1=e1.detail.response.returnval[0].to_date;
+            document.querySelector('zonetostudent-card').zfromdate=fromdate1;
+            document.querySelector('zonetostudent-card').ztodate=todate1;
 
-        this.$.addcalcajax.generateRequest();
       },
-      addcalcResponse:function(e){
-        var gotdis=e.detail.response.returnval[0].discount_percent;
-        alert(gotdis);
-        var finalcalc=calcfee-((calcfee/100)*gotdis);
-        alert('very final fee......'+finalcalc);
-        document.querySelector('zonetostudent-card').fee=finalcalc;
-      },
-      setzone:function(studid,zone,fee)
+      setzone:function(studid,zone,fee,fromdatez,todatez)
       {
         this.setzoneurl = "http://localhost:8081/setzone";
-        var obj={"studid":"","zone":"","fee":""};
+        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":""};
         obj.studid=studid;
         obj.zone=zone;
         obj.fee=fee;
+        obj.fromdate=fromdatez;
+        obj.todate=todatez;
         this.setzoneparam=obj;
+        alert(JSON.stringify(obj));
         this.$.setzoneajax.generateRequest();
       },
       setzoneResponse:function(e){

@@ -24,8 +24,9 @@
     <div class="frontpage">
       <paper-icon-button class="iconbutton" src="../../images/zone.png" on-click="zone"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/reports.png" on-click="report"></paper-icon-button>
-      <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
+      
       <paper-icon-button class="iconbutton" src="../../images/transportation.png" on-click="transportfee"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/discount.png" on-click="discount"></paper-icon-button>
     </div>
   </body>
     
@@ -46,13 +47,14 @@ document.querySelector('transport-app').setPage("zonetostudent","zone to student
       {
 document.querySelector('transport-app').setPage("generatereport","Generate Report");
       },
-      cancel:function()
-      {
-        document.querySelector('transport-app').setPage("cancellation","Transport Cancellation");
-      },
+      
       transportfee:function()
       {
          document.querySelector('transport-app').setPage("transportfee","Transport Fee");
+      },
+      discount:function()
+      {
+        document.querySelector('transport-app').setPage("discount","Fee Discount");
       }
       
 

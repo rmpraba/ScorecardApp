@@ -252,9 +252,8 @@
     var drop;
     var routeidd;
     var routetrip="";
-    var gradedis="";
     var totalfee;
-    var finalfee;
+    var months;
     var calcfee;
 
 
@@ -355,17 +354,17 @@
       
    }
       },
-      gettermdate:function(id){
+      gettermdate:function(grade){
          this.gettermdateurl="http://localhost:8081/gettermdate";
-         var obj={"idb":""}
-         obj.idb=id;
+         var obj={"grade":""}
+         obj.grade=grade;
          this.gettermdateparam=obj;
         this.$.gettermdateajax.generateRequest();
       },
          gettermdateResponse:function(e1)
           {
-            var fromdate1=e1.detail.response.returnval[0].from_date;
-            var todate1=e1.detail.response.returnval[0].to_date;
+            var fromdate1=e1.detail.response.returnval[0].start_date;
+            var todate1=e1.detail.response.returnval[0].end_date;
             document.querySelector('zonetostudent-card').zfromdate=fromdate1;
             document.querySelector('zonetostudent-card').ztodate=todate1;
 
@@ -408,6 +407,7 @@
       },
       getsec:function(std)
       {
+        alert('1');
         this.getsecurl="http://localhost:8081/getsec";
         var obj={"std":""};
         obj.std=std;
@@ -417,6 +417,7 @@
       getsecResponse:function(e1)
           {
             var secitem=e1.detail.response.returnval;
+              alert(secitem);
             document.querySelector('zonetostudent-card').secarr=secitem;
       },
        getname:function(std,sec)
@@ -557,6 +558,22 @@
         //alert(JSON.stringify(obj));
         this.transportrequiredstatusurl="http://localhost:8081/transportrequiredstatus";
         this.$.transportrequiredstatusajax.generateRequest();
+      },
+       monthdiff:function(fromdate,todate){
+        //alert('flow');
+        var froms =fromdate;
+        var to=todate;
+          var d1 = new Date(froms);
+          var d2=new Date(to);
+          //alert('hi..'+d1+'   dvfa.. '+d2);
+          months = (d2.getFullYear() - d1.getFullYear()) * 12;
+          months -= d1.getMonth() + 1;
+          months += d2.getMonth();
+          var month=months+2;
+          //alert(totalfee+'   '+month);
+          var cusfee=parseInt((totalfee/12)*month);
+          //alert(cusfee);
+          document.querySelector('zonetostudent-card').fee=cusfee;
       },
       transportrequiredstatusResponse:function(e){
 

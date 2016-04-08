@@ -1,17 +1,18 @@
 
- <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+ <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+ <link rel="import" href="..\..\bower_components/polymer/polymer.html">
    <link rel="import" href="../bower_components/paper-input/paper-input.html">
        <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
        <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
-       <link rel="import" href="bower_components/paper-item/paper-item.html">
-       <link rel="import" href="bower_components/paper-button/paper-button.html">
-       <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+       <link rel="import" href="../bower_components/paper-item/paper-item.html">
+       <link rel="import" href="../bower_components/paper-button/paper-button.html">
+       <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
        <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
-       <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+       <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
        <link rel="import" href="../bower_components/paper-input-autocomplete/paper-input-autocomplete.html">
        <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-        <link rel="import" href="bower_components/iron-pages/iron-pages.html">
-    <link rel="import" href="transport-service.html">
+        <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+    <link rel="import" href="../transport-service/transport-service.html">
     <link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
     <link rel="import" href="../todatepicker-card/todatepicker-card.html">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -29,7 +30,7 @@
         <td>
           <div class="class-drop">
           <paper-dropdown-menu label="Standard">
-            <paper-menu class="dropdown-content" on-iron-select="std" valueattr="value" >
+            <paper-menu class="dropdown-content" on-iron-select="stnd" valueattr="value" >
               <template  is="dom-repeat" items="{{stdarr}}" as="view">
               <paper-item value="{{view.class}}">{{view.class}}</paper-item>
               </template>
@@ -40,7 +41,7 @@
       <td>
       <div class="class-drop">
         <paper-dropdown-menu label="Section">
-          <paper-menu class="dropdown-content" on-iron-select="sec" valueattr="value" >
+          <paper-menu class="dropdown-content" on-iron-select="secn" valueattr="value" >
             <template  is="dom-repeat" items="{{secarr}}" as="view">
               <paper-item value="{{view.section}}">{{view.section}}</paper-item>
             </template>
@@ -53,7 +54,7 @@
         <td>
         
           <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
-      <paper-listbox class="dropdown-content" on-iron-select="FnItemSelected">
+      <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item>{{item.itemdes}}</paper-item>
         </template>
@@ -78,7 +79,7 @@
         <td>
       <div class="drop-down">
         <paper-dropdown-menu label="Select the Zone">
-          <paper-menu class="dropdown-content" on-iron-select="zone" valueattr="value" >
+          <paper-menu class="dropdown-content" on-iron-select="zoned" valueattr="value" >
             <template  is="dom-repeat" items="{{itemarr}}" as="view">
               <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
             </template>
@@ -173,21 +174,23 @@ var todat;
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
         },
-        std:function(e){
+        stnd:function(e){
+          alert('0');
+          
       this.std = (e.target.selectedItem.textContent).trim();
       this.$.root.getsec(this.std);
     },
-    sec:function(e){
+    secn:function(e){
       this.sec = (e.target.selectedItem.textContent).trim();
       this.$.root.getname(this.std,this.sec);
 
     },
-    zone:function(e){
+    zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
       this.zone = (e.target.selectedItem.textContent).trim();
       this.$.root.getfee(this.zone);
       var id=1;
-        this.$.root.gettermdate(id);
+        this.$.root.gettermdate(this.grade);
     },
    
     
@@ -265,6 +268,7 @@ var todat;
        this.querySelector('paper-listbox').style.visibility='hidden';
     this.studid = e.target.selectedItem.textContent.trim();
     this.itemArray=[];
+    document.querySelector('#input1').selected=-1;
     this.value=this.studid;
     alert(this.studid);
      this.$.root.getstudetail(this.studid);

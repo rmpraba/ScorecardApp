@@ -222,14 +222,15 @@ app.post('/getfee' ,  urlencodedParser,function (req, res)
 
 app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 {
-	var idz={"id":req.query.idb};
-	    connection.query('select from_date,to_date from dates where ?',[idz],
+	var idz={"school_type":req.query.grade};
+	    connection.query('select start_date,end_date from transport_details where ?',[idz],
        	function(err, rows)
        	{
       	if(!err)
 		{
 			if(rows.length>0)
 			{
+				console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -246,7 +247,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'))";
+	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"','','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'))";
 	    console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)

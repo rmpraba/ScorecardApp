@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       
           <template  is="dom-repeat" items="{{refundarr}}" as="view">
-           <refund-card studid="{{view.student_id}}" name="{{view.student_name}}" amount="{{view.refund_amount}}">
+           <refund-card studid="{{view.student_id}}" name="{{view.student_name}}" amount="{{view.refund_amount}}" canceldate="{{view.cancelled_date}}">
   </refund-card>
           </template>
         

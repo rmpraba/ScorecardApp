@@ -77,17 +77,22 @@ height: 40%
   <div class="hor">
    <div  class="layout">
    <paper-item id="lb" >student Id:</paper-item>
-   <paper-item id="lb">name:</paper-item>
-   <paper-item id="lb">Refund Amount:</paper-item>
+   <paper-item id="lb">name</paper-item>
+   <paper-item id="lb">Refund Amount</paper-item>
+    <paper-item id="lb">Cancel Date</paper-item>
+    <paper-item id="lb">Approval</paper-item>
   </div>
  <div class="hor">
   <div  class="layout"> <paper-item >{{studid}}</paper-item>
    <paper-item >{{name}}</paper-item>
-   <paper-item >{{amount}}</paper-item></div>
-  <paper-checkbox id="box" class="checkbox" on-change="Fnapproval">Approve</paper-checkbox>
-   </div>
+   <paper-item >{{amount}}</paper-item>
+   <paper-item >{{canceldate}}</paper-item>
+  <paper-checkbox id="box" class="checkbox" on-change="Fnapproval"></paper-checkbox>
+   </div></div>
   </div>
- 
+ </div>
+ </div>
+ <hr/>
   </iron-collapse>
    <refund-service id="service"></refund-service>
   </template>
@@ -124,10 +129,10 @@ height: 40%
 },
 Fnapproval:function(e)
 {
-  alert('d');
+  
   if(e.target.checked==true)
     {
-      alert('s');
+     
       this.$.service.Approvereq(this.studid);
     }
 }

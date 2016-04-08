@@ -94,8 +94,8 @@ height: 40%
 </div>
   </div>
   <hr/>
-  <paper-checkbox on-change="cancel" >Cancel Transport</paper-checkbox>
   <datepicker-card></datepicker-card>
+  <paper-checkbox on-change="cancel" >Cancel Transport</paper-checkbox>
     <paper-button id="button" class="button" on-click="click">Submit</paper-button>
   </iron-collapse>
   <transport-service id="service"></transport-service>
@@ -108,7 +108,7 @@ height: 40%
       </paper-dialog-scrollable>
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button on-click="accept">Accept</paper-button>
+        <paper-button dialog-dismiss on-click="accept">Accept</paper-button>
       </div>
     </paper-dialog>
   </template>

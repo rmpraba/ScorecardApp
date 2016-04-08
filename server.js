@@ -606,7 +606,7 @@ app.post('/cancel',  urlencodedParser,function (req, res){
 	var student_id={"student_id":req.query.student_id};
 	var end_transport=req.query.end_date;
 
-	var queryy="SELECT DATEDIFF(STR_TO_DATE('"+end_transport+"', '%m/%d/%Y'),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days, fees FROM transport_details join student_fee where ? and  ?";
+	var queryy="SELECT student_id, DATEDIFF(STR_TO_DATE('"+end_transport+"', '%m/%d/%Y'),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days, installment_1 + installment_2 as total, fees FROM transport_details join student_fee where ? and  ?";
     connection.query(queryy,[end_transport,school_type, student_id],
 		function(err, rows){
        	if(err){
@@ -624,7 +624,7 @@ app.post('/cancel',  urlencodedParser,function (req, res){
 		});
 });
 app.post('/proceedcancel',  urlencodedParser,function (req, res){
-	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount};
+	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "status":"1"};
     connection.query('insert into cancellation set ?',[collection],
 	function(err, rows){
 		if(!err){
@@ -847,6 +847,28 @@ app.post('/approval-card',  urlencodedParser,function (req, res)
 });    
 	});
 
+app.post('/name',  urlencodedParser,function (req, res){
+
+       connection.query('select student_id, student_name from student_details join student_fee on student_fee.student_id=student_details.id',
+       	function(err, rows)
+       	{
+       		if(err){
+       			console.log(err);
+       		}
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
 
 function setvalue()
 {

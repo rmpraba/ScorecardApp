@@ -16,13 +16,9 @@ body{
     padding: 0 !important;
 }
 .footer{
-	background-color: #252626;
-    padding: 1% 0;
-    position:fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
     font-weight: bold;
+    bottom: 0; 
+    position: absolute;
 }
 
 .button{

@@ -242,6 +242,16 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="nameajax"
+        url="{{nameurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="nameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -528,10 +538,14 @@
         var totalmonths = total_days/30;
         var months_used = Math.ceil(monthsused);
         var total_months = Math.ceil(totalmonths);
-        var fees = JSON.stringify(e.detail.response.returnval[0].fees);
+        var totalamount = JSON.stringify(e.detail.response.returnval[0].fees);
+        var paidamount = JSON.stringify(e.detail.response.returnval[0].total);
         var positive = total_months - months_used;
         var percent = (positive / total_months)*100;
-        var refund_amount = (fees/100)*percent;
+        var total_refund_amount = (totalamount/100)*percent;
+        var used_amount = parseInt(totalamount - total_refund_amount);
+        var refund_amount = paidamount - used_amount;
+        alert(refund_amount);
         document.querySelector('cancellation-item-card').months_used=months_used;
         document.querySelector('cancellation-item-card').total_months=total_months;
         document.querySelector('cancellation-item-card').refund_amount=refund_amount;
@@ -574,6 +588,14 @@
           var cusfee=parseInt((totalfee/12)*month);
           //alert(cusfee);
           document.querySelector('zonetostudent-card').fee=cusfee;
+      },
+      name:function(){
+        this.nameurl="http://localhost:8081/name";
+        this.$.nameajax.generateRequest();
+      },
+      nameResponse:function(e){
+        var nameitem=e.detail.response.returnval;
+        document.querySelector('cancellation-card').autocompletename(nameitem);
       },
       transportrequiredstatusResponse:function(e){
 

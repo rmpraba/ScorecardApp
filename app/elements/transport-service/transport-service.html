@@ -299,7 +299,7 @@
           document.querySelector('mappointtoroute-card').itemarr=routedetails;
       },
 
-      insertpoint:function(route,pt,tripp,pickuptime,droptime)
+      insertpoint:function(route,pt,pickuptime,droptime,tripp)
       {
         point=pt;
         trip=tripp;
@@ -310,6 +310,17 @@
         obj.routename=route;
         this.routeidparam=obj;
         this.$.routeidajax.generateRequest();
+      },
+      insertpointResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result=='success')
+        {
+            alert('The point is mapped to route');
+        }
+        else
+        {
+            alert('The point is not mapped to route');
+        }
       },
       routeidResponse:function(e)
       {
@@ -389,7 +400,7 @@
         obj.fromdate=fromdatez;
         obj.todate=todatez;
         this.setzoneparam=obj;
-        alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.setzoneajax.generateRequest();
       },
       setzoneResponse:function(e){
@@ -417,7 +428,7 @@
       },
       getsec:function(std)
       {
-        alert('1');
+       // alert('1');
         this.getsecurl="http://localhost:8081/getsec";
         var obj={"std":""};
         obj.std=std;
@@ -427,7 +438,7 @@
       getsecResponse:function(e1)
           {
             var secitem=e1.detail.response.returnval;
-              alert(secitem);
+              //alert(secitem);
             document.querySelector('zonetostudent-card').secarr=secitem;
       },
        getname:function(std,sec)
@@ -471,11 +482,7 @@
             this.gradediscountparam=obj;
             this.$.gradediscountajax.generateRequest();
       },
-      gradediscountResponse:function(e){
-        gradedis=e.detail.response.returnval[0].discount_percent;
-        alert('discount percent is'+gradedis);
-
-      },
+      
       generatereport:function(studid){
         this.genereporturl="http://localhost:8081/report-card";
         var obj={"studid":""}
@@ -545,7 +552,7 @@
         var total_refund_amount = (totalamount/100)*percent;
         var used_amount = parseInt(totalamount - total_refund_amount);
         var refund_amount = paidamount - used_amount;
-        alert(refund_amount);
+       // alert(refund_amount);
         document.querySelector('cancellation-item-card').months_used=months_used;
         document.querySelector('cancellation-item-card').total_months=total_months;
         document.querySelector('cancellation-item-card').refund_amount=refund_amount;

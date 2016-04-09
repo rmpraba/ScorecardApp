@@ -19,7 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       .disframe{
           @apply(--layout-horizontal);
-          margin-top: 10%;
+          margin-top: 7%;
           margin-left: 40%
       }
       #hidet{
@@ -87,11 +87,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+    var ctrlDown = false;
+var ctrlKey = 17, f5Key = 116, rKey = 82;
     Polymer({
       is: 'discountstudent-card',
       ready:function(){
         this.$.hidet.hidden=true;
+
       },
       click:function(e){
           this.$.hidet.hidden=false;
@@ -101,7 +103,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       clicksend:function(e){
         this.$.service.sendrequest(this.id,this.studname,this.schooltype,this.zonename,this.fees,this.fromdate,this.todate,this.schooltype,this.disamt,this.reason);
       }
-
+    
+      
 
 
     });

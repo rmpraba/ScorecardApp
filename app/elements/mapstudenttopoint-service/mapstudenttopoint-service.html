@@ -75,6 +75,7 @@
   </template>
   <script>
   (function() {
+    var len;
     Polymer({
       is: "mapstudenttopoint-service",
       selectclass:function(){
@@ -113,11 +114,20 @@
     },
     studentpointResponse:function(e){
       var result=e.detail.response.returnval;
+      var j=0;
       if(result=='success'){
+        for(var i=0;i<len;i++)
+        {
+          j=j+1;
+        }
+        if(j==len)
+        {
         alert('inserted successfully');
-      } else {
+        }
+        else {
       alert('insertion failed');
       }
+      } 
     }
     });
   })();

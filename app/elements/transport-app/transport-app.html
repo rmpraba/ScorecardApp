@@ -85,28 +85,89 @@
   Polymer({
     is: "transport-app",
     ready: function() {
+      //alert("yes coming");
+      //this.page="transportadmin";
+  
+   var name=sessionStorage.getItem("userinfo");
+   var currpage=localStorage.getItem("curr_sess_page");
+   //alert(currpage);
+  
+   if(name=="Transport Admin")  {
+    //alert('in');
+    this.page="transportadmin";
+    if((currpage=='mappointtoroute')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='mappointtoroute';
+    }
+    else if((currpage=='mapstudenttopoint')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='mapstudenttopoint';
+    }
+    else if((currpage=='approval')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='approval';
+    }
+    else if((currpage=='cancellation')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='cancellation';
+    }
+    else if((currpage=='generatereport')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='generatereport';
+    }
+
+
+  }
+  else if(name=="Accounts Admin"){
+   this.page="accountadmin"; 
+   if((currpage=='zonetostudent')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='zonetostudent';
+    }
+    else if((currpage=='transportfee')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='transportfee';
+    }
+    else if((currpage=='discount')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='discount';
+    }
+    else if((currpage=='generatereport')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='generatereport';
+    }   
+  }
     
   },
   setPage:function(page,title)
     {
+      //alert(page);
+     localStorage.setItem("curr_sess_homepage","0");
+     localStorage.setItem("curr_sess_page",page);
      this.page=page;
      this.title=title;
+     
  },
  signout:function()
  {
-  window.location.href="index.html";
+  window.location.href="../index.html";
+
    //document.querySelector('app-card').setPage("loginpage");
  },
  home:function()
  {
+  localStorage.setItem("curr_sess_homepage","1");
   var name=sessionStorage.getItem("userinfo");
   if(name=="Transport Admin")
   {
-     document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    //alert("hi");
+    window.location.href="../elements/home.html";
+    
   }
-  else if(name=="Accounts Admin")
+else if(name=="Accounts Admin")
   {
-     document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    //alert("come");
+     window.location.href="../elements/home.html";
   }
  }
   });

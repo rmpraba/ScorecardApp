@@ -30,7 +30,7 @@
         <td>
           <div class="class-drop">
           <paper-dropdown-menu label="Standard">
-            <paper-menu class="dropdown-content" on-iron-select="stnd" valueattr="value" >
+            <paper-menu id="drop"class="dropdown-content" on-iron-select="stnd" valueattr="value" >
               <template  is="dom-repeat" items="{{stdarr}}" as="view">
               <paper-item value="{{view.class}}">{{view.class}}</paper-item>
               </template>
@@ -41,7 +41,7 @@
       <td>
       <div class="class-drop">
         <paper-dropdown-menu label="Section">
-          <paper-menu class="dropdown-content" on-iron-select="secn" valueattr="value" >
+          <paper-menu id="drop" class="dropdown-content" on-iron-select="secn" valueattr="value" >
             <template  is="dom-repeat" items="{{secarr}}" as="view">
               <paper-item value="{{view.section}}">{{view.section}}</paper-item>
             </template>
@@ -173,31 +173,39 @@ var todat;
         this.$.datebox.hidden=true;
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
+        localStorage.setItem("curr_sess_showpage","zonetostudent");
+        this.page="zonetostudent";
+        },
+        setPage:function(page)
+        {
+          localStorage.setItem("curr_sess_showpage",this.page);
+          this.page=page;
         },
         stnd:function(e){
-          alert('0');
+         // alert('0');
           
       this.std = (e.target.selectedItem.textContent).trim();
       this.$.root.getsec(this.std);
+      this.sec='';
     },
     secn:function(e){
       this.sec = (e.target.selectedItem.textContent).trim();
       this.$.root.getname(this.std,this.sec);
-
+      
     },
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
       this.zone = (e.target.selectedItem.textContent).trim();
       this.$.root.getfee(this.zone);
-      var id=1;
-        this.$.root.gettermdate(this.grade);
+      this.$.root.gettermdate(this.grade);
+      
     },
    
     
     autocompletearr:function(autocompletearr)
     {
          item=autocompletearr;
-         alert(item);
+        // alert(item);
     },
    
     FnInputChanged:function(e){
@@ -270,7 +278,7 @@ var todat;
     this.itemArray=[];
     document.querySelector('#input1').selected=-1;
     this.value=this.studid;
-    alert(this.studid);
+   // alert(this.studid);
      this.$.root.getstudetail(this.studid);
   },
     setInput:function(namearr)
@@ -280,7 +288,7 @@ var todat;
       //alert(JSON.stringify(namearr));
       inputlocal.source=namearr;
 
-      alert(JSON.stringify(inputlocal.source));
+     // alert(JSON.stringify(inputlocal.source));
     },
     changeHandler:function(event){ 
         
@@ -289,30 +297,30 @@ var todat;
         
        
         if(yearly.checked==true){ 
-        alert('Complete Year is selected');
+        //alert('Complete Year is selected');
         var temp='foryear';
          
         fromdat=new Date(this.zfromdate);
         todat=new Date(this.ztodate);
         this.$.root.calc(temp);
        
-        alert(fromdat+'   '+todat);
+       // alert(fromdat+'   '+todat);
         }
         if((yearly.checked==false)&(datebox.checked==false)){ 
-        alert('Option is de-selected');
+        //alert('Option is de-selected');
         var temp='';
         this.fee=temp;
         fromdat=temp;
         todat=temp;
         }
         if(datebox.checked==true){
-          alert('date check is selected');
+          //alert('date check is selected');
           var fromd = localStorage.getItem("localsess_from_date");
           var tod = localStorage.getItem("localsess_to_date");
           fromdat=new Date(fromd);
           todat =new Date(tod);
           this.$.root.monthdiff(fromdat,todat);
-          alert(fromdat+'   '+todat);
+          //alert(fromdat+'   '+todat);
         }
 
          
@@ -322,7 +330,7 @@ click:function(e)
       
         fromdate=fromdat.getFullYear()+"/"+(fromdat.getMonth()+1)+"/"+fromdat.getDate();
         todate=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
-        alert(fromdate+'   '+todate);
+        //alert(fromdate+'   '+todate);
       //alert(this.studentid+this.zone_id+this.fee);
       this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate);
 

@@ -108,12 +108,13 @@
        clickfn:function(){
         this.hide=false;
        },
-       FnGetItems:function(route,point,pickup,drop){
-        var obj={"route":"","point":"","pickuptime":"","droptime":""};
+       FnGetItems:function(route,point,pickup,drop,trip){
+        var obj={"route":"","point":"","pickuptime":"","droptime":"","trip":""};
         obj.route=routename;
         obj.point=point;
         obj.pickuptime=pickup;
         obj.droptime=drop;
+        obl.trip=trip;
         itemarray.push(obj);
        }
 

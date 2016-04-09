@@ -67,6 +67,7 @@
         is:"mapstudenttopoint-card",
         ready:function(){
           this.$.maps.selectclass();
+          
         },
         classes1:function(e){
                     this.class = (e.target.selectedItem.value);
@@ -86,7 +87,7 @@
             obj.pickpoint=pickpoint;
             obj.droppoint=droppoint;
             itemarray.push(obj);
-            alert(JSON.stringify(itemarray));
+            //alert(JSON.stringify(itemarray));
            },
       });
     })();

@@ -34,23 +34,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     padding-right: 10%;
   }
   </style>
-      
-      
-          <template  is="dom-repeat" items="{{refundarr}}" as="view">
-           <refund-card studid="{{view.student_id}}" name="{{view.student_name}}" amount="{{view.refund_amount}}" canceldate="{{view.cancelled_date}}">
-  </refund-card>
-          </template>
-        
+  <template  is="dom-repeat" items="{{refundarr}}" as="view">
+      <refund-card studid="{{view.student_id}}" name="{{view.student_name}}" amount="{{view.refund_amount}}" reason="{{view.reason}}" canceldate="{{view.cancelled_date}}"></refund-card>
+    </template>
       <refund-service id="service"></refund-service>
   </template>
   <script>
     Polymer({
       is: "refund-list",
       ready: function() {
-        this.$.service.refundreq();
+       
         
    }
-
     });
   </script>
 </dom-module>

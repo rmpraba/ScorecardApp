@@ -614,7 +614,6 @@ app.post('/cancel',  urlencodedParser,function (req, res){
        	}
 			if(!err){
 				if(rows.length>0){
-					console.log(JSON.stringify(rows));
 					res.status(200).json({'returnval': rows});
 				} else {
 					console.log(err);
@@ -624,9 +623,12 @@ app.post('/cancel',  urlencodedParser,function (req, res){
 		});
 });
 app.post('/proceedcancel',  urlencodedParser,function (req, res){
-	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "status":"1"};
+	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "status":"1", "reason":req.query.reason};
     connection.query('insert into cancellation set ?',[collection],
 	function(err, rows){
+		if(err){
+			console.log(err);
+		}
 		if(!err){
 			if(rows.length>0){
 				res.status(200).json({'returnval': rows});
@@ -803,7 +805,7 @@ app.post('/chequedetails2',  urlencodedParser,function (req, res)
 app.post('/refund-card',  urlencodedParser,function (req, res)
 {
 
-       connection.query('SELECT student_id,student_name,refund_amount,DATE_FORMAT( cancelled_date, "%d/%m/%Y" ) as cancelled_date from  cancellation where status=1',
+       connection.query('SELECT student_id,student_name,refund_amount,reason,DATE_FORMAT( cancelled_date, "%d/%m/%Y" ) as cancelled_date from  cancellation where status=1',
        	function(err, rows)
        	{
 		if(!err)

@@ -21,9 +21,9 @@ body{
     position: absolute;
 }
 
-.button{
-	background-color: #252626;
-    color: #ffffff;
+paper-button{
+	background: #252626 !important;
+    color: white;
 }
 .class-drop{
     width: 100%;
@@ -49,14 +49,37 @@ body{
 }
 
 .logindialog .button{
-    width: 20%;
-    margin: 5% 0 0 40%;
+    width: 40%;
+    margin: 5% 0 0 30%;
 }
 
 .layframe{
     margin-left: 30%;
 }
-.field{
-    width:80%;
+.cancellation-card .row{
+    padding: 1% 3% 1% 5%;
+}
+.cancellation-card .detail{
+    width: 75%;
+    margin: 1% 5% 1% 5%;
+}
+.cancellation-card paper-input{
+    width: 50% !important;
+    margin: 5% 20% 0% 30%;
+}
+.cancellation-card paper-listbox{
+    width: 50% !important;
+    margin: 0% 20% 0% 30%;
+}
+.cancellation-card .reason iron-autogrow-textarea{
+    margin-top: 1%;
+}
+.cancellation-card .check-box{
+    padding: 5%;
+    margin:5% 0 0 40%;
+}
+.cancellation-card .button{
+    width: 30%;
+    margin: 0% 0 0 35%;
 }
 </style>

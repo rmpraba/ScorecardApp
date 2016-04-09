@@ -14,24 +14,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="datepicker-card/datepicker-card.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../transport-service/transport-service.html">
 <link rel="import" href="../cancellation-item-card/cancellation-item-card.html">
-
+<link rel="stylesheet" type="text/css" href="styles/styles.css">
 <dom-module id="cancellation-card">
-  <template>
-    <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
-    <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
-      <template is="dom-repeat" items="{{itemArray}}" as="item">
-        <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+  <div class="cancellation-card">
+    <template>
+      <div class="field">
+        <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+        <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
+          <template is="dom-repeat" items="{{itemArray}}" as="item">
+            <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+          </template>
+        </paper-listbox>
+      </div>
+      <template  is="dom-repeat" items="{{cancellationarr}}" as="view">
+        <cancellation-item-card studid="{{view.id}}" name="{{view.student_name}}" classes="{{view.class_id}}" school = "{{view.school_type}}" dob="{{view.dob}}" zone="{{view.zone_id}}" fee="{{view.fees}}" photo="{{view.photo}}" paid="{{view.total}}" due="{{view.due}}" pick="{{view.pick}}" drop="{{view.drop1}}"></cancellation-item-card>
       </template>
-    </paper-listbox>
-    <template  is="dom-repeat" items="{{cancellationarr}}" as="view">
-      <cancellation-item-card studid="{{view.id}}" name="{{view.student_name}}" classes="{{view.class_id}}" school = "{{view.school_type}}" dob="{{view.dob}}" zone="{{view.zone_id}}" fee="{{view.fees}}" photo="{{view.photo}}" paid="{{view.total}}" due="{{view.due}}" pick="{{view.pick}}" drop="{{view.drop1}}"></cancellation-item-card>
+      <transport-service id="service"></transport-service>
     </template>
-    <transport-service id="service"></transport-service>
-  </template>
+  </div>
   <script>
   (function() {
     var namearr=[];
@@ -120,7 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
       FnItemSelected:function(e){
        this.studid= e.target.selectedItem.value
-        alert(e.target.selectedItem.value);
+        //alert(e.target.selectedItem.value);
         this.$.service.cancellation(this.studid);
         this.itemArray=[];
         document.querySelector("#itemlist").selected=-1;

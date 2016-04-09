@@ -545,22 +545,20 @@
         var total_refund_amount = (totalamount/100)*percent;
         var used_amount = parseInt(totalamount - total_refund_amount);
         var refund_amount = paidamount - used_amount;
-        alert(refund_amount);
         document.querySelector('cancellation-item-card').months_used=months_used;
         document.querySelector('cancellation-item-card').total_months=total_months;
         document.querySelector('cancellation-item-card').refund_amount=refund_amount;
       },
-      proceedcancellation:function(student_id, student_name, months_used, refund_amount){
+      proceedcancellation:function(student_id, student_name, months_used, refund_amount, reason)
+      {
         this.student_id=student_id;
         this.proceedcancelurl="http://localhost:8081/proceedcancel";
-        var obj={"student_id":""}
-        var obj={"student_name":""}
-        var obj={"months_used":""}
-        var obj={"refund_amount":""}
+        var obj={"student_id":"","student_name":"","months_used":"","refund_amount":"","reason":""}
         obj.student_id=student_id;
         obj.student_name=student_name;
         obj.months_used=months_used;
         obj.refund_amount=refund_amount;
+        obj.reason = reason;
         this.proceedcancelparam=obj;
         this.$.proceedcancelajax.generateRequest();
       }, 
@@ -569,7 +567,6 @@
         var obj={"student_id":""};
         obj.student_id=this.student_id;
         this.transportrequiredstatusparam=obj;
-        //alert(JSON.stringify(obj));
         this.transportrequiredstatusurl="http://localhost:8081/transportrequiredstatus";
         this.$.transportrequiredstatusajax.generateRequest();
       },

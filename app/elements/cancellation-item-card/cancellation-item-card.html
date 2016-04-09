@@ -64,7 +64,7 @@ height: 40%
  <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
 <iron-collapse id="{{studid}}">
   <div class="field">
-  <div class="detail1">
+  <div class="detail">
   <div class="imag"><img src="images/{{studid}}.jpg"/></div>
   <div class="hor">
     <div class="layout">
@@ -94,9 +94,20 @@ height: 40%
 </div>
   </div>
   <hr/>
-  <datepicker-card></datepicker-card>
-  <paper-checkbox on-change="cancel" >Cancel Transport</paper-checkbox>
+  <div class="row">
+    <div class="date">
+      <datepicker-card></datepicker-card>
+    </div>
+    <div class="reason">
+      <paper-item>Reason</paper-item><iron-autogrow-textarea value="{{reason}}"></iron-autogrow-textarea>
+    </div>
+  </div>
+  <div class="check-box">
+    <paper-checkbox on-change="cancel" >Cancel Transport</paper-checkbox>
+  </div>
+  <div class="button">
     <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+  </div>
   </iron-collapse>
   <transport-service id="service"></transport-service>
     <paper-dialog id="confirm">
@@ -140,7 +151,7 @@ height: 40%
           document.querySelector('#confirm').open();
         },
         accept:function(){
-          this.$.service.proceedcancellation(this.studid, this.name, this.months_used,this.refund_amount);
+          this.$.service.proceedcancellation(this.studid, this.name, this.months_used,this.refund_amount,this.reason);
         }
       });
     })();

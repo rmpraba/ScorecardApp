@@ -35,18 +35,10 @@ height: 40%
         width: 100%;
         text-align: left;
         }
-        .imag{
-          height: 30%;
- width : 20%;
- }
- img{
- width : 60%;
- 
- }
- .layout
- {
-  @apply(--layout-horizontal);
- }
+.layout
+{
+@apply(--layout-horizontal);
+}
  .hor
  {
   margin-top: 5%;
@@ -62,15 +54,14 @@ height: 40%
  }
  </style>
  <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
-<iron-collapse id="{{studid}}">
-  <div class="field">
-  <div class="detail">
-  <div class="imag"><img src="images/{{studid}}.jpg"/></div>
-  <div class="hor">
+<iron-collapse id="{{studid}}" class="detail">
     <div class="layout">
-      <paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
-      <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item>
+      <div class="img"><img src="images/{{studid}}.jpg"/></div>
     </div>
+      <div class="layout">
+        <paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
+        <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item>
+      </div>
     <div class="layout">
       <paper-item id="lb">class:</paper-item><paper-item>{{classes}}</paper-item>
       <paper-item id="lb">School Type:</paper-item><paper-item >{{school}}</paper-item>
@@ -90,23 +81,21 @@ height: 40%
     <div class="layout">
       <paper-item id="lb">Drop Place:</paper-item><paper-item >{{drop}}</paper-item>
     </div>
-  </div>
-</div>
-  </div>
-  <hr/>
-  <div class="row">
+  <div class="layout">
     <div class="date">
       <datepicker-card></datepicker-card>
     </div>
     <div class="reason">
-      <paper-item>Reason</paper-item><iron-autogrow-textarea value="{{reason}}"></iron-autogrow-textarea>
+      <paper-textarea value="{{reason}}" label="Reason"></paper-textarea>
     </div>
   </div>
-  <div class="check-box">
-    <paper-checkbox on-change="cancel" >Cancel Transport</paper-checkbox>
-  </div>
-  <div class="button">
-    <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+  <div class="layout">
+    <div class="check-box">
+      <paper-checkbox on-change="cancel" >Cancel Transport</paper-checkbox>
+    </div>
+    <div class="button">
+      <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+    </div>
   </div>
   </iron-collapse>
   <transport-service id="service"></transport-service>

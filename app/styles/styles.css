@@ -64,22 +64,57 @@ paper-button{
     margin: 1% 5% 1% 5%;
 }
 .cancellation-card paper-input{
-    width: 50% !important;
-    margin: 5% 20% 0% 30%;
+    width: 65% !important;
+    margin: 5% 20% 0% 20%;
 }
 .cancellation-card paper-listbox{
-    width: 50% !important;
-    margin: 0% 20% 0% 30%;
+    width: 65% !important;
+    margin: 0% 20% 0% 20%;
 }
-.cancellation-card .reason iron-autogrow-textarea{
-    margin-top: 1%;
+.cancellation-card .reason{
+    @apply(--layout-horizontal);
+}
+.cancellation-card .reason paper-textarea{
+    margin: 1% 0 0 20%;
+    width: 50%;
 }
 .cancellation-card .check-box{
-    padding: 5%;
-    margin:5% 0 0 40%;
+    padding: 1%;
+    margin:3% 0 2% 0%;
 }
 .cancellation-card .button{
     width: 30%;
-    margin: 0% 0 0 35%;
+    margin: 2% 0 0 23%;
 }
+.cancellation-card .collapse{
+    width: 65% !important;
+    margin: 5% 20% 0% 20%;
+}
+.cancellation-card .detail{
+    width: 80%;
+    margin-left: 20%;
+}
+.cancellation-card .layout .date{
+    width: 30%;
+    float: left;
+    margin: 1% 0 0 0;
+}
+.cancellation-card .layout .date .card.datepicker-card{
+    margin: 0;
+}
+.cancellation-card .layout .date paper-input{
+    margin: 0;
+    padding: 0;
+}
+.cancellation-card .layout .reason{
+    width: 40%;
+    text-align: center;
+}
+.cancellation-card .layout .reason paper-input{
+    margin: 0 !important;
+}
+.cancellation-card img{
+    height: 250px;
+    width: 200px;
+ }
 </style>

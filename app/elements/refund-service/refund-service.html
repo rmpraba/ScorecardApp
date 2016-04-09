@@ -56,12 +56,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       refundResponse:function(e)
       {
         var refundresult=e.detail.response.returnval;
-         alert(JSON.stringify(e.detail.response.returnval));
+         //alert(JSON.stringify(e.detail.response.returnval));
          document.querySelector('refund-list').refundarr=refundresult;
       },
       Approvereq:function(stdid)
       {
-        alert('aa');
+        
         this.approvalurl="http://localhost:8081/approval-card";
          var obj={"studid":""}
         obj.studid=stdid;

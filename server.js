@@ -805,7 +805,7 @@ app.post('/chequedetails2',  urlencodedParser,function (req, res)
 app.post('/refund-card',  urlencodedParser,function (req, res)
 {
 
-       connection.query('SELECT student_id,student_name,refund_amount,DATE_FORMAT( cancelled_date, "%d/%m/%Y" ) as cancelled_date from  cancellation where status=1',
+       connection.query('SELECT student_id,student_name,refund_amount,reason,DATE_FORMAT( cancelled_date, "%d/%m/%Y" ) as cancelled_date from  cancellation where status=1',
        	function(err, rows)
        	{
 		if(!err)

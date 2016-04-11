@@ -261,6 +261,85 @@
         on-response="generatereportbynameResponse"
         debounce-duration="300"
         >
+        </iron-ajax>
+
+         <iron-ajax
+        method="post"
+        id="deletemappointajax"
+        url="{{deletemappointurl}}"
+        params="{{deletemappointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="deletemappointResponse"
+        debounce-duration="300"
+        >
+        </iron-ajax>
+          <iron-ajax
+        method="post"
+        id="getstudapprovalajax"
+        url="{{getstudapprovalurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstudapprovalResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+     <iron-ajax
+        method="post"
+        id="confirmdiscajax"
+        url="{{confirmdiscurl}}"
+        params="{{confirmdiscparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="confirmdiscResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   </iron-ajax>
+     <iron-ajax
+        method="post"
+        id="getapprovalverifyajax"
+        url="{{getapprovalverifyurl}}"
+        params="{{getapprovalverifyparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getapprovalverifyResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="confirmedfeeajax"
+        url="{{confirmedfeeurl}}"
+        params="{{confirmedfeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="confirmedfeeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="confirmfeeajax"
+        url="{{confirmfeeurl}}"
+        params="{{confirmfeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="confirmfeeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="cancelledfeeajax"
+        url="{{cancelledfeeurl}}"
+        params="{{cancelledfeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="cancelledfeeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -622,7 +701,122 @@
       {
          var nameitem=e.detail.response.returnval; 
       document.querySelector('genestureport-card').autocompletename(nameitem);
-      }
+      },
+      deletemappoint:function(pointarray,routenam,tripnum)
+      {
+        alert('2');
+ this.deletemappointurl="http://localhost:8081/deletemappoint-card";
+ var obj={"pointarray":"","routenam":"","tripnum":""}
+        obj.pointarray=pointarray;
+        obj.routenam=routenam;
+        obj.tripnum=tripnum;
+        alert(obj);
+        this.deletemappointparam=obj;
+        this.$.deletemappointajax.generateRequest();
+
+      },
+       getstudapproval:function(){
+        
+        this.getstudapprovalurl="http://localhost:8081/getstudapproval";
+        this.$.getstudapprovalajax.generateRequest();
+      },
+      getstudapprovalResponse:function(e){
+          var reqappro=e.detail.response.returnval;
+          
+          document.querySelector('approvediscount-card').approvearr=reqappro;
+
+      },
+      confirmdisc:function(stid,admrea,accdis,flag,status){
+          var todat=new Date();
+         var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
+
+          this.confirmdiscurl="http://localhost:8081/confirmdisc";
+          var obj={"stid":"","admrea":"","accdis":"","nowdate":"","flag":"","status":""}
+          obj.stid=stid;
+          obj.admrea=admrea;
+          obj.accdis=accdis;
+          obj.nowdate=today;
+          obj.flag=flag;
+          obj.status=status;
+          this.confirmdiscparam=obj;
+          
+          this.$.confirmdiscajax.generateRequest();
+      },
+      confirmdiscResponse:function(e){
+            var resultx=e.detail.response.returnval;
+            if(resultx=='success')
+            {
+              alert('Updation successfully');
+            }
+            else{
+              alert('Updation Failed');
+            }
+      },
+      getapprovalverify:function(){
+        
+        this.getapprovalverifyurl="http://localhost:8081/getapprovalverify";
+        this.$.getapprovalverifyajax.generateRequest();
+      },
+      getapprovalverifyResponse:function(e){
+          var verifyreq=e.detail.response.returnval;
+         
+          document.querySelector('discountverify-card').verifyarr=verifyreq;
+
+      },
+      confirmedfee:function(stid,fee,status,flag){
+        var todat=new Date();
+         var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
+        this.confirmedfeeurl="http://localhost:8081/confirmedfee";
+        var obj={"stid":"","fees":"","status":"","date":"","flag":""}
+        obj.stid=stid;
+        obj.fees=fee;
+        obj.status=status;
+        obj.date=today;
+        obj.flag=flag;
+        this.confirmedfeeparam=obj;
+        this.$.confirmedfeeajax.generateRequest();
+        
+        this.confirmfeeurl="http://localhost:8081/confirmfee";
+        var obj={"stid":"","fees":""}
+        obj.stid=stid;
+        obj.fees=fee;
+        this.confirmfeeparam=obj;
+        this.$.confirmfeeajax.generateRequest();
+
+      },
+      
+      confirmfeeResponse:function(e){
+          var verifyres=e.detail.response.returnval;
+          if(verifyres=='success')
+          {
+            alert('Fee is confirmed and updatede');
+          }
+          else
+          {
+            alert('Operation Failed');
+          }
+
+      },
+      cancelledfee:function(stid,status,flag){
+        this.cancelledfeeurl="http://localhost:8081/cancelledfee";
+        var obj={"stid":"","status":"","flag":""}
+        obj.stid=stid;
+        obj.status=status;
+        obj.flag=flag;
+        this.cancelledfeeparam=obj;
+        
+        this.$.cancelledfeeajax.generateRequest();
+      },
+      cancelledfeeResponse:function(e){
+        var resltzx=e.detail.response.returnval;
+        if(resltzx=='success')
+        {
+            alert('Request Cancelled');
+        }
+        else
+        {
+            alert('Operation Interupted');
+        }
 
     });
  })();

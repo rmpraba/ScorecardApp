@@ -992,6 +992,31 @@ app.post('/generatereportbyname',  urlencodedParser,function (req, res)
 });
 	});
 
+
+app.post('/deletemappoint-card',  urlencodedParser,function (req, res)
+{
+console.log('come');
+	var ptarr=req.query.pointarray;
+	var rtname=req.query.routenam;
+	var trip1=req.query.tripnum;
+console.log('come'+ptarr);
+       connection.query('delete from point where point_name in (?) and trip=? and route_id=(select id from route where route_name=?)',[ptarr,trip1,rtname],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			console.log('suc');
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});
+});
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

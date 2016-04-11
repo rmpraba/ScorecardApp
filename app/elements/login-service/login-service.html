@@ -225,6 +225,12 @@
        document.querySelector('app-card').setPage("transportapp");
        document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
       }
+       else if(role=="Admin Manager")
+    {
+       sessionStorage.setItem("userinfo",role);
+       document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+    }
       else 
       {
         alert('Invalid UserName or Password');

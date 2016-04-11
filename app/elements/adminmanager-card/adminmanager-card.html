@@ -9,15 +9,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+ <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 
 <dom-module id="adminmanager-card">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <div>Hello from <span>{{foo}}</span></div>
+  <style>
+ .frontpage
+ {
+  margin:0 auto;
+    text-align: center;
+    width: 100%;
+    height: 60%;
+ }
+ .iconbutton
+ {
+    top:35%;
+  width: 15%;
+  height: 35%;
+ }
+ </style>
+  <body style="height: auto;">
+  
+
+    <div class="frontpage">
+    
+      <paper-icon-button label="Discount Approval"class="iconbutton" src="../../images/discount.png" on-click="discount"></paper-icon-button>
+    </div>
+  </body>
+    
   </template>
   <script>
   (function() {
@@ -26,13 +47,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'adminmanager-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'adminmanager-card',
-          notify: true
-        }
+        ready: function() {
+       
+      },
+ discount:function()
+      {
+        document.querySelector('transport-app').setPage("approvediscount","Discount Approval");
       }
+
+
     });
   })();
   </script>

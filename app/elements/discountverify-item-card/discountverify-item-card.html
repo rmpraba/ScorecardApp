@@ -1,0 +1,147 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+
+<dom-module id="discountverify-item-card">
+    <template>
+        <style>
+ 
+ 
+ .detail1
+ {
+@apply(--layout-horizontal);
+height: 40%
+
+ }
+ .collapse
+ {
+ padding: 10px 15px;
+        margin-top: 20px;
+        background-color: #B2C2F0;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 100%;
+        text-align: left;
+        }
+.layout
+{
+@apply(--layout-horizontal);
+}
+ .hor
+ {
+  margin-top: 5%;
+@apply(--layout-vertical);
+ }
+ #lb
+ {
+  font-weight: bold;
+  
+ }
+ paper-item{
+  width: 150px;
+ }
+ .cancel{
+  margin-left: 10%;
+ }
+ .button{
+  margin-left: 50%;
+ }
+ .reasontext{
+  width: 100%;
+ }
+ </style>
+ <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
+<iron-collapse id="{{studid}}" class="detail">
+    <div class="layout">
+      <div class="img"><img src="images/{{studid}}.jpg"/></div>
+    </div>
+      <div class="layout">
+      <paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
+        <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item>
+      </div>
+    <div class="layout">
+        <paper-item id="lb">School Type:</paper-item><paper-item >{{school}}</paper-item>
+        <paper-item id="lb">zone:</paper-item> <paper-item  >{{zone}}</paper-item>
+    </div>
+    <div class="layout">
+     
+          <paper-item id="lb">Bus Fee:</paper-item><paper-item >{{fee}}</paper-item>
+          <paper-item id="lb">Reqested Amt:</paper-item><paper-item >{{reqamt}}</paper-item>
+    </div>
+    <div class="layout">
+        <paper-item id="lb">From Date:</paper-item><paper-item >{{fromdate}}</paper-item>
+         <paper-item id="lb">End Date:</paper-item><paper-item >{{todate}}</paper-item>
+     
+    </div>
+    <div class="layout">
+       <paper-item id="lb">Status:</paper-item><paper-item >{{status}}</paper-item>
+       <paper-item id="lb">Given Reason:</paper-item><paper-item >{{reason}}</paper-item>
+    </div>
+    <div class="layout">
+      <paper-button class="button" on-click="confirmed">Confirm</paper-button>
+      <div style="margin-left: 5%;">
+      <paper-button class="button">Cancel</paper-button></div>
+    </div>
+  
+  </iron-collapse>
+  <transport-service id="service"></transport-service>
+     </template>
+  <script>
+  (function() {
+    'use strict';
+     var idd="0";
+    Polymer({
+      is: 'discountverify-item-card',
+
+     ready:function()
+        {
+
+          
+            },
+            toggle: function(e){
+          if(idd=="0"){
+            idd= document.querySelector("#"+this.studid);
+           idd.toggle()
+          } else {
+            if(idd!=document.querySelector("#"+this.studid)){
+              idd.opened=false;
+            }
+            idd= document.querySelector("#"+this.studid);
+            idd.toggle()
+          }
+        },
+        confirmed:function(){
+          var totalfee=this.fee-this.reqamt;
+          
+          if(this.status=='Accepted')
+          {
+            var status='Discount Confirmed';
+          
+          var flag=4;
+          this.$.service.confirmedfee(this.studid,totalfee,status,flag);
+        }
+        else if(this.status=='Rejected')
+        {
+          
+          var status='Cancelled';
+          var flag=4;
+          this.$.service.cancelledfee(this.studid,status,flag);
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

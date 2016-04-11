@@ -48,7 +48,7 @@
           </td>
           <td style="width: 70px;"></td>
           <td>
-          <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+          <paper-button id="button" class="button" on-click="Fndeletepoint">Submit</paper-button>
           
           </td>
           <td>
@@ -101,9 +101,10 @@
 
          sessionStorage.setItem("trip",tripno);
        },
-       click:function()
+       Fndeletepoint:function()
        {
-        this.$.select.mappoint(itemarray);
+        alert('1');
+        this.$.select.deletemappoint(pointarray,routename,tripno);
        },
        clickfn:function()
        {
@@ -131,8 +132,9 @@
            pointarray.splice(i, 1);
           }
         }
-        alert(pointarray);
-       }
+        
+       },
+
 
         
 

@@ -1,14 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
@@ -18,59 +7,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <dom-module id="refund-card">
 <template>
- <style>
- 
- 
- .detail1
- {
-@apply(--layout-horizontal);
-height: 40%
-
- }
- .collapse
- {
- padding: 10px 15px;
-        margin-top: 20px;
-        background-color: #B2C2F0;
-        border: 1px solid #dedede;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        font-size: 15px;
-        cursor: pointer;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        width: 100%;
-        text-align: left;
-        }
-        .imag{
-          height: 30%;
- width : 20%;
- }
- img{
- width : 60%;
- 
- }
- .layout
- {
-  @apply(--layout-horizontal);
- }
- .hor
- {
-  margin-top: 5%;
-@apply(--layout-vertical);
- }
- #lb
- {
-  font-weight: bold;
-  
- }
- paper-item{
-  width: 150px;
- }
- </style>
- <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
+  <style>
+    .detail1{
+      @apply(--layout-horizontal);
+      height: 40%;
+    }
+    .collapse{
+      padding: 10px 15px;
+      margin-top: 20px;
+      background-color: #B2C2F0;
+      border: 1px solid #dedede;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      width: 100%;
+      text-align: left;
+    }
+    .imag {
+      height: 30%;
+      width : 20%;
+    }
+    img {
+      width : 60%;
+    }
+    .layout{
+      @apply(--layout-horizontal);
+    }
+    .hor{
+      margin-top: 5%;
+      @apply(--layout-vertical);
+    }
+    #lb{
+      font-weight: bold;
+    }
+    paper-item{
+      width: 150px;
+    }
+  </style>
+<button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
 <iron-collapse id="{{studid}}">
   <div class="field">
   <div class="detail1">

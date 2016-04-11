@@ -62,7 +62,7 @@ padding: 30px;
     <timepicker1-card></timepicker1-card>
   </div>
   <div>
-    <paper-input class="field" value="{{trip}}"></paper-input>
+    <!--<paper-input class="field" value="{{trip}}"></paper-input>-->
   </div>
   <div>
   <paper-button class="button" on-click="insert">ADD</paper-button>
@@ -86,22 +86,12 @@ padding: 30px;
       {
         n=n+1;
       },
-      
-      changeHandler:function(event)
-      { 
-        var box = document.querySelector("#box");
-        if(box.checked==true)
-        { 
-
-        document.querySelector('mappointtoroute-card').FnGetItems(this.route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),this.trip);  
-        }
-      },
     
       insert:function()
       {
         var route=sessionStorage.getItem("route");
         var tripn=sessionStorage.getItem("trip");
-        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),this.trip);
+        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn);
       }
      
 

@@ -23,8 +23,8 @@
           </td>
           <td>
             <div class="drop-down">
-            <paper-dropdown-menu label="---Select the Route---">
-                <paper-menu class="dropdown-content"  on-iron-select="rootname" valueattr="value" >
+            <paper-dropdown-menu label="---Select the Route---" id="route" required  errorMessage ="please select the route" >
+                <paper-menu class="dropdown-content" on-iron-select="rootname" valueattr="value" >
                    <template  is="dom-repeat" items="{{routearr}}" as="view">
               <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
               </template>
@@ -37,8 +37,8 @@
           </td>
           <td>
           <div class="drop-down">
-           <paper-dropdown-menu label="---Select the Trip---">
-               <paper-menu class="dropdown-content"  on-iron-select="tripnum" valueattr="value" >
+           <paper-dropdown-menu label="---Select the Trip---" id="tripnoo" required error-message="select the trip">
+               <paper-menu class="dropdown-content" on-iron-select="tripnum" valueattr="value"  >
                    <template  is="dom-repeat" items="{{triparr}}" as="view">
               <paper-item value="{{view.trip}}">{{view.trip}}</paper-item>
               </template>
@@ -57,7 +57,6 @@
         </tr>
       </table>
         <div>
-            <app-service itemarr="{{itemarr}}"></app-service>
             <template  is="dom-repeat" items="{{itemarr}}">
             <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}">
             </template>
@@ -77,8 +76,9 @@
  <script>
 (function() {
   var routename="";
-  var itemarray=[];
+  var pointarray=[];
   var detailarr=[];
+  var tripno="";
     Polymer({
       is: "mappointtoroute-card",
       ready:function()
@@ -96,7 +96,7 @@
        },
        tripnum:function(e)
        {
-        var tripno = (e.target.selectedItem.textContent).trim();
+         tripno = (e.target.selectedItem.textContent).trim();
         this.$.select.getroutedetail(tripno);
 
          sessionStorage.setItem("trip",tripno);
@@ -105,17 +105,33 @@
        {
         this.$.select.mappoint(itemarray);
        },
-       clickfn:function(){
+       clickfn:function()
+       {
+          if(tripno=="")
+          {
+         this.$.route.validate();
+         this.$.tripnoo.validate();
+        }
+        else
+        {
         this.hide=false;
+      }
        },
-       FnGetItems:function(route,point,pickup,drop,trip){
-        var obj={"route":"","point":"","pickuptime":"","droptime":"","trip":""};
-        obj.route=routename;
-        obj.point=point;
-        obj.pickuptime=pickup;
-        obj.droptime=drop;
-        obl.trip=trip;
-        itemarray.push(obj);
+       FnGetpoints:function(points,checktype)
+       {
+        if(checktype=="true")
+        {
+        pointarray.push(points);
+        }
+        else
+        {
+          var i = pointarray.indexOf(points);
+          if(i != -1)
+          {
+           pointarray.splice(i, 1);
+          }
+        }
+        alert(pointarray);
        }
 
         

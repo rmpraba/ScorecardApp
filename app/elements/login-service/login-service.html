@@ -216,19 +216,18 @@
        if(role=="Transport Admin")
       {
         sessionStorage.setItem("userinfo",role);
-      document.querySelector('app-card').setPage("transportapp");
-      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
-        }
-    else if(role=="Accounts Admin")
-    {
+        document.querySelector('app-card').setPage("transportapp");
+        document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      }
+      else if(role=="Accounts Admin")
+      {
        sessionStorage.setItem("userinfo",role);
        document.querySelector('app-card').setPage("transportapp");
-      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
-    }
-    
-      else if(role=="invalid")
+       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      }
+      else 
       {
-        alert('invalid username or password');
+        alert('Invalid UserName or Password');
       }
       },
 
@@ -252,7 +251,6 @@
       //fetch the pickup point and pass the route card
       routepickuppointResponse:function(e){
         pzone_fee=e.detail.response.returnval[0].fees;
-        //alert(pzone_fee);
          var routepickuppoint=e.detail.response.returnval
          document.querySelector('app-card').setPage("routelist","Map Point to Student");
         document.querySelector('route-card').pickarr=routepickuppoint;
@@ -271,7 +269,6 @@
       routedroppointResponse:function(e)
       {
          dzone_fee=e.detail.response.returnval[0].fees;
-         //alert(dzone_fee);
          var routedroppoint=e.detail.response.returnval
          document.querySelector('app-card').setPage("routelist","Map Point to Student");
         document.querySelector('route-card').droparr=routedroppoint;
@@ -374,7 +371,6 @@
             obj.zone=zone;
             obj.route=route;
             this.rootparam=obj;
-            //alert(JSON.stringify(obj));
             this.$.rootajax.generateRequest();
       },
 
@@ -471,7 +467,6 @@
       {
         disid=e.detail.response.returnval[0].distance_id;
           var fee=e.detail.response.returnval[0].fees;
-          alert(fee);
         document.querySelector('app-card').setPage("createzonecard","createzone");
         document.querySelector('zone-card').fee=fee;        
       },

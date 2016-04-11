@@ -252,6 +252,15 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="generatereportbynameajax"
+        url="{{generatereportbynameurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="generatereportbynameResponse"
+        debounce-duration="300"
+        >
     </template>
 
   <script>
@@ -603,7 +612,18 @@
       },
       transportrequiredstatusResponse:function(e){
 
+      },
+      generatereportbyname:function()
+      {
+       this.generatereportbynameurl="http://localhost:8081/generatereportbyname";
+       this.$.generatereportbynameajax.generateRequest();
+      },
+      generatereportbynameResponse:function(e)
+      {
+         var nameitem=e.detail.response.returnval; 
+      document.querySelector('genestureport-card').autocompletename(nameitem);
       }
+
     });
  })();
   </script>

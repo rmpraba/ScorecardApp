@@ -49,14 +49,14 @@ padding: 30px;
   <legend align="center"></legend>
   <div class="card">
   <div class="detail">
-   <paper-input id="point" class="field" value={{points}}></paper-input>
+   <paper-input id="point" label="Point" class="field" value={{points}}></paper-input>
    </div>
    
   <div>
-    <paper-input id="point" class="field" value={{picktime}}></paper-input>
+    <paper-input id="point" label="pickup Time" class="field" value={{picktime}}></paper-input>
   </div>
   <div>
-    <paper-input id="point" class="field" value={{droptime}}></paper-input>
+    <paper-input id="point" label="Drop Time" class="field" value={{droptime}}></paper-input>
   </div>
    <paper-checkbox id="box" class="checkbox" on-change="changeHandler"></paper-checkbox>
    </div>
@@ -82,6 +82,17 @@ padding: 30px;
         this.$.trip.hidden=true;
         //this.$.routename.hidden=true;
         
+      },
+      changeHandler:function(e)
+      {
+        if(e.target.checked==true)
+         {
+           document.querySelector('mappointtoroute-card').FnGetpoints(this.points,"true");
+         }
+         else
+         {
+           document.querySelector('mappointtoroute-card').FnGetpoints(this.points,"false");
+         }
       }
       
      

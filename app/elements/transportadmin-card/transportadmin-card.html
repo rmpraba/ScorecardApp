@@ -3,6 +3,7 @@
  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
  <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
  <link rel="import" href="../refund-service/refund-service.html">
+ <link rel="import" href="../transport-service/transport-service.html">
  <dom-module id="transportadmin-card">
  <template>
  <style > 
@@ -32,6 +33,7 @@
     </div>
   </body>
    <refund-service id="service"></refund-service>
+   <transport-service id="transportservice"></transport-service>
 </template>
 <script>
   Polymer({
@@ -56,11 +58,12 @@
       },
       report:function()
       {
+        this.$.transportservice.generatereportbyname();
       document.querySelector('transport-app').setPage("generatereport","Generate Report");
       },
        approval:function()
       {
-         this.$.service.refundreq();
+      this.$.service.refundreq();
       document.querySelector('transport-app').setPage("approval","Refund Approval");
       }
       

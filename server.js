@@ -28,11 +28,12 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-      	//console.log(rows);
+      	
 			res.status(200).json({'returnval': rows});
 		}
 		else
 		{
+            
 			res.status(200).json({'returnval': 'invalid'});
 		}
 	}
@@ -402,7 +403,7 @@ app.post('/report-card',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,s.class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2 as total, z.fees-z.installment_1+z.installment_2 as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2 as total, z.fees-z.installment_1+z.installment_2 as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
 		if(!err)
@@ -671,7 +672,7 @@ app.post('/reportfee-card',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,s.class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2,z.installment_1+z.installment_2 as total, z.fees-(z.installment_1+z.installment_2) as due,z.fees/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2,z.installment_1+z.installment_2 as total, z.fees-(z.installment_1+z.installment_2) as due,z.fees/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
 		if(!err)
@@ -970,6 +971,26 @@ app.post('/sendrequest',  urlencodedParser,function (req, res)
 
 
 
+app.post('/generatereportbyname',  urlencodedParser,function (req, res)
+{
+
+       connection.query('SELECT student_name from student_details',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
 
 function setvalue()
 {

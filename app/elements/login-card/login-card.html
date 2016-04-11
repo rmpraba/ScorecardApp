@@ -12,20 +12,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <dom-module id="login-card">
 <template>
-    <iron-a11y-keys target="[[_target]]" keys="enter" on-keys-pressed="_test"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_target]]" keys="enter" on-keys-pressed="Fnenterkeylogin"></iron-a11y-keys>
     <div class="logindialog">
         <div class="card-img">
             <img src="../../images/student_login.png" height="80px" width="90px"></img>
         </div>
         <div class="content">
             <div class="field">
-                <paper-input label="Username" value="{{uname}}" required auto-validate error-message="needs username!"></paper-input>
+                <paper-input label="Username" id="username" value="{{uname}}" required auto-validate error-message="needs username!"></paper-input>
             </div>
             <div class="field">
-                <paper-input label="Password" type="password" value="{{pass}}" required auto-validate error-message="needs password!"></paper-input>
+                <paper-input label="Password" id="password" type="password" value="{{pass}}" required auto-validate error-message="needs password!"></paper-input>
             </div>
             <div class="button">
-                <paper-button raised  class="in" on-click="login">Sign in</paper-button>
+                <paper-button raised  class="in" on-click="Fnlogin">Sign in</paper-button>
             </div>
         </div>
     </div>
@@ -37,14 +37,33 @@
       is: "login-card",
       ready:function()
       {
-       this.uname="";
-       this.password="";
+       
       },
-      login:function()
+      Fnlogin:function()
       {
-      this.$.loginservice.logincheck(this.uname,this.pass);
-      
+        if(this.uname==""&&this.pass=="")
+        {
+           this.$.username.validate();
+           this.$.password.validate();
+        }
+        else
+        {
+            this.$.loginservice.logincheck(this.uname,this.pass);
+        }
+      },
+      Fnenterkeylogin:function()
+      {
+        if(this.uname==""&&this.pass=="")
+        {
+           this.$.username.validate();
+           this.$.password.validate();
+        }
+        else
+        {
+            this.$.loginservice.logincheck(this.uname,this.pass);
+        }
       }
+
     });
 
   </script>

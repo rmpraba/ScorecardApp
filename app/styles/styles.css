@@ -42,6 +42,11 @@ paper-button{
     width:35%;
     margin: 10% 0 0 32%;
     text-align: center;
+   display: inline-block;
+    @apply(--layout-center);
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+    padding:5px;
 }
 .logindialog .field{
     width: 60%;

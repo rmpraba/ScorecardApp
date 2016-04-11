@@ -704,13 +704,11 @@
       },
       deletemappoint:function(pointarray,routenam,tripnum)
       {
-        alert('2');
  this.deletemappointurl="http://localhost:8081/deletemappoint-card";
  var obj={"pointarray":"","routenam":"","tripnum":""}
         obj.pointarray=pointarray;
         obj.routenam=routenam;
         obj.tripnum=tripnum;
-        alert(obj);
         this.deletemappointparam=obj;
         this.$.deletemappointajax.generateRequest();
 
@@ -807,7 +805,8 @@
         
         this.$.cancelledfeeajax.generateRequest();
       },
-      cancelledfeeResponse:function(e){
+      cancelledfeeResponse:function(e)
+      {
         var resltzx=e.detail.response.returnval;
         if(resltzx=='success')
         {
@@ -817,6 +816,7 @@
         {
             alert('Operation Interupted');
         }
+      }
 
     });
  })();

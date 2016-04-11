@@ -1017,6 +1017,147 @@ console.log('come'+ptarr);
 });
 });
 
+
+app.post('/getstudapproval',  urlencodedParser,function (req, res)
+{
+	
+	    connection.query('SELECT * from md_discount where flag=3',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+	
+});
+	});
+
+
+app.post('/confirmdisc',  urlencodedParser,function (req, res)
+{
+	var val={"stud_id":req.query.stid};
+	var vari={"admin_reason":req.query.admrea,"approve_discount":req.query.accdis,"updatation":req.query.nowdate,"status":req.query.status,"flag":req.query.flag};
+	    connection.query('update md_discount set ? where ? ',[vari,val],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			res.status(200).json({'returnval': 'success'});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});
+	});
+
+
+app.post('/getapprovalverify',  urlencodedParser,function (req, res)
+{
+	
+	    connection.query('SELECT * from md_discount where flag=2',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+	
+});
+	});
+
+
+app.post('/confirmedfee',  urlencodedParser,function (req, res)
+{
+	
+    var val={"stud_id":req.query.stid};
+	var vari={"updatation":req.query.date,"status":req.query.status,"flag":req.query.flag};
+	    connection.query('update md_discount set ? where ? ',[vari,val],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			res.status(200).json({'returnval': 'success'});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});
+	});
+
+app.post('/confirmfee',  urlencodedParser,function (req, res)
+{
+	
+    var val={"student_id":req.query.stid};
+	var vari={"fees":req.query.fees};
+	    connection.query('update student_fee set ? where ? ',[vari,val],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			res.status(200).json({'returnval': 'success'});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});
+	});
+
+
+app.post('/cancelledfee',  urlencodedParser,function (req, res)
+{
+	
+    var val={"stud_id":req.query.stid};
+	var vari={"status":req.query.status,"flag":req.query.flag};
+	    connection.query('update md_discount set ? where ? ',[vari,val],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			res.status(200).json({'returnval': 'success'});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});
+	});
+
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

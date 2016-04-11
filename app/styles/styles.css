@@ -122,4 +122,7 @@ paper-button{
     height: 250px;
     width: 200px;
  }
+ .card .select-class{
+    margin: 0 0 0 20% !important;
+ }
 </style>

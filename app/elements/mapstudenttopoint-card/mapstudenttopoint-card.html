@@ -20,17 +20,10 @@
   .template{
     margin-left: -5%;
   }
-
   </style>
     <body>
       <div >
       <div class="card">
-      <table >
-        <tr>
-        <td style="width: 17%;"></td>
-          <td>  <paper-item label="">Grade</paper-item>
-          </td>
-          <td>
         <div class="select-class">
           <paper-dropdown-menu label="Select Grade">
             <paper-menu class="dropdown-content" on-iron-select="classes1" attr-for-selected="value" >
@@ -40,23 +33,17 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-          </td>
-          <td>
-          </td>
-            </tr>
-          </table>
+      </div>
+      <div class="template">
+        <app-service studentarr="{{studentarr}}"></app-service>
+          <template  is="dom-repeat" items="{{studentarr}}">
+            <studenttopoint-item-card studentid="{{item.id}}" studentname="{{item.student_name}}">
+          </template>
+          <div class="button" style="margin-left: 50%;margin-top: 3%;">
+            <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
           </div>
-          <div class="template">
-          <app-service studentarr="{{studentarr}}"></app-service>
-            <template  is="dom-repeat" items="{{studentarr}}">
-              <studenttopoint-item-card studentid="{{item.id}}" studentname="{{item.student_name}}">
-            </template>
-              <div class="button" style="margin-left: 80%;margin-top: 3%;">
-                <paper-button raised class="custom indigo" on-click="click">Submit</paper-button>
-              </div>
         </div>
-        </div>
-          
+      </div>
     </body>
     <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
   </template>
@@ -67,12 +54,12 @@
         is:"mapstudenttopoint-card",
         ready:function(){
           this.$.maps.selectclass();
-          
+          this.$.submitbutton.hidden=true;
         },
         classes1:function(e){
-                    this.class = (e.target.selectedItem.value);
-                     alert('The select grade is..'+this.class);
-                     this.$.maps.classpick(this.class);
+          this.class = (e.target.selectedItem.value);
+          this.$.maps.classpick(this.class);
+          this.$.submitbutton.hidden=false;
         },
         click:function()
         {

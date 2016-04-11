@@ -19,76 +19,96 @@
  width: auto;
  margin-left: 3%;
  }
-    .detail{
- width: 35%;
- @apply(--layout-vertical);
- border-spacing: 20px;
- margin-left: 2%;
+ fieldset{
+  margin: 0% 0% 0% 42%;
+  width: 100%;
  }
-   .detail1{
- width: 35%;
- @apply(--layout-vertical);
- border-spacing: 20px;
+.detail{
+ width: 100%;
  margin-left: 2%;
  }
  .field{
-  
   text-align: center;
   border-radius: 2px;
-  
-  
  }
- paper-input{
-  
- }
+ .row {
+  display: inline-block;
+  margin: 0 1em 0 0;
+}
+paper-checkbox{
+  position: absolute;
+  right: 22.5%;
+  top:15%;
+}
   </style>
  
   <legend align="center"></legend>
   <div class="card">
-  <div class="detail1" >
-    <paper-input  style="width:50%;" class="field" value="{{studentid}}"></paper-input>
-  </div>
-    <div class="detail" style="margin-left: -5%;">
-    <paper-input  class="field" value="{{studentname}}"></paper-input>
-    </div>
-    <div class="detail">
-      <paper-dropdown-menu label="Select Pick-up Route">
-      <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
-        <template  is="dom-repeat" items="{{routearr}}" as="view">
-          <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
-        </template>
-      </paper-menu>
-    </paper-dropdown-menu>
-    </div>
-    <div class="detail">
-      <paper-dropdown-menu label="Select Drop Route">
-      <paper-menu class="dropdown-content" on-iron-select="droproute" attr-for-selected="value" >
-        <template  is="dom-repeat" items="{{routearr}}" as="view">
-          <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
-        </template>
-      </paper-menu>
-    </paper-dropdown-menu>
-    </div>
-    <div class="detail">
-      <paper-dropdown-menu label="Select Pick-up Point">
-      <paper-menu class="dropdown-content" on-iron-select="pickpoints" attr-for-selected="value" >
-        <template  is="dom-repeat" items="{{pointarr}}" as="view">
-          <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
-        </template>
-      </paper-menu>
-    </paper-dropdown-menu>
-    </div>
-    <div class="detail">
-      <paper-dropdown-menu label="Select Drop Point">
-      <paper-menu class="dropdown-content" on-iron-select="droppoints" attr-for-selected="value" >
-        <template  is="dom-repeat" items="{{droparr}}" as="view">
-          <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
-        </template>
-      </paper-menu>
-    </paper-dropdown-menu>
-    </div>
-    <paper-checkbox id="box" on-change="changeHandler" style="margin-top: 1%;margin-left: 1%;"></paper-checkbox>
+    <ul>
+      <li>
+        <fieldset>
+          <ul>
+            <li class="row">
+              <paper-input class="field" value="{{studentid}}"></paper-input>
+              <paper-input  class="field" value="{{studentname}}"></paper-input>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="field">
+                  <paper-dropdown-menu label="Pick-up Route">
+                    <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
+                      <template  is="dom-repeat" items="{{routearr}}" as="view">
+                        <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                </div>
+                <div class="field">
+                  <paper-dropdown-menu label="Pick-up Point">
+                    <paper-menu class="dropdown-content" on-iron-select="pickpoints" attr-for-selected="value" >
+                      <template  is="dom-repeat" items="{{pointarr}}" as="view">
+                        <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="field">
+                  <paper-dropdown-menu label="Drop Route">
+                    <paper-menu class="dropdown-content" on-iron-select="droproute" attr-for-selected="value" >
+                      <template  is="dom-repeat" items="{{routearr}}" as="view">
+                        <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                </div>
+                <div class="field">
+                  <paper-dropdown-menu label="Drop Point">
+                    <paper-menu class="dropdown-content" on-iron-select="droppoints" attr-for-selected="value" >
+                      <template  is="dom-repeat" items="{{droparr}}" as="view">
+                        <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </fieldset>
+      </li>
+      <li class="row">
+        <div class="detail">
+          <div class="field">
+              <paper-checkbox id="box" on-change="changeHandler"></paper-checkbox>
+          </div>
+        </div>
+      </li>
+    </ul>
     <mapstudenttopoint-services id="mapstud"></mapstudenttopoint-services>
+  </div>
   <iron-ajax
     auto
     method="post"

@@ -20,7 +20,6 @@ body{
     bottom: 0; 
     position: absolute;
 }
-
 paper-button{
 	background: #252626 !important;
     color: white;
@@ -52,12 +51,10 @@ paper-button{
     width: 60%;
     margin: 0 0 0 20%;
 }
-
 .logindialog .button{
     width: 40%;
     margin: 5% 0 0 30%;
 }
-
 .layframe{
     margin-left: 30%;
 }
@@ -68,11 +65,11 @@ paper-button{
     width: 75%;
     margin: 1% 5% 1% 5%;
 }
-.cancellation-card paper-input{
+.cancellation-card paper-input, .genestureport-card paper-input{
     width: 65% !important;
     margin: 5% 20% 0% 20%;
 }
-.cancellation-card paper-listbox{
+.cancellation-card paper-listbox, .genestureport-card paper-listbox{
     width: 65% !important;
     margin: 0% 20% 0% 20%;
 }
@@ -91,11 +88,11 @@ paper-button{
     width: 30%;
     margin: 2% 0 0 23%;
 }
-.cancellation-card .collapse{
+.cancellation-card .collapse, .genestureport-card .collapse{
     width: 65% !important;
     margin: 5% 20% 0% 20%;
 }
-.cancellation-card .detail{
+.cancellation-card .detail, .genestureport-card .detail{
     width: 80%;
     margin-left: 20%;
 }
@@ -118,11 +115,69 @@ paper-button{
 .cancellation-card .layout .reason paper-input{
     margin: 0 !important;
 }
-.cancellation-card img{
+.cancellation-card img, .genestureport-card img{
     height: 250px;
     width: 200px;
- }
- .card .select-class{
+}
+.card .select-class{
     margin: 0 0 0 20% !important;
+}
+.card{
+   @apply(--layout-horizontal);
+   @apply(--layout-center);
+   position: relative;
+   width: auto;
+   margin-left: 3%;
+}
+fieldset{
+   margin: 0% 0% 0% 22%;
+   width: 54%;
+}
+.detail{
+   width: 100%;
+   margin-left: 2%;
  }
+ .field{
+    text-align: center;
+    border-radius: 2px;
+ }
+ .row {
+    display: inline-block;
+    margin: 0 1em 0 0;
+}
+.mapstudenttopoint-card paper-checkbox{
+    position: absolute;
+    right: 22.5%;
+    top:15%;
+}
+.detail1{
+    @apply(--layout-horizontal);
+    height: 40%;
+}
+.collapse{
+    padding: 10px 15px;
+    margin-top: 20px;
+    background-color: #B2C2F0;
+    border: 1px solid #dedede;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    width: 100%;
+    text-align: left;
+}
+.layout{
+    display: flex;
+}
+.hor{
+    margin-top: 5%;
+    @apply(--layout-vertical);
+}
+#lb{
+    font-weight: bold;
+}
+paper-item{
+    width: 150px;
+}
 </style>

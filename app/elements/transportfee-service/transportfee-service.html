@@ -217,8 +217,11 @@
         var zonid=e.detail.response.returnval[0].zone_id,
         feez=e.detail.response.returnval[0].fees;
         document.querySelector('discountstudent-card').fees=feez;
-        fromd=e.detail.response.returnval[0].from_date;
-        tod=e.detail.response.returnval[0].to_date;
+        var fromdzxc=e.detail.response.returnval[0].from_date;
+        var todzxc=e.detail.response.returnval[0].to_date;
+        fromd=new Date(fromdzxc);
+        tod=new Date(todzxc);
+        
         
         this.getfeezoneurl="http://localhost:8081/getfeezone";
         var obj={"zone":""}
@@ -241,13 +244,16 @@
 
         var studnam=e.detail.response.returnval[0].student_name;
         var schooltyp=e.detail.response.returnval[0].school_type; 
+
+         var fromdatz=fromd.getFullYear()+"/"+(fromd.getMonth()+1)+"/"+fromd.getDate();
+        var todatz=tod.getFullYear()+"/"+(tod.getMonth()+1)+"/"+tod.getDate();
             
         document.querySelector('discountstudent-card').studname=studnam;
         document.querySelector('discountstudent-card').zonename=zonenam;
         document.querySelector('discountstudent-card').schooltype=schooltyp;
         
-        document.querySelector('discountstudent-card').fromdate=fromd;
-        document.querySelector('discountstudent-card').todate=tod;
+        document.querySelector('discountstudent-card').fromdate=fromdatz;
+        document.querySelector('discountstudent-card').todate=todatz;
 
      },
      sendrequest:function(id,stuname,schooltypez,zonname,feesz,fromdatez,todatez,schooltypez,disamtz,reason){

@@ -1077,11 +1077,11 @@ app.post('/getapprovalverify',  urlencodedParser,function (req, res)
 			if(rows.length>0)
 			{
 				
-			res.status(200).json({'returnval': rows});
+			res.status(200).json(rows);
 			}
 			else
 			{
-			res.status(200).json({'returnval': 'invalid'});
+			res.status(200).json('invalid');
 			}
 		}
 		else

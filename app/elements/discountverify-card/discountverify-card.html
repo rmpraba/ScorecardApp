@@ -20,10 +20,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="discountverify-card">
   <template>
-  <template  is="dom-repeat" items="{{verifyarr}}" as="view">
-        <discountverify-item-card studid="{{view.stud_id}}" name="{{view.stud_name}}" school = "{{view.school_type}}" zone="{{view.zone_id}}" fee="{{view.fees}}" fromdate="{{view.from_date}}" todate="{{view.to_date}}" reqamt="{{view.approve_discount}}" reason="{{view.admin_reason}}" status="{{view.status}}"></discountverify-item-card>
-      </template>
-      <transport-service id="service"></transport-service>
+  <!-- Halo -->
+  <template  is="dom-repeat" items="{{theriarr}}" >
+  <!-- <paper-input value="asd"></paper-input> -->
+        <discountverify-item-card studid="{{item.stud_id}}" name="{{item.stud_name}}" school = "{{item.school_type}}" zone="{{item.zone_id}}" fee="{{item.fees}}" fromdate="{{item.from_date}}" todate="{{item.to_date}}" reqamt="{{item.approve_discount}}" reason="{{item.admin_reason}}" status="{{item.status}}"></discountverify-item-card> 
+  </template>
+      <!-- <transport-service id="service" theriarr="{{theriarr}}"></transport-service> -->
   </template>
   <script>
   (function() {
@@ -36,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready:function()
         {
-            this.$.service.getapprovalverify();
+            //this.$.service.getapprovalverify();
           
             }      
        

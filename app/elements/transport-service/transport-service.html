@@ -756,10 +756,13 @@
         this.$.getapprovalverifyajax.generateRequest();
       },
       getapprovalverifyResponse:function(e){
-          var verifyreq=e.detail.response.returnval;
-         
-          document.querySelector('discountverify-card').verifyarr=verifyreq;
 
+          var verifyreq=[];
+          verifyreq=e.detail.response;
+          alert(JSON.stringify(verifyreq));
+          //verifyreq=[{"name":"dsddsds"},{"name":"eerrere"}];
+          document.querySelector('discountverify-card').theriarr=verifyreq;
+          //alert(JSON.stringify(document.querySelector('discountverify-card').theriarr));
       },
       confirmedfee:function(stid,fee,status,flag){
         var todat=new Date();

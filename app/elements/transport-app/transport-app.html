@@ -17,6 +17,7 @@
 <link rel="import" href="../discountstudent-card/discountstudent-card.html">
 <link rel="import" href="../transportfee-card/transportfee-card.html">
 <link rel="import" href="../mapstudenttopoint-card/mapstudenttopoint-card.html">
+<link rel="import" href="../discountverify-card/discountverify-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -79,14 +80,14 @@
            <section data-category="discount">
               <discountstudent-card></discountstudent-card>
            </section>
-            <section data-category="discount">
-              <discountstudent-card></discountstudent-card>
-           </section>
-           <section data-category="adminmanager">
+                       <section data-category="adminmanager">
               <adminmanager-card></adminmanager-card>
            </section>
             <section data-category="approvediscount">
               <approvediscount-card></approvediscount-card>
+           </section>
+           <section data-category="discountverify">
+              <discountverify-card></discountverify-card>
            </section>
           </iron-pages>
        </div>
@@ -148,8 +149,20 @@
     else if((currpage=='generatereport')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='generatereport';
+    }
+    else if((currpage=='discountverify')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='discountverify';
     }   
   }
+  else if(name=="Admin Manager"){
+   this.page="adminmanager"; 
+   if((currpage=='approvediscount')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='approvediscount';
+    }
+  }
+  
     
   },
   setPage:function(page,title)
@@ -178,6 +191,11 @@
     
   }
 else if(name=="Accounts Admin")
+  {
+    //alert("come");
+     window.location.href="../elements/home.html";
+  }
+  else if(name=="Admin Manager")
   {
     //alert("come");
      window.location.href="../elements/home.html";

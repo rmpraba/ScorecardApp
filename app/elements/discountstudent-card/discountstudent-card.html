@@ -39,28 +39,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <table>
         <tr>
           <td>
-            <paper-input class="field" label="Student Name" value="{{studname}}"></paper-input>
+            <paper-input id="q1" class="field" label="Student Name" value="{{studname}}"></paper-input>
           </td>
           <td>
-            <paper-input class="field" label="School type" value="{{schooltype}}"></paper-input>
-          </td>
-         
-        </tr>
-        <tr>
-          <td>
-            <paper-input class="field" label="Zone Name" value="{{zonename}}"></paper-input>
-          </td>
-          <td>
-            <paper-input class="field" label="Fees" value="{{fees}}"></paper-input>
+            <paper-input id="q2" class="field" label="School type" value="{{schooltype}}"></paper-input>
           </td>
          
         </tr>
         <tr>
           <td>
-            <paper-input class="field" label="From Date" value="{{fromdate}}"></paper-input>
+            <paper-input id="q3" class="field" label="Zone Name" value="{{zonename}}"></paper-input>
           </td>
           <td>
-            <paper-input class="field" label="To Date" value="{{todate}}"></paper-input>
+            <paper-input id="q4" class="field" label="Fees" value="{{fees}}"></paper-input>
+          </td>
+         
+        </tr>
+        <tr>
+          <td>
+            <paper-input id="q5" class="field" label="From Date" value="{{fromdate}}"></paper-input>
+          </td>
+          <td>
+            <paper-input id="q6" class="field" label="To Date" value="{{todate}}"></paper-input>
           </td>
           </tr>
           <tr>
@@ -93,6 +93,12 @@ var ctrlKey = 17, f5Key = 116, rKey = 82;
       is: 'discountstudent-card',
       ready:function(){
         this.$.hidet.hidden=true;
+        this.$.q1.readonly=true;
+        this.$.q2.readonly=true;
+        this.$.q3.readonly=true;
+        this.$.q4.readonly=true;
+        this.$.q5.readonly=true;
+        this.$.q6.readonly=true;
 
       },
       click:function(e)

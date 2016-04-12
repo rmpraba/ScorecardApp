@@ -38,7 +38,8 @@ paper-button{
     margin-top: 4%;
 }
 .logindialog{
-    width:35%;
+    width:30%;
+    height:70%;
     margin: 10% 0 0 32%;
     text-align: center;
    display: inline-block;

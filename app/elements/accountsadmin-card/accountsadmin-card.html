@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../transport-service/transport-service.html">
  <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
  <dom-module id="accountsadmin-card">
  <template> 
@@ -27,9 +28,10 @@
       
       <paper-icon-button class="iconbutton" src="../../images/transportation.png" on-click="transportfee"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/discount.png" on-click="discount"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/verify.jpg" on-click="discountverify"></paper-icon-button>
     </div>
   </body>
-    
+    <transport-service id="service"></transport-service>
 </template>
 <script>
   Polymer({
@@ -55,6 +57,12 @@ document.querySelector('transport-app').setPage("generatereport","Generate Repor
       discount:function()
       {
         document.querySelector('transport-app').setPage("discount","Fee Discount");
+      },
+      discountverify:function()
+      {
+        this.$.service.getapprovalverify();
+          
+        document.querySelector('transport-app').setPage("discountverify","Discount Verification");
       }
       
 

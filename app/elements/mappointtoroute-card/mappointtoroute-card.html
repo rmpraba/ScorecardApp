@@ -48,7 +48,7 @@
           </td>
           <td style="width: 70px;"></td>
           <td>
-          <paper-button id="button" class="button" on-click="Fndeletepoint">Submit</paper-button>
+          <paper-button id="button" class="button" on-click="Fndeletepoint">Delete</paper-button>
           
           </td>
           <td>
@@ -103,8 +103,19 @@
        },
        Fndeletepoint:function()
        {
-        alert('1');
-        this.$.select.deletemappoint(pointarray,routename,tripno);
+         if(tripno=="")
+          {
+         this.$.route.validate();
+         this.$.tripnoo.validate();
+         }
+         else if(pointarray.length>0)
+          {
+            this.$.select.deletemappoint(pointarray,routename,tripno);
+          }
+         else
+          {
+            alert("No CheckBox is Checked");
+          } 
        },
        clickfn:function()
        {

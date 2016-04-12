@@ -624,7 +624,7 @@ app.post('/cancel',  urlencodedParser,function (req, res){
 		});
 });
 app.post('/proceedcancel',  urlencodedParser,function (req, res){
-	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "status":"1", "reason":req.query.reason};
+	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "flag":3,"status":"Requested", "reason":req.query.reason};
     connection.query('insert into cancellation set ?',[collection],
 	function(err, rows){
 		if(err){
@@ -806,7 +806,7 @@ app.post('/chequedetails2',  urlencodedParser,function (req, res)
 app.post('/refund-card',  urlencodedParser,function (req, res)
 {
 
-       connection.query('SELECT student_id,student_name,refund_amount,reason,DATE_FORMAT( cancelled_date, "%d/%m/%Y" ) as cancelled_date from  cancellation where status=1',
+       connection.query('SELECT student_id,student_name,refund_amount,reason,DATE_FORMAT( cancelled_date, "%d/%m/%Y" ) as cancelled_date from  cancellation where flag=3',
        	function(err, rows)
        	{
 		if(!err)
@@ -832,13 +832,14 @@ app.post('/approval-card',  urlencodedParser,function (req, res)
 
 
 		var studid={"student_id":req.query.studid};
+				var vale={"status":req.query.status,"flag":req.query.flag};
 		console.log(studid);
-	    connection.query('update  cancellation set status=2 where ?',[studid],
+	    connection.query('update  cancellation set ? where ?',[vale,studid],
        	function(err, rows) 
        	{
 		if(!err)
 		{
-			console.log("success");
+			
 			res.status(200).json({'returnval': 'success'});
 		}
 		else
@@ -1158,6 +1159,32 @@ app.post('/cancelledfee',  urlencodedParser,function (req, res)
 	});
 
 
+
+app.post('/getverify',  urlencodedParser,function (req, res)
+{
+	
+	    connection.query('SELECT * from cancellation where flag=2',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json('invalid');
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+	
+});
+	});
 function setvalue()
 {
 	console.log("calling setvalue.....");

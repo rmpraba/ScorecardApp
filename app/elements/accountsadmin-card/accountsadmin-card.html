@@ -29,6 +29,7 @@
       <paper-icon-button class="iconbutton" src="../../images/transportation.png" on-click="transportfee"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/discount.png" on-click="discount"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/verify.jpg" on-click="discountverify"></paper-icon-button>
+       <paper-icon-button class="iconbutton" src="../../images/verify.jpg" on-click="refundverify"></paper-icon-button>
     </div>
   </body>
     <transport-service id="service"></transport-service>
@@ -63,6 +64,11 @@ document.querySelector('transport-app').setPage("generatereport","Generate Repor
         this.$.service.getapprovalverify();
           
         document.querySelector('transport-app').setPage("discountverify","Discount Verification");
+      },
+      refundverify:function()
+      {
+         document.querySelector('transport-app').setPage("refundverify","Refund Verification");
+
       }
       
 

@@ -59,6 +59,7 @@
    <paper-item id="lb">Reason</paper-item>
     <paper-item id="lb">Cancel Date</paper-item>
     <paper-item id="lb">Approval</paper-item>
+    <paper-item id="lb">Reject</paper-item>
   </div>
  <div class="hor">
   <div  class="layout"> <paper-item >{{studid}}</paper-item>
@@ -66,7 +67,8 @@
    <paper-item >{{amount}}</paper-item>
    <paper-item >{{reason}}</paper-item>
    <paper-item >{{canceldate}}</paper-item>
-  <paper-checkbox id="box" class="checkbox" on-change="Fnapproval"></paper-checkbox>
+  <paper-checkbox id="box1" class="checkbox" on-change="Fnapproval"></paper-checkbox>
+  <paper-checkbox id="box2" class="checkbox" on-change="Fnapproval"></paper-checkbox>
    </div>
   </div>
  </div>
@@ -79,7 +81,7 @@
 
   
  (function() {
-   
+   var status='';
    var idd="0";
     Polymer({
       is: "refund-card",
@@ -108,12 +110,24 @@
 },
 Fnapproval:function(e)
 {
-  
-  if(e.target.checked==true)
+    var approve=document.querySelector("#box1");
+    var reject=document.querySelector("#box2");
+  if(approve.checked==true)
     {
-     
-      this.$.service.Approvereq(this.studid);
+     status='Approved';
+     var flag=2;
+      this.$.service.Approvereq(this.studid,status,flag);
     }
+    if(approve.checked==true)
+    {
+     status='Rejected';
+     var flag=2;
+      this.$.service.Approvereq(this.studid,status,flag);
+    }
+
+
+
+
 }
       
     });

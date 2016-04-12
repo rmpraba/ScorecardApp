@@ -33,6 +33,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getverifyajax"
+        url="{{getverifyurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getverifyResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
     <style>
       :host {
         display: block;
@@ -59,14 +70,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // alert(JSON.stringify(e.detail.response.returnval));
          document.querySelector('refund-list').refundarr=refundresult;
       },
-      Approvereq:function(stdid)
+      Approvereq:function(stdid,status,flag)
       {
         //alert('aa');
         this.approvalurl="http://localhost:8081/approval-card";
-         var obj={"studid":""}
+         var obj={"studid":"","status":"","flag":""}
         obj.studid=stdid;
+        obj.status=status;
+        obj.flag=flag;
         this.approvalparam=obj;
         this.$.approvalajax.generateRequest();
+      },
+      approvalResponse:function(e){
+          var result=e.detail.response.returnval;
+       
+          if(result=='success'){
+            alert('Request Confirmed');
+          }
+          else
+          {
+            alert('Request Failed');
+          }
+      },
+       getverify:function()
+     {
+
+      this.getverifyurl="http://localhost:8081/getverify";
+        this.$.getverifyajax.generateRequest();
+      },
+      getverifyResponse:function(e)
+      {
+        var refundresult=e.detail.response.returnval;
+         document.querySelector('refundverify-card').refundarr=refundresult;
       }
     });
  })();

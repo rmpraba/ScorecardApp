@@ -28,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div class="disframe"><div>
-        <paper-input style="width: 90%;" class="field" label="Student ID" value="{{id}}"></paper-input>
+        <paper-input style="width: 90%;" id="stdid" class="field" label="Student ID" value="{{id}}" required auto-validate error-message="needs Student Id"></paper-input>
     </div>
     <div>
       <paper-button id="button" class="button" on-click="click">Submit</paper-button>
@@ -65,10 +65,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </tr>
           <tr>
           <td>
-            <paper-input class="field" label="Discount Amount" value="{{disamt}}"></paper-input>
+            <paper-input class="field" id="damt" label="Discount Amount" value="{{disamt}}" required error-message="needs discount amount"></paper-input>
           </td>
           <td>
-            <paper-input class="field" label="Reason" value="{{reason}}"></paper-input>
+            <paper-input class="field" id="res" label="Reason" value="{{reason}}" required error-message="needs reason"></paper-input>
           </td>
         </tr>
         <tr>
@@ -95,13 +95,30 @@ var ctrlKey = 17, f5Key = 116, rKey = 82;
         this.$.hidet.hidden=true;
 
       },
-      click:function(e){
+      click:function(e)
+      {
+        if(this.id=="")
+        {
+          this.$.stdid.validate();
+        }
+        else
+        {
           this.$.hidet.hidden=false;
           this.$.service.getfeedata(this.id);
+        }
 
       },
-      clicksend:function(e){
+      clicksend:function(e)
+      {
+        if(this.disamt=="" && this.reason=="")
+        {
+          this.$.damt.validate();
+          this.$.res.validate();
+        }
+        else
+        {
         this.$.service.sendrequest(this.id,this.studname,this.schooltype,this.zonename,this.fees,this.fromdate,this.todate,this.schooltype,this.disamt,this.reason);
+        }
       }
     
       

@@ -7,13 +7,14 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
 <dom-module id="generatereport-card">
   <template>
     <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
     <iron-collapse id="{{studid}}" class="detail">
-      <div class="img">
-        <img src="images/{{studid}}.jpg"/>
-      </div>
+       <div class="field1">
+      <div class="imag">  <img src="images/{{studid}}.jpg"/></div>
+      <div class="full">
       <div class="layout">
         <paper-item id="lb" >student Id:</paper-item><paper-item >{{studid}}</paper-item>
         <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item>
@@ -33,6 +34,8 @@
       <div class="layout">
         <paper-item id="lb" >Pick Up Place: </paper-item><paper-item >{{pick}}</paper-item>
         <paper-item id="lb">Drop Place:</paper-item><paper-item >{{drop}}</paper-item>
+      </div>
+      </div>
       </div>
     </iron-collapse>
   </template>

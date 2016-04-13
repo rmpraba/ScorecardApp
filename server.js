@@ -588,7 +588,7 @@ app.post('/cancellation',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,s.class_id,s.school_type,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2 as total, z.fees-z.installment_1+z.installment_2 as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+       connection.query('SELECT s.id,s.student_name,s.class_id,s.school_type,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1+z.installment_2 as total, z.fees-z.installment_1+z.installment_2 as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
 		if(!err)
@@ -607,11 +607,10 @@ app.post('/cancellation',  urlencodedParser,function (req, res)
 });
 app.post('/cancel',  urlencodedParser,function (req, res){
 	var school_type={"school_type":req.query.school_type};
-	var student_id={"student_id":req.query.student_id};
 	var end_transport=req.query.end_date;
 
-	var queryy="SELECT student_id, DATEDIFF(STR_TO_DATE('"+end_transport+"', '%m/%d/%Y'),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days, installment_1 + installment_2 as total, fees FROM transport_details join student_fee where ? and  ?";
-    connection.query(queryy,[end_transport,school_type, student_id],
+	var queryy="SELECT DATEDIFF(STR_TO_DATE('"+end_transport+"', '%m/%d/%Y'),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days FROM transport_details where ? and  ?";
+    connection.query(queryy,[end_transport,school_type],
 		function(err, rows){
        	if(err){
        		console.log(err);

@@ -353,6 +353,8 @@
     var totalfee;
     var months;
     var calcfee;
+    var cancelfee;
+    var cancelpaid;
 
 
     Polymer({
@@ -616,12 +618,13 @@
         var reportresult=e.detail.response.returnval;
         document.querySelector('cancellation-card').cancellationarr=reportresult;
       }, 
-      cancel:function(school_type, student_id){
+      cancel:function(school_type, fee, paid){
         this.cancelurl="http://localhost:8081/cancel";
         var end_date = localStorage.getItem("localsess_curr_date",this.showdate);
-        var obj={"school_type":"","student_id":"","end_date":""};
+        var obj={"school_type":"","end_date":""};
         obj.school_type=school_type;
-        obj.student_id=student_id;
+        cancelfee = fee;
+        cancelpaid = paid;
         obj.end_date=end_date;
         this.cancelparam=obj;
         this.$.cancelajax.generateRequest();
@@ -633,8 +636,8 @@
         var totalmonths = total_days/30;
         var months_used = Math.ceil(monthsused);
         var total_months = Math.ceil(totalmonths);
-        var totalamount = JSON.stringify(e.detail.response.returnval[0].fees);
-        var paidamount = JSON.stringify(e.detail.response.returnval[0].total);
+        var totalamount = cancelfee;
+        var paidamount = cancelpaid;
         var positive = total_months - months_used;
         var percent = (positive / total_months)*100;
         var total_refund_amount = (totalamount/100)*percent;

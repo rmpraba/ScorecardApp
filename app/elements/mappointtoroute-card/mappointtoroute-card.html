@@ -15,143 +15,87 @@
   <template>  
     <body>
       <div class="dupframe">
-      <table>
-        <tr>
-        <td style="width: 17%;"></td>
-          <td>
-            <paper-item label="">Route Name<paper-item>
-          </td>
-          <td>
-            <div class="drop-down">
-            <paper-dropdown-menu label="---Select the Route---" id="route" required  errorMessage ="please select the route" >
-                <paper-menu class="dropdown-content" on-iron-select="rootname" valueattr="value" >
-                   <template  is="dom-repeat" items="{{routearr}}" as="view">
-              <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
+        <div class="drop-down">
+          <paper-dropdown-menu label="Route" id="route" required  errorMessage ="please select the route" >
+            <paper-menu class="dropdown-content" on-iron-select="rootname" valueattr="value" >
+              <template  is="dom-repeat" items="{{routearr}}" as="view">
+                <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
               </template>
-                </paper-menu>
-            </paper-dropdown-menu>
-          </div>
-          </td>
-          <td>
-            <paper-item label="">Trip<paper-item>
-          </td>
-          <td>
-          <div class="drop-down">
-           <paper-dropdown-menu label="---Select the Trip---" id="tripnoo" required error-message="select the trip">
-               <paper-menu class="dropdown-content" on-iron-select="tripnum" valueattr="value"  >
-                   <template  is="dom-repeat" items="{{triparr}}" as="view">
-              <paper-item value="{{view.trip}}">{{view.trip}}</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+          <paper-dropdown-menu label="Trip" id="tripnoo" required error-message="select the trip">
+            <paper-menu class="dropdown-content" on-iron-select="tripnum" valueattr="value"  >
+              <template  is="dom-repeat" items="{{triparr}}" as="view">
+                <paper-item value="{{view.trip}}">{{view.trip}}</paper-item>
               </template>
-                </paper-menu>
-            </paper-dropdown-menu>
-          </div>    
-          </td>
-          <td style="width: 70px;"></td>
-          <td>
-          <paper-button id="button" class="button" on-click="Fndeletepoint">Delete</paper-button>
-          
-          </td>
-          <td>
-            <paper-button id="create" class="button" on-click="clickfn">Create New</paper-button>
-          </td>
-        </tr>
-      </table>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
         <div>
-            <template  is="dom-repeat" items="{{itemarr}}">
+          <template  is="dom-repeat" items="{{itemarr}}">
             <fetch-card points="{{item.point_name}}" trip="{{item.trip}}" picktime="{{item.pickup_time}}" droptime="{{item.drop_time}}">
-            </template>
-          </div>
-          
-         <div id="cardnew" hidden$="{{hide}}">
-            
-              <item-card></item-card>
-            
-          </div>
-                
+          </template>
+        </div>
+        <div id="cardnew" hidden$="{{hide}}">
+          <item-card></item-card>
+        </div>
+        <div class="buttons">
+          <paper-button id="button" class="button" on-click="Fndeletepoint">Submit</paper-button>
+          <paper-button id="create" class="button" on-click="clickfn">Create New</paper-button>
+        </div>
       </div>
-        
     </body>
   <transport-service id="select"></transport-service>
   </template>
- <script>
-(function() {
-  var routename="";
-  var pointarray=[];
-  var detailarr=[];
-  var tripno="";
-    Polymer({
-      is: "mappointtoroute-card",
-      ready:function()
-      { 
-        this.hide=true;
-        this.$.select.getroute();
-       },
-       rootname:function(e)
-       {
-        routename = (e.target.selectedItem.textContent).trim();
-        //alert('selected route = '+routename);
-        this.$.select.gettrip(routename);
-        
-        sessionStorage.setItem("route",routename);
-       },
-       tripnum:function(e)
-       {
-         tripno = (e.target.selectedItem.textContent).trim();
-        this.$.select.getroutedetail(tripno);
-
-         sessionStorage.setItem("trip",tripno);
-       },
-       Fndeletepoint:function()
-       {
-         if(tripno=="")
-          {
-         this.$.route.validate();
-         this.$.tripnoo.validate();
-         }
-         else if(pointarray.length>0)
-          {
+  <script>
+    (function() {
+      var routename="";
+      var pointarray=[];
+      var detailarr=[];
+      var tripno="";
+        Polymer({
+          is: "mappointtoroute-card",
+          ready:function(){ 
+            this.hide=true;
+            this.$.button.hidden=true;
+            this.$.create.hidden=true;
+            this.$.select.getroute();
+          },
+          rootname:function(e){
+            routename = (e.target.selectedItem.textContent).trim();
+            this.$.select.gettrip(routename);
+            sessionStorage.setItem("route",routename);
+          },
+          tripnum:function(e){
+            tripno = (e.target.selectedItem.textContent).trim();
+            this.$.select.getroutedetail(tripno);
+            sessionStorage.setItem("trip",tripno);
+            this.$.button.hidden=false;
+            this.$.create.hidden=false;
+          },
+          Fndeletepoint:function(){
             this.$.select.deletemappoint(pointarray,routename,tripno);
-          }
-         else
-          {
-            alert("No CheckBox is Checked");
-          } 
-       },
-       clickfn:function()
-       {
-          if(tripno=="")
-          {
-         this.$.route.validate();
-         this.$.tripnoo.validate();
-        }
-        else
-        {
-        this.hide=false;
-      }
-       },
-       FnGetpoints:function(points,checktype)
-       {
-        if(checktype=="true")
-        {
-        pointarray.push(points);
-        }
-        else
-        {
-          var i = pointarray.indexOf(points);
-          if(i != -1)
-          {
-           pointarray.splice(i, 1);
-          }
-        }
-        
-       },
-
-
-        
-
-});
-})();
+          },
+          clickfn:function(){
+             if(tripno==""){
+              this.$.route.validate();
+              this.$.tripnoo.validate();
+            } else {
+              this.hide=false;
+            }
+          },
+          FnGetpoints:function(points,checktype){
+            if(checktype=="true"){
+              pointarray.push(points);
+            } else {
+              var i = pointarray.indexOf(points);
+              if(i != -1) {
+                pointarray.splice(i, 1);
+              }
+            }
+            
+          },
+        });
+    })();
   </script>
-
- 
 </dom-module>

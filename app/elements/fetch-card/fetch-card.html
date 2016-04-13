@@ -1,4 +1,3 @@
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
@@ -13,91 +12,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <dom-module id="fetch-card">
 <template>
- <style is="custom-style">
- .card{
-  margin-left: 10%;
- @apply(--layout-horizontal);
- @apply(--layout-center);
- position: relative;
- }
-    .detail{
- width: 35%;
- @apply(--layout-vertical);
- margin-left: -10%;
- }
- .r1,.r2{
- @apply(--layout-horizontal);
- }
- .field{
-  margin-left: 20%;
-  text-align: center;
-  border-radius: 2px;
-  width: 70%;
-  margin-top : 2px;
- }
- 
- .iconbutton{
-  height: 15px;
-  width: 15px;
-  border-radius: 2px;
-  box-shadow: 5px;
- }
- .checkbox{
-padding: 30px;
- }
- </style>
   <legend align="center"></legend>
-  <div class="card">
-  <div class="detail">
-   <paper-input id="point" label="Point" class="field" value={{points}}></paper-input>
-   </div>
-   
-  <div>
-    <paper-input id="point" label="pickup Time" class="field" value={{picktime}}></paper-input>
-  </div>
-  <div>
-    <paper-input id="point" label="Drop Time" class="field" value={{droptime}}></paper-input>
-  </div>
-   <paper-checkbox id="box" class="checkbox" on-change="changeHandler">Remove</paper-checkbox>
-   </div>
-   <div>
-     <paper-input id="trip" class="field" label="Trip" value={{trip}}></paper-input>
-   </div>
- 
-  
-
-  </template>
+    <ul>
+      <li>
+        <fieldset>
+          <ul>
+            <li class="row">
+              <div class="detail">
+                <div class="layout">
+                  <paper-input id="point" label="Point" class="field" value={{points}}></paper-input>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="layout">
+                  <paper-input id="point" label="pickup Time" class="field" value={{picktime}}></paper-input>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="layout">
+                  <paper-input id="point" label="Drop Time" class="field" value={{droptime}}></paper-input>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </fieldset>
+      </li>
+      <li class="row">
+        <div class="detail">
+          <div class="field">
+            <paper-checkbox id="box" class="checkbox" on-change="changeHandler"></paper-checkbox>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div>
+      <paper-input id="trip" class="field" label="Trip" value={{trip}}></paper-input>
+    </div>
+</template>
   <script>
-
   (function() {
     var n=0;
       var itemarr=[];
-      
     Polymer({
       is: "fetch-card",
-      ready:function()
-      {
+      ready:function(){
         n=n+1;
         this.$.point.readonly=true;
         this.$.trip.hidden=true;
-        //this.$.routename.hidden=true;
-        
       },
-      changeHandler:function(e)
-      {
-        if(e.target.checked==true)
-         {
+      changeHandler:function(e){
+        if(e.target.checked==true){
            document.querySelector('mappointtoroute-card').FnGetpoints(this.points,"true");
-         }
-         else
-         {
+        } else {
            document.querySelector('mappointtoroute-card').FnGetpoints(this.points,"false");
-         }
+        }
       }
-      
-     
     });
-     })();
+  })();
   </script>
-
 </dom-module>

@@ -3,7 +3,7 @@
 
 }
 .head{
-	background-color:#1E2021 ; 
+    background-color:#1E2021 ; 
     text-align: center; 
     color: #ffffff;  
     padding: 1% 0;
@@ -12,7 +12,7 @@
     font-size: 2em;
 }
 body{
-	margin: 0;
+    margin: 0;
     padding: 0 !important;
 }
 .footer{
@@ -21,7 +21,7 @@ body{
     position: absolute;
 }
 paper-button{
-	background: #252626 !important;
+    background: #252626 !important;
     color: white;
 }
 .class-drop{
@@ -33,13 +33,15 @@ paper-button{
     margin-top: 7%;
 }
 .dupframe{
-    table-layout: auto; 
+    margin-left: 20%; 
+    margin-top: 4%;
+}
+.dupframe .drop-down{
     margin-left: 20%; 
     margin-top: 4%;
 }
 .logindialog{
-    width:30%;
-    height:70%;
+    width:35%;
     margin: 10% 0 0 32%;
     text-align: center;
    display: inline-block;
@@ -73,6 +75,9 @@ paper-button{
 .cancellation-card paper-listbox, .genestureport-card paper-listbox{
     width: 65% !important;
     margin: 0% 20% 0% 20%;
+}
+.cancellation-card paper-listbox paper-item,.genestureport-card paper-listbox paper-item{
+    width: 100%;
 }
 .cancellation-card .reason{
     @apply(--layout-horizontal);
@@ -134,6 +139,9 @@ fieldset{
    margin: 0% 0% 0% 22%;
    width: 54%;
 }
+ul, li{
+    list-style: none outside none;
+}
 .detail{
    width: 100%;
    margin-left: 2%;
@@ -150,6 +158,20 @@ fieldset{
     position: absolute;
     right: 22.5%;
     top:15%;
+}
+.dupframe .checkbox{
+  position: absolute;
+  right: 22.5%;
+  margin-top: -65px; 
+}
+.dupframe .buttons{
+    margin-left: 30%;
+    margin-top:5%;
+    margin-bottom: 5%;
+}
+.dupframe fieldset{
+    margin-left: -1%;
+    width: 70%;
 }
 .detail1{
     @apply(--layout-horizontal);

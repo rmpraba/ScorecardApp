@@ -447,23 +447,26 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 	});
 app.post('/classpick',  urlencodedParser,function (req, res)
 {
-	var class_id={"school_type":req.query.classes};
-	var trans_req={"transport_required":"yes"};
+	var class_id=req.query.classes;
 	//console.log('in server...');
-       connection.query('SELECT id, student_name from student_details where ? and ?',[class_id,trans_req],
+       connection.query('SELECT sd.id, sd.student_name from student_details sd join student_fee sf on sd.id = sf.student_id where sd.school_type= ? and sd.transport_required="yes" and sf.installment_1>0',[class_id],
        	function(err, rows)
        	{ 
 		if(!err)
 		{
 		if(rows.length>0)
 		{
-			//console.log(rows);
+			console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
 		{
 			res.status(200).json({'returnval': 'invalid'});
 		}
+	}
+	else
+	{
+		console.log(err);
 	}
 });
 });

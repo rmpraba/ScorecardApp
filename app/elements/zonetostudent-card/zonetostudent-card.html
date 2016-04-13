@@ -1,47 +1,47 @@
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
-<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
-<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="import" href="../bower_components/paper-input-autocomplete/paper-input-autocomplete.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../transport-service/transport-service.html">
-<link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
-<link rel="import" href="../todatepicker-card/todatepicker-card.html">
-<link rel="stylesheet" type="text/css" href="../styles/styles.css">
-<dom-module id="zonetostudent-card">
+
+ <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+ <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+   <link rel="import" href="../bower_components/paper-input/paper-input.html">
+       <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+       <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+       <link rel="import" href="../bower_components/paper-item/paper-item.html">
+       <link rel="import" href="../bower_components/paper-button/paper-button.html">
+       <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+       <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+       <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+       <link rel="import" href="../bower_components/paper-input-autocomplete/paper-input-autocomplete.html">
+       <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+        <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+    <link rel="import" href="../transport-service/transport-service.html">
+    <link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
+    <link rel="import" href="../todatepicker-card/todatepicker-card.html">
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+        <dom-module id="zonetostudent-card">
+
 <template>  
   <body>
-    <div class="zonetostudent-card">
-      <div class="layframe">
-        <div class="layout">
+    
+
+    <div class="layframe">
+
+    <table>
+      <tr>
+        
+        <td>
+          <div class="class-drop">
           <paper-dropdown-menu label="Standard">
             <paper-menu id="drop"class="dropdown-content" on-iron-select="stnd" valueattr="value" >
               <template  is="dom-repeat" items="{{stdarr}}" as="view">
-                <paper-item value="{{view.class}}">{{view.class}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-          <paper-dropdown-menu label="Section">
-            <paper-menu id="drop" class="dropdown-content" on-iron-select="secn" valueattr="value" >
-              <template  is="dom-repeat" items="{{secarr}}" as="view">
-                <paper-item value="{{view.section}}">{{view.section}}</paper-item>
+              <paper-item value="{{view.class}}">{{view.class}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-<<<<<<< HEAD
       </td>
       <td>
       <div class="class-drop">
         <paper-dropdown-menu label="Section">
-          <paper-menu id="drop1" class="dropdown-content" on-iron-select="secn" valueattr="value" >
+          <paper-menu id="drop" class="dropdown-content" on-iron-select="secn" valueattr="value" >
             <template  is="dom-repeat" items="{{secarr}}" as="view">
               <paper-item value="{{view.section}}">{{view.section}}</paper-item>
             </template>
@@ -53,55 +53,62 @@
        <tr>
         <td>
         
-=======
-        <div class="layout">
->>>>>>> origin/master
           <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
-          <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnItemSelected">
-            <template is="dom-repeat" items="{{itemArray}}" as="item">
-              <paper-item>{{item.itemdes}}</paper-item>
-            </template>
-          </paper-listbox>
+      <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnItemSelected">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <paper-item>{{item.itemdes}}</paper-item>
+        </template>
+      </paper-listbox>
+        </td>
+        <td>
           <paper-input class="field" label="School Type" is="" id="dad" value="{{grade}}"></paper-input>
-        </div>
-        <div class="layout">
-          <paper-input class="field" label="Student ID" is="" id="idd" value="{{id}}"></paper-input>
-          <paper-input class="field" label="Date Of Birth" is="" id="dob" value="{{date}}"></paper-input>
-        </div>
-        <div class="layout">
-          <paper-dropdown-menu label="Select the Zone">
-            <paper-menu class="dropdown-content" on-iron-select="zoned" valueattr="value" >
-              <template  is="dom-repeat" items="{{itemarr}}" as="view">
-                <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-        </div>
-      </div>
-<<<<<<< HEAD
+        </td>
+      </tr>
+        <tr>
+        <td>
+         
+             <paper-input class="field" label="Student ID" is="" id="idd" value="{{id}}"></paper-input>
+           
       
         </td>
         <td>
-          <paper-input style="width: 100px;" class="field" label="Fees" value="{{fee}}"></paper-input>
+          <paper-input class="field" label="Date Of Birth" is="" id="dob" value="{{date}}"></paper-input>
+        </td>
+      </tr>
+     <tr>
+        <td>
+      <div class="drop-down">
+        <paper-dropdown-menu label="Select the Zone">
+          <paper-menu class="dropdown-content" on-iron-select="zoned" valueattr="value" >
+            <template  is="dom-repeat" items="{{itemarr}}" as="view">
+              <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+      
+        </td>
+         <td>
+          <paper-input style="width: 100px;" readonly class="field" label="Fees" value="{{fee}}"></paper-input>
         </td>
         <td>
           <paper-input id="zdate1" style="width: 10%;" value="{{zfromdate}}"></paper-input> 
         </td>
       </tr>
       </table>
-      <paper-item id="item">Transport Requirement Period</paper-item>
                 <div>
-                
       <table>
-        <tr>
         
+          <paper-item id="item">Transport Requirement Period</paper-item>
+        
+        <tr>
                     <td>
             Complete Year
             <paper-checkbox id="yearly" class="checkbox" on-change="fullHandler"></paper-checkbox>
           </td>
-          <td style="width: 20%;"></td>
+          <td style="width: 10%;"></td>
           <td>
-          Custom
+            Custom
             <paper-checkbox id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox>
           </td>
           <td>
@@ -117,9 +124,7 @@
       <table>
       <tr>
         
-        <td>
-          
-        </td>
+       
         <td>
             <fromdatepicker-card id="date1"></fromdatepicker-card>
         </td>
@@ -132,16 +137,11 @@
       </tr>
      
       <tr><td style="width: 10px; height: 20px;"></td></tr>
-      <tr><td style="width: 20%;">
-        
-      </td>
-      <td>
-        <paper-button id="button" class="button" on-click="click">Add</paper-button>
-      </td>
-        <td style="width: 32%;">
-          
-        </td>
-        
+      <tr>
+      <td style="width: 30%;"></td>
+        <td>
+          <paper-button id="button" class="button" on-click="click">Add</paper-button>
+        </td><td style="width: 20%;"></td>
         <td>
           <paper-button id="button" class="button" style="margin-left: -25%;">Cancel</paper-button>
         </td>
@@ -149,46 +149,12 @@
     </table>
       
 
-=======
-      <div class="layframe">
-        <div class="layout label">
-          <paper-item>Transport Requirement Period</paper-item>
-        </div>
-        <div class="layout">
-          <div class="check-box">
-            <paper-checkbox id="yearly" class="checkbox" on-change="changeHandler">Complete Year</paper-checkbox>
-          </div>
-          <div class="button">
-            <paper-button class="button" on-click="clickdate">Custom</paper-button>
-          </div>
-        </div>
-        <div class="layout">
-          <div class="date">
-            <paper-input id="zdate1" value="{{zfromdate}}"></paper-input>
-            <fromdatepicker-card id="date1"></fromdatepicker-card>
-          </div>
-          <div class="date">
-            <paper-input id="zdate" value="{{ztodate}}"></paper-input>
-            <todatepicker-card id="date2"></todatepicker-card> 
-          </div>
-          <div class="fee">
-            <paper-input class="field" label="Fees" value="{{fee}}"></paper-input>
-          </div>
-        </div>
-        <div class="layout">
-          <div class="check-box">
-            <paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </div>
-        </div>
-        <div class="buttons">
-          <paper-button id="button" class="button" on-click="click">Add</paper-button>
-          <paper-button id="button" class="button">Cancel</paper-button>
-        </div>
-      </div>
->>>>>>> origin/master
     </div>
+
+    
+    
   </body>
-  <transport-service id="root"></transport-service>
+    <transport-service id="root"></transport-service>
 </template>
 <script>
  (function() {
@@ -198,7 +164,9 @@
     var fromdat;
 var todat;
   Polymer({
+
     is: "zonetostudent-card",
+    
       ready: function() {
         this.$.root.getzone();
         this.$.root.getstd();
@@ -217,7 +185,6 @@ var todat;
           this.page=page;
         },
         stnd:function(e){
-<<<<<<< HEAD
          // alert('0');
           
       this.std = (e.target.selectedItem.textContent).trim();
@@ -226,9 +193,8 @@ var todat;
     },
     secn:function(e){
       this.sec = (e.target.selectedItem.textContent).trim();
-
       this.$.root.getname(this.std,this.sec);
-      document.querySelector('#drop1').selected=-1;
+      
     },
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
@@ -245,25 +211,6 @@ var todat;
         // alert(item);
     },
    
-=======
-          this.std = (e.target.selectedItem.textContent).trim();
-          this.$.root.getsec(this.std);
-          this.sec='';
-        },
-        secn:function(e){
-          this.sec = (e.target.selectedItem.textContent).trim();
-          this.$.root.getname(this.std,this.sec);
-        },
-        zoned:function(e){
-          this.zone_id=e.target.selectedItem.value;
-          this.zone = (e.target.selectedItem.textContent).trim();
-          this.$.root.getfee(this.zone);
-          this.$.root.gettermdate(this.grade);
-        },
-        autocompletearr:function(autocompletearr){
-          item=autocompletearr;
-        },
->>>>>>> origin/master
     FnInputChanged:function(e){
      //alert(e.keyCode);
       if(e.keyCode==13|| e.keyCode==40)
@@ -303,7 +250,7 @@ var todat;
           this.itemflag="false";
         }
         else
-        this.itemval = this.value +String.fromCharCode((e.keyCode));
+        this.itemval = this.itemval +String.fromCharCode((e.keyCode));
         if(this.itemval.length>0)
         {
           for(var i=0;i<item.length;i++){
@@ -346,16 +293,23 @@ var todat;
 
      // alert(JSON.stringify(inputlocal.source));
     },
-    changeHandler:function(event){ 
+     changeHandler:function(event){ 
         
         
         var custom = document.querySelector("#custom");
         var datebox = document.querySelector("#datebox");
         
        
-        
+       if(custom.checked==true){
+         this.$.date1.hidden=false;
+        this.$.date2.hidden=false;
+        this.$.datebox.hidden=false;          
+          document.querySelector("#yearly").checked=false;
+        }
+
+ 
         if(custom.checked==false){
-          alert('custom is selected');
+         
           this.$.date1.hidden=true;
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;          
@@ -368,17 +322,7 @@ var todat;
         }
 
 
-        
-
-        if(custom.checked==true){
-          alert('custom is selected');
-          this.$.date1.hidden=false;
-        this.$.date2.hidden=false;
-        this.$.datebox.hidden=false;          
-          document.querySelector("#yearly").checked=false;
-        }
-
-
+       
        
         if(datebox.checked==true){
           //alert('date check is selected');
@@ -396,7 +340,7 @@ fullHandler:function(event){
   var yearly = document.querySelector("#yearly");
     
     if(yearly.checked==true){ 
-        alert('Complete Year is selected');
+       
 
         document.querySelector("#datebox").checked=false;
         document.querySelector("#custom").checked=false;
@@ -410,7 +354,7 @@ fullHandler:function(event){
         todat=new Date(this.ztodate);
         this.$.root.calc(temp);
        
-        alert(fromdat+'   '+todat);
+       
         }  
 
         if(yearly.checked==false){
@@ -429,8 +373,13 @@ click:function(e)
       //alert(this.studentid+this.zone_id+this.fee);
       this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate);
 
-    }
-
+    },
+clickdate:function()
+{
+    this.$.date1.hidden=false;
+        this.$.date2.hidden=false;
+        this.$.datebox.hidden=false;
+}
   });
    })();
 

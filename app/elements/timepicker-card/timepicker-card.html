@@ -19,7 +19,7 @@
       }
     </style>
     <div class="card">
-      <paper-input class="btn" on-click="showDialog" raised value="{{picktime}}"></paper-input>
+      <paper-input class="btn" label="Pickup Time" on-click="showDialog" raised value="{{picktime}}"></paper-input>
       <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="dismissDialog">
         <paper-time-picker id="picker" time="[[time]]"></paper-time-picker>
         <div class="buttons">

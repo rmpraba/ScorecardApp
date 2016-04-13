@@ -60,6 +60,7 @@ paper-button{
 }
 .layframe{
     margin-left: 30%;
+    padding: 1% 0 1% 0;
 }
 .cancellation-card .row{
     padding: 1% 3% 1% 5%;
@@ -84,7 +85,7 @@ paper-button{
 }
 .cancellation-card .reason paper-textarea{
     margin: 1% 0 0 20%;
-    width: 50%;
+    width: 100%;
 }
 .cancellation-card .check-box{
     padding: 1%;
@@ -138,9 +139,20 @@ paper-button{
 fieldset{
    margin: 0% 0% 0% 22%;
    width: 54%;
+   border: none !important;
 }
-ul, li{
+li{
     list-style: none outside none;
+}
+.ro{
+    box-shadow: 0 3px 5px rgba(0,0,0,0.25)!important;
+}
+.rows{
+    box-shadow: 0 3px 5px rgba(0,0,0,0.25)!important;
+    width: 85%;
+}
+.rowss{
+    width: 100%;
 }
 .detail{
    width: 100%;
@@ -202,5 +214,17 @@ ul, li{
 }
 paper-item{
     width: 150px;
+}
+.layout.label{
+    padding: 0% 0 1% 0;
+}
+.layout.label paper-item{
+    width: 50%;
+}
+.zonetostudent-card .layframe .date{
+    margin: 0;
+}
+ul li #new-button{
+    margin-left: 800%;
 }
 </style>

@@ -1,4 +1,3 @@
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
@@ -16,21 +15,43 @@
 <dom-module id="item-card">
 <template>
   <legend align="center"></legend>
-  <div class="card">
-    <div class="detail">
-      <paper-input  class="field" value={{points}}></paper-input>
-    </div>
-    <div>
-      <timepicker-card></timepicker-card>
-    </div>
-    <div>
-      <timepicker1-card></timepicker1-card>
-    </div>
-    <div>
-    <paper-button class="button" on-click="insert">ADD</paper-button>
-    </div>
-    <paper-input hidden="true" value="{{routen}}"></paper-input>
-  </div>
+    <ul>
+      <li class="rows">
+        <fieldset>
+          <ul class="rowss">
+            <li class="row">
+              <div class="detail">
+                <div class="layout">
+                  <paper-input label="Point" class="field" value={{points}}></paper-input>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="layout">
+                  <timepicker-card></timepicker-card>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail"> 
+                <div class="layout">
+                  <timepicker1-card></timepicker1-card>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="field">
+                  <paper-button id="new-button" class="button item-card" on-click="insert">Add</paper-button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </fieldset>
+      </li>
+    </ul>
+  <paper-input hidden="true" value="{{routen}}"></paper-input>
   <transport-service id="insert"></transport-service>
 </template>
 <script>

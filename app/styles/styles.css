@@ -59,7 +59,41 @@ paper-button{
     margin: 5% 0 0 30%;
 }
 .layframe{
-    margin-left: 30%;
+    margin-left: 33%;
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+    
+
+}
+.zonetostudent-card .class-drop{
+    padding: 5%;
+}
+.zonetostudent-card .field{
+    padding: 5%;
+    text-align: left;
+}
+.zonetostudent-card .button{
+    padding: 15%;
+
+    
+}
+.zonetostudent-card #button4{
+    padding: 15%;
+    background-color:#ffffff; 
+    color:#000000;
+}
+.zonetostudent-card #button4: hover{
+    padding: 15%;
+    background-color:#ffa64d; 
+    color:#000000;
+}
+.zonetostudent-card #item{
+    width: auto;
+    margin-left: 10%;
+    font-size: large;
+    font-weight:500;
+    @apply(--layout-horizontal);
+    
 }
 .cancellation-card .row{
     padding: 1% 3% 1% 5%;

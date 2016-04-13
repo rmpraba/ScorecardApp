@@ -41,7 +41,7 @@
       <td>
       <div class="class-drop">
         <paper-dropdown-menu label="Section">
-          <paper-menu id="drop" class="dropdown-content" on-iron-select="secn" valueattr="value" >
+          <paper-menu id="drop1" class="dropdown-content" on-iron-select="secn" valueattr="value" >
             <template  is="dom-repeat" items="{{secarr}}" as="view">
               <paper-item value="{{view.section}}">{{view.section}}</paper-item>
             </template>
@@ -89,22 +89,27 @@
       
         </td>
         <td>
+          <paper-input style="width: 100px;" class="field" label="Fees" value="{{fee}}"></paper-input>
+        </td>
+        <td>
           <paper-input id="zdate1" style="width: 10%;" value="{{zfromdate}}"></paper-input> 
         </td>
       </tr>
       </table>
+      <paper-item id="item">Transport Requirement Period</paper-item>
                 <div>
+                
       <table>
-        
-          <paper-item>Transport Requirement Period</paper-item>
-        
         <tr>
+        
                     <td>
             Complete Year
-            <paper-checkbox id="yearly" class="checkbox" on-change="changeHandler"></paper-checkbox>
+            <paper-checkbox id="yearly" class="checkbox" on-change="fullHandler"></paper-checkbox>
           </td>
+          <td style="width: 20%;"></td>
           <td>
-            <paper-button class="button" on-click="clickdate">Custom</paper-button>
+          Custom
+            <paper-checkbox id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox>
           </td>
           <td>
                
@@ -120,7 +125,7 @@
       <tr>
         
         <td>
-          <paper-input style="width: 100px;" class="field" label="Fees" value="{{fee}}"></paper-input>
+          
         </td>
         <td>
             <fromdatepicker-card id="date1"></fromdatepicker-card>
@@ -134,11 +139,16 @@
       </tr>
      
       <tr><td style="width: 10px; height: 20px;"></td></tr>
-      <tr>
-      <td></td>
-        <td>
-          <paper-button id="button" class="button" on-click="click">Add</paper-button>
+      <tr><td style="width: 20%;">
+        
+      </td>
+      <td>
+        <paper-button id="button" class="button" on-click="click">Add</paper-button>
+      </td>
+        <td style="width: 32%;">
+          
         </td>
+        
         <td>
           <paper-button id="button" class="button" style="margin-left: -25%;">Cancel</paper-button>
         </td>
@@ -190,8 +200,9 @@ var todat;
     },
     secn:function(e){
       this.sec = (e.target.selectedItem.textContent).trim();
+
       this.$.root.getname(this.std,this.sec);
-      
+      document.querySelector('#drop1').selected=-1;
     },
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
@@ -292,27 +303,38 @@ var todat;
     },
     changeHandler:function(event){ 
         
-        var yearly = document.querySelector("#yearly");
+        
+        var custom = document.querySelector("#custom");
         var datebox = document.querySelector("#datebox");
         
        
-        if(yearly.checked==true){ 
-        //alert('Complete Year is selected');
-        var temp='foryear';
-         
-        fromdat=new Date(this.zfromdate);
-        todat=new Date(this.ztodate);
-        this.$.root.calc(temp);
-       
-       // alert(fromdat+'   '+todat);
-        }
-        if((yearly.checked==false)&(datebox.checked==false)){ 
-        //alert('Option is de-selected');
-        var temp='';
+        
+        if(custom.checked==false){
+          alert('custom is selected');
+          this.$.date1.hidden=true;
+        this.$.date2.hidden=true;
+        this.$.datebox.hidden=true;          
+         document.querySelector("#datebox").checked=false;
+
+         var temp='';
         this.fee=temp;
         fromdat=temp;
         todat=temp;
         }
+
+
+        
+
+        if(custom.checked==true){
+          alert('custom is selected');
+          this.$.date1.hidden=false;
+        this.$.date2.hidden=false;
+        this.$.datebox.hidden=false;          
+          document.querySelector("#yearly").checked=false;
+        }
+
+
+       
         if(datebox.checked==true){
           //alert('date check is selected');
           var fromd = localStorage.getItem("localsess_from_date");
@@ -325,6 +347,34 @@ var todat;
 
          
 },
+fullHandler:function(event){
+  var yearly = document.querySelector("#yearly");
+    
+    if(yearly.checked==true){ 
+        alert('Complete Year is selected');
+
+        document.querySelector("#datebox").checked=false;
+        document.querySelector("#custom").checked=false;
+         this.$.date1.hidden=true;
+        this.$.date2.hidden=true;
+        this.$.datebox.hidden=true; 
+        
+        var temp='foryear';
+         
+        fromdat=new Date(this.zfromdate);
+        todat=new Date(this.ztodate);
+        this.$.root.calc(temp);
+       
+        alert(fromdat+'   '+todat);
+        }  
+
+        if(yearly.checked==false){
+          var temp1='';
+          this.fee=temp1;
+        fromdat=temp1;
+        todat=temp1;
+        }
+},
 click:function(e)
     {
       
@@ -334,13 +384,8 @@ click:function(e)
       //alert(this.studentid+this.zone_id+this.fee);
       this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate);
 
-    },
-clickdate:function()
-{
-    this.$.date1.hidden=false;
-        this.$.date2.hidden=false;
-        this.$.datebox.hidden=false;
-}
+    }
+
   });
    })();
 

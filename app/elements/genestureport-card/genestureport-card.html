@@ -31,6 +31,7 @@
       is: "genestureport-card",
       ready: function() 
       {
+        this.$.service.generatereportbyname();
         this.querySelector('paper-listbox').style.visibility='hidden';
       },
       autocompletename(nameitem)

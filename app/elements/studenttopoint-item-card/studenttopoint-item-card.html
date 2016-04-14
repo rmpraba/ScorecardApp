@@ -71,7 +71,7 @@
       <li class="row">
         <div class="detail">
           <div class="field">
-              <paper-checkbox id="box" on-change="changeHandler"></paper-checkbox>
+              <paper-checkbox id="selectbox" on-change="changeHandler"></paper-checkbox>
           </div>
         </div>
       </li>
@@ -156,8 +156,9 @@
         this.droppoint = (e.target.selectedItem.value);
       }, 
       changeHandler:function(event){ 
-        var box = document.querySelector("#box");
-        if(box.checked==true){ 
+        var box = document.querySelector("#selectbox");
+        if(box.checked==true)
+        { 
         document.querySelector('mapstudenttopoint-card').FnGetItems(this.studentid,this.pickroute,this.droproute,this.pickpoint,this.droppoint); 
         }
     }

@@ -25,8 +25,8 @@
       <div class = "mapstudenttopoint-card">
       <div class="card">
         <div class="select-class">
-          <paper-dropdown-menu label="Select Grade">
-            <paper-menu class="dropdown-content" on-iron-select="classes1" attr-for-selected="value" >
+          <paper-dropdown-menu   label="Select Grade">
+            <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="classes1" attr-for-selected="value" >
               <template  is="dom-repeat" items="{{classarr}}" as="view">
                 <paper-item value="{{view.school_type}}">{{view.school_type}}</paper-item>
               </template>
@@ -57,6 +57,7 @@
           this.$.submitbutton.hidden=true;
         },
         classes1:function(e){
+
           this.class = (e.target.selectedItem.value);
           this.$.maps.classpick(this.class);
           this.$.submitbutton.hidden=false;
@@ -64,11 +65,25 @@
         click:function()
         {
             this.$.maps.submit(itemarray);
+            document.querySelector('mapstudenttopoint-card').studentarr=[];
+            itemarray=[];
+             document.querySelector('#gradeselect').selected=-1;
+             this.$.submitbutton.hidden=true;
            },
-           FnGetItems:function(studentid,pickroute,droproute,pickpoint,droppoint){
-            var obj={"studentid":"","pickroute":"","droproute":"","pickpoint":"","droppoint":""};
+           FnGetItems:function(studentid,pickroute,droproute,pickpoint,droppoint)
+           {
+            var trip;
+            if(this.class=="Primary")
+            {
+              trip="2";
+            }
+            else
+            {
+              trip="1";
+            }
+            var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":""};
             obj.studentid=studentid;
-            obj.class_id=this.class;
+            obj.class_id=trip;
             obj.pickroute=pickroute;
             obj.droproute=droproute;
             obj.pickpoint=pickpoint;

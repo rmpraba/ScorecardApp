@@ -128,7 +128,7 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				console.log(rows);
+				//console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -231,7 +231,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				console.log(rows);
+				//console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -403,14 +403,14 @@ app.post('/report-card',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2 as total, z.fees-z.installment_1+z.installment_2 as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,z.fees-z.discount_fee as actualfee ,z.installment_1,z.installment_2 as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
 		if(!err)
 		{
 		if(rows.length>0)
 		{
-console.log(rows);
+//console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -588,7 +588,7 @@ app.post('/cancellation',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,s.class_id,s.school_type,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1+z.installment_2 as total, z.fees-z.installment_1+z.installment_2 as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+       connection.query('SELECT s.id,s.student_name,s.class_id,s.school_type,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,z.fees-z.discount_fee as actualfee ,z.installment_1+z.installment_2 as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
 		if(!err)
@@ -674,7 +674,7 @@ app.post('/reportfee-card',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees ,z.installment_1,z.installment_2,z.installment_1+z.installment_2 as total, z.fees-(z.installment_1+z.installment_2) as due,z.fees/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,z.fees-z.discount_fee as actualfee,z.installment_1,z.installment_2,z.installment_1+z.installment_2 as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
 		if(!err)
@@ -815,7 +815,7 @@ app.post('/refund-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-console.log(rows);
+//console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -835,7 +835,7 @@ app.post('/approval-card',  urlencodedParser,function (req, res)
 
 		var studid={"student_id":req.query.studid};
 				var vale={"status":req.query.status,"flag":req.query.flag};
-		console.log(studid);
+		//console.log(studid);
 	    connection.query('update  cancellation set ? where ?',[vale,studid],
        	function(err, rows) 
        	{
@@ -954,7 +954,7 @@ app.post('/sendrequest',  urlencodedParser,function (req, res)
 {
 	
     var queryyz="insert into md_discount values('"+req.query.stid+"','"+req.query.stname+"','"+req.query.schooltypezx+"','"+req.query.zoname+"',"+req.query.feesx+",STR_TO_DATE('"+req.query.fromdatx+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todatx+"','%Y/%m/%d'),'"+req.query.disamtx+"','"+req.query.reasonx+"','Requested',3,STR_TO_DATE('"+req.query.todayx+"','%Y/%m/%d'),null,null)";
-	    console.log(queryyz);
+	   // console.log(queryyz);
 	    connection.query(queryyz,
        	function(err, rows)
        	{
@@ -998,18 +998,18 @@ app.post('/generatereportbyname',  urlencodedParser,function (req, res)
 
 app.post('/deletemappoint-card',  urlencodedParser,function (req, res)
 {
-console.log('come');
+//console.log('come');
 	var ptarr=req.query.pointarray;
 	var rtname=req.query.routenam;
 	var trip1=req.query.tripnum;
-console.log('come'+ptarr);
+//console.log('come'+ptarr);
        connection.query('delete from point where point_name in (?) and trip=? and route_id=(select id from route where route_name=?)',[ptarr,trip1,rtname],
        	function(err, rows)
        	{
 		if(!err)
 		{
-			console.log('suc');
-			res.status(200).json({'returnval': rows});
+			//console.log('suc');
+			res.status(200).json({'returnval': 'success'});
 		}
 		else
 		{
@@ -1121,7 +1121,7 @@ app.post('/confirmfee',  urlencodedParser,function (req, res)
 {
 	
     var val={"student_id":req.query.stid};
-	var vari={"fees":req.query.fees};
+	var vari={"discount_fee":req.query.fees};
 	    connection.query('update student_fee set ? where ? ',[vari,val],
        	function(err, rows)
        	{
@@ -1172,7 +1172,7 @@ app.post('/getverify',  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				console.log(rows);
+				//console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else

@@ -19,7 +19,7 @@
         </paper-listbox>
       </div>
       <template  is="dom-repeat" items="{{reportarr}}" as="view">
-        <generatereport-card studid="{{view.id}}" name="{{view.student_name}}" classes="{{view.class_id}}" dob="{{view.dob}}" zone="{{view.zone_id}}" fee="{{view.fees}}" photo="{{view.photo}}" paid="{{view.total}}" due="{{view.due}}" pick="{{view.pick}}" drop="{{view.drop1}}"></generatereport-card>
+        <generatereport-card studid="{{view.id}}" name="{{view.student_name}}" classes="{{view.class_id}}" dob="{{view.dob}}" zone="{{view.zone_id}}" fee="{{view.fees}}" photo="{{view.photo}}" paid="{{view.total}}" due="{{view.due}}" pick="{{view.pick}}" drop="{{view.drop1}}" actual="{{view.actualfee}}" discount="{{view.discount_fee}}"></generatereport-card>
       </template>
       <transport-service id="service"></transport-service>
     </template>

@@ -108,6 +108,10 @@ height: 40%
    <div  class="layout"><paper-item id="lb" >Pick Up Place: </paper-item><paper-item >{{pick}}</paper-item>
    <paper-item id="lb">Drop Place:</paper-item><paper-item >{{drop}}</paper-item></div>
    </div>
+   <div class="layout">
+        <paper-item id="lb" >Discount: </paper-item><paper-item >{{discount}}</paper-item>
+        <paper-item id="lb">Actual Fee:</paper-item><paper-item >{{actual}}</paper-item>
+      </div>
    </div>
   </div>
   <hr/>
@@ -287,7 +291,7 @@ toggle1: function(e)
       document.querySelector("#box2").checked=false;
       document.querySelector("#box1").checked=false;
         this.page="install1";
-        this.value1=this.fee;
+        this.value1=this.actual;
       }
       },
       payment:function(e)

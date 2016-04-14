@@ -41,7 +41,7 @@
       <td>
       <div class="class-drop">
         <paper-dropdown-menu label="Section">
-          <paper-menu id="drop" class="dropdown-content" on-iron-select="secn" valueattr="value" >
+          <paper-menu id="secnselect"  class="dropdown-content" on-iron-select="secn" valueattr="value" >
             <template  is="dom-repeat" items="{{secarr}}" as="view">
               <paper-item value="{{view.section}}">{{view.section}}</paper-item>
             </template>
@@ -190,6 +190,7 @@ var todat;
       this.std = (e.target.selectedItem.textContent).trim();
       this.$.root.getsec(this.std);
       this.sec='';
+      document.querySelector('#secnselect').selected=-1;
     },
     secn:function(e){
       this.sec = (e.target.selectedItem.textContent).trim();
@@ -250,7 +251,7 @@ var todat;
           this.itemflag="false";
         }
         else
-        this.itemval = this.itemval +String.fromCharCode((e.keyCode));
+        this.itemval = this.value +String.fromCharCode((e.keyCode));
         if(this.itemval.length>0)
         {
           for(var i=0;i<item.length;i++){

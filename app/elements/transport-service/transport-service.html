@@ -406,6 +406,7 @@
         if(result=='success')
         {
             alert('The point is mapped to route');
+            document.querySelector('mappointtoroute-card').refreshdeletedata();
         }
         else
         {
@@ -715,6 +716,13 @@
         this.deletemappointparam=obj;
         this.$.deletemappointajax.generateRequest();
 
+      },
+      deletemappointResponse:function(e)
+      {
+
+          alert('Data Deleted successfully');
+          document.querySelector('mappointtoroute-card').refreshdeletedata();
+        
       },
        getstudapproval:function(){
         

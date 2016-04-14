@@ -40,7 +40,7 @@
           <item-card></item-card>
         </div>
         <div class="buttons">
-          <paper-button id="button" class="button" on-click="Fndeletepoint">Submit</paper-button>
+          <paper-button id="button" class="button" on-click="Fndeletepoint">Delete</paper-button>
           <paper-button id="create" class="button" on-click="clickfn">Create New</paper-button>
         </div>
       </div>
@@ -73,8 +73,27 @@
             this.$.button.hidden=false;
             this.$.create.hidden=false;
           },
-          Fndeletepoint:function(){
+          refreshdeletedata:function()
+          {
+             this.$.select.getroutedetail(tripno);
+             this.hide=true;
+
+           },
+          Fndeletepoint:function()
+          {
+             if(tripno=="")
+          {
+         this.$.route.validate();
+         this.$.tripnoo.validate();
+         }
+         else if(pointarray.length>0)
+          {
             this.$.select.deletemappoint(pointarray,routename,tripno);
+          }
+         else
+          {
+            alert("No CheckBox is Checked");
+          } 
           },
           clickfn:function(){
              if(tripno==""){

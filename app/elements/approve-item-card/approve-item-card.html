@@ -57,10 +57,16 @@ height: 40%
   margin-left: 10%;
  }
  .button{
-  margin-left: 50%;
+  margin:2% 0 0 37%;
  }
  .reasontext{
   width: 100%;
+ }
+ .check-box{
+  margin: 2.5% 0 0 2% !important;
+ }
+ .reason.checked{
+  margin: 0% 0 0 2%;
  }
  </style>
  <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
@@ -92,16 +98,15 @@ height: 40%
     </div>
     <div class="layout">
     <paper-item id="lb">Acceptable Discount:</paper-item><paper-input class="field" label="Acceptable discount" on-change="accdiscount"value="{{accdis}}"></paper-input>
-          <div class="check-box">
+    <div class="check-box">
       <paper-checkbox id="cancel" on-change="changeHandler" >Reject Discount</paper-checkbox>
     </div>
-    <div class="reason">
+    <div class="reason checked">
        <paper-input id="reasontext" value="{{reasons}}" label="Reason for discount rejection"></paper-input>
     </div>
 
   </div>
   <div class="layout">
-    
     <div class="button">
       <paper-button id="button" class="button" on-click="accept">Submit</paper-button>
     </div>

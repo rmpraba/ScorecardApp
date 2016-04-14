@@ -167,6 +167,16 @@
         this.payfeeparam=obj;
         this.$.payfeeajax.generateRequest();
      },
+     payfeeResponse:function(e)
+     {
+        var pay1success=e.detail.response.returnval;
+        //alert(JSON.stringify(pay1success));
+        if(pay1success=='success')
+        {
+            alert("pay the fee successfully");
+        }
+        
+     },
      chequeinfo:function(stdid,name,chequenum,bankname,chequedate)
      {
       this.chequedetailsurl="http://localhost:8081/chequedetails";
@@ -190,6 +200,16 @@
         obj.paytype=paytype;
         this.payfee2param=obj;
         this.$.payfee2ajax.generateRequest();
+     },
+     payfee2Response:function(e)
+     {
+        var pay2success=e.detail.response.returnval;
+       // alert(JSON.stringify(pay2success));
+        if(pay2success=='success')
+        {
+            alert("pay the fee successfully");
+        }
+        
      },
      chequeinfo2:function(stdid,name,chequenum,bankname,chequedate)
      {

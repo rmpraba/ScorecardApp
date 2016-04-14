@@ -328,6 +328,9 @@ this.value1=val;
     },
     pay1:function()
     {
+       document.querySelector("#box2").checked=false;
+      document.querySelector("#box1").checked=false;
+      document.querySelector("#box3").checked=false;
       if(paytype=="Cheque")
       {
         this.chequedate=localStorage.getItem("localsess_curr_date");
@@ -342,6 +345,9 @@ this.value1=val;
     },
     pay2:function()
     {
+       document.querySelector("#box2").checked=false;
+      document.querySelector("#box1").checked=false;
+      document.querySelector("#box3").checked=false;
       this.chequedate=localStorage.getItem("localsess_curr_date");
       this.$.service.payfee2(this.value2,this.studid,"PDC");
        this.$.service.chequeinfo2(this.studid,this.name,this.chequenum,this.bankname,this.chequedate);

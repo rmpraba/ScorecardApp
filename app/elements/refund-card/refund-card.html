@@ -67,8 +67,8 @@
    <paper-item >{{amount}}</paper-item>
    <paper-item >{{reason}}</paper-item>
    <paper-item >{{canceldate}}</paper-item>
-  <paper-checkbox id="box1" class="checkbox" on-change="Fnapproval" style= "padding-right: 12%; margin-left:3%;"></paper-checkbox>
-  <paper-checkbox id="box2" class="checkbox" on-change="Fnapproval"></paper-checkbox>
+  <paper-checkbox id="acceptcheck" class="checkbox" on-change="Fnapproval1" style= "padding-right: 12%; margin-left:3%;"></paper-checkbox>
+  <paper-checkbox id="rejectcheck" class="checkbox" on-change="Fnapproval2"></paper-checkbox>
    </div>
   </div>
  </div>
@@ -108,25 +108,25 @@
       }
 
 },
-Fnapproval:function(e)
+Fnapproval1:function(e)
 {
-    var approve=document.querySelector("#box1");
-    var reject=document.querySelector("#box2");
-  if(approve.checked==true)
-    {
+  alert('d');
+   
+   if(e.target.checked==true)
+   {
      status='Approved';
      var flag=2;
       this.$.service.Approvereq(this.studid,status,flag);
     }
-    if(approve.checked==true)
-    {
+  },
+  Fnapproval2:function(e)
+{
+    if(e.target.checked==true)
+   {
      status='Rejected';
      var flag=2;
       this.$.service.Approvereq(this.studid,status,flag);
     }
-
-
-
 
 }
       

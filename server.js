@@ -248,7 +248,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"','','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'))";
+	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"','','',0,'','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'))";
 	    console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)
@@ -449,7 +449,7 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 {
 	var class_id=req.query.classes;
 	//console.log('in server...');
-       connection.query('SELECT sd.id, sd.student_name from student_details sd join student_fee sf on sd.id = sf.student_id where sd.school_type= ? and sd.transport_required="yes" and sf.installment_1>0',[class_id],
+       connection.query('SELECT sd.id, sd.student_name from student_details sd join student_fee sf on sd.id = sf.student_id where sd.school_type= ? and sd.transport_required="yes" and sf.installment_1>0 or sf.fees-sf.discount_fee=0',[class_id],
        	function(err, rows)
        	{ 
 		if(!err)

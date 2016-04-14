@@ -2,6 +2,9 @@
 .rom{
 
 }
+section{
+    padding: 0 !important;
+}
 .head{
     background-color:#1E2021 ; 
     text-align: center; 

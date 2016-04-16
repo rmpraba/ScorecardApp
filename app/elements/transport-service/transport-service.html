@@ -631,19 +631,31 @@
         this.$.cancelajax.generateRequest();
       },
       cancelResponse:function(e){
-        var days_used = JSON.stringify(e.detail.response.returnval[0].Days_used);
-        var total_days = JSON.stringify(e.detail.response.returnval[0].Total_days);
-        var monthsused = days_used/30;
-        var totalmonths = total_days/30;
-        var months_used = Math.ceil(monthsused);
-        var total_months = Math.ceil(totalmonths);
+        var school_start_date = new Date(e.detail.response.returnval[0].start_date);
+        var school_end_date = new Date(e.detail.response.returnval[0].end_date);
+        var end_date = new Date(localStorage.getItem("localsess_curr_date",this.showdate));
+        var a = (school_end_date.getFullYear() - school_start_date.getFullYear()) * 12;
+        a += school_end_date.getMonth() - school_start_date.getMonth();
+        if (school_end_date.getDate() < school_start_date.getDate()){
+          a--;
+        }
+        var b = (end_date.getFullYear() - school_start_date.getFullYear()) * 12;
+        b += end_date.getMonth() - school_start_date.getMonth();
+        if (end_date.getDate() < school_start_date.getDate()){
+          b--;
+        }
+        var total_months = a + 1;
+        var months_used = b + 1;
         var totalamount = cancelfee;
         var paidamount = cancelpaid;
-        var positive = total_months - months_used;
-        var percent = (positive / total_months)*100;
+        var remaining_months = total_months - months_used;
+        var percent = (remaining_months / total_months)*100;
+        alert("percent"+' '+percent);
         var total_refund_amount = (totalamount/100)*percent;
+        alert("refund"+' '+total_refund_amount);
         var used_amount = parseInt(totalamount - total_refund_amount);
         var refund_amount = paidamount - used_amount;
+        alert("refund_amount"+' '+refund_amount);
         document.querySelector('cancellation-item-card').months_used=months_used;
         document.querySelector('cancellation-item-card').total_months=total_months;
         document.querySelector('cancellation-item-card').refund_amount=refund_amount;

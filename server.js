@@ -609,8 +609,9 @@ app.post('/cancel',  urlencodedParser,function (req, res){
 	var school_type={"school_type":req.query.school_type};
 	var end_transport=req.query.end_date;
 
-	var queryy="SELECT DATEDIFF(STR_TO_DATE('"+end_transport+"', '%m/%d/%Y'),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days FROM transport_details where ? and  ?";
-    connection.query(queryy,[end_transport,school_type],
+	/*var queryy="SELECT DATEDIFF(STR_TO_DATE('"+end_transport+"', '%m/%d/%Y'),start_date) AS Days_used, DATEDIFF(end_date,start_date) AS Total_days FROM transport_details where ?";*/
+	var queryy="SELECT start_date, end_date FROM transport_details where ?";
+    connection.query(queryy,[school_type],
 		function(err, rows){
        	if(err){
        		console.log(err);

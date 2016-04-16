@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="cancellation-card">
   <div class="cancellation-card">
     <template>
-      <div class="field">
+      <div class="search">
         <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
         <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
           <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -134,5 +134,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
   })();
   </script>
-
 </dom-module>

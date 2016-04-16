@@ -126,18 +126,21 @@
         this.routearr=route;
       },
       pickroute:function(e){
+        alert(this.studentid);
         this.pickroute = (e.target.selectedItem.value);
         this.selectpointurl = "http://localhost:8081/pickpoints";
-        var obj={"routept":""};
+        var obj={"routept":"","studid":""};
         obj.routept=this.pickroute;
+        obj.studid=this.studentid;
         this.routepickpointparam=obj;
         this.$.selectpointajax.generateRequest();
       },
       droproute:function(e){
         this.droproute = (e.target.selectedItem.value);
         this.routedroppointurl = "http://localhost:8081/routedroppoint";
-        var obj={"routedroppt":""};
+        var obj={"routedroppt":"","studid":""};
         obj.routedroppt=this.droproute;
+        obj.studid=this.studentid;
         this.routedroppointparam=obj;
         this.$.routedroppoint.generateRequest();
       },

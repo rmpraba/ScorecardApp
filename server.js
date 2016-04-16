@@ -473,29 +473,37 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 
 app.post('/pickpoints',  urlencodedParser,function (req, res)
 {
-		var route_id={"route_id":req.query.routept};
+		var route_id=req.query.routept;
+		var studid=req.query.studid;
 		
-       connection.query('SELECT id, point_name from point where ?',[route_id],
+       connection.query('SELECT id, point_name from point where route_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=?)))',[route_id,studid],
        	function(err, rows)
        	{
 		if(!err)
 		{
 		if(rows.length>0)
 		{
+			console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
 		{
+
 			res.status(200).json({'returnval': 'invalid'});
 		}
+	}
+	else
+	{
+		console.log(err);
 	}
 });
 });
 app.post('/routedroppoint',  urlencodedParser,function (req, res)
 {
-		var route_id={"route_id":req.query.routedroppt};
-
-       connection.query('SELECT id, point_name from point where ?',[route_id],
+		var route_id=req.query.routedroppt;
+		var studid=req.query.studid;
+		
+       connection.query('SELECT id, point_name from point where route_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=?)))',[route_id,studid],
        	function(err, rows)
        	{
 		if(!err)

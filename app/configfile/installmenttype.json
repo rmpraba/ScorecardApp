@@ -1,0 +1,12 @@
+[
+{
+	"install_type":"install1",
+	"amt_percentage":"75",
+	"paydate":"20/05/2015"
+},
+{
+	"install_type":"install2",
+	"amt_percentage":"25",
+	"paydate":"30/07/2015"
+}
+]

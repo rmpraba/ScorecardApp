@@ -449,7 +449,7 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 {
 	var class_id=req.query.classes;
 	//console.log('in server...');
-       connection.query('SELECT sd.id, sd.student_name from student_details sd join student_fee sf on sd.id = sf.student_id where sd.school_type= ? and sd.transport_required="yes" and sf.installment_1>0 or sf.fees-sf.discount_fee=0',[class_id],
+      connection.query('SELECT sd.id, sd.student_name from student_details sd join student_fee sf on sd.id = sf.student_id where sd.school_type= ? and sd.transport_required="yes" and sf.installment_1>0 or sf.fees-sf.discount_fee=0',[class_id],
        	function(err, rows)
        	{ 
 		if(!err)

@@ -113,6 +113,16 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        
+        id="getinstalltypeajax"
+        url="{{getinstalltypeurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getinstalltypeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -155,6 +165,7 @@
       var nameitem=e.detail.response.returnval;
       
       document.querySelector('transportfee-card').autocompletename(nameitem);
+       document.querySelector('transportfee-service').getinstalltype();
      },
      payfee:function(install,studid,paytype)
      {
@@ -309,12 +320,16 @@
         {
             alert('Request failed');
         }
+     },
+     getinstalltype:function()
+     {
+        this.getinstalltypeurl="../../configfile/installmenttype.json";
+        this.$.getinstalltypeajax.generateRequest(); 
+     },
+     getinstalltypeResponse:function(e)
+     {
+//alert(JSON.stringify(e.detail.response));
      }
-
-      
-    
-
-
 
     });
  })();

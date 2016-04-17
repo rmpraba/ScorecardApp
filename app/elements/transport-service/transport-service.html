@@ -90,27 +90,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
-<iron-ajax
-        method="post"
-        id="getstdajax"
-        url="{{getstdurl}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getstdResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-  <iron-ajax
-        method="post"
-        id="getsecajax"
-        url="{{getsecurl}}"
-        params="{{getsecparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getsecResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+
   <iron-ajax
         method="post"
         id="getnameajax"
@@ -340,6 +320,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="classajax"
+        url="{{classurl}}"
+        params="{{classparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="classResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -355,6 +346,10 @@
     var calcfee;
     var cancelfee;
     var cancelpaid;
+    var cusfee;
+    var yearlyfee;
+    var val;
+    var oneway=75;
 
 
     Polymer({
@@ -460,10 +455,8 @@
       },
       calc:function(values){
       if(values=='foryear'){
-        var yearlyfee=totalfee;
-       
-        document.querySelector('zonetostudent-card').fee=yearlyfee;
-      
+        yearlyfee=totalfee;
+        //alert(yearlyfee);
    }
       },
       gettermdate:function(grade){
@@ -481,15 +474,16 @@
             document.querySelector('zonetostudent-card').ztodate=todate1;
 
       },
-      setzone:function(studid,zone,fee,fromdatez,todatez)
+      setzone:function(studid,zone,fee,fromdatez,todatez,modez)
       {
         this.setzoneurl = "http://localhost:8081/setzone";
-        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":""};
+        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":""};
         obj.studid=studid;
         obj.zone=zone;
         obj.fee=fee;
         obj.fromdate=fromdatez;
         obj.todate=todatez;
+        obj.mode=modez;
         this.setzoneparam=obj;
        // alert(JSON.stringify(obj));
         this.$.setzoneajax.generateRequest();
@@ -507,38 +501,10 @@
          }
       },
 
-      getstd:function()
-      {
-        this.getstdurl="http://localhost:8081/getstd";
-        this.$.getstdajax.generateRequest();
-      },
-      getstdResponse:function(e1)
-      {
-            var a1=e1.detail.response.returnval;
-            document.querySelector('zonetostudent-card').stdarr=a1;
-      },
-      getsec:function(std)
-      {
-       // alert('1');
-        this.getsecurl="http://localhost:8081/getsec";
-        var obj={"std":""};
-        obj.std=std;
-        this.getsecparam=obj;
-        this.$.getsecajax.generateRequest();
-      },
-      getsecResponse:function(e1)
-          {
-            var secitem=e1.detail.response.returnval;
-              //alert(secitem);
-            document.querySelector('zonetostudent-card').secarr=secitem;
-      },
-       getname:function(std,sec)
+      
+       getname:function()
       {
         this.getnameurl="http://localhost:8081/getname";
-        var obj={"std":"","sec":""};
-        obj.std=std;
-        obj.sec=sec;
-        this.getnameparam=obj;
         this.$.getnameajax.generateRequest();
       },
       getnameResponse:function(e1)
@@ -563,6 +529,8 @@
             var gradename=e1.detail.response.returnval[0].school_type;
             var dob=e1.detail.response.returnval[0].dob;
             var stdid=e1.detail.response.returnval[0].id;
+            
+            var classz=e1.detail.response.returnval[0].class_id;
             document.querySelector('zonetostudent-card').name=profilename;
             document.querySelector('zonetostudent-card').grade=gradename;
            document.querySelector('zonetostudent-card').date=dob;
@@ -572,6 +540,19 @@
             obj.grade=gradename;
             this.gradediscountparam=obj;
             this.$.gradediscountajax.generateRequest();
+
+            this.classurl="http://localhost:8081/getclass";
+            var obj1={"class":""}
+            obj1.class=classz;
+            this.classparam=obj1;
+            this.$.classajax.generateRequest();
+
+      },
+      classResponse:function(e){
+        var stnd=e.detail.response.returnval[0].class;
+        var secn=e.detail.response.returnval[0].section;
+        document.querySelector('zonetostudent-card').stnd=stnd;
+        document.querySelector('zonetostudent-card').secn=secn;
       },
       
       generatereport:function(studid){
@@ -693,9 +674,8 @@
           months += d2.getMonth();
           var month=months+2;
           //alert(totalfee+'   '+month);
-          var cusfee=parseInt((totalfee/12)*month);
+          cusfee=parseInt((totalfee/12)*month);
           //alert(cusfee);
-          document.querySelector('zonetostudent-card').fee=cusfee;
       },
       name:function(){
         this.nameurl="http://localhost:8081/name";
@@ -842,7 +822,24 @@
         {
             alert('Operation Interupted');
         }
-      }
+      },
+      oneway:function(){
+        val=(yearlyfee/100)*oneway;
+      document.querySelector('zonetostudent-card').fee=val;
+      },
+      onecus:function(){
+          val=(cusfee/100)*oneway;
+         document.querySelector('zonetostudent-card').fee=val;
+      },
+      twoway:function(){
+      val=yearlyfee;
+      document.querySelector('zonetostudent-card').fee=val;   
+      },
+      twocus:function(){
+          val=cusfee;
+        document.querySelector('zonetostudent-card').fee=val;
+        }
+      
 
     });
  })();

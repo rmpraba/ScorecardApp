@@ -11,6 +11,8 @@
        <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
        <link rel="import" href="../bower_components/paper-input-autocomplete/paper-input-autocomplete.html">
        <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+       <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+       <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
         <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
     <link rel="import" href="../transport-service/transport-service.html">
     <link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
@@ -24,60 +26,45 @@
 
     <div class="layframe">
 
-    <table>
-      <tr>
-        
-        <td>
-          <div class="class-drop">
-          <paper-dropdown-menu label="Standard">
-            <paper-menu id="drop"class="dropdown-content" on-iron-select="stnd" valueattr="value" >
-              <template  is="dom-repeat" items="{{stdarr}}" as="view">
-              <paper-item value="{{view.class}}">{{view.class}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-        </div>
-      </td>
-      <td>
-      <div class="class-drop">
-        <paper-dropdown-menu label="Section">
-          <paper-menu id="secnselect"  class="dropdown-content" on-iron-select="secn" valueattr="value" >
-            <template  is="dom-repeat" items="{{secarr}}" as="view">
-              <paper-item value="{{view.section}}">{{view.section}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </div>
-        </td>
-      </tr>
-       <tr>
-        <td>
-        
+    <table style="padding: 1%;">
+         <tr>
+         <td>
+    <div class="left">
+
           <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item>{{item.itemdes}}</paper-item>
         </template>
       </paper-listbox>
-        </td>
-        <td>
-          <paper-input class="field" label="School Type" is="" id="dad" value="{{grade}}"></paper-input>
-        </td>
-      </tr>
-        <tr>
-        <td>
-         
-             <paper-input class="field" label="Student ID" is="" id="idd" value="{{id}}"></paper-input>
-           
-      
-        </td>
-        <td>
-          <paper-input class="field" label="Date Of Birth" is="" id="dob" value="{{date}}"></paper-input>
-        </td>
-      </tr>
-     <tr>
-        <td>
-      <div class="drop-down" style="margin-left: 5%;">
+      </div>
+</td>
+<td>
+<div class="right">
+          <paper-input class="field" label="School Type" readonly is="" id="dad5" value="{{grade}}"></paper-input></div>
+</td>
+
+  </tr>
+  <tr>
+  <td>
+
+<div class="left">
+          <paper-input class="field" label="Standard" is="" readonly id="dad4" value="{{stnd}}"></paper-input></div>
+</td><td>
+          <div class="right">
+          <paper-input class="field" label="Section" is="" id="dad3" readonly value="{{secn}}"></paper-input>          </div>
+    </td></tr>
+    <tr>
+    <td>
+    <div class="left">
+             <paper-input class="field" label="Student ID" is="" id="dad2" readonly value="{{id}}"></paper-input></div>
+</td>
+<td><div class="right">
+          <paper-input class="field" label="Date Of Birth" is="" id="dad1" readonly value="{{date}}"></paper-input></div>
+</td></tr>
+<tr><td>
+<div class="left">
+      <div class="drop-down" >
         <paper-dropdown-menu label="Select the Zone">
           <paper-menu class="dropdown-content" on-iron-select="zoned" valueattr="value" >
             <template  is="dom-repeat" items="{{itemarr}}" as="view">
@@ -86,69 +73,70 @@
           </paper-menu>
         </paper-dropdown-menu>
       </div>
-      
-        </td>
-         <td>
-          <paper-input style="width: 100px; margin-left: 5%;" readonly class="field" label="Fees" value="{{fee}}"></paper-input>
-        </td>
-        <td>
-          <paper-input id="zdate1" style="width: 10%;" value="{{zfromdate}}"></paper-input> 
-        </td>
-      </tr>
-      </table>
-                <div>
-      <table style="margin-left: 5%;">
-        
-          <paper-item style="margin:0 0 2% 2%; width: 50%;" id="item">Transport Requirement Period</paper-item>
-        
-        <tr>
-                    <td>
+      </div>
+</td><td>
+<div class="right">
+          <paper-input  readonly class="field" label="Fees" id="dad" value="{{fee}}"></paper-input></div>
+ </td></tr>
+ <tr><td>
+<div class="left">
+ <paper-input id="zdate1"  value="{{zfromdate}}"></paper-input> </div>
+</td></tr></table>
+
+<div style="height: 5%"></div>
+
+          <paper-item style="font-weight: 500; font-size: x-large; margin-left: -1.5%;">Requirements:</paper-item>
+
+
+<table style="padding: 1%;">
+<tr><td><div class="left1">
             Complete Year
-            <paper-checkbox id="yearly" class="checkbox" on-change="fullHandler"></paper-checkbox>
-          </td>
-          <td style="width: 10%;"></td>
-          <td>
+            <paper-checkbox id="yearly" class="checkbox" on-change="fullHandler"></paper-checkbox></div>
+    </td>
+<td><div class="right1">
             Custom
-            <paper-checkbox id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox>
-          </td>
-          <td>
-               
-             <paper-input id="zdate" style="width: 10%;" value="{{ztodate}}"></paper-input> 
-          </td>
-        </tr>
-      </table>
+            <paper-checkbox id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox></div>
+    </td>
+ </tr></table>
+
+         <paper-input id="zdate"  value="{{ztodate}}"></paper-input> 
 
 
-      
-    </div>  
-      <table>
-      <tr>
-        
-       
-        <td>
-            <fromdatepicker-card id="date1"></fromdatepicker-card>
-        </td>
-        <td>
-            <todatepicker-card id="date2"></todatepicker-card>
-        </td>
-        <td>
+
+
+    <table ><tr><td><div class="left">
+            <fromdatepicker-card id="date1"></fromdatepicker-card></div>
+</td>
+<td><div class="right">
+            <todatepicker-card id="date2"></todatepicker-card></div>
+</td><td><div class="right3">
           <paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
-        </td>
-      </tr>
-     
-      <tr><td style="width: 10px; height: 20px;"></td></tr>
-      <tr>
-      <td style="width: 10%;"></td>
-        <td style="padding-right: 10%;">
-          <paper-button id="button" class="button" on-click="click">Add</paper-button>
-        </td><td style="width: 20%;"></td>
-        <td style="padding-left: 10%;">
-          <paper-button id="button" class="button" style="margin-left: -25%;">Cancel</paper-button>
-        </td>
-      </tr>
-    </table>
-      
+</div>
+</td></tr>
+</table>
 
+
+<table style="padding: 1%;">
+<tr><td>
+     
+<div class="left1">
+One-Way
+  <paper-checkbox id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox></div>
+
+</td><td><div class="right2">
+  Two-Way
+<paper-checkbox id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
+
+</td></tr>
+<tr><td style="height: 4%;"></td>
+  <td>
+    <paper-button class="button" on-click="click">Submit</paper-button>
+  </td>
+  <td>
+    <paper-button class="button" on-click="ready">Cancel</paper-button>
+  </td>
+</tr>
+</table>
     </div>
 
     
@@ -162,41 +150,39 @@
     var fromdate;
     var todate;
     var fromdat;
+    var datebox;
 var todat;
+var mode;
   Polymer({
 
     is: "zonetostudent-card",
     
       ready: function() {
         this.$.root.getzone();
-        this.$.root.getstd();
+        this.$.root.getname();
         this.querySelector('paper-listbox').style.visibility='hidden';
         this.$.date1.hidden=true;
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
+        this.$.dad.disabled=true;
+        this.$.dad1.disabled=true;
+        this.$.dad2.disabled=true;
+        this.$.dad3.disabled=true;
+        this.$.dad4.disabled=true;
+        this.$.dad5.disabled=true;
         localStorage.setItem("curr_sess_showpage","zonetostudent");
         this.page="zonetostudent";
+        
         },
         setPage:function(page)
         {
           localStorage.setItem("curr_sess_showpage",this.page);
           this.page=page;
         },
-        stnd:function(e){
-         // alert('0');
-          
-      this.std = (e.target.selectedItem.textContent).trim();
-      this.$.root.getsec(this.std);
-      this.sec='';
-      document.querySelector('#secnselect').selected=-1;
-    },
-    secn:function(e){
-      this.sec = (e.target.selectedItem.textContent).trim();
-      this.$.root.getname(this.std,this.sec);
       
-    },
+   
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
       this.zone = (e.target.selectedItem.textContent).trim();
@@ -284,6 +270,13 @@ var todat;
     this.value=this.studid;
    // alert(this.studid);
      this.$.root.getstudetail(this.studid);
+     this.$.dad.disabled=false;
+     this.$.dad1.disabled=false;
+     this.$.dad2.disabled=false;
+     this.$.dad3.disabled=false;
+     this.$.dad4.disabled=false;
+     this.$.dad5.disabled=false;
+
   },
     setInput:function(namearr)
     {
@@ -298,10 +291,16 @@ var todat;
         
         
         var custom = document.querySelector("#custom");
-        var datebox = document.querySelector("#datebox");
+        datebox = document.querySelector("#datebox");
         
        
        if(custom.checked==true){
+        document.querySelector("#oneway").checked=false;
+        document.querySelector("#twoway").checked=false;
+        var temp='';
+        this.fee=temp;
+        fromdat=temp;
+        todat=temp;
          this.$.date1.hidden=false;
         this.$.date2.hidden=false;
         this.$.datebox.hidden=false;          
@@ -320,6 +319,8 @@ var todat;
         this.fee=temp;
         fromdat=temp;
         todat=temp;
+        document.querySelector("#oneway").checked=false;
+        document.querySelector("#twoway").checked=false;
         }
 
 
@@ -341,7 +342,12 @@ fullHandler:function(event){
   var yearly = document.querySelector("#yearly");
     
     if(yearly.checked==true){ 
-       
+       document.querySelector("#oneway").checked=false;
+        document.querySelector("#twoway").checked=false;
+        var temp='';
+        this.fee=temp;
+        fromdat=temp;
+        todat=temp;
 
         document.querySelector("#datebox").checked=false;
         document.querySelector("#custom").checked=false;
@@ -363,8 +369,55 @@ fullHandler:function(event){
           this.fee=temp1;
         fromdat=temp1;
         todat=temp1;
+        document.querySelector("#oneway").checked=false;
+        document.querySelector("#twoway").checked=false;
         }
 },
+
+onewayHandler:function(event){
+var oneway = document.querySelector("#oneway");
+mode='One-Way';
+if(oneway.checked==true){
+      document.querySelector("#twoway").checked=false;
+      this.$.root.oneway();
+
+  }
+  if((oneway.checked==true)&&(datebox.checked==true)){
+    document.querySelector("#twoway").checked=false;
+    this.$.root.onecus();
+  }
+  if(oneway.checked==false){
+     var temp='';
+        this.fee=temp;
+        fromdat=temp;
+        todat=temp;
+        document.querySelector("#datebox").checked=false;
+        document.querySelector("#twoway").checked=false;
+
+  }
+
+},
+twowayHandler:function(event){
+  var twoway = document.querySelector("#twoway");
+  mode='Two-Way';
+  if(twoway.checked==true){
+        document.querySelector("#oneway").checked=false;
+        this.$.root.twoway();
+  } 
+  if((twoway.checked==true)&&(datebox.checked==true)){
+    document.querySelector("#oneway").checked=false;
+    this.$.root.twocus();
+  }
+  if(twoway.checked==false){
+    var temp='';
+        this.fee=temp;
+        fromdat=temp;
+        todat=temp;
+        document.querySelector("#oneway").checked=false;
+        document.querySelector("#datebox").checked=false;
+  }
+},
+
 click:function(e)
     {
       
@@ -372,7 +425,7 @@ click:function(e)
         todate=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
         //alert(fromdate+'   '+todate);
       //alert(this.studentid+this.zone_id+this.fee);
-      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate);
+      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode);
 
     },
 clickdate:function()

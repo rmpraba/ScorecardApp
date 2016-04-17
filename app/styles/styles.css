@@ -63,44 +63,63 @@ paper-button{
     margin: 5% 0 0 30%;
 }
 .layframe{
-    margin-left: 33%;
-    @apply(--layout-vertical);
-    @apply(--layout-center);
-    
+    margin-left: 30%;
+    width: all;
+     @apply(--layout-horizontal);
+     display: inline-grid;
+     padding: 5%;
+}
 
-}
-.zonetostudent-card .dropdown-content{
-width: 85%;
-
-}
-.zonetostudent-card .class-drop{
-    padding: 5%;
-}
 .zonetostudent-card .field{
-    padding: 5%;
-    text-align: left;
+    width:80%;
 }
-.zonetostudent-card .button{
-    padding: 15%;
 
+.zonetostudent-card .left{
+        text-align: left;
+       
+   @apply(--layout-vertical);
+   
+
+}
+.zonetostudent-card .right{
     
+        text-align: left;
+        margin-left: 50%;
+        width: 100%;
+       @apply(--layout-vertical);
+  
 }
-.zonetostudent-card #button4{
-    padding: 15%;
-    background-color:#ffffff; 
-    color:#000000;
+
+
+.zonetostudent-card .left1{
+        text-align: left;
+       
+   @apply(--layout-vertical);
+   
+
 }
-.zonetostudent-card #button4: hover{
-    padding: 15%;
-    background-color:#ffa64d; 
-    color:#000000;
+.zonetostudent-card .right1{
+    
+        text-align: left;
+        margin-left: 180%;
+        width: 100%;
+       @apply(--layout-vertical);
+  
 }
-.zonetostudent-card #item{
-    width: auto;
-    margin-left: -2%;
-    font-size: large;
-    font-weight:500;
-    @apply(--layout-horizontal);
+.zonetostudent-card .right2{
+    
+        text-align: left;
+        margin-left: 205%;
+        width: 100%;
+       @apply(--layout-vertical);
+  
+}
+.zonetostudent-card .right3{
+    
+        text-align: left;
+        margin-left: 300%;
+        width: 100%;
+       @apply(--layout-vertical);
   
 }
 .horizontallayout

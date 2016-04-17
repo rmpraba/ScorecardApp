@@ -248,7 +248,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"','','',0,'','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'))";
+	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"')";
 	    console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)
@@ -321,10 +321,9 @@ app.post('/getsec' ,  urlencodedParser,function (req, res)
 
 app.post('/getname' ,  urlencodedParser,function (req, res)
 {
-		var std={"class":req.query.std};
-		var sec={"section":req.query.sec};
+		
 		var trans_req={"transport_required":"yes"};
-	    connection.query('select student_name from student_details where class_id=(select id from class_details where ? and ?) and? ',[std,sec,trans_req],
+	    connection.query('select student_name from student_details where ? ',[trans_req],
        	function(err, rows)
        	{
       	if(!err)
@@ -1196,6 +1195,38 @@ app.post('/getverify',  urlencodedParser,function (req, res)
 	
 });
 	});
+
+
+
+app.post('/getclass',  urlencodedParser,function (req, res)
+{
+			var id={"id":req.query.class};
+	    connection.query('SELECT * from class_details where ?',[id],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json('invalid');
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+	
+});
+	});
+
+
+
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

@@ -100,13 +100,14 @@
       submit:function(itemarr){
           len=itemarr.length;
           for(var i=0;i<itemarr.length;i++){
-            var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":""};
+            var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":"","flag":""};
             obj.studentid=itemarr[i].studentid;
             obj.class_id=itemarr[i].class_id;
             obj.pickroute=itemarr[i].pickroute;
             obj.droproute=itemarr[i].droproute;
             obj.pickpoint=itemarr[i].pickpoint;
             obj.droppoint=itemarr[i].droppoint;
+            obj.flag=1;
             this.studentpointurl="http://localhost:8081/submiturl";
                  this.studentpointparam=obj;
             this.$.studentpointajax.generateRequest();

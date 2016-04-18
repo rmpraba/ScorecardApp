@@ -539,7 +539,7 @@ app.post('/routepoint',  urlencodedParser,function (req, res)
 
 app.post('/submiturl',  urlencodedParser,function (req, res)
 {
-		var mappointtostudent={"student_id":req.query.studentid,"school_type":req.query.class_id,"pickup_route_id":req.query.pickroute,"pickup_point":req.query.pickpoint,"drop_route_id":req.query.droproute, "drop_point":req.query.droppoint};
+		var mappointtostudent={"student_id":req.query.studentid,"school_type":req.query.class_id,"pickup_route_id":req.query.pickroute,"pickup_point":req.query.pickpoint,"drop_route_id":req.query.droproute, "drop_point":req.query.droppoint,"flag":req.query.flag};
 		//console.log(mappointtostudent);
 	    connection.query('insert into student_point set ?',[mappointtostudent],
        	function(err, rows) 

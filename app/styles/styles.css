@@ -1,4 +1,4 @@
-<style type="text/css">
+<style is="custom-style">
 .rom{
 
 }
@@ -363,25 +363,25 @@ ul li #new-button{
 .row .field{
     display: inline-block;
 }
-.container{
+  .container{
     padding: 5%;
-}
-.flex-vertical {
+  }
+  .flex-vertical {
     @apply(--layout-vertical);
     height: 220px;
-}
-.flexchild-vertical {
+  }
+  .flexchild-vertical {
     @apply(--layout-horizontal);
-}
-.profile-image{
+  }
+  .profile-image{
     width: 15%;
     height: 15%;
     margin:0 5% 20% 0;
-}
-.report{
+  }
+  .report{
     margin: 3% 0 3% 20%;
-}
-.reports{
+  }
+  .reports{
     margin:0% 0% 3% 0%; 
-}
+  }
 </style>

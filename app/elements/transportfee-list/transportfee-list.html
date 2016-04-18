@@ -116,65 +116,7 @@ height: 40%
   </div>
   <hr/>
   </iron-collapse>
-   <button  class="collapse" on-click="toggle1">Transport Fee</button>
-   
-<iron-collapse id="s1">
-
- <paper-checkbox style="margin: 2% 0 0 2%;" id="box1" class="checkbox" on-change="Fninstall1">Installment1</paper-checkbox>
-     <paper-checkbox style="margin: 2% 0 0 2%;" id="box2" class="checkbox" on-change="Fninstall2">Installment2</paper-checkbox>
-      <paper-checkbox style="margin: 2% 0 0 2%;" id="box3" class="checkbox" on-change="FnPayfully">Pay Fully</paper-checkbox>
-       <iron-pages selected="{{page}}" attr-for-selected="data-category">
-       
-       <section data-category="install1">
-       <div class="vlayout">
-  <div  class="layout"><paper-item id="lb" >Fee:</paper-item>
-  <paper-input  value="{{value1}}" disabled> </paper-input>
- 
-  </div>
-   <div  class="layout"><paper-item id="lb" >Mode of Payment:</paper-item>
-    <div class="drop-down">
-            <paper-dropdown-menu  class="hide1" label="---Select the Mode of Payment---">
-                <paper-menu class="dropdown-content" id="paymodemenu"  on-iron-select="payment" valueattr="value" >
-                   <paper-item value="cheque">Cheque</paper-item>
-                    <paper-item value="cash">Cash</paper-item>
-                </paper-menu>
-            </paper-dropdown-menu>
-          </div> </div>
-
-          <div  class="layout"><paper-item class="ldate1" id="lb" >Paid DATE:</paper-item><paper-item class="date1" id="lb" >{{paiddate1}}</paper-item></div>
-<paper-button class="hide1" id="pay1button" on-click="pay1">pay</paper-button>
-             </div>
-              </section>
-            <section data-category="install2">
-            <div class="vlayout">
-  <div  class="layout"><paper-item id="lb" >Fee:</paper-item>
-  <paper-input  value="{{value2}}" disabled> </paper-input></div>
-   <div  class="layout"><paper-item id="lb" >Mode of Payment:</paper-item>
-    <div class="drop-down">
-            <paper-dropdown-menu  id="paymode2" label="---Select the Mode of Payment---">
-                <paper-menu class="dropdown-content" id="paymodemenu"  on-iron-select="payment" valueattr="value" >
-                   <paper-item value="cheque">Cheque</paper-item>
-                    <paper-item value="cash">Other</paper-item>
-                </paper-menu>
-            </paper-dropdown-menu>
-          </div> </div>
- <div  class="layout"><paper-item class="ldate2" id="lb" >Paid DATE:</paper-item><paper-item class="date2" id="lb" >{{paiddate2}}</paper-item></div>
-<paper-button  class="hide2" id="pay2button" on-click="pay2">pay</paper-button>
-             </div>
-             </section>
- </iron-pages>
-
-  </iron-collapse>
-
-<paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
-<h4>ADD CHEQUE DETAILS</h4>
- <div  class="layout"> <paper-input class="hide2"  id="chequenum" label="Enter the Cheque No:" value="{{chequenum}}"> </paper-input></div>
- <div  class="layout"> <paper-input class="hide2"  id="bankname" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>
- <datepicker-card></datepicker-card>
- 
-<paper-button on-click="add">ADD</paper-button>
-</paper-dialog>
-
+  
         <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
@@ -189,10 +131,7 @@ height: 40%
       is: "transportfee-list",
       ready:function()
       {
-     this.querySelector('.ldate1').style.visibility='hidden';
-     this.querySelector('.date1').style.visibility='hidden';
-     this.querySelector('.ldate2').style.visibility='hidden';
-     this.querySelector('.date2').style.visibility='hidden';
+     
       },
       toggle: function(e)
       {
@@ -212,149 +151,7 @@ height: 40%
 
       }
 
-},
-toggle1: function(e)
-      {
-        if(this.install1>0)
-        {
-          document.querySelector("#box3").disabled=true;
-        }
-       var s=document.querySelector("#s1"); 
-       s.toggle();
-
-      },
-      Fninstall1: function(e)
-      {
-      
-         if(e.target.checked==true)
-    {
-      document.querySelector("#box2").checked=false;
-      document.querySelector("#box3").checked=false;
-        this.page="install1";
-        if(this.install1>0)
-        {
-          this.value1=this.install1;
-          document.querySelector(".hide1").disabled=true;
-          document.querySelector("#pay1button").disabled=true;
-          this.querySelector('.ldate1').style.visibility='visible';
-          this.querySelector('.date1').style.visibility='visible';
-          if(this.modeofpay1=="Cheque")
-          {
-            //document.querySelector("#paymodemenu").selected=0;
-          }
-        }
-
-        else
-        {
-          this.value1=this.install;
-        }
-      
 }
-      },
-      Fninstall2: function(e)
-      {
-         if(e.target.checked==true)
-    {
-      document.querySelector("#box1").checked=false;
-      document.querySelector("#box3").checked=false;
-        this.page="install2";
-        if(this.install1=="0")
-        {
-          alert("Pay  Installment1 First");
-       document.querySelector(".hide2").disabled=true;
-       document.querySelector("#paymode2").disabled=true;
-        }
-        else if(this.due=="0")
-        {
-       this.value2=this.install2;
-       document.querySelector(".hide2").disabled=true;
-       document.querySelector("#paymode2").disabled=true;
-        }
-        else
-        {
-          this.value2=this.due;
-        }
-        if(this.install2>0)
-        {
-          this.value2=this.install2;
-          this.querySelector('.ldate2').style.visibility='visible';
-          this.querySelector('.date2').style.visibility='visible';
-          document.querySelector(".hide2").disabled=true;
-       document.querySelector("#paymode2").disabled=true;
-        }
-      
-}
-      },
-      FnPayfully:function(e)
-      {
-
-  if(e.target.checked==true)
-    {
-      document.querySelector("#box2").checked=false;
-      document.querySelector("#box1").checked=false;
-        this.page="install1";
-        this.value1=this.actual;
-      }
-      },
-      payment:function(e)
-      {
-        paytype = (e.target.selectedItem.textContent).trim();
-        if(paytype=="Cheque")
-        {
-        var id = 'animated';
-        var dialog = document.getElementById(id);
-        dialog.open();
-       }
-      
-    
-    },
-    add:function()
-    {
-       var id = 'animated';
-      var dialog = document.getElementById(id);
-      dialog.opened=false;
-    },
-    changeHandler:function(e)
-    {
- 
-    if(e.target.checked==true)
-    {
-      val=this.value1;
-     //alert(e.target.checked);
-     this.value1=this.fee;
-    }
-    else
-    {
-this.value1=val;
-    }
-    },
-    pay1:function()
-    {
-       document.querySelector("#box2").checked=false;
-      document.querySelector("#box1").checked=false;
-      document.querySelector("#box3").checked=false;
-      if(paytype=="Cheque")
-      {
-        this.chequedate=localStorage.getItem("localsess_curr_date");
-       this.$.service.payfee(this.value1,this.studid,paytype);
-       this.$.service.chequeinfo(this.studid,this.name,this.chequenum,this.bankname,this.chequedate);
-      }
-      else
-      {
-        
-        this.$.service.payfee(this.install,this.studid,paytype);
-      }
-    },
-    pay2:function()
-    {
-       document.querySelector("#box2").checked=false;
-      document.querySelector("#box1").checked=false;
-      document.querySelector("#box3").checked=false;
-      this.chequedate=localStorage.getItem("localsess_curr_date");
-      this.$.service.payfee2(this.value2,this.studid,"PDC");
-       this.$.service.chequeinfo2(this.studid,this.name,this.chequenum,this.bankname,this.chequedate);
-    }
-
       
     });
     })();

@@ -38,23 +38,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    <paper-item >{{installamt}}</paper-item>
    <paper-item >{{paydate}}</paper-item>
     <div class="drop-down">
-            <paper-dropdown-menu disabled$="{{enable}}"    label="---Select the Mode of Payment---">
-                <paper-menu class="dropdown-content" id="paymodemenu" selected="{{paymode}}" on-iron-select="payment" valueattr="value" >
+            <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}"    label="---Select the Mode of Payment---">
+                <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
                    <paper-item value="Cheque">Cheque</paper-item>
                     <paper-item value="Cash">Cash</paper-item>
                 </paper-menu>
             </paper-dropdown-menu>
           </div>
+          <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
            <paper-item id="installsdate" hidden$="{{hidden1}}">{{installdate}}</paper-item>
-    <paper-button id="add" hidden$="{{hidden2}}" on-click="add">ADD</paper-button>
+    <paper-button  hidden$="{{hidden2}}" on-click="payfees">PAY</paper-button>
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
           
    </div>
+   <paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+<h4>ADD CHEQUE DETAILS</h4>
+ <div  class="layout"> <paper-input class="hide2"  id="chequenum" label="Enter the Cheque No:" value="{{chequenum}}"> </paper-input></div>
+ <div  class="layout"> <paper-input class="hide2"  id="bankname" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>
+ <datepicker-card></datepicker-card>
+ 
+<paper-button on-click="add">ADD</paper-button>
+<transportfee-service id="service"></transportfee-service>
   </template>
   <script>
   (function() {
-    'use strict';
+    var paytype;
 
     Polymer({
       is: 'installtype-card',
@@ -68,17 +77,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         if(pstatus==true)
         {
-           alert(pstatus);
+           //alert(pstatus);
            this.hidden1=false;
            this.hidden2=true;
-           alert(this.paymode);
+           //alert(this.paymode);
         }
         else
         {
-          alert(pstatus);
+          //alert(pstatus);
           this.hidden1=true;
           this.hidden2=false;
-          alert(this.paymode);
+          //alert(this.paymode);
         }
       },
       payinstall:function(e)
@@ -87,7 +96,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         {
          this.enable=false;
         }
+      },
+       payment:function(e)
+      {
+        paytype = (e.target.selectedItem.textContent).trim();
+        if(paytype=="Cheque")
+        {
+        var id = 'animated';
+        var dialog = document.getElementById(id);
+        dialog.open();
+       }
+     },
+        add:function()
+    {
+       var id = 'animated';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+
+      payfees:function()
+      {
+        //alert(this.studid);
+          if(paytype=="Cheque")
+      {
+
+        this.chequedate=localStorage.getItem("localsess_curr_date");
+       this.$.service.payfee(this.installamt,this.studid,paytype,this.installtype);
+       this.$.service.chequeinfo(this.studid,this.name,this.chequenum,this.bankname,this.chequedate);
       }
+      else
+      {
+        
+        this.$.service.payfee(this.installamt,this.studid,paytype,this.installtype);
+      }
+      }
+    
+    
     });
   })();
   </script>

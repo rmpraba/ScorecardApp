@@ -51,7 +51,7 @@
    <paper-item id="lb"> Mode Of Payment</paper-item>
   </div>
           <template  is="dom-repeat" items="{{installmentarr}}" as="view">
-          <installtype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}">
+          <installtype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}">
           </installtype-card>
           </template>
          </iron-collapse>

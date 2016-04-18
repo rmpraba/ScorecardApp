@@ -159,8 +159,7 @@
      {
       var date1;
       var date2;
-      //alert(JSON.stringify(e.detail.response.returnval));
-      feestudid=e.detail.response.returnval[0].student_id;
+      feestudid=e.detail.response.returnval[0].id;
       discountfee=e.detail.response.returnval[0].discount_fee;
       feepercent=e.detail.response.returnval[0].fees;
       mode1=e.detail.response.returnval[0].modeofpayment1;
@@ -173,7 +172,6 @@
       var d2=e.detail.response.returnval[0].installment_2Date;
       date2=new Date(d2);
      install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
-      alert(feepercent);
       var feeresult=e.detail.response.returnval;
        document.querySelector('transportfee-card').feearr=feeresult;
        document.querySelector('transportfee-service').getinstalltype();
@@ -191,15 +189,17 @@
       
       document.querySelector('transportfee-card').autocompletename(nameitem);
      },
-     payfee:function(install,studid,paytype)
+     payfee:function(install,studid,paytype,instype)
      {
       
        this.payfeeurl="http://localhost:8081/payfee-card";
-        var obj={"studid":"","installfee":"","paytype":""}
+        var obj={"studid":"","installfee":"","paytype":"","instype":""}
         obj.studid=studid;
         obj.installfee=install;
         obj.paytype=paytype;
+        obj.instype=instype;
         this.payfeeparam=obj;
+
         this.$.payfeeajax.generateRequest();
      },
      payfeeResponse:function(e)
@@ -393,14 +393,14 @@
                  paymode="";
                 }
             }
-            var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","studid":""}
+            var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":""}
             obj.installtype=installdata[i].install_type;
             obj.amount=((parseInt(feepercent)-parseInt(discountfee))/100)*parseInt(installdata[i].amt_percentage);
             obj.paydate=installdata[i].paydate;
             obj.installdate=paiddate;
             obj.paidstatus=paidstatus;
             obj.paymentmode=paymode;
-            obj.studid=feestudid;
+            obj.feestudid=feestudid;
             installarr.push(obj);
         }
         alert(JSON.stringify(installarr));

@@ -726,10 +726,25 @@ app.post('/getnameofstu-card',  urlencodedParser,function (req, res)
 app.post('/payfee-card',  urlencodedParser,function (req, res)
 {
 		var d = new Date();
+		var mode;
+		var install1;
+		var install1date;
 		var studid={"student_id":req.query.studid};
-		var mode={"modeofpayment1":req.query.paytype};
-		var install1={"installment_1":req.query.installfee};
-		var install1date={"installment_1Date":d}
+		if(req.query.instype=="installment1")
+		{
+			console.log('yes');
+		 mode={"modeofpayment1":req.query.paytype};
+		 install1={"installment_1":req.query.installfee};
+		 install1date={"installment_1Date":d}
+	    }
+	    else
+	    {
+	    	console.log('no');
+	    	mode={"modeofpayment2":req.query.paytype};
+		 install1={"installment_2":req.query.installfee};
+		 install1date={"installment_2Date":d}
+	    }
+	    console.log(studid);
 	    connection.query('update  student_fee set ?,?,? where ?',[mode,install1,install1date,studid],
        	function(err, rows) 
        	{

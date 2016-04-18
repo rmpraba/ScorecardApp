@@ -43,18 +43,21 @@
    <button  class="collapse" on-click="toggle2"  hidden$="{{hide}}">Transport Fee</button>
    
 <iron-collapse id="type">
-           <div  class="layout">
-
-   <paper-item id="lb" >    installment Type</paper-item>
-   <paper-item id="lb"> Amount</paper-item>
-   <paper-item id="lb"> Date</paper-item>
-   <paper-item id="lb"> Mode Of Payment</paper-item>
-  </div>
-          <template  is="dom-repeat" items="{{installmentarr}}" as="view">
+  <div class="container flex-vertical">
+    <div class="flex-horizontal margin">
+      <paper-item>Installment Type</paper-item>
+      <paper-item>Amount</paper-item>
+      <paper-item>Date</paper-item>
+      <paper-item>Mode Of Payment</paper-item>
+    </div>
+    <div class="flexchild-vertical report">
+      <template  is="dom-repeat" items="{{installmentarr}}" as="view">
           <installtype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}">
           </installtype-card>
-          </template>
-         </iron-collapse>
+      </template>
+    </div>
+  </div>
+</iron-collapse>
       <transportfee-service id="service"></transportfee-service>
   </template>
   <script>

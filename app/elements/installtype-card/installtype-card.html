@@ -17,7 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
-
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
@@ -57,8 +56,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  <div  class="layout"> <paper-input class="hide2"  id="chequenum" label="Enter the Cheque No:" value="{{chequenum}}"> </paper-input></div>
  <div  class="layout"> <paper-input class="hide2"  id="bankname" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>
  <datepicker-card></datepicker-card>
- 
-<paper-button on-click="add">ADD</paper-button>
+<div class="butto">
+  <paper-button on-click="add">ADD</paper-button>
+</div>
 <transportfee-service id="service"></transportfee-service>
   </template>
   <script>

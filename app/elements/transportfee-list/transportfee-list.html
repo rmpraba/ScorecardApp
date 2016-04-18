@@ -90,34 +90,48 @@ height: 40%
 {
   padding: 2%;
 }
+.flex-vertical {
+    @apply(--layout-vertical);
+    height: 220px;
+}
+.flexchild-vertical {
+    @apply(--layout-horizontal);
+}
  </style>
  <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
-<iron-collapse id="{{studid}}">
-  <div class="field">
-  <div class="detail1">
- <div class="imag"><img src="images/{{studid}}.jpg"/></div>
- <div class="hor">
-  <div  class="layout"><paper-item id="lb" >student Id:</paper-item> <paper-item >{{studid}}</paper-item>
-   <paper-item id="lb">student name:</paper-item><paper-item >{{name}}</paper-item></div>
-  <div  class="layout"> <paper-item id="lb">class:</paper-item><paper-item>{{classes}}</paper-item>
-  <paper-item id="lb">zone:</paper-item> <paper-item  >{{zone}}</paper-item></div>
-  <div  class="layout"><paper-item id="lb" >Date of Birth: </paper-item><paper-item >{{dob}}</paper-item>
-   <paper-item id="lb">Bus Fee:</paper-item><paper-item >{{fee}}</paper-item></div>
- <div  class="layout"><paper-item id="lb" >Paid: </paper-item><paper-item >{{paid}}</paper-item>
-   <paper-item id="lb">Remaining Fee:</paper-item><paper-item >{{due}}</paper-item></div>
-   <div  class="layout"><paper-item id="lb" >Pick Up Place: </paper-item><paper-item >{{pick}}</paper-item>
-   <paper-item id="lb">Drop Place:</paper-item><paper-item >{{drop}}</paper-item></div>
-   </div>
-   <div class="layout">
-        <paper-item id="lb" >Discount: </paper-item><paper-item >{{discount}}</paper-item>
-        <paper-item id="lb">Actual Fee:</paper-item><paper-item >{{actual}}</paper-item>
-      </div>
-   </div>
+<iron-collapse id="{{studid}}" class="detail">
+<div class="container flex-vertical transport-fee">
+  <div class="flexchild-vertical reports">
+    <div class="profile-image">
+      <img src="../images/{{studid}}.jpg"/>
+    </div>
+    <div class="flexchild-vertical">
+      <paper-item>Student Id:</paper-item> <paper-item >{{studid}}</paper-item>
+      <paper-item>Student Name:</paper-item><paper-item >{{name}}</paper-item>
+    </div>
   </div>
-  <hr/>
+    <div class="flexchild-vertical report">
+      <paper-item>Class:</paper-item><paper-item>{{classes}}</paper-item>
+      <paper-item>School Type:</paper-item><paper-item >{{school}}</paper-item>
+    </div>
+    <div class="flexchild-vertical report">
+      <paper-item>Zone:</paper-item> <paper-item  >{{zone}}</paper-item>
+      <paper-item>Date of Birth: </paper-item><paper-item >{{dob}}</paper-item>
+    </div>
+    <div class="flexchild-vertical report">
+      <paper-item>Bus Fee:</paper-item><paper-item >{{fee}}</paper-item>
+      <paper-item>Paid: </paper-item><paper-item >{{paid}}</paper-item>
+    </div>
+    <div class="flexchild-vertical report">
+      <paper-item>Remaining Fee:</paper-item><paper-item >{{due}}</paper-item>
+      <paper-item>Pick Up Place: </paper-item><paper-item >{{pick}}</paper-item>
+    </div>
+    <div class="flexchild-vertical report">
+      <paper-item>Discount: </paper-item><paper-item >{{discount}}</paper-item>
+      <paper-item>Actual Fee:</paper-item><paper-item >{{actual}}</paper-item>
+    </div>
   </iron-collapse>
-  
-        <transportfee-service id="service"></transportfee-service>
+  <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
 

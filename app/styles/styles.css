@@ -4,6 +4,8 @@
 }
 section{
     padding: 0 !important;
+    height: 100%;
+    width: 100%;
 }
 .head{
     background-color:#1E2021 ; 
@@ -270,9 +272,15 @@ li{
     width: 100%;
     text-align: left;
 }
-.layout{
+.layout,.flex-horizontal{
     display: flex;
     flex-direction: row;
+}
+.flex-horizontal.margin{
+    margin-left: 23%;
+}
+.margin{
+    margin: 0 15% 0 15%;
 }
 .hor{
     margin-top: 5%;
@@ -366,6 +374,9 @@ ul li #new-button{
   .container{
     padding: 5%;
   }
+  .container.flex-vertical.transport-fee{
+    height: 75%;
+  }
   .flex-vertical {
     @apply(--layout-vertical);
     height: 220px;
@@ -384,4 +395,13 @@ ul li #new-button{
   .reports{
     margin:0% 0% 3% 0%; 
   }
+  .container paper-item{
+    height: 5% !important;
+  }
+paper-button{
+    height: 16%;
+  }
+.butto{
+    margin:3% 0 0 3%; 
+}
 </style>

@@ -331,6 +331,28 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="studzoneajax"
+        url="{{studzoneurl}}"
+        params="{{studzoneparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studzoneResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="updatezoneajax"
+        url="{{updatezoneurl}}"
+        params="{{updatezoneparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatezoneResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -474,16 +496,19 @@
             document.querySelector('zonetostudent-card').ztodate=todate1;
 
       },
-      setzone:function(studid,zone,fee,fromdatez,todatez,modez)
+      setzone:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx)
       {
         this.setzoneurl = "http://localhost:8081/setzone";
-        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":""};
+        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":""};
         obj.studid=studid;
         obj.zone=zone;
         obj.fee=fee;
         obj.fromdate=fromdatez;
         obj.todate=todatez;
         obj.mode=modez;
+        obj.name=namex;
+        obj.today=todayx;
+        obj.status=statusx;
         this.setzoneparam=obj;
        // alert(JSON.stringify(obj));
         this.$.setzoneajax.generateRequest();
@@ -838,7 +863,54 @@
       twocus:function(){
           val=cusfee;
         document.querySelector('zonetostudent-card').fee=val;
-        }
+      },
+       studzone:function(id){
+              this.studzoneurl="http://localhost:8081/getstudzone";
+              var obj={"stid":""}
+              obj.stid=id;
+              
+              this.studzoneparam=obj;
+              
+              this.$.studzoneajax.generateRequest();
+        },
+        studzoneResponse:function(e){
+              var status=e.detail.response.returnval[0].status;
+              
+              if(status=='mapped'){
+                alert('The student is already mapped You Cannot Map again');
+              }
+                else{document.querySelector('zonetostudent-card').status=status;}
+          
+        },
+        updatezone:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx)
+      {
+        this.updatezoneurl = "http://localhost:8081/updatezone";
+        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":""};
+        obj.studid=studid;
+        obj.zone=zone;
+        obj.fee=fee;
+        obj.fromdate=fromdatez;
+        obj.todate=todatez;
+        obj.mode=modez;
+        obj.name=namex;
+        obj.today=todayx;
+        obj.status=statusx;
+        this.updatezoneparam=obj;
+       // alert(JSON.stringify(obj));
+        this.$.updatezoneajax.generateRequest();
+      },
+      updatezoneResponse:function(e){
+         var result=e.detail.response.returnval;
+         //alert(result);
+         if(result=="success")
+         {
+          alert('Updation done successfully');
+         }
+         else
+         {
+          alert('Updation interrupt');
+         }
+      },
       
 
     });

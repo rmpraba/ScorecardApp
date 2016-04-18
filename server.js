@@ -248,7 +248,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"')";
+	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"')";
 	    console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)
@@ -480,7 +480,7 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-			console.log(rows);
+			//console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -1236,6 +1236,60 @@ app.post('/getclass',  urlencodedParser,function (req, res)
 	
 });
 	});
+
+
+
+
+
+app.post('/getstudzone',  urlencodedParser,function (req, res)
+{
+	var stuid={"student_id":req.query.stid};
+	    connection.query('SELECT status from student_fee where ?',[stuid],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json('invalid');
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+	
+});
+	});
+
+
+app.post('/updatezone' ,  urlencodedParser,function (req, res)
+{
+	var queryy="update student_fee set zone_id='"+req.query.zone+"',fees='"+req.query.fee+"',from_date=STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),to_date=STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),mode='"+req.query.mode+"',updated_by='"+req.query.name+"',updated_on=STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),status='"+req.query.status+"'  WHERE student_id='"+req.query.studid+"'";
+	    console.log(queryy);
+	    connection.query(queryy,
+       	function(err, rows)
+       	{
+      	
+		
+			if(!err)
+			{
+			res.status(200).json({'returnval': 'success'});
+			}
+			else
+			{
+				console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		
+});
+	});
+
 
 
 

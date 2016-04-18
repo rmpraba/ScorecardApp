@@ -444,18 +444,19 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 	}
 });
 	});
+
 app.post('/classpick',  urlencodedParser,function (req, res)
 {
-	var class_id=req.query.classes;
+	var class_id={"school_type":req.query.classes};
+	var req={"transport_required":'yes'};
 	//console.log('in server...');
-      connection.query('SELECT sd.id, sd.student_name from student_details sd join student_fee sf on sd.id = sf.student_id where sd.school_type= ? and sd.transport_required="yes" and sf.installment_1>0 or sf.fees-sf.discount_fee=0',[class_id],
-       	function(err, rows)
-       	{ 
+      connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ?',[class_id,req],
+       		function(err, rows)
+       	{
 		if(!err)
 		{
 		if(rows.length>0)
 		{
-			console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -463,12 +464,9 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 			res.status(200).json({'returnval': 'invalid'});
 		}
 	}
-	else
-	{
-		console.log(err);
-	}
+
 });
-});
+	});
 
 app.post('/pickpoints',  urlencodedParser,function (req, res)
 {

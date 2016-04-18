@@ -432,9 +432,6 @@ twowayHandler:function(event){
 
 click:function(e)
     {
-      
-
-alert(name,this.status,today);
 
         fromdate=fromdat.getFullYear()+"/"+(fromdat.getMonth()+1)+"/"+fromdat.getDate();
         todate=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
@@ -444,7 +441,7 @@ alert(name,this.status,today);
       {
       this.$.root.updatezone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status);
     }
-    else if(this.status=='cancelled')
+    else if(this.status=='mapped')
     {
       alert('You Cannot Mapped Again');
       ready();

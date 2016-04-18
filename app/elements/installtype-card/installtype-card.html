@@ -1,0 +1,94 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../transportfee-service/transportfee-service.html">
+<link rel="import" href="../datepicker-card/datepicker-card.html">
+
+<dom-module id="installtype-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div  class="layout">
+   
+    <paper-checkbox style="margin: 2% 0 0 2%;" id="{{studid}}" class="checkbox" disabled$="{{paidstatus}}" on-change="payinstall"></paper-checkbox>
+   <paper-item >{{installtype}}</paper-item>
+   <paper-item >{{installamt}}</paper-item>
+   <paper-item >{{paydate}}</paper-item>
+    <div class="drop-down">
+            <paper-dropdown-menu disabled$="{{enable}}"    label="---Select the Mode of Payment---">
+                <paper-menu class="dropdown-content" id="paymodemenu" selected="{{paymode}}" on-iron-select="payment" valueattr="value" >
+                   <paper-item value="Cheque">Cheque</paper-item>
+                    <paper-item value="Cash">Cash</paper-item>
+                </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+           <paper-item id="installsdate" hidden$="{{hidden1}}">{{installdate}}</paper-item>
+    <paper-button id="add" hidden$="{{hidden2}}" on-click="add">ADD</paper-button>
+            <template is="dom-if" if="{{checkinstall(paidstatus)}}">
+            </template>
+          
+   </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'installtype-card',
+ ready:function()
+ {
+  
+  this.enable=true;
+ },
+      checkinstall:function(pstatus)
+
+      {
+        if(pstatus==true)
+        {
+           alert(pstatus);
+           this.hidden1=false;
+           this.hidden2=true;
+           alert(this.paymode);
+        }
+        else
+        {
+          alert(pstatus);
+          this.hidden1=true;
+          this.hidden2=false;
+          alert(this.paymode);
+        }
+      },
+      payinstall:function(e)
+      {
+        if(e.target.checked==true)
+        {
+         this.enable=false;
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

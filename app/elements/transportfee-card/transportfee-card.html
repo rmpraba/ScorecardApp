@@ -4,8 +4,10 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../transportfee-service/transportfee-service.html">
 <link rel="import" href="../transportfee-list/transportfee-list.html">
+<link rel="import" href="../installtype-card/installtype-card.html">
 
 <dom-module id="transportfee-card">
 
@@ -36,8 +38,23 @@
           <template  is="dom-repeat" items="{{feearr}}" as="view">
            <transportfee-list studid="{{view.id}}" name="{{view.student_name}}" classes="{{view.class_id}}" dob="{{view.dob}}" zone="{{view.zone_id}}" fee="{{view.fees}}" photo="{{view.photo}}" paid="{{view.total}}" due="{{view.due}}" pick="{{view.pick}}" drop="{{view.drop1}}" install="{{view.install}}" install1="{{view.installment_1}}" install2="{{view.installment_2}}" paiddate1="{{view.installment_1Date}}" paiddate2="{{view.installment_2Date}}" modeofpay1="{{view.modeofpayment1}}" modeofpay2="{{view.modeofpayment2}}" actual="{{view.actualfee}}" discount="{{view.discount_fee}}">
                  </transportfee-list>
+
           </template>
-        
+   <button  class="collapse" on-click="toggle2"  hidden$="{{hide}}">Transport Fee</button>
+   
+<iron-collapse id="type">
+           <div  class="layout">
+
+   <paper-item id="lb" >    installment Type</paper-item>
+   <paper-item id="lb"> Amount</paper-item>
+   <paper-item id="lb"> Date</paper-item>
+   <paper-item id="lb"> Mode Of Payment</paper-item>
+  </div>
+          <template  is="dom-repeat" items="{{installmentarr}}" as="view">
+          <installtype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}">
+          </installtype-card>
+          </template>
+         </iron-collapse>
       <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
@@ -46,11 +63,17 @@
     Polymer({
       is: "transportfee-card",
       ready: function() {
+        this.hide=true;
         this.$.service.getnameofstu();
         this.querySelector('paper-listbox').style.visibility='hidden';
-        this.$.service.getinstalltype();
+        //this.$.service.getinstalltype();
         
    },
+   toggle2: function(e)
+      {
+      var s=document.querySelector("#type"); 
+      s.toggle();
+     },
    autocompletename(nameitem)
    {
 namearr=nameitem;
@@ -125,6 +148,7 @@ namearr=nameitem;
     this.itemArray=[];
     document.querySelector("#itemlist1").selected=-1;
     this.$.service.generatefee(this.studid);
+    this.hide=false;
    }
 
     });

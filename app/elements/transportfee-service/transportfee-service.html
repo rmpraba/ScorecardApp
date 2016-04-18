@@ -134,6 +134,15 @@
     var fromd;
     var tod;
     var studname;
+    var feepercent;
+    var install1fee;
+    var install2fee;
+    var install1date;
+    var install2date;
+    var discountfee;
+    var feestudid;
+    var mode1;
+    var mode2;
 
     Polymer({
       is: "transportfee-service",
@@ -148,10 +157,26 @@
      },
      generatefeeResponse:function(e)
      {
-      
+      var date1;
+      var date2;
       //alert(JSON.stringify(e.detail.response.returnval));
+      feestudid=e.detail.response.returnval[0].student_id;
+      discountfee=e.detail.response.returnval[0].discount_fee;
+      feepercent=e.detail.response.returnval[0].fees;
+      mode1=e.detail.response.returnval[0].modeofpayment1;
+      mode2=e.detail.response.returnval[0].modeofpayment2;
+      install1fee=e.detail.response.returnval[0].installment_1;
+      install2fee=e.detail.response.returnval[0].installment_2;
+      var d1=e.detail.response.returnval[0].installment_1Date;
+      date1=new Date(d1);
+  install1date=date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+      var d2=e.detail.response.returnval[0].installment_2Date;
+      date2=new Date(d2);
+     install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+      alert(feepercent);
       var feeresult=e.detail.response.returnval;
        document.querySelector('transportfee-card').feearr=feeresult;
+       document.querySelector('transportfee-service').getinstalltype();
      },
      getnameofstu:function()
      {
@@ -165,7 +190,6 @@
       var nameitem=e.detail.response.returnval;
       
       document.querySelector('transportfee-card').autocompletename(nameitem);
-       document.querySelector('transportfee-service').getinstalltype();
      },
      payfee:function(install,studid,paytype)
      {
@@ -328,7 +352,60 @@
      },
      getinstalltypeResponse:function(e)
      {
+        var installarr=[];
+        var installdata=e.detail.response;
+        for(var i=0;i<installdata.length;i++)
+        {
+             var paidstatus;
+             var paiddate;
+             var paymode;
+            //alert(feepercent);
+            //alert(installdata[i].amt_percentage);
+            if(installdata[i].install_type=="installment1")
+            {
+                if(install1fee>0)
+                {
+                 paidstatus=true;
+                 paiddate=install1date;
+                 paymode=mode1;
+
+                }
+                else
+                {
+                    paidstatus=false;
+                 paiddate="no";
+                 paymode="";
+                }
+            }
+             if(installdata[i].install_type=="installment2")
+            {
+                if(install2fee>0)
+                {
+                 paidstatus=true;
+                 paiddate=install2date;
+                 paymode=mode2;
+
+                }
+                else
+                {
+                    paidstatus=false;
+                 paiddate="no";
+                 paymode="";
+                }
+            }
+            var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","studid":""}
+            obj.installtype=installdata[i].install_type;
+            obj.amount=((parseInt(feepercent)-parseInt(discountfee))/100)*parseInt(installdata[i].amt_percentage);
+            obj.paydate=installdata[i].paydate;
+            obj.installdate=paiddate;
+            obj.paidstatus=paidstatus;
+            obj.paymentmode=paymode;
+            obj.studid=feestudid;
+            installarr.push(obj);
+        }
+        alert(JSON.stringify(installarr));
 //alert(JSON.stringify(e.detail.response));
+document.querySelector('transportfee-card').installmentarr=installarr;
      }
 
     });

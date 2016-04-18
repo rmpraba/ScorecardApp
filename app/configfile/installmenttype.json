@@ -1,12 +1,13 @@
 [
 {
-	"install_type":"install1",
+	"install_type":"installment1",
 	"amt_percentage":"75",
 	"paydate":"20/05/2015"
 },
 {
-	"install_type":"install2",
+	"install_type":"installment2",
 	"amt_percentage":"25",
 	"paydate":"30/07/2015"
 }
+
 ]

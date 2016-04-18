@@ -171,23 +171,23 @@ paper-button{
     width: 100%;
     margin-left: 0%;
 }
-.cancellation-card .layout .date{
+.cancellation-card .date{
     width: 30%;
     float: left;
     margin: 1% 0 0 0;
 }
-.cancellation-card .layout .date .card.datepicker-card{
+.cancellation-card .date .card.datepicker-card{
     margin: 0;
 }
-.cancellation-card .layout .date paper-input{
+.cancellation-card .date paper-input{
     margin: 0;
     padding: 0;
 }
-.cancellation-card .layout .reason{
+.cancellation-card .reason{
     width: 40%;
     text-align: center;
 }
-.cancellation-card .layout .reason paper-input{
+.cancellation-card .reason paper-input{
     margin: 0 !important;
 }
 .cancellation-card img, .genestureport-card img{
@@ -362,5 +362,26 @@ ul li #new-button{
 }
 .row .field{
     display: inline-block;
+}
+.container{
+    padding: 5%;
+}
+.flex-vertical {
+    @apply(--layout-vertical);
+    height: 220px;
+}
+.flexchild-vertical {
+    @apply(--layout-horizontal);
+}
+.profile-image{
+    width: 15%;
+    height: 15%;
+    margin:0 5% 20% 0;
+}
+.report{
+    margin: 3% 0 3% 20%;
+}
+.reports{
+    margin:0% 0% 3% 0%; 
 }
 </style>

@@ -404,4 +404,146 @@ paper-button{
 .butto{
     margin:3% 0 0 3%; 
 }
+.receipt{
+   margin-left: 2%;
+   margin-top: 2%;
+}
+.receipt .header{
+   @apply(--layout-horizontal);
+   
+    
+}
+.receipt .header .logo{
+    width: 10%;
+    height: 10%;
+}
+.receipt .header .heading{
+    width: 75%;
+    height: 10%;
+    margin-left: 12%;
+    text-align: center;
+}
+.receipt .header .title{
+    font-size: xx-large;
+    font-weight: 900;
+    margin-top: -3.25%;
+}
+.receipt .header .address{
+    font-weight: 500;
+}
+.receipt .body1{
+    text-align: center;
+    @apply(--layout-horizontal);
+}
+.receipt .body1 .l1{
+    margin-left: 0%;    
+}
+.receipt .body1 .r1{
+    margin-left: 85%;
+    margin-top: -6.2%;
+    
+}
+.receipt .body1 #ln2{
+    margin-top: -2.5%;
+    
+}
+.receipt .body2{
+    display: flex;
+    padding: -5%;
+}
+.receipt .body2 .r2{
+    margin-left: 60%;
+}
+.receipt #ln3{
+    margin-top: -3.5%;
+    
+}
+.receipt .body3{
+    display: flex;
+    margin-left: 1%;
+}
+
+.receipt .body3 .l13{
+margin-left: 20%;    
+}
+.receipt .body3 .r3{
+ margin-left: 55%;       
+}
+.receipt #ln4{
+    margin-top: -1%;
+    
+}
+.receipt .body4{
+    display: flex;
+   
+}
+
+.receipt .body4 .l14{
+margin-left: 8%;    
+}
+.receipt .body4 .r4{
+ margin-left: 54%;       
+}
+.receipt #ln5{
+    margin-top: 1%;
+    
+}
+
+.receipt .body5{
+    display: flex;
+   @apply(--layout-horizontal);
+}
+
+.receipt .body5 .l15{
+margin-left: 8%; 
+@apply(--layout-horizontal);
+float: left;
+text-align: left;   
+}
+.receipt .body5 .r5{
+ margin-left: 65%;       
+}
+.receipt #ln6{
+    margin-top: 1%;
+    
+}
+.receipt .body6{
+ margin-left: 0%;       
+}
+
+.receipt .body7{
+    display: flex;
+   
+}
+
+.receipt .body7 .l17{
+margin-left: 12%;    
+}
+.receipt .body7 .r7{
+ margin-left: 35%;       
+}
+.receipt .body8{
+    @apply(--layout-horizontal);
+text-align: center;
+ margin-top: 3%;
+ 
+}
+.receipt .body9{
+    @apply(--layout-horizontal);
+    margin-top: 2%;
+ 
+}
+.receipt .body9 .l8{
+    @apply(--layout-horizontal);    
+    text-align: left;
+    float: left;
+    width: 100%;
+}
+
+.receipt .body9 .r8{
+    @apply(--layout-horizontal);    
+    text-align: left;
+    float: right;
+    margin-top: 4%;
+}
 </style>

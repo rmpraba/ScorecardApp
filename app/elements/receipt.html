@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.0-beta.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.1.135/jspdf.min.js"></script>
+<script type="text/javascript" src="http://cdn.uriit.ru/jsPDF/libs/adler32cs.js/adler32cs.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js
+"></script>
+<script type="text/javascript" src="libs/Blob.js/BlobBuilder.js"></script>
+<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.addimage.js"></script>
+<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.standard_fonts_metrics.js"></script>
+<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.split_text_to_size.js"></script>
+<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.from_html.js"></script>
+<script type="text/javascript" src="js/basic.js"></script>
+<link rel="import"  href="../../receipt-card/receipt-card.html">
+</head>
+<body id="target">
+
+<receipt-card></receipt-card>
+
+<button id="cmd">generate PDF</button>
+</body>
+</html>
+<script>
+	$(function() {
+  var doc = new jsPDF();
+  var specialElementHandlers = {
+    '#editor': function(element, renderer) {
+      return true;
+    }
+  };
+  $('#cmd').click(function() {
+    doc.fromHTML($('#target').html(), 15, 15, {
+      'width': 170,
+      'elementHandlers': specialElementHandlers
+    });
+    doc.save('sample-file.pdf');
+  });
+});
+</script>

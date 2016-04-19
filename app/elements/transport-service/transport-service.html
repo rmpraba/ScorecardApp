@@ -353,6 +353,26 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        
+        id="onewayajax"
+        url="{{onewayurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="onewayResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        
+        id="onecusajax"
+        url="{{onecusurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="onecusResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -371,7 +391,7 @@
     var cusfee;
     var yearlyfee;
     var val;
-    var oneway=75;
+    var oneway;
 
 
     Polymer({
@@ -849,12 +869,36 @@
         }
       },
       oneway:function(){
-        val=(yearlyfee/100)*oneway;
+        
+        this.onewayurl="../../configfile/modeofway.json";
+        this.$.onewayajax.generateRequest(); 
+
+        
+      },
+      onewayResponse:function(e){
+        
+          var temp=[];
+          temp=e.detail.response;
+        
+          oneway=temp[0].oneway;
+        
+          val=(yearlyfee/100)*oneway;
+
       document.querySelector('zonetostudent-card').fee=val;
       },
       onecus:function(){
-          val=(cusfee/100)*oneway;
+           this.onecusurl="../../configfile/modeofway.json";
+        this.$.onecusajax.generateRequest(); 
+        },
+      onecusResponse:function(e){
+            var temp=[];
+          temp=e.detail.response;
+        
+          oneway=temp[0].oneway;
+        
+              val=(cusfee/100)*oneway;
          document.querySelector('zonetostudent-card').fee=val;
+      
       },
       twoway:function(){
       val=yearlyfee;
@@ -910,8 +954,8 @@
          {
           alert('Updation interrupt');
          }
-      },
-      
+      }
+            
 
     });
  })();

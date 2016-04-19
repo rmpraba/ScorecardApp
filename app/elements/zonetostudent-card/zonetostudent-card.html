@@ -128,18 +128,15 @@ One-Way
 <paper-checkbox id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
 
 </td></tr>
-<tr><td style="height: 10%;"></td></tr>
-<tr>
-<td></td>
-  <td>
-    <paper-button class="button" on-click="click">Submit</paper-button>
-  </td>
-  <td>
-    <paper-button class="button" on-click="ready">Cancel</paper-button>
-  </td>
-</tr>
-   
 </table>
+<div class="buttons">
+  <div class="submit">
+    <paper-button class="button" on-click="click">Submit</paper-button>
+  </div>
+  <div class="cancel">
+    <paper-button class="button" on-click="ready">Cancel</paper-button>
+  </div>
+</div>
 <paper-input id="status" class="field" value="{{status}}"></paper-input>
     </div>
 

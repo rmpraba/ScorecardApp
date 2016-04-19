@@ -546,4 +546,20 @@ text-align: center;
     float: right;
     margin-top: 4%;
 }
+.layframe .buttons{
+text-align: center;
+    @apply(--layout-horizontal); 
+    margin-top: 5%;   
+}
+.layframe .buttons .submit{
+    margin-left: -65%;
+}
+.layframe .buttons .cancel{
+    margin-top: -4.5%;
+    margin-left: -13%;
+    
+}
+.layframe .button{
+    height: 5%;
+}
 </style>

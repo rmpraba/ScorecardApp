@@ -14,17 +14,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+      <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+      <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
 
-<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.addimage.js"></script>
-<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.standard_fonts_metrics.js"></script>
-<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.split_text_to_size.js"></script>
-<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.from_html.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/ui/1.12.0-beta.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.1.135/jspdf.min.js"></script>
-<script type="text/javascript" src="http://cdn.uriit.ru/jsPDF/libs/adler32cs.js/adler32cs.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js
-"></script>
 
 
 <dom-module id="receipt-card">
@@ -36,6 +30,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <html>
     <body id="receipt">
+    <img id="imgRes" height="1px" width="1px"  />
+   <div id="canvas" style="background-image:url(fimage/1.jpg)">
     <div class="receipt" >
         <div class="header">
         <div class="logo"><img src="../../images/zeesouth.png"/></div>
@@ -150,17 +146,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
           
           <div>
-            <paper-button class="button" id="pdf" on-click="generatepdf">Save as PDF</paper-button>
+            <paper-button class="button" id="pdf">Save as PDF</paper-button>
           </div>
 
-
-
-    </div>
+</div>
+</div>
     </body>
     <div id="editor"></div>
     </html>
   </template>
   <script>
+
+  $(window).load(function(){
+$(document).ready(function() {
+    $('#pdf').click(function() {       
+        html2canvas($("#canvas"), {
+            onrendered: function(canvas) {         
+                var imgData = canvas.toDataURL('image/png'); 
+                $("#imgRes").attr("src", imgData);             
+                var doc = new jsPDF('p', 'mm');
+                doc.addImage(imgData, 'PNG', 10, 10);
+                doc.save('sample-file.pdf');
+            }
+        });
+    });
+});
+});
   (function() {
     'use strict';
 
@@ -311,13 +322,13 @@ tens_complication:function() {
             inWords[j]=tensPlace[actnumber[i]];
         }
     },
-    generatepdf:function(e){
+   /* generatepdf:function(e){
       var doc = new jsPDF();
       alert('save as pdf');
       doc.fromHTML($('#receipt').html(), 15, 15, {
         'width': 170,'elementHandlers': specialElementHandlers});
     doc.save('sample-file.pdf');
-    }
+    }*/
       
       
     });

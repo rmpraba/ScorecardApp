@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/ui/1.12.0-beta.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.1.135/jspdf.min.js"></script>
-<script type="text/javascript" src="http://cdn.uriit.ru/jsPDF/libs/adler32cs.js/adler32cs.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js
-"></script>
-<script type="text/javascript" src="libs/Blob.js/BlobBuilder.js"></script>
-<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.addimage.js"></script>
-<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.standard_fonts_metrics.js"></script>
-<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.split_text_to_size.js"></script>
-<script type="text/javascript" src="http://cdn.immex1.com/js/jspdf/plugins/jspdf.plugin.from_html.js"></script>
-<script type="text/javascript" src="js/basic.js"></script>
-<link rel="import"  href="../../receipt-card/receipt-card.html">
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+      <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+      <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+      <link rel="import" href="receipt-card/receipt-card.html">
+
+
 </head>
 <body id="target">
+<img id="imgRes" height="1px" width="1px"  />
+   <div id="canvas" style="background-image:url(fimage/1.jpg)">
+   <receipt-card></receipt-card>
 
-<receipt-card></receipt-card>
-
-<button id="cmd">generate PDF</button>
+</div> 
+<button id="download">Download Pdf</button>
 </body>
 </html>
 <script>
-	$(function() {
-  var doc = new jsPDF();
-  var specialElementHandlers = {
-    '#editor': function(element, renderer) {
-      return true;
-    }
-  };
-  $('#cmd').click(function() {
-    doc.fromHTML($('#target').html(), 15, 15, {
-      'width': 170,
-      'elementHandlers': specialElementHandlers
+$(window).load(function(){
+$(document).ready(function() {
+    $('#download').click(function() {       
+        html2canvas($("#canvas"), {
+            onrendered: function(canvas) {         
+                var imgData = canvas.toDataURL('image/png'); 
+                $("#imgRes").attr("src", imgData);             
+                var doc = new jsPDF('p', 'mm');
+                doc.addImage(imgData, 'PNG', 10, 10);
+                doc.save('sample-file.pdf');
+            }
+        });
     });
-    doc.save('sample-file.pdf');
-  });
 });
+});
+	
 </script>

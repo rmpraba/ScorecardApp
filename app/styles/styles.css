@@ -404,4 +404,15 @@ paper-button{
 .butto{
     margin:3% 0 0 3%; 
 }
+.headtabs{
+    width: 80%;
+    margin-left:9%; 
+}
+.flexchild-vertical .field{
+    width: 20%;
+    text-align: center;
+}
+.flexchild-vertical .field paper-item{
+    justify-content: center;
+}
 </style>

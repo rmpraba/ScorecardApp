@@ -241,9 +241,18 @@
         on-response="generatereportbynameResponse"
         debounce-duration="300"
         >
-        </iron-ajax>
-
-         <iron-ajax
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="generateroutereportajax"
+        url="{{generateroutereporturl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="generateroutereportResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
         method="post"
         id="deletemappointajax"
         url="{{deletemappointurl}}"
@@ -328,6 +337,39 @@
         handle-as="json"
         content-type="application/json"
         on-response="classResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="statuschangeajax"
+        url="{{statuschangeurl}}"
+        params="{{statuschangeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="statuschangeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="pointflagajax"
+        url="{{pointflagurl}}"
+        params="{{pointflagparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="pointflagResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="routereportajax"
+        url="{{routereporturl}}"
+        params="{{routereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routereportResponse"
         debounce-duration="300"
         >
   </iron-ajax>
@@ -529,12 +571,11 @@
             var gradename=e1.detail.response.returnval[0].school_type;
             var dob=e1.detail.response.returnval[0].dob;
             var stdid=e1.detail.response.returnval[0].id;
-            
             var classz=e1.detail.response.returnval[0].class_id;
             document.querySelector('zonetostudent-card').name=profilename;
             document.querySelector('zonetostudent-card').grade=gradename;
-           document.querySelector('zonetostudent-card').date=dob;
- document.querySelector('zonetostudent-card').id=stdid;
+            document.querySelector('zonetostudent-card').date=dob;
+            document.querySelector('zonetostudent-card').id=stdid;
             this.gradediscounturl="http://localhost:8081/gradediscount";
             var obj={"grade":""}
             obj.grade=gradename;
@@ -566,6 +607,27 @@
         //alert(JSON.stringify(e.detail.response.returnval));
         var reportresult=e.detail.response.returnval;
         document.querySelector('genestureport-card').reportarr=reportresult;
+      },
+      generateroutereport:function(){
+        this.generateroutereporturl="http://localhost:8081/generateroutereport";
+        this.$.generateroutereportajax.generateRequest();
+      },
+      generateroutereportResponse:function(e){
+        var nameitem=e.detail.response.returnval;
+        document.querySelector('routereport-card').autocompletename(nameitem);
+      },
+      routereport:function(routeid){
+        this.routereporturl="http://localhost:8081/route-report-card";
+        var obj={"routeid":""}
+        obj.routeid=routeid;
+        this.routereportparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.routereportajax.generateRequest();
+      },
+      routereportResponse:function(e){
+        //alert(JSON.stringify(e.detail.response.returnval));
+        var routereportresult=e.detail.response.returnval;
+        document.querySelector('routereport-card').reportarr=routereportresult;
       },
      gettrip:function(routename)
       {
@@ -661,24 +723,30 @@
         this.transportrequiredstatusparam=obj;
         this.transportrequiredstatusurl="http://localhost:8081/transportrequiredstatus";
         this.$.transportrequiredstatusajax.generateRequest();
+        this.statuschangeurl="http://localhost:8081/statuschange";
+        this.statuschangeparam=obj;
+        this.$.statuschangeajax.generateRequest();
+        this.pointflagurl="http://localhost:8081/pointflag";
+        this.pointflagparam=obj;
+        this.$.pointflagajax.generateRequest();
       },
        monthdiff:function(fromdate,todate){
         //alert('flow');
-        var froms =fromdate;
-        var to=todate;
-          var d1 = new Date(froms);
-          var d2=new Date(to);
-          //alert('hi..'+d1+'   dvfa.. '+d2);
-          months = (d2.getFullYear() - d1.getFullYear()) * 12;
-          months -= d1.getMonth() + 1;
-          months += d2.getMonth();
-          var month=months+2;
-          //alert(totalfee+'   '+month);
-          cusfee=parseInt((totalfee/12)*month);
-          //alert(cusfee);
+        var froms = fromdate;
+        var to = todate;
+        var d1 = new Date(froms);
+        var d2=new Date(to);
+        //alert('hi..'+d1+'   dvfa.. '+d2);
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth() + 1;
+        months += d2.getMonth();
+        var month = months+2;
+        //alert(totalfee+'   '+month);
+        cusfee = parseInt((totalfee/12)*month);
+        //alert(cusfee);
       },
       name:function(){
-        this.nameurl="http://localhost:8081/name";
+        this.nameurl = "http://localhost:8081/name";
         this.$.nameajax.generateRequest();
       },
       nameResponse:function(e){
@@ -688,32 +756,28 @@
       transportrequiredstatusResponse:function(e){
 
       },
-      generatereportbyname:function()
-      {
+      generatereportbyname:function(){
        this.generatereportbynameurl="http://localhost:8081/generatereportbyname";
        this.$.generatereportbynameajax.generateRequest();
       },
-      generatereportbynameResponse:function(e)
-      {
-         var nameitem=e.detail.response.returnval; 
-      document.querySelector('genestureport-card').autocompletename(nameitem);
+      generatereportbynameResponse:function(e){
+        var nameitem=e.detail.response.returnval; 
+        document.querySelector('genestureport-card').autocompletename(nameitem);
       },
       deletemappoint:function(pointarray,routenam,tripnum)
       {
- this.deletemappointurl="http://localhost:8081/deletemappoint-card";
- var obj={"pointarray":"","routenam":"","tripnum":""}
+        this.deletemappointurl="http://localhost:8081/deletemappoint-card";
+        var obj={"pointarray":"","routenam":"","tripnum":""}
         obj.pointarray=pointarray;
         obj.routenam=routenam;
         obj.tripnum=tripnum;
         this.deletemappointparam=obj;
         this.$.deletemappointajax.generateRequest();
-
       },
       deletemappointResponse:function(e)
       {
-
-          alert('Data Deleted successfully');
-          document.querySelector('mappointtoroute-card').refreshdeletedata();
+        alert('Data Deleted successfully');
+        document.querySelector('mappointtoroute-card').refreshdeletedata();
         
       },
        getstudapproval:function(){
@@ -728,30 +792,26 @@
 
       },
       confirmdisc:function(stid,admrea,accdis,flag,status){
-          var todat=new Date();
-         var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
-
-          this.confirmdiscurl="http://localhost:8081/confirmdisc";
-          var obj={"stid":"","admrea":"","accdis":"","nowdate":"","flag":"","status":""}
-          obj.stid=stid;
-          obj.admrea=admrea;
-          obj.accdis=accdis;
-          obj.nowdate=today;
-          obj.flag=flag;
-          obj.status=status;
-          this.confirmdiscparam=obj;
-          
-          this.$.confirmdiscajax.generateRequest();
+        var todat=new Date();
+        var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
+        this.confirmdiscurl="http://localhost:8081/confirmdisc";
+        var obj={"stid":"","admrea":"","accdis":"","nowdate":"","flag":"","status":""}
+        obj.stid=stid;
+        obj.admrea=admrea;
+        obj.accdis=accdis;
+        obj.nowdate=today;
+        obj.flag=flag;
+        obj.status=status;
+        this.confirmdiscparam=obj;
+        this.$.confirmdiscajax.generateRequest();
       },
       confirmdiscResponse:function(e){
-            var resultx=e.detail.response.returnval;
-            if(resultx=='success')
-            {
-              alert('Updation successfully');
-            }
-            else{
-              alert('Updation Failed');
-            }
+        var resultx=e.detail.response.returnval;
+        if(resultx=='success'){
+          alert('Updation successfully');
+        } else {
+          alert('Updation Failed');
+        }
       },
       getapprovalverify:function(){
         
@@ -759,7 +819,6 @@
         this.$.getapprovalverifyajax.generateRequest();
       },
       getapprovalverifyResponse:function(e){
-
           var verifyreq=[];
           verifyreq=e.detail.response;
           //alert(JSON.stringify(verifyreq));
@@ -769,7 +828,7 @@
       },
       confirmedfee:function(stid,fee,status,flag){
         var todat=new Date();
-         var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
+        var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
         this.confirmedfeeurl="http://localhost:8081/confirmedfee";
         var obj={"stid":"","fees":"","status":"","date":"","flag":""}
         obj.stid=stid;
@@ -779,14 +838,12 @@
         obj.flag=flag;
         this.confirmedfeeparam=obj;
         this.$.confirmedfeeajax.generateRequest();
-        
         this.confirmfeeurl="http://localhost:8081/confirmfee";
         var obj={"stid":"","fees":""}
         obj.stid=stid;
         obj.fees=fee;
         this.confirmfeeparam=obj;
         this.$.confirmfeeajax.generateRequest();
-
       },
       
       confirmfeeResponse:function(e){
@@ -799,7 +856,6 @@
           {
             alert('Operation Failed');
           }
-
       },
       cancelledfee:function(stid,status,flag){
         this.cancelledfeeurl="http://localhost:8081/cancelledfee";
@@ -808,7 +864,6 @@
         obj.status=status;
         obj.flag=flag;
         this.cancelledfeeparam=obj;
-        
         this.$.cancelledfeeajax.generateRequest();
       },
       cancelledfeeResponse:function(e)
@@ -836,11 +891,9 @@
       document.querySelector('zonetostudent-card').fee=val;   
       },
       twocus:function(){
-          val=cusfee;
+        val=cusfee;
         document.querySelector('zonetostudent-card').fee=val;
-        }
-      
-
+      }
     });
  })();
   </script>

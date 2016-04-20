@@ -726,12 +726,12 @@
         var paidamount = cancelpaid;
         var remaining_months = total_months - months_used;
         var percent = (remaining_months / total_months)*100;
-        alert("percent"+' '+percent);
+       // alert("percent"+' '+percent);
         var total_refund_amount = (totalamount/100)*percent;
-        alert("refund"+' '+total_refund_amount);
+        //alert("refund"+' '+total_refund_amount);
         var used_amount = parseInt(totalamount - total_refund_amount);
         var refund_amount = paidamount - used_amount;
-        alert("refund_amount"+' '+refund_amount);
+        //alert("refund_amount"+' '+refund_amount);
         document.querySelector('cancellation-item-card').months_used=months_used;
         document.querySelector('cancellation-item-card').total_months=total_months;
         document.querySelector('cancellation-item-card').refund_amount=refund_amount;

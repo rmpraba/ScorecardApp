@@ -354,7 +354,7 @@
         var install2status;
         var install1fine;
         var install2fine;
-      alert(JSON.stringify(feeresult));
+      //alert(JSON.stringify(feeresult));
       feestudname=feeresult[0].student_name;
       feestudid=feeresult[0].id;
       discountfee=feeresult[0].discount_fee;
@@ -374,7 +374,7 @@
       date2=new Date(d2);
      install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
         var installdata=e.detail.response;
-        alert(feepercent+''+discountfee);
+        //alert(feepercent+''+discountfee);
         for(var i=0;i<installdata.length;i++)
         {
              var paidstatus;
@@ -425,7 +425,7 @@
                     fine=install2fine;
                 }
             }
-            alert(installdata[i].amt_percentage);
+            //alert(installdata[i].amt_percentage);
             var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":""}
             obj.installtype=installdata[i].install_type;
             obj.amount=((parseInt(feepercent)-parseInt(discountfee))/100)*parseInt(installdata[i].amt_percentage)+parseInt(fine);
@@ -438,7 +438,7 @@
             obj.installstatus=installstatus;
             installarr.push(obj);
         }
-        alert(JSON.stringify(installarr));
+        //alert(JSON.stringify(installarr));
 //alert(JSON.stringify(e.detail.response));
 document.querySelector('transportfee-card').installmentarr=installarr;
      },
@@ -453,7 +453,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         var cstatus;
         var chequedetail=e.detail.response.returnval;
 
-       alert('s'+JSON.stringify(chequedetail));
+      // alert('s'+JSON.stringify(chequedetail));
         var d=new Date();
         for(var i=0;i<chequedetail.length;i++)
         {
@@ -478,7 +478,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
             obj.installtype=chequedetail[i].installtype;
             chequedetailarr.push(obj);
         }
-        alert('a'+JSON.stringify(chequedetailarr));
+       // alert('a'+JSON.stringify(chequedetailarr));
         document.querySelector('chequedetail-card').chequearr=chequedetailarr;
 
      },
@@ -512,7 +512,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         obj.installtype=uinstalltype;
         obj.paidstatus=paidstatus;
         this.updatestuchequeparam=obj;
-        alert(JSON.stringify(obj));
+//alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
      }
     });

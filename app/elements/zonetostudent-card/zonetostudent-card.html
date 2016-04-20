@@ -128,15 +128,16 @@ One-Way
 <paper-checkbox id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
 
 </td></tr>
-<tr><td style="height: 4%;"></td>
-  <td>
-    <paper-button class="button" on-click="click">Submit</paper-button>
-  </td>
-  <td>
-    <paper-button class="button" on-click="ready">Cancel</paper-button>
-  </td>
-</tr>
 </table>
+<div class="buttons">
+  <div class="submit">
+    <paper-button class="button" on-click="click">Submit</paper-button>
+  </div>
+  <div class="cancel">
+    <paper-button class="button" on-click="ready">Cancel</paper-button>
+  </div>
+</div>
+<paper-input id="status" class="field" value="{{status}}"></paper-input>
     </div>
 
     
@@ -153,6 +154,11 @@ One-Way
     var datebox;
 var todat;
 var mode;
+var dat2=new Date();
+      var today = dat2.getFullYear()+"/"+(dat2.getMonth()+1)+"/"+dat2.getDate();
+
+      var name=sessionStorage.getItem("userinfo");
+      var status='mapped';
   Polymer({
 
     is: "zonetostudent-card",
@@ -164,6 +170,7 @@ var mode;
         this.$.date1.hidden=true;
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;
+        this.$.status.hidden=true;
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
         this.$.dad.disabled=true;
@@ -188,7 +195,7 @@ var mode;
       this.zone = (e.target.selectedItem.textContent).trim();
       this.$.root.getfee(this.zone);
       this.$.root.gettermdate(this.grade);
-      
+      this.$.root.studzone(this.id);
     },
    
     
@@ -276,6 +283,7 @@ var mode;
      this.$.dad3.disabled=false;
      this.$.dad4.disabled=false;
      this.$.dad5.disabled=false;
+     
 
   },
     setInput:function(namearr)
@@ -407,6 +415,7 @@ twowayHandler:function(event){
   if((twoway.checked==true)&&(datebox.checked==true)){
     document.querySelector("#oneway").checked=false;
     this.$.root.twocus();
+
   }
   if(twoway.checked==false){
     var temp='';
@@ -420,12 +429,29 @@ twowayHandler:function(event){
 
 click:function(e)
     {
-      
+
         fromdate=fromdat.getFullYear()+"/"+(fromdat.getMonth()+1)+"/"+fromdat.getDate();
         todate=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
         //alert(fromdate+'   '+todate);
       //alert(this.studentid+this.zone_id+this.fee);
-      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode);
+      if(this.status=='cancelled')
+      {
+      this.$.root.updatezone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status);
+    }
+    else if(this.status=='mapped')
+    {
+      alert('You Cannot Mapped Again');
+      ready();
+      document.querySelector("#yearly").checked=false;
+      document.querySelector("#custom").checked=false;
+      document.querySelector("#datebox").checked=false;
+      document.querySelector("#twoway").checked=false;
+      document.querySelector("#oneway").checked=false;
+    
+    }
+    else{
+      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status); 
+    }
 
     },
 clickdate:function()

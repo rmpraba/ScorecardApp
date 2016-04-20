@@ -1,0 +1,62 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<dom-module id="import-excel">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+   <input type="file" name="File" id="file" on-change="setFiles">
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'import-excel',
+
+       setFiles: function(e, detail, sender)
+        {
+  var formData = new FormData();
+  alert(JSON.stringify(this.$.file.files[0][0]));
+  var f=this.$.file.files[0]
+  var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", f, false);
+    alert(rawFile);
+    alert(rawFile.respostText);
+  var handle=fopen(f, "r");
+  var filesop;
+  while((filesop = fgetcsv(handle, 1000, ",")) !== false)
+{
+var name = filesop[0];
+alert(name);
+}
+
+ /* for (var i = 0, f; f = sender.files[i]; ++i)
+   {
+    alert(sender.files[i]);
+    formData.append(sender.name, f,this.$.name.value || f.name);
+  }*/
+
+alert(formData);
+  //this.$.ajax.body = formData;
+  // Override default type set by core-ajax.
+  // Allow browser to set the mime multipart content type itself. 
+  //this.$.ajax.contentType = null;
+}
+    });
+  })();
+  </script>
+</dom-module>

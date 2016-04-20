@@ -20,6 +20,9 @@
 <link rel="import" href="../mapstudenttopoint-card/mapstudenttopoint-card.html">
 <link rel="import" href="../discountverify-card/discountverify-card.html">
 <link rel="import" href="../refundverify-card/refundverify-card.html">
+<link rel="import" href="../receipt-card/receipt-card.html">
+<link rel="import" href="../import-excel/import-excel.html">
+<link rel="import" href="../chequedetail-card/chequedetail-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -97,6 +100,15 @@
            <section data-category="refundverify">
               <refundverify-card></refundverify-card>
            </section>
+           <section data-category="importexcel">
+              <import-excel></import-excel>
+           </section>
+           <section data-category="receipt">
+              <receipt-card></receipt-card>
+           </section>
+             <section data-category="chequedetail">
+              <chequedetail-card></chequedetail-card>
+           </section>
           </iron-pages>
        </div>
 
@@ -165,7 +177,12 @@
     else if((currpage=='discountverify')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='discountverify';
-    }   
+    } 
+    else if((currpage=='receipt')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='receipt';
+    } 
+      
   }
   else if(name=="Admin Manager"){
    this.page="adminmanager"; 

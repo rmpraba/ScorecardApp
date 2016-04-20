@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+      <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+      <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+      <link rel="import" href="receipt-card/receipt-card.html">
+
+
+</head>
+<body id="target">
+<img id="imgRes" height="1px" width="1px"  />
+   <div id="canvas" style="background-image:url(fimage/1.jpg)">
+   <receipt-card></receipt-card>
+
+</div> 
+<button id="download">Download Pdf</button>
+</body>
+</html>
+<script>
+$(window).load(function(){
+$(document).ready(function() {
+    $('#download').click(function() {       
+        html2canvas($("#canvas"), {
+            onrendered: function(canvas) {         
+                var imgData = canvas.toDataURL('image/png'); 
+                $("#imgRes").attr("src", imgData);             
+                var doc = new jsPDF('p', 'mm');
+                doc.addImage(imgData, 'PNG', 10, 10);
+                doc.save('sample-file.pdf');
+            }
+        });
+    });
+});
+});
+	
+</script>

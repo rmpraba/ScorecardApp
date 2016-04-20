@@ -29,6 +29,7 @@
       <paper-icon-button class="iconbutton" src="../../images/reports.png" on-click="report"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/reports.png" on-click="routereport"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/importexcel.jpg" on-click="importexcel"></paper-icon-button>
     </div>
   </body>
    <refund-service id="service"></refund-service>
@@ -64,6 +65,10 @@
       this.$.transportservice.generateroutereport();
       document.querySelector('transport-app').setPage("generateroutereport","Route Report");
       }
+      importexcel:function()
+      {
+        document.querySelector('transport-app').setPage("importexcel","Import Excel");
+      },
       
       
 

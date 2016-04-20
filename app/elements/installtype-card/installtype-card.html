@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div  class="layout">
    
-    <paper-checkbox style="margin: 2% 0 0 2%;" id="{{studid}}" class="checkbox" disabled$="{{paidstatus}}" on-change="payinstall"></paper-checkbox>
+    <paper-checkbox style="margin: 2% 0 0 2%;" id="{{studid}}" value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" on-change="payinstall"></paper-checkbox>
    <paper-item >{{installtype}}</paper-item>
    <paper-item >{{installamt}}</paper-item>
    <paper-item >{{paydate}}</paper-item>
@@ -49,16 +49,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-button  hidden$="{{hidden2}}" on-click="payfees">PAY</paper-button>
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
-          
-   </div>
-   <paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+            </div>
+       <paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
 <h4>ADD CHEQUE DETAILS</h4>
- <div  class="layout"> <paper-input class="hide2"  id="chequenum" label="Enter the Cheque No:" value="{{chequenum}}"> </paper-input></div>
- <div  class="layout"> <paper-input class="hide2"  id="bankname" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>
+ <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
+ <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
  <datepicker-card></datepicker-card>
 <div class="butto">
   <paper-button on-click="add">ADD</paper-button>
-</div>
+</div>     
+ </paper-dialog>
+   
 <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
@@ -109,6 +110,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
         add:function()
     {
+      //alert(this.chequeno);
+      //alert(this.banknam);
        var id = 'animated';
       var dialog = document.getElementById(id);
       dialog.opened=false;
@@ -119,10 +122,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //alert(this.studid);
           if(paytype=="Cheque")
       {
+        alert(this.chequeno);
+        alert(this.banknam)
 
         this.chequedate=localStorage.getItem("localsess_curr_date");
        this.$.service.payfee(this.installamt,this.studid,paytype,this.installtype);
-       this.$.service.chequeinfo(this.studid,this.name,this.chequenum,this.bankname,this.chequedate);
+       this.$.service.chequeinfo(this.studid,this.studname,this.chequeno,this.banknam,this.chequedate,this.installtype);
       }
       else
       {

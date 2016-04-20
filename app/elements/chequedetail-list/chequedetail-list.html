@@ -1,0 +1,81 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../transportfee-service/transportfee-service.html">
+<dom-module id="chequedetail-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+   <div class="hor">
+  <div  class="layout"> 
+  <paper-item  style="color:{{cstatus}};" id="{{installtype}}" >{{studid}}</paper-item>
+   <paper-item style="color:{{cstatus}};" >{{name}}</paper-item>
+   <paper-item style="color:{{cstatus}};" >{{chequeno}}</paper-item>
+   <paper-item style="color:{{cstatus}};">{{bankname}}</paper-item>
+   <paper-item  style="color:{{cstatus}};">{{cdate}}</paper-item>
+  <paper-checkbox id="acceptcheque" class="checkbox" on-change="Fncleared" style= "padding-right: 12%; margin-left:3%;"></paper-checkbox>
+  <paper-checkbox id="rejectcheque" class="checkbox" on-change="Fnbounce"></paper-checkbox>
+  <paper-button id="button" class="button" on-click="accept">Submit</paper-button>
+   </div>
+   <transportfee-service id="service"></transportfee-service>
+  </template>
+  <script>
+  (function() {
+    var chequestatus;
+
+    Polymer({
+      is: 'chequedetail-list',
+
+   
+      Fncleared:function(e)
+      {
+       if(e.target.checked==true)
+       {
+        document.querySelector("#rejectcheque").checked=false;
+            chequestatus="cleared";  
+
+       }
+       else
+       {
+        chequestatus="no";
+       }
+      },
+      Fnbounce:function(e)
+      {
+      if(e.target.checked==true)
+       {
+        document.querySelector("#acceptcheque").checked=false;
+            chequestatus="bounce";  
+       }
+       else
+       {
+        chequestatus="no";
+       }
+      },
+      accept:function()
+      {
+        if(chequestatus=="cleared"||chequestatus=="bounce")
+        {
+          
+          this.$.service.updatechequedetail(chequestatus,this.chequeno,this.installtype,this.studid);
+        }
+        else
+        {
+          alert('please check the checkbox');
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

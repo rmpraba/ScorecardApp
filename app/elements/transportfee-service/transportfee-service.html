@@ -123,6 +123,38 @@
         debounce-duration="300"
         >
   </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="checkchequedetailsajax"
+        url="{{checkchequedetailsurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="checkchequedetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="updatechequedetailajax"
+        url="{{updatechequedetailurl}}"
+         params="{{updatechequedetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatechequedetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="updatestuchequeajax"
+        url="{{updatestuchequeurl}}"
+         params="{{updatestuchequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatestuchequeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -134,15 +166,11 @@
     var fromd;
     var tod;
     var studname;
-    var feepercent;
-    var install1fee;
-    var install2fee;
-    var install1date;
-    var install2date;
-    var discountfee;
-    var feestudid;
-    var mode1;
-    var mode2;
+    var feeresult;
+    var uchequeno;
+    var uchequestatus;
+    var uinstalltype;
+
 
     Polymer({
       is: "transportfee-service",
@@ -157,22 +185,8 @@
      },
      generatefeeResponse:function(e)
      {
-      var date1;
-      var date2;
-      feestudid=e.detail.response.returnval[0].id;
-      discountfee=e.detail.response.returnval[0].discount_fee;
-      feepercent=e.detail.response.returnval[0].fees;
-      mode1=e.detail.response.returnval[0].modeofpayment1;
-      mode2=e.detail.response.returnval[0].modeofpayment2;
-      install1fee=e.detail.response.returnval[0].installment_1;
-      install2fee=e.detail.response.returnval[0].installment_2;
-      var d1=e.detail.response.returnval[0].installment_1Date;
-      date1=new Date(d1);
-  install1date=date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
-      var d2=e.detail.response.returnval[0].installment_2Date;
-      date2=new Date(d2);
-     install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
-      var feeresult=e.detail.response.returnval;
+      
+        feeresult=e.detail.response.returnval;
        document.querySelector('transportfee-card').feearr=feeresult;
        document.querySelector('transportfee-service').getinstalltype();
      },
@@ -212,53 +226,24 @@
         }
         
      },
-     chequeinfo:function(stdid,name,chequenum,bankname,chequedate)
+     chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype)
      {
       this.chequedetailsurl="http://localhost:8081/chequedetails";
-        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":""}
+        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":""}
         obj.studid=stdid;
         obj.name=name;
         obj.chequenum=chequenum;
         obj.bankname=bankname;
         obj.chequedate=chequedate;
+        obj.installtype=installtype;
+        obj.chequestatus="processing";
         this.chequedetailsparam=obj;
+
         this.$.chequedetailsajax.generateRequest();
 
      },
-     payfee2:function(install,studid,paytype)
-     {
-      
-       this.payfee2url="http://localhost:8081/payfee2-card";
-        var obj={"studid":"","installfee":"","paytype":""}
-        obj.studid=studid;
-        obj.installfee=install;
-        obj.paytype=paytype;
-        this.payfee2param=obj;
-        this.$.payfee2ajax.generateRequest();
-     },
-     payfee2Response:function(e)
-     {
-        var pay2success=e.detail.response.returnval;
-       // alert(JSON.stringify(pay2success));
-        if(pay2success=='success')
-        {
-            alert("pay the fee successfully");
-        }
-        
-     },
-     chequeinfo2:function(stdid,name,chequenum,bankname,chequedate)
-     {
-      this.chequedetails2url="http://localhost:8081/chequedetails2";
-        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":""}
-        obj.studid=stdid;
-        obj.name=name;
-        obj.chequenum=chequenum;
-        obj.bankname=bankname;
-        obj.chequedate=chequedate;
-        this.chequedetails2param=obj;
-        this.$.chequedetails2ajax.generateRequest();
-
-     },
+    
+    
      getfeedata:function(id)
      {
        this.getfeedataurl="http://localhost:8081/getfeedata";
@@ -352,62 +337,184 @@
      },
      getinstalltypeResponse:function(e)
      {
+        var feepercent;
         var installarr=[];
+        var install1fee;
+        var install2fee;
+        var install1date;
+        var install2date;
+        var discountfee;
+        var feestudid;
+        var mode1;
+        var mode2;
+        var feestudname;
+        var date1;
+        var date2;
+        var install1status;
+        var install2status;
+        var install1fine;
+        var install2fine;
+      alert(JSON.stringify(feeresult));
+      feestudname=feeresult[0].student_name;
+      feestudid=feeresult[0].id;
+      discountfee=feeresult[0].discount_fee;
+      feepercent=feeresult[0].fees;
+      mode1=feeresult[0].modeofpayment1;
+      mode2=feeresult[0].modeofpayment2;
+      install1fee=feeresult[0].installment_1;
+      install2fee=feeresult[0].installment_2;
+      install1status=feeresult[0].install1_status;
+      install2status=feeresult[0].install2_status;
+      install1fine=feeresult[0].install1_fine;
+      install2fine=feeresult[0].install2_fine;
+      var d1=feeresult[0].installment_1Date;
+      date1=new Date(d1);
+  install1date=date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+      var d2=feeresult[0].installment_2Date;
+      date2=new Date(d2);
+     install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
         var installdata=e.detail.response;
+        alert(feepercent+''+discountfee);
         for(var i=0;i<installdata.length;i++)
         {
              var paidstatus;
              var paiddate;
              var paymode;
+             var installstatus;
+             var fine;
             //alert(feepercent);
             //alert(installdata[i].amt_percentage);
             if(installdata[i].install_type=="installment1")
             {
-                if(install1fee>0)
+                if(install1fee>0 && install1status!="bounce")
                 {
                  paidstatus=true;
                  paiddate=install1date;
                  paymode=mode1;
+                 installstatus=install1status;
+                 fine=install1fine;
 
                 }
                 else
                 {
                     paidstatus=false;
-                 paiddate="no";
-                 paymode="";
+                    paiddate="no";
+                    paymode="";
+                    installstatus="";
+                    fine=install1fine;
+
                 }
             }
              if(installdata[i].install_type=="installment2")
             {
-                if(install2fee>0)
+                if(install2fee>0 && install2status!="bounce")
                 {
                  paidstatus=true;
                  paiddate=install2date;
                  paymode=mode2;
+                 installstatus=install2status;
+                 fine=install2fine;
 
                 }
                 else
                 {
                     paidstatus=false;
-                 paiddate="no";
-                 paymode="";
+                    paiddate="no";
+                    paymode="";
+                    installstatus="";
+                    fine=install2fine;
                 }
             }
-            var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":""}
+            alert(installdata[i].amt_percentage);
+            var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":""}
             obj.installtype=installdata[i].install_type;
-            obj.amount=((parseInt(feepercent)-parseInt(discountfee))/100)*parseInt(installdata[i].amt_percentage);
+            obj.amount=((parseInt(feepercent)-parseInt(discountfee))/100)*parseInt(installdata[i].amt_percentage)+parseInt(fine);
             obj.paydate=installdata[i].paydate;
             obj.installdate=paiddate;
             obj.paidstatus=paidstatus;
             obj.paymentmode=paymode;
             obj.feestudid=feestudid;
+            obj.feestudname=feestudname;
+            obj.installstatus=installstatus;
             installarr.push(obj);
         }
         alert(JSON.stringify(installarr));
 //alert(JSON.stringify(e.detail.response));
 document.querySelector('transportfee-card').installmentarr=installarr;
-     }
+     },
+     checkchequedetails:function()
+     {
+         this.checkchequedetailsurl="http://localhost:8081/checkchequedetails";
+        this.$.checkchequedetailsajax.generateRequest(); 
+     },
+     checkchequedetailsResponse:function(e)
+     {
+        var chequedetailarr=[];
+        var cstatus;
+        var chequedetail=e.detail.response.returnval;
 
+       alert('s'+JSON.stringify(chequedetail));
+        var d=new Date();
+        for(var i=0;i<chequedetail.length;i++)
+        {
+            var d1=new Date(chequedetail[i].cheque_date);
+            var mondiff=(d.getMonth()+1)-(d1.getMonth()+1);
+            var daydiff=d.getDate()-d1.getDate();
+            if(mondiff==0 && daydiff<=5)
+            {
+                cstatus="red";
+            }
+            else
+            {
+                cstatus="no";
+            }
+            var obj={"studid":"","sname":"","chequeno":"","bankname":"","cdate":"","cstatus":"","installtype":""}
+            obj.studid=chequedetail[i].student_id;
+            obj.sname=chequedetail[i].name;
+            obj.chequeno=chequedetail[i].cheque_no;
+            obj.bankname=chequedetail[i].bank_name;
+            obj.cdate=chequedetail[i].cheque_date;
+            obj.cstatus=cstatus;
+            obj.installtype=chequedetail[i].installtype;
+            chequedetailarr.push(obj);
+        }
+        alert('a'+JSON.stringify(chequedetailarr));
+        document.querySelector('chequedetail-card').chequearr=chequedetailarr;
+
+     },
+     updatechequedetail:function(chequestatus,chequenum,installtype,cname)
+     {
+        uchequeno=cname;
+        uchequestatus=chequestatus;
+        uinstalltype=installtype;
+         this.updatechequedetailurl="http://localhost:8081/updatechequedetail";
+        var obj={"chequestatus":"","chequenum":""}
+        obj.chequestatus=chequestatus;
+        obj.chequenum=chequenum;
+        this.updatechequedetailparam=obj;
+        this.$.updatechequedetailajax.generateRequest(); 
+     },
+     updatechequedetailResponse:function(e)
+     {
+        var paidstatus;
+        if(uchequestatus=="cleared")
+        {
+            paidstatus="paid";
+        }
+        else
+        {
+            paidstatus="bounce";
+        }
+
+        this.updatestuchequeurl="http://localhost:8081/updatestucheque";
+        var obj={"chequename":"","installtype":"","paidstatus":""}
+        obj.chequename=uchequeno;
+        obj.installtype=uinstalltype;
+        obj.paidstatus=paidstatus;
+        this.updatestuchequeparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.updatestuchequeajax.generateRequest(); 
+     }
     });
  })();
   </script>

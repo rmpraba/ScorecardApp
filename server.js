@@ -677,10 +677,11 @@ app.post('/transportrequiredstatus',  urlencodedParser,function (req, res)
 app.post('/reportfee-card',  urlencodedParser,function (req, res)
 {
 
+	
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
 		if(!err)
@@ -729,13 +730,25 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 		var mode;
 		var install1;
 		var install1date;
+		var paidstatus;
+		var status;
+		if(req.query.paytype=="Cash")
+		{
+         paidstatus="paid";
+		}
+		if(req.query.paytype=="Cheque")
+		{
+			paidstatus="processing"
+		}
+		
 		var studid={"student_id":req.query.studid};
 		if(req.query.instype=="installment1")
 		{
 			console.log('yes');
 		 mode={"modeofpayment1":req.query.paytype};
 		 install1={"installment_1":req.query.installfee};
-		 install1date={"installment_1Date":d}
+		 install1date={"installment_1Date":d};
+		 status={"install1_status":paidstatus};
 	    }
 	    else
 	    {
@@ -743,9 +756,10 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 	    	mode={"modeofpayment2":req.query.paytype};
 		 install1={"installment_2":req.query.installfee};
 		 install1date={"installment_2Date":d}
+		 status={"install2_status":paidstatus};
 	    }
 	    console.log(studid);
-	    connection.query('update  student_fee set ?,?,? where ?',[mode,install1,install1date,studid],
+	    connection.query('update  student_fee set ?,?,?,? where ?',[mode,install1,install1date,status,studid],
        	function(err, rows) 
        	{
 		if(!err)
@@ -763,12 +777,13 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 app.post('/chequedetails',  urlencodedParser,function (req, res)
 {
 		
-		var studid={"student_id":req.query.studid,"name":req.query.name,"cheque_no":req.query.chequenum,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate};
+		var studid={"student_id":req.query.studid,"name":req.query.name,"cheque_no":req.query.chequenum,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate,"installtype":req.query.installtype,"cheque_status":req.query.chequestatus};
 	    connection.query('insert into cheque_details  set ?',[studid],
        	function(err, rows) 
        	{
 		if(!err)
 		{
+			console.log('dd');
 			res.status(200).json({'returnval': 'success'});
 		}
 		else
@@ -776,54 +791,12 @@ app.post('/chequedetails',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
 });    
 	});
 
 
 
-app.post('/payfee2-card',  urlencodedParser,function (req, res)
-{
-	var d = new Date();
-		
-		var studid={"student_id":req.query.studid};
-		var mode={"modeofpayment2":req.query.paytype};
-		var install1={"installment_2":req.query.installfee};
-		var install1date={"installment_2Date":d}
-	    connection.query('update  student_fee set ?,?,? where ?',[mode,install1,install1date,studid],
-       	function(err, rows) 
-       	{
-		if(!err)
-		{
-			res.status(200).json({'returnval': 'success'});
-		}
-		else
-		{
-			console.log(err);
-			res.status(200).json({'returnval': 'invalid'});
-		}
-	
-});    
-	});
-app.post('/chequedetails2',  urlencodedParser,function (req, res)
-{
-		
-		var studid={"student_id":req.query.studid,"name":req.query.name,"cheque_no":req.query.chequenum,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate};
-	    connection.query('insert into cheque_details  set ?',[studid],
-       	function(err, rows) 
-       	{
-		if(!err)
-		{
-			res.status(200).json({'returnval': 'success'});
-		}
-		else
-		{
-			console.log(err);
-			res.status(200).json({'returnval': 'invalid'});
-		}
-	
-});    
-	});
+
 
 
 app.post('/refund-card',  urlencodedParser,function (req, res)
@@ -1293,7 +1266,104 @@ app.post('/updatezone' ,  urlencodedParser,function (req, res)
 
 
 
+app.post('/checkchequedetails',  urlencodedParser,function (req, res)
+{
 
+       connection.query('SELECT * from cheque_details where cheque_status="processing" ',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': ''});
+		}
+	}
+});
+	});
+
+
+app.post('/updatechequedetail',  urlencodedParser,function (req, res)
+{
+	var cstatus={"cheque_status":req.query.chequestatus};
+    var cno={"cheque_no":req.query.chequenum};
+       connection.query('update cheque_details set ? where ?', [cstatus,cno],
+       	function(err, rows) 
+       	{
+		if(!err)
+		{
+		
+			 console.log('cyes');
+			res.status(200).json({'returnval': 'success'});
+			
+		}
+		else
+		{
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});
+});
+
+app.post('/updatestucheque',  urlencodedParser,function (req, res)
+{
+	var chequename;
+	var chequestatus;
+	var updatefine
+	var installtype=req.query.installtype;
+	var fine1=0;
+	var fine2=0;
+	if(installtype=="installment1")
+	{
+		if(req.query.paidstatus=="bounce")
+		{
+			fine1=250;
+		}
+		else
+		{
+			fine1=0;
+		}
+		chequestatus={"install1_status":req.query.paidstatus};
+		//updatefine={"install1_fine":install1_fine+fine};
+	}
+	else
+	{
+		if(req.query.paidstatus=="bounce")
+		{
+			fine2=250;
+		}
+		else
+		{
+			fine2=0;
+		}
+         chequestatus={"install2_status":req.query.paidstatus};
+          //updatefine={"install2_fine":install2_fine+fine};
+	}
+
+	chequename={"student_id":req.query.chequename}
+       connection.query('update student_fee set ?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,fine1,fine2,chequename],
+       	function(err, rows) 
+       	{
+		if(!err)
+		{
+		
+			 console.log('ccyes');
+			res.status(200).json({'returnval': 'success'});
+			
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	
+});
+});
 function setvalue()
 {
 	console.log("calling setvalue.....");

@@ -153,12 +153,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
                     <div>
             <paper-button class="button" id="pdf">Save as PDF</paper-button>
-<<<<<<< HEAD
+
             <paper-button class="button" id="email" on-click="email">Send email</paper-button>
             <paper-button class="button" id="print" on-click="print">Print</paper-button>
-=======
-             <paper-button class="button" id="printreceipt" on-click="printDiv">Print the Receipt</paper-button>
->>>>>>> origin/master
+
+             
+
           </div>
     </body>
     <div id="editor"></div>
@@ -373,7 +373,7 @@ var specialElementHandlers = {
     this.feeinword='Rs'+'  '+finalWord;
 
 },
-<<<<<<< HEAD
+
  email:function(e){
               alert('sending email');
             //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=Receipt"+document.title+"&body=.receipt"+escape(window.location.href);
@@ -390,34 +390,6 @@ var specialElementHandlers = {
             window.print()
 
         }
-=======
-tens_complication:function()
- {
-        if(actnumber[i]==0)
-         {
-            inWords[j]='';
-        }
-        else if(actnumber[i]==1)
-         {
-            inWords[j]=ePlace[actnumber[i-1]];
-        }
-        else
-         {
-            inWords[j]=tensPlace[actnumber[i]];
-        }
-    },
-    printDiv:function()
-    {
-      var printContents = document.getElementById('canvas').innerHTML;
-     var originalContents = document.body.innerHTML;
->>>>>>> origin/master
-
-     document.body.innerHTML = printContents;
-
-     window.print();
-
-     document.body.innerHTML = originalContents;
-    }
       
     });
   })();

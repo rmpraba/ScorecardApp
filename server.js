@@ -989,6 +989,44 @@ app.post('/generatereportbyname',  urlencodedParser,function (req, res)
 });
 	});
 
+app.post('/generateroutereport',  urlencodedParser,function (req, res)
+{
+	connection.query('SELECT * from route',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
+
+app.post('/route-report-card',  urlencodedParser,function (req, res){
+
+	var route_id={"route_id":req.query.routeid};
+    connection.query('SELECT p.route_id, p.point_name, p.pickup_time, p.drop_time,p.trip, r.route_name from point p left join route r on p.route_id=r.id where ?',[route_id],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 app.post('/deletemappoint-card',  urlencodedParser,function (req, res)
 {
@@ -1211,6 +1249,55 @@ app.post('/getclass',  urlencodedParser,function (req, res)
 	});
 
 
+app.post('/statuschange',  urlencodedParser,function (req, res)
+{
+	var student_id = {"student_id":req.query.student_id};
+	var required = {"status":'cancelled'};
+    connection.query('update student_details set ? where ? ',[required,student_id],
+       	function(err, rows)
+       	{
+       	if(err){
+       		console.log(err);
+       	}
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
+
+app.post('/pointflag',  urlencodedParser,function (req, res)
+{
+	var student_id = {"student_id":req.query.student_id};
+	var required = {"flag":2};
+    connection.query('update student_point set ? where ? ',[required,student_id],
+       	function(err, rows)
+       	{
+       	if(err){
+       		console.log(err);
+       	}
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
 
 
 

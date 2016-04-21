@@ -6,6 +6,7 @@
 <link rel="import" href="../mappointtoroute-card/mappointtoroute-card.html">
 <link rel="import" href="../genestureport-card/genestureport-card.html">
 <link rel="import" href="../cancellation-card/cancellation-card.html">
+<link rel="import" href="../routereport-card/routereport-card.html">
 <link rel="import" href="../refund-card/refund-card.html">
 <link rel="import" href="../item-card/item-card.html">
 <link rel="import" href="../accountsadmin-card/accountsadmin-card.html">
@@ -74,6 +75,9 @@
            </section>
             <section data-category="cancellation">
               <cancellation-card></cancellation-card>
+           </section>
+            <section data-category="generateroutereport">
+              <routereport-card></routereport-card>
            </section>
             <section data-category="transportfee">
               <transportfee-card></transportfee-card>
@@ -144,6 +148,10 @@
     else if((currpage=='generatereport')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='generatereport';
+    }
+    else if((currpage=='generateroutereport')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='generateroutereport';
     }
 
 

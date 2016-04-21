@@ -1,0 +1,62 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<dom-module id="routereport-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .flex-vertical {
+        @apply(--layout-vertical);
+        height: 50px;
+        margin-left:9%; 
+        width: 82%;
+        padding: 1%;
+      }
+      .flexchild-vertical {
+        @apply(--layout-horizontal);
+        border-radius: 2px;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+      }
+    </style>
+      <div class="container flex-vertical">
+        <div class="flexchild-vertical">
+          <div class="field"><paper-item>{{routename}}</paper-item></div>
+          <div class="field"><paper-item>{{point}}</paper-item></div>
+          <div class="field"><paper-item>{{picktime}}</paper-item></div>
+          <div class="field"><paper-item>{{droptime}}</paper-item></div>
+          <div class="field"><paper-item>{{trip}}</paper-item></div>
+        </div>
+      </div>
+  <transport-service id="service"></transport-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var idd="0";
+
+    Polymer({
+      is: 'routereport-item-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'routereport-item-card',
+          notify: true
+        }
+      },
+      toggle: function(e){
+        if(idd=="0"){
+          idd= document.querySelector("#"+this.routeid);
+          idd.toggle()
+        } else {
+          if(idd!=document.querySelector("#"+this.routeid)){
+            idd.opened=false;
+          }
+          idd= document.querySelector("#"+this.routeid);
+          idd.toggle()
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

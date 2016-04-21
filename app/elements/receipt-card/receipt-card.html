@@ -55,13 +55,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <div class="body2">
             <div class="l2">
-              <paper-item class="lb">Student Name : </paper-item><paper-item>{{studname}}</paper-item>
-              <paper-item class="lb">Father Name  : </paper-item><paper-item>{{dadname}}</paper-item>
-              <paper-item class="lb">Mother Name  : </paper-item><paper-item>{{momname}}</paper-item>
+              <div><paper-item >Student Name : </paper-item><paper-item>{{studname}}</paper-item></div>
+              <div style="margin-top: -30%"><paper-item >Father Name  : </paper-item><paper-item>{{dadname}}</paper-item></div>
+              <div style="margin-top: -30%"><paper-item >Mother Name  : </paper-item><paper-item>{{momname}}</paper-item></div>
             </div>
             <div class="r2">
-              <paper-item class="lb">Class        : </paper-item><paper-item>{{classid}}</paper-item>
-              <paper-item class="lb">Session      : </paper-item><paper-item>{{sessi}}</paper-item>
+            <div >  <paper-item >Class        : </paper-item><paper-item>{{classid}}</paper-item></div>
+              <div style="margin-top: -30%"><paper-item >Session      : </paper-item><paper-item>{{sessi}}</paper-item></div>
             </div>
 
           </div>
@@ -69,13 +69,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           
           <div class="body3">
             <div class="l3">
-              <h1>SL.No.</h1>
+              <h3>SL.No.</h3>
             </div>
             <div class="l13">
-              <h1>Particulars</h1>
+              <h3>Particulars</h3>
             </div>
             <div class="r3">
-              <h1>Amount</h1>
+              <h3>Amount</h3>
             </div>
           </div>
 
@@ -100,26 +100,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               
             </div>
             <div class="l15">
-              <paper-item class="lb">Transport fee Paid : Rs {{feeinword}}</paper-item>
-            </div>
+              <paper-item class="lb">Transport fee Paid :</paper-item>
+           
+            <div class="word">
+              <paper-item>{{feeinword}}</paper-item>
+            </div> </div>
             <div class="r5">
-              <paper-item> Total fees :{{fees}}</paper-item>
+              <paper-item> Total fees :</paper-item>
+              
+              <div class="cash">
                 <paper-input class="button" on-change="convertrs" value="{{totalfee}}"></paper-input>
             </div>
-
+</div>
           </div>
           <hr id="ln6"></hr>
           <div class="body6">
             <paper-item class="lb">Mode Of Payment : {{modepay}}</paper-item>
+            <div class="r6">
+              <paper-item class="lb">Cheque No : {{chequeno}}</paper-item>
+            </div>
           </div>
               
           <div class="body7">
             <div class="l7">
               <paper-item class="lb">Bank : {{bank}}</paper-item>
             </div>
-            <div class="l17">
-              <paper-item class="lb">Cheque No : {{chequeno}}</paper-item>
-            </div>
+            
             <div class="r7">
               <paper-item> Cheque Dated  :  {{chequedate}}</paper-item>
             </div>
@@ -145,13 +151,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
           
+<<<<<<< HEAD
           <div>
             <paper-button class="button" id="pdf">Save as PDF</paper-button>
              <paper-button class="button" id="printreceipt" on-click="printDiv">Print the Receipt</paper-button>
           </div>
+=======
+          
+>>>>>>> origin/master
 
 </div>
 </div>
+<div style="margin-bottom: 0%; height: 40%; margin-top: 20%;">
+            <paper-button class="button" id="pdf">Save as PDF</paper-button>
+          </div>
     </body>
     <div id="editor"></div>
     </html>
@@ -176,6 +189,7 @@ $(document).ready(function() {
   (function() {
     'use strict';
 
+<<<<<<< HEAD
       var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
     var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
     var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
@@ -189,6 +203,10 @@ $(document).ready(function() {
     var actnumber;
 
    
+=======
+      
+    
+>>>>>>> origin/master
 var specialElementHandlers = {
     '#editor': function (element, renderer) {
         return true;
@@ -204,7 +222,19 @@ var specialElementHandlers = {
 
       },
       convertrs:function() {
-        alert('hi');
+        var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
+    var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
+    var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
+    var junkVal;
+    var obStr;
+    var numReversed;
+    var totalWords="";
+    var inWords=new Array();
+    var finalWord="";
+    var i,j;
+    var actnumber;
+
+
     junkVal=this.totalfee;
     junkVal=Math.floor(junkVal);
     obStr=new String(junkVal);
@@ -213,7 +243,7 @@ var specialElementHandlers = {
     var iWordsLength=numReversed.length;
     if(Number(junkVal) >=0){
         //do nothing
-        alert("ok");
+
     }
     else{
         alert('wrong Number cannot be converted');
@@ -243,7 +273,15 @@ var specialElementHandlers = {
             inWords[j]=inWords[j]+' Only';
             break;
         case 1:
-            tens_complication();
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
             break;
         case 2:
             if(actnumber[i]==0) {
@@ -268,7 +306,15 @@ var specialElementHandlers = {
             }
             break;
         case 4:
-            tens_complication();
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
             break;
         case 5:
             if(actnumber[i]==0 || actnumber[i+1]==1) {
@@ -282,7 +328,15 @@ var specialElementHandlers = {
             }
             break;
         case 6:
-            tens_complication();
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
             break;
         case 7:
             if(actnumber[i]==0 || actnumber[i+1]==1 ){
@@ -294,7 +348,15 @@ var specialElementHandlers = {
             inWords[j]=inWords[j]+" Crore";
             break;
         case 8:
-            tens_complication();
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
             break;
         default:
             break;
@@ -307,10 +369,12 @@ var specialElementHandlers = {
     for(i=0; i<inWords.length; i++) {
         finalWord+=inWords[i];
     }
-    this.feeinword=obStr+'  '+finalWord;
-    alert(finalWord);
-    alert(obStr+'  '+finalWord);
+    this.feeinword='Rs'+'  '+finalWord;
+ 
 
+}
+
+<<<<<<< HEAD
 },
 tens_complication:function() {
         if(actnumber[i]==0) {
@@ -334,6 +398,8 @@ tens_complication:function() {
 
      document.body.innerHTML = originalContents;
     }
+=======
+>>>>>>> origin/master
    /* generatepdf:function(e){
       var doc = new jsPDF();
       alert('save as pdf');

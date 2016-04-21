@@ -354,7 +354,11 @@
         var install2status;
         var install1fine;
         var install2fine;
+<<<<<<< HEAD
      // alert(JSON.stringify(feeresult));
+=======
+      //alert(JSON.stringify(feeresult));
+>>>>>>> origin/master
       feestudname=feeresult[0].student_name;
       feestudid=feeresult[0].id;
       discountfee=feeresult[0].discount_fee;
@@ -478,7 +482,11 @@ document.querySelector('transportfee-card').installmentarr=installarr;
             obj.installtype=chequedetail[i].installtype;
             chequedetailarr.push(obj);
         }
+<<<<<<< HEAD
         //alert('a'+JSON.stringify(chequedetailarr));
+=======
+       // alert('a'+JSON.stringify(chequedetailarr));
+>>>>>>> origin/master
         document.querySelector('chequedetail-card').chequearr=chequedetailarr;
 
      },
@@ -512,7 +520,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         obj.installtype=uinstalltype;
         obj.paidstatus=paidstatus;
         this.updatestuchequeparam=obj;
-        alert(JSON.stringify(obj));
+//alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
      }
     });

@@ -98,18 +98,20 @@ var dt;
       {
         if(e.target.checked==true)
         {
-          this.enable=false;
+         
           if(ck!='null')
           {
             if(ck!=this.installtype)
             {
-         
           document.getElementById(ck).checked = false;
           document.getElementById(dt).disabled = true;
+          this.enable=false;
         }
          }
           ck=this.installtype;
           dt=this.paydate;
+          document.getElementById(dt).disabled = false;
+           this.enable=false;
         }
         else
         {

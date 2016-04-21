@@ -29,6 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <html>
+    <form method="post" action="">
     <body id="receipt">
     <img id="imgRes" height="1px" width="1px"  />
    <div id="canvas" style="background-image:url(fimage/1.jpg)">
@@ -157,9 +158,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </div>
 <div style="margin-bottom: 0%; height: 40%; margin-top: 20%;">
             <paper-button class="button" id="pdf">Save as PDF</paper-button>
+            <paper-button class="button" id="email" on-click="email">Send email</paper-button>
+            <paper-button class="button" id="print" on-click="print">Print</paper-button>
           </div>
     </body>
     <div id="editor"></div>
+
+    <a href="javascript:doit()"><img src="fimage/1.jpg" border=0 align="middle">
+    </form>
     </html>
   </template>
   <script>
@@ -179,6 +185,9 @@ $(document).ready(function() {
     });
 });
 });
+
+
+
   (function() {
     'use strict';
 
@@ -349,7 +358,23 @@ var specialElementHandlers = {
     this.feeinword='Rs'+'  '+finalWord;
  
 
-}
+},
+ email:function(e){
+              alert('sending email');
+            //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=Receipt"+document.title+"&body=.receipt"+escape(window.location.href);
+            var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com '
+             +document.getElementById('canvas').value
+             +'&body='+document.getElementById('canvas').value;
+              window.location.href = link;
+        },
+        print:function(){
+            if (!window.print){
+            alert("You need NS4.x to use this print button!")
+            return
+            }
+            window.print()
+
+        }
 
    /* generatepdf:function(e){
       var doc = new jsPDF();

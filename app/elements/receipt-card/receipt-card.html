@@ -151,15 +151,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="r8">
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
-          
-          
-
-</div>
-</div>
-<div style="margin-bottom: 0%; height: 40%; margin-top: 20%;">
+                    <div>
             <paper-button class="button" id="pdf">Save as PDF</paper-button>
+<<<<<<< HEAD
             <paper-button class="button" id="email" on-click="email">Send email</paper-button>
             <paper-button class="button" id="print" on-click="print">Print</paper-button>
+=======
+             <paper-button class="button" id="printreceipt" on-click="printDiv">Print the Receipt</paper-button>
+>>>>>>> origin/master
           </div>
     </body>
     <div id="editor"></div>
@@ -178,7 +177,7 @@ $(document).ready(function() {
                 var imgData = canvas.toDataURL('image/png'); 
                 $("#imgRes").attr("src", imgData);             
                 var doc = new jsPDF('p', 'mm');
-                doc.addImage(imgData, 'PNG', 10, 10);
+                doc.addImage(imgData, 'PNG', 10, 8);
                 doc.save('sample-file.pdf');
             }
         });
@@ -191,8 +190,21 @@ $(document).ready(function() {
   (function() {
     'use strict';
 
-      
-    
+
+      var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
+    var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
+    var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
+    var junkVal;
+    var obStr;
+    var numReversed;
+    var totalWords="";
+    var inWords=new Array();
+    var finalWord="";
+    var i,j;
+    var actnumber;
+
+   
+
 var specialElementHandlers = {
     '#editor': function (element, renderer) {
         return true;
@@ -207,7 +219,8 @@ var specialElementHandlers = {
       ready:function(){
 
       },
-      convertrs:function() {
+      convertrs:function() 
+      {
         var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
     var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
     var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
@@ -227,7 +240,8 @@ var specialElementHandlers = {
     numReversed=obStr.split("");
     actnumber=numReversed.reverse();
     var iWordsLength=numReversed.length;
-    if(Number(junkVal) >=0){
+    if(Number(junkVal) >=0)
+    {
         //do nothing
 
     }
@@ -246,7 +260,8 @@ var specialElementHandlers = {
 
     
     j=0;
-    for(i=0; i<iWordsLength; i++){
+    for(i=0; i<iWordsLength; i++)
+    {
         switch(i)
         {
         case 0:
@@ -350,15 +365,15 @@ var specialElementHandlers = {
         j++;
     }
 
-    
     inWords.reverse();
-    for(i=0; i<inWords.length; i++) {
+    for(i=0; i<inWords.length; i++)
+     {
         finalWord+=inWords[i];
     }
     this.feeinword='Rs'+'  '+finalWord;
- 
 
 },
+<<<<<<< HEAD
  email:function(e){
               alert('sending email');
             //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=Receipt"+document.title+"&body=.receipt"+escape(window.location.href);
@@ -375,15 +390,34 @@ var specialElementHandlers = {
             window.print()
 
         }
+=======
+tens_complication:function()
+ {
+        if(actnumber[i]==0)
+         {
+            inWords[j]='';
+        }
+        else if(actnumber[i]==1)
+         {
+            inWords[j]=ePlace[actnumber[i-1]];
+        }
+        else
+         {
+            inWords[j]=tensPlace[actnumber[i]];
+        }
+    },
+    printDiv:function()
+    {
+      var printContents = document.getElementById('canvas').innerHTML;
+     var originalContents = document.body.innerHTML;
+>>>>>>> origin/master
 
-   /* generatepdf:function(e){
-      var doc = new jsPDF();
-      alert('save as pdf');
-      doc.fromHTML($('#receipt').html(), 15, 15, {
-        'width': 170,'elementHandlers': specialElementHandlers});
-    doc.save('sample-file.pdf');
-    }*/
-      
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+    }
       
     });
   })();

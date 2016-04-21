@@ -219,7 +219,6 @@
      payfeeResponse:function(e)
      {
         var pay1success=e.detail.response.returnval;
-        //alert(JSON.stringify(pay1success));
         if(pay1success=='success')
         {
             alert("pay the fee successfully");
@@ -354,7 +353,7 @@
         var install2status;
         var install1fine;
         var install2fine;
-      //alert(JSON.stringify(feeresult));
+
       feestudname=feeresult[0].student_name;
       feestudid=feeresult[0].id;
       discountfee=feeresult[0].discount_fee;
@@ -478,7 +477,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
             obj.installtype=chequedetail[i].installtype;
             chequedetailarr.push(obj);
         }
-       // alert('a'+JSON.stringify(chequedetailarr));
+
         document.querySelector('chequedetail-card').chequearr=chequedetailarr;
 
      },

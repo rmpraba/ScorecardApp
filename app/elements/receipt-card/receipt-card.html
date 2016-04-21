@@ -147,6 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           
           <div>
             <paper-button class="button" id="pdf">Save as PDF</paper-button>
+             <paper-button class="button" id="printreceipt" on-click="printDiv">Print the Receipt</paper-button>
           </div>
 
 </div>
@@ -165,7 +166,7 @@ $(document).ready(function() {
                 var imgData = canvas.toDataURL('image/png'); 
                 $("#imgRes").attr("src", imgData);             
                 var doc = new jsPDF('p', 'mm');
-                doc.addImage(imgData, 'PNG', 10, 10);
+                doc.addImage(imgData, 'PNG', 10, 8);
                 doc.save('sample-file.pdf');
             }
         });
@@ -187,7 +188,7 @@ $(document).ready(function() {
     var i,j;
     var actnumber;
 
-    
+   
 var specialElementHandlers = {
     '#editor': function (element, renderer) {
         return true;
@@ -322,6 +323,17 @@ tens_complication:function() {
             inWords[j]=tensPlace[actnumber[i]];
         }
     },
+    printDiv:function()
+    {
+      var printContents = document.getElementById('canvas').innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+    }
    /* generatepdf:function(e){
       var doc = new jsPDF();
       alert('save as pdf');

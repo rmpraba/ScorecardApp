@@ -177,7 +177,7 @@
         generatefee:function(studid)
      {
       
-      this.generatefeeurl="http://localhost:8081/reportfee-card";
+      this.generatefeeurl=sessionStorage.getItem("addrinfo")+"/reportfee-card";
         var obj={"studid":""}
         obj.studid=studid;
         this.generatefeeparam=obj;
@@ -193,7 +193,7 @@
      getnameofstu:function()
      {
       //alert('hi');
-      this.getnameofstuurl="http://localhost:8081/getnameofstu-card";
+      this.getnameofstuurl=sessionStorage.getItem("addrinfo")+"/getnameofstu-card";
        this.$.getnameofstuajax.generateRequest();
      },
      getnameofstuResponse:function(e)
@@ -206,7 +206,7 @@
      payfee:function(install,studid,paytype,instype)
      {
       
-       this.payfeeurl="http://localhost:8081/payfee-card";
+       this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
         var obj={"studid":"","installfee":"","paytype":"","instype":""}
         obj.studid=studid;
         obj.installfee=install;
@@ -227,7 +227,7 @@
      },
      chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype)
      {
-      this.chequedetailsurl="http://localhost:8081/chequedetails";
+      this.chequedetailsurl=sessionStorage.getItem("addrinfo")+"/chequedetails";
         var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":""}
         obj.studid=stdid;
         obj.name=name;
@@ -245,7 +245,7 @@
     
      getfeedata:function(id)
      {
-       this.getfeedataurl="http://localhost:8081/getfeedata";
+       this.getfeedataurl=sessionStorage.getItem("addrinfo")+"/getfeedata";
         var obj={"studid":""}
         obj.studid=id;
         this.getfeedataparam=obj;
@@ -262,7 +262,7 @@
         tod=new Date(todzxc);
         
         
-        this.getfeezoneurl="http://localhost:8081/getfeezone";
+        this.getfeezoneurl=sessionStorage.getItem("addrinfo")+"/getfeezone";
         var obj={"zone":""}
         obj.zone=zonid;
         this.getfeezoneparam=obj;
@@ -273,7 +273,7 @@
      getfeezoneResponse:function(e){
         zonenam=e.detail.response.returnval[0].zone_name;
 
-        this.getfeenameurl="http://localhost:8081/getfeename";
+        this.getfeenameurl=sessionStorage.getItem("addrinfo")+"/getfeename";
         var obj={"sid":""}
         obj.sid=stuid;
         this.getfeenameparam=obj;
@@ -443,7 +443,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
      },
      checkchequedetails:function()
      {
-         this.checkchequedetailsurl="http://localhost:8081/checkchequedetails";
+         this.checkchequedetailsurl=sessionStorage.getItem("addrinfo")+"/checkchequedetails";
         this.$.checkchequedetailsajax.generateRequest(); 
      },
      checkchequedetailsResponse:function(e)
@@ -486,7 +486,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         uchequeno=cname;
         uchequestatus=chequestatus;
         uinstalltype=installtype;
-         this.updatechequedetailurl="http://localhost:8081/updatechequedetail";
+         this.updatechequedetailurl=sessionStorage.getItem("addrinfo")+"/updatechequedetail";
         var obj={"chequestatus":"","chequenum":""}
         obj.chequestatus=chequestatus;
         obj.chequenum=chequenum;
@@ -505,7 +505,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
             paidstatus="bounce";
         }
 
-        this.updatestuchequeurl="http://localhost:8081/updatestucheque";
+        this.updatestuchequeurl=sessionStorage.getItem("addrinfo")+"/updatestucheque";
         var obj={"chequename":"","installtype":"","paidstatus":""}
         obj.chequename=uchequeno;
         obj.installtype=uinstalltype;

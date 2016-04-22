@@ -1,0 +1,153 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+      <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+      <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+
+
+<dom-module id="studpass-card">
+  
+    <template>
+      <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <html>
+    <body id="pass">
+    
+   
+    <div class="pass" >
+    <div class="front"id="front">
+    <img id="imgRes" height="1px" width="1px"  />
+    <div id="canvas" style="background-image:url(fimage/1.jpg)">
+        
+        <div class="header">
+        <div class="logo"><img style="width: 18%; height: 12%; margin-top: 5%;" src="../../images/zeesouth.png"/></div>
+        <div class="heading">
+          <div class="title">Mount Litera Zee School-South Bangalore</div>
+          <div class="address">South Bangalore #58/4, Haralur Road, Kudlu, HSR Extension, Bangalore - 560068 Phone : 080-65468341</div>
+        </div>
+        </div>
+
+        <div class="body1">
+        
+          <hr></hr>
+        </div>
+
+        <div class="body2">
+          <div class="studimg">
+            <img style="width: 50%; height: 25%; margin-top: 0%;" src="../../images/s1.jpg"/>
+          </div>
+          <div class="studetail">
+          <p>Name{{studname}}</p>
+             <p>Zone/Route{{zone}}/{{route}}</p>
+            </div>
+        </div>
+<div class="back">
+        <div class="body3">
+        <div class="backimg">
+        <div class="backdetails">
+                  <p>Address:</p>
+                  <p>a{{address1}}</p>
+                  <p>b{{address2}}</p>
+                  <p> </p>
+                  <hr></hr>
+                  <p>Pick point:{{pickup}}</p>
+                  <p>Drop point:{{drop}}</p>
+                  <hr></hr>
+                  <p>Parents Mobile:{{mobno}}</p>
+                  <p>Blood Group:{{blood}}</p>
+                  
+
+                  <hr></hr>
+                  <p>Transport Coordinator no:{{coorno}}</p>
+          </div>
+          </div>
+        </div>
+</div>
+      </div>
+      </div>
+      <div class="button">
+        <paper-button class="button" id="pdf1">Save as PDF</paper-button>
+        <paper-button class="button" on-click="print">Print</paper-button>
+      </div>
+      </div>
+      </body>
+      </html>
+  </template>
+  <script>
+
+  $(window).load(function(){
+$(document).ready(function() {
+    $('#pdf1').click(function() {       
+        html2canvas($("#canvas"), {
+            onrendered: function(canvas) {    
+            alert('s');     
+                var imgData = canvas.toDataURL('image/png'); 
+                $("#imgRes").attr("src", imgData);             
+                var doc = new jsPDF('p', 'mm');
+                doc.addImage(imgData, 'PNG', 10, 8);
+                doc.save('sample.pdf');
+            }
+        });
+    });
+});
+});
+
+
+  (function() {
+    'use strict';
+
+ 
+
+   
+
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
+
+
+
+    Polymer({
+      is: 'studpass-card',
+
+     ready:function(){
+
+      },
+       email:function(e){
+              alert('sending email');
+            //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=pass"+document.title+"&body=.pass"+escape(window.location.href);
+            var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
+              window.location.href = link;
+        },
+        print:function(){
+            if (!window.print){
+            alert("You need NS4.x to use this print button!")
+            return
+            }
+            window.print()
+
+        }
+      
+    });
+  })();
+  </script>
+</dom-module>

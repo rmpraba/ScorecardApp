@@ -32,8 +32,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <form method="post" action="">
     <body id="receipt">
     <img id="imgRes" height="1px" width="1px"  />
-   <div id="canvas" style="background-image:url(fimage/1.jpg)">
+   
     <div class="receipt" >
+    <div id="canvas" style="background-image:url(fimage/1.jpg)">
         <div class="header">
         <div class="logo"><img src="../../images/zeesouth.png"/></div>
         <div class="heading">
@@ -107,14 +108,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-item>{{feeinword}}</paper-item>
             </div> </div>
             <div class="r5">
-              <paper-item> Total fees :</paper-item>
+              <paper-item style="width: 80px;"> Total fees :</paper-item>
               
               <div class="cash">
                 <paper-input class="button" on-change="convertrs" value="{{totalfee}}"></paper-input>
             </div>
 </div>
           </div>
+
           <hr id="ln6"></hr>
+
           <div class="body6">
             <paper-item class="lb">Mode Of Payment : {{modepay}}</paper-item>
             <div class="r6">
@@ -151,21 +154,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="r8">
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
-                    <div>
-            <paper-button class="button" id="pdf">Save as PDF</paper-button>
-
-            <paper-button class="button" id="email" on-click="email">Send email</paper-button>
-            <paper-button class="button" id="print" on-click="print">Print</paper-button>
-
-             
-
-          </div>
+                    
     </body>
     <div id="editor"></div>
 
-    <a href="javascript:doit()"><img src="fimage/1.jpg" border=0 align="middle">
+    
     </form>
     </html>
+    <div>
+    <table>
+      <tr >
+        <td>
+           <paper-button class="button" id="pdf">Save as PDF</paper-button>
+        </td>
+        <td>
+          <paper-button class="button" id="email" on-click="email">Send email</paper-button>
+        </td>
+        <td>
+          <paper-button class="button" id="print" on-click="print">Print</paper-button>
+        </td>
+      </tr>
+    </table>
+           
+     
+
+          </div>
   </template>
   <script>
 
@@ -377,9 +390,7 @@ var specialElementHandlers = {
  email:function(e){
               alert('sending email');
             //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=Receipt"+document.title+"&body=.receipt"+escape(window.location.href);
-            var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com '
-             +document.getElementById('canvas').value
-             +'&body='+document.getElementById('canvas').value;
+            var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
               window.location.href = link;
         },
         print:function(){
@@ -389,6 +400,22 @@ var specialElementHandlers = {
             }
             window.print()
 
+
+              /*var pc=document.getElementById('canvas').innerHTML;
+          var oc=document.body.innerHTML;
+          document.body.innerHTML=pc;
+
+            if (!window.print){
+            alert("You need NS4.x to use this print button!")
+            return
+            }
+            window.print();
+
+             document.body.innerHTML=oc;
+             /*w=window.open();
+             w.document.write(document.getElementById(d)[0].innerHTML);
+             w.print();
+             w.close();*/
         }
       
     });

@@ -23,15 +23,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="studpass-card">
   
     <template>
-      <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <html>
-    <body id="pass">
-    
-   
     <div class="pass" >
     <div class="front"id="front">
     <img id="imgRes" height="1px" width="1px"  />
@@ -52,12 +43,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <div class="body2">
           <div class="studimg">
-            <img style="width: 50%; height: 25%; margin-top: 0%;" src="../../images/s1.jpg"/>
+            <img style="width: 35%; height: 25%; margin-top: 0%;" src="../../images/s1.jpg"/>
           </div>
           <div class="studetail">
           <p>Name{{studname}}</p>
              <p>Zone/Route{{zone}}/{{route}}</p>
             </div>
+        </div>
         </div>
 <div class="back">
         <div class="body3">
@@ -82,14 +74,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
 </div>
       </div>
-      </div>
       <div class="button">
         <paper-button class="button" id="pdf1">Save as PDF</paper-button>
         <paper-button class="button" on-click="print">Print</paper-button>
       </div>
       </div>
-      </body>
-      </html>
   </template>
   <script>
 

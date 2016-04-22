@@ -609,15 +609,24 @@ text-align: center;
 .layframe .button{
     height: 5%;
 }
+.pass{
+    width: all;
+    height: all;
+    @apply(--layout-horizontal); 
+    margin-left: 20%;
+    margin-top: 10%;
+
+}
 .pass .front{
    width: 5.5cm;
   height: 8.5cm;
-  background-color: #e6f9ff;
-  margin: 30mm 45mm 30mm 45mm;
-
+  background: linear-gradient(#408CD9,#5398DD,#66A3E1,#79AEE4,#8CBAE8,#A0C6EC,#B3D1F0,#CFE2F6,#ECF4FB,#FFFFFF);
+  border-radius: 15px;
+   box-shadow: 5px 5px 5px #888888;
 }
 .pass .front .header{
    @apply(--layout-horizontal);
+   margin-top: -10%;
 }
 .pass .front .header .logo{
     
@@ -642,12 +651,13 @@ text-align: center;
 }
 .pass .front .body1{
 
-    margin-top: 25%;
+    margin-top: 0%;
     text-align: center;
     @apply(--layout-horizontal);
 }
 .pass .front .body2{
     @apply(--layout-horizontal);
+    margin-top: 10%;
     
 }
 .pass .front .body2 .studimg{
@@ -655,7 +665,7 @@ text-align: center;
     text-align: center;
     @apply(--layout-vertical);
     
-     margin-top: 10%;
+     
 }
 
 .pass .body2 .studetail{
@@ -664,11 +674,19 @@ text-align: center;
     text-align: center;
     @apply(--layout-center);
 }
-.pass .body3{
+.pass .back{
+    border-radius: 15px;
+   box-shadow: 5px 5px 5px 5px #888888;
    width: 5.5cm;
   height: 8.5cm;
-margin-left: 105%;
-margin-top: -135%;
+  margin-left: 108%;
+margin-top: -148%;
+}
+.pass .body3{
+   
+margin-top: 5%;
+margin-left: 2%;
+
 
 }
 .pass .body3 .backimg{
@@ -684,9 +702,6 @@ margin-top: -135%;
     margin-top: 8%;
     height: 20%;
     margin-left: 10%;
-}
-.pass #front{
-    background: linear-gradient(,,,,,,,,,,);
 }
 
 </style>

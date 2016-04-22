@@ -622,7 +622,9 @@ text-align: center;
   height: 8.5cm;
   background: linear-gradient(#408CD9,#5398DD,#66A3E1,#79AEE4,#8CBAE8,#A0C6EC,#B3D1F0,#CFE2F6,#ECF4FB,#FFFFFF);
   border-radius: 15px;
-   box-shadow: 5px 5px 5px #888888;
+   border-color: #888888;
+   border-style: dotted;
+   border-width: 2px;
 }
 .pass .front .header{
    @apply(--layout-horizontal);
@@ -676,27 +678,17 @@ text-align: center;
 }
 .pass .back{
     border-radius: 15px;
-   box-shadow: 5px 5px 5px 5px #888888;
+   border-color: #888888;
+   border-style: dotted;
+   border-width: 2px;
    width: 5.5cm;
   height: 8.5cm;
-  margin-left: 108%;
+  margin-left: 112%;
 margin-top: -148%;
 }
-.pass .body3{
-   
+.pass .back .body3{
 margin-top: 5%;
 margin-left: 2%;
-
-
-}
-.pass .body3 .backimg{
-//background-image:url("../../images/z.png");
-
-}
-.pass .body3 .backdetails{
-    margin-top: 7%;
-    margin-left: 2%;
-    
 }
 .pass .button{
     margin-top: 8%;

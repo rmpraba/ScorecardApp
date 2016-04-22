@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+<dom-module id="feereports-item-card">
+  <template>
+    <style is="custom-style">
+      .flex-vertical {
+        @apply(--layout-vertical);
+        height: 1px;
+        padding: 2% !important;
+        width: 90%;
+      }
+      .flexchild-vertical {
+        @apply(--layout-horizontal);
+      }
+      .flexchild-vertical paper-item{
+        width: 100%;
+      }
+      .flexchild-vertical .field{
+        padding: 0;
+      }
+    </style>
+    <div class="container flex-vertical">
+      <div class="flexchild-vertical feereport">
+          <div class="field" style="width: 5%; margin-left: 3%;"><paper-item>{{studentid}}</paper-item></div>
+          <div class="field" style="width: 20%; margin-left: -3%;"><paper-item>{{studentname}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: -2.5%;"><paper-item>{{totalfee}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: 3%;"><paper-item>{{installment1}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: 5%"><paper-item>{{installment2}}</paper-item></div>
+          <div class="field" style="width: 10%;margin-left: 5%" ><paper-item>{{installment1date}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: 10%"><paper-item>{{installment2date}}</paper-item></div>
+        <div class="flexchild-vertical">
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'feereports-item-card',
+
+    });
+  })();
+  </script>
+</dom-module>

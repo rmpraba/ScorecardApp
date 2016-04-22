@@ -573,4 +573,10 @@ text-align: center;
 .layframe .button{
     height: 5%;
 }
+.feereports-card{
+    margin-left: 3%;
+}
+.nodata{
+    margin:15% 0 0 45%;
+}
 </style>

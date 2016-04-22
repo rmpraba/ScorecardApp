@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../datepicker1-card/datepicker1-card.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../transportfee-service/transportfee-service.html">
+<link rel="import" href="../feereports-item-card/feereports-item-card.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
+<dom-module id="feereports-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .headtabs{
+        width: 90% !important;
+        margin: 0 !important;
+      }
+    </style>
+    <div class="feereports-card">
+      <div class="date">
+        <datepicker1-card></datepicker1-card>
+      </div>
+      <div class="headtabs">
+          <paper-tabs selected="0">
+            <paper-tab>ID</paper-tab>
+            <paper-tab>Name</paper-tab>
+            <paper-tab>Total Fee</paper-tab>
+            <paper-tab>Installment 1</paper-tab>
+            <paper-tab>Installment 2</paper-tab>
+            <paper-tab>Installment 1 Date</paper-tab>
+            <paper-tab>Installment 2 Date</paper-tab>
+          </paper-tabs>
+      </div>
+      <template  is="dom-repeat" items="{{feereportarr}}" as="view">
+        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" totalfee="{{view.fees}}" installment1="{{view.installment_1}}" installment2="{{view.installment_2}}" installment1date="{{view.installment_1Date}}" installment2date="{{view.installment_2Date}}"></feereports-item-card>
+      </template>
+      <template>
+        <nodata-card></nodata-card>
+      </template>
+      <transportfee-service id="service"></transportfee-service>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'feereports-card',
+    ready:function(){
+      this.querySelector("paper-tabs").style.visibility='hidden';
+    },
+    showpapertab:function(){
+      this.querySelector("paper-tabs").style.visibility='visible';
+    }
+    });
+  })();
+  </script>
+</dom-module>

@@ -155,6 +155,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="datepickajax"
+        url="{{datepickurl}}"
+        params="{{datepickparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="datepickResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -330,13 +341,11 @@
             alert('Request failed');
         }
      },
-     getinstalltype:function()
-     {
+    getinstalltype:function(){
         this.getinstalltypeurl="../../configfile/installmenttype.json";
         this.$.getinstalltypeajax.generateRequest(); 
-     },
-     getinstalltypeResponse:function(e)
-     {
+    },
+    getinstalltypeResponse:function(e){
         var feepercent;
         var installarr=[];
         var install1fee;
@@ -369,10 +378,10 @@
       install2fine=feeresult[0].install2_fine;
       var d1=feeresult[0].installment_1Date;
       date1=new Date(d1);
-  install1date=date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+      install1date=date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
       var d2=feeresult[0].installment_2Date;
       date2=new Date(d2);
-     install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+      install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
         var installdata=e.detail.response;
         alert(feepercent+''+discountfee);
         for(var i=0;i<installdata.length;i++)
@@ -514,7 +523,24 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         this.updatestuchequeparam=obj;
         alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
-     }
+     },
+      datepick:function(e){
+        this.datepickurl="http://localhost:8081/datepick";
+        var obj={"e":""}
+        var condate = new Date(e);
+        var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+        obj.dates=todate;
+        this.datepickparam=obj;
+        this.$.datepickajax.generateRequest();
+      },
+      datepickResponse:function(e){
+        var feeresult=e.detail.response.returnval;
+        if(feeresult == "invalid"){
+          document.querySelector('transport-app').setPage("nodata","Fee Reports");
+        } else {
+          document.querySelector('feereports-card').feereportarr=feeresult;
+        }
+      }
     });
  })();
   </script>

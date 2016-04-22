@@ -596,18 +596,17 @@ app.post('/cancellation',  urlencodedParser,function (req, res)
        connection.query('SELECT s.id,s.student_name,s.class_id,s.school_type,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,z.fees-z.discount_fee as actualfee ,z.installment_1+z.installment_2 as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
        	function(err, rows)
        	{
-		if(!err)
-		{
-		if(rows.length>0)
-		{
-			res.status(200).json({'returnval': rows});
-		}
-		else
-		{
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
 			console.log(err);
-			res.status(200).json({'returnval': 'invalid'});
 		}
-	}
 });
 });
 app.post('/cancel',  urlencodedParser,function (req, res){
@@ -632,7 +631,7 @@ app.post('/cancel',  urlencodedParser,function (req, res){
 		});
 });
 app.post('/proceedcancel',  urlencodedParser,function (req, res){
-	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "flag":3,"status":"Requested", "reason":req.query.reason};
+	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "flag":3,"status":"Requested", "reason":req.query.reason, "status":'Requested'};
     connection.query('insert into cancellation set ?',[collection],
 	function(err, rows){
 		if(err){
@@ -727,6 +726,7 @@ app.post('/getnameofstu-card',  urlencodedParser,function (req, res)
 app.post('/payfee-card',  urlencodedParser,function (req, res)
 {
 		var d = new Date();
+        var instalment1date=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 		var mode;
 		var install1;
 		var install1date;
@@ -747,7 +747,7 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 			console.log('yes');
 		 mode={"modeofpayment1":req.query.paytype};
 		 install1={"installment_1":req.query.installfee};
-		 install1date={"installment_1Date":d};
+		 install1date={"installment_1Date":instalment1date};
 		 status={"install1_status":paidstatus};
 	    }
 	    else
@@ -1451,6 +1451,28 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 	
 });
 });
+
+app.post('/datepick',  urlencodedParser,function (req, res)
+{
+	
+	var date1={"installment_1Date":req.query.dates};
+	var date2={"installment_2Date":req.query.dates};
+	    connection.query('Select f.student_id, d.student_name, f.zone_id, f.fees, f.installment_1, f.installment_2, f.installment_1Date, f.installment_2Date, f.modeofpayment1, f.modeofpayment2 from student_fee f left join student_details d on f.student_id=d.id where ? or ?',[date1, date2],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

@@ -22,7 +22,9 @@
 <link rel="import" href="../refundverify-card/refundverify-card.html">
 <link rel="import" href="../receipt-card/receipt-card.html">
 <link rel="import" href="../import-excel/import-excel.html">
+<link rel="import" href="../feereports-card/feereports-card.html">
 <link rel="import" href="../chequedetail-card/chequedetail-card.html">
+<link rel="import" href="../nodata-card/nodata-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -76,6 +78,12 @@
             <section data-category="cancellation">
               <cancellation-card></cancellation-card>
            </section>
+            <section data-category="feereport">
+              <feereport-card></feereport-card>
+           </section>
+            <section data-category="feereports">
+              <feereports-card></feereports-card>
+           </section>
             <section data-category="generateroutereport">
               <routereport-card></routereport-card>
            </section>
@@ -88,7 +96,7 @@
            <section data-category="discount">
               <discountstudent-card></discountstudent-card>
            </section>
-                       <section data-category="adminmanager">
+          <section data-category="adminmanager">
               <adminmanager-card></adminmanager-card>
            </section>
             <section data-category="approvediscount">
@@ -109,6 +117,9 @@
              <section data-category="chequedetail">
               <chequedetail-card></chequedetail-card>
            </section>
+            <section data-category="nodata">
+              <nodata-card></nodata-card>
+           </section>
           </iron-pages>
        </div>
 
@@ -119,13 +130,8 @@
   Polymer({
     is: "transport-app",
     ready: function() {
-      //alert("yes coming");
-      //this.page="transportadmin";
-  
    var name=sessionStorage.getItem("userinfo");
    var currpage=localStorage.getItem("curr_sess_page");
-   //alert(currpage);
-  
    if(name=="Transport Admin")  {
     //alert('in');
     this.page="transportadmin";
@@ -182,6 +188,10 @@
       //alert('in in');
       this.page='receipt';
     } 
+    else if((currpage=='feereports')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='feereports';
+    }
       
   }
   else if(name=="Admin Manager"){

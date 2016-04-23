@@ -1473,6 +1473,51 @@ app.post('/datepick',  urlencodedParser,function (req, res)
 	});
 });
 
+app.post('/getpasszone',  urlencodedParser,function (req, res)
+{
+	
+	var date1={"student_id":req.query.stid};
+	    connection.query('SELECT zone_name FROM  `md_zone` WHERE id=(SELECT zone_id FROM student_fee WHERE ?)',[date1],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+app.post('/getpassdetail',  urlencodedParser,function (req, res)
+{
+	
+	var date4={"student_id":req.query.stid};
+	    connection.query('Select * from student_point where ?',[date4],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+
+
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

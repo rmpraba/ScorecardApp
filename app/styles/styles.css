@@ -624,12 +624,11 @@ text-align: center;
     margin:15% 0 0 45%;
 }
 .pass{
-    width: all;
-    height: all;
+    width: 21cm;
+  height: 29.7cm;
     @apply(--layout-horizontal); 
     margin-left: 20%;
-    margin-top: 10%;
-
+    margin-top: 15%;
 }
 .pass .front{
    width: 5.5cm;
@@ -642,7 +641,7 @@ text-align: center;
 }
 .pass .front .header{
    @apply(--layout-horizontal);
-   margin-top: -10%;
+   margin-top: -3%;
 }
 .pass .front .header .logo{
     
@@ -684,7 +683,7 @@ text-align: center;
      
 }
 
-.pass .body2 .studetail{
+.pass .front .body2 .studetail{
     font-size: large;
     font-weight: bolder;
     text-align: center;
@@ -697,15 +696,15 @@ text-align: center;
    border-width: 2px;
    width: 5.5cm;
   height: 8.5cm;
-  margin-left: 112%;
-margin-top: -148%;
+  margin-left: 28%;
+margin-top: -41%;
 }
 .pass .back .body3{
 margin-top: 5%;
 margin-left: 2%;
 }
-.pass .button{
-    margin-top: 8%;
+.pass .buttons{
+    margin-top: 20%;
     height: 20%;
     margin-left: 10%;
 }

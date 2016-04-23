@@ -413,6 +413,29 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getpasszoneajax"
+        url="{{getpasszoneurl}}"
+        params="{{getpasszoneparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getpasszoneResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  
+   <iron-ajax
+        method="post"
+        id="getpassdetailajax"
+        url="{{getpassdetailurl}}"
+        params="{{getpassdetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getpassdetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -432,6 +455,7 @@
     var yearlyfee;
     var val;
     var oneway;
+    var zonename;
 
 
     Polymer({
@@ -595,6 +619,7 @@
       
        getname:function()
       {
+        //alert('hi service');
         this.getnameurl=sessionStorage.getItem("addrinfo")+"/getname";
         this.$.getnameajax.generateRequest();
       },
@@ -603,6 +628,7 @@
             var iditem=e1.detail.response.returnval;
             document.querySelector('zonetostudent-card').studentidarr=iditem;
             document.querySelector('zonetostudent-card').autocompletearr(iditem);
+            document.querySelector('studentpass-card').autocompletearr(iditem);
             //alert(JSON.stringify(document.querySelector('zonetostudent-card').namearr));
       },
 
@@ -1013,7 +1039,25 @@
          {
           alert('Updation interrupt');
          }
+      },
+      getpassdetail:function(studid){
+             this.getpasszoneurl=sessionStorage.getItem("addrinfo")+"/getpasszone";
+              var obj={"stid":""}
+              obj.stid=id;
+              this.getpasszoneparam=obj;
+              this.$.getpasszoneajax.generateRequest();
+
+          this.getpassdetailurl=sessionStorage.getItem("addrinfo")+"/getpassdetail";
+          this.getpassdetailparam=obj;
+          this.$.getpassdetailajax.generateRequest();
+      },
+      getpasszoneResponse:function(e){
+          zonename=e.detail.response.returnval[0].zone_name;
+      },
+      getpassdetailResponse:function(e){
+        var pickroute=e.detail.response.returnval[0].
       }
+
     });
  })();
   </script>

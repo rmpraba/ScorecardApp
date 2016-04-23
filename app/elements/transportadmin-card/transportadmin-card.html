@@ -30,7 +30,7 @@
       <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/importexcel.jpg" on-click="importexcel"></paper-icon-button>
-      <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="pass"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
     </div>
   </body>
    <refund-service id="service"></refund-service>
@@ -70,7 +70,7 @@
       {
         document.querySelector('transport-app').setPage("importexcel","Import Excel");
       },
-      pass:function()
+      stpass:function()
       {
         document.querySelector('transport-app').setPage("pass","Student Bus Pass");
       }

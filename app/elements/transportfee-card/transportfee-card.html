@@ -5,6 +5,8 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../transportfee-service/transportfee-service.html">
 <link rel="import" href="../transportfee-list/transportfee-list.html">
 <link rel="import" href="../installtype-card/installtype-card.html">
@@ -43,20 +45,21 @@
    <button  class="collapse" on-click="toggle2"  hidden$="{{hide}}">Transport Fee</button>
    
 <iron-collapse id="type">
-  <div class="container flex-vertical">
-    <div class="flex-horizontal margin">
-      <paper-item>Installment Type</paper-item>
-      <paper-item>Amount</paper-item>
-      <paper-item>Date</paper-item>
-      <paper-item>Mode Of Payment</paper-item>
-    </div>
-    <div class="flexchild-vertical report">
+<div class="transportheadtabs">
+          <paper-tabs>
+            <paper-tab>Installment Type</paper-tab>
+            <paper-tab>Amount</paper-tab>
+            <paper-tab>Date</paper-tab>
+            <paper-tab>Mode of Payment</paper-tab>
+            <paper-tab>Paid Date</paper-tab>
+          </paper-tabs>
+      </div>
+      <div style="margin-left:12%;"> 
       <template  is="dom-repeat" items="{{installmentarr}}" as="view">
           <installtype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
           </installtype-card>
       </template>
-    </div>
-  </div>
+   </div>
 </iron-collapse>
       <transportfee-service id="service"></transportfee-service>
   </template>

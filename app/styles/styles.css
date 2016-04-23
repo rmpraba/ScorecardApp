@@ -46,8 +46,8 @@ paper-button{
     margin-top: 4%;
 }
 .logindialog{
-    width:30%;
-    height: 40%;
+    width:25%;
+    height: 60%;
     margin: 10% 0 0 32%;
     text-align: center;
    display: inline-block;
@@ -379,7 +379,7 @@ ul li #new-button{
   }
   .flex-vertical {
     @apply(--layout-vertical);
-    height: 220px;
+    height: 200px;
   }
   .flexchild-vertical {
     @apply(--layout-horizontal);
@@ -390,10 +390,10 @@ ul li #new-button{
     margin:0 5% 20% 0;
   }
   .report{
-    margin: 3% 0 3% 20%;
+    margin: 2% 0 2% 20%;
   }
   .reports{
-    margin:0% 0% 3% 0%; 
+    margin:0% 0% 2% 0%; 
   }
   .container paper-item{
     height: 5% !important;
@@ -407,6 +407,14 @@ paper-button{
 .headtabs{
     width: 80%;
     margin-left:9%; 
+}
+.transportheadtabs{
+    background-color: #668cff;
+    width: 62%;
+    margin-left:11%; 
+    margin-top: 5%;
+    font-weight:bold;
+    font-size: large;
 }
 .flexchild-vertical .field{
     width: 20%;
@@ -431,7 +439,7 @@ paper-button{
     width: 80%;
     height: 7%;
     margin-left: 14.5%;
-    margin-top: -8%;
+    margin-top: -14%;
     text-align: center;
 }
 .receipt .header .title{
@@ -538,7 +546,7 @@ margin-left: 40%;
 margin-top: -120%;
 }
 .receipt #ln6{
-    margin-top: 1%;
+    margin-top: 5%;
     width: 98%;
     
 }
@@ -587,7 +595,7 @@ text-align: center;
 }
 .receipt .button{
     margin-bottom: 0.5%;
-    margin-top: 250%;
+    margin-top: 100%;
     height: 60px;
     width: auto;
     @apply(--layout-horizontal);    
@@ -616,12 +624,11 @@ text-align: center;
     margin:15% 0 0 45%;
 }
 .pass{
-    width: all;
-    height: all;
+    width: 21cm;
+  height: 29.7cm;
     @apply(--layout-horizontal); 
     margin-left: 20%;
-    margin-top: 10%;
-
+    margin-top: 15%;
 }
 .pass .front{
    width: 5.5cm;
@@ -634,7 +641,7 @@ text-align: center;
 }
 .pass .front .header{
    @apply(--layout-horizontal);
-   margin-top: -10%;
+   margin-top: -3%;
 }
 .pass .front .header .logo{
     
@@ -676,7 +683,7 @@ text-align: center;
      
 }
 
-.pass .body2 .studetail{
+.pass .front .body2 .studetail{
     font-size: large;
     font-weight: bolder;
     text-align: center;
@@ -689,15 +696,15 @@ text-align: center;
    border-width: 2px;
    width: 5.5cm;
   height: 8.5cm;
-  margin-left: 112%;
-margin-top: -148%;
+  margin-left: 28%;
+margin-top: -41%;
 }
 .pass .back .body3{
 margin-top: 5%;
 margin-left: 2%;
 }
-.pass .button{
-    margin-top: 8%;
+.pass .buttons{
+    margin-top: 20%;
     height: 20%;
     margin-left: 10%;
 }

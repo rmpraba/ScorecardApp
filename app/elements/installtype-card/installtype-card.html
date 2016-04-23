@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div  class="layout">
    
-    <paper-checkbox style="margin: 2% 0 0 2%;" id="{{installtype}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" on-change="payinstall"></paper-checkbox>
+    <paper-checkbox style="margin: 1% 0 0 2%;" id="{{installtype}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" on-change="payinstall"></paper-checkbox>
    <paper-item >{{installtype}}</paper-item>
    <paper-item >{{installamt}}</paper-item>
    <paper-item >{{paydate}}</paper-item>
@@ -46,7 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
            <paper-item id="installsdate" hidden$="{{hidden1}}">{{installdate}}</paper-item>
-    <paper-button id="{{studid}}" disabled$="{{enable}}" hidden$="{{hidden2}}" on-click="payfees">PAY</paper-button>
+    <paper-button style="margin-top: 1%;" id="{{studid}}" disabled$="{{enable}}" hidden$="{{hidden2}}" on-click="payfees">PAY</paper-button>
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
             </div>

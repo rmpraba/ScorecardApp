@@ -171,7 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button class="button" id="email" on-click="email">Send email</paper-button>
         </td>
         <td>
-          <paper-button class="button" id="print" on-click="print">Print</paper-button>
+          <paper-button class="button" style="margin-top: 120%;" id="print" on-click="print">Print</paper-button>
         </td>
       </tr>
     </table>
@@ -393,7 +393,14 @@ var specialElementHandlers = {
             var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
               window.location.href = link;
         },
+
         print:function(){
+
+              this.$.pdf.hidden=true;
+              this.$.email.hidden=true;
+              this.$.print.hidden=true;
+
+
             if (!window.print){
             alert("You need NS4.x to use this print button!")
             return
@@ -401,6 +408,9 @@ var specialElementHandlers = {
             window.print()
 
 
+              this.$.pdf.hidden=false;
+              this.$.email.hidden=false;
+              this.$.print.hidden=false;
               /*var pc=document.getElementById('canvas').innerHTML;
           var oc=document.body.innerHTML;
           document.body.innerHTML=pc;

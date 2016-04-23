@@ -118,7 +118,7 @@
     Polymer({
       is: "studenttopoint-item-card",
       ready:function(){
-        this.routepointurl = "http://localhost:8081/routepoint";
+        this.routepointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
         this.$.routepoint.generateRequest();
       }, 
       routepointResponse:function(e){
@@ -128,7 +128,7 @@
       pickroute:function(e){
         alert(this.studentid);
         this.pickroute = (e.target.selectedItem.value);
-        this.selectpointurl = "http://localhost:8081/pickpoints";
+        this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
         var obj={"routept":"","studid":""};
         obj.routept=this.pickroute;
         obj.studid=this.studentid;
@@ -137,7 +137,7 @@
       },
       droproute:function(e){
         this.droproute = (e.target.selectedItem.value);
-        this.routedroppointurl = "http://localhost:8081/routedroppoint";
+        this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
         var obj={"routedroppt":"","studid":""};
         obj.routedroppt=this.droproute;
         obj.studid=this.studentid;

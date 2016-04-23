@@ -61,7 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      refundreq:function()
      {
 
-      this.refundurl="http://localhost:8081/refund-card";
+      this.refundurl=sessionStorage.getItem("addrinfo")+"/refund-card";
         this.$.refundajax.generateRequest();
       },
       refundResponse:function(e)
@@ -73,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Approvereq:function(stdid,status,flag)
       {
         //alert('aa');
-        this.approvalurl="http://localhost:8081/approval-card";
+        this.approvalurl=sessionStorage.getItem("addrinfo")+"/approval-card";
          var obj={"studid":"","status":"","flag":""}
         obj.studid=stdid;
         obj.status=status;
@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        getverify:function()
      {
 
-      this.getverifyurl="http://localhost:8081/getverify";
+      this.getverifyurl=sessionStorage.getItem("addrinfo")+"/getverify";
         this.$.getverifyajax.generateRequest();
       },
       getverifyResponse:function(e)

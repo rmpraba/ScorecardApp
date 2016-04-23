@@ -2,6 +2,16 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <dom-module id="transport-service">
   <template>
+   <iron-ajax
+        auto
+        id="addressajax"
+        url="../../configfile/address.json"
+        handle-as="json"
+        content-type="application/json"
+        on-response="addressResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
 <iron-ajax
         method="post"
         id="getrouteajax"
@@ -426,10 +436,16 @@
 
     Polymer({
       is: "transport-service",
+      addressResponse:function(e)
+      {
+        var addr=e.detail.response.address;
+        sessionStorage.setItem("addrinfo",addr);
+        //alert(JSON.stringify(e.detail.response.address));
+      },
      
        getroute:function()
       {
-        this.getrouteurl="http://localhost:8081/getroute";
+        this.getrouteurl=sessionStorage.getItem("addrinfo")+"/getroute";
         this.$.getrouteajax.generateRequest();
       },
       getrouteResponse:function(e1)
@@ -440,7 +456,7 @@
        getroutedetail:function(tripno)
       {
         //alert('Hi  ...   '+routetrip);
-        this.getroutedetailurl="http://localhost:8081/getroutedetail";
+        this.getroutedetailurl=sessionStorage.getItem("addrinfo")+"/getroutedetail";
         var obj={"routename":"","tripnos":""};
         obj.routename=routetrip;
         obj.tripnos=tripno;
@@ -462,7 +478,7 @@
         trip=tripp;
         pick=pickuptime;
         drop=droptime;
-        this.routeidurl="http://localhost:8081/routeid";
+        this.routeidurl=sessionStorage.getItem("addrinfo")+"/routeid";
         var obj={"routename":""};
         obj.routename=route;
         this.routeidparam=obj;
@@ -483,7 +499,7 @@
       routeidResponse:function(e)
       {
         routeidd=e.detail.response.returnval[0].id;
-         this.sequenceurl="http://localhost:8081/sequence";
+         this.sequenceurl=sessionStorage.getItem("addrinfo")+"/sequence";
          this.$.sequenceajax.generateRequest();
 
       },
@@ -499,14 +515,14 @@
         obj.pick=pick;
         obj.drop=drop;
         this.insertpointparam=obj;
-        this.insertpointurl="http://localhost:8081/insertpoint";
+        this.insertpointurl=sessionStorage.getItem("addrinfo")+"/insertpoint";
         this.$.insertpointajax.generateRequest();
 
       },
          getzone:function()
 
       {
-        this.getzoneurl="http://localhost:8081/getzone";
+        this.getzoneurl=sessionStorage.getItem("addrinfo")+"/getzone";
         this.$.getzoneajax.generateRequest();
       },
       getzoneResponse:function(e1)
@@ -516,7 +532,7 @@
       },
       getfee:function(zone)
       {
-        this.getfeeurl = "http://localhost:8081/getfee";
+        this.getfeeurl = sessionStorage.getItem("addrinfo")+"/getfee";
         var obj={"zone":""}
         obj.zone=zone;
         this.getfeeparam=obj;
@@ -532,7 +548,7 @@
    }
       },
       gettermdate:function(grade){
-         this.gettermdateurl="http://localhost:8081/gettermdate";
+         this.gettermdateurl=sessionStorage.getItem("addrinfo")+"/gettermdate";
          var obj={"grade":""}
          obj.grade=grade;
          this.gettermdateparam=obj;
@@ -548,7 +564,7 @@
       },
       setzone:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx)
       {
-        this.setzoneurl = "http://localhost:8081/setzone";
+        this.setzoneurl = sessionStorage.getItem("addrinfo")+"/setzone";
         var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":""};
         obj.studid=studid;
         obj.zone=zone;
@@ -579,7 +595,7 @@
       
        getname:function()
       {
-        this.getnameurl="http://localhost:8081/getname";
+        this.getnameurl=sessionStorage.getItem("addrinfo")+"/getname";
         this.$.getnameajax.generateRequest();
       },
       getnameResponse:function(e1)
@@ -592,7 +608,7 @@
 
       getstudetail:function(studid)
       {
-        this.getstudetailurl="http://localhost:8081/getstudetail";
+        this.getstudetailurl=sessionStorage.getItem("addrinfo")+"/getstudetail";
         var obj={"studid":""};
         obj.studid=studid;
         this.getstudetailparam=obj;
@@ -609,13 +625,13 @@
             document.querySelector('zonetostudent-card').grade=gradename;
             document.querySelector('zonetostudent-card').date=dob;
             document.querySelector('zonetostudent-card').id=stdid;
-            this.gradediscounturl="http://localhost:8081/gradediscount";
+            this.gradediscounturl=sessionStorage.getItem("addrinfo")+"/gradediscount";
             var obj={"grade":""}
             obj.grade=gradename;
             this.gradediscountparam=obj;
             this.$.gradediscountajax.generateRequest();
 
-            this.classurl="http://localhost:8081/getclass";
+            this.classurl=sessionStorage.getItem("addrinfo")+"/getclass";
             var obj1={"class":""}
             obj1.class=classz;
             this.classparam=obj1;
@@ -630,7 +646,7 @@
       },
       
       generatereport:function(studid){
-        this.genereporturl="http://localhost:8081/report-card";
+        this.genereporturl=sessionStorage.getItem("addrinfo")+"/report-card";
         var obj={"studid":""}
         obj.studid=studid;
         this.genereportparam=obj;
@@ -642,7 +658,7 @@
         document.querySelector('genestureport-card').reportarr=reportresult;
       },
       generateroutereport:function(){
-        this.generateroutereporturl="http://localhost:8081/generateroutereport";
+        this.generateroutereporturl=sessionStorage.getItem("addrinfo")+"/generateroutereport";
         this.$.generateroutereportajax.generateRequest();
       },
       generateroutereportResponse:function(e){
@@ -650,7 +666,7 @@
         document.querySelector('routereport-card').autocompletename(nameitem);
       },
       routereport:function(routeid){
-        this.routereporturl="http://localhost:8081/route-report-card";
+        this.routereporturl=sessionStorage.getItem("addrinfo")+"/route-report-card";
         var obj={"routeid":""}
         obj.routeid=routeid;
         this.routereportparam=obj;
@@ -667,7 +683,7 @@
         routetrip=routename;
         //alert('name of route'+routetrip);
         //alert('Hi');
-        this.gettripurl="http://localhost:8081/gettrip";
+        this.gettripurl=sessionStorage.getItem("addrinfo")+"/gettrip";
         var obj={"triproute":""};
         obj.triproute=routename;
         this.gettripparam=obj;
@@ -683,7 +699,7 @@
       },
       //cancellation
       cancellation:function(studid){
-        this.cancellationurl="http://localhost:8081/cancellation";
+        this.cancellationurl=sessionStorage.getItem("addrinfo")+"/cancellation";
         var obj={"studid":""}
         obj.studid=studid;
         this.cancellationparam=obj;
@@ -696,7 +712,7 @@
         document.querySelector('cancellation-card').cancellationarr=reportresult;
       }, 
       cancel:function(school_type, fee, paid){
-        this.cancelurl="http://localhost:8081/cancel";
+        this.cancelurl=sessionStorage.getItem("addrinfo")+"/cancel";
         var end_date = localStorage.getItem("localsess_curr_date",this.showdate);
         var obj={"school_type":"","end_date":""};
         obj.school_type=school_type;
@@ -726,12 +742,12 @@
         var paidamount = cancelpaid;
         var remaining_months = total_months - months_used;
         var percent = (remaining_months / total_months)*100;
-        alert("percent"+' '+percent);
+       // alert("percent"+' '+percent);
         var total_refund_amount = (totalamount/100)*percent;
-        alert("refund"+' '+total_refund_amount);
+        //alert("refund"+' '+total_refund_amount);
         var used_amount = parseInt(totalamount - total_refund_amount);
         var refund_amount = paidamount - used_amount;
-        alert("refund_amount"+' '+refund_amount);
+        //alert("refund_amount"+' '+refund_amount);
         document.querySelector('cancellation-item-card').months_used=months_used;
         document.querySelector('cancellation-item-card').total_months=total_months;
         document.querySelector('cancellation-item-card').refund_amount=refund_amount;
@@ -739,7 +755,7 @@
       proceedcancellation:function(student_id, student_name, months_used, refund_amount, reason)
       {
         this.student_id=student_id;
-        this.proceedcancelurl="http://localhost:8081/proceedcancel";
+        this.proceedcancelurl=sessionStorage.getItem("addrinfo")+"/proceedcancel";
         var obj={"student_id":"","student_name":"","months_used":"","refund_amount":"","reason":""}
         obj.student_id=student_id;
         obj.student_name=student_name;
@@ -754,12 +770,12 @@
         var obj={"student_id":""};
         obj.student_id=this.student_id;
         this.transportrequiredstatusparam=obj;
-        this.transportrequiredstatusurl="http://localhost:8081/transportrequiredstatus";
+        this.transportrequiredstatusurl=sessionStorage.getItem("addrinfo")+"/transportrequiredstatus";
         this.$.transportrequiredstatusajax.generateRequest();
-        this.statuschangeurl="http://localhost:8081/statuschange";
+        this.statuschangeurl=sessionStorage.getItem("addrinfo")+"/statuschange";
         this.statuschangeparam=obj;
         this.$.statuschangeajax.generateRequest();
-        this.pointflagurl="http://localhost:8081/pointflag";
+        this.pointflagurl=sessionStorage.getItem("addrinfo")+"/pointflag";
         this.pointflagparam=obj;
         this.$.pointflagajax.generateRequest();
       },
@@ -779,7 +795,7 @@
         //alert(cusfee);
       },
       name:function(){
-        this.nameurl = "http://localhost:8081/name";
+        this.nameurl = sessionStorage.getItem("addrinfo")+"/name";
         this.$.nameajax.generateRequest();
       },
       nameResponse:function(e){
@@ -790,7 +806,7 @@
 
       },
       generatereportbyname:function(){
-       this.generatereportbynameurl="http://localhost:8081/generatereportbyname";
+       this.generatereportbynameurl=sessionStorage.getItem("addrinfo")+"/generatereportbyname";
        this.$.generatereportbynameajax.generateRequest();
       },
       generatereportbynameResponse:function(e){
@@ -799,7 +815,7 @@
       },
       deletemappoint:function(pointarray,routenam,tripnum)
       {
-        this.deletemappointurl="http://localhost:8081/deletemappoint-card";
+        this.deletemappointurl=sessionStorage.getItem("addrinfo")+"/deletemappoint-card";
         var obj={"pointarray":"","routenam":"","tripnum":""}
         obj.pointarray=pointarray;
         obj.routenam=routenam;
@@ -815,7 +831,7 @@
       },
        getstudapproval:function(){
         
-        this.getstudapprovalurl="http://localhost:8081/getstudapproval";
+        this.getstudapprovalurl=sessionStorage.getItem("addrinfo")+"/getstudapproval";
         this.$.getstudapprovalajax.generateRequest();
       },
       getstudapprovalResponse:function(e){
@@ -827,7 +843,7 @@
       confirmdisc:function(stid,admrea,accdis,flag,status){
         var todat=new Date();
         var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
-        this.confirmdiscurl="http://localhost:8081/confirmdisc";
+        this.confirmdiscurl=sessionStorage.getItem("addrinfo")+"/confirmdisc";
         var obj={"stid":"","admrea":"","accdis":"","nowdate":"","flag":"","status":""}
         obj.stid=stid;
         obj.admrea=admrea;
@@ -848,7 +864,7 @@
       },
       getapprovalverify:function(){
         
-        this.getapprovalverifyurl="http://localhost:8081/getapprovalverify";
+        this.getapprovalverifyurl=sessionStorage.getItem("addrinfo")+"/getapprovalverify";
         this.$.getapprovalverifyajax.generateRequest();
       },
       getapprovalverifyResponse:function(e){
@@ -862,7 +878,7 @@
       confirmedfee:function(stid,fee,status,flag){
         var todat=new Date();
         var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
-        this.confirmedfeeurl="http://localhost:8081/confirmedfee";
+        this.confirmedfeeurl=sessionStorage.getItem("addrinfo")+"/confirmedfee";
         var obj={"stid":"","fees":"","status":"","date":"","flag":""}
         obj.stid=stid;
         obj.fees=fee;
@@ -871,7 +887,7 @@
         obj.flag=flag;
         this.confirmedfeeparam=obj;
         this.$.confirmedfeeajax.generateRequest();
-        this.confirmfeeurl="http://localhost:8081/confirmfee";
+        this.confirmfeeurl=sessionStorage.getItem("addrinfo")+"/confirmfee";
         var obj={"stid":"","fees":""}
         obj.stid=stid;
         obj.fees=fee;
@@ -891,7 +907,7 @@
           }
       },
       cancelledfee:function(stid,status,flag){
-        this.cancelledfeeurl="http://localhost:8081/cancelledfee";
+        this.cancelledfeeurl=sessionStorage.getItem("addrinfo")+"/cancelledfee";
         var obj={"stid":"","status":"","flag":""}
         obj.stid=stid;
         obj.status=status;
@@ -952,7 +968,7 @@
         document.querySelector('zonetostudent-card').fee=val;
       },
        studzone:function(id){
-              this.studzoneurl="http://localhost:8081/getstudzone";
+              this.studzoneurl=sessionStorage.getItem("addrinfo")+"/getstudzone";
               var obj={"stid":""}
               obj.stid=id;
               
@@ -971,7 +987,7 @@
         },
         updatezone:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx)
       {
-        this.updatezoneurl = "http://localhost:8081/updatezone";
+        this.updatezoneurl = sessionStorage.getItem("addrinfo")+"/updatezone";
         var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":""};
         obj.studid=studid;
         obj.zone=zone;

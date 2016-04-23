@@ -79,7 +79,7 @@
     Polymer({
       is: "mapstudenttopoint-service",
       selectclass:function(){
-        this.selectclassurl = "http://localhost:8081/selectclass";
+        this.selectclassurl = sessionStorage.getItem("addrinfo")+"/selectclass";
         this.$.selectclassajax.generateRequest();
       },
       selectclassResponse:function(e){
@@ -87,7 +87,7 @@
         document.querySelector('mapstudenttopoint-card').classarr=classdetail;
       },
       classpick:function(cla){
-        this.classpickurl = "http://localhost:8081/classpick";
+        this.classpickurl = sessionStorage.getItem("addrinfo")+"/classpick";
         var obj={"classes":""}
         obj.classes=cla;
         this.classpickparam=obj;
@@ -108,7 +108,7 @@
             obj.pickpoint=itemarr[i].pickpoint;
             obj.droppoint=itemarr[i].droppoint;
             obj.flag=1;
-            this.studentpointurl="http://localhost:8081/submiturl";
+            this.studentpointurl=sessionStorage.getItem("addrinfo")+"/submiturl";
                  this.studentpointparam=obj;
             this.$.studentpointajax.generateRequest();
           }

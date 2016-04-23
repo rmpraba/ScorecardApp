@@ -416,33 +416,36 @@ paper-button{
     justify-content: center;
 }
 .receipt{
-   margin-left: 2%;
-   margin-top: 2%;
+   width: 21cm;
+  height: 29.7cm;
+
 }
 .receipt .header{
    @apply(--layout-horizontal);
-   
-    
 }
 .receipt .header .logo{
-    width: 10%;
-    height: 10%;
+    width: 7%;
+    height: 7%;
 }
 .receipt .header .heading{
-    width: 75%;
-    height: 10%;
-    margin-left: 12%;
+    width: 80%;
+    height: 7%;
+    margin-left: 14.5%;
+    margin-top: -8%;
     text-align: center;
 }
 .receipt .header .title{
     font-size: xx-large;
-    font-weight: 900;
+    font-weight: 700;
     margin-top: -3.25%;
 }
 .receipt .header .address{
     font-weight: 500;
+    width: 80%;
+    margin-left: 10%;
 }
 .receipt .body1{
+    margin-top: 0%;
     text-align: center;
     @apply(--layout-horizontal);
 }
@@ -450,23 +453,24 @@ paper-button{
     margin-left: 0%;    
 }
 .receipt .body1 .r1{
-    margin-left: 85%;
-    margin-top: -6.2%;
+    margin-left: 63%;
+    margin-top: -12.8%;
     
 }
 .receipt .body1 #ln2{
-    margin-top: -2.5%;
+    margin-top: -7%;
     
 }
 .receipt .body2{
     display: flex;
-    padding: -5%;
+    padding: -100%;
 }
 .receipt .body2 .r2{
-    margin-left: 60%;
+    margin-left: 40%;
 }
 .receipt #ln3{
-    margin-top: -3.5%;
+    margin-top: -4.5%;
+    width: 98%;
     
 }
 .receipt .body3{
@@ -478,10 +482,11 @@ paper-button{
 margin-left: 20%;    
 }
 .receipt .body3 .r3{
- margin-left: 55%;       
+ margin-left: 40%;       
 }
 .receipt #ln4{
     margin-top: -1%;
+    width: 98%;
     
 }
 .receipt .body4{
@@ -490,48 +495,68 @@ margin-left: 20%;
 }
 
 .receipt .body4 .l14{
-margin-left: 8%;    
+
 }
 .receipt .body4 .r4{
- margin-left: 54%;       
+ margin-left: 30%;       
 }
 .receipt #ln5{
     margin-top: 1%;
+    width: 98%;
     
 }
 
 .receipt .body5{
-    display: flex;
+    
    @apply(--layout-horizontal);
 }
 
+
 .receipt .body5 .l15{
-margin-left: 8%; 
+margin-left: 7%;
+display: inline-block;
 @apply(--layout-horizontal);
-float: left;
-text-align: left;   
+text-align: left;  
 }
+
+.receipt .body5 .l15 .word{
+text-align: left;  
+margin-left: 100%;
+margin-top: -20%;
+width: auto;
+@apply(--layout-horizontal);
+    }
+
 .receipt .body5 .r5{
- margin-left: 65%;       
+ margin-left: 59%;       
+ text-align: left;  
+ margin-top: -7%;
+}
+.receipt .body5 .r5 .cash{
+width: 40%;
+margin-left: 40%;
+margin-top: -120%;
 }
 .receipt #ln6{
     margin-top: 1%;
+    width: 98%;
     
 }
 .receipt .body6{
  margin-left: 0%;       
 }
-
+.receipt .body6 .r6{
+margin-left: 62%;   
+margin-top: -6.5%; 
+}
 .receipt .body7{
     display: flex;
    
 }
 
-.receipt .body7 .l17{
-margin-left: 12%;    
-}
+
 .receipt .body7 .r7{
- margin-left: 35%;       
+ margin-left: 38.5%;       
 }
 .receipt .body8{
     @apply(--layout-horizontal);
@@ -541,7 +566,9 @@ text-align: center;
 }
 .receipt .body9{
     @apply(--layout-horizontal);
+    margin-left: 1%;
     margin-top: 2%;
+    width: 94%;
  
 }
 .receipt .body9 .l8{
@@ -556,7 +583,16 @@ text-align: center;
     text-align: left;
     float: right;
     margin-top: 4%;
+    margin-right: 5%;
 }
+.receipt .button{
+    margin-bottom: 0.5%;
+    margin-top: 250%;
+    height: 60px;
+    width: auto;
+    @apply(--layout-horizontal);    
+}
+
 .layframe .buttons{
 text-align: center;
     @apply(--layout-horizontal); 
@@ -578,5 +614,91 @@ text-align: center;
 }
 .nodata{
     margin:15% 0 0 45%;
+}
+.pass{
+    width: all;
+    height: all;
+    @apply(--layout-horizontal); 
+    margin-left: 20%;
+    margin-top: 10%;
+
+}
+.pass .front{
+   width: 5.5cm;
+  height: 8.5cm;
+  background: linear-gradient(#408CD9,#5398DD,#66A3E1,#79AEE4,#8CBAE8,#A0C6EC,#B3D1F0,#CFE2F6,#ECF4FB,#FFFFFF);
+  border-radius: 15px;
+   border-color: #888888;
+   border-style: dotted;
+   border-width: 2px;
+}
+.pass .front .header{
+   @apply(--layout-horizontal);
+   margin-top: -10%;
+}
+.pass .front .header .logo{
+    
+}
+.pass .front .header .heading{
+    width: 80%;
+    height: 7%;
+    margin-top: -20%;
+    margin-left: 14.5%;
+    text-align: center;
+}
+.pass .front .header .title{
+    font-size: small;
+    font-weight: 300;
+    margin-top: -3.25%;
+}
+.pass .front .header .address{
+    font-size: xx-small;
+    font-weight: 100;
+    width: 80%;
+    margin-left: 10%;
+}
+.pass .front .body1{
+
+    margin-top: 0%;
+    text-align: center;
+    @apply(--layout-horizontal);
+}
+.pass .front .body2{
+    @apply(--layout-horizontal);
+    margin-top: 10%;
+    
+}
+.pass .front .body2 .studimg{
+    @apply(--layout-center);
+    text-align: center;
+    @apply(--layout-vertical);
+    
+     
+}
+
+.pass .body2 .studetail{
+    font-size: large;
+    font-weight: bolder;
+    text-align: center;
+    @apply(--layout-center);
+}
+.pass .back{
+    border-radius: 15px;
+   border-color: #888888;
+   border-style: dotted;
+   border-width: 2px;
+   width: 5.5cm;
+  height: 8.5cm;
+  margin-left: 112%;
+margin-top: -148%;
+}
+.pass .back .body3{
+margin-top: 5%;
+margin-left: 2%;
+}
+.pass .button{
+    margin-top: 8%;
+    height: 20%;
+    margin-left: 10%;
 }
 </style>

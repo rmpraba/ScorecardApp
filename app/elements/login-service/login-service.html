@@ -200,7 +200,7 @@
       logincheck:function(uname,pass)
       {
         username=uname;
-        this.loginurl="http://localhost:8081/login-card";
+        this.loginurl=sessionStorage.getItem("addrinfo")+"/login-card";
         var obj={"username":"","password":""}
         obj.username=uname;
         obj.password=pass;
@@ -248,7 +248,7 @@
       //fetch the pick up route from route card and pass to the routepointajax to find the pickup point of the student
       routepickuppoint:function(routeptt)
       {
-        this.routepickuppointurl = "http://localhost:8081/routepoint";
+        this.routepickuppointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
         var obj={"routept":""}
         obj.routept=routeptt;
         this.routepickuppointparam=obj;
@@ -264,7 +264,7 @@
       //fetch the drop route from route card and pass to the routedroppointajax to find the droppoint point of the student
       routedroppoint:function(routedropptt)
       {
-        this.routedroppointurl = "http://localhost:8081/routedroppoint";
+        this.routedroppointurl =sessionStorage.getItem("addrinfo")+"/routedroppoint";
         var obj={"routedroppt":""}
         obj.routedroppt=routedropptt;
         this.routedroppointparam=obj;
@@ -302,7 +302,7 @@
           fee=pzone_fee;
         }
         //alert(fee);
-       this.studbusurl="http://localhost:8081/studbusroute"
+       this.studbusurl=sessionStorage.getItem("addrinfo")+"/studbusroute"
                    var obj={"pickpt":"","droppt":""}
                 obj.pickpt=pickpt;
                      obj.droppt=droppt;
@@ -324,7 +324,7 @@
               pickbus=e.detail.response.returnval[0].bus_no;
               dropbus=e.detail.response.returnval[1].bus_no;
              }
-             this.studrouteurl="http://localhost:8081/studroute";
+             this.studrouteurl=sessionStorage.getItem("addrinfo")+"/studroute";
              var obj={"studid":"","pickpt":"","droppt":"","fee":"","pickbus":"","dropbus":""}
              obj.studid=studid;
              obj.pickpt=pickpoint;
@@ -341,7 +341,7 @@
       //fetch the zone,distance and fee from zone card and insert into the zone table
        createzone:function(zone)
        {
-            this.createzoneurl="http://localhost:8081/createzone";
+            this.createzoneurl=sessionStorage.getItem("addrinfo")+"/createzone";
             var obj={"zone":"", "disid":""}
             obj.zone=zone;
             
@@ -361,7 +361,7 @@
       //to get the zone information to create new route
           zone:function(){
 
-            this.zonepointurl = "http://localhost:8081/zonepoint";
+            this.zonepointurl = sessionStorage.getItem("addrinfo")+"/zonepoint";
             this.$.zonepoint.generateRequest();
           },
           //fetch the zone id from zonepointajax and pass to the create route card
@@ -372,7 +372,7 @@
           },
           //fetch the zone and route from route card and create new route
           studroot:function(zone, route){
-            this.rooturl="http://localhost:8081/studroot";
+            this.rooturl=sessionStorage.getItem("addrinfo")+"/studroot";
             var obj={"zone":"", "route":""}
             obj.zone=zone;
             obj.route=route;
@@ -382,7 +382,7 @@
 
       getroute:function()
       {
-        this.routeurl="http://localhost:8081/route-card";
+        this.routeurl=sessionStorage.getItem("addrinfo")+"/route-card";
        this.$.routeajax.generateRequest();
       },
       //get the zone id to create new point
@@ -390,7 +390,7 @@
 
       {
 
-        this.getzoneurl="http://localhost:8081/getzone";
+        this.getzoneurl=sessionStorage.getItem("addrinfo")+"/getzone";
         this.$.getzoneajax.generateRequest();
 
       },
@@ -406,7 +406,7 @@
       //to feetch the route of the selecte zone to create new point card
       selectroute:function(zone)
       {
-        this.selectrouteurl="http://localhost:8081/selectroute";
+        this.selectrouteurl=sessionStorage.getItem("addrinfo")+"/selectroute";
         var obj={"zone":""}
         obj.zone=zone;
         this.selectrouteparam=obj;
@@ -424,7 +424,7 @@
       //create new point and insert into the point table
       newroute:function(route,newPickpnt)
       {
-        this.newrouteurl="http://localhost:8081/newroute";
+        this.newrouteurl=sessionStorage.getItem("addrinfo")+"/newroute";
         var obj={"route":"","newPickpnt":""};
         obj.route=route;
         obj.newPickpnt=newPickpnt;
@@ -435,7 +435,7 @@
       getpoint:function()
       {
 
-        this.getpointurl="http://localhost:8081/getpoint";
+        this.getpointurl=sessionStorage.getItem("addrinfo")+"/getpoint";
         this.$.getpointajax.generateRequest();
       },
 //fetch the point info and bind to the map bus to route card
@@ -450,7 +450,7 @@
 //fetch the bus id,time mode of travel and insert the data to the bus data
       mapbus:function(busid,point,modeval,time)
       {
-        this.mapbusurl="http://localhost:8081/mapbus";
+        this.mapbusurl=sessionStorage.getItem("addrinfo")+"/mapbus";
         var obj={"busid":"","point":"","modeval":"","time":""};
         obj.busid=busid;
         obj.point=point;
@@ -462,7 +462,7 @@
   
       maxlimit:function(mindis,maxdis)
       {
-       this.maxlimiturl="http://localhost:8081/maxlimit";
+       this.maxlimiturl=sessionStorage.getItem("addrinfo")+"/maxlimit";
         var obj={"mindis":"","maxdis":""};
         obj.mindis=mindis;
         obj.maxdis=maxdis;

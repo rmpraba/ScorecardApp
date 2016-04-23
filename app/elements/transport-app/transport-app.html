@@ -24,7 +24,11 @@
 <link rel="import" href="../import-excel/import-excel.html">
 <link rel="import" href="../feereports-card/feereports-card.html">
 <link rel="import" href="../chequedetail-card/chequedetail-card.html">
+<<<<<<< HEAD
 <link rel="import" href="../nodata-card/nodata-card.html">
+=======
+<link rel="import" href="../studpass-card/studpass-card.html">
+>>>>>>> origin/master
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -117,8 +121,13 @@
              <section data-category="chequedetail">
               <chequedetail-card></chequedetail-card>
            </section>
+<<<<<<< HEAD
             <section data-category="nodata">
               <nodata-card></nodata-card>
+=======
+           <section data-category="pass">
+             <studpass-card></studpass-card>
+>>>>>>> origin/master
            </section>
           </iron-pages>
        </div>
@@ -158,6 +167,10 @@
     else if((currpage=='generateroutereport')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='generateroutereport';
+    }
+    else if((currpage=='pass')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='pass';
     }
 
 

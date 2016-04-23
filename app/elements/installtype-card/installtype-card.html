@@ -32,12 +32,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div  class="layout">
    
-    <paper-checkbox style="margin: 2% 0 0 2%;" id="{{studid}}" value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" on-change="payinstall"></paper-checkbox>
+    <paper-checkbox style="margin: 2% 0 0 2%;" id="{{installtype}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" on-change="payinstall"></paper-checkbox>
    <paper-item >{{installtype}}</paper-item>
    <paper-item >{{installamt}}</paper-item>
    <paper-item >{{paydate}}</paper-item>
     <div class="drop-down">
-            <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}"    label="---Select the Mode of Payment---">
+            <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paydate}}"   label="---Select the Mode of Payment---">
                 <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
                    <paper-item value="Cheque">Cheque</paper-item>
                     <paper-item value="Cash">Cash</paper-item>
@@ -46,16 +46,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
            <paper-item id="installsdate" hidden$="{{hidden1}}">{{installdate}}</paper-item>
-    <paper-button  hidden$="{{hidden2}}" on-click="payfees">PAY</paper-button>
+    <paper-button id="{{studid}}" disabled$="{{enable}}" hidden$="{{hidden2}}" on-click="payfees">PAY</paper-button>
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
             </div>
-       <paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+       <paper-dialog id="animated" >
 <h4>ADD CHEQUE DETAILS</h4>
  <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
  <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
- <datepicker-card></datepicker-card>
-<div class="butto">
+ <div>
+ <datepicker-card></datepicker-card></div>
+<div class="buttons">
   <paper-button on-click="add">ADD</paper-button>
 </div>     
  </paper-dialog>
@@ -65,13 +66,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     var paytype;
+var chequenum;
+var bankname;
+var ck='null';
+var dt;
 
     Polymer({
       is: 'installtype-card',
  ready:function()
  {
   
-  this.enable=true;
+   this.enable=true;
  },
       checkinstall:function(pstatus)
 
@@ -85,17 +90,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         else
         {
-          //alert(pstatus);
           this.hidden1=true;
           this.hidden2=false;
-          //alert(this.paymode);
         }
       },
       payinstall:function(e)
       {
         if(e.target.checked==true)
         {
-         this.enable=false;
+         
+          if(ck!='null')
+          {
+            if(ck!=this.installtype)
+            {
+          document.getElementById(ck).checked = false;
+          document.getElementById(dt).disabled = true;
+          this.enable=false;
+        }
+         }
+          ck=this.installtype;
+          dt=this.paydate;
+          document.getElementById(dt).disabled = false;
+           this.enable=false;
+        }
+        else
+        {
+          this.enable=true;
         }
       },
        payment:function(e)
@@ -108,10 +128,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         dialog.open();
        }
      },
+     showdialog:function()
+     {
+      
+ var id = 'animated';
+        var dialog = document.getElementById(id);
+        dialog.open();
+     },
+
         add:function()
     {
-      //alert(this.chequeno);
-      //alert(this.banknam);
+      chequenum=this.chequeno;
+      bankname=this.banknam;
+     
        var id = 'animated';
       var dialog = document.getElementById(id);
       dialog.opened=false;
@@ -122,12 +151,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //alert(this.studid);
           if(paytype=="Cheque")
       {
-        alert(this.chequeno);
-        alert(this.banknam)
-
+       
         this.chequedate=localStorage.getItem("localsess_curr_date");
        this.$.service.payfee(this.installamt,this.studid,paytype,this.installtype);
-       this.$.service.chequeinfo(this.studid,this.studname,this.chequeno,this.banknam,this.chequedate,this.installtype);
+       this.$.service.chequeinfo(this.studid,this.studname,chequenum,bankname,this.chequedate,this.installtype);
       }
       else
       {

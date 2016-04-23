@@ -50,11 +50,11 @@
       },
       zone:function()
       {
-document.querySelector('transport-app').setPage("zonetostudent","zone to student");
+        document.querySelector('transport-app').setPage("zonetostudent","zone to student");
       },
       report:function()
       {
-document.querySelector('transport-app').setPage("generatereport","Generate Report");
+        document.querySelector('transport-app').setPage("generatereport","Generate Report");
       },
       
       transportfee:function()
@@ -68,7 +68,6 @@ document.querySelector('transport-app').setPage("generatereport","Generate Repor
       discountverify:function()
       {
         this.$.service.getapprovalverify();
-          
         document.querySelector('transport-app').setPage("discountverify","Discount Verification");
       },
       refundverify:function()
@@ -91,6 +90,9 @@ document.querySelector('transport-app').setPage("generatereport","Generate Repor
       {
         document.querySelector('transport-app').setPage("feereports","Fee Reports");
       },
+      {
+        document.querySelector('transport-app').setPage("pending","Pending Fee Reports");
+      }
       
 
   });

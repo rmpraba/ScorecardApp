@@ -166,6 +166,16 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="receiptseqajax"
+        url="{{receiptsequrl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="receiptseqResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -181,6 +191,8 @@
     var uchequeno;
     var uchequestatus;
     var uinstalltype;
+    var receiptcreate=[];
+
 
 
     Polymer({
@@ -224,7 +236,7 @@
         obj.paytype=paytype;
         obj.instype=instype;
         this.payfeeparam=obj;
-
+        receiptcreate.push(obj);
         this.$.payfeeajax.generateRequest();
      },
      payfeeResponse:function(e)
@@ -232,8 +244,17 @@
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
         {
+          alert(JSON.stringify(receiptcreate));
             alert("pay the fee successfully");
         }
+        this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
+        this.$.receiptseqajax.generateRequest();
+      },
+      receiptseqResponse:function(e)
+      {
+        var receiptseqno=e.detail.response.returnval;
+        document.querySelector('receipt-card').receiptarr=receiptcreate;
+        document.querySelector('transport-app').setPage("receipt","Fee Receipt");
         
      },
      chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype)

@@ -14,82 +14,11 @@
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../transportfee-service/transportfee-service.html">
 <link rel="import" href="../datepicker-card/datepicker-card.html">
-
+<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <dom-module id="transportfee-list">
 <template>
  <style>
- 
- 
- .detail1
- {
-  width: 100%;
-  padding-top: 2%;
-@apply(--layout-horizontal);
-height: 40%
 
- }
- .collapse
- {
- padding: 10px 15px;
-        margin-top: 20px;
-        background-color: #B2C2F0;
-        border: 1px solid #dedede;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        font-size: 15px;
-        cursor: pointer;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        width: 100%;
-        text-align: left;
-        }
-        .imag{
-          height: 30%;
- width : 20%;
- }
- img{
- width : 60%;
- 
- }
- .layout
- {
-  @apply(--layout-horizontal);
- }
- .vlayout
- {
-  width: 100%;
-  border: 1px solid #dedede;
-  @apply(--layout-vertical);
- }
- .hor
- {
-  margin-top: 5%;
-@apply(--layout-vertical);
- }
- #lb
- {
-  font-weight: bold;
-  
- }
-
- paper-item{
-  width: 150px;
- }
- #pay1button{
-  margin: 0 auto;
-  width: 50%;
-  background-color: #252626;
-    color: #ffffff;
-}
-#pay2button{
-  margin:0 auto;
-  width: 50%;
-  background-color: #252626;
-    color: #ffffff;
-}
-#box
-{
-  padding: 2%;
-}
 .flex-vertical {
     @apply(--layout-vertical);
     height: 220px;
@@ -100,9 +29,9 @@ height: 40%
  </style>
  <button  class="collapse" on-click="toggle">Student Id:{{studid}}</button>
 <iron-collapse id="{{studid}}" class="detail">
-<div class="container flex-vertical transport-fee">
-  <div class="flexchild-vertical reports">
-    <div class="profile-image">
+<div class="container flex-vertical">
+      <div class="flexchild-vertical reports">
+        <div class="profile-image">
       <img src="../images/{{studid}}.jpg"/>
     </div>
     <div class="flexchild-vertical">

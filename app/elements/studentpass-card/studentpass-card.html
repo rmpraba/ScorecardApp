@@ -20,14 +20,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
 
 
-<dom-module id="studpass-card">
-  
-    <template>
-    <div class="pass" >
-    <div class="front"id="front">
-    <img id="imgRes" height="1px" width="1px"  />
-    <div id="canvas" style="background-image:url(fimage/1.jpg)">
-        
+<dom-module id="studentpass-card">
+  <template>
+
+   <img id="imgRes" height="1px" width="1px" />
+  <div class="pass">
+  <div id="canvas" style="background-image:url(fimage/1.jpg)">
+      <div class="front">
+     
+
         <div class="header">
         <div class="logo"><img style="width: 18%; height: 12%; margin-top: 5%;" src="../../images/zeesouth.png"/></div>
         <div class="heading">
@@ -35,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="address">South Bangalore #58/4, Haralur Road, Kudlu, HSR Extension, Bangalore - 560068 Phone : 080-65468341</div>
         </div>
         </div>
-          <hr></hr>
+         <hr></hr>
         <div class="body2">
           <div class="studimg">
             <img style="width: 35%; height: 25%; margin-top: 0%;" src="../../images/s1.jpg"/>
@@ -45,9 +46,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              <p>Zone/Route{{zone}}/{{route}}</p>
             </div>
         </div>
-        </div>
-<div class="back">
-        <div class="body3">
+      </div>
+      <div class="back">
+         <div class="body3">
         <div class="backimg">
         <div class="backdetails">
                   <p>Address:</p>
@@ -64,20 +65,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                   <hr></hr>
                   <p>Transport Coordinator no:{{coorno}}</p>
-          </div>
-          </div>
         </div>
-</div>
+        </div>
+        </div>
+
       </div>
-      <div class="button">
+    </div>
+    <div class="button">
         <paper-button class="button" id="pdf1">Save as PDF</paper-button>
         <paper-button class="button" on-click="print">Print</paper-button>
       </div>
-      </div>
+  </div>
   </template>
-  <script>
 
-  $(window).load(function(){
+
+  <script>
+  
+
+    $(window).load(function(){
 $(document).ready(function() {
     $('#pdf1').click(function() {       
         html2canvas($("#canvas"), {
@@ -95,12 +100,10 @@ $(document).ready(function() {
 });
 
 
+
+
   (function() {
     'use strict';
-
- 
-
-   
 
 var specialElementHandlers = {
     '#editor': function (element, renderer) {
@@ -108,12 +111,10 @@ var specialElementHandlers = {
     }
 };
 
-
-
     Polymer({
-      is: 'studpass-card',
+      is: 'studentpass-card',
 
-     ready:function(){
+    ready:function(){
 
       },
        email:function(e){
@@ -128,7 +129,6 @@ var specialElementHandlers = {
             return
             }
             window.print()
-
         }
       
     });

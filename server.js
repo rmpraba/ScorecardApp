@@ -1473,16 +1473,15 @@ app.post('/datepick',  urlencodedParser,function (req, res)
 	});
 });
 
-app.post('/getpasszone',  urlencodedParser,function (req, res)
+app.post('/pending',  urlencodedParser,function (req, res)
 {
-	
-	var date1={"student_id":req.query.stid};
-	    connection.query('SELECT zone_name FROM  `md_zone` WHERE id=(SELECT zone_id FROM student_fee WHERE ?)',[date1],
-       	function(err, rows){
+	    connection.query('Select f.student_id, d.student_name,f.fees,(f.installment_1+f.installment_2) as paid, (f.fees-f.discount_fee)-(f.installment_1+f.installment_2) as pending from student_fee f left join student_details d on f.student_id=d.id where (f.fees-f.discount_fee)-(f.installment_1+f.installment_2)>0',
+	function(err, rows){
 		if(!err){
 			if(rows.length>0)
 			{
 				res.status(200).json({'returnval': rows});
+				console.log(rows);
 			} else {
 				console.log(err);
 				res.status(200).json({'returnval': 'invalid'});
@@ -1493,6 +1492,26 @@ app.post('/getpasszone',  urlencodedParser,function (req, res)
 	});
 });
 
+app.post('/getpasszone',  urlencodedParser,function (req, res)
+{
+	
+	var date1={"student_id":req.query.stid};
+	    connection.query('SELECT zone_name FROM  `md_zone` WHERE id=(SELECT zone_id FROM student_fee WHERE ?)',[date1],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+				console.log(rows);
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 app.post('/getpassdetail',  urlencodedParser,function (req, res)
 {
@@ -1568,6 +1587,7 @@ app.post('/getstureceipt',  urlencodedParser,function (req, res)
 		}
 	});
 });
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

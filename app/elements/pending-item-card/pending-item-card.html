@@ -1,0 +1,46 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="pending-item-card">
+  <template>
+    <style is="custom-style">
+      .flex-vertical {
+        @apply(--layout-vertical);
+        height: 1px;
+        padding: 2% !important;
+        width: 90%;
+      }
+      .flexchild-vertical {
+        @apply(--layout-horizontal);
+      }
+      .flexchild-vertical paper-item{
+        width: 100%;
+      }
+      .flexchild-vertical .field{
+        padding: 0;
+      }
+    </style>
+    <div class="container flex-vertical">
+      <div class="flexchild-vertical feereport">
+          <div class="field" style="width: 5%; margin-left: 3%;"><paper-item>{{student_id}}</paper-item></div>
+          <div class="field" style="width: 20%; margin-left: -3%;"><paper-item>{{student_name}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: -2.5%;"><paper-item>{{fees}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: 3%;"><paper-item>{{paid}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: 5%"><paper-item>{{pending}}</paper-item></div>
+        <div class="flexchild-vertical">
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'pending-item-card',
+      ready:function(){
+
+      }
+    });
+  })();
+  </script>
+</dom-module>

@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <form method="post" action="">
     <body id="receipt">
     <img id="imgRes" height="1px" width="1px"  />
-   
+   <template is="dom-repeat" items="{{receiptarr}}" as="view">
     <div class="receipt" >
     <div id="canvas" style="background-image:url(fimage/1.jpg)">
         <div class="header">
@@ -42,31 +42,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="address">South Bangalore #58/4, Haralur Road, Kudlu, HSR Extension, Bangalore - 560068 Phone : 080-65468341</div>
         </div>
         </div>
-<template  is="dom-repeat" items="{{receiptarr}}" as="view">
+
         <div class="body1">
         <h1>FEE RECEIPT</h1>
           <hr></hr>
-          <div class="l1">
-          <paper-item class="lb">Receipt Date: </paper-item><paper-item>{{today}}</paper-item>
+          </div>
+        <div class="body11">
+          <div class="lb1">Receipt No:</div>
+          <div class="val1"> {{view.receiptno}}</div>
+          <div class="lb2">Receipt Date:</div>
+          <div class="val2"> {{view.today}}</div>
         </div>
-         
-        <div class="r1">
-          <paper-item class="lb">Receipt No: </paper-item><paper-item>{{view.receiptid}}</paper-item>
-        </div>
-        <hr id='ln2'></hr>
+        <div id="ln2">
+          <hr></hr>
         </div>
 
           <div class="body2">
-            <div class="l2">
-              <div><paper-item >Student Name : </paper-item><paper-item>{{view.studname}}</paper-item></div>
-              <div style="margin-top: -30%"><paper-item >Father Name  : </paper-item><paper-item>{{dadname}}</paper-item></div>
-              <div style="margin-top: -30%"><paper-item >Mother Name  : </paper-item><paper-item>{{momname}}</paper-item></div>
-            </div>
-            <div class="r2">
-            <div >  <paper-item >Class        : </paper-item><paper-item>{{view.classname}}</paper-item></div>
-              <div style="margin-top: -30%"><paper-item >Session      : </paper-item><paper-item>{{section}}</paper-item></div>
-            </div>
 
+
+            <div class="lb3">
+            <table >
+              <tr>
+                <td style="padding-bottom: 13%">
+                    Student Name
+                </td>
+                <td style="padding-bottom: 13%">
+                  : {{view.studname}}
+                </td>
+              </tr>
+              
+              <tr>
+                <td>
+                  Parent Name
+                </td>
+                <td>
+                  : {{view.dadname}}
+                </td>
+              </tr>
+            </table>
+            </div>
+            
+
+              
+            <div class="lb5">
+            <table>
+              <tr>
+                <td style="padding-bottom: 20%"> Class</td>
+                <td style="padding-bottom: 20%">: {{view.stnd}}/{{view.sec}}</td>
+              </tr>
+              <tr>
+                <td>Session</td>
+                <td>: {{view.session}}</td>
+              </tr>
+            </table>
+           </div>
+            
           </div>
           <hr id="ln3"></hr>
           
@@ -89,30 +119,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-item> SL.No.</paper-item>
             </div>
             <div class="l14">
-              <paper-item class="lb">Transport fee({{view.installtype}})</paper-item>
+              <div style="margin-top: 15%;">Transport fee</div><div style="margin-top: -20%; margin-left: 100%;">({{view.installtype}})</div>
             </div>
             <div class="r4">
-              <paper-item> fees{{view.installfee}}</paper-item>
+              <paper-item>{{view.installfee}}</paper-item>
             </div>
 
           </div>
           <hr id="ln5"></hr>
 
           <div class="body5">
-            <div class="l5">
-              
-            </div>
+           
             <div class="l15">
-              <paper-item class="lb">Transport fee Paid :</paper-item>
+              <paper-item class="lb">Transport fee Paid</paper-item>
            
             <div class="word">
-              <paper-item>{{feeinword}}</paper-item>
+              <paper-item>: {{feeinword}}</paper-item>
             </div> </div>
+
             <div class="r5">
-              <paper-item style="width: 80px;"> Total fees :</paper-item>
+              <paper-item style="width: 80px; margin-top: -1%;"> Total fees :</paper-item>
               
               <div class="cash">
-                <paper-input class="button" on-change="convertrs" value="{{totalfee}}"></paper-input>
+                <paper-input class="button" on-change="convertrs" value="{{installfee}}"></paper-input>
             </div>
 </div>
           </div>
@@ -120,21 +149,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <hr id="ln6"></hr>
 
           <div class="body6">
-            <paper-item class="lb">Mode Of Payment : {{view.paytype}}</paper-item>
-            <div class="r6">
-              <paper-item class="lb">Cheque No : {{chequeno}}</paper-item>
-            </div>
-          </div>
-              
-          <div class="body7">
-            <div class="l7">
-              <paper-item class="lb">Bank : {{bank}}</paper-item>
-            </div>
+            <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
             
-            <div class="r7">
-              <paper-item> Cheque Dated  :  {{chequedate}}</paper-item>
-            </div>
-</div>
+          </div>
+       
             <div class="body8">
               <h3><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></h3>
             </div>
@@ -155,8 +173,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="r8">
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
-            </template>
-                    
+  </template>
     </body>
     <div id="editor"></div>
 

@@ -279,7 +279,6 @@
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
         {
-          alert(JSON.stringify(receiptcreate));
             alert("pay the fee successfully");
         }
         this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
@@ -313,15 +312,18 @@
 
       var recarr=[];
 var  getstu=e.detail.response.returnval;
+var dt=new Date();
+var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
 //receiptcreate.push(getstu);
 var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
-recobj.receiptid=receiptid;
+recobj.receiptno=receiptid;
 recobj.studname=getstu[0].student_name;
-recobj.classname=getstu[0].classname;
-recobj.section=getstu[0].section;
+recobj.stnd=getstu[0].classname;
+recobj.sec=getstu[0].section;
 recobj.installtype=receiptcreate[0].instype;
 recobj.installfee=receiptcreate[0].installfee;
 recobj.paytype=receiptcreate[0].paytype;
+recobj.today=todate;
  //alert(JSON.stringify(recobj));
 recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;

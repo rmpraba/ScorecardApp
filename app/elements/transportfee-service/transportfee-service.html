@@ -524,11 +524,10 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         }
       },
       pending:function(){
-        alert('hi');
         this.pendingurl=sessionStorage.getItem("addrinfo")+"/pending";
         this.$.pendingajax.generateRequest();
       }, 
-      pendingResponse:function(){
+      pendingResponse:function(e){
         var pending=e.detail.response.returnval;
         document.querySelector('pending-card').pendingarr=pending;
       }

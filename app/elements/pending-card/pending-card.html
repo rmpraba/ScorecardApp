@@ -24,6 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
     </style>
+      <div class="pending-card">
       <div class="headtabs">
         <paper-tabs selected="0">
           <paper-tab>ID</paper-tab>
@@ -37,6 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <pending-item-card student_id="{{view.student_id}}" student_name="{{view.student_name}}" fees="{{view.fees}}" paid="{{view.paid}}" pending="{{view.pending}}"></pending-item-card>
       </template>
       <transportfee-service id="service"></transportfee-service>
+      </div>
   </template>
   <script>
   (function() {

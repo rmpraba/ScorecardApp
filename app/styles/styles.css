@@ -617,7 +617,7 @@ text-align: center;
 .layframe .button{
     height: 5%;
 }
-.feereports-card{
+.feereports-card, .pending-card{
     margin-left: 3%;
 }
 .nodata{

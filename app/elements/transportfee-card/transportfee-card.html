@@ -79,7 +79,13 @@
       {
       var s=document.querySelector("#type"); 
       s.toggle();
+      document.querySelector('transportfee-list').hidecollapse();
      },
+     hidecollapse1:function()
+{
+  var s= document.querySelector("#type");
+    s.opened=false;
+},
    autocompletename(nameitem)
    {
 namearr=nameitem;

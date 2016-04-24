@@ -82,6 +82,7 @@
       {
       idd= document.querySelector("#"+this.studid);
        idd.toggle()
+        document.querySelector('transportfee-card').hidecollapse1();
       }
       else
       {
@@ -91,9 +92,14 @@
       }
        idd= document.querySelector("#"+this.studid);
           idd.toggle()
-
+      document.querySelector('transportfee-card').hidecollapse1();
       }
 
+},
+hidecollapse:function()
+{
+   idd= document.querySelector("#"+this.studid);
+    idd.opened=false;
 }
       
     });

@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="../../transportfee-service/transportfee-service.html">
+<link rel="import" href="../transportfee-service/transportfee-service.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
        <link rel="import" href="../../bower_components/paper-button/paper-button.html">
        <link rel="import" href="../../bower_components/paper-input/paper-input.html">
@@ -30,13 +30,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
    <div class="field">
         <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
-        <paper-listbox id="itemlist1" class="dropdown-content" on-iron-select="FnnameSelected">
+        <paper-listbox id="itemlist1" class="dropdown-content" on-iron-select="FnItemSelected">
           <template is="dom-repeat" items="{{itemArray}}" as="item">
             <paper-item>{{item.itemdes}}</paper-item>
           </template>
         </paper-listbox>
       </div>
-
     <div id="hidet">
       <table>
         <tr>
@@ -89,8 +88,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     var namearr=[];
-    var ctrlDown = false;
-var ctrlKey = 17, f5Key = 116, rKey = 82;
     Polymer({
       is: 'discountstudent-card',
       ready:function(){
@@ -101,7 +98,6 @@ var ctrlKey = 17, f5Key = 116, rKey = 82;
         this.$.q4.readonly=true;
         this.$.q5.readonly=true;
         this.$.q6.readonly=true;
-
      this.$.service.discountreportbyname();
         this.querySelector('paper-listbox').style.visibility='hidden';
       },
@@ -110,7 +106,7 @@ var ctrlKey = 17, f5Key = 116, rKey = 82;
         namearr=nameitem;
       },
    FnInputChanged:function(e){
-     //alert(e.keyCode);
+     //alert(namearr);
       if(e.keyCode==13|| e.keyCode==40)
         this.querySelector('paper-listbox').focus();
       var arr=[];
@@ -176,16 +172,16 @@ var ctrlKey = 17, f5Key = 116, rKey = 82;
         }
       }
     },
-   FnnameSelected:function(e)
+   FnItemSelected:function(e)
    {
     this.querySelector('paper-listbox').style.visibility='hidden';
     this.studid = e.target.selectedItem.textContent.trim();
-    
-    //alert(this.studid);
+    this.querySelector('paper-listbox').selected=-1;
+    // document.querySelector("#itemlist1").selected=-1;
+    this.itemArray="";
     this.$.hidet.hidden=false;
     this.$.service.getfeedata(this.studid);
-    this.itemArray=[];
-    document.querySelector("#itemlist1").selected=-1;
+   
    },
 
         

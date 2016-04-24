@@ -9,11 +9,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="../transportfee-service/transportfee-service.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-       <link rel="import" href="../bower_components/paper-button/paper-button.html">
-       <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../transportfee-service/transportfee-service.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+       <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+       <link rel="import" href="../../bower_components/paper-input/paper-input.html">
        <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+       <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <dom-module id="discountstudent-card">
   <template>
     <style>
@@ -27,13 +28,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          margin-left: 40%
       }
     </style>
-    <div class="disframe"><div>
-        <paper-input style="width: 90%;" id="stdid" class="field" label="Student ID" value="{{id}}" required auto-validate error-message="needs Student Id"></paper-input>
-    </div>
-    <div>
-      <paper-button id="button" class="button" on-click="click">Submit</paper-button>
-    </div>
-    </div>
+   <div class="field">
+        <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+        <paper-listbox id="itemlist1" class="dropdown-content" on-iron-select="FnnameSelected">
+          <template is="dom-repeat" items="{{itemArray}}" as="item">
+            <paper-item>{{item.itemdes}}</paper-item>
+          </template>
+        </paper-listbox>
+      </div>
 
     <div id="hidet">
       <table>
@@ -86,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
   (function() {
-    'use strict';
+    var namearr=[];
     var ctrlDown = false;
 var ctrlKey = 17, f5Key = 116, rKey = 82;
     Polymer({
@@ -100,20 +102,93 @@ var ctrlKey = 17, f5Key = 116, rKey = 82;
         this.$.q5.readonly=true;
         this.$.q6.readonly=true;
 
+     this.$.service.discountreportbyname();
+        this.querySelector('paper-listbox').style.visibility='hidden';
       },
-      click:function(e)
+      autocompletename(nameitem)
       {
-        if(this.id=="")
-        {
-          this.$.stdid.validate();
+        namearr=nameitem;
+      },
+   FnInputChanged:function(e){
+     //alert(e.keyCode);
+      if(e.keyCode==13|| e.keyCode==40)
+        this.querySelector('paper-listbox').focus();
+      var arr=[];
+      arr.push({"itemdes":"-----Select-----"});
+      this.querySelector('paper-listbox').style.visibility='visible';
+      if(e.keyCode==8)
+      {
+        this.itemflag="true";
+        this.itemval="";
+        //alert('yes');
+        var len=(this.value).length;
+        if(len<=1){
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.itemArray="";
+          this.itemval="";
+        }
+        if(len>1){
+          this.querySelector('paper-listbox').style.visibility='visible';
+          var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+          for(var i=0;i<namearr.length;i++)
+          {
+            var subval=((namearr[i].student_name).trim()).substring(0,backsubval.length);
+            if((subval).toUpperCase()==(backsubval).toUpperCase())
+            {
+              var obj={"itemdes":""};
+              obj.itemdes=namearr[i].student_name;
+              arr.push(obj);
+            }
+          }
+          this.itemArray=arr;
+        }
+      }
+      if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39)
+      {
+        if(this.itemflag=="true") {
+          this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+          this.itemflag="false";
         }
         else
+        this.itemval = this.value +String.fromCharCode((e.keyCode));
+        if(this.itemval.length>0)
         {
-          this.$.hidet.hidden=false;
-          this.$.service.getfeedata(this.id);
+          for(var i=0;i<namearr.length;i++){
+            var subval=((namearr[i].student_name).trim()).substring(0,this.itemval.length);
+            if((subval).toUpperCase()==(this.itemval).toUpperCase())
+            {
+              var obj={"itemdes":""};
+              obj.itemdes=namearr[i].student_name;
+              arr.push(obj);
+            }
+          }
+          if(arr.length>0)
+          {
+            this.itemArray=arr;
+          }
+          else
+          {
+            var obj={"itemdes":""};
+            obj.itemdes="No items found";
+            arr.push(obj);
+            this.itemArray=arr;
+          }
         }
+      }
+    },
+   FnnameSelected:function(e)
+   {
+    this.querySelector('paper-listbox').style.visibility='hidden';
+    this.studid = e.target.selectedItem.textContent.trim();
+    
+    //alert(this.studid);
+    this.$.hidet.hidden=false;
+    this.$.service.getfeedata(this.studid);
+    this.itemArray=[];
+    document.querySelector("#itemlist1").selected=-1;
+   },
 
-      },
+        
       clicksend:function(e)
       {
         if(this.disamt=="" && this.reason=="")

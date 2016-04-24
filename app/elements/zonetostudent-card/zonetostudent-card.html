@@ -83,7 +83,7 @@
  <paper-input id="zdate1"  value="{{zfromdate}}"></paper-input> </div>
 </td></tr></table>
 
-<div style="height: 5%"></div>
+<div id="req">
 
           <paper-item style="font-weight: 500; font-size: x-large; margin-left: -1.5%;">Requirements:</paper-item>
 
@@ -116,7 +116,7 @@
 </table>
 
 
-<table style="padding: 1%;">
+<table id="way" style="padding: 1%;">
 <tr><td>
      
 <div class="left1">
@@ -133,14 +133,14 @@ One-Way
   <div class="submit">
     <paper-button class="button" on-click="click">Submit</paper-button>
   </div>
-  <div class="cancel">
+  <div style="margin-top: -3.5%; margin-left: -30%;" class="cancel">
     <paper-button class="button" on-click="ready">Cancel</paper-button>
   </div>
 </div>
 <paper-input id="status" class="field" value="{{status}}"></paper-input>
     </div>
 
-    
+   </div> 
     
   </body>
     <transport-service id="root"></transport-service>
@@ -171,6 +171,8 @@ var dat2=new Date();
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;
         this.$.status.hidden=true;
+        this.$.req.hidden=true;
+        this.$.way.hidden=true;
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
         this.$.dad.disabled=true;
@@ -196,6 +198,7 @@ var dat2=new Date();
       this.$.root.getfee(this.zone);
       this.$.root.gettermdate(this.grade);
       this.$.root.studzone(this.id);
+      this.$.req.hidden=false;
     },
    
     
@@ -303,6 +306,7 @@ var dat2=new Date();
         
        
        if(custom.checked==true){
+       this.$.way.hidden=false; 
         document.querySelector("#oneway").checked=false;
         document.querySelector("#twoway").checked=false;
         var temp='';
@@ -317,7 +321,7 @@ var dat2=new Date();
 
  
         if(custom.checked==false){
-         
+         this.$.way.hidden=true;
           this.$.date1.hidden=true;
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;          
@@ -350,6 +354,7 @@ fullHandler:function(event){
   var yearly = document.querySelector("#yearly");
     
     if(yearly.checked==true){ 
+      this.$.way.hidden=false;
        document.querySelector("#oneway").checked=false;
         document.querySelector("#twoway").checked=false;
         var temp='';
@@ -373,6 +378,7 @@ fullHandler:function(event){
         }  
 
         if(yearly.checked==false){
+          this.$.way.hidden=true;
           var temp1='';
           this.fee=temp1;
         fromdat=temp1;
@@ -395,6 +401,7 @@ if(oneway.checked==true){
     this.$.root.onecus();
   }
   if(oneway.checked==false){
+
      var temp='';
         this.fee=temp;
         fromdat=temp;

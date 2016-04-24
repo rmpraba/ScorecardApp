@@ -16,10 +16,7 @@ section{
     height: 6%;
     font-size: 2em;
 }
-body{
-    margin: 0;
-    padding: 0 !important;
-}
+
 .footer{
     font-weight: bold;
     bottom: 0; 
@@ -65,7 +62,8 @@ paper-button{
     margin: 5% 0 0 30%;
 }
 .layframe{
-    margin-left: 30%;
+    margin-left: 25%;
+     @apply(--layout-center);
     width: all;
      @apply(--layout-horizontal);
      display: inline-grid;
@@ -124,6 +122,11 @@ paper-button{
        @apply(--layout-vertical);
   
 }
+.layframe .buttons{
+    margin-left: -6%;
+    margin-top: 2%;
+}
+
 .horizontallayout
 {
     @apply(--layout-horizontal);
@@ -457,27 +460,60 @@ paper-button{
     text-align: center;
     @apply(--layout-horizontal);
 }
-.receipt .body1 .l1{
-    margin-left: 0%;    
+.receipt .body11{
+    @apply(--layout-horizontal);
+    display: flex;
+    margin-top: 1%;
 }
-.receipt .body1 .r1{
-    margin-left: 63%;
-    margin-top: -12.8%;
+.receipt .body11 .lb1{
+margin-left: 1%;
+margin-top: 1%;
+}
+.receipt .body11 .val1{
+    margin-top: 1%;
+    margin-left: 1%;
+}
+.receipt .body11 .lb2{
+    margin-left: 52%;
+    margin-top: 1%;
+}
+.receipt .body11 .val2{
+ margin-top: 1%;
+    margin-left: 1%;   
+}
+.receipt .body11 #ln2{
+    
     
 }
-.receipt .body1 #ln2{
-    margin-top: -7%;
-    
+.receipt #ln2{
+    margin-top: 2%;
 }
 .receipt .body2{
-    display: flex;
-    padding: -100%;
+    display: contents;
+    @apply(--layout-horizontal);
+    height: 10%;
 }
-.receipt .body2 .r2{
-    margin-left: 40%;
+.receipt .body2 .lb3{
+    margin-left: 1%;
+    width: 70%;
+    text-align: left;
+    float: left;
+    @apply(--layout-horizontal);
+
 }
+
+.receipt .body2 .lb5{
+    margin-top: 
+    margin-left: 20%;
+    width: auto;
+    text-align: left;
+    float: left;
+    @apply(--layout-horizontal);
+    
+}
+
 .receipt #ln3{
-    margin-top: -4.5%;
+    
     width: 98%;
     
 }
@@ -506,7 +542,7 @@ margin-left: 20%;
 
 }
 .receipt .body4 .r4{
- margin-left: 30%;       
+ margin-left: 42%;       
 }
 .receipt #ln5{
     margin-top: 1%;
@@ -515,7 +551,7 @@ margin-left: 20%;
 }
 
 .receipt .body5{
-    
+    margin-top: -2%
    @apply(--layout-horizontal);
 }
 
@@ -529,43 +565,36 @@ text-align: left;
 
 .receipt .body5 .l15 .word{
 text-align: left;  
-margin-left: 100%;
-margin-top: -20%;
+margin-left: 90%;
+margin-top: -25%;
 width: auto;
 @apply(--layout-horizontal);
     }
 
 .receipt .body5 .r5{
- margin-left: 59%;       
+ margin-left: 60%;       
  text-align: left;  
- margin-top: -7%;
+ margin-top: -6%;
 }
 .receipt .body5 .r5 .cash{
 width: 40%;
 margin-left: 40%;
-margin-top: -120%;
+margin-top: -23.5%;
 }
 .receipt #ln6{
-    margin-top: 5%;
+    margin-top: 0%;
     width: 98%;
     
 }
 .receipt .body6{
- margin-left: 0%;       
-}
-.receipt .body6 .r6{
-margin-left: 62%;   
-margin-top: -6.5%; 
-}
-.receipt .body7{
-    display: flex;
-   
+ margin-left: 0%;  
+ margin-top: 0%;
+@apply(--layout-horizontal);
+text-align: left;
+float: left;     
+display: flex;
 }
 
-
-.receipt .body7 .r7{
- margin-left: 38.5%;       
-}
 .receipt .body8{
     @apply(--layout-horizontal);
 text-align: center;
@@ -595,8 +624,8 @@ text-align: center;
 }
 .receipt .button{
     margin-bottom: 0.5%;
-    margin-top: 100%;
-    height: 60px;
+    margin-top: 10%;
+    height: 100%;
     width: auto;
     @apply(--layout-horizontal);    
 }

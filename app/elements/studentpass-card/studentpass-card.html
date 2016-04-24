@@ -85,8 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div>
     <div class="buttons">
-        <paper-button class="button" id="pdf1">Save as PDF</paper-button>
-        <paper-button class="button" id="print" on-click="print">Print</paper-button>
+         <paper-button class="button" id="print" on-click="print">Print</paper-button>
       </div>
   </div>
      <transport-service id="root"></transport-service>
@@ -96,21 +95,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   
 
-    $(window).load(function(){
-$(document).ready(function() {
-    $('#pdf1').click(function() {       
-        html2canvas($("#canvas"), {
-            onrendered: function(canvas) {    
-                var imgData = canvas.toDataURL('image/png'); 
-                $("#imgRes").attr("src", imgData);             
-                var doc = new jsPDF('p', 'mm');
-                doc.addImage(imgData, 'PNG', 10, 8);
-                doc.save('sample.pdf');
-            }
-        });
-    });
-});
-});
 
 
   (function() {
@@ -131,14 +115,12 @@ $(document).ready(function() {
               window.location.href = link;
         },
         print:function(){
-          this.$.pdf.hidden=true;
           this.$.print.hidden=true;
             if (!window.print){
             alert("You need NS4.x to use this print button!")
             return
             }
             window.print();
-            this.$.pdf.hidden=false;
             this.$.print.hidden=false;
         },
          autocompletearr:function(autocompletearr)

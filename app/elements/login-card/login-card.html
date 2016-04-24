@@ -13,7 +13,8 @@
 <dom-module id="login-card">
 <template>
     <iron-a11y-keys target="[[_target]]" keys="enter" on-keys-pressed="Fnenterkeylogin"></iron-a11y-keys>
-    <div class="logindialog">
+    <div class="wholepage">
+    <div class="logindialog" style="background-color: #ffffff;">
         <div class="card-img">
             <img src="../../images/zeesouth.png" height="100px" width="90px"></img>
         </div>
@@ -28,6 +29,7 @@
                 <paper-button raised  class="in" on-click="Fnlogin">Sign in</paper-button>
             </div>
         </div>
+    </div>
     </div>
   <login-service id="loginservice"></login-service>
   </template>

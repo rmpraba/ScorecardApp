@@ -872,8 +872,9 @@ app.post('/name',  urlencodedParser,function (req, res){
 
 app.post('/getfeedata' ,  urlencodedParser,function (req, res)
 {	
-		var studid={"student_id":req.query.studid};
-	    connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where ?',[studid],
+		var studid=req.query.studid;
+		console.log(studid);
+	    connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where student_id=(select id from student_details where student_name=?)',[studid],
        	function(err, rows)
        	{
       	if(!err)
@@ -1607,6 +1608,7 @@ app.post('/getparentinfo',  urlencodedParser,function (req, res)
 		if(!err){
 			if(rows.length>0)
 			{
+				console.log(rows);
 				res.status(200).json({'returnval': rows});
 			} else {
 				console.log(err);
@@ -1656,7 +1658,7 @@ app.post('/updatereceiptsequence',  urlencodedParser,function (req, res)
 
 app.post('/getstureceipt',  urlencodedParser,function (req, res)
 {
-	var stuid=req.query.rstudid;
+	var stuid=req.query.stid;
 	    connection.query('select student_name ,(select class from class_details where id=class_id) as classname, (select section from class_details where id=class_id) as section from student_details where id= ? ',[stuid],
        	function(err, rows){
 		if(!err){

@@ -220,6 +220,26 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+   <iron-ajax
+        method="post"
+        id="getreceiptinfoajax"
+        url="{{getreceiptinfourl}}"
+         params="{{getreceiptinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getreceiptinfoResponse"
+          </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="discountreportbynameajax"
+        url="{{discountreportbynameurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="discountreportbynameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -240,6 +260,8 @@
     var feeresultinsta1;
     var collection1;
     var collectreport=[];
+    var recstudid;
+    var dadname;
 
 
     Polymer({
@@ -291,7 +313,6 @@
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
         {
-          alert(JSON.stringify(receiptcreate));
             alert("pay the fee successfully");
         }
         this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
@@ -311,29 +332,46 @@
       },
       updatereceiptseqResponse:function()
       {
-        var recstudid=receiptcreate[0].studid;
+        recstudid=receiptcreate[0].studid;
           this.getstureceipturl=sessionStorage.getItem("addrinfo")+"/getstureceipt";
-           var obj={"rstudid":""}
-            obj.rstudid=recstudid;
+           var obj={"stid":""}
+            obj.stid=recstudid;
            this.getstureceiptparam =obj;
         this.$.getstureceiptajax.generateRequest();
+
+        this.getreceiptinfourl=sessionStorage.getItem("addrinfo")+"/getparentinfo";
+          
+           this.getreceiptinfoparam =obj;
+        this.$.getreceiptinfoajax.generateRequest();
        
         
      },
+     getreceiptinfoResponse:function(e){
+        dadname=e.detail.response.returnval[0].parent_name;
+        alert(dadname);
+      },
      getstureceiptResponse:function(e)
      {
 
       var recarr=[];
 var  getstu=e.detail.response.returnval;
+var dt=new Date();
+var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
+var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
+alert(dadname+'   '+recstudid);
 //receiptcreate.push(getstu);
 var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
-recobj.receiptid=receiptid;
+recobj.receiptno=receiptid;
 recobj.studname=getstu[0].student_name;
-recobj.classname=getstu[0].classname;
-recobj.section=getstu[0].section;
+recobj.stnd=getstu[0].classname;
+recobj.sec=getstu[0].section;
 recobj.installtype=receiptcreate[0].instype;
 recobj.installfee=receiptcreate[0].installfee;
 recobj.paytype=receiptcreate[0].paytype;
+recobj.today=todate;
+recobj.stid=recstudid;
+recobj.session=yr;
+recobj.parent=dadname;
  //alert(JSON.stringify(recobj));
 recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;
@@ -366,6 +404,7 @@ recarr.push(recobj);
         this.$.getfeedataajax.generateRequest(); 
      },
      getfeedataResponse:function(e){
+      alert(JSON.stringify(e.detail.response.returnval));
         stuid=e.detail.response.returnval[0].student_id;
         var zonid=e.detail.response.returnval[0].zone_id,
         feez=e.detail.response.returnval[0].fees;
@@ -465,6 +504,7 @@ recarr.push(recobj);
         var install2status;
         var install1fine;
         var install2fine;
+        var dadname;
 
       feestudname=feeresult[0].student_name;
       feestudid=feeresult[0].id;
@@ -676,6 +716,14 @@ document.querySelector('transportfee-card').installmentarr=installarr;
       pendingResponse:function(e){
         var pending=e.detail.response.returnval;
         document.querySelector('pending-card').pendingarr=pending;
+      },
+       discountreportbyname:function(){
+       this.discountreportbynameurl=sessionStorage.getItem("addrinfo")+"/generatereportbyname";
+       this.$.discountreportbynameajax.generateRequest();
+      },
+      discountreportbynameResponse:function(e){
+        var nameitem=e.detail.response.returnval; 
+        document.querySelector('discountstudent-card').autocompletename(nameitem);
       }
     });
  })();

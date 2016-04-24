@@ -76,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   Parent Name
                 </td>
                 <td>
-                  : {{view.dadname}}
+                  : {{view.parent}}
                 </td>
               </tr>
             </table>
@@ -141,7 +141,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-item style="width: 80px; margin-top: -1%;"> Total fees :</paper-item>
               
               <div class="cash">
-                <paper-input class="button" on-change="convertrs" value="{{installfee}}"></paper-input>
+                <paper-input class="button" on-change="convertrs" value="{{view.installfee}}"></paper-input>
             </div>
 </div>
           </div>
@@ -210,7 +210,7 @@ $(document).ready(function() {
                 $("#imgRes").attr("src", imgData);             
                 var doc = new jsPDF('p', 'mm');
                 doc.addImage(imgData, 'PNG', 10, 8);
-                doc.save('sample-file.pdf');
+                doc.save('{{view.stid}}.pdf');
             }
         });
     });

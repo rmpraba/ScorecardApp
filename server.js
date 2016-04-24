@@ -1589,6 +1589,7 @@ app.post('/getparentinfo',  urlencodedParser,function (req, res)
 		if(!err){
 			if(rows.length>0)
 			{
+				console.log(rows);
 				res.status(200).json({'returnval': rows});
 			} else {
 				console.log(err);
@@ -1638,7 +1639,7 @@ app.post('/updatereceiptsequence',  urlencodedParser,function (req, res)
 
 app.post('/getstureceipt',  urlencodedParser,function (req, res)
 {
-	var stuid=req.query.rstudid;
+	var stuid=req.query.stid;
 	    connection.query('select student_name ,(select class from class_details where id=class_id) as classname, (select section from class_details where id=class_id) as section from student_details where id= ? ',[stuid],
        	function(err, rows){
 		if(!err){

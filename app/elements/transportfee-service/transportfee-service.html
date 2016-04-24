@@ -210,6 +210,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="getreceiptinfoajax"
+        url="{{getreceiptinfourl}}"
+         params="{{getreceiptinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getreceiptinfoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -227,7 +238,8 @@
     var uinstalltype;
     var receiptcreate=[];
     var receiptid;
-
+    var recstudid;
+    var dadname;
 
 
     Polymer({
@@ -298,15 +310,24 @@
       },
       updatereceiptseqResponse:function()
       {
-        var recstudid=receiptcreate[0].studid;
+        recstudid=receiptcreate[0].studid;
           this.getstureceipturl=sessionStorage.getItem("addrinfo")+"/getstureceipt";
-           var obj={"rstudid":""}
-            obj.rstudid=recstudid;
+           var obj={"stid":""}
+            obj.stid=recstudid;
            this.getstureceiptparam =obj;
         this.$.getstureceiptajax.generateRequest();
+
+        this.getreceiptinfourl=sessionStorage.getItem("addrinfo")+"/getparentinfo";
+          
+           this.getreceiptinfoparam =obj;
+        this.$.getreceiptinfoajax.generateRequest();
        
         
      },
+     getreceiptinfoResponse:function(e){
+        dadname=e.detail.response.returnval[0].parent_name;
+        alert(dadname);
+      },
      getstureceiptResponse:function(e)
      {
 
@@ -314,6 +335,8 @@
 var  getstu=e.detail.response.returnval;
 var dt=new Date();
 var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
+var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
+alert(dadname+'   '+recstudid);
 //receiptcreate.push(getstu);
 var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
 recobj.receiptno=receiptid;
@@ -324,6 +347,9 @@ recobj.installtype=receiptcreate[0].instype;
 recobj.installfee=receiptcreate[0].installfee;
 recobj.paytype=receiptcreate[0].paytype;
 recobj.today=todate;
+recobj.stid=recstudid;
+recobj.session=yr;
+recobj.parent=dadname;
  //alert(JSON.stringify(recobj));
 recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;
@@ -455,6 +481,7 @@ recarr.push(recobj);
         var install2status;
         var install1fine;
         var install2fine;
+        var dadname;
 
       feestudname=feeresult[0].student_name;
       feestudid=feeresult[0].id;
@@ -642,6 +669,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         var pending=e.detail.response.returnval;
         document.querySelector('pending-card').pendingarr=pending;
       }
+      
     });
  })();
   </script>

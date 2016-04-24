@@ -1473,26 +1473,6 @@ app.post('/datepick',  urlencodedParser,function (req, res)
 	});
 });
 
-app.post('/getpasszone',  urlencodedParser,function (req, res)
-{
-	
-	var date1={"student_id":req.query.stid};
-	    connection.query('SELECT zone_name FROM  `md_zone` WHERE id=(SELECT zone_id FROM student_fee WHERE ?)',[date1],
-       	function(err, rows){
-		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
-			}
-		} else {
-			console.log(err);
-		}
-	});
-});
-
 
 app.post('/getpassdetail',  urlencodedParser,function (req, res)
 {
@@ -1515,6 +1495,88 @@ app.post('/getpassdetail',  urlencodedParser,function (req, res)
 });
 
 
+app.post('/getpointname',  urlencodedParser,function (req, res)
+{
+	
+	var date5={"id":req.query.point};
+	    connection.query('Select distinct point_name from point where ?',[date5],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+app.post('/getpassname',  urlencodedParser,function (req, res)
+{
+	
+	var date5={"student_name":req.query.stid};
+	    connection.query('Select id,class_id from student_details where ?',[date5],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+
+app.post('/getpassclass',  urlencodedParser,function (req, res)
+{
+	
+	var date5={"id":req.query.class};
+	    connection.query('Select * from class_details where ?',[date5],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+app.post('/getparentinfo',  urlencodedParser,function (req, res)
+{
+	
+	var date4={"student_id":req.query.stid};
+	    connection.query('Select * from parent where ?',[date4],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 
 

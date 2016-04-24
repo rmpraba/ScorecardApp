@@ -708,4 +708,30 @@ margin-left: 2%;
     height: 20%;
     margin-left: 10%;
 }
+.cheque{
+    @apply(--layout-horizontal);   
+    display: flex;
+}
+.cheque .left{
+    margin-left: 2%;
+}
+.cheque .center{
+    margin-left: 20%;
+}
+.cheque .right{
+    margin-left: 20%
+}
+.dd{
+    @apply(--layout-horizontal);   
+    display: flex;
+}
+.dd .left{
+    margin-left: 2%;
+}
+.dd .center{
+    margin-left: 20%;
+}
+.dd .right{
+    margin-left: 20%
+}
 </style>

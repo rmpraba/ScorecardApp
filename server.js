@@ -1474,7 +1474,28 @@ app.post('/datepick',  urlencodedParser,function (req, res)
 });
 
 
+
+app.post('/pending',  urlencodedParser,function (req, res)
+{
+	    connection.query('Select f.student_id, d.student_name,f.fees,(f.installment_1+f.installment_2) as paid, (f.fees-f.discount_fee)-(f.installment_1+f.installment_2) as pending from student_fee f left join student_details d on f.student_id=d.id where (f.fees-f.discount_fee)-(f.installment_1+f.installment_2)>0',
+	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+				console.log(rows);
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
 app.post('/getpassdetail',  urlencodedParser,function (req, res)
+
 {
 	
 	var date4={"student_id":req.query.stid};
@@ -1484,6 +1505,7 @@ app.post('/getpassdetail',  urlencodedParser,function (req, res)
 			if(rows.length>0)
 			{
 				res.status(200).json({'returnval': rows});
+				console.log(rows);
 			} else {
 				console.log(err);
 				res.status(200).json({'returnval': 'invalid'});

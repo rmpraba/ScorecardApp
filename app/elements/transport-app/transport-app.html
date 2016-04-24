@@ -23,6 +23,7 @@
 <link rel="import" href="../receipt-card/receipt-card.html">
 <link rel="import" href="../import-excel/import-excel.html">
 <link rel="import" href="../feereports-card/feereports-card.html">
+<link rel="import" href="../pending-card/pending-card.html">
 <link rel="import" href="../chequedetail-card/chequedetail-card.html">
 <link rel="import" href="../nodata-card/nodata-card.html">
 <link rel="import" href="../studentpass-card/studentpass-card.html">
@@ -54,19 +55,18 @@
 
       <div class="content">
         <iron-pages selected="{{page}}" attr-for-selected="data-category">
-
-        <section data-category="loginpage">
+            <section data-category="loginpage">
               <login-card></login-card>
-           </section>
+            </section>
             <section data-category="accountadmin">
               <accountsadmin-card></accountsadmin-card>
-           </section>
+            </section>
             <section data-category="transportadmin">
               <transportadmin-card></transportadmin-card>
-           </section>
-          <section data-category="zonetostudent">
+            </section>
+            <section data-category="zonetostudent">
               <zonetostudent-card></zonetostudent-card>
-           </section>
+            </section>
            <section data-category="mappointtoroute">
               <mappointtoroute-card></mappointtoroute-card>
            </section>
@@ -120,17 +120,18 @@
            </section>
             <section data-category="nodata">
               <nodata-card></nodata-card>
-              </section>
+            </section>
            <section data-category="pass">
               <studentpass-card></studentpass-card>
            </section>
+          <section data-category="pending">
+            <pending-card></pending-card>
+          </section>
           </iron-pages>
        </div>
-
-       <div class="footer">
+       <div class="footer"></div>
   </template>
   <script>
-
   Polymer({
     is: "transport-app",
     ready: function() {
@@ -167,8 +168,6 @@
       //alert('in in');
       this.page='pass';
     }
-
-
   }
   else if(name=="Accounts Admin"){
    this.page="accountadmin"; 
@@ -200,7 +199,10 @@
       //alert('in in');
       this.page='feereports';
     }
-      
+   else if((currpage=='pending')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='pending';
+    }
   }
   else if(name=="Admin Manager"){
    this.page="adminmanager"; 
@@ -209,17 +211,13 @@
       this.page='approvediscount';
     }
   }
-  
-    
   },
-  setPage:function(page,title)
-    {
-      //alert(page);
-     localStorage.setItem("curr_sess_homepage","0");
-     localStorage.setItem("curr_sess_page",page);
-     this.page=page;
-     this.title=title;
-     
+  setPage:function(page,title){
+    //alert(page);
+    localStorage.setItem("curr_sess_homepage","0");
+    localStorage.setItem("curr_sess_page",page);
+    this.page=page;
+    this.title=title;
  },
  signout:function()
  {

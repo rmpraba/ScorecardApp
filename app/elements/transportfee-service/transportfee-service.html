@@ -635,11 +635,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
       pending:function(){
         this.pendingurl=sessionStorage.getItem("addrinfo")+"/pending";
         this.$.pendingajax.generateRequest();
-<<<<<<< HEAD
       }, 
-=======
-      },
->>>>>>> origin/master
       pendingResponse:function(e){
         var pending=e.detail.response.returnval;
         document.querySelector('pending-card').pendingarr=pending;

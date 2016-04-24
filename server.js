@@ -1542,7 +1542,7 @@ app.post('/getpassname',  urlencodedParser,function (req, res)
 {
 	
 	var date5={"student_name":req.query.stid};
-	    connection.query('Select id,class_id from student_details where ?',[date5],
+	    connection.query('Select * from student_details where ?',[date5],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)

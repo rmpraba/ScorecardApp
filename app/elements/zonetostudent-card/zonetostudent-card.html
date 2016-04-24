@@ -85,7 +85,7 @@
 
 <div id="req">
 
-          <paper-item style="font-weight: 500; font-size: x-large; margin-left: -1.5%;">Requirements:</paper-item>
+          <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Travel Requirements:</p>
 
 
 <table style="padding: 1%;">
@@ -116,7 +116,9 @@
 </table>
 
 
-<table id="way" style="padding: 1%;">
+<div id="way">
+<table style="padding: 1%;">
+<p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Mode Of Travel:</p>
 <tr><td>
      
 <div class="left1">
@@ -129,7 +131,9 @@ One-Way
 
 </td></tr>
 </table>
-<div class="buttons">
+</div>
+
+<div class="buttons" id="but">
   <div class="submit">
     <paper-button class="button" on-click="click">Submit</paper-button>
   </div>
@@ -164,6 +168,8 @@ var dat2=new Date();
     is: "zonetostudent-card",
     
       ready: function() {
+        
+
         this.$.root.getzone();
         this.$.root.getname();
         this.querySelector('paper-listbox').style.visibility='hidden';
@@ -173,6 +179,7 @@ var dat2=new Date();
         this.$.status.hidden=true;
         this.$.req.hidden=true;
         this.$.way.hidden=true;
+        this.$.but.hidden=true;
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
         this.$.dad.disabled=true;
@@ -181,6 +188,7 @@ var dat2=new Date();
         this.$.dad3.disabled=true;
         this.$.dad4.disabled=true;
         this.$.dad5.disabled=true;
+
         localStorage.setItem("curr_sess_showpage","zonetostudent");
         this.page="zonetostudent";
         
@@ -199,6 +207,7 @@ var dat2=new Date();
       this.$.root.gettermdate(this.grade);
       this.$.root.studzone(this.id);
       this.$.req.hidden=false;
+      this.$.dad.disabled=false;
     },
    
     
@@ -280,7 +289,7 @@ var dat2=new Date();
     this.value=this.studid;
    // alert(this.studid);
      this.$.root.getstudetail(this.studid);
-     this.$.dad.disabled=false;
+     
      this.$.dad1.disabled=false;
      this.$.dad2.disabled=false;
      this.$.dad3.disabled=false;
@@ -392,16 +401,18 @@ onewayHandler:function(event){
 var oneway = document.querySelector("#oneway");
 mode='One-Way';
 if(oneway.checked==true){
+  this.$.but.hidden=false;
       document.querySelector("#twoway").checked=false;
       this.$.root.oneway();
 
   }
   if((oneway.checked==true)&&(datebox.checked==true)){
+    
     document.querySelector("#twoway").checked=false;
     this.$.root.onecus();
   }
   if(oneway.checked==false){
-
+this.$.but.hidden=true;
      var temp='';
         this.fee=temp;
         fromdat=temp;
@@ -416,15 +427,18 @@ twowayHandler:function(event){
   var twoway = document.querySelector("#twoway");
   mode='Two-Way';
   if(twoway.checked==true){
+    this.$.but.hidden=false;
         document.querySelector("#oneway").checked=false;
         this.$.root.twoway();
   } 
   if((twoway.checked==true)&&(datebox.checked==true)){
+    
     document.querySelector("#oneway").checked=false;
     this.$.root.twocus();
 
   }
   if(twoway.checked==false){
+    this.$.but.hidden=true;
     var temp='';
         this.fee=temp;
         fromdat=temp;
@@ -454,10 +468,11 @@ click:function(e)
       document.querySelector("#datebox").checked=false;
       document.querySelector("#twoway").checked=false;
       document.querySelector("#oneway").checked=false;
-    
+
     }
     else{
       this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status); 
+
     }
 
     },

@@ -176,6 +176,29 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="updatereceiptseqajax"
+        url="{{updatereceiptsequrl}}"
+         params="{{updatereceiptparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatereceiptseqResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+    <iron-ajax
+        method="post"
+        id="getstureceiptajax"
+        url="{{getstureceipturl}}"
+         params="{{getstureceiptparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstureceiptResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -192,6 +215,7 @@
     var uchequestatus;
     var uinstalltype;
     var receiptcreate=[];
+    var receiptid;
 
 
 
@@ -244,7 +268,7 @@
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
         {
-          alert(JSON.stringify(receiptcreate));
+          //alert(JSON.stringify(receiptcreate));
             alert("pay the fee successfully");
         }
         this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
@@ -252,10 +276,45 @@
       },
       receiptseqResponse:function(e)
       {
-        var receiptseqno=e.detail.response.returnval;
-        document.querySelector('receipt-card').receiptarr=receiptcreate;
-        document.querySelector('transport-app').setPage("receipt","Fee Receipt");
+        var receiptschoolid=e.detail.response.returnval[0].schoolid;
+        var receiptseq=e.detail.response.returnval[0].sequence;
+        receiptid=receiptschoolid+receiptseq;
+        this.updatereceiptsequrl=sessionStorage.getItem("addrinfo")+"/updatereceiptsequence";
+  var obj={"schoolid":"","sequence":""}
+        obj.schoolid=receiptschoolid;
+        obj.sequence =receiptseq;
+        this.updatereceiptparam =obj;
+        this.$.updatereceiptseqajax.generateRequest();
+      },
+      updatereceiptseqResponse:function()
+      {
+        var recstudid=receiptcreate[0].studid;
+          this.getstureceipturl=sessionStorage.getItem("addrinfo")+"/getstureceipt";
+           var obj={"rstudid":""}
+            obj.rstudid=recstudid;
+           this.getstureceiptparam =obj;
+        this.$.getstureceiptajax.generateRequest();
+       
         
+     },
+     getstureceiptResponse:function(e)
+     {
+
+      var recarr=[];
+var  getstu=e.detail.response.returnval;
+//receiptcreate.push(getstu);
+var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
+recobj.receiptid=receiptid;
+recobj.studname=getstu[0].student_name;
+recobj.classname=getstu[0].classname;
+recobj.section=getstu[0].section;
+recobj.installtype=receiptcreate[0].instype;
+recobj.installfee=receiptcreate[0].installfee;
+recobj.paytype=receiptcreate[0].paytype;
+ //alert(JSON.stringify(recobj));
+recarr.push(recobj);
+        document.querySelector('receipt-card').receiptarr=recarr;
+        document.querySelector('transport-app').setPage("receipt","Fee Receipt");
      },
      chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype)
      {
@@ -468,6 +527,7 @@
             installarr.push(obj);
         }
         //alert(JSON.stringify(installarr));
+
 //alert(JSON.stringify(e.detail.response));
 document.querySelector('transportfee-card').installmentarr=installarr;
      },

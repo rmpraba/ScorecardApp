@@ -1514,10 +1514,60 @@ app.post('/getpassdetail',  urlencodedParser,function (req, res)
 	});
 });
 
+app.post('/receiptsequence',  urlencodedParser,function (req, res)
+{
+	    connection.query('Select * from receiptsequence',
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
+app.post('/updatereceiptsequence',  urlencodedParser,function (req, res)
+{
+	var scid={"schoolid":req.query.schoolid};
+    var seq=req.query.sequence;
+	    connection.query('update receiptsequence set sequence=?+1  where ? ',[seq,scid],
+       	function(err, rows){
+		if(!err)
+		{
+			
+				res.status(200).json({'returnval': 'success'});
+			
+		}
+		 else {
+			console.log(err);
+		}
+	});
+});
 
-
-
+app.post('/getstureceipt',  urlencodedParser,function (req, res)
+{
+	var stuid=req.query.rstudid;
+	    connection.query('select student_name ,(select class from class_details where id=class_id) as classname, (select section from class_details where id=class_id) as section from student_details where id= ? ',[stuid],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 function setvalue()
 {
 	console.log("calling setvalue.....");

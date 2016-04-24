@@ -42,28 +42,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="address">South Bangalore #58/4, Haralur Road, Kudlu, HSR Extension, Bangalore - 560068 Phone : 080-65468341</div>
         </div>
         </div>
-
+<template  is="dom-repeat" items="{{receiptarr}}" as="view">
         <div class="body1">
         <h1>FEE RECEIPT</h1>
           <hr></hr>
           <div class="l1">
           <paper-item class="lb">Receipt Date: </paper-item><paper-item>{{today}}</paper-item>
         </div>
+         
         <div class="r1">
-          <paper-item class="lb">Receipt No: </paper-item><paper-item>{{id}}</paper-item>
+          <paper-item class="lb">Receipt No: </paper-item><paper-item>{{view.receiptid}}</paper-item>
         </div>
         <hr id='ln2'></hr>
         </div>
 
           <div class="body2">
             <div class="l2">
-              <div><paper-item >Student Name : </paper-item><paper-item>{{studname}}</paper-item></div>
+              <div><paper-item >Student Name : </paper-item><paper-item>{{view.studname}}</paper-item></div>
               <div style="margin-top: -30%"><paper-item >Father Name  : </paper-item><paper-item>{{dadname}}</paper-item></div>
               <div style="margin-top: -30%"><paper-item >Mother Name  : </paper-item><paper-item>{{momname}}</paper-item></div>
             </div>
             <div class="r2">
-            <div >  <paper-item >Class        : </paper-item><paper-item>{{classid}}</paper-item></div>
-              <div style="margin-top: -30%"><paper-item >Session      : </paper-item><paper-item>{{sessi}}</paper-item></div>
+            <div >  <paper-item >Class        : </paper-item><paper-item>{{view.classname}}</paper-item></div>
+              <div style="margin-top: -30%"><paper-item >Session      : </paper-item><paper-item>{{section}}</paper-item></div>
             </div>
 
           </div>
@@ -88,10 +89,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-item> SL.No.</paper-item>
             </div>
             <div class="l14">
-              <paper-item class="lb">Transport fee({{paymentdetails}})</paper-item>
+              <paper-item class="lb">Transport fee({{view.installtype}})</paper-item>
             </div>
             <div class="r4">
-              <paper-item> fees{{fees}}</paper-item>
+              <paper-item> fees{{view.installfee}}</paper-item>
             </div>
 
           </div>
@@ -119,7 +120,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <hr id="ln6"></hr>
 
           <div class="body6">
-            <paper-item class="lb">Mode Of Payment : {{modepay}}</paper-item>
+            <paper-item class="lb">Mode Of Payment : {{view.paytype}}</paper-item>
             <div class="r6">
               <paper-item class="lb">Cheque No : {{chequeno}}</paper-item>
             </div>
@@ -154,6 +155,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="r8">
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
+            </template>
                     
     </body>
     <div id="editor"></div>

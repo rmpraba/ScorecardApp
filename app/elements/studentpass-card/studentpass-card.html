@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
- <link rel="import" href="../../transport-service/transport-service.html">
+ <link rel="import" href="../transport-service/transport-service.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 
  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
@@ -53,8 +53,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <img style="width: 35%; height: 25%; margin-top: 0%;" src="../../images/s1.jpg"/>
           </div>
           <div class="studetail">
-          <p>Name{{studname}}</p>
-             <p>Zone/Route{{zone}}/{{route}}</p>
+          <p>{{studname}}</p>
+             <p>{{stnd}} - {{sec}}</p>
             </div>
         </div>
 
@@ -64,15 +64,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <div class="body3">
         <div class="backimg">
         <div class="backdetails">
-                  <p>Address:</p>
-                  <p>a{{address1}}</p>
-                  <p>b{{address2}}</p>
-                  <p> </p>
+                  <p>Address:S/O,{{parent}}<br>
+                  {{address1}}<br>
+                  {{address2}}<br>
+                  {{town}}-{{pin}}</p>
                   <hr></hr>
-                  <p>Pick point:{{pickup}}</p>
-                  <p>Drop point:{{drop}}</p>
+                  <p>Pick pt:{{pickup}}</p>
+                  <p>Drop pt:{{drop}}</p>
                   <hr></hr>
-                  <p>Parents Mobile:{{mobno}}</p>
+                  <p>Parents Mob:{{mobno}}</p>
                   <p>Blood Group:{{blood}}</p>
                   
 
@@ -137,7 +137,7 @@ $(document).ready(function() {
             alert("You need NS4.x to use this print button!")
             return
             }
-            window.print()
+            window.print();
             this.$.pdf.hidden=false;
             this.$.print.hidden=false;
         },
@@ -214,6 +214,8 @@ $(document).ready(function() {
     this.itemArray=[];
     document.querySelector('#input1').selected=-1;
     this.value=this.studid;
+    this.studname=this.studid;
+
     this.$.root.getpassdetail(this.studid);
   },
     setInput:function(namearr)

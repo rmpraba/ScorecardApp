@@ -110,6 +110,7 @@
     this.querySelector('paper-listbox').style.visibility='hidden';
     this.studid = e.target.selectedItem.textContent.trim();
     this.itemArray=[];
+    
     document.querySelector("#itemlist").selected=-1;
     this.$.service.generatereport(this.studid);
    }

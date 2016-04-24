@@ -16,10 +16,7 @@ section{
     height: 6%;
     font-size: 2em;
 }
-body{
-    margin: 0;
-    padding: 0 !important;
-}
+
 .footer{
     font-weight: bold;
     bottom: 0; 

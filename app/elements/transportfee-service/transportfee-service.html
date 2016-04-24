@@ -210,6 +210,16 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="discountreportbynameajax"
+        url="{{discountreportbynameurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="discountreportbynameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -356,6 +366,7 @@ recarr.push(recobj);
         this.$.getfeedataajax.generateRequest(); 
      },
      getfeedataResponse:function(e){
+      alert(JSON.stringify(e.detail.response.returnval));
         stuid=e.detail.response.returnval[0].student_id;
         var zonid=e.detail.response.returnval[0].zone_id,
         feez=e.detail.response.returnval[0].fees;
@@ -641,7 +652,15 @@ document.querySelector('transportfee-card').installmentarr=installarr;
       pendingResponse:function(e){
         var pending=e.detail.response.returnval;
         document.querySelector('pending-card').pendingarr=pending;
-      }
+      },
+       discountreportbyname:function(){
+       this.discountreportbynameurl=sessionStorage.getItem("addrinfo")+"/generatereportbyname";
+       this.$.discountreportbynameajax.generateRequest();
+      },
+      discountreportbynameResponse:function(e){
+        var nameitem=e.detail.response.returnval; 
+        document.querySelector('discountstudent-card').autocompletename(nameitem);
+      },
     });
  })();
   </script>

@@ -262,6 +262,9 @@
     var collectreport=[];
     var recstudid;
     var dadname;
+    var chenum;
+    var chedate;
+    var banknm;
 
 
     Polymer({
@@ -354,10 +357,14 @@
      {
 
       var recarr=[];
+      var cheqarr=[];
 var  getstu=e.detail.response.returnval;
 var dt=new Date();
 var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
 var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
+var feezxc=receiptcreate[0].installfee;
+document.querySelector('receipt-card').convertrs(feezxc);
+
 //alert(dadname+'   '+recstudid);
 //receiptcreate.push(getstu);
 var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
@@ -375,10 +382,22 @@ recobj.parent=dadname;
  //alert(JSON.stringify(recobj));
 recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;
+        var pt=receiptcreate[0].paytype;
+       if(pt=='Cheque'){
+            var cqobj={"cheno":"","cqdate":"","bknm":""}
+            cqobj.cheno=chenum;
+            cqobj.cqdate=chedate;
+            cqobj.bknm=banknm;
+            cheqarr.push(cqobj);
+            document.querySelector('receipt-card').chequearr=cheqarr;
+        }
         document.querySelector('transport-app').setPage("receipt","Fee Receipt");
      },
      chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype)
      {
+      chenum=chequenum;
+      chedate=chequedate;
+      banknm=bankname;
       this.chequedetailsurl=sessionStorage.getItem("addrinfo")+"/chequedetails";
         var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":""}
         obj.studid=stdid;

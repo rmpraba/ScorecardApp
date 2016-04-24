@@ -18,16 +18,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div class="cheque">
-    <div class="left">
-      Cheque No:{{chequeno}}
-    </div>
-    <div class="center">
-      Bank Name:{{bank}}
-    </div>
-    <div class="right">
-      Cheque Date:{{cqdate}}
-    </div>
-      
+    <table style="width: 100%; margin-top: 5%;">
+      <tr>
+        <td style="width: 33%">Cheque No:{{cheqno}}</td>
+        <td style="width: 33%">Cheque Date:{{cqdate}}</td>
+        <td style="width: 33%">Bank Name:{{bank}}</td>
+        
+      </tr>
+    </table>
     </div>
   </template>
   <script>

@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
       <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
       <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
-
+<link rel="import" href="../cqreceipt-card/cqreceipt-card.html">
 
 
 <dom-module id="receipt-card">
@@ -152,6 +152,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
             
           </div>
+           <template  is="dom-repeat" items="{{chequearr}}" as="view">
+       <cqreceipt-card style="margin-top: 5%;" cheqno="{{view.cheno}}" bank="{{view.bknm}}" cqdate="{{view.cqdate}}"></cqreceipt-card>
+      </template>
        
             <div class="body8">
               <h3><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></h3>
@@ -184,13 +187,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <table>
       <tr >
         <td>
-           <paper-button class="button" id="pdf">Save as PDF</paper-button>
+           <paper-button style="height: 35px;" class="button" id="pdf">Save as PDF</paper-button>
         </td>
         <td>
-          <paper-button class="button" id="email" on-click="email">Send email</paper-button>
+          <paper-button style="height: 35px;" class="button" id="email" on-click="email">Send email</paper-button>
         </td>
         <td>
-          <paper-button class="button" style="margin-top: 120%;" id="print" on-click="print">Print</paper-button>
+          <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
         </td>
       </tr>
     </table>
@@ -223,19 +226,7 @@ $(document).ready(function() {
     'use strict';
 
 
-      var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
-    var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
-    var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
-    var junkVal;
-    var obStr;
-    var numReversed;
-    var totalWords="";
-    var inWords=new Array();
-    var finalWord="";
-    var i,j;
-    var actnumber;
-
-   
+      
 
 var specialElementHandlers = {
     '#editor': function (element, renderer) {
@@ -251,7 +242,7 @@ var specialElementHandlers = {
       ready:function(){
 
       },
-      convertrs:function() 
+      convertrs:function(value) 
       {
         var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
     var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
@@ -266,7 +257,7 @@ var specialElementHandlers = {
     var actnumber;
 
 
-    junkVal=this.totalfee;
+    junkVal=value;
     junkVal=Math.floor(junkVal);
     obStr=new String(junkVal);
     numReversed=obStr.split("");

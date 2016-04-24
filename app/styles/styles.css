@@ -557,7 +557,7 @@ margin-left: 20%;
 
 
 .receipt .body5 .l15{
-margin-left: 7%;
+margin-left: 2%;
 display: inline-block;
 @apply(--layout-horizontal);
 text-align: left;  
@@ -572,7 +572,7 @@ width: auto;
     }
 
 .receipt .body5 .r5{
- margin-left: 60%;       
+ margin-left: 65%;       
  text-align: left;  
  margin-top: -6%;
 }
@@ -737,19 +737,7 @@ margin-left: 2%;
     height: 20%;
     margin-left: 10%;
 }
-.cheque{
-    @apply(--layout-horizontal);   
-    display: flex;
-}
-.cheque .left{
-    margin-left: 2%;
-}
-.cheque .center{
-    margin-left: 20%;
-}
-.cheque .right{
-    margin-left: 20%
-}
+
 .dd{
     @apply(--layout-horizontal);   
     display: flex;

@@ -102,7 +102,7 @@ app.post('/insertpoint' ,  urlencodedParser,function (req, res)
        	{
 		if(!err)
 		{
-			console.log('inserted');
+			//console.log('inserted');
 			res.status(200).json({'returnval': 'success'});
 		}
 		else
@@ -249,7 +249,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
 	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0)";
-	    console.log(queryy);
+	   // console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)
        	{
@@ -634,17 +634,16 @@ app.post('/proceedcancel',  urlencodedParser,function (req, res){
 	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "flag":3,"status":"Requested", "reason":req.query.reason, "status":'Requested'};
     connection.query('insert into cancellation set ?',[collection],
 	function(err, rows){
-		if(err){
-			console.log(err);
-		}
-		if(!err){
-			if(rows.length>0){
-				res.status(200).json({'returnval': rows});
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
+		
+		if(!err)
+			{
+			res.status(200).json({'returnval': 'success'});
 			}
-		}
+			else
+			{
+				console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+			}
 	});
 	});
 app.post('/transportrequiredstatus',  urlencodedParser,function (req, res)
@@ -744,7 +743,7 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 		var studid={"student_id":req.query.studid};
 		if(req.query.instype=="installment1")
 		{
-			console.log('yes');
+			//console.log('yes');
 		 mode={"modeofpayment1":req.query.paytype};
 		 install1={"installment_1":req.query.installfee};
 		 install1date={"installment_1Date":instalment1date};
@@ -752,13 +751,13 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 	    }
 	    else
 	    {
-	    	console.log('no');
+	    	//console.log('no');
 	    	mode={"modeofpayment2":req.query.paytype};
 		 install1={"installment_2":req.query.installfee};
 		 install1date={"installment_2Date":instalment1date}
 		 status={"install2_status":paidstatus};
 	    }
-	    console.log(studid);
+	    //console.log(studid);
 	    connection.query('update  student_fee set ?,?,?,? where ?',[mode,install1,install1date,status,studid],
        	function(err, rows) 
        	{
@@ -783,7 +782,7 @@ app.post('/chequedetails',  urlencodedParser,function (req, res)
        	{
 		if(!err)
 		{
-			console.log('dd');
+			//console.log('dd');
 			res.status(200).json({'returnval': 'success'});
 		}
 		else
@@ -873,7 +872,7 @@ app.post('/name',  urlencodedParser,function (req, res){
 app.post('/getfeedata' ,  urlencodedParser,function (req, res)
 {	
 		var studid=req.query.studid;
-		console.log(studid);
+		//console.log(studid);
 	    connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where student_id=(select id from student_details where student_name=?)',[studid],
        	function(err, rows)
        	{
@@ -1332,7 +1331,7 @@ app.post('/getstudzone',  urlencodedParser,function (req, res)
 app.post('/updatezone' ,  urlencodedParser,function (req, res)
 {
 	var queryy="update student_fee set zone_id='"+req.query.zone+"',fees='"+req.query.fee+"',from_date=STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),to_date=STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),mode='"+req.query.mode+"',updated_by='"+req.query.name+"',updated_on=STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),status='"+req.query.status+"'  WHERE student_id='"+req.query.studid+"'";
-	    console.log(queryy);
+	    //console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)
        	{
@@ -1386,7 +1385,7 @@ app.post('/updatechequedetail',  urlencodedParser,function (req, res)
 		if(!err)
 		{
 		
-			 console.log('cyes');
+			// console.log('cyes');
 			res.status(200).json({'returnval': 'success'});
 			
 		}
@@ -1440,7 +1439,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 		if(!err)
 		{
 		
-			 console.log('ccyes');
+			// console.log('ccyes');
 			res.status(200).json({'returnval': 'success'});
 			
 		}
@@ -1502,7 +1501,7 @@ app.post('/pending',  urlencodedParser,function (req, res)
 			if(rows.length>0)
 			{
 				res.status(200).json({'returnval': rows});
-				console.log(rows);
+				//console.log(rows);
 			} else {
 				console.log(err);
 				res.status(200).json({'returnval': 'invalid'});
@@ -1524,7 +1523,7 @@ app.post('/getpassdetail',  urlencodedParser,function (req, res)
 			if(rows.length>0)
 			{
 				res.status(200).json({'returnval': rows});
-				console.log(rows);
+				//console.log(rows);
 			} else {
 				console.log(err);
 				res.status(200).json({'returnval': 'invalid'});
@@ -1608,7 +1607,7 @@ app.post('/getparentinfo',  urlencodedParser,function (req, res)
 		if(!err){
 			if(rows.length>0)
 			{
-				console.log(rows);
+				//console.log(rows);
 				res.status(200).json({'returnval': rows});
 			} else {
 				console.log(err);

@@ -842,7 +842,9 @@
       }, 
       proceedcancelResponse:function(e){
         var reportresult=e.detail.response.returnval;
-        var obj={"student_id":""};
+        if(reportresult=='success'){
+          alert('Cancellation Request is Sent Successfully');
+              var obj={"student_id":""};
         obj.student_id=this.student_id;
         this.transportrequiredstatusparam=obj;
         this.transportrequiredstatusurl=sessionStorage.getItem("addrinfo")+"/transportrequiredstatus";
@@ -852,7 +854,12 @@
         this.$.statuschangeajax.generateRequest();
         this.pointflagurl=sessionStorage.getItem("addrinfo")+"/pointflag";
         this.pointflagparam=obj;
-        this.$.pointflagajax.generateRequest();
+        this.$.pointflagajax.generateRequest();  
+        }
+        else{
+          alert('Request Failed');
+        }
+        
       },
        monthdiff:function(fromdate,todate){
         //alert('flow');

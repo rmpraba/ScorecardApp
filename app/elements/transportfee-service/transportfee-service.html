@@ -348,7 +348,7 @@
      },
      getreceiptinfoResponse:function(e){
         dadname=e.detail.response.returnval[0].parent_name;
-        alert(dadname);
+       // alert(dadname);
       },
      getstureceiptResponse:function(e)
      {
@@ -358,7 +358,7 @@ var  getstu=e.detail.response.returnval;
 var dt=new Date();
 var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
 var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
-alert(dadname+'   '+recstudid);
+//alert(dadname+'   '+recstudid);
 //receiptcreate.push(getstu);
 var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
 recobj.receiptno=receiptid;
@@ -404,7 +404,7 @@ recarr.push(recobj);
         this.$.getfeedataajax.generateRequest(); 
      },
      getfeedataResponse:function(e){
-      alert(JSON.stringify(e.detail.response.returnval));
+      //alert(JSON.stringify(e.detail.response.returnval));
         stuid=e.detail.response.returnval[0].student_id;
         var zonid=e.detail.response.returnval[0].zone_id,
         feez=e.detail.response.returnval[0].fees;

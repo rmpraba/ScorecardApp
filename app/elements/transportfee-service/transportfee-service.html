@@ -199,6 +199,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="pendingajax"
+        url="{{pendingurl}}"
+         
+        handle-as="json"
+        content-type="application/json"
+        on-response="pendingResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
      <script>
@@ -620,6 +631,14 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         } else {
           document.querySelector('feereports-card').feereportarr=feeresult;
         }
+      },
+      pending:function(){
+        this.pendingurl=sessionStorage.getItem("addrinfo")+"/pending";
+        this.$.pendingajax.generateRequest();
+      },
+      pendingResponse:function(e){
+        var pending=e.detail.response.returnval;
+        document.querySelector('pending-card').pendingarr=pending;
       }
     });
  })();

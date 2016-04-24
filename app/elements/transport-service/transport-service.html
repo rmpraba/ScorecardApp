@@ -379,6 +379,9 @@
         handle-as="json"
         content-type="application/json"
         on-response="pointflagResponse"
+        debounce-duration="300">
+       </iron-ajax>
+  <iron-ajax
         id="updatezoneajax"
         url="{{updatezoneurl}}"
         params="{{updatezoneparam}}"
@@ -394,7 +397,9 @@
         params="{{routereportparam}}"
         handle-as="json"
         content-type="application/json"
-        on-response="routereportResponse"
+        on-response="routereportResponse">
+</iron-ajax>
+  <iron-ajax
         id="onewayajax"
         url="{{onewayurl}}"
         handle-as="json"
@@ -410,17 +415,6 @@
         handle-as="json"
         content-type="application/json"
         on-response="onecusResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-  <iron-ajax
-        method="post"
-        id="getpasszoneajax"
-        url="{{getpasszoneurl}}"
-        params="{{getpasszoneparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getpasszoneResponse"
         debounce-duration="300"
         >
   </iron-ajax>
@@ -1123,7 +1117,6 @@
           this.getpassclassparam=obj3;
           this.$.getpassclassajax.generateRequest();
       },
-
        getpassdetailResponse:function(e){
         var pp=e.detail.response.returnval[0].pickup_point;
         var dp=e.detail.response.returnval[0].drop_point;

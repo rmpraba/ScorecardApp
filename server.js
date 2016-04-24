@@ -872,8 +872,9 @@ app.post('/name',  urlencodedParser,function (req, res){
 
 app.post('/getfeedata' ,  urlencodedParser,function (req, res)
 {	
-		var studid={"student_id":req.query.studid};
-	    connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where ?',[studid],
+		var studid=req.query.studid;
+		console.log(studid);
+	    connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where student_id=(select id from student_details where student_name=?)',[studid],
        	function(err, rows)
        	{
       	if(!err)

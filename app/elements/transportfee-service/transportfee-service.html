@@ -168,8 +168,42 @@
   </iron-ajax>
    <iron-ajax
         method="post"
+        id="receiptseqajax"
+        url="{{receiptsequrl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="receiptseqResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="updatereceiptseqajax"
+        url="{{updatereceiptsequrl}}"
+         params="{{updatereceiptparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatereceiptseqResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+    <iron-ajax
+        method="post"
+        id="getstureceiptajax"
+        url="{{getstureceipturl}}"
+         params="{{getstureceiptparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstureceiptResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
         id="pendingajax"
         url="{{pendingurl}}"
+         
         handle-as="json"
         content-type="application/json"
         on-response="pendingResponse"
@@ -191,49 +225,110 @@
     var uchequeno;
     var uchequestatus;
     var uinstalltype;
-    var install2date;
+    var receiptcreate=[];
+    var receiptid;
+
 
 
     Polymer({
       is: "transportfee-service",
-      generatefee:function(studid){
-        this.generatefeeurl=sessionStorage.getItem("addrinfo")+"/reportfee-card";
+        generatefee:function(studid)
+     {
+      
+      this.generatefeeurl=sessionStorage.getItem("addrinfo")+"/reportfee-card";
         var obj={"studid":""}
         obj.studid=studid;
         this.generatefeeparam=obj;
         this.$.generatefeeajax.generateRequest();
-      },
-     generatefeeResponse:function(e){
-      feeresult=e.detail.response.returnval;
-      document.querySelector('transportfee-card').feearr=feeresult;
-      document.querySelector('transportfee-service').getinstalltype();
      },
-     getnameofstu:function(){
+     generatefeeResponse:function(e)
+     {
+      
+        feeresult=e.detail.response.returnval;
+       document.querySelector('transportfee-card').feearr=feeresult;
+       document.querySelector('transportfee-service').getinstalltype();
+     },
+     getnameofstu:function()
+     {
       //alert('hi');
       this.getnameofstuurl=sessionStorage.getItem("addrinfo")+"/getnameofstu-card";
-      this.$.getnameofstuajax.generateRequest();
+       this.$.getnameofstuajax.generateRequest();
      },
-     getnameofstuResponse:function(e){
+     getnameofstuResponse:function(e)
+     {
+
       var nameitem=e.detail.response.returnval;
+      
       document.querySelector('transportfee-card').autocompletename(nameitem);
      },
-     payfee:function(install,studid,paytype,instype){
-      this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
-      var obj={"studid":"","installfee":"","paytype":"","instype":""}
-      obj.studid=studid;
-      obj.installfee=install;
-      obj.paytype=paytype;
-      obj.instype=instype;
-      this.payfeeparam=obj;
-      this.$.payfeeajax.generateRequest();
+     payfee:function(install,studid,paytype,instype)
+     {
+      
+       this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
+        var obj={"studid":"","installfee":"","paytype":"","instype":""}
+        obj.studid=studid;
+        obj.installfee=install;
+        obj.paytype=paytype;
+        obj.instype=instype;
+        this.payfeeparam=obj;
+        receiptcreate.push(obj);
+        this.$.payfeeajax.generateRequest();
      },
-     payfeeResponse:function(e){
-      var pay1success=e.detail.response.returnval;
-      if(pay1success=='success'){
-        alert("pay the fee successfully");
-      }
+     payfeeResponse:function(e)
+     {
+        var pay1success=e.detail.response.returnval;
+        if(pay1success=='success')
+        {
+          alert(JSON.stringify(receiptcreate));
+            alert("pay the fee successfully");
+        }
+        this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
+        this.$.receiptseqajax.generateRequest();
+      },
+      receiptseqResponse:function(e)
+      {
+        var receiptschoolid=e.detail.response.returnval[0].schoolid;
+        var receiptseq=e.detail.response.returnval[0].sequence;
+        receiptid=receiptschoolid+receiptseq;
+        this.updatereceiptsequrl=sessionStorage.getItem("addrinfo")+"/updatereceiptsequence";
+  var obj={"schoolid":"","sequence":""}
+        obj.schoolid=receiptschoolid;
+        obj.sequence =receiptseq;
+        this.updatereceiptparam =obj;
+        this.$.updatereceiptseqajax.generateRequest();
+      },
+      updatereceiptseqResponse:function()
+      {
+        var recstudid=receiptcreate[0].studid;
+          this.getstureceipturl=sessionStorage.getItem("addrinfo")+"/getstureceipt";
+           var obj={"rstudid":""}
+            obj.rstudid=recstudid;
+           this.getstureceiptparam =obj;
+        this.$.getstureceiptajax.generateRequest();
+       
+        
      },
-     chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype){
+     getstureceiptResponse:function(e)
+     {
+
+      var recarr=[];
+var  getstu=e.detail.response.returnval;
+//receiptcreate.push(getstu);
+var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
+recobj.receiptid=receiptid;
+recobj.studname=getstu[0].student_name;
+recobj.classname=getstu[0].classname;
+recobj.section=getstu[0].section;
+recobj.installtype=receiptcreate[0].instype;
+recobj.installfee=receiptcreate[0].installfee;
+recobj.paytype=receiptcreate[0].paytype;
+ //alert(JSON.stringify(recobj));
+recarr.push(recobj);
+        document.querySelector('receipt-card').receiptarr=recarr;
+        document.querySelector('transport-app').setPage("receipt","Fee Receipt");
+     },
+     chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype)
+     {
       this.chequedetailsurl=sessionStorage.getItem("addrinfo")+"/chequedetails";
         var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":""}
         obj.studid=stdid;
@@ -244,9 +339,14 @@
         obj.installtype=installtype;
         obj.chequestatus="processing";
         this.chequedetailsparam=obj;
+
         this.$.chequedetailsajax.generateRequest();
+
      },
-     getfeedata:function(id){
+    
+    
+     getfeedata:function(id)
+     {
        this.getfeedataurl=sessionStorage.getItem("addrinfo")+"/getfeedata";
         var obj={"studid":""}
         obj.studid=id;
@@ -262,15 +362,19 @@
         var todzxc=e.detail.response.returnval[0].to_date;
         fromd=new Date(fromdzxc);
         tod=new Date(todzxc);
+        
+        
         this.getfeezoneurl=sessionStorage.getItem("addrinfo")+"/getfeezone";
         var obj={"zone":""}
         obj.zone=zonid;
         this.getfeezoneparam=obj;
         this.$.getfeezoneajax.generateRequest(); 
+
        //document.querySelector('transportfee-card').feearr=feeresult;
      },
      getfeezoneResponse:function(e){
         zonenam=e.detail.response.returnval[0].zone_name;
+
         this.getfeenameurl=sessionStorage.getItem("addrinfo")+"/getfeename";
         var obj={"sid":""}
         obj.sid=stuid;
@@ -434,14 +538,17 @@
             installarr.push(obj);
         }
         //alert(JSON.stringify(installarr));
+
 //alert(JSON.stringify(e.detail.response));
 document.querySelector('transportfee-card').installmentarr=installarr;
      },
-     checkchequedetails:function(){
+     checkchequedetails:function()
+     {
          this.checkchequedetailsurl=sessionStorage.getItem("addrinfo")+"/checkchequedetails";
         this.$.checkchequedetailsajax.generateRequest(); 
      },
-     checkchequedetailsResponse:function(e){
+     checkchequedetailsResponse:function(e)
+     {
         var chequedetailarr=[];
         var cstatus;
         var chequedetail=e.detail.response.returnval;
@@ -475,7 +582,8 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         document.querySelector('chequedetail-card').chequearr=chequedetailarr;
 
      },
-     updatechequedetail:function(chequestatus,chequenum,installtype,cname){
+     updatechequedetail:function(chequestatus,chequenum,installtype,cname)
+     {
         uchequeno=cname;
         uchequestatus=chequestatus;
         uinstalltype=installtype;
@@ -486,7 +594,8 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         this.updatechequedetailparam=obj;
         this.$.updatechequedetailajax.generateRequest(); 
      },
-     updatechequedetailResponse:function(e){
+     updatechequedetailResponse:function(e)
+     {
         var paidstatus;
         if(uchequestatus=="cleared")
         {
@@ -503,11 +612,11 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         obj.installtype=uinstalltype;
         obj.paidstatus=paidstatus;
         this.updatestuchequeparam=obj;
-        //alert(JSON.stringify(obj));
+//alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
      },
       datepick:function(e){
-        this.datepickurl=sessionStorage.getItem("addrinfo")+"/datepick";
+        this.datepickurl="http://localhost:8081/datepick";
         var obj={"e":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
@@ -526,7 +635,11 @@ document.querySelector('transportfee-card').installmentarr=installarr;
       pending:function(){
         this.pendingurl=sessionStorage.getItem("addrinfo")+"/pending";
         this.$.pendingajax.generateRequest();
+<<<<<<< HEAD
       }, 
+=======
+      },
+>>>>>>> origin/master
       pendingResponse:function(e){
         var pending=e.detail.response.returnval;
         document.querySelector('pending-card').pendingarr=pending;
@@ -534,6 +647,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
     });
  })();
   </script>
+
 </dom-module>
 
 

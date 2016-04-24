@@ -31,13 +31,15 @@
             <paper-tab>Total Fee</paper-tab>
             <paper-tab>Installment 1</paper-tab>
             <paper-tab>Installment 2</paper-tab>
-            <paper-tab>Installment 1 Date</paper-tab>
-            <paper-tab>Installment 2 Date</paper-tab>
           </paper-tabs>
       </div>
-      <template  is="dom-repeat" items="{{feereportarr}}" as="view">
-        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" totalfee="{{view.fees}}" installment1="{{view.installment_1}}" installment2="{{view.installment_2}}" installment1date="{{view.installment_1Date}}" installment2date="{{view.installment_2Date}}"></feereports-item-card>
+      <template  is="dom-repeat" items="{{feereportarr1}}" as="view">
+        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" totalfee="{{view.fees}}" installment1="{{view.installment_1}}" installment2="{{view.installment_2}}"></feereports-item-card>
       </template>
+      <template  is="dom-repeat" items="{{feereportarr2}}" as="view">
+        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" totalfee="{{view.fees}}" installment1="{{view.installment_1}}" installment2="{{view.installment_2}}"></feereports-item-card>
+      </template>
+      {{total_collection}}
       <template>
         <nodata-card></nodata-card>
       </template>

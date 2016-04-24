@@ -157,9 +157,20 @@
   </iron-ajax>
    <iron-ajax
         method="post"
-        id="datepickajax"
-        url="{{datepickurl}}"
-        params="{{datepickparam}}"
+        id="datepickinsta1ajax"
+        url="{{datepickinsta1url}}"
+        params="{{datepickinsta1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="datepickinsta1Response"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="datepickinsta2ajax"
+        url="{{datepickinsta2url}}"
+        params="{{datepickinsta2param}}"
         handle-as="json"
         content-type="application/json"
         on-response="datepickResponse"
@@ -203,7 +214,6 @@
         method="post"
         id="pendingajax"
         url="{{pendingurl}}"
-         
         handle-as="json"
         content-type="application/json"
         on-response="pendingResponse"
@@ -227,7 +237,9 @@
     var uinstalltype;
     var receiptcreate=[];
     var receiptid;
-
+    var feeresultinsta1;
+    var collection1;
+    var collectreport=[];
 
 
     Polymer({
@@ -615,21 +627,46 @@ document.querySelector('transportfee-card').installmentarr=installarr;
 //alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
      },
-      datepick:function(e){
-        this.datepickurl="http://localhost:8081/datepick";
+      datepickinsta1:function(e){
+        this.datepickinsta1url="http://localhost:8081/datepickinsta1";
         var obj={"e":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
-        this.datepickparam=obj;
-        this.$.datepickajax.generateRequest();
+        this.datepickinsta1param=obj;
+        this.$.datepickinsta1ajax.generateRequest();
+      },
+      datepickinsta1Response:function(e){
+        collection1 = 0;
+        var feeresultinsta1=e.detail.response.returnval;
+        for(var i=0;i<feeresultinsta1.length;i++)
+        {
+          collection1 += parseInt(e.detail.response.returnval[i].installment_1);
+        }
+        document.querySelector('feereports-card').feereportarr1=feeresultinsta1;
+      },
+      datepickinsta2:function(e){
+        this.datepickinsta2url="http://localhost:8081/datepickinsta2";
+        var obj={"e":""}
+        var condate = new Date(e);
+        var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+        obj.dates=todate;
+        this.datepickinsta2param=obj;
+        this.$.datepickinsta2ajax.generateRequest();
       },
       datepickResponse:function(e){
-        var feeresult=e.detail.response.returnval;
-        if(feeresult == "invalid"){
+        var collection2 = 0;
+        var feeresultinsta2=e.detail.response.returnval;
+        for(var i=0;i<feeresultinsta2.length;i++)
+        {
+          collection2 += parseInt(e.detail.response.returnval[i].installment_2);
+        }
+        var total_collection = collection1 + collection2;
+        if(feeresultinsta2 == "invalid"){
           document.querySelector('transport-app').setPage("nodata","Fee Reports");
         } else {
-          document.querySelector('feereports-card').feereportarr=feeresult;
+           document.querySelector('feereports-card').feereportarr2=feeresultinsta2;
+           document.querySelector('feereports-card').total_collection=total_collection;
         }
       },
       pending:function(){

@@ -755,7 +755,7 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 	    	console.log('no');
 	    	mode={"modeofpayment2":req.query.paytype};
 		 install1={"installment_2":req.query.installfee};
-		 install1date={"installment_2Date":d}
+		 install1date={"installment_2Date":instalment1date}
 		 status={"install2_status":paidstatus};
 	    }
 	    console.log(studid);
@@ -1452,12 +1452,11 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 });
 });
 
-app.post('/datepick',  urlencodedParser,function (req, res)
+app.post('/datepickinsta1',  urlencodedParser,function (req, res)
 {
 	
-	var date1={"installment_1Date":req.query.dates};
-	var date2={"installment_2Date":req.query.dates};
-	    connection.query('Select f.student_id, d.student_name, f.zone_id, f.fees, f.installment_1, f.installment_2, f.installment_1Date, f.installment_2Date, f.modeofpayment1, f.modeofpayment2 from student_fee f left join student_details d on f.student_id=d.id where ? or ?',[date1, date2],
+	var date={"installment_1Date":req.query.dates};
+	    connection.query('Select f.student_id, d.student_name,f.fees,f.installment_1 from student_fee f left join student_details d on f.student_id=d.id where ? ',[date],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -1473,6 +1472,25 @@ app.post('/datepick',  urlencodedParser,function (req, res)
 	});
 });
 
+app.post('/datepickinsta2',  urlencodedParser,function (req, res)
+{
+	var date={"installment_2Date":req.query.dates};
+	console.log(date);
+	    connection.query('Select f.student_id, d.student_name,f.fees,f.installment_2 from student_fee f left join student_details d on f.student_id=d.id where ? ',[date],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 
 app.post('/pending',  urlencodedParser,function (req, res)

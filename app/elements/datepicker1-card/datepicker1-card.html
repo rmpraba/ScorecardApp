@@ -59,7 +59,8 @@
       var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
           this.showdate = moment(this.$.picker.date).format('L');
           localStorage.setItem("localsess_curr_date",this.showdate);
-      this.$.service.datepick(this.date);
+      this.$.service.datepickinsta1(this.date);
+      this.$.service.datepickinsta2(this.date);
       document.querySelector('feereports-card').showpapertab();
       }
     }

@@ -844,6 +844,8 @@
         else{
           alert('Request Failed');
         }
+        document.querySelector('cancellation-card').getrefreshcancel();
+        document.querySelector('transport-app').setPage("cancellation","Transport Cancellation");
         
       },
        monthdiff:function(fromdate,todate){

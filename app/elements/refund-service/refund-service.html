@@ -43,6 +43,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="refundchequeajax"
+        url="{{refundchequeurl}}"
+         params="{{refundchequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="refundchequeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="updaterefundchequeajax"
+        url="{{updaterefundchequeurl}}"
+         params="{{updaterefundchequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updaterefundchequeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
 
     <style>
       :host {
@@ -54,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function()
   {
-
+var refundid;
     Polymer({
       is: 'refund-service',
 
@@ -86,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        
           if(result=='success'){
             alert('Request Confirmed');
-            //document.querySelector('refund-service').refundreq();
+            document.querySelector('refund-list').refundrefresh();
           }
           else
           {
@@ -103,7 +125,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         var refundresult=e.detail.response.returnval;
          document.querySelector('refundverify-card').refundarr=refundresult;
+      },
+      refundcheque:function(stdid,name,chequeno,bankname,chequedate)
+      {
+        refundid=stdid;
+         this.refundchequeurl=sessionStorage.getItem("addrinfo")+"/refundcheque";
+        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":""}
+        obj.studid=stdid;
+        obj.name=name;
+        obj.chequenum=chequeno;
+        obj.bankname=bankname;
+        obj.chequedate=chequedate;
+        this.refundchequeparam=obj;
+        this.$.refundchequeajax.generateRequest();
+
+      },
+      refundchequeResponse:function(e)
+      {
+    this.updaterefundchequeurl=sessionStorage.getItem("addrinfo")+"/updaterefundcheque";
+    var obj={"studid":""}
+    obj.studid=refundid;
+    this.updaterefundchequeparam=obj;
+    this.$.updaterefundchequeajax.generateRequest();
+
+      },
+      updaterefundchequeResponse:function(e)
+      {
+        document.querySelector('refundverify-card').refreshrefundverify();
       }
+    
+
     });
  })();
   </script>

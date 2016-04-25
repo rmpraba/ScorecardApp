@@ -126,8 +126,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //alert(e.target.selectedItem.value);
         this.$.service.cancellation(this.studid);
         this.itemArray=[];
-        document.querySelector("#itemlist").selected=-1;
+        this.querySelector('paper-listbox').selected=-1;;
         
+      },
+      getrefreshcancel:function(e)
+      {
+        this.$.service.name();
+        this.cancellationarr=[];
+        this.querySelector('paper-listbox').selected=-1;
       }
     });
   })();

@@ -50,7 +50,7 @@
         <datepicker-card></datepicker-card>
       </div>
       <div class="reason">
-        <paper-textarea value="{{reason}}" label="Reason"></paper-textarea>
+        <paper-textarea value="{{reason}}" id="reason"  error-message="needs Reasons!" label="Reason" required ></paper-textarea>
       </div>
     </div>
     <div class="flexchild-vertical report">
@@ -99,10 +99,12 @@
           }
         },
         cancel: function(e){
+          this.$.reason.validate();
           this.$.service.cancel(this.school, this.fee, this.paid);
         },
         click:function(){
           document.querySelector('#confirm').open();
+        this.$.reason.validate();
         },
         accept:function(){
           this.$.service.proceedcancellation(this.studid, this.name, this.months_used,this.refund_amount,this.reason);

@@ -840,7 +840,7 @@ app.post('/approval-card',  urlencodedParser,function (req, res)
 		else
 		{
 			console.log(err);
-			res.status(200).json({'returnval': 'invalid'});
+			res.status(200).json({'returnval': ''});
 		}
 	
 });    
@@ -1674,6 +1674,37 @@ app.post('/getstureceipt',  urlencodedParser,function (req, res)
 	});
 });
 
+app.post('/refundcheque',  urlencodedParser,function (req, res)
+{
+	var studid={"student_id":req.query.studid,"name":req.query.name,"chequeno":req.query.chequenum,"bankname":req.query.bankname,"chequedate":req.query.chequedate};
+	    connection.query('insert into refundchequedetail  set ?',[studid],
+       	function(err, rows){
+		if(!err){
+			
+				res.status(200).json({'returnval': 'success'});
+			} 
+		 else {
+			console.log(err);
+		}
+	});
+});
+
+
+app.post('/updaterefundcheque',  urlencodedParser,function (req, res)
+{
+var student_id = {"student_id":req.query.studid};
+connection.query('update cancellation set flag=1,status="closed" where ? ',[student_id],
+       	function(err, rows)
+       	{
+       	if(!err){
+			console.log('suc');
+				res.status(200).json({'returnval': 'success'});
+			} 
+		 else {
+			console.log(err);
+		}
+	});
+});
 function setvalue()
 {
 	console.log("calling setvalue.....");

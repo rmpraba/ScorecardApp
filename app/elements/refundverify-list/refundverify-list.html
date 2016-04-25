@@ -11,7 +11,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
  <link rel="import" href="../bower_components/paper-item/paper-item.html">
        <link rel="import" href="../bower_components/paper-button/paper-button.html">
+       <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
        <link rel="import" href="../refund-service/refund-service.html">
+       <link rel="import" href="../datepicker2-card/datepicker2-card.html">
+
 
 
 <dom-module id="refundverify-list">
@@ -90,12 +93,23 @@ height: 40%
   <div class="layout">
     
     <div class="button">
-      <paper-button id="button" class="button" on-click="accept">Ignore</paper-button>
+      <paper-button id="button" class="button" on-click="accept">Issue cheque</paper-button>
     </div>
   </div>
   </iron-collapse>
  
     </div>
+       <paper-dialog id="animated" >
+<h4>ADD CHEQUE DETAILS</h4>
+ <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
+ <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
+ <div>
+ <datepicker2-card></datepicker2-card></div>
+<div class="buttons">
+  <paper-button on-click="add">ADD</paper-button>
+</div>     
+ </paper-dialog>
+  <refund-service id="service"></refund-service>
   </template>
   <script>
   (function() {
@@ -117,6 +131,29 @@ height: 40%
             idd= document.querySelector("#"+this.studid);
             idd.toggle()
           }
+        },
+          showdialog:function()
+     {
+      
+       var id = 'animated';
+        var dialog = document.getElementById(id);
+        dialog.open();
+     },
+        add:function()
+      {
+      var chequenum=this.chequeno;
+      var bankname=this.banknam;
+       var id = 'animated';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+       this.chequedate=localStorage.getItem("localsess_check_date");
+       this.$.service.refundcheque(this.studid,this.name,chequenum,bankname,this.chequedate);
+      },
+        accept:function()
+        {
+        var id = 'animated';
+        var dialog = document.getElementById(id);
+        dialog.open();
         }
     });
   })();

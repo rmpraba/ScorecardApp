@@ -1093,7 +1093,7 @@
           var classid=e.detail.response.returnval[0].class_id;
           var bloodgp=e.detail.response.returnval[0].blood_group;
           document.querySelector('studentpass-card').blood=bloodgp;
-
+          document.querySelector('studentpass-card').sid=idst;
           this.getpassdetailurl=sessionStorage.getItem("addrinfo")+"/getpassdetail";
           var obj={"stid":""}
           obj.stid=idst;

@@ -83,7 +83,6 @@
  <paper-input id="zdate1"  value="{{zfromdate}}"></paper-input> </div>
 </td></tr></table>
 
-<div id="req">
 
           <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Travel Requirements:</p>
 
@@ -116,7 +115,6 @@
 </table>
 
 
-<div id="way">
 <table style="padding: 1%;">
 <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Mode Of Travel:</p>
 <tr><td>
@@ -131,7 +129,6 @@ One-Way
 
 </td></tr>
 </table>
-</div>
 
 <div class="buttons" id="but">
   <div class="submit">
@@ -142,7 +139,6 @@ One-Way
   </div>
 </div>
 <paper-input id="status" class="field" value="{{status}}"></paper-input>
-    </div>
 
    </div> 
     
@@ -177,9 +173,6 @@ var dat2=new Date();
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;
         this.$.status.hidden=true;
-        this.$.req.hidden=true;
-        this.$.way.hidden=true;
-        this.$.but.hidden=true;
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
         this.$.dad.disabled=true;
@@ -188,26 +181,22 @@ var dat2=new Date();
         this.$.dad3.disabled=true;
         this.$.dad4.disabled=true;
         this.$.dad5.disabled=true;
-
-        localStorage.setItem("curr_sess_showpage","zonetostudent");
-        this.page="zonetostudent";
-        
-        },
-        setPage:function(page)
-        {
-          localStorage.setItem("curr_sess_showpage",this.page);
-          this.page=page;
-        },
-      
-   
+        this.$.yearly.disabled=true;
+        this.$.custom.disabled=true;
+        this.$.oneway.disabled=true;
+         this.$.twoway.disabled=true;
+         this.$.but.disabled=true;
+         },
+       
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
       this.zone = (e.target.selectedItem.textContent).trim();
       this.$.root.getfee(this.zone);
       this.$.root.gettermdate(this.grade);
       this.$.root.studzone(this.id);
-      this.$.req.hidden=false;
       this.$.dad.disabled=false;
+      this.$.yearly.disabled=false;
+      this.$.custom.disabled=false;
     },
    
     
@@ -315,7 +304,6 @@ var dat2=new Date();
         
        
        if(custom.checked==true){
-       this.$.way.hidden=false; 
         document.querySelector("#oneway").checked=false;
         document.querySelector("#twoway").checked=false;
         var temp='';
@@ -324,13 +312,16 @@ var dat2=new Date();
         todat=temp;
          this.$.date1.hidden=false;
         this.$.date2.hidden=false;
-        this.$.datebox.hidden=false;          
+        this.$.datebox.hidden=false;    
+        this.$.oneway.disabled=false;
+         this.$.twoway.disabled=false;      
           document.querySelector("#yearly").checked=false;
         }
 
  
         if(custom.checked==false){
-         this.$.way.hidden=true;
+          this.$.oneway.disabled=true;
+         this.$.twoway.disabled=true;
           this.$.date1.hidden=true;
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;          
@@ -363,7 +354,8 @@ fullHandler:function(event){
   var yearly = document.querySelector("#yearly");
     
     if(yearly.checked==true){ 
-      this.$.way.hidden=false;
+      this.$.oneway.disabled=false;
+         this.$.twoway.disabled=false;
        document.querySelector("#oneway").checked=false;
         document.querySelector("#twoway").checked=false;
         var temp='';
@@ -387,7 +379,8 @@ fullHandler:function(event){
         }  
 
         if(yearly.checked==false){
-          this.$.way.hidden=true;
+          this.$.oneway.disabled=true;
+         this.$.twoway.disabled=true;
           var temp1='';
           this.fee=temp1;
         fromdat=temp1;
@@ -401,25 +394,23 @@ onewayHandler:function(event){
 var oneway = document.querySelector("#oneway");
 mode='One-Way';
 if(oneway.checked==true){
-  this.$.but.hidden=false;
+  this.$.but.disabled=false;
       document.querySelector("#twoway").checked=false;
       this.$.root.oneway();
-
   }
-  if((oneway.checked==true)&&(datebox.checked==true)){
-    
-    document.querySelector("#twoway").checked=false;
+
+  else if((oneway.checked==true)&&(datebox.checked==true)){
     this.$.root.onecus();
   }
+  
   if(oneway.checked==false){
-this.$.but.hidden=true;
+this.$.but.disabled=true;
      var temp='';
         this.fee=temp;
         fromdat=temp;
         todat=temp;
         document.querySelector("#datebox").checked=false;
         document.querySelector("#twoway").checked=false;
-
   }
 
 },
@@ -427,18 +418,18 @@ twowayHandler:function(event){
   var twoway = document.querySelector("#twoway");
   mode='Two-Way';
   if(twoway.checked==true){
-    this.$.but.hidden=false;
+    this.$.but.disabled=false;
         document.querySelector("#oneway").checked=false;
         this.$.root.twoway();
-  } 
-  if((twoway.checked==true)&&(datebox.checked==true)){
-    
-    document.querySelector("#oneway").checked=false;
-    this.$.root.twocus();
 
+  } 
+  
+  else if((twoway.checked==true)&&(datebox.checked==true)){
+    this.$.root.twocus();
   }
+  
   if(twoway.checked==false){
-    this.$.but.hidden=true;
+    this.$.but.disabled=true;
     var temp='';
         this.fee=temp;
         fromdat=temp;

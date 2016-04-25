@@ -155,17 +155,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
-     <iron-ajax
-        method="post"
-        id="gradediscountajax"
-        url="{{gradediscounturl}}"
-        params="{{gradediscountparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="gradediscountResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+    
      <iron-ajax
         method="post"
         id="addcalcajax"
@@ -700,12 +690,7 @@
             document.querySelector('zonetostudent-card').grade=gradename;
             document.querySelector('zonetostudent-card').date=dob;
             document.querySelector('zonetostudent-card').id=stdid;
-            this.gradediscounturl=sessionStorage.getItem("addrinfo")+"/gradediscount";
-            var obj={"grade":""}
-            obj.grade=gradename;
-            this.gradediscountparam=obj;
-            this.$.gradediscountajax.generateRequest();
-
+           
             this.classurl=sessionStorage.getItem("addrinfo")+"/getclass";
             var obj1={"class":""}
             obj1.class=classz;
@@ -1059,13 +1044,11 @@
               this.$.studzoneajax.generateRequest();
         },
         studzoneResponse:function(e){
-              var status=e.detail.response.returnval[0].status;
-              
+          var status=e.detail.response.returnval;
               if(status=='mapped'){
                 alert('The student is already mapped You Cannot Map again');
               }
-                else{document.querySelector('zonetostudent-card').status=status;}
-          
+            document.querySelector('zonetostudent-card').status=status;
         },
         updatezone:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx)
       {

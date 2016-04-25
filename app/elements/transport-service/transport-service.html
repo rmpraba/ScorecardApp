@@ -378,6 +378,28 @@
         content-type="application/json"
         on-response="routereportResponse">
 </iron-ajax>
+
+
+ <iron-ajax
+        method="post"
+        id="studentpickroutereportajax"
+        url="{{studentpickroutereporturl}}"
+        params="{{studentpickroutereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentpickroutereportResponse">
+</iron-ajax>
+
+<iron-ajax
+        method="post"
+        id="studentdroproutereportajax"
+        url="{{studentdroproutereporturl}}"
+        params="{{studentdroproutereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentdroproutereportResponse">
+</iron-ajax>
+
   <iron-ajax
         id="onewayajax"
         url="{{onewayurl}}"
@@ -723,10 +745,46 @@
         //alert(JSON.stringify(obj));
         this.$.routereportajax.generateRequest();
       },
+     
       routereportResponse:function(e){
         //alert(JSON.stringify(e.detail.response.returnval));
         var routereportresult=e.detail.response.returnval;
         document.querySelector('routereport-card').reportarr=routereportresult;
+      },
+      studentroutereport:function(routeid,tripid,pickordrop)
+      {
+        if(pickordrop=="Pickup")
+        {
+this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickroute-report-card";
+        var obj={"routeid":"","tripid":""}
+        obj.routeid=routeid;
+        obj.tripid=tripid;
+        this.studentpickroutereportparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.studentpickroutereportajax.generateRequest();
+      }
+      else
+      {
+        this.studentdroproutereporturl=sessionStorage.getItem("addrinfo")+"/studentdroproute-report-card";
+        var obj={"routeid":"","tripid":""}
+        obj.routeid=routeid;
+        obj.tripid=tripid;
+        this.studentdroproutereportparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.studentdroproutereportajax.generateRequest();
+      }
+      },
+      studentpickroutereportResponse:function(e)
+      {
+        var routereportresult=e.detail.response.returnval;
+        document.querySelector('routereport-card').reportarr=routereportresult;
+        //alert(JSON.stringify(e.detail.response.returnval));
+      },
+       studentdroproutereportResponse:function(e)
+      {
+        var routereportresult=e.detail.response.returnval;
+        document.querySelector('routereport-card').reportarr=routereportresult;
+        //alert(JSON.stringify(e.detail.response.returnval));
       },
      gettrip:function(routename)
       {

@@ -231,6 +231,12 @@
        document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
     }
+    else if(role=="Finance Manager")
+    {
+       sessionStorage.setItem("userinfo",role);
+       document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
       else 
       {
         alert('Invalid UserName or Password');

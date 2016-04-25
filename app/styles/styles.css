@@ -16,7 +16,10 @@ section{
     height: 6%;
     font-size: 2em;
 }
-
+.routereport
+{
+    @apply(--layout-horizontal); 
+}
 .footer{
     font-weight: bold;
     bottom: 0; 

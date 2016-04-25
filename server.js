@@ -848,7 +848,7 @@ app.post('/approval-card',  urlencodedParser,function (req, res)
 
 app.post('/name',  urlencodedParser,function (req, res){
 
-       connection.query('select student_id, student_name from student_details join student_fee on student_fee.student_id=student_details.id',
+       connection.query('select student_id, student_name from student_details join student_fee on student_fee.student_id=student_details.id and student_details.transport_required="yes"',
        	function(err, rows)
        	{
        		if(err){
@@ -1028,6 +1028,50 @@ app.post('/route-report-card',  urlencodedParser,function (req, res){
 	});
 });
 
+
+app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
+	var tripid={"school_type":req.query.tripid};
+	
+		console.log(req.query.pickordrop);
+         var route_id={"pickup_route_id":req.query.routeid};
+
+    connection.query('SELECT student_id,(select student_name from student_details where id=student_id)as name,(select point_name from point where id=pickup_point)  as pick from student_point where ? and ?',[route_id,tripid],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
+	var tripid={"school_type":req.query.tripid};
+	
+		console.log(req.query.pickordrop);
+         var route_id={"drop_route_id":req.query.routeid};
+
+    connection.query('SELECT student_id,(select student_name from student_details where id=student_id)as name,(select point_name from point where id=drop_point)  as droppoint from student_point where ? and ?',[route_id,tripid],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 app.post('/deletemappoint-card',  urlencodedParser,function (req, res)
 {
 //console.log('come');

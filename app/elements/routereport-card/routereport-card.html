@@ -12,7 +12,15 @@
 <dom-module id="routereport-card">
   <div class="routereport-card">
     <template>
-      <div class="field">
+    <style>
+    .routereport
+    {
+
+        @apply(--layout-horizontal);
+      }
+    </style>
+    <div class="routereport">
+      <div style="padding-right: 2%;">
         <paper-input label="Enter Route" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
         <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
           <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -20,13 +28,42 @@
           </template>
         </paper-listbox>
       </div>
+      
+      <div style="padding-right: 2%;">
+      <div class="drop-down" >
+        <paper-dropdown-menu label="Select the Trip">
+          <paper-menu class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
+            
+              <paper-item value="1">1</paper-item>
+              <paper-item value="2">2</paper-item>
+          
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+      </div>
+
+       <div style="padding-right: 2%;">
+      <div class="drop-down" >
+        <paper-dropdown-menu label="Select PickUp or Drop">
+          <paper-menu class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
+            
+              <paper-item value="pickup">Pickup</paper-item>
+              <paper-item value="drop">Drop</paper-item>
+          
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+      </div>
+       <div class="buttons"  style="padding-top: 1%;">
+         <paper-button class="button" id="rep" on-click="show">Show</paper-button>
+      </div>
+      </div>
+      </div>
       <div class="headtabs">
-          <paper-tabs selected="0">
-            <paper-tab>Route Name</paper-tab>
+          <paper-tabs>
+            <paper-tab>Student Id</paper-tab>
+            <paper-tab>Name</paper-tab>
             <paper-tab>Point</paper-tab>
-            <paper-tab>Pick-up Time</paper-tab>
-            <paper-tab>Drop Time</paper-tab>
-            <paper-tab>Trip</paper-tab>
           </paper-tabs>
       </div>
       <template  is="dom-repeat" items="{{reportarr}}" as="view">
@@ -34,7 +71,7 @@
           <!-- <button  class="collapse" on-click="toggle">Route Id:{{routeid}}</button> -->
    
         <!-- </iron-collapse> -->
-        <routereport-item-card routename="{{view.route_name}}" point="{{view.point_name}}" picktime="{{view.pickup_time}}" droptime="{{view.drop_time}}" trip="{{view.trip}}"></routereport-item-card>
+        <routereport-item-card stid="{{view.student_id}}" name="{{view.name}}" pick="{{view.pick}}" ></routereport-item-card>
       </template>
       <div id="button">
         <paper-button class="button" style="margin: 4% 0 0 45%; height: 35px;" id="print" on-click="print">Print</paper-button>
@@ -45,7 +82,9 @@
   <script type="text/javascript">
   (function() {
     var namearr=[];
-    'use strict';
+    var routename;
+    var triptype;
+    var pickordrop
 
     Polymer({
       is: 'routereport-card',
@@ -131,11 +170,26 @@
       FnItemSelected:function(e){
         this.querySelector("paper-tabs").style.visibility='visible';
         this.$.print.hidden=false;
-        this.routeid= e.target.selectedItem.value;
+        routeid= e.target.selectedItem.value;
         //alert(e.target.selectedItem.value);
-        this.$.service.routereport(this.routeid);
+        //this.$.service.routereport(routeid);
         this.itemArray=[];
         document.querySelector("#itemlist").selected=-1;
+      },
+      show:function()
+      {
+          this.$.service.studentroutereport(routeid,triptype,pickordrop);
+      },
+      Fntrip:function(e)
+      {
+       
+triptype=(e.target.selectedItem.textContent).trim();;
+
+      },
+      Fnpickordrop:function(e)
+      {
+pickordrop=(e.target.selectedItem.textContent).trim();;
+
       },
       print:function(){
         this.$.print.hidden=true;

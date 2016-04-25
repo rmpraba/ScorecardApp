@@ -9,21 +9,23 @@
         @apply(--layout-vertical);
         height: 50px;
         margin-left:7%; 
-        width: 82%;
+        width: 90%;
         padding: 1%;
       }
       .flexchild-vertical {
         @apply(--layout-horizontal);
         border-radius: 2px;
       }
+      .fieldsize
+      {
+        margin-left: 9%;
+      }
     </style>
       <div class="container flex-vertical">
         <div class="flexchild-vertical">
-          <div class="field"><paper-item>{{routename}}</paper-item></div>
-          <div class="field"><paper-item>{{point}}</paper-item></div>
-          <div class="field"><paper-item>{{picktime}}</paper-item></div>
-          <div class="field"><paper-item>{{droptime}}</paper-item></div>
-          <div class="field"><paper-item>{{trip}}</paper-item></div>
+          <div class="fieldsize"><paper-item>{{stid}}</paper-item></div>
+          <div class="fieldsize"><paper-item>{{name}}</paper-item></div>
+          <div class="fieldsize"><paper-item>{{pick}}</paper-item></div>
         </div>
       </div>
   <transport-service id="service"></transport-service>

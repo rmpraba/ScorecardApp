@@ -37,6 +37,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template  is="dom-repeat" items="{{pendingarr}}" as="view">
         <pending-item-card student_id="{{view.student_id}}" student_name="{{view.student_name}}" fees="{{view.fees}}" paid="{{view.paid}}" pending="{{view.pending}}"></pending-item-card>
       </template>
+      <div id="button">
+        <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
+      </div>
       <transportfee-service id="service"></transportfee-service>
       </div>
   </template>
@@ -48,7 +51,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'pending-card',
     ready:function(){
       this.$.service.pending();
-    }
+    },
+      print:function(){
+        this.$.print.hidden=true;
+        if (!window.print){
+          alert("You need NS4.x to use this print button!")
+          return
+        }
+          window.print()
+          this.$.print.hidden=false;
+      }
     });
   })();
   </script>

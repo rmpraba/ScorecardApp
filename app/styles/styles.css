@@ -751,4 +751,19 @@ margin-left: 2%;
 .dd .right{
     margin-left: 20%
 }
+.feereports-card .total-collection{
+    margin: 2% 0 0 55%;
+}
+.feereports-card .total-collection paper-item{
+    font-weight: bolder;
+}
+.feereport{
+    margin-left: 2%;
+}
+.feereports-card .date{
+    margin-left: -15%;
+}
+.feereports-card #button, .pending-card #button, .routereport-card #button{
+    margin: 5% 0 0 40%;
+}
 </style>

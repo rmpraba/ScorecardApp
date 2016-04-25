@@ -155,18 +155,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
-    
-     <iron-ajax
-        method="post"
-        id="addcalcajax"
-        url="{{addcalcurl}}"
-        params="{{addcalcparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="addcalcResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+ 
    <iron-ajax
         method="post"
         id="cancellationajax"
@@ -602,6 +591,7 @@
       },
       getfeeResponse:function(e){
          totalfee=e.detail.response.returnval[0].fees;
+          document.querySelector('zonetostudent-card').fee=totalfee;
       },
       calc:function(values){
       if(values=='foryear'){

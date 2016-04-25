@@ -153,7 +153,7 @@ One-Way
     var fromdat;
     var datebox;
 var todat;
-var mode;
+var mode='Two-Way';
 var dat2=new Date();
       var today = dat2.getFullYear()+"/"+(dat2.getMonth()+1)+"/"+dat2.getDate();
 
@@ -197,6 +197,13 @@ var dat2=new Date();
       this.$.dad.disabled=false;
       this.$.yearly.disabled=false;
       this.$.custom.disabled=false;
+      this.$.oneway.disabled=false;
+         this.$.twoway.disabled=false;
+          this.$.but.disabled=false;
+      document.querySelector("#yearly").checked=true;
+      
+      document.querySelector("#twoway").checked=true;
+
     },
    
     
@@ -313,15 +320,13 @@ var dat2=new Date();
          this.$.date1.hidden=false;
         this.$.date2.hidden=false;
         this.$.datebox.hidden=false;    
-        this.$.oneway.disabled=false;
-         this.$.twoway.disabled=false;      
+              
           document.querySelector("#yearly").checked=false;
         }
 
  
         if(custom.checked==false){
-          this.$.oneway.disabled=true;
-         this.$.twoway.disabled=true;
+        
           this.$.date1.hidden=true;
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;          
@@ -354,8 +359,7 @@ fullHandler:function(event){
   var yearly = document.querySelector("#yearly");
     
     if(yearly.checked==true){ 
-      this.$.oneway.disabled=false;
-         this.$.twoway.disabled=false;
+      
        document.querySelector("#oneway").checked=false;
         document.querySelector("#twoway").checked=false;
         var temp='';
@@ -379,8 +383,7 @@ fullHandler:function(event){
         }  
 
         if(yearly.checked==false){
-          this.$.oneway.disabled=true;
-         this.$.twoway.disabled=true;
+      
           var temp1='';
           this.fee=temp1;
         fromdat=temp1;
@@ -394,7 +397,7 @@ onewayHandler:function(event){
 var oneway = document.querySelector("#oneway");
 mode='One-Way';
 if(oneway.checked==true){
-  this.$.but.disabled=false;
+ 
       document.querySelector("#twoway").checked=false;
       this.$.root.oneway();
   }
@@ -404,7 +407,7 @@ if(oneway.checked==true){
   }
   
   if(oneway.checked==false){
-this.$.but.disabled=true;
+
      var temp='';
         this.fee=temp;
         fromdat=temp;
@@ -415,10 +418,11 @@ this.$.but.disabled=true;
 
 },
 twowayHandler:function(event){
+  alert('two way');
   var twoway = document.querySelector("#twoway");
   mode='Two-Way';
   if(twoway.checked==true){
-    this.$.but.disabled=false;
+
         document.querySelector("#oneway").checked=false;
         this.$.root.twoway();
 
@@ -429,7 +433,7 @@ twowayHandler:function(event){
   }
   
   if(twoway.checked==false){
-    this.$.but.disabled=true;
+
     var temp='';
         this.fee=temp;
         fromdat=temp;

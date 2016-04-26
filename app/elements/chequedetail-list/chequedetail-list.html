@@ -19,7 +19,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
        .flex-vertical {
         @apply(--layout-vertical);
-        margin-left:1%; 
+        margin-left:1%;
+        height: 5%; 
         width: 95%;
         padding: 1%;
       }
@@ -27,21 +28,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 30%;
         @apply(--layout-horizontal);
         border-radius: 3px;
-        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+      }
+      .flexchild-vertical .field{
+        padding: 0;
       }
     </style>
-   <div class="container flex-vertical">
-        <div class="flexchild-vertical">
-  <paper-item  style="color:{{cstatus}};" id="{{installtype}}" >{{studid}}</paper-item>
-   <paper-item style="color:{{cstatus}};padding-left:-2% padding-top: 1%;" >{{name}}</paper-item>
-   <paper-item style="color:{{cstatus}};" >{{chequeno}}</paper-item>
-   <paper-item style="color:{{cstatus}};">{{bankname}}</paper-item>
-   <paper-item  style="color:{{cstatus}};">{{cdate}}</paper-item>
-  <paper-checkbox id="acceptcheque" class="checkbox" on-change="Fncleared" style="padding-top: 1%;"></paper-checkbox>
-  <paper-checkbox style="padding-top: 1%;  " id="rejectcheque" class="checkbox" on-change="Fnbounce"></paper-checkbox>
-  <paper-button style="padding-top: 1%;" id="button"  on-click="accept">Submit</paper-button>
-   </div>
+    <div class="container flex-vertical">
+      <div class="flexchild-vertical feereport">
+        <div class="field"><paper-item  style="color:{{cstatus}}; width: 15%;" id="{{installtype}}" >{{studid}}</paper-item></div>
+        <div class="field"><paper-item style="color:{{cstatus}};padding-left:-1%; margin-left: -15%; padding-top: 1%;" >{{name}}</paper-item></div>
+        <div class="field"><paper-item style="color:{{cstatus}}; width: 20%; margin-left: 15%;" >{{chequeno}}</paper-item></div>
+        <div class="field"><paper-item style="color:{{cstatus}}; width: 20%;">{{bankname}}</paper-item></div>
+        <div class="field"><paper-item  style="color:{{cstatus}}; width: 20%;">{{cdate}}</paper-item></div>
+        <div class="field"><paper-checkbox id="acceptcheque" class="checkbox" on-change="Fncleared" style="padding-top: 1%; width: 20%;"></paper-checkbox></div>
+        <div class="field"><paper-checkbox style="padding-top: 1%; width: 20%;  margin-left: 30%; " id="rejectcheque" class="checkbox" on-change="Fnbounce"></paper-checkbox></div>
+        <div class="field"><paper-button style=" height: 34px;  margin-left:20%; " id="button"  on-click="accept">Submit</paper-button></div>
       </div>
+    </div>
    <transportfee-service id="service"></transportfee-service>
   </template>
   <script>

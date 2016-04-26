@@ -10,6 +10,11 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <dom-module id="studenttopoint-item-card">
+<style type="text/css">
+  .flexchild-vertical {
+    @apply(--layout-horizontal);
+  }
+</style>
 <template>
   <legend align="center"></legend>
   <div class="card">
@@ -18,8 +23,14 @@
         <fieldset>
           <ul>
             <li class="row">
-              <paper-input class="field" value="{{studentid}}"></paper-input>
-              <paper-input  class="field" value="{{studentname}}"></paper-input>
+              <div class="detail">
+                <div class="field" style="padding: 0 1% 0 1%;">
+                    <paper-input class="field" value="{{studentid}}"></paper-input>
+                </div>
+                <div class="field"  style="padding: 0 1% 0 1%;">
+                    <paper-input  class="field" value="{{studentname}}"></paper-input>
+                </div>
+              </div>
             </li>
             <li class="row">
               <div class="detail">
@@ -28,7 +39,7 @@
                     <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{routearr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
-                      </template>
+                      </template>s
                     </paper-menu>
                   </paper-dropdown-menu>
                 </div>
@@ -115,6 +126,8 @@
   </template>
   <script>
   (function() {
+      var pickuproute;
+      var pickuppoint;
     Polymer({
       is: "studenttopoint-item-card",
       ready:function(){
@@ -126,8 +139,8 @@
         this.routearr=route;
       },
       pickroute:function(e){
-        alert(this.studentid);
         this.pickroute = (e.target.selectedItem.value);
+        pickuproute = this.pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
         var obj={"routept":"","studid":""};
         obj.routept=this.pickroute;

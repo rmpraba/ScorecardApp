@@ -720,8 +720,15 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         {
           collection2 += parseInt(e.detail.response.returnval[i].installment_2);
         }
-        var total_collection = collection1 + collection2;
-        if(feeresultinsta2 == "invalid"){
+        if(collection1 && collection2){
+          var total_collection = collection1 + collection2;
+        } else if(collection1) {
+          var total_collection = collection1;
+        } else {
+          var total_collection = collection2;
+        }
+        alert(collection1);
+        if(total_collection == 0){
           document.querySelector('transport-app').setPage("nodata","Fee Reports");
         } else {
            document.querySelector('feereports-card').feereportarr2=feeresultinsta2;

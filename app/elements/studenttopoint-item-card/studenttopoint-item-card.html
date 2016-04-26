@@ -173,10 +173,7 @@
       }, 
       changeHandler:function(event){ 
         var box = document.querySelector("#selectbox");
-        if(box.checked==true)
-        { 
-        document.querySelector('mapstudenttopoint-card').FnGetItems(this.studentid,this.pickroute,this.droproute,this.pickpoint,this.droppoint); 
-        }
+        document.querySelector('mapstudenttopoint-card').FnGetItemsz(this.studentid,this.pickroute,this.droproute,this.pickpoint,this.droppoint); 
     }
   });
   })();

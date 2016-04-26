@@ -52,7 +52,7 @@
           <template  is="dom-repeat" items="{{studentarr}}">
             <studenttopoint-item-card studentid="{{item.id}}" studentname="{{item.student_name}}">
           </template>
-          <div class="button" style="margin-left: 50%;margin-top: 3%;">
+          <div class="button" style="margin-left: 50%;margin-top: 3%; height: 40% !important;">
             <paper-button raised id="submitbutton" class="custom indigo" on-click="click">Submit</paper-button>
           </div>
         </div>
@@ -168,7 +168,7 @@
              document.querySelector('#gradeselect').selected=-1;
              this.$.submitbutton.hidden=true;
            },
-           FnGetItems:function(studentid,pickroute,droproute,pickpoint,droppoint)
+           FnGetItemsz:function(studentid,pickroute,droproute,pickpoint,droppoint)
            {
             var trip;
             if(this.class=="Primary")

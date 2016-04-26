@@ -17,17 +17,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .headtabs{
+        width: 90% !important;
+        margin: 0 0 0 0% !important;
+      }
     </style>
      <div class="hor">
-  <div  class="layout"> 
-  <paper-item  >STUDENT ID</paper-item>
-   <paper-item >STUDENT NAME</paper-item>
-   <paper-item >CHEQUE NO</paper-item>
-   <paper-item >BANK NAME</paper-item>
-   <paper-item >CHEQUE DATE</paper-item>
-   <paper-item >CHEQUE CLEARED</paper-item>
-   <paper-item >CHEQUE BOUNCE</paper-item>
-   </div>
+      <div class="headtabs">
+          <paper-tabs selected="0">
+            <paper-tab style="width: 1%; margin-left: 0%;">ID</paper-tab>
+            <paper-tab style="width: 1%; margin-left: -3%;">Name</paper-tab>
+            <paper-tab style="width: 1%; margin-left: 0%;">Cheque No</paper-tab>
+            <paper-tab style="width: 1%; margin-left: -5%;">Bank Name</paper-tab>
+            <paper-tab style="width: 1%; margin-left: -5%;">Date</paper-tab>
+            <paper-tab style="width: 1%; margin-left: 0%;">Cheque Cleared</paper-tab>
+            <paper-tab style="width: 1%; margin-left: 0%;">Cheque Bounce</paper-tab>
+          </paper-tabs>
+      </div>
    </div>
      <template  is="dom-repeat" items="{{chequearr}}" as="view">
       <chequedetail-list studid="{{view.studid}}" name="{{view.sname}}" chequeno="{{view.chequeno}}" bankname="{{view.bankname}}" cdate="{{view.cdate}}" cstatus="{{view.cstatus}}" installtype="{{view.installtype}}"></chequedetail-list>

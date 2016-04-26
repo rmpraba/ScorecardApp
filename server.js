@@ -445,6 +445,25 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 });
 	});
 
+app.post('/selectname',  urlencodedParser,function (req, res)
+{
+
+       connection.query('SELECT id, student_name from student_details',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
 app.post('/classpick',  urlencodedParser,function (req, res)
 {
 	var class_id={"school_type":req.query.classes};
@@ -468,6 +487,29 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 });
 	});
 
+app.post('/namepick',  urlencodedParser,function (req, res)
+{
+	var id={"id":req.query.id};
+	var req={"transport_required":'yes'};
+	//console.log('in server...');
+      connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ?',[id,req],
+       		function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+			console.log(rows);
+		}
+		else
+		{
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+
+});
+	});
 app.post('/pickpoints',  urlencodedParser,function (req, res)
 {
 		var route_id=req.query.routept;

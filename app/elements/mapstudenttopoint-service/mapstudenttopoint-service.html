@@ -19,12 +19,35 @@
   <iron-ajax
     auto
     method="post"
+    id="selectnameajax"
+    url="{{selectnameurl}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="selectnameResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+  <iron-ajax
+    auto
+    method="post"
     id="classpickajax"
     url="{{classpickurl}}"
     params="{{classpickparam}}"
     handle-as="json"
     content-type="application/json"
     on-response="classpickResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+  <iron-ajax
+    auto
+    method="post"
+    id="namepickajax"
+    url="{{namepickurl}}"
+    params="{{namepickparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="namepickResponse"
     debounce-duration="300"
   >
   </iron-ajax>
@@ -86,6 +109,25 @@
         var classdetail=e.detail.response.returnval;
         document.querySelector('mapstudenttopoint-card').classarr=classdetail;
       },
+      selectname:function(){
+        this.selectnameurl = sessionStorage.getItem("addrinfo")+"/selectname";
+        this.$.selectnameajax.generateRequest();
+      },
+      selectnameResponse:function(e){;
+        var nameitem=e.detail.response.returnval;
+        document.querySelector('mapstudenttopoint-card').autocompletename(nameitem);
+      },
+      namepick:function(cla){
+        this.namepickurl = sessionStorage.getItem("addrinfo")+"/namepick";
+        var obj={"id":""}
+        obj.id=cla;
+        this.namepickparam=obj;
+        this.$.namepickajax.generateRequest();
+      },
+      namepickResponse:function(e){
+        var student=e.detail.response.returnval;
+        document.querySelector('mapstudenttopoint-card').studentarr=student;
+      },
       classpick:function(cla){
         this.classpickurl = sessionStorage.getItem("addrinfo")+"/classpick";
         var obj={"classes":""}
@@ -110,6 +152,7 @@
             obj.flag=1;
             this.studentpointurl=sessionStorage.getItem("addrinfo")+"/submiturl";
                  this.studentpointparam=obj;
+                 //alert(JSON.stringify(obj))
             this.$.studentpointajax.generateRequest();
           }
     },

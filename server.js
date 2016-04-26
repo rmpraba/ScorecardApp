@@ -1054,10 +1054,10 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
 app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
 	var tripid={"school_type":req.query.tripid};
 	
-		console.log(req.query.pickordrop);
+		console.log(tripid);
          var route_id={"drop_route_id":req.query.routeid};
 
-    connection.query('SELECT student_id,(select student_name from student_details where id=student_id)as name,(select point_name from point where id=drop_point)  as droppoint from student_point where ? and ?',[route_id,tripid],
+    connection.query('SELECT student_id,(select student_name from student_details where id=student_id)as name,(select point_name from point where id=drop_point)  as pick from student_point where ? and ?',[route_id,tripid],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){

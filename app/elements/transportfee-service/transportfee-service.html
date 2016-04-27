@@ -168,12 +168,34 @@
   </iron-ajax>
    <iron-ajax
         method="post"
+        id="datepickinsta1chequeajax"
+        url="{{datepickinsta1chequeurl}}"
+        params="{{datepickinsta1chequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="datepickinsta1chequeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
         id="datepickinsta2ajax"
         url="{{datepickinsta2url}}"
         params="{{datepickinsta2param}}"
         handle-as="json"
         content-type="application/json"
         on-response="datepickResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="datepickinsta2chequeajax"
+        url="{{datepickinsta2chequeurl}}"
+        params="{{datepickinsta2chequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="datepickchequeResponse"
         debounce-duration="300"
         >
   </iron-ajax>
@@ -259,12 +281,18 @@
     var receiptid;
     var feeresultinsta1;
     var collection1;
+    var collection1cheque;
+    var total_collection_cash;
     var collectreport=[];
     var recstudid;
     var dadname;
     var chenum;
     var chedate;
     var banknm;
+    var feeresultinsta1;
+    var feeresultinsta2;
+    var feeresultinsta1cheque;
+    var feeresultinsta2cheque;
 
 
     Polymer({
@@ -316,7 +344,7 @@
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
         {
-            alert("pay the fee successfully");
+            alert("Paid Successfully");
         }
         this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
         this.$.receiptseqajax.generateRequest();
@@ -423,7 +451,7 @@ recarr.push(recobj);
         this.$.getfeedataajax.generateRequest(); 
      },
      getfeedataResponse:function(e){
-      //alert(JSON.stringify(e.detail.response.returnval));
+        //alert(JSON.stringify(e.detail.response.returnval));
         stuid=e.detail.response.returnval[0].student_id;
         var zonid=e.detail.response.returnval[0].zone_id,
         feez=e.detail.response.returnval[0].fees;
@@ -683,7 +711,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
         obj.installtype=uinstalltype;
         obj.paidstatus=paidstatus;
         this.updatestuchequeparam=obj;
-//alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
      },
       datepickinsta1:function(e){
@@ -697,7 +725,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
       },
       datepickinsta1Response:function(e){
         collection1 = 0;
-        var feeresultinsta1=e.detail.response.returnval;
+        feeresultinsta1=e.detail.response.returnval;
         for(var i=0;i<feeresultinsta1.length;i++)
         {
           collection1 += parseInt(e.detail.response.returnval[i].installment_1);
@@ -715,25 +743,100 @@ document.querySelector('transportfee-card').installmentarr=installarr;
       },
       datepickResponse:function(e){
         var collection2 = 0;
-        var feeresultinsta2=e.detail.response.returnval;
+        total_collection_cash = 0;
+        feeresultinsta2=e.detail.response.returnval;
         for(var i=0;i<feeresultinsta2.length;i++)
         {
           collection2 += parseInt(e.detail.response.returnval[i].installment_2);
         }
         if(collection1 && collection2){
-          var total_collection = collection1 + collection2;
+          total_collection_cash = collection1 + collection2;
         } else if(collection1) {
-          var total_collection = collection1;
+          total_collection_cash = collection1;
         } else {
-          var total_collection = collection2;
+          total_collection_cash = collection2;
         }
-        alert(collection1);
-        if(total_collection == 0){
+        //alert(collection1);
+        /*if(total_collection == 0){
           document.querySelector('transport-app').setPage("nodata","Fee Reports");
-        } else {
-           document.querySelector('feereports-card').feereportarr2=feeresultinsta2;
-           document.querySelector('feereports-card').total_collection=total_collection;
+        } else {*/
+          document.querySelector('feereports-card').feereportarr2=feeresultinsta2;
+          document.querySelector('feereports-card').total_collection_cash=total_collection_cash;
+        //}
+      },
+      datepickinsta1cheque:function(e){
+        this.datepickinsta1chequeurl="http://localhost:8081/datepickinsta1cheque";
+        var obj={"e":""}
+        var condate = new Date(e);
+        var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+        obj.dates=todate;
+        this.datepickinsta1chequeparam=obj;
+        this.$.datepickinsta1chequeajax.generateRequest();
+      },
+      datepickinsta1chequeResponse:function(e){
+        collection1cheque = 0;
+        feeresultinsta1cheque=e.detail.response.returnval;
+        for(var i=0;i<feeresultinsta1cheque.length;i++)
+        {
+          collection1cheque += parseInt(e.detail.response.returnval[i].installment_1);
         }
+        document.querySelector('feereports-card').feereportarr1cheque=feeresultinsta1cheque;
+      },
+      datepickinsta2cheque:function(e){
+        this.datepickinsta2chequeurl="http://localhost:8081/datepickinsta2cheque";
+        var obj={"e":""}
+        var condate = new Date(e);
+        var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+        obj.dates=todate;
+        this.datepickinsta2chequeparam=obj;
+        this.$.datepickinsta2chequeajax.generateRequest();
+      },
+      datepickchequeResponse:function(e){
+        var collection2cheque = 0;
+        feeresultinsta2cheque=e.detail.response.returnval;
+        for(var i=0;i<feeresultinsta2cheque.length;i++){
+          collection2cheque += parseInt(e.detail.response.returnval[i].installment_2);
+        }
+        if(collection1cheque && collection2cheque){
+          var total_collection_cheque = collection1cheque + collection2cheque;
+        } else if(collection1cheque) {
+          var total_collection_cheque = collection1cheque;
+        } else {
+          var total_collection_cheque = collection2cheque;
+        }
+        if(total_collection_cash && total_collection_cheque){
+          var total_collection = total_collection_cheque + total_collection_cash;
+        } else if(total_collection_cash){
+          var total_collection = total_collection_cash;
+        } else {
+          var total_collection = total_collection_cheque;
+        }
+        if(feeresultinsta1 && feeresultinsta2){
+          var students_paid_by_cash = feeresultinsta1.length+feeresultinsta2.length;
+        } else if(feeresultinsta1) {
+          var students_paid_by_cash = feeresultinsta1.length
+        } else {
+          var students_paid_by_cash = feeresultinsta2.length;
+        }
+        if(feeresultinsta1cheque && feeresultinsta2cheque){
+          var students_paid_by_cheque = feeresultinsta1cheque.length + feeresultinsta2cheque.length;
+        } else if(feeresultinsta1cheque) {
+          var students_paid_by_cheque = feeresultinsta1cheque.length;
+        } else {
+          var students_paid_by_cheque = feeresultinsta2cheque.length;
+        }
+        var total_students_paid = students_paid_by_cash + students_paid_by_cheque;
+        //alert(collection1);
+        /*if(total_collection_cheque == 0){
+          document.querySelector('transport-app').setPage("nodata","Fee Reports");
+        } else {*/
+           document.querySelector('feereports-card').feereportarr2cheque=feeresultinsta2cheque;
+           document.querySelector('feereports-card').total_collection_cheque=total_collection_cheque;
+           document.querySelector('feereports-card').total_collection= total_collection;
+           document.querySelector('feereports-card').students_paid_by_cash= students_paid_by_cash;
+           document.querySelector('feereports-card').students_paid_by_cheque= students_paid_by_cheque;
+           document.querySelector('feereports-card').total_students_paid= total_students_paid;
+        //}
       },
       pending:function(){
         this.pendingurl=sessionStorage.getItem("addrinfo")+"/pending";

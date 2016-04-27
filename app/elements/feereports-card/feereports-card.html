@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../transportfee-service/transportfee-service.html">
 <link rel="import" href="../feereports-item-card/feereports-item-card.html">
+<link rel="import" href="../feereportscheque-item-card/feereportscheque-item-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
 <dom-module id="feereports-card">
@@ -22,27 +23,77 @@
       .total-collection{
         @apply(--layout-horizontal);
       }
+      .fields{
+        @apply(--layout-horizontal);
+      }
     </style>
     <div class="feereports-card">
       <div class="date">
         <datepicker1-card></datepicker1-card>
       </div>
-      <div class="headtabs">
+      <div class="field" id="by1"><paper-item><h1>By Cash</h1></paper-item></div>
+      <div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
+            <paper-tab>Receipt No</paper-tab>
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>
       <template  is="dom-repeat" items="{{feereportarr1}}" as="view">
-        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" installment1="{{view.installment_1}}"></feereports-item-card>
+        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_1}}"></feereports-item-card>
       </template>
       <template  is="dom-repeat" items="{{feereportarr2}}" as="view">
-        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" installment1="{{view.installment_2}}"></feereports-item-card>
+        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_2}}"></feereports-item-card>
       </template>
-        <div class="total-collection" id="totcol">
-          <paper-item>Total Collection</paper-item>
-          <paper-item>{{total_collection}}</paper-item>
+        <div class="total-collection" id="totcol1">
+          <paper-item>Total Collection by Cash</paper-item>
+          <paper-item>{{total_collection_cash}}</paper-item>
+        </div>
+      <div class="field" id="by2"><paper-item><h1>By Cheque</h1></paper-item></div>
+      <div class="headtabs" id="tabs2">
+          <paper-tabs selected="0">
+            <paper-tab>ID</paper-tab>
+            <paper-tab>Name</paper-tab>
+            <paper-tab>Bank Name</paper-tab>
+            <paper-tab>Cheque No</paper-tab>
+            <paper-tab>Cheque Date</paper-tab>
+            <paper-tab>Receipt No</paper-tab>
+            <paper-tab>Fee Paid</paper-tab>
+          </paper-tabs>
+      </div>
+      <template  is="dom-repeat" items="{{feereportarr1cheque}}" as="view">
+        <feereportscheque-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" bankname="{{view.bank_name}}" chequeno="{{view.cheque_no}}" chequedate="{{view.cheque_date}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_1}}"></feereportscheque-item-card>
+      </template>
+      <template  is="dom-repeat" items="{{feereportarr2cheque}}" as="view">
+        <feereportscheque-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" bankname="{{view.bank_name}}" chequeno="{{view.cheque_no}}" chequedate="{{view.cheque_date}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_2}}"></feereportscheque-item-card>
+      </template>
+        <div class="total-collection" id="totcol2">
+          <paper-item>Total Collection  by Cheque</paper-item><paper-item>{{total_collection_cheque}}</paper-item>
+        </div>
+        <div class="grand-total" id="grndtot">
+          <div class="fields">
+            <paper-item>Students Paid by Cash</paper-item>
+            <paper-item>{{students_paid_by_cash}}</paper-item>
+          </div>
+          <div class="fields">
+            <paper-item>Students Paid by Cheque</paper-item>
+            <paper-item>{{students_paid_by_cheque}}</paper-item>
+          </div>
+          <div class="fields">
+            <paper-item>Total Students Paid</paper-item>
+            <paper-item>{{total_students_paid}}</paper-item>
+          </div>
+          <div class="fields">
+            <paper-item>Total Collection  by Cash</paper-item><paper-item>{{total_collection_cash}}</paper-item>
+          </div>
+          <div class="fields">
+            <paper-item>Total Collection  by Cheque</paper-item><paper-item>{{total_collection_cheque}}</paper-item>
+          </div>
+          <div class="fields">
+            <paper-item>Grand Total</paper-item>
+            <paper-item>{{total_collection}}</paper-item>
+          </div>
         </div>
         <div id="button">
           <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
@@ -60,15 +111,24 @@
     Polymer({
       is: 'feereports-card',
       ready:function(){
-        this.querySelector("paper-tabs").style.visibility='hidden';
         this.$.print.hidden=true;
-        this.$.totcol.hidden=true;
-
+        this.$.totcol1.hidden=true;
+        this.$.totcol2.hidden=true;
+        this.$.grndtot.hidden=true;
+        this.$.tabs1.hidden=true;
+        this.$.tabs2.hidden=true;
+        this.$.by1.hidden=true;
+        this.$.by2.hidden=true;
       },
       showpapertab:function(){
-        this.querySelector("paper-tabs").style.visibility='visible';
         this.$.print.hidden=false;
-        this.$.totcol.hidden=false;
+        this.$.totcol1.hidden=false;
+        this.$.totcol2.hidden=false;
+        this.$.grndtot.hidden=false;
+        this.$.tabs1.hidden=false;
+        this.$.tabs2.hidden=false;
+        this.$.by1.hidden=false;
+        this.$.by2.hidden=false;
       },
       print:function(){
         this.$.print.hidden=true;

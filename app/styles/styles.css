@@ -65,7 +65,7 @@ paper-button{
     margin: 5% 0 0 30%;
 }
 .layframe{
-    margin-left: 25%;
+    margin-left: 15%;
      @apply(--layout-center);
     width: all;
      @apply(--layout-horizontal);
@@ -268,7 +268,20 @@ li{
 .collapse{
     padding: 10px 15px;
     margin-top: 20px;
-    background-color: #B2C2F0;
+    background-color: #e8e1df;
+    border: 1px solid #dedede;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    width: 100%;
+    text-align: left;
+}
+.collapse1{
+    padding: 10px 15px;
+    margin-top: 20px;
+    //background-color: #B2C2F0;
     border: 1px solid #dedede;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;

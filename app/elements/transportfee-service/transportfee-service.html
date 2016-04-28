@@ -16,6 +16,18 @@
 
    <iron-ajax
         method="post"
+        id="zonefeeajax"
+        url="{{zonefeeurl}}"
+        params="{{zonefeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="zonefeeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+   <iron-ajax
+        method="post"
         id="getnameofstuajax"
         url="{{getnameofstuurl}}"
         handle-as="json"
@@ -123,6 +135,18 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+  <iron-ajax
+        
+        id="zoneinstalltypeajax"
+        url="{{zoneinstalltypeurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="zoneinstalltypeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
     <iron-ajax
         method="post"
         id="checkchequedetailsajax"
@@ -277,6 +301,21 @@
         obj.studid=studid;
         this.generatefeeparam=obj;
         this.$.generatefeeajax.generateRequest();
+     },
+        zonefee:function(studid)
+     {
+      
+      this.zonefeeurl=sessionStorage.getItem("addrinfo")+"/zonefee-card";
+        var obj={"studid":""}
+        obj.studid=studid;
+        this.zonefeeparam=obj;
+        this.$.zonefeeajax.generateRequest();
+     },
+     zonefeeResponse:function(e)
+     {
+      
+        feeresult=e.detail.response.returnval;
+       document.querySelector('transportfee-service').zoneinstalltype();
      },
      generatefeeResponse:function(e)
      {
@@ -505,6 +544,10 @@ recarr.push(recobj);
         this.getinstalltypeurl="../../configfile/installmenttype.json";
         this.$.getinstalltypeajax.generateRequest(); 
     },
+    zoneinstalltype:function(){
+        this.zoneinstalltypeurl="../../configfile/installmenttype.json";
+        this.$.zoneinstalltypeajax.generateRequest(); 
+    },
     getinstalltypeResponse:function(e){
         var feepercent;
         var installarr=[];
@@ -613,6 +656,115 @@ recarr.push(recobj);
 //alert(JSON.stringify(e.detail.response));
 document.querySelector('transportfee-card').installmentarr=installarr;
      },
+ zoneinstalltypeResponse:function(e){
+        var feepercent;
+        var installarr=[];
+        var install1fee;
+        var install2fee;
+        var install1date;
+        var install2date;
+        var discountfee;
+        var feestudid;
+        var mode1;
+        var mode2;
+        var feestudname;
+        var date1;
+        var date2;
+        var install1status;
+        var install2status;
+        var install1fine;
+        var install2fine;
+        var dadname;
+
+      feestudname=feeresult[0].student_name;
+      feestudid=feeresult[0].id;
+      discountfee=feeresult[0].discount_fee;
+      feepercent=feeresult[0].fees;
+      mode1=feeresult[0].modeofpayment1;
+      mode2=feeresult[0].modeofpayment2;
+      install1fee=feeresult[0].installment_1;
+      install2fee=feeresult[0].installment_2;
+      install1status=feeresult[0].install1_status;
+      install2status=feeresult[0].install2_status;
+      install1fine=feeresult[0].install1_fine;
+      install2fine=feeresult[0].install2_fine;
+      var d1=feeresult[0].installment_1Date;
+      date1=new Date(d1);
+      install1date=date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+      var d2=feeresult[0].installment_2Date;
+      date2=new Date(d2);
+      install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+        var installdata=e.detail.response;
+        //alert(feepercent+''+discountfee);
+        for(var i=0;i<installdata.length;i++)
+        {
+             var paidstatus;
+             var paiddate;
+             var paymode;
+             var installstatus;
+             var fine;
+            //alert(feepercent);
+            //alert(installdata[i].amt_percentage);
+            if(installdata[i].install_type=="installment1")
+            {
+                if(install1fee>0 && install1status!="bounce")
+                {
+                 paidstatus=true;
+                 paiddate=install1date;
+                 paymode=mode1;
+                 installstatus=install1status;
+                 fine=install1fine;
+
+                }
+                else
+                {
+                    paidstatus=false;
+                    paiddate="no";
+                    paymode="";
+                    installstatus="";
+                    fine=install1fine;
+
+                }
+            }
+             if(installdata[i].install_type=="installment2")
+            {
+                if(install2fee>0 && install2status!="bounce")
+                {
+                 paidstatus=true;
+                 paiddate=install2date;
+                 paymode=mode2;
+                 installstatus=install2status;
+                 fine=install2fine;
+
+                }
+                else
+                {
+                    paidstatus=false;
+                    paiddate="no";
+                    paymode="";
+                    installstatus="";
+                    fine=install2fine;
+                }
+            }
+            //alert(installdata[i].amt_percentage);
+            var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":""}
+            obj.installtype=installdata[i].install_type;
+            obj.amount=((parseInt(feepercent)-parseInt(discountfee))/100)*parseInt(installdata[i].amt_percentage)+parseInt(fine);
+            obj.paydate=installdata[i].paydate;
+            obj.installdate=paiddate;
+            obj.paidstatus=paidstatus;
+            obj.paymentmode=paymode;
+            obj.feestudid=feestudid;
+            obj.feestudname=feestudname;
+            obj.installstatus=installstatus;
+            installarr.push(obj);
+        }
+        //alert(JSON.stringify(installarr));
+
+//alert(JSON.stringify(e.detail.response));
+document.querySelector('zonetostudent-card').installmentarr=installarr;
+     },
+
      checkchequedetails:function()
      {
          this.checkchequedetailsurl=sessionStorage.getItem("addrinfo")+"/checkchequedetails";

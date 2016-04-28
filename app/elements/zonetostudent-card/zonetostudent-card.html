@@ -18,52 +18,58 @@
     <link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
     <link rel="import" href="../todatepicker-card/todatepicker-card.html">
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-        <dom-module id="zonetostudent-card">
+    <link rel="import" href="../zoneinstalltype-card/zoneinstalltype-card.html">
+        <link rel="import" href="../transportfee-service/transportfee-service.html">
+<dom-module id="zonetostudent-card">
 
-<template>  
+<template>
+<style type="text/css">
+  .horizontalframe
+  {
+
+        @apply(--layout-horizontal);
+        
+  }
+  .hrspace
+  {
+    padding: 1%;
+  }
+  .hrrspace
+  {
+
+    padding-left: 4%;
+  }
+  .vrspace
+  {
+    padding-top: 5%;
+  }
+</style>  
   <body>
     
 
     <div class="layframe">
-
-    <table style="padding: 1%;">
-         <tr>
-         <td>
-    <div class="left">
-
-          <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+        <div class="horizontalframe">
+    <div class="hrspace">
+          <paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item>{{item.itemdes}}</paper-item>
         </template>
       </paper-listbox>
       </div>
-</td>
-<td>
-<div class="right">
-          <paper-input class="field" label="School Type" readonly is="" id="dad5" value="{{grade}}"></paper-input></div>
-</td>
+<div class="hrspace">
+          <paper-input  label="School Type" readonly is="" id="dad5" value="{{grade}}"></paper-input></div>
 
-  </tr>
-  <tr>
-  <td>
+<div class="hrspace">
+          <paper-input  label="Standard" is="" readonly id="dad4" value="{{stnd}}"></paper-input></div>
+</div>
+ <div class="horizontalframe">
+    <div class="hrspace">
+             <paper-input  label="Student ID" is="" id="dad2" readonly value="{{id}}"></paper-input></div>
+<div class="hrspace">
+          <paper-input  label="Date Of Birth" is="" id="dad1" readonly value="{{date}}"></paper-input></div>
 
-<div class="left">
-          <paper-input class="field" label="Standard" is="" readonly id="dad4" value="{{stnd}}"></paper-input></div>
-</td><td>
-          <div class="right">
-          <paper-input class="field" label="Section" is="" id="dad3" readonly value="{{secn}}"></paper-input>          </div>
-    </td></tr>
-    <tr>
-    <td>
-    <div class="left">
-             <paper-input class="field" label="Student ID" is="" id="dad2" readonly value="{{id}}"></paper-input></div>
-</td>
-<td><div class="right">
-          <paper-input class="field" label="Date Of Birth" is="" id="dad1" readonly value="{{date}}"></paper-input></div>
-</td></tr>
-<tr><td>
-<div class="left">
+<div class="hrspace">
       <div class="drop-down" >
         <paper-dropdown-menu label="Select the Zone">
           <paper-menu class="dropdown-content" on-iron-select="zoned" valueattr="value" >
@@ -74,76 +80,85 @@
         </paper-dropdown-menu>
       </div>
       </div>
-</td><td>
-<div class="right">
-          <paper-input  readonly class="field" label="Fees" id="dad" value="{{fee}}"></paper-input></div>
- </td></tr>
- <tr><td>
-<div class="left">
+</div>
+<div class="horizontalframe">
+<div>
+          <paper-input  readonly label="Fees" id="dad" value="{{fee}}"></paper-input></div>
+
+<div>
  <paper-input id="zdate1"  value="{{zfromdate}}"></paper-input> </div>
-</td></tr></table>
+ <div> <paper-input id="zdate"  value="{{ztodate}}"></paper-input> </div>
+</div>
 
-
+<div  class="horizontalframe hrrspace">
+<div class="verticalframe">
           <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Travel Requirements:</p>
-
-
-<table style="padding: 1%;">
-<tr><td><div class="left1">
+<div class="horizontalframe" >
+    <div >
             Complete Year
             <paper-checkbox id="yearly" class="checkbox" on-change="fullHandler"></paper-checkbox></div>
-    </td>
-<td><div class="right1">
+    <div >
             Custom
             <paper-checkbox id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox></div>
-    </td>
- </tr></table>
+            </div>
+  </div>
 
-         <paper-input id="zdate"  value="{{ztodate}}"></paper-input> 
-
-
-
-
-    <table ><tr><td><div class="left">
-            <fromdatepicker-card id="date1"></fromdatepicker-card></div>
-</td>
-<td><div class="right">
-            <todatepicker-card id="date2"></todatepicker-card></div>
-</td><td><div class="right3">
-          <paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
-</div>
-</td></tr>
-</table>
-
-
-<table style="padding: 1%;">
+<div class="verticalframe hrrspace">
 <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Mode Of Travel:</p>
-<tr><td>
-     
-<div class="left1">
+
+  <div class="horizontalframe">   
+<div>
 One-Way
   <paper-checkbox id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox></div>
-
-</td><td><div class="right2">
+<div >
   Two-Way
 <paper-checkbox id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
+</div>
+</div>
+</div>
+<div class="horizontalframe" >
+<div >
+            <fromdatepicker-card id="date1"></fromdatepicker-card></div>
+<div >
+            <todatepicker-card id="date2"></todatepicker-card></div>
+<div class="vrspace">
+          <paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
+</div>
+</div>
+<div class="horizontalframe hrspace" id="but">
 
-</td></tr>
-</table>
-
-<div class="buttons" id="but">
-  <div class="submit">
+<div>
     <paper-button class="button" on-click="click">Submit</paper-button>
   </div>
-  <div style="margin-top: -3.5%; margin-left: -30%;" class="cancel">
+  <div>
     <paper-button class="button" on-click="ready">Cancel</paper-button>
   </div>
-</div>
-<paper-input id="status" class="field" value="{{status}}"></paper-input>
 
+<paper-input id="status" class="field" value="{{status}}"></paper-input>
+</div>
+<div hidden$="{{hidetransport}}">
+<div  class="collapse" on-click="toggle2"  hidden$="{{hide}}">Transport Fee</div>
+<div class="collapse1">
+          <paper-tabs>
+            <paper-tab>Installment Type</paper-tab>
+            <paper-tab>Amount</paper-tab>
+            <paper-tab>Date</paper-tab>
+            <paper-tab>Mode of Payment</paper-tab>
+          </paper-tabs>
+      </div>
+      <div class="collapse1"> 
+      <template  is="dom-repeat" items="{{installmentarr}}" as="view">
+          <zoneinstalltype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
+          </zoneinstalltype-card>
+      </template>
+      <div >
+      <paper-button  id="{{id}}" on-click="payfee">PAY</paper-button>
+   </div>
    </div> 
-    
+    </div>
   </body>
     <transport-service id="root"></transport-service>
+    <transportfee-service id="service"></transportfee-service>
 </template>
 <script>
  (function() {
@@ -152,6 +167,8 @@ One-Way
     var todate;
     var fromdat;
     var datebox;
+    var feepay;
+
 var todat;
 var mode='Two-Way';
 var dat2=new Date();
@@ -164,12 +181,12 @@ var dat2=new Date();
     is: "zonetostudent-card",
     
       ready: function() {
-        
-
+      
         this.$.root.getzone();
         this.$.root.getname();
         this.querySelector('paper-listbox').style.visibility='hidden';
         this.$.date1.hidden=true;
+       
         this.$.date2.hidden=true;
         this.$.datebox.hidden=true;
         this.$.status.hidden=true;
@@ -178,7 +195,7 @@ var dat2=new Date();
         this.$.dad.disabled=true;
         this.$.dad1.disabled=true;
         this.$.dad2.disabled=true;
-        this.$.dad3.disabled=true;
+        //this.$.dad3.disabled=true;
         this.$.dad4.disabled=true;
         this.$.dad5.disabled=true;
         this.$.yearly.disabled=true;
@@ -187,7 +204,11 @@ var dat2=new Date();
          this.$.twoway.disabled=true;
          this.$.but.disabled=true;
          },
-       
+       Fnfeepayment:function(feearr)
+       {
+        feepay=feearr;
+        alert(JSON.stringify(feearr));
+       },
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
       this.zone = (e.target.selectedItem.textContent).trim();
@@ -205,12 +226,26 @@ var dat2=new Date();
       document.querySelector("#twoway").checked=true;
 
     },
+    setzonedate:function(zonefromdate,zonetodate)
+    {
+      var temp='foryear';
+          fromdat=new Date(zonefromdate);
+          todat =new Date(zonetodate);
+           this.$.root.calc(temp);
+    },
    
-    
+    payfee:function()
+    {
+ 
+     for(var i=0;i<feepay.length;i++)
+     {
+
+      this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
+    }
+    },
     autocompletearr:function(autocompletearr)
     {
          item=autocompletearr;
-        // alert(item);
     },
    
     FnInputChanged:function(e){
@@ -288,7 +323,7 @@ var dat2=new Date();
      
      this.$.dad1.disabled=false;
      this.$.dad2.disabled=false;
-     this.$.dad3.disabled=false;
+     //this.$.dad3.disabled=false;
      this.$.dad4.disabled=false;
      this.$.dad5.disabled=false;
      
@@ -402,7 +437,7 @@ if(oneway.checked==true){
       this.$.root.oneway();
   }
 
-  else if((oneway.checked==true)&&(datebox.checked==true)){
+ if((oneway.checked==true)&&(datebox.checked==true)){
     this.$.root.onecus();
   }
   
@@ -428,7 +463,7 @@ twowayHandler:function(event){
 
   } 
   
-  else if((twoway.checked==true)&&(datebox.checked==true)){
+   if((twoway.checked==true)&&(datebox.checked==true)){
     this.$.root.twocus();
   }
   
@@ -446,13 +481,15 @@ twowayHandler:function(event){
 click:function(e)
     {
 
+
+
         fromdate=fromdat.getFullYear()+"/"+(fromdat.getMonth()+1)+"/"+fromdat.getDate();
         todate=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
         //alert(fromdate+'   '+todate);
       //alert(this.studentid+this.zone_id+this.fee);
       if(this.status=='cancelled')
       {
-      this.$.root.updatezone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status);
+      this.$.root.updatezone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value);
     }
     else if(this.status=='mapped')
     {
@@ -466,9 +503,10 @@ click:function(e)
 
     }
     else{
-      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status); 
+      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value); 
 
     }
+     this.hidetransport=false;
 
     },
 clickdate:function()

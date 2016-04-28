@@ -505,6 +505,7 @@
     var yearlyfee;
     var val;
     var oneway;
+    var zstuname;
 
 
     Polymer({
@@ -539,7 +540,6 @@
       },
       getroutedetailResponse:function(e1)
           { 
-            //alert('i m back');
           var routedetails=e1.detail.response.returnval;
           //alert(JSON.stringify(routedetails));
           document.querySelector('mappointtoroute-card').itemarr=routedetails;
@@ -579,7 +579,6 @@
       sequenceResponse:function(e)
       {
         var seq=(e.detail.response.returnval[0].count)+1;
-        //alert(seq);
         var obj={"id":"","routes":"","points":"","trip":"","pick":"","drop":""};
         obj.id="p"+seq;
         obj.routes=routeidd;
@@ -634,10 +633,12 @@
             var todate1=e1.detail.response.returnval[0].end_date;
             document.querySelector('zonetostudent-card').zfromdate=fromdate1;
             document.querySelector('zonetostudent-card').ztodate=todate1;
+            document.querySelector('zonetostudent-card').setzonedate(fromdate1,todate1);
 
       },
-      setzone:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx)
+      setzone:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx,stuname)
       {
+        zstuname=stuname;
         this.setzoneurl = sessionStorage.getItem("addrinfo")+"/setzone";
         var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":""};
         obj.studid=studid;
@@ -659,6 +660,8 @@
          if(result=="success")
          {
           alert('Zone allocated successfully');
+          document.querySelector('transportfee-service').zonefee(zstuname);
+          document.querySelector('zonetostudent-card').hidetransport=false;
          }
          else
          {

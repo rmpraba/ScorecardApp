@@ -21,9 +21,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../transportfee-service/transportfee-service.html">
-<link rel="import" href="../datepicker-card/datepicker-card.html">
+<link rel="import" href="../zonedatepicker-card/zonedatepicker-card.html">
 
-<dom-module id="installtype-card">
+<dom-module id="zoneinstalltype-card">
   <template>
     <style>
       :host {
@@ -39,14 +39,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="drop-down">
             <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paydate}}"   label="---Select the Mode of Payment---">
                 <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
-                   <paper-item value="Cheque">Cheque</paper-item>
-                    <paper-item value="Cash">Cash</paper-item>
+                   <paper-item value="Cheque" id="{{installtype}}">Cheque</paper-item>
+                    <paper-item value="Cash" id="{{installtype}}">Cash</paper-item>
                 </paper-menu>
             </paper-dropdown-menu>
           </div>
           <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
-           <paper-item id="installsdate" hidden$="{{hidden1}}">{{installdate}}</paper-item>
-    <paper-button style="margin-top: 1%;" id="{{studid}}" disabled$="{{enable}}" hidden$="{{hidden2}}" on-click="payfees">PAY</paper-button>
+           
+    
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
             </div>
@@ -55,9 +55,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
  <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
  <div>
- <datepicker-card></datepicker-card></div>
+ <zonedatepicker-card></zonedatepicker-card></div>
 <div class="buttons">
-  <paper-button on-click="add">ADD</paper-button>
+  <paper-button id="{{installtype}}" on-click="add">ADD</paper-button>
 </div>     
  </paper-dialog>
    
@@ -70,9 +70,12 @@ var chequenum;
 var bankname;
 var ck='null';
 var dt;
+var pushitem=[];
+var type;
+var amt;
 
     Polymer({
-      is: 'installtype-card',
+      is: 'zoneinstalltype-card',
  ready:function()
  {
   
@@ -122,10 +125,21 @@ var dt;
       {
         paytype = (e.target.selectedItem.textContent).trim();
         if(paytype=="Cheque")
-        {
+        { type=this.installtype;
+          amt=this.installamt;
         var id = 'animated';
         var dialog = document.getElementById(id);
         dialog.open();
+       }
+       else
+       {
+        var obj={"installamt":"","studid":"","paytype":"","installtype":""}
+        obj.installamt=this.installamt;
+        obj.studid=this.studid;
+        obj.paytype=paytype;
+        obj.installtype=this.installtype;
+        pushitem.push(obj);
+         document.querySelector('zonetostudent-card').Fnfeepayment(pushitem);
        }
      },
      showdialog:function()
@@ -144,6 +158,13 @@ var dt;
        var id = 'animated';
       var dialog = document.getElementById(id);
       dialog.opened=false;
+       var obj={"installamt":"","studid":"","paytype":"","installtype":""}
+        obj.installamt=amt;
+        obj.studid=this.studid;
+        obj.paytype=paytype;
+        obj.installtype=type;
+        pushitem.push(obj);
+        document.querySelector('zonetostudent-card').Fnfeepayment(pushitem);
     },
 
       payfees:function()

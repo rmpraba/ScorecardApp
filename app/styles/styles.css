@@ -782,4 +782,8 @@ margin-left: 2%;
 .feereports-card #button, .pending-card #button, .routereport-card #button{
     margin: 5% 0 0 40%;
 }
+.feereports-card .grand-total{
+    width: 100%;
+    margin:5% 0 0 27%; 
+}
 </style>

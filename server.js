@@ -248,7 +248,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0)";
+	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0)";
 	   // console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)
@@ -409,7 +409,7 @@ app.post('/report-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-//console.log(rows);
+			//console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -468,8 +468,8 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 {
 	var class_id={"school_type":req.query.classes};
 	var req={"transport_required":'yes'};
-	//console.log('in server...');
-      connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ?',[class_id,req],
+		//console.log('in server...');
+      	connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ?',[class_id,req],
        		function(err, rows)
        	{
 		if(!err)
@@ -491,8 +491,8 @@ app.post('/namepick',  urlencodedParser,function (req, res)
 {
 	var id={"id":req.query.id};
 	var req={"transport_required":'yes'};
-	//console.log('in server...');
-      connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ?',[id,req],
+		//console.log('in server...');
+      	connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ?',[id,req],
        		function(err, rows)
        	{
 		if(!err)
@@ -500,7 +500,7 @@ app.post('/namepick',  urlencodedParser,function (req, res)
 		if(rows.length>0)
 		{
 			res.status(200).json({'returnval': rows});
-			console.log(rows);
+			//console.log(rows);
 		}
 		else
 		{
@@ -879,7 +879,7 @@ app.post('/refund-card',  urlencodedParser,function (req, res)
 		else
 		{
 			console.log(err);
-			res.status(200).json({'returnval': 'invalid'});
+			res.status(200).json({'returnval': ''});
 		}
 	}
 });
@@ -1119,7 +1119,7 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
 app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
 	var tripid={"school_type":req.query.tripid};
 	
-		console.log(tripid);
+		//console.log(tripid);
          var route_id={"drop_route_id":req.query.routeid};
 
     connection.query('SELECT student_id,(select student_name from student_details where id=student_id)as name,(select point_name from point where id=drop_point)  as pick from student_point where ? and ?',[route_id,tripid],
@@ -1177,7 +1177,7 @@ app.post('/getstudapproval',  urlencodedParser,function (req, res)
 			}
 			else
 			{
-			res.status(200).json({'returnval': 'invalid'});
+			res.status(200).json({'returnval': ''});
 			}
 		}
 		else
@@ -1225,7 +1225,7 @@ app.post('/getapprovalverify',  urlencodedParser,function (req, res)
 			}
 			else
 			{
-			res.status(200).json('invalid');
+			res.status(200).json('');
 			}
 		}
 		else
@@ -1560,12 +1560,12 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 	
 });
 });
-
 app.post('/datepickinsta1',  urlencodedParser,function (req, res)
 {
 	
 	var date={"installment_1Date":req.query.dates};
-	    connection.query('Select f.student_id, d.student_name,f.fees,f.installment_1 from student_fee f left join student_details d on f.student_id=d.id where ? ',[date],
+	var mode= {"modeofpayment1":"Cash"};
+	    connection.query('Select f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_1 from student_fee f left join student_details d on f.student_id=d.id where ? and ?',[date, mode],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -1580,12 +1580,31 @@ app.post('/datepickinsta1',  urlencodedParser,function (req, res)
 		}
 	});
 });
-
+app.post('/datepickinsta1cheque',  urlencodedParser,function (req, res)
+{
+	
+	var date={"installment_1Date":req.query.dates};
+	var mode= {"modeofpayment1":"Cheque"};
+	    connection.query('select f.student_id, f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_1, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ?',[date, mode],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 app.post('/datepickinsta2',  urlencodedParser,function (req, res)
 {
 	var date={"installment_2Date":req.query.dates};
-	console.log(date);
-	    connection.query('Select f.student_id, d.student_name,f.fees,f.installment_2 from student_fee f left join student_details d on f.student_id=d.id where ? ',[date],
+	var mode= {"modeofpayment2":"Cash"};
+	    connection.query('Select f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_2 from student_fee f left join student_details d on f.student_id=d.id where ? and ? ',[date, mode],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -1600,8 +1619,26 @@ app.post('/datepickinsta2',  urlencodedParser,function (req, res)
 		}
 	});
 });
-
-
+app.post('/datepickinsta2cheque',  urlencodedParser,function (req, res)
+{
+	
+	var date={"installment_2Date":req.query.dates};
+	var mode= {"modeofpayment2":"Cheque"};
+	    connection.query('select f.student_id, f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_2, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ?',[date, mode],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 app.post('/pending',  urlencodedParser,function (req, res)
 {
 	    connection.query('Select f.student_id, d.student_name,f.fees,(f.installment_1+f.installment_2) as paid, (f.fees-f.discount_fee)-(f.installment_1+f.installment_2) as pending from student_fee f left join student_details d on f.student_id=d.id where (f.fees-f.discount_fee)-(f.installment_1+f.installment_2)>0',
@@ -1806,7 +1843,7 @@ connection.query('update cancellation set flag=1,status="closed" where ? ',[stud
        	function(err, rows)
        	{
        	if(!err){
-			console.log('suc');
+			//console.log('suc');
 				res.status(200).json({'returnval': 'success'});
 			} 
 		 else {

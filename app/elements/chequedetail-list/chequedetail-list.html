@@ -40,58 +40,67 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="field"><paper-item style="color:{{cstatus}}; width: 20%; margin-left: 15%;" >{{chequeno}}</paper-item></div>
         <div class="field"><paper-item style="color:{{cstatus}}; width: 20%;">{{bankname}}</paper-item></div>
         <div class="field"><paper-item  style="color:{{cstatus}}; width: 20%;">{{cdate}}</paper-item></div>
-        <div class="field"><paper-checkbox id="acceptcheque" class="checkbox" on-change="Fncleared" style="padding-top: 1%; width: 20%;"></paper-checkbox></div>
-        <div class="field"><paper-checkbox style="padding-top: 1%; width: 20%;  margin-left: 30%; " id="rejectcheque" class="checkbox" on-change="Fnbounce"></paper-checkbox></div>
-        <div class="field"><paper-button style=" height: 34px;  margin-left:20%; " id="button"  on-click="accept">Submit</paper-button></div>
+        <div class="field"><paper-checkbox id="acceptcheque" checked class="checkbox" on-change="Fncleared" style="padding-top: 1%; width: 20%;"></paper-checkbox></div>
+        
       </div>
+       <paper-dialog id="animated" modal >
+<h4>ADD CHEQUE DETAILS</h4>
+  <div class="field"><paper-checkbox  id="process" class="checkbox" on-change="Fnprocess" style="padding-top: 1%; width: 20%;">Processing</paper-checkbox></div>
+  <div class="field"><paper-checkbox id="bounce" class="checkbox" on-change="Fnbounce" style="padding-top: 1%; width: 20%;">Bounce</paper-checkbox></div>
+ <div>
+ </paper-dialog>
     </div>
    <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
   (function() {
     var chequestatus;
+    var chqid;
 
     Polymer({
       is: 'chequedetail-list',
 
-   
       Fncleared:function(e)
       {
-       if(e.target.checked==true)
+        document.querySelector('#process').checked=false;
+        document.querySelector('#bounce').checked=false;
+        chqid=this.chequeno;
+       if(e.target.checked==false)
        {
-        document.querySelector("#rejectcheque").checked=false;
-            chequestatus="cleared";  
-
+       
+        var id = 'animated';
+        var dialog = document.getElementById(id);
+        dialog.open();
        }
        else
        {
-        chequestatus="no";
+        document.querySelector('chequedetail-card').FnChangestatus(chqid,"cleared");
+       }
+      },
+      Fnprocess:function(e)
+      {
+        
+        var id = 'animated';
+        var dialog = document.getElementById(id);
+         dialog.opened=false;
+         if(e.target.checked==true)
+       {
+        alert(chqid);
+         document.querySelector('chequedetail-card').FnChangestatus(chqid,"processing");
        }
       },
       Fnbounce:function(e)
       {
-      if(e.target.checked==true)
+        var id = 'animated';
+        var dialog = document.getElementById(id);
+         dialog.opened=false;
+         if(e.target.checked==true)
        {
-        document.querySelector("#acceptcheque").checked=false;
-            chequestatus="bounce";  
-       }
-       else
-       {
-        chequestatus="no";
+        alert(chqid);
+         document.querySelector('chequedetail-card').FnChangestatus(chqid,"bounce");
        }
       },
-      accept:function()
-      {
-        if(chequestatus=="cleared"||chequestatus=="bounce")
-        {
-          
-          this.$.service.updatechequedetail(chequestatus,this.chequeno,this.installtype,this.studid);
-        }
-        else
-        {
-          alert('please check the checkbox');
-        }
-      }
+     
     });
   })();
   </script>

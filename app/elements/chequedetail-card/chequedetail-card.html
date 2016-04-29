@@ -38,18 +38,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <template  is="dom-repeat" items="{{chequearr}}" as="view">
       <chequedetail-list studid="{{view.studid}}" name="{{view.sname}}" chequeno="{{view.chequeno}}" bankname="{{view.bankname}}" cdate="{{view.cdate}}" cstatus="{{view.cstatus}}" installtype="{{view.installtype}}"></chequedetail-list>
     </template>
+    <div class="field"><paper-button style=" height: 34px;  margin-left:20%; " id="button"  on-click="accept">Submit</paper-button></div>
     <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
   (function() {
-    'use strict';
+    var chqdetail=[];
 
     Polymer({
       is: 'chequedetail-card',
 ready:function()
 {
   this.$.service.checkchequedetails();
-}
+},
+Fnchequedetail:function(chequedetail)
+{
+ chqdetail=chequedetail;
+ for(var i=0;i<chqdetail.length;i++)
+  {
+    chqdetail[i].cheque_status="cleared";
+  }
+ 
+},
+FnChangestatus:function(chqid,st)
+{
+  
+  for(var i=0;i<chqdetail.length;i++)
+  {
+    if(chqdetail[i].cheque_no==chqid)
+    {
+      chqdetail[i].cheque_status=st;
+    }
+  }
+},
+ accept:function()
+      {
+       for(var i=0;i<chqdetail.length;i++)
+        {
+          this.$.service.updatechequedetail(chqdetail[i].cheque_status,chqdetail[i].cheque_no,chqdetail[i].installtype,chqdetail[i].student_id);
+        }
+       
+      }
     });
   })();
   </script>

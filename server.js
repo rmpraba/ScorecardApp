@@ -1587,18 +1587,27 @@ app.post('/datepickinsta1',  urlencodedParser,function (req, res)
 	var date={"installment_1Date":req.query.dates};
 	var mode= {"modeofpayment1":"Cash"};
 	    connection.query('Select f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_1 from student_fee f left join student_details d on f.student_id=d.id where ? and ?',[date, mode],
-       	function(err, rows){
-		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
-			}
-		} else {
-			console.log(err);
-		}
+       	function(err, rows){	
+       		var itemarr = new Array();	
+       		if(!err){
+		       	if(rows.length>0){
+			        for(var i=0;i<rows.length;i++){
+			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":""};
+			            obj.student_id=rows[i].student_id;
+			            obj.student_name=rows[i].student_name;
+			            obj.receipt_no=rows[i].receipt_no;
+			            obj.fees=rows[i].fees;
+			            obj.installment_1=rows[i].installment_1;
+			            itemarr.push(obj);
+			        }
+		           	//console.log(JSON.stringify(itemarr));
+					res.status(200).json({'returnval': itemarr});
+		        } else {
+		            res.status(200).json({'returnval': ''});
+		        }
+	        } else {
+	          console.log(err);
+	        }
 	});
 });
 app.post('/datepickinsta1cheque',  urlencodedParser,function (req, res)
@@ -1607,18 +1616,30 @@ app.post('/datepickinsta1cheque',  urlencodedParser,function (req, res)
 	var date={"installment_1Date":req.query.dates};
 	var mode= {"modeofpayment1":"Cheque"};
 	    connection.query('select f.student_id, f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_1, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ?',[date, mode],
-       	function(err, rows){
-		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
-			}
-		} else {
-			console.log(err);
-		}
+       	function(err, rows){	
+       		var itemarr = new Array();	
+       		if(!err){
+		       	if(rows.length>0){
+			        for(var i=0;i<rows.length;i++){
+			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":"","cheque_no":"","bank_name":"","cheque_date":"",};
+			            obj.student_id=rows[i].student_id;
+			            obj.student_name=rows[i].student_name;
+			            obj.receipt_no=rows[i].receipt_no;
+			            obj.fees=rows[i].fees;
+			            obj.installment_1=rows[i].installment_1;
+			            obj.cheque_no=rows[i].cheque_no;
+			            obj.bank_name=rows[i].bank_name;
+			            obj.cheque_date=rows[i].cheque_date;
+			            itemarr.push(obj);
+			        }
+		           	//console.log(JSON.stringify(itemarr));
+					res.status(200).json({'returnval': itemarr});
+		        } else {
+		            res.status(200).json({'returnval': ''});
+		        }
+	        } else {
+	          console.log(err);
+	        }
 	});
 });
 app.post('/datepickinsta2',  urlencodedParser,function (req, res)
@@ -1627,17 +1648,26 @@ app.post('/datepickinsta2',  urlencodedParser,function (req, res)
 	var mode= {"modeofpayment2":"Cash"};
 	    connection.query('Select f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_2 from student_fee f left join student_details d on f.student_id=d.id where ? and ? ',[date, mode],
        	function(err, rows){
+       		var itemarr = new Array();	
 		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
-			}
-		} else {
-			console.log(err);
-		}
+	       	if(rows.length>0){
+		        for(var i=0;i<rows.length;i++){
+		            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":""};
+		            obj.student_id=rows[i].student_id;
+		            obj.student_name=rows[i].student_name;
+		            obj.receipt_no=rows[i].receipt_no;
+		            obj.fees=rows[i].fees;
+		            obj.installment_1=rows[i].installment_2;
+		            itemarr.push(obj);
+		        }
+	           	//console.log(JSON.stringify(itemarr));
+					res.status(200).json({'returnval': itemarr});
+		        } else {
+		            res.status(200).json({'returnval': ''});
+		        }
+        } else {
+          console.log(err);
+        }
 	});
 });
 app.post('/datepickinsta2cheque',  urlencodedParser,function (req, res)
@@ -1645,19 +1675,31 @@ app.post('/datepickinsta2cheque',  urlencodedParser,function (req, res)
 	
 	var date={"installment_2Date":req.query.dates};
 	var mode= {"modeofpayment2":"Cheque"};
-	    connection.query('select f.student_id, f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_2, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ?',[date, mode],
-       	function(err, rows){
-		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
-			}
-		} else {
-			console.log(err);
-		}
+	    connection.query('select f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_2, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ?',[date, mode],
+       	function(err, rows){	
+       		var itemarr = new Array();	
+       		if(!err){
+		       	if(rows.length>0){
+			        for(var i=0;i<rows.length;i++){
+			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":"","cheque_no":"","bank_name":"","cheque_date":"",};
+			            obj.student_id=rows[i].student_id;
+			            obj.student_name=rows[i].student_name;
+			            obj.receipt_no=rows[i].receipt_no;
+			            obj.fees=rows[i].fees;
+			            obj.installment_1=rows[i].installment_2;
+			            obj.cheque_no=rows[i].cheque_no;
+			            obj.bank_name=rows[i].bank_name;
+			            obj.cheque_date=rows[i].cheque_date;
+			            itemarr.push(obj);
+			        }
+		           	//console.log(JSON.stringify(itemarr));
+					res.status(200).json({'returnval': itemarr});
+		        } else {
+		            res.status(200).json({'returnval': ''});
+		        }
+	        } else {
+	          console.log(err);
+	        }
 	});
 });
 app.post('/pending',  urlencodedParser,function (req, res)

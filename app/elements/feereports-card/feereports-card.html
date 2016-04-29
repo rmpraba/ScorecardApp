@@ -40,12 +40,12 @@
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>
-      <template  is="dom-repeat" items="{{feereportarr1}}" as="view">
-        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_1}}"></feereports-item-card>
+      <template  is="dom-repeat" items="{{feereportarr}}" as="view">
+        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" receiptno="{{view.receipt_no}}" feepaid="{{view.installment_1}}"></feereports-item-card>
       </template>
-      <template  is="dom-repeat" items="{{feereportarr2}}" as="view">
+      <!--<template  is="dom-repeat" items="{{feereportarr2}}" as="view">
         <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_2}}"></feereports-item-card>
-      </template>
+      </template>-->
         <div class="total-collection" id="totcol1">
           <paper-item>Total Collection by Cash</paper-item>
           <paper-item>{{total_collection_cash}}</paper-item>
@@ -62,12 +62,12 @@
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>
-      <template  is="dom-repeat" items="{{feereportarr1cheque}}" as="view">
-        <feereportscheque-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" bankname="{{view.bank_name}}" chequeno="{{view.cheque_no}}" chequedate="{{view.cheque_date}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_1}}"></feereportscheque-item-card>
-      </template>
       <template  is="dom-repeat" items="{{feereportarr2cheque}}" as="view">
-        <feereportscheque-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" bankname="{{view.bank_name}}" chequeno="{{view.cheque_no}}" chequedate="{{view.cheque_date}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_2}}"></feereportscheque-item-card>
+        <feereportscheque-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" bankname="{{view.bank_name}}" chequeno="{{view.cheque_no}}" chequedate="{{view.cheque_date}}" receiptno="{{view.receipt_no}}" feepaid="{{view.installment_1}}"></feereportscheque-item-card>
       </template>
+      <!--<template  is="dom-repeat" items="{{feereportarr2cheque}}" as="view">
+        <feereportscheque-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" bankname="{{view.bank_name}}" chequeno="{{view.cheque_no}}" chequedate="{{view.cheque_date}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_2}}"></feereportscheque-item-card>
+      </template>-->
         <div class="total-collection" id="totcol2">
           <paper-item>Total Collection  by Cheque</paper-item><paper-item>{{total_collection_cheque}}</paper-item>
         </div>

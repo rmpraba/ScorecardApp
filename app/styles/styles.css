@@ -65,7 +65,7 @@ paper-button{
     margin: 5% 0 0 30%;
 }
 .layframe{
-    margin-left: 15%;
+    margin-left: 18%;
      @apply(--layout-center);
     width: all;
      @apply(--layout-horizontal);

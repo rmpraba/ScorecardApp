@@ -42,6 +42,14 @@
   .vrspace
   {
     padding-top: 5%;
+    margin-top: 2%;
+  }
+  .fee{
+    margin-left: 1%;
+  }
+  .mode{
+    margin-left: 4%;
+    margin-top: 2%;
   }
 </style>  
   <body>
@@ -82,7 +90,7 @@
       </div>
 </div>
 <div class="horizontalframe">
-<div>
+<div class="fee">
           <paper-input  readonly label="Fees" id="dad" value="{{fee}}"></paper-input></div>
 
 <div>
@@ -93,30 +101,21 @@
 <div  class="horizontalframe hrrspace">
 <div class="verticalframe">
           <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Travel Requirements:</p>
-<div class="horizontalframe" >
-    <div >
+<div  style="width: 170%;" class="horizontalframe" >
+    <div style="width: 150%;">
             Complete Year
-            <paper-checkbox id="yearly" class="checkbox" on-change="fullHandler"></paper-checkbox></div>
-    <div >
+            <paper-checkbox style="margin-left: 3%" id="yearly" class="checkbox" on-change="fullHandler"></paper-checkbox></div>
+    <div style="width: 150%;">
             Custom
-            <paper-checkbox id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox></div>
+            <paper-checkbox style="margin-left: 3%" id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox></div>
             </div>
   </div>
 
-<div class="verticalframe hrrspace">
-<p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Mode Of Travel:</p>
+<div class="verticalframe hrrspace" style="margin-left: 6%; margin-top: 3%;">
+
 
   <div class="horizontalframe">   
-<div>
-One-Way
-  <paper-checkbox id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox></div>
-<div >
-  Two-Way
-<paper-checkbox id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
-</div>
-</div>
-</div>
-<div class="horizontalframe" >
+
 <div >
             <fromdatepicker-card id="date1"></fromdatepicker-card></div>
 <div >
@@ -125,12 +124,25 @@ One-Way
           <paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
 </div>
 </div>
-<div class="horizontalframe hrspace" id="but">
+</div>
+</div>
+<div class="mode">
+<p style="font-weight: 500; font-size: large; margin-left: 0%;">Mode Of Travel:</p>
+<div style="width: 70%;" class="horizontalframe" >
+  <div style="width: 25%;">
+One-Way
+  <paper-checkbox style="margin-left: 25%" id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox></div>
+<div style="width: 100%;">
+  Two-Way
+<paper-checkbox style="margin-left: 3%" id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
+</div>
+</div>
+<div style="margin-top: 5%; margin-left: 20%;" class="horizontalframe hrspace" id="but">
 
 <div>
     <paper-button class="button" on-click="click">Submit</paper-button>
   </div>
-  <div>
+  <div style="margin-left: 5%;">
     <paper-button class="button" on-click="ready">Cancel</paper-button>
   </div>
 
@@ -453,7 +465,7 @@ if(oneway.checked==true){
 
 },
 twowayHandler:function(event){
-  alert('two way');
+  //alert('two way');
   var twoway = document.querySelector("#twoway");
   mode='Two-Way';
   if(twoway.checked==true){

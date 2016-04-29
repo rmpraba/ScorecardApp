@@ -281,14 +281,13 @@ li{
 .collapse1{
     padding: 10px 15px;
     margin-top: 20px;
-    //background-color: #B2C2F0;
     border: 1px solid #dedede;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     font-size: 15px;
     cursor: pointer;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-    width: 100%;
+    width: 98%;
     text-align: left;
 }
 .layout,.flex-horizontal{

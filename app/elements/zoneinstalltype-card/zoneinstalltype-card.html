@@ -71,6 +71,7 @@ var bankname;
 var ck='null';
 var dt;
 var pushitem=[];
+var chequeitem=[];
 var type;
 var amt;
 
@@ -125,11 +126,14 @@ var amt;
       {
         paytype = (e.target.selectedItem.textContent).trim();
         if(paytype=="Cheque")
-        { type=this.installtype;
+        { 
+          type=this.installtype;
           amt=this.installamt;
         var id = 'animated';
         var dialog = document.getElementById(id);
         dialog.open();
+        this.chequeno="";
+        this.banknam="";
        }
        else
        {
@@ -171,27 +175,20 @@ var amt;
         obj.paytype=paytype;
         obj.installtype=type;
         pushitem.push(obj);
-        document.querySelector('zonetostudent-card').Fnfeepayment(pushitem);
-      }
-    },
-
-      payfees:function()
-      {
-        //alert(this.studid);
-          if(paytype=="Cheque")
-      {
-       
         this.chequedate=localStorage.getItem("localsess_curr_date");
-       this.$.service.payfee(this.installamt,this.studid,paytype,this.installtype);
-       this.$.service.chequeinfo(this.studid,this.studname,chequenum,bankname,this.chequedate,this.installtype);
+var obj1={"studid":"","studname":"","chequenum":"","bankname":"","chequedate":"","installtype":""}
+obj1.studid=this.studid;
+obj1.studname=this.studname;
+obj1.chequenum=chequenum;
+obj1.bankname=bankname;
+obj1.chequedate=this.chequedate;
+obj1.installtype=type;
+chequeitem.push(obj1);
+        document.querySelector('zonetostudent-card').Fnfeepayment(pushitem);
+        document.querySelector('zonetostudent-card').Fnchequepayment(chequeitem);
+
       }
-      else
-      {
-        
-        this.$.service.payfee(this.installamt,this.studid,paytype,this.installtype);
-      }
-      }
-    
+    }
     
     });
   })();

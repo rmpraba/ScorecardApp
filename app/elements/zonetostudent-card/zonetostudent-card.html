@@ -180,6 +180,7 @@ One-Way
     var fromdat;
     var datebox;
     var feepay;
+    var chequearray;
 
 var todat;
 var mode='Two-Way';
@@ -221,6 +222,10 @@ var dat2=new Date();
         feepay=feearr;
         //alert(JSON.stringify(feearr));
        },
+       Fnchequepayment:function(chequearr)
+       {
+             chequearray=chequearr;
+       },
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
       this.zone = (e.target.selectedItem.textContent).trim();
@@ -253,6 +258,13 @@ var dat2=new Date();
      {
 
       this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
+    }
+    if(chequearray.length>0)
+    {
+      for(var i=0;i<chequearray.length;i++)
+      {
+        this.$.service.chequeinfo(chequearray[i].studid,chequearray[i].studname,chequearray[i].chequenum,chequearray[i].bankname,chequearray[i].chequedate,chequearray[i].installtype);
+      }
     }
     },
     autocompletearr:function(autocompletearr)

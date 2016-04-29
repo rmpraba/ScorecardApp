@@ -17,28 +17,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-      .headtabs{
-        width: 90% !important;
-        margin: 0 0 0 0% !important;
+      .centerbutton
+      {
+        
+        margin: 0 auto;
       }
     </style>
-     <div class="hor">
-      <div class="headtabs">
-          <paper-tabs selected="0">
-            <paper-tab style="width: 1%; margin-left: 0%;">ID</paper-tab>
-            <paper-tab style="width: 1%; margin-left: -3%;">Name</paper-tab>
-            <paper-tab style="width: 1%; margin-left: 0%;">Cheque No</paper-tab>
-            <paper-tab style="width: 1%; margin-left: -5%;">Bank Name</paper-tab>
-            <paper-tab style="width: 1%; margin-left: -5%;">Date</paper-tab>
-            <paper-tab style="width: 1%; margin-left: 0%;">Cheque Cleared</paper-tab>
-            <paper-tab style="width: 1%; margin-left: 0%;">Cheque Bounce</paper-tab>
+    <div class="collapse1">
+          <paper-tabs>
+            <paper-tab >ID</paper-tab>
+            <paper-tab>Name</paper-tab>
+            <paper-tab>Cheque No</paper-tab>
+            <paper-tab>Bank Name</paper-tab>
+            <paper-tab>Date</paper-tab>
+            <paper-tab>Cheque Cleared</paper-tab>
           </paper-tabs>
       </div>
-   </div>
+      <div class="collapse1">
      <template  is="dom-repeat" items="{{chequearr}}" as="view">
       <chequedetail-list studid="{{view.studid}}" name="{{view.sname}}" chequeno="{{view.chequeno}}" bankname="{{view.bankname}}" cdate="{{view.cdate}}" cstatus="{{view.cstatus}}" installtype="{{view.installtype}}"></chequedetail-list>
     </template>
-    <div class="field"><paper-button style=" height: 34px;  margin-left:20%; " id="button"  on-click="accept">Submit</paper-button></div>
+    <div class="centerbutton">
+    <paper-button id="button"  on-click="accept">Submit</paper-button></div>
+    </div>
+    
     <transportfee-service id="service"></transportfee-service>
   </template>
   <script>

@@ -55,10 +55,20 @@
       var pickdate=moment(this.$.picker.date).format('L');
       var dd1=new Date();
       var dd2=new Date(pickdate);
-      var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
+      var days=parseInt((dd2 - dd1) / (1000 * 60 * 60 * 24));
+      //alert(days);
+      if(days>=0)
+      {
           this.showdate = moment(this.$.picker.date).format('L');
           localStorage.setItem("localsess_curr_date",this.showdate);
           document.querySelector('zoneinstalltype-card').showdialog();
+        }
+        else
+        {
+          alert("please select the future date");
+          this.showdate="";
+          document.querySelector('zoneinstalltype-card').showdialog();
+        }
       }
     }
 });

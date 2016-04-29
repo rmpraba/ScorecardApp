@@ -998,8 +998,8 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         var pending=e.detail.response.returnval;
         document.querySelector('pending-card').pendingarr=pending;
       },
-       discountreportbyname:function(){
-       this.discountreportbynameurl=sessionStorage.getItem("addrinfo")+"/generatereportbyname";
+       discountbyname:function(){
+       this.discountreportbynameurl=sessionStorage.getItem("addrinfo")+"/discountbyname";
        this.$.discountreportbynameajax.generateRequest();
       },
       discountreportbynameResponse:function(e){

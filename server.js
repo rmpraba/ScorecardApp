@@ -1053,6 +1053,27 @@ app.post('/generatereportbyname',  urlencodedParser,function (req, res)
 	}
 });
 	});
+app.post('/discountbyname',  urlencodedParser,function (req, res)
+{
+
+       connection.query('SELECT student_name from student_details where id in (select student_id from student_fee)',
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
+
 
 app.post('/generateroutereport',  urlencodedParser,function (req, res)
 {

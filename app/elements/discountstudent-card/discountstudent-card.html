@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </tr>
           <tr>
           <td>
-            <paper-input class="field" id="damt" label="Discount Amount" value="{{disamt}}" required error-message="needs discount amount"></paper-input>
+            <paper-input class="field" id="damt" label="Discount Amount" value="{{disamt}}" allowed-pattern="[0-9 ]" required error-message="needs discount amount"></paper-input>
           </td>
           <td>
             <paper-input class="field" id="res" label="Reason" value="{{reason}}" required error-message="needs reason"></paper-input>
@@ -98,7 +98,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.q4.readonly=true;
         this.$.q5.readonly=true;
         this.$.q6.readonly=true;
-     this.$.service.discountreportbyname();
+     this.$.service.discountbyname();
         this.querySelector('paper-listbox').style.visibility='hidden';
       },
       autocompletename(nameitem)
@@ -187,10 +187,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
       clicksend:function(e)
       {
-        if(this.disamt=="" && this.reason=="")
+        if(this.disamt=="" || this.reason=="")
         {
           this.$.damt.validate();
           this.$.res.validate();
+        }
+        else if(this.disamt>this.fees)
+        {
+          alert("discount is higher than your fee");
         }
         else
         {

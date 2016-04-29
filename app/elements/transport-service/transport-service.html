@@ -2,16 +2,7 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <dom-module id="transport-service">
   <template>
-   <iron-ajax
-        auto
-        id="addressajax"
-        url="../../configfile/address.json"
-        handle-as="json"
-        content-type="application/json"
-        on-response="addressResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+  
 <iron-ajax
         method="post"
         id="getrouteajax"
@@ -510,12 +501,7 @@
 
     Polymer({
       is: "transport-service",
-      addressResponse:function(e)
-      {
-        var addr=e.detail.response.address;
-        sessionStorage.setItem("addrinfo",addr);
-        //alert(JSON.stringify(e.detail.response.address));
-      },
+      
      
        getroute:function()
       {
@@ -680,9 +666,9 @@
       getnameResponse:function(e1)
           {
             var iditem=e1.detail.response.returnval;
-            document.querySelector('zonetostudent-card').studentidarr=iditem;
+            //document.querySelector('zonetostudent-card').studentidarr=iditem;
             document.querySelector('zonetostudent-card').autocompletearr(iditem);
-            document.querySelector('studentpass-card').autocompletearr(iditem);
+            //document.querySelector('studentpass-card').autocompletearr(iditem);
             //alert(JSON.stringify(document.querySelector('zonetostudent-card').namearr));
       },
 

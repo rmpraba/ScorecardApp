@@ -2,6 +2,16 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <dom-module id="login-service">
   <template>
+   <iron-ajax
+        auto
+        id="addressajax"
+        url="../../configfile/address.json"
+        handle-as="json"
+        content-type="application/json"
+        on-response="addressResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <!--pass the user name and password for signin-->
   <iron-ajax
         method="post"
@@ -196,6 +206,12 @@
     Polymer({
       is: "login-service",
 
+     addressResponse:function(e)
+      {
+        var addr=e.detail.response.address;
+        sessionStorage.setItem("addrinfo",addr);
+        //alert(JSON.stringify(e.detail.response.address));
+      },
      //fetch the username and password from logincard and pass to the loginajax
       logincheck:function(uname,pass)
       {

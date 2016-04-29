@@ -5,6 +5,7 @@
 <link rel="import" href="../transport-app/transport-app.html">
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../login-card/login-card.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 
 <dom-module id="app-card">
@@ -18,15 +19,33 @@
           <transport-app></transport-app>
         </section>
            </iron-pages>
+            <iron-ajax
+        auto
+        id="addressajax"
+        url="../../configfile/address.json"
+        handle-as="json"
+        content-type="application/json"
+        on-response="addressResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
            </template>
   <!-- build:js scripts/app.js -->
   
 <script>
   Polymer({
     is: "app-card",
-    ready: function() {
+    ready: function() 
+    {
+    this.$.addressajax.generateRequest();
     this.page="loginpage";
   },
+  addressResponse:function(e)
+      {
+        var addr=e.detail.response.address;
+        sessionStorage.setItem("addrinfo",addr);
+        //alert(JSON.stringify(e.detail.response.address));
+      },
   setPage:function(page)
     {
      this.page=page;

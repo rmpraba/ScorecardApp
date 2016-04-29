@@ -52,8 +52,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
        <paper-dialog id="animated" >
 <h4>ADD CHEQUE DETAILS</h4>
- <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
- <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
+ <div  class="layout"> <paper-input required error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
+ <div  class="layout"> <paper-input required  error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
  <div>
  <zonedatepicker-card></zonedatepicker-card></div>
 <div class="buttons">
@@ -152,6 +152,13 @@ var amt;
 
         add:function()
     {
+      if(this.chequeno==""&&this.banknam=="")
+      {
+          this.$.chequeno.validate();
+          this.$.banknam.validate();
+      }
+      else
+      {
       chequenum=this.chequeno;
       bankname=this.banknam;
      
@@ -165,6 +172,7 @@ var amt;
         obj.installtype=type;
         pushitem.push(obj);
         document.querySelector('zonetostudent-card').Fnfeepayment(pushitem);
+      }
     },
 
       payfees:function()

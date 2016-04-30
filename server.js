@@ -248,7 +248,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0)";
+	var queryy="insert into student_fee values('"+req.query.studid+"','"+req.query.zone+"',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0)";
 	   // console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)

@@ -569,7 +569,6 @@ recarr.push(recobj);
         {
             alert('Request failed');
         }
-        document.querySelector('discountstudent-card').discountfresh();
      },
     getinstalltype:function(){
         this.getinstalltypeurl="../../configfile/installmenttype.json";
@@ -806,13 +805,8 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         var chequedetailarr=[];
         var cstatus;
         var chequedetail=e.detail.response.returnval;
-if(chequedetail=="")
-{
-  
- document.querySelector('transport-app').setPage("nodata","Cheque Details");
-}
-else
-{
+
+      // alert('s'+JSON.stringify(chequedetail));
         var d=new Date();
         for(var i=0;i<chequedetail.length;i++)
         {
@@ -840,7 +834,6 @@ else
 
         document.querySelector('chequedetail-card').chequearr=chequedetailarr;
         document.querySelector('chequedetail-card').Fnchequedetail(chequedetail);
-      }
 
      },
      updatechequedetail:function(chequestatus,chequenum,installtype,cname)
@@ -873,11 +866,8 @@ else
         obj.installtype=uinstalltype;
         obj.paidstatus=paidstatus;
         this.updatestuchequeparam=obj;
+        //alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
-     },
-     updatestuchequeResponse:function(e)
-     {
-           document.querySelector('chequedetail-card').refreshchequedetail();
      },
       datepickinsta1:function(e){
         this.datepickinsta1url="http://localhost:8081/datepickinsta1";
@@ -936,7 +926,22 @@ else
         /*if(total_collection == 0){
           document.querySelector('transport-app').setPage("nodata","Fee Reports");
         } else {*/
-        var feeresultcash = feeresultinsta1.concat(feeresultinsta2);
+        var feeresultcash = [];
+        if(feeresultinsta1!="")
+        {
+           for(i=0;i<feeresultinsta1.length;i++)
+          {
+           feeresultcash.push(feeresultinsta1[i]);
+          }
+        
+      }
+         if(feeresultinsta2!="")
+        {
+          for(i=0;i<feeresultinsta2.length;i++)
+          {
+           feeresultcash.push(feeresultinsta2[i]);
+          }
+       }
         document.querySelector('feereports-card').feereportarr=feeresultcash;
         document.querySelector('feereports-card').total_collection_cash=total_collection_cash;
         //}
@@ -1005,7 +1010,6 @@ else
           var students_paid_cheque = feeresultinsta2cheque.length;
         }
         var students_paid_by_cash = students_paid_cash - cashcount;
-        var feeresultcheque = feeresultinsta1cheque.concat(feeresultinsta2cheque);
         for(var i=0;i<feeresultinsta1cheque.length;i++){
           for (var j = 0; j<feeresultinsta2cheque.length;j++) {
             if(feeresultinsta1cheque[i].student_id == feeresultinsta2cheque[j].student_id){
@@ -1020,7 +1024,23 @@ else
         /*if(total_collection_cheque == 0){
           document.querySelector('transport-app').setPage("nodata","Fee Reports");
         } else {*/
-           document.querySelector('feereports-card').feereportarr2cheque=feeresultcheque;
+        var feeresultcheque = [];
+        if(feeresultinsta1cheque!="")
+        {
+           for(i=0;i<feeresultinsta1cheque.length;i++)
+          {
+           feeresultcheque.push(feeresultinsta1cheque[i]);
+          }
+        
+      }
+         if(feeresultinsta2cheque!="")
+        {
+          for(i=0;i<feeresultinsta2cheque.length;i++)
+          {
+           feeresultcheque.push(feeresultinsta2cheque[i]);
+          }
+       }
+           document.querySelector('feereports-card').feereportarrcheque=feeresultcheque;
            document.querySelector('feereports-card').total_collection_cheque=total_collection_cheque;
            document.querySelector('feereports-card').total_collection= total_collection;
            document.querySelector('feereports-card').students_paid_by_cash= students_paid_by_cash;

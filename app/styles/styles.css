@@ -242,11 +242,7 @@ li{
     flex-direction: column;
     margin: 0 1em 0 0;
 }
-.mapstudenttopoint-card paper-checkbox{
-    position: absolute;
-    right: 22.5%;
-    top:15%;
-}
+
 .dupframe .checkbox{
   position: absolute;
   right: 22.5%;

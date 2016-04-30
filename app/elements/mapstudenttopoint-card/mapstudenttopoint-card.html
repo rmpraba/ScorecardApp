@@ -22,15 +22,21 @@
   }
   .hrlayout
   {
-    margin-left: 5%;
+    margin-left: 20%;
      @apply(--layout-horizontal);
   }
+  .hrspace
+  {
+    padding-left: 3%;
+    padding-top: 5%;
+  }
+  
   </style>
     <body>
       <div class = "mapstudenttopoint-card">
       <div class="card">
         <div class="hrlayout">
-          <div id="selectclass">
+          <div id="selectclass" >
             <paper-dropdown-menu   label="Select Grade">
               <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="classes1" attr-for-selected="value" >
                 <template  is="dom-repeat" items="{{classarr}}" as="view">
@@ -39,7 +45,8 @@
               </paper-menu>
             </paper-dropdown-menu>
           </div>
-          <div>
+          <div class="hrspace">OR</div>
+          <div class="hrspace">
               <paper-checkbox id="selectbox" on-change="changeHandler">Select by Name</paper-checkbox>
           </div>
          
@@ -76,6 +83,11 @@
           this.$.submitbutton.hidden=true;
           this.$.search.hidden=true;
         },
+        refreshmappoint:function()
+        {
+          this.studentarr=[];
+        this.$.maps.selectclass();
+        },
         changeHandler:function(e)
         {
        if(e.target.checked==true)
@@ -93,6 +105,7 @@
           this.class = (e.target.selectedItem.value);
           this.$.maps.classpick(this.class);
           this.$.submitbutton.hidden=false;
+           this.$.search.hidden=true;
         },
         autocompletename(nameitem){
           namearr=nameitem;
@@ -172,7 +185,6 @@
         click:function()
         {
             this.$.maps.submit(itemarray);
-            document.querySelector('mapstudenttopoint-card').studentarr=[];
             itemarray=[];
              document.querySelector('#gradeselect').selected=-1;
              this.$.submitbutton.hidden=true;
@@ -196,7 +208,7 @@
             obj.pickpoint=pickpoint;
             obj.droppoint=droppoint;
             itemarray.push(obj);
-            //alert(JSON.stringify(itemarray));
+            
            },
       });
     })();

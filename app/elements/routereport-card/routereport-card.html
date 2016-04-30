@@ -13,10 +13,34 @@
   <div class="routereport-card">
     <template>
     <style>
-    .routereport
-    {
-
+      .routereport{
         @apply(--layout-horizontal);
+      }
+      .total-collection{
+        @apply(--layout-horizontal);
+        margin-left: 70%;
+      }
+      .total-collection paper-item{
+        font-weight: bold;
+      }
+      .itemcards:nth-child(odd){
+        background-color: #f1f1f1;
+        height: 7%;
+        width: 70%;
+        margin-left: 15%;
+      }
+      .itemcards:nth-child(even){
+        background-color: #ffffff;
+        height: 7%;
+        width: 70%;
+        margin-left: 15%;
+      }
+      .headtabs{
+        margin-left: 12%;
+      }
+      .headtabs paper-tab{
+        font-size: 1.15em;
+        font-weight: bold !important;
       }
     </style>
     <div class="routereport">
@@ -28,15 +52,12 @@
           </template>
         </paper-listbox>
       </div>
-      
       <div style="padding-right: 2%;">
       <div class="drop-down" >
         <paper-dropdown-menu label="Select the Trip">
           <paper-menu class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
-            
               <paper-item value="1">1</paper-item>
               <paper-item value="2">2</paper-item>
-          
           </paper-menu>
         </paper-dropdown-menu>
       </div>
@@ -67,12 +88,18 @@
           </paper-tabs>
       </div>
       <template  is="dom-repeat" items="{{reportarr}}" as="view">
+        <div class="itemcards">
+          <routereport-item-card stid="{{view.student_id}}" name="{{view.name}}" pick="{{view.pick}}" ></routereport-item-card>
+        </div>
         <!-- <iron-collapse id="{{routeid}}"> -->
           <!-- <button  class="collapse" on-click="toggle">Route Id:{{routeid}}</button> -->
    
         <!-- </iron-collapse> -->
-        <routereport-item-card stid="{{view.student_id}}" name="{{view.name}}" pick="{{view.pick}}" ></routereport-item-card>
       </template>
+      <div class="total-collection" id="grndtot" style="font-weight: bold !important;">
+          <paper-item>Total students</paper-item>
+          <paper-item>{{no_of_student}}</paper-item>
+      </div>
       <div id="button">
         <paper-button class="button" style="margin: 4% 0 0 45%; height: 35px;" id="print" on-click="print">Print</paper-button>
       </div>
@@ -100,6 +127,7 @@
         this.$.service.name();
         this.querySelector("paper-tabs").style.visibility='hidden';
         this.$.print.hidden=true;
+        this.$.grndtot.hidden=true;
       },
       autocompletename(nameitem){
         namearr=nameitem;
@@ -186,10 +214,9 @@
 triptype=(e.target.selectedItem.textContent).trim();;
 
       },
-      Fnpickordrop:function(e)
-      {
-pickordrop=(e.target.selectedItem.textContent).trim();;
-
+      Fnpickordrop:function(e){
+        pickordrop=(e.target.selectedItem.textContent).trim();
+        this.$.grndtot.hidden=false;
       },
       print:function(){
         this.$.print.hidden=true;

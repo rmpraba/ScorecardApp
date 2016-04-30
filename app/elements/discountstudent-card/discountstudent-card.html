@@ -200,6 +200,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         {
         this.$.service.sendrequest(this.id,this.studname,this.schooltype,this.zonename,this.fees,this.fromdate,this.todate,this.schooltype,this.disamt,this.reason);
         }
+      },
+      discountfresh:function(){
+         this.$.service.discountbyname();
       }
     
       

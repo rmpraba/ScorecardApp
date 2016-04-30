@@ -4,7 +4,7 @@ var express    = require("express");
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'transport'
+   database : 'transport4'
  });
 var bodyParser = require('body-parser');
  var app = express();
@@ -768,13 +768,13 @@ app.post('/zonefee-card',  urlencodedParser,function (req, res)
 app.post('/getnameofstu-card',  urlencodedParser,function (req, res)
 {
 
-       connection.query('SELECT student_name from student_details',
+       connection.query('SELECT student_name from student_details where id=(select student_id from student_fee where status="mapped")',
        	function(err, rows)
        	{
 		if(!err)
 		{
 		if(rows.length>0)
-		{
+		{	console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else

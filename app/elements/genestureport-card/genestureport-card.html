@@ -107,12 +107,11 @@
     },
    FnItemSelected:function(e)
    {
-    this.querySelector('paper-listbox').style.visibility='hidden';
-    this.studid = e.target.selectedItem.textContent.trim();
-    this.itemArray=[];
-    
-    document.querySelector("#itemlist").selected=-1;
-    this.$.service.generatereport(this.studid);
+       this.studid= e.target.selectedItem.textContent.trim();
+        //alert(e.target.selectedItem.value);
+        this.$.service.generatereport(this.studid);
+        this.itemArray=[];
+        this.querySelector('paper-listbox').selected=-1;
    }
 
     });

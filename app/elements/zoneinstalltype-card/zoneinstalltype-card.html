@@ -127,13 +127,14 @@ var amt;
         paytype = (e.target.selectedItem.textContent).trim();
         if(paytype=="Cheque")
         { 
-          type=this.installtype;
+           this.chequeno="";
+           this.banknam="";
+           type=this.installtype;
           amt=this.installamt;
         var id = 'animated';
         var dialog = document.getElementById(id);
         dialog.open();
-        this.chequeno="";
-        this.banknam="";
+       
        }
        else
        {

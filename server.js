@@ -445,10 +445,10 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 });
 	});
 
-app.post('/selectname',  urlencodedParser,function (req, res)
+app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
 {
 
-       connection.query('SELECT id, student_name from student_details',
+       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee)',
        	function(err, rows)
        	{
 		if(!err)

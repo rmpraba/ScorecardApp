@@ -497,6 +497,7 @@
     var val;
     var oneway;
     var zstuname;
+    var distance;
 
 
     Polymer({
@@ -531,12 +532,13 @@
           document.querySelector('mappointtoroute-card').itemarr=routedetails;
       },
 
-      insertpoint:function(route,pt,pickuptime,droptime,tripp)
+      insertpoint:function(route,pt,pickuptime,droptime,tripp,dist)
       {
         point=pt;
         trip=tripp;
         pick=pickuptime;
         drop=droptime;
+        distance=dist;
         this.routeidurl=sessionStorage.getItem("addrinfo")+"/routeid";
         var obj={"routename":""};
         obj.routename=route;
@@ -565,13 +567,14 @@
       sequenceResponse:function(e)
       {
         var seq=(e.detail.response.returnval[0].count)+1;
-        var obj={"id":"","routes":"","points":"","trip":"","pick":"","drop":""};
+        var obj={"id":"","routes":"","points":"","trip":"","pick":"","drop":"","distance":""};
         obj.id="p"+seq;
         obj.routes=routeidd;
         obj.points=point;
         obj.trip=trip;
         obj.pick=pick;
         obj.drop=drop;
+        obj.distance=distance;
         this.insertpointparam=obj;
         this.insertpointurl=sessionStorage.getItem("addrinfo")+"/insertpoint";
         this.$.insertpointajax.generateRequest();

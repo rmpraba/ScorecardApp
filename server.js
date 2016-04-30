@@ -1864,6 +1864,27 @@ app.post('/updatereceiptsequence',  urlencodedParser,function (req, res)
 	});
 });
 
+
+
+app.post('/receiptnoinfee',  urlencodedParser,function (req, res)
+{
+	var rid={"receipt_no":req.query.receiptno};
+    var sid={"student_id":req.query.studid};
+	    connection.query('update student_fee set ?  where ? ',[rid,sid],
+       	function(err, rows){
+		if(!err)
+		{
+			
+				res.status(200).json({'returnval': 'success'});
+			
+		}
+		 else {
+			console.log(err);
+		}
+	});
+});
+
+
 app.post('/getstureceipt',  urlencodedParser,function (req, res)
 {
 	var stuid=req.query.stid;

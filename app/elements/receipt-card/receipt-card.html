@@ -152,9 +152,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
             
           </div>
-           <template  is="dom-repeat" items="{{chequearr}}" as="view">
-       <cqreceipt-card style="margin-top: 5%;" cheqno="{{view.cheno}}" bank="{{view.bknm}}" cqdate="{{view.cqdate}}"></cqreceipt-card>
-      </template>
+          
        
             <div class="body8">
               <h3><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></h3>
@@ -198,8 +196,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </tr>
     </table>
            
-     
-
+      <template  is="dom-repeat" items="{{chequearr}}" as="view">
+       <cqreceipt-card style="margin-top: 5%;" cheqno="{{view.cheno}}" bank="{{view.bknm}}" cqdate="{{view.cqdate}}"></cqreceipt-card>
+      </template>
           </div>
   </template>
   <script>

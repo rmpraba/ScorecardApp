@@ -244,7 +244,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
-
+<iron-ajax
+        method="post"
+        id="receiptnoajax"
+        url="{{receiptnourl}}"
+         params="{{receiptnoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="receiptnoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     <iron-ajax
         method="post"
         id="getstureceiptajax"
@@ -319,6 +329,7 @@
     var feeresultinsta2cheque;
     var cashcount;
     var chequecount;
+    var rstudid;
 
 
     Polymer({
@@ -369,7 +380,7 @@
      },
      payfee:function(install,studid,paytype,instype)
      {
-      
+       rstudid=studid;
        this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
         var obj={"studid":"","installfee":"","paytype":"","instype":""}
         obj.studid=studid;
@@ -396,11 +407,18 @@
         var receiptseq=e.detail.response.returnval[0].sequence;
         receiptid=receiptschoolid+receiptseq;
         this.updatereceiptsequrl=sessionStorage.getItem("addrinfo")+"/updatereceiptsequence";
-  var obj={"schoolid":"","sequence":""}
+        var obj={"schoolid":"","sequence":""}
         obj.schoolid=receiptschoolid;
         obj.sequence =receiptseq;
         this.updatereceiptparam =obj;
         this.$.updatereceiptseqajax.generateRequest();
+         this.receiptnourl=sessionStorage.getItem("addrinfo")+"/receiptnoinfee";
+        var obj={"receiptno":"","studid":""}
+        obj.receiptno=receiptid;
+        obj.studid =rstudid;
+        this.receiptnoparam =obj;
+        this.$.receiptnoajax.generateRequest();
+
       },
       updatereceiptseqResponse:function()
       {
@@ -427,13 +445,12 @@
 
       var recarr=[];
       var cheqarr=[];
-var  getstu=e.detail.response.returnval;
-var dt=new Date();
+      var  getstu=e.detail.response.returnval;
+      var dt=new Date();
 var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
 var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
 var feezxc=receiptcreate[0].installfee;
 document.querySelector('receipt-card').convertrs(feezxc);
-
 //alert(dadname+'   '+recstudid);
 //receiptcreate.push(getstu);
 var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}

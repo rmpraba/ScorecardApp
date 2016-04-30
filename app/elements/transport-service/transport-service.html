@@ -716,7 +716,7 @@
         this.$.genereportajax.generateRequest();
       },
       genereportResponse:function(e){
-        //alert(JSON.stringify(e.detail.response.returnval));
+        alert(JSON.stringify(e.detail.response.returnval));
         var reportresult=e.detail.response.returnval;
         document.querySelector('genestureport-card').reportarr=reportresult;
       },

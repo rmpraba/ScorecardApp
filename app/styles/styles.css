@@ -2,6 +2,12 @@
 .rom{
 
 }
+body{
+    padding: 0 !important;
+}
+paper-button{
+    height: 6% !important;
+}
 section{
     padding: 0 !important;
     height: 100%;
@@ -19,6 +25,10 @@ section{
 .routereport
 {
     @apply(--layout-horizontal); 
+    margin: 4% 0 4% 24%;
+}
+.route-detail{
+    margin-left: 7%;
 }
 .footer{
     font-weight: bold;
@@ -242,11 +252,7 @@ li{
     flex-direction: column;
     margin: 0 1em 0 0;
 }
-.mapstudenttopoint-card paper-checkbox{
-    position: absolute;
-    right: 22.5%;
-    top:15%;
-}
+
 .dupframe .checkbox{
   position: absolute;
   right: 22.5%;
@@ -412,9 +418,6 @@ ul li #new-button{
   }
   .reports{
     margin:0% 0% 2% 0%; 
-  }
-  .container paper-item{
-    height: 5% !important;
   }
 paper-button{
     height: 16%;

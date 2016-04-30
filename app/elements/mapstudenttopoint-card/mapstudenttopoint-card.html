@@ -15,17 +15,28 @@
   <template>  
   <style>
   .card{
-    margin-left: 30%;
+   @apply(--layout-center);
   }
   .template{
     margin-left: -5%;
   }
+  .hrlayout
+  {
+    margin-left: 20%;
+     @apply(--layout-horizontal);
+  }
+  .hrspace
+  {
+    padding-left: 3%;
+    padding-top: 5%;
+  }
+  
   </style>
     <body>
       <div class = "mapstudenttopoint-card">
       <div class="card">
-        <div class="select-class">
-          <div id="selectclass">
+        <div class="hrlayout">
+          <div id="selectclass" >
             <paper-dropdown-menu   label="Select Grade">
               <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="classes1" attr-for-selected="value" >
                 <template  is="dom-repeat" items="{{classarr}}" as="view">
@@ -34,10 +45,13 @@
               </paper-menu>
             </paper-dropdown-menu>
           </div>
-          <div class="field" style="margin-top: 5% !important; position: absolute; right: 40%; width: 100%;">
+          <div class="hrspace">OR</div>
+          <div class="hrspace">
               <paper-checkbox id="selectbox" on-change="changeHandler">Select by Name</paper-checkbox>
           </div>
-          <div id="search" style="margin-left: -60% !important;">
+         
+        </div>
+         <div id="search">
             <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
             <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
               <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -45,7 +59,6 @@
               </template>
             </paper-listbox>
           </div>
-        </div>
       </div>
       <div class="template">
         <app-service studentarr="{{studentarr}}"></app-service>
@@ -69,21 +82,30 @@
           this.$.maps.selectclass();
           this.$.submitbutton.hidden=true;
           this.$.search.hidden=true;
-          this.$.selectbox.hidden= false;
         },
-        changeHandler:function(){
-          this.$.search.hidden=true;
-          this.$.selectclass.hidden=true;
+        refreshmappoint:function()
+        {
+          this.studentarr=[];
+        this.$.maps.selectclass();
+        },
+        changeHandler:function(e)
+        {
+       if(e.target.checked==true)
+        {
           this.$.search.hidden=false;
-          this.$.selectbox.hidden= true;
           this.$.maps.selectname();
+        }
+        else
+        {
+          this.$.search.hidden=true;
+        }
 
         },
         classes1:function(e){
           this.class = (e.target.selectedItem.value);
           this.$.maps.classpick(this.class);
           this.$.submitbutton.hidden=false;
-          this.$.selectbox.hidden=true;
+           this.$.search.hidden=true;
         },
         autocompletename(nameitem){
           namearr=nameitem;
@@ -163,7 +185,6 @@
         click:function()
         {
             this.$.maps.submit(itemarray);
-            document.querySelector('mapstudenttopoint-card').studentarr=[];
             itemarray=[];
              document.querySelector('#gradeselect').selected=-1;
              this.$.submitbutton.hidden=true;
@@ -187,7 +208,7 @@
             obj.pickpoint=pickpoint;
             obj.droppoint=droppoint;
             itemarray.push(obj);
-            //alert(JSON.stringify(itemarray));
+            
            },
       });
     })();

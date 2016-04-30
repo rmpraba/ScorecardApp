@@ -152,21 +152,22 @@
             obj.flag=1;
             this.studentpointurl=sessionStorage.getItem("addrinfo")+"/submiturl";
                  this.studentpointparam=obj;
-                 //alert(JSON.stringify(obj))
             this.$.studentpointajax.generateRequest();
           }
     },
-    studentpointResponse:function(e){
+    studentpointResponse:function(e)
+    {
       var result=e.detail.response.returnval;
       var j=0;
       if(result=='success'){
         
         alert('Mapping is done Successfully');
         }
-        else {
-      alert('insertion failed');
-      }
-      
+        else 
+        {
+       alert('insertion failed');
+       }
+      document.querySelector('mapstudenttopoint-card').refreshmappoint();
     }
     });
   })();

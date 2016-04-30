@@ -765,13 +765,17 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       studentpickroutereportResponse:function(e)
       {
         var routereportresult=e.detail.response.returnval;
+        var no_of_student = routereportresult.length;
         document.querySelector('routereport-card').reportarr=routereportresult;
+        document.querySelector('routereport-card').no_of_student=no_of_student;
         //alert(JSON.stringify(e.detail.response.returnval));
       },
        studentdroproutereportResponse:function(e)
       {
         var routereportresult=e.detail.response.returnval;
+        var no_of_student= routereportresult.length;
         document.querySelector('routereport-card').reportarr=routereportresult;
+        document.querySelector('routereport-card').no_of_student=no_of_student;
         //alert(JSON.stringify(e.detail.response.returnval));
       },
      gettrip:function(routename)

@@ -4,7 +4,7 @@ var express    = require("express");
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'transport4'
+   database : 'transport'
  });
 var bodyParser = require('body-parser');
  var app = express();

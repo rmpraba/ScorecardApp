@@ -41,6 +41,13 @@
               </div>
             </li>
             <li class="row">
+              <div class="detail"> 
+                <div class="layout">
+                 <paper-input label="distance" class="field" value={{distance}}></paper-input>
+                </div>
+              </div>
+            </li>
+            <li class="row">
               <div class="detail">
                 <div class="field">
                   <paper-button id="new-button" class="button item-card" on-click="insert">Add</paper-button>
@@ -67,7 +74,7 @@
       insert:function(){
         var route=sessionStorage.getItem("route");
         var tripn=sessionStorage.getItem("trip");
-        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn);
+        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,distance);
         this.points="";
       }
     });

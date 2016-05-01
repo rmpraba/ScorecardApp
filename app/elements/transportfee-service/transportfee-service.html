@@ -152,7 +152,6 @@
         method="post"
         id="checkchequedetailsajax"
         url="{{checkchequedetailsurl}}"
-        params="{{checkchequedetailsparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="checkchequedetailsResponse"
@@ -229,7 +228,6 @@
         method="post"
         id="receiptseqajax"
         url="{{receiptsequrl}}"
-        params="{{receiptseqparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="receiptseqResponse"
@@ -273,7 +271,6 @@
         method="post"
         id="pendingajax"
         url="{{pendingurl}}"
-        params="{{pendingparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="pendingResponse"
@@ -294,22 +291,9 @@
         method="post"
         id="discountreportbynameajax"
         url="{{discountreportbynameurl}}"
-          params="{{discountreportbynameparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="discountreportbynameResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-
-  <iron-ajax
-        method="post"
-        id="updaterecpnoajax"
-        url="{{updaterecpnourl}}"
-          params="{{updaterecpnoparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="updaterecpnoResponse"
         debounce-duration="300"
         >
   </iron-ajax>
@@ -346,8 +330,6 @@
     var feeresultinsta2cheque;
     var cashcount;
     var chequecount;
-    var school=sessionStorage.getItem("sch");
-    var stidzx;
     var rstudid;
     var chequearr=[];
 
@@ -359,8 +341,8 @@
       
       this.generatefeeurl=sessionStorage.getItem("addrinfo")+"/reportfee-card";
         var obj={"studid":"","schol":""}
-        obj.schol=school;
         obj.studid=studid;
+        obj.schol=sessionStorage.getItem("sch");
         this.generatefeeparam=obj;
         this.$.generatefeeajax.generateRequest();
      },
@@ -388,31 +370,26 @@
      },
      getnameofstu:function()
      {
-      alert(school);
+      //alert('hi');
       this.getnameofstuurl=sessionStorage.getItem("addrinfo")+"/getnameofstu-card";
       var obj={"schol":""}
-      obj.schol=school;
+      obj.schol=sessionStorage.getItem("sch");
       this.getnameofstuparam=obj;
        this.$.getnameofstuajax.generateRequest();
-      
      },
      getnameofstuResponse:function(e)
      {
 
       var nameitem=e.detail.response.returnval;
-      if(nameitem=='invalid'){
-
-      }
-      else{document.querySelector('transportfee-card').autocompletename(nameitem);}
       
+      
+      document.querySelector('transportfee-card').autocompletename(nameitem);
      },
      payfee:function(install,studid,paytype,instype)
      {
-      stidzx=studid;
        rstudid=studid;
        this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
-        var obj={"studid":"","installfee":"","paytype":"","instype":"","schol":""}
-        obj.schol=school;
+        var obj={"studid":"","installfee":"","paytype":"","instype":""}
         obj.studid=studid;
         obj.installfee=install;
         obj.paytype=paytype;
@@ -433,9 +410,6 @@
       generatereceipt:function()
       {
         this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
-        var obj={"schol":""}
-        obj.schol=school;
-        this.receiptseqparam=obj;
         this.$.receiptseqajax.generateRequest();
       },
       receiptseqResponse:function(e)
@@ -450,10 +424,9 @@
         this.updatereceiptparam =obj;
         this.$.updatereceiptseqajax.generateRequest();
          this.receiptnourl=sessionStorage.getItem("addrinfo")+"/receiptnoinfee";
-        var obj={"receiptno":"","studid":"","schol":""}
+        var obj={"receiptno":"","studid":""}
         obj.receiptno=receiptid;
         obj.studid =rstudid;
-        obj.schol=school;
         this.receiptnoparam =obj;
         this.$.receiptnoajax.generateRequest();
 
@@ -468,10 +441,8 @@
         this.$.getstureceiptajax.generateRequest();
 
         this.getreceiptinfourl=sessionStorage.getItem("addrinfo")+"/getparentinfo";
-          var obj={"schol":""}
-          obj.schol=school;
-           this.getreceiptinfoparam =obj;
           
+           this.getreceiptinfoparam =obj;
         this.$.getreceiptinfoajax.generateRequest();
        
         
@@ -496,9 +467,8 @@ for(var i=0;i<receiptcreate.length;i++)
 var feezxc=receiptcreate[i].installfee;
 document.querySelector('receipt-card').convertrs(feezxc);
 
-//alert(dadname+'   '+recstudid);
-//receiptcreate.push(getstu);
-var recobj={"receiptno":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
+
+var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
 recobj.receiptno=receiptid;
 recobj.studname=getstu[0].student_name;
 recobj.classname=getstu[0].classname;
@@ -568,15 +538,6 @@ recarr1.push(recobj1);
       }
 }
         document.querySelector('transport-app').setPage("receipt","Fee Receipt");
-
-        this.updaterecpnourl=sessionStorage.getItem("addrinfo")+"/updaterecpno";
-          var obj={"schol":"","stid":"","recpno":""}
-          obj.schol=school;
-          obj.stid=stidzx;
-          obj.recpno=receiptid;
-           this.updaterecpnoparam =obj;
-          
-        this.$.getreceiptinfoajax.generateRequest();
      },
      chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype)
      {
@@ -584,8 +545,7 @@ recarr1.push(recobj1);
       chedate=chequedate;
       banknm=bankname;
       this.chequedetailsurl=sessionStorage.getItem("addrinfo")+"/chequedetails";
-        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":"","schol":""}
-        obj.schol=school;
+        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":""}
         obj.studid=stdid;
         obj.name=name;
         obj.chequenum=chequenum;
@@ -661,9 +621,8 @@ recarr1.push(recobj1);
         var todatey=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
         var today=toda.getFullYear()+"/"+(toda.getMonth()+1)+"/"+toda.getDate();
        this.sendrequesturl="http://localhost:8081/sendrequest";
-        var obj={"schol":"","stid":"","stname":"","schooltypezx":"","zoname":"","feesx":"","fromdatx":"","todatx":"","schooltypex":"","disamtx":"","reasonx":"","todayx":""}
+        var obj={"stid":"","stname":"","schooltypezx":"","zoname":"","feesx":"","fromdatx":"","todatx":"","schooltypex":"","disamtx":"","reasonx":"","todayx":""}
         obj.stid=id;
-        obj.schol=school;
         obj.stname=stuname;
         obj.schooltypezx=schooltypez;
         obj.zoname=zonname;
@@ -803,6 +762,7 @@ recarr1.push(recobj1);
 
 //alert(JSON.stringify(e.detail.response));
 document.querySelector('transportfee-card').installmentarr=installarr;
+
      },
  zoneinstalltypeResponse:function(e){
         var feepercent;
@@ -911,14 +871,12 @@ document.querySelector('transportfee-card').installmentarr=installarr;
 
 //alert(JSON.stringify(e.detail.response));
 document.querySelector('zonetostudent-card').installmentarr=installarr;
+document.querySelector('zonetostudent-card').payoption(installarr);
      },
 
      checkchequedetails:function()
      {
          this.checkchequedetailsurl=sessionStorage.getItem("addrinfo")+"/checkchequedetails";
-         var obj={"schol":""}
-         obj.schol=school;
-         this.checkchequedetailsparam=obj;
         this.$.checkchequedetailsajax.generateRequest(); 
      },
      checkchequedetailsResponse:function(e)
@@ -926,13 +884,8 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         var chequedetailarr=[];
         var cstatus;
         var chequedetail=e.detail.response.returnval;
-if(chequedetail=='')
-{
-  
- document.querySelector('transport-app').setPage("nodata","Cheque Details");
-}
-else
-{
+
+      // alert('s'+JSON.stringify(chequedetail));
         var d=new Date();
         for(var i=0;i<chequedetail.length;i++)
         {
@@ -961,18 +914,16 @@ else
         document.querySelector('chequedetail-card').chequearr=chequedetailarr;
         document.querySelector('chequedetail-card').Fnchequedetail(chequedetail);
 
-     }
-   },
+     },
      updatechequedetail:function(chequestatus,chequenum,installtype,cname)
      {
         uchequeno=cname;
         uchequestatus=chequestatus;
         uinstalltype=installtype;
          this.updatechequedetailurl=sessionStorage.getItem("addrinfo")+"/updatechequedetail";
-        var obj={"chequestatus":"","chequenum":"","schol":""}
+        var obj={"chequestatus":"","chequenum":""}
         obj.chequestatus=chequestatus;
         obj.chequenum=chequenum;
-        obj.schol=school;
         this.updatechequedetailparam=obj;
         this.$.updatechequedetailajax.generateRequest(); 
      },
@@ -997,26 +948,12 @@ else
         //alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
      },
-     updatestuchequeResponse:function(e)
-     {  
-            var result=e.detail.response.returnval;
-            if(result=='success'){
-              alert('The Check clearance is saved');
-              
-            }
-            else{
-              alert('Request Failed');
-            }
-            document.querySelector('chequedetail-card').refreshchequedetail();
-           
-     },
       datepickinsta1:function(e){
-        this.datepickinsta1url=sessionStorage.getItem("addrinfo")+"/datepickinsta1";
-        var obj={"e":"","schol":""}
+        this.datepickinsta1url="http://localhost:8081/datepickinsta1";
+        var obj={"e":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
-        obj.schol=school;
         this.datepickinsta1param=obj;
         this.$.datepickinsta1ajax.generateRequest();
       },
@@ -1030,9 +967,8 @@ else
         //document.querySelector('feereports-card').feereportarr1=feeresultinsta1;
       },
       datepickinsta2:function(e){
-        this.datepickinsta2url=sessionStorage.getItem("addrinfo")+"/datepickinsta2";
-        var obj={"e":"","schol":""}
-        obj.schol=school;
+        this.datepickinsta2url="http://localhost:8081/datepickinsta2";
+        var obj={"e":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
@@ -1090,9 +1026,8 @@ else
         //}
       },
       datepickinsta1cheque:function(e){
-        this.datepickinsta1chequeurl=sessionStorage.getItem("addrinfo")+"/datepickinsta1cheque";
-        var obj={"e":"","schol":""}
-        obj.schol=school;
+        this.datepickinsta1chequeurl="http://localhost:8081/datepickinsta1cheque";
+        var obj={"e":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
@@ -1109,9 +1044,8 @@ else
         //document.querySelector('feereports-card').feereportarr1cheque=feeresultinsta1cheque;
       },
       datepickinsta2cheque:function(e){
-        this.datepickinsta2chequeurl=sessionStorage.getItem("addrinfo")+"/datepickinsta2cheque";
-        var obj={"e":"","schol":""}
-        obj.schol=school;
+        this.datepickinsta2chequeurl="http://localhost:8081/datepickinsta2cheque";
+        var obj={"e":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
@@ -1195,9 +1129,6 @@ else
       },
       pending:function(){
         this.pendingurl=sessionStorage.getItem("addrinfo")+"/pending";
-        var obj={"schol":""}
-        obj.schol=school;
-        this.pendingparam=obj;
         this.$.pendingajax.generateRequest();
       }, 
       pendingResponse:function(e){
@@ -1206,9 +1137,6 @@ else
       },
        discountbyname:function(){
        this.discountreportbynameurl=sessionStorage.getItem("addrinfo")+"/discountbyname";
-       var obj={"schol":""}
-       obj.schol=school;
-       this.discountreportbynameparam=obj;
        this.$.discountreportbynameajax.generateRequest();
       },
       discountreportbynameResponse:function(e){

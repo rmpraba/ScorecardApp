@@ -58,7 +58,7 @@
               <div class="detail">
                 <div class="field">
                   <paper-dropdown-menu label="Drop Route">
-                    <paper-menu class="dropdown-content" on-iron-select="droproute" attr-for-selected="value" >
+                    <paper-menu class="dropdown-content" on-iron-select="droproute" selected="{{selectid}}" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{routearr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
                       </template>
@@ -146,6 +146,7 @@
       pickroute:function(e){
         this.pickroute = (e.target.selectedItem.value);
         pickuproute = this.pickroute;
+        this.selectid=this.pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
         var obj={"routept":"","studid":"","schol":""};
         obj.schol=school;

@@ -19,6 +19,7 @@
     <link rel="import" href="../todatepicker-card/todatepicker-card.html">
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <link rel="import" href="../zoneinstalltype-card/zoneinstalltype-card.html">
+    <link rel="import" href="../zoneinstalltype1-card/zoneinstalltype1-card.html">
         <link rel="import" href="../transportfee-service/transportfee-service.html">
 <dom-module id="zonetostudent-card">
 
@@ -148,8 +149,17 @@ One-Way
 
 <paper-input id="status" class="field" value="{{status}}"></paper-input>
 </div>
+<div hidden$="{{hidepayoption}}">
+<div  class="collapse" on-click="toggle2">Transport Fee</div>
+<div  class="horizontalframe">
+  <div style="width: 25%;">
+  <paper-checkbox style="margin-left: 25%" id="lumsum" class="checkbox" on-change="lumsumHandler">LUMSUM</paper-checkbox></div>
+<div style="width: 100%;">
+<paper-checkbox style="margin-left: 3%" id="install" class="checkbox" on-change="installHandler">INSTALLMENT</paper-checkbox></div>
+</div>
+</div>
 <div hidden$="{{hidetransport}}">
-<div  class="collapse" on-click="toggle2"  hidden$="{{hide}}">Transport Fee</div>
+
 <div class="collapse1">
           <paper-tabs>
             <paper-tab>Installment Type</paper-tab>
@@ -168,12 +178,32 @@ One-Way
    </div>
    </div> 
     </div>
+    <div hidden$="{{hidetransport1}}">
+
+<div class="collapse1">
+          <paper-tabs>
+            <paper-tab>Installment Type</paper-tab>
+            <paper-tab>Amount</paper-tab>
+            <paper-tab>Mode of Payment</paper-tab>
+          </paper-tabs>
+      </div>
+      <div class="collapse1"> 
+      <template  is="dom-repeat" items="{{installmentarr1}}" as="view">
+          <zoneinstalltype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
+          </zoneinstalltype-card>
+      </template>
+      <div >
+      <paper-button  id="{{id}}" on-click="payfee">PAY</paper-button>
+   </div>
+   </div> 
+    </div>
   </body>
     <transport-service id="root"></transport-service>
     <transportfee-service id="service"></transportfee-service>
 </template>
 <script>
  (function() {
+  var payarrr=[];
     var item=[];//name field
     var fromdate;
     var todate;
@@ -216,6 +246,7 @@ var dat2=new Date();
         this.$.oneway.disabled=true;
          this.$.twoway.disabled=true;
          this.$.but.disabled=true;
+         this.hidepayoption=true;
          
          },
        Fnfeepayment:function(feearr)
@@ -226,6 +257,41 @@ var dat2=new Date();
        Fnchequepayment:function(chequearr)
        {
              chequearray=chequearr;
+       },
+       lumsumHandler:function(e)
+       {
+        var arr=[];
+        if(e.target.checked==true)
+        {
+           document.querySelector("#install").checked=false;
+         this.hidetransport1=false;
+         this.hidetransport=true;
+        var date1=new Date();
+      var installdate=date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+         var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":""}
+         obj.installtype="installment1";
+         obj.amount=this.fee;
+         obj.paydate=installdate;
+         obj.feestudid=this.id;
+         obj.paidstatus=false;
+         obj.feestudname=this.value;
+         arr.push(obj);
+         this.installmentarr1=arr;
+        }
+       },
+       installHandler:function(e)
+       {
+        if(e.target.checked==true)
+        {
+          document.querySelector("#lumsum").checked=false;
+          this.hidetransport=false;
+          this.hidetransport1=true;
+
+        }
+       },
+       payoption:function(payarr)
+       {
+payarrr=payarr;
        },
        gotozone:function()
        {
@@ -539,9 +605,10 @@ click:function(e)
     }
     else{
       this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value); 
+      this.hidepayoption=false;
 
     }
-     this.hidetransport=false;
+     
 
     },
 clickdate:function()

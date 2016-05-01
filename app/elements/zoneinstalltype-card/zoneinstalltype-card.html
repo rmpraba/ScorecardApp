@@ -34,8 +34,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    
     <paper-checkbox style="margin: 1% 0 0 2%;" id="{{installtype}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" checked on-change="payinstall"></paper-checkbox>
    <paper-item >{{installtype}}</paper-item>
-   <paper-item >{{installamt}}</paper-item>
-   <paper-item >{{paydate}}</paper-item>
+   <paper-item id="{{paydate}}" >{{installamt}}</paper-item>
+   <!--<paper-item >{{paydate}}</paper-item>-->
     <div class="drop-down">
             <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paydate}}"   label="---Select the Mode of Payment---">
                 <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
@@ -50,10 +50,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
             </div>
-       <paper-dialog id="animated" >
+       <paper-dialog id="animated">
 <h4>ADD CHEQUE DETAILS</h4>
- <div  class="layout"> <paper-input required error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
- <div  class="layout"> <paper-input required  error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
+ <div  class="layout"> <paper-input required allowed-pattern="^[1-9][0-9]*$" error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
+ <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z]" error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
  <div>
  <zonedatepicker-card></zonedatepicker-card></div>
 <div class="buttons">
@@ -123,7 +123,7 @@ var amt;
         }
       },
        payment:function(e)
-      {
+      {alert('1');
         paytype = (e.target.selectedItem.textContent).trim();
 
        for(var i=0;i<pushitem.length;i++)
@@ -135,11 +135,12 @@ var amt;
        }
 
         if(paytype=="Cheque")
-        { 
+        { alert('2');
            this.chequeno="";
            this.banknam="";
            type=this.installtype;
           amt=this.installamt;
+          alert(amt+''+type);
         var id = 'animated';
         var dialog = document.getElementById(id);
         dialog.open();

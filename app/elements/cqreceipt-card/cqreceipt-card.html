@@ -18,33 +18,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
       <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
       <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
-<link rel="import" href="../cqreceipt-card/cqreceipt-card.html">
 
-
-<dom-module id="receipt-card">
+<dom-module id="cqreceipt-card">
   <template>
       <style>
       :host {
         display: block;
       }
+      .cheque
+      {
+        padding: 2%;
+         @apply(--layout-horizontal);
+      }
+      .hrspace
+      {
+        padding-left: 2%;
+      }
     </style>
-    <html>
-    <form method="post" action="">
-    <body id="receipt">
-    <img id="imgRes" height="1px" width="1px"  />
    <template is="dom-repeat" items="{{receiptarr}}" as="view">
     <div class="receipt" >
-    <div id="canvas" style="background-image:url(fimage/1.jpg)">
         <div class="header">
-        <div class="logo"><img src="../../images/zeesouth.png"/></div>
-        <div class="heading">
-          <div class="title">Mount Litera Zee School-South Bangalore</div>
-          <div class="address">South Bangalore #58/4, Haralur Road, Kudlu, HSR Extension, Bangalore - 560068 Phone : 080-65468341</div>
-        </div>
-        </div>
-
-        <div class="body1">
-        <h1>FEE RECEIPT</h1>
+          <h1 class="body1">ACKNOWLEDGEMENT</h1>
           <hr></hr>
           </div>
         <div class="body11">
@@ -53,9 +47,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="lb2">Receipt Date:</div>
           <div class="val2"> {{view.today}}</div>
         </div>
-        <div id="ln2">
+       
           <hr></hr>
-        </div>
 
           <div class="body2">
 
@@ -88,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <table>
               <tr>
                 <td style="padding-bottom: 20%"> Class</td>
-                <td style="padding-bottom: 20%">: {{view.stnd}}/{{view.sec}}</td>
+                <td style="padding-bottom: 20%">: {{view.classname}}/{{view.section}}</td>
               </tr>
               <tr>
                 <td>Session</td>
@@ -141,7 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-item style="width: 80px; margin-top: -1%;"> Total fees :</paper-item>
               
               <div class="cash">
-                <paper-input class="button" on-change="convertrs" value="{{view.installfee}}"></paper-input>
+                <paper-input class="button" on-change="convertrss" value="{{view.installfee}}"></paper-input>
             </div>
 </div>
           </div>
@@ -152,84 +145,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
             
           </div>
-           <template  is="dom-repeat" items="{{chequearr}}" as="view">
-        <div class="cheque">
-    <table style="width: 100%; margin-top: 5%;">
-      <tr>
-        <td style="width: 33%">Cheque No:{{cheqno}}</td>
-        <td style="width: 33%">Cheque Date:{{cqdate}}</td>
-        <td style="width: 33%">Bank Name:{{bank}}</td>
-        
-      </tr>
-    </table>
-    </div>
-
-      </template>
-       
-            <div class="body8">
-              <h3><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></h3>
-            </div>
-
-            <div class="body9">
-              <div class="l8">
-              <div><p>1.  Fee to be paid by Cash / Cheque / Demand Draft only</p></div>
-              <div><p>2.  Cheque / Demand Draft to be made in the name of <strong>"SAMSIDH EDUCATIONAL SOCIETY"</strong></p></div>
-              <div><p>3.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be paid by Cash / DD.</p></div>
-              <div><h4>4.  FEES ONCE PAID WILL NOT BE REFUNDED AT ANY GIVEN CIRCUMSTANCES</h4></div>
-             </div> 
-              
-              
-              
-              
-
-            
-            <div class="r8">
-            <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
-            </div>
-  </template>
-    </body>
-    <div id="editor"></div>
-
+         <hr id="ln3"></hr>
+    <div hidden$="{{chequeview}}" class="cheque">
     
-    </form>
-    </html>
-    <div>
-    <table>
-      <tr >
-        <td>
-           <paper-button style="height: 35px;" class="button" id="pdf">Save as PDF</paper-button>
-        </td>
-        <td>
-          <paper-button style="height: 35px;" class="button" id="email" on-click="email">Send email</paper-button>
-        </td>
-        <td>
-          <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
-        </td>
-      </tr>
-    </table>
-           
-     
-
-          </div>
+        <div class="hrspace">Cheque No:{{cheqno}}</div>
+        <div class="hrspace">Cheque Date:{{cqdate}}</div>
+        <div class="hrspace">Bank Name:{{bank}}</div>
+    </div>
+    <hr id="ln3"></hr>
+    </div>   
+  </template>
+    
   </template>
   <script>
-
-  $(window).load(function(){
-$(document).ready(function() {
-    $('#pdf').click(function() {       
-        html2canvas($("#canvas"), {
-            onrendered: function(canvas) {         
-                var imgData = canvas.toDataURL('image/png'); 
-                $("#imgRes").attr("src", imgData);             
-                var doc = new jsPDF('p', 'mm');
-                doc.addImage(imgData, 'PNG', 10, 8);
-                doc.save('{{view.stid}}.pdf');
-            }
-        });
-    });
-});
-});
-
 
 
   (function() {
@@ -250,9 +178,18 @@ var specialElementHandlers = {
       is: 'receipt-card',
 
       ready:function(){
+  this.chequeview=true;
 
       },
-      convertrs:function(value) 
+      chequearray:function(charr)
+      {
+        
+        this.chequeview=false;
+        this.cheqno=charr.cheno;
+        this.cqdate=charr.cqdate;
+        this.bank=charr.bknm;
+      },
+      convertrss:function(value) 
       {
         var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
     var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
@@ -452,3 +389,4 @@ var specialElementHandlers = {
   })();
   </script>
 </dom-module>
+ 

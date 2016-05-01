@@ -125,6 +125,15 @@ var amt;
        payment:function(e)
       {
         paytype = (e.target.selectedItem.textContent).trim();
+
+       for(var i=0;i<pushitem.length;i++)
+       {
+       if(this.installtype==pushitem[i].installtype)
+       {
+        pushitem.splice(i,1);
+       }
+       }
+
         if(paytype=="Cheque")
         { 
            this.chequeno="";

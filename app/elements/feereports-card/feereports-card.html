@@ -22,6 +22,7 @@
       }
       .total-collection{
         @apply(--layout-horizontal);
+        margin: 5% 0% 5% 60%;
       }
       .fields{
         @apply(--layout-horizontal);
@@ -62,8 +63,8 @@
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>
-      <template  is="dom-repeat" items="{{feereportarr2cheque}}" as="view">
-        <feereportscheque-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" bankname="{{view.bank_name}}" chequeno="{{view.cheque_no}}" chequedate="{{view.cheque_date}}" receiptno="{{view.receipt_no}}" feepaid="{{view.installment_1}}"></feereportscheque-item-card>
+      <template  is="dom-repeat" items="{{feereportarrcheque}}" as="views">
+        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.student_name}}" bankname="{{views.bank_name}}" chequeno="{{views.cheque_no}}" chequedate="{{views.cheque_date}}" receiptno="{{views.receipt_no}}" feepaid="{{views.installment_1}}"></feereportscheque-item-card>
       </template>
       <!--<template  is="dom-repeat" items="{{feereportarr2cheque}}" as="view">
         <feereportscheque-item-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" bankname="{{view.bank_name}}" chequeno="{{view.cheque_no}}" chequedate="{{view.cheque_date}}" receiptno="{{view.receipt_no}}" installment1="{{view.installment_2}}"></feereportscheque-item-card>

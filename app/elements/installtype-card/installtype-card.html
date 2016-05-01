@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../datepicker-card/datepicker-card.html">
 
 <dom-module id="installtype-card">
-  <template>
+   <template>
     <style>
       :host {
         display: block;
@@ -39,25 +39,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="drop-down">
             <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paydate}}"   label="---Select the Mode of Payment---">
                 <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
-                   <paper-item value="Cheque">Cheque</paper-item>
-                    <paper-item value="Cash">Cash</paper-item>
+                   <paper-item value="Cheque" id="{{installtype}}">Cheque</paper-item>
+                    <paper-item value="Cash" id="{{installtype}}">Cash</paper-item>
                 </paper-menu>
             </paper-dropdown-menu>
           </div>
           <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
-           <paper-item id="installsdate" hidden$="{{hidden1}}">{{installdate}}</paper-item>
-    <paper-button style="margin-top: 1%;" id="{{studid}}" disabled$="{{enable}}" hidden$="{{hidden2}}" on-click="payfees">PAY</paper-button>
+           
+    
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
             </div>
        <paper-dialog id="animated" >
 <h4>ADD CHEQUE DETAILS</h4>
- <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
- <div  class="layout"> <paper-input   id="{{studid}}" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
+ <div  class="layout"> <paper-input required error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
+ <div  class="layout"> <paper-input required  error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
  <div>
  <datepicker-card></datepicker-card></div>
 <div class="buttons">
-  <paper-button on-click="add">ADD</paper-button>
+  <paper-button id="{{installtype}}" on-click="add">ADD</paper-button>
 </div>     
  </paper-dialog>
    
@@ -70,6 +70,10 @@ var chequenum;
 var bankname;
 var ck='null';
 var dt;
+var pushitem=[];
+var chequeitem=[];
+var type;
+var amt;
 
     Polymer({
       is: 'installtype-card',
@@ -121,11 +125,35 @@ var dt;
        payment:function(e)
       {
         paytype = (e.target.selectedItem.textContent).trim();
+
+       for(var i=0;i<pushitem.length;i++)
+       {
+       if(this.installtype==pushitem[i].installtype)
+       {
+        pushitem.splice(i,1);
+       }
+       }
+
         if(paytype=="Cheque")
-        {
+        { 
+           this.chequeno="";
+           this.banknam="";
+           type=this.installtype;
+          amt=this.installamt;
         var id = 'animated';
         var dialog = document.getElementById(id);
         dialog.open();
+       
+       }
+       else
+       {
+        var obj={"installamt":"","studid":"","paytype":"","installtype":""}
+        obj.installamt=this.installamt;
+        obj.studid=this.studid;
+        obj.paytype=paytype;
+        obj.installtype=this.installtype;
+        pushitem.push(obj);
+         document.querySelector('transportfee-card').Fnfeepayment(pushitem);
        }
      },
      showdialog:function()
@@ -138,31 +166,39 @@ var dt;
 
         add:function()
     {
+      if(this.chequeno==""&&this.banknam=="")
+      {
+          this.$.chequeno.validate();
+          this.$.banknam.validate();
+      }
+      else
+      {
       chequenum=this.chequeno;
       bankname=this.banknam;
      
        var id = 'animated';
       var dialog = document.getElementById(id);
       dialog.opened=false;
-    },
-
-      payfees:function()
-      {
-        //alert(this.studid);
-          if(paytype=="Cheque")
-      {
-       
+       var obj={"installamt":"","studid":"","paytype":"","installtype":""}
+        obj.installamt=amt;
+        obj.studid=this.studid;
+        obj.paytype=paytype;
+        obj.installtype=type;
+        pushitem.push(obj);
         this.chequedate=localStorage.getItem("localsess_curr_date");
-       this.$.service.payfee(this.installamt,this.studid,paytype,this.installtype);
-       this.$.service.chequeinfo(this.studid,this.studname,chequenum,bankname,this.chequedate,this.installtype);
+var obj1={"studid":"","studname":"","chequenum":"","bankname":"","chequedate":"","installtype":""}
+obj1.studid=this.studid;
+obj1.studname=this.studname;
+obj1.chequenum=chequenum;
+obj1.bankname=bankname;
+obj1.chequedate=this.chequedate;
+obj1.installtype=type;
+chequeitem.push(obj1);
+        document.querySelector('transportfee-card').Fnfeepayment(pushitem);
+        document.querySelector('transportfee-card').Fnchequepayment(chequeitem);
+
       }
-      else
-      {
-        
-        this.$.service.payfee(this.installamt,this.studid,paytype,this.installtype);
-      }
-      }
-    
+    }
     
     });
   })();

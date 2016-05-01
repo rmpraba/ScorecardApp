@@ -10,6 +10,7 @@
 <link rel="import" href="../login-card/login-card.html">
 <link rel="import" href="../../timepicker-card/timepicker-card.html">
 <link rel="import" href="../../timepicker1-card/timepicker1-card.html">
+<link rel="import" href="../transport-service/transport-service.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <dom-module id="item-card">
@@ -71,11 +72,11 @@
       ready:function(){
         n=n+1;
       },
-      insert:function(){
+      insert:function(e){
+        alert('Add button is clicked');
         var route=sessionStorage.getItem("route");
         var tripn=sessionStorage.getItem("trip");
-        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,distance);
-        this.points="";
+        this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,this.distance);
       }
     });
   })();

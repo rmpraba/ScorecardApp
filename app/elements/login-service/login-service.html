@@ -203,6 +203,7 @@
     var studid="";
     var disid="";
     var username="";
+    var school="";
     Polymer({
       is: "login-service",
 
@@ -229,6 +230,9 @@
       {
 
         var role=e.detail.response.returnval[0].role_name;
+        school=e.detail.response.returnval[0].school;
+        sessionStorage.setItem("sch",school);
+        //alert('School ID is '+school);
        if(role=="Transport Admin")
       {
         sessionStorage.setItem("userinfo",role);

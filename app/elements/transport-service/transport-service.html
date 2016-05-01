@@ -7,6 +7,7 @@
         method="post"
         id="getrouteajax"
         url="{{getrouteurl}}"
+        params="{{getrouteparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="getrouteResponse"
@@ -52,6 +53,7 @@
         method="post"
         id="sequenceajax"
         url="{{sequenceurl}}"
+        params="{{sequenceparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="sequenceResponse"
@@ -63,6 +65,7 @@
         method="post"
         id="getzoneajax"
         url="{{getzoneurl}}"
+        params="{{getzoneparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="getzoneResponse"
@@ -114,16 +117,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
-  <iron-ajax
-        method="post"
-        id="getrouteajax"
-        url="{{getrouteurl}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getrouteResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+
    <iron-ajax
         method="post"
         id="genereportajax"
@@ -206,6 +200,7 @@
         method="post"
         id="nameajax"
         url="{{nameurl}}"
+        params="{{nameparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="nameResponse"
@@ -216,6 +211,7 @@
         method="post"
         id="generatereportbynameajax"
         url="{{generatereportbynameurl}}"
+        params="{{generatereportbynameparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="generatereportbynameResponse"
@@ -226,6 +222,7 @@
         method="post"
         id="generateroutereportajax"
         url="{{generateroutereporturl}}"
+        params="{{generateroutereportparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="generateroutereportResponse"
@@ -247,6 +244,7 @@
         method="post"
         id="getstudapprovalajax"
         url="{{getstudapprovalurl}}"
+        params="{{getstudapprovalparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="getstudapprovalResponse"
@@ -498,8 +496,7 @@
     var oneway;
     var zstuname;
     var distance;
-
-
+var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
       
@@ -507,6 +504,9 @@
        getroute:function()
       {
         this.getrouteurl=sessionStorage.getItem("addrinfo")+"/getroute";
+        var obj={"schol":""}
+        obj.schol=school;
+        this.getrouteparam=obj;
         this.$.getrouteajax.generateRequest();
       },
       getrouteResponse:function(e1)
@@ -518,7 +518,8 @@
       {
         //alert('Hi  ...   '+routetrip);
         this.getroutedetailurl=sessionStorage.getItem("addrinfo")+"/getroutedetail";
-        var obj={"routename":"","tripnos":""};
+        var obj={"routename":"","tripnos":"","schol":""};
+        obj.schol=school;
         obj.routename=routetrip;
         obj.tripnos=tripno;
         this.getroutedetailparam=obj;
@@ -534,18 +535,21 @@
 
       insertpoint:function(route,pt,pickuptime,droptime,tripp,dist)
       {
+        //alert('insert');
         point=pt;
         trip=tripp;
         pick=pickuptime;
         drop=droptime;
         distance=dist;
         this.routeidurl=sessionStorage.getItem("addrinfo")+"/routeid";
-        var obj={"routename":""};
+        var obj={"routename":"","schol":""};
+        obj.schol=school;
         obj.routename=route;
         this.routeidparam=obj;
         this.$.routeidajax.generateRequest();
       },
       insertpointResponse:function(e){
+        //alert('responsefin');
         var result=e.detail.response.returnval;
         if(result=='success')
         {
@@ -559,15 +563,21 @@
       },
       routeidResponse:function(e)
       {
+        //alert('routeid');
         routeidd=e.detail.response.returnval[0].id;
          this.sequenceurl=sessionStorage.getItem("addrinfo")+"/sequence";
+         var obj={"schol":""}
+        obj.schol=school;
+        this.sequenceparam=obj;
          this.$.sequenceajax.generateRequest();
 
       },
       sequenceResponse:function(e)
       {
+        //alert('seqence');
         var seq=(e.detail.response.returnval[0].count)+1;
-        var obj={"id":"","routes":"","points":"","trip":"","pick":"","drop":"","distance":""};
+        var obj={"id":"","routes":"","points":"","trip":"","pick":"","drop":"","distance":"","schol":""}
+        obj.schol=school;
         obj.id="p"+seq;
         obj.routes=routeidd;
         obj.points=point;
@@ -584,6 +594,9 @@
 
       {
         this.getzoneurl=sessionStorage.getItem("addrinfo")+"/getzone";
+        var obj={"schol":""}
+        obj.schol=school;
+        this.getzoneparam=obj;
         this.$.getzoneajax.generateRequest();
       },
       getzoneResponse:function(e1)
@@ -594,8 +607,9 @@
       getfee:function(zone)
       {
         this.getfeeurl = sessionStorage.getItem("addrinfo")+"/getfee";
-        var obj={"zone":""}
+        var obj={"zone":"","schol":""}
         obj.zone=zone;
+        obj.schol=school;
         this.getfeeparam=obj;
         this.$.getfeeajax.generateRequest();
       },
@@ -611,7 +625,8 @@
       },
       gettermdate:function(grade){
          this.gettermdateurl=sessionStorage.getItem("addrinfo")+"/gettermdate";
-         var obj={"grade":""}
+         var obj={"grade":"","schol":""}
+         obj.schol=school;
          obj.grade=grade;
          this.gettermdateparam=obj;
         this.$.gettermdateajax.generateRequest();
@@ -629,7 +644,8 @@
       {
         zstuname=stuname;
         this.setzoneurl = sessionStorage.getItem("addrinfo")+"/setzone";
-        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":""};
+        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":"","schol":""};
+        obj.schol=school;
         obj.studid=studid;
         obj.zone=zone;
         obj.fee=fee;
@@ -663,6 +679,9 @@
       {
         //alert('hi service');
         this.getnameurl=sessionStorage.getItem("addrinfo")+"/getname";
+        var obj={"schol":""}
+        obj.schol=school;
+        this.getnameparam=obj;
         this.$.getnameajax.generateRequest();
       },
       getnameResponse:function(e1)
@@ -677,8 +696,9 @@
       getstudetail:function(studid)
       {
         this.getstudetailurl=sessionStorage.getItem("addrinfo")+"/getstudetail";
-        var obj={"studid":""};
+        var obj={"studid":"","schol":""};
         obj.studid=studid;
+        obj.schol=school;
         this.getstudetailparam=obj;
         this.$.getstudetailajax.generateRequest();
       },
@@ -695,8 +715,9 @@
             document.querySelector('zonetostudent-card').id=stdid;
            
             this.classurl=sessionStorage.getItem("addrinfo")+"/getclass";
-            var obj1={"class":""}
+            var obj1={"class":"","schol":""}
             obj1.class=classz;
+            obj1.schol=school;
             this.classparam=obj1;
             this.$.classajax.generateRequest();
 
@@ -722,6 +743,9 @@
       },
       generateroutereport:function(){
         this.generateroutereporturl=sessionStorage.getItem("addrinfo")+"/generateroutereport";
+        var obj={"schol":""}
+        obj.schol=school;
+        this.generateroutereportparam=obj;
         this.$.generateroutereportajax.generateRequest();
       },
       generateroutereportResponse:function(e){
@@ -747,7 +771,8 @@
         if(pickordrop=="Pickup")
         {
 this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickroute-report-card";
-        var obj={"routeid":"","tripid":""}
+        var obj={"routeid":"","tripid":"","schol":""}
+        obj.schol=school;
         obj.routeid=routeid;
         obj.tripid=tripid;
         this.studentpickroutereportparam=obj;
@@ -757,7 +782,8 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       else
       {
         this.studentdroproutereporturl=sessionStorage.getItem("addrinfo")+"/studentdroproute-report-card";
-        var obj={"routeid":"","tripid":""}
+        var obj={"routeid":"","tripid":"","schol":""}
+        obj.schol=school;
         obj.routeid=routeid;
         obj.tripid=tripid;
         this.studentdroproutereportparam=obj;
@@ -787,7 +813,8 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         //alert('name of route'+routetrip);
         //alert('Hi');
         this.gettripurl=sessionStorage.getItem("addrinfo")+"/gettrip";
-        var obj={"triproute":""};
+        var obj={"triproute":"","schol":""};
+        obj.schol=school;
         obj.triproute=routename;
         this.gettripparam=obj;
         //alert(JSON.stringify(obj));
@@ -803,8 +830,9 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       //cancellation
       cancellation:function(studid){
         this.cancellationurl=sessionStorage.getItem("addrinfo")+"/cancellation";
-        var obj={"studid":""}
+        var obj={"studid":"","schol":""}
         obj.studid=studid;
+        obj.schol=school;
         this.cancellationparam=obj;
         //alert(JSON.stringify(obj));
         this.$.cancellationajax.generateRequest();
@@ -817,7 +845,8 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       cancel:function(school_type, fee, paid){
         this.cancelurl=sessionStorage.getItem("addrinfo")+"/cancel";
         var end_date = localStorage.getItem("localsess_curr_date",this.showdate);
-        var obj={"school_type":"","end_date":""};
+        var obj={"school_type":"","end_date":"","schol":""}
+        obj.schol=school;
         obj.school_type=school_type;
         cancelfee = fee;
         cancelpaid = paid;
@@ -859,8 +888,9 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       {
         this.student_id=student_id;
         this.proceedcancelurl=sessionStorage.getItem("addrinfo")+"/proceedcancel";
-        var obj={"student_id":"","student_name":"","months_used":"","refund_amount":"","reason":""}
+        var obj={"student_id":"","student_name":"","months_used":"","refund_amount":"","reason":"","schol":""}
         obj.student_id=student_id;
+        obj.schol=school;
         obj.student_name=student_name;
         obj.months_used=months_used;
         obj.refund_amount=refund_amount;
@@ -872,7 +902,8 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         var reportresult=e.detail.response.returnval;
         if(reportresult=='success'){
           alert('Cancellation Request is Sent Successfully');
-              var obj={"student_id":""};
+              var obj={"student_id":"","schol":""}
+              obj.schol=school;
         obj.student_id=this.student_id;
         this.transportrequiredstatusparam=obj;
         this.transportrequiredstatusurl=sessionStorage.getItem("addrinfo")+"/transportrequiredstatus";
@@ -908,6 +939,9 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       },
       name:function(){
         this.nameurl = sessionStorage.getItem("addrinfo")+"/name";
+        var obj={"schol":""}
+        obj.schol=school;
+        this.nameparam=obj;
         this.$.nameajax.generateRequest();
       },
       nameResponse:function(e){
@@ -919,6 +953,9 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       },
       generatereportbyname:function(){
        this.generatereportbynameurl=sessionStorage.getItem("addrinfo")+"/generatereportbyname";
+       var obj={"schol":""}
+       obj.schol=school;
+       this.generatereportbynameparam=obj;
        this.$.generatereportbynameajax.generateRequest();
       },
       generatereportbynameResponse:function(e){
@@ -928,7 +965,8 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       deletemappoint:function(pointarray,routenam,tripnum)
       {
         this.deletemappointurl=sessionStorage.getItem("addrinfo")+"/deletemappoint-card";
-        var obj={"pointarray":"","routenam":"","tripnum":""}
+        var obj={"pointarray":"","routenam":"","tripnum":"","schol":""}
+        obj.schol=school;
         obj.pointarray=pointarray;
         obj.routenam=routenam;
         obj.tripnum=tripnum;
@@ -944,19 +982,27 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
        getstudapproval:function(){
         
         this.getstudapprovalurl=sessionStorage.getItem("addrinfo")+"/getstudapproval";
+        var obj={"schol":""}
+        obj.schol=school;
+        this.getstudapprovalparam=obj;
         this.$.getstudapprovalajax.generateRequest();
       },
       getstudapprovalResponse:function(e){
           var reqappro=e.detail.response.returnval;
-          
+          if(reqappro==''){
+          document.querySelector('transport-app').setPage("nodata","Discount Approval");
+          }
+          else{
           document.querySelector('approvediscount-card').approvearr=reqappro;
+        }
 
       },
       confirmdisc:function(stid,admrea,accdis,flag,status){
         var todat=new Date();
         var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
         this.confirmdiscurl=sessionStorage.getItem("addrinfo")+"/confirmdisc";
-        var obj={"stid":"","admrea":"","accdis":"","nowdate":"","flag":"","status":""}
+        var obj={"stid":"","admrea":"","accdis":"","nowdate":"","flag":"","status":"","schol":""}
+        obj.schol=school;
         obj.stid=stid;
         obj.admrea=admrea;
         obj.accdis=accdis;
@@ -973,25 +1019,36 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         } else {
           alert('Updation Failed');
         }
+        document.querySelector('approvediscount-card').freshappr();
       },
       getapprovalverify:function(){
         
         this.getapprovalverifyurl=sessionStorage.getItem("addrinfo")+"/getapprovalverify";
+        var obj={"schol":""}
+        obj.schol=school;
+        this.getapprovalverifyparam=obj;
         this.$.getapprovalverifyajax.generateRequest();
       },
       getapprovalverifyResponse:function(e){
           var verifyreq=[];
           verifyreq=e.detail.response;
+          if(verifyreq=='')
+          {
+            document.querySelector('transport-app').setPage("nodata","Discount Verification");
+          }
+          else{document.querySelector('discountverify-card').theriarr=verifyreq;
+        }
           //alert(JSON.stringify(verifyreq));
           //verifyreq=[{"name":"dsddsds"},{"name":"eerrere"}];
-          document.querySelector('discountverify-card').theriarr=verifyreq;
+          
           //alert(JSON.stringify(document.querySelector('discountverify-card').theriarr));
       },
       confirmedfee:function(stid,fee,status,flag){
         var todat=new Date();
         var today=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
         this.confirmedfeeurl=sessionStorage.getItem("addrinfo")+"/confirmedfee";
-        var obj={"stid":"","fees":"","status":"","date":"","flag":""}
+        var obj={"stid":"","fees":"","status":"","date":"","flag":"","schol":""}
+        obj.schol=school;
         obj.stid=stid;
         obj.fees=fee;
         obj.status=status;
@@ -1000,7 +1057,8 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         this.confirmedfeeparam=obj;
         this.$.confirmedfeeajax.generateRequest();
         this.confirmfeeurl=sessionStorage.getItem("addrinfo")+"/confirmfee";
-        var obj={"stid":"","fees":""}
+        var obj={"stid":"","fees":"","schol":""}
+        obj.schol=school;
         obj.stid=stid;
         obj.fees=fee;
         this.confirmfeeparam=obj;
@@ -1017,6 +1075,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
           {
             alert('Operation Failed');
           }
+          document.querySelector('discountverify-card').freshapp();
       },
       cancelledfee:function(stid,status,flag){
         this.cancelledfeeurl=sessionStorage.getItem("addrinfo")+"/cancelledfee";
@@ -1081,9 +1140,9 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
       },
        studzone:function(id){
               this.studzoneurl=sessionStorage.getItem("addrinfo")+"/getstudzone";
-              var obj={"stid":""}
+              var obj={"stid":"","schol":""}
               obj.stid=id;
-              
+              obj.schol=school;
               this.studzoneparam=obj;
               
               this.$.studzoneajax.generateRequest();

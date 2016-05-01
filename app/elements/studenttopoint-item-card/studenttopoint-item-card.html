@@ -117,6 +117,7 @@
         method="post"
         id="routepoint"
         url="{{routepointurl}}"
+        params="{{routepointparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="routepointResponse"
@@ -128,10 +129,14 @@
   (function() {
       var pickuproute;
       var pickuppoint;
+      var school=sessionStorage.getItem("sch");
     Polymer({
       is: "studenttopoint-item-card",
       ready:function(){
         this.routepointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
+        var obj={"schol":""}
+        obj.schol=school;
+        this.routepointparam=obj;
         this.$.routepoint.generateRequest();
       }, 
       routepointResponse:function(e){
@@ -142,7 +147,8 @@
         this.pickroute = (e.target.selectedItem.value);
         pickuproute = this.pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
-        var obj={"routept":"","studid":""};
+        var obj={"routept":"","studid":"","schol":""};
+        obj.schol=school;
         obj.routept=this.pickroute;
         obj.studid=this.studentid;
         this.routepickpointparam=obj;
@@ -151,7 +157,8 @@
       droproute:function(e){
         this.droproute = (e.target.selectedItem.value);
         this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
-        var obj={"routedroppt":"","studid":""};
+        var obj={"routedroppt":"","studid":"","schol":""};
+        obj.schol=school;
         obj.routedroppt=this.droproute;
         obj.studid=this.studentid;
         this.routedroppointparam=obj;

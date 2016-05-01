@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- <paper-input value="asd"></paper-input> -->
         <discountverify-item-card studid="{{item.stud_id}}" name="{{item.stud_name}}" school = "{{item.school_type}}" zone="{{item.zone_id}}" fee="{{item.fees}}" fromdate="{{item.from_date}}" todate="{{item.to_date}}" reqamt="{{item.approve_discount}}" reason="{{item.admin_reason}}" status="{{item.status}}"></discountverify-item-card> 
   </template>
-      <!-- <transport-service id="service" theriarr="{{theriarr}}"></transport-service> -->
+      <transport-service id="service"></transport-service>
   </template>
   <script>
   (function() {
@@ -39,8 +39,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready:function()
         {
-            //this.$.service.getapprovalverify();
+            this.$.service.getapprovalverify();
           
+            },
+            freshapp:function(){
+              this.$.service.getapprovalverify();
             }      
        
        

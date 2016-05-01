@@ -99,6 +99,7 @@
   <script>
   (function() {
     var len;
+    var school=sessionStorage.getItem("sch");
     Polymer({
       is: "mapstudenttopoint-service",
       selectclass:function(){
@@ -119,7 +120,8 @@
       },
       namepick:function(cla){
         this.namepickurl = sessionStorage.getItem("addrinfo")+"/namepick";
-        var obj={"id":""}
+        var obj={"id":"","schol":""}
+        obj.schol=school;
         obj.id=cla;
         this.namepickparam=obj;
         this.$.namepickajax.generateRequest();
@@ -130,8 +132,9 @@
       },
       classpick:function(cla){
         this.classpickurl = sessionStorage.getItem("addrinfo")+"/classpick";
-        var obj={"classes":""}
+        var obj={"classes":"","schol":""}
         obj.classes=cla;
+        obj.schol=school;
         this.classpickparam=obj;
         this.$.classpickajax.generateRequest();
       },
@@ -142,7 +145,7 @@
       submit:function(itemarr){
           len=itemarr.length;
           for(var i=0;i<itemarr.length;i++){
-            var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":"","flag":""};
+            var obj={"studentid":"","class_id":"","pickroute":"","droproute":"","pickpoint":"","droppoint":"","flag":"","schol":""};
             obj.studentid=itemarr[i].studentid;
             obj.class_id=itemarr[i].class_id;
             obj.pickroute=itemarr[i].pickroute;
@@ -150,6 +153,7 @@
             obj.pickpoint=itemarr[i].pickpoint;
             obj.droppoint=itemarr[i].droppoint;
             obj.flag=1;
+            obj.schol=school;
             this.studentpointurl=sessionStorage.getItem("addrinfo")+"/submiturl";
                  this.studentpointparam=obj;
             this.$.studentpointajax.generateRequest();

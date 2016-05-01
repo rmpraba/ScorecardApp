@@ -9,15 +9,151 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
-<dom-module id="cqreceipt-card">
+
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+      <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+      <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+<link rel="import" href="../cqreceipt-card/cqreceipt-card.html">
+
+
+<dom-module id="receipt-card">
   <template>
-    <style>
+      <style>
       :host {
         display: block;
       }
     </style>
-    <div class="cheque">
+    <html>
+    <form method="post" action="">
+    <body id="receipt">
+    <img id="imgRes" height="1px" width="1px"  />
+   <template is="dom-repeat" items="{{receiptarr}}" as="view">
+    <div class="receipt" >
+    <div id="canvas" style="background-image:url(fimage/1.jpg)">
+        <div class="header">
+        <div class="logo"><img src="../../images/zeesouth.png"/></div>
+        <div class="heading">
+          <div class="title">Mount Litera Zee School-South Bangalore</div>
+          <div class="address">South Bangalore #58/4, Haralur Road, Kudlu, HSR Extension, Bangalore - 560068 Phone : 080-65468341</div>
+        </div>
+        </div>
+
+        <div class="body1">
+        <h1>FEE RECEIPT</h1>
+          <hr></hr>
+          </div>
+        <div class="body11">
+          <div class="lb1">Receipt No:</div>
+          <div class="val1"> {{view.receiptno}}</div>
+          <div class="lb2">Receipt Date:</div>
+          <div class="val2"> {{view.today}}</div>
+        </div>
+        <div id="ln2">
+          <hr></hr>
+        </div>
+
+          <div class="body2">
+
+
+            <div class="lb3">
+            <table >
+              <tr>
+                <td style="padding-bottom: 13%">
+                    Student Name
+                </td>
+                <td style="padding-bottom: 13%">
+                  : {{view.studname}}
+                </td>
+              </tr>
+              
+              <tr>
+                <td>
+                  Parent Name
+                </td>
+                <td>
+                  : {{view.parent}}
+                </td>
+              </tr>
+            </table>
+            </div>
+            
+
+              
+            <div class="lb5">
+            <table>
+              <tr>
+                <td style="padding-bottom: 20%"> Class</td>
+                <td style="padding-bottom: 20%">: {{view.stnd}}/{{view.sec}}</td>
+              </tr>
+              <tr>
+                <td>Session</td>
+                <td>: {{view.session}}</td>
+              </tr>
+            </table>
+           </div>
+            
+          </div>
+          <hr id="ln3"></hr>
+          
+          <div class="body3">
+            <div class="l3">
+              <h3>SL.No.</h3>
+            </div>
+            <div class="l13">
+              <h3>Particulars</h3>
+            </div>
+            <div class="r3">
+              <h3>Amount</h3>
+            </div>
+          </div>
+
+          <hr id="ln4"></hr>
+
+          <div class="body4">
+            <div class="l4">
+              <paper-item> SL.No.</paper-item>
+            </div>
+            <div class="l14">
+              <div style="margin-top: 15%;">Transport fee</div><div style="margin-top: -20%; margin-left: 100%;">({{view.installtype}})</div>
+            </div>
+            <div class="r4">
+              <paper-item>{{view.installfee}}</paper-item>
+            </div>
+
+          </div>
+          <hr id="ln5"></hr>
+
+          <div class="body5">
+           
+            <div class="l15">
+              <paper-item class="lb">Transport fee Paid</paper-item>
+           
+            <div class="word">
+              <paper-item>: {{feeinword}}</paper-item>
+            </div> </div>
+
+            <div class="r5">
+              <paper-item style="width: 80px; margin-top: -1%;"> Total fees :</paper-item>
+              
+              <div class="cash">
+                <paper-input class="button" on-change="convertrs" value="{{view.installfee}}"></paper-input>
+            </div>
+</div>
+          </div>
+
+          <hr id="ln6"></hr>
+
+          <div class="body6">
+            <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
+            
+          </div>
+           <template  is="dom-repeat" items="{{chequearr}}" as="view">
+        <div class="cheque">
     <table style="width: 100%; margin-top: 5%;">
       <tr>
         <td style="width: 33%">Cheque No:{{cheqno}}</td>
@@ -27,21 +163,291 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </tr>
     </table>
     </div>
+
+      </template>
+       
+            <div class="body8">
+              <h3><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></h3>
+            </div>
+
+            <div class="body9">
+              <div class="l8">
+              <div><p>1.  Fee to be paid by Cash / Cheque / Demand Draft only</p></div>
+              <div><p>2.  Cheque / Demand Draft to be made in the name of <strong>"SAMSIDH EDUCATIONAL SOCIETY"</strong></p></div>
+              <div><p>3.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be paid by Cash / DD.</p></div>
+              <div><h4>4.  FEES ONCE PAID WILL NOT BE REFUNDED AT ANY GIVEN CIRCUMSTANCES</h4></div>
+             </div> 
+              
+              
+              
+              
+
+            
+            <div class="r8">
+            <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
+            </div>
+  </template>
+    </body>
+    <div id="editor"></div>
+
+    
+    </form>
+    </html>
+    <div>
+    <table>
+      <tr >
+        <td>
+           <paper-button style="height: 35px;" class="button" id="pdf">Save as PDF</paper-button>
+        </td>
+        <td>
+          <paper-button style="height: 35px;" class="button" id="email" on-click="email">Send email</paper-button>
+        </td>
+        <td>
+          <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
+        </td>
+      </tr>
+    </table>
+           
+     
+
+          </div>
   </template>
   <script>
+
+  $(window).load(function(){
+$(document).ready(function() {
+    $('#pdf').click(function() {       
+        html2canvas($("#canvas"), {
+            onrendered: function(canvas) {         
+                var imgData = canvas.toDataURL('image/png'); 
+                $("#imgRes").attr("src", imgData);             
+                var doc = new jsPDF('p', 'mm');
+                doc.addImage(imgData, 'PNG', 10, 8);
+                doc.save('{{view.stid}}.pdf');
+            }
+        });
+    });
+});
+});
+
+
+
   (function() {
     'use strict';
 
-    Polymer({
-      is: 'cqreceipt-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'cqreceipt-card',
-          notify: true
+      
+
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
+
+
+
+    Polymer({
+      is: 'receipt-card',
+
+      ready:function(){
+
+      },
+      convertrs:function(value) 
+      {
+        var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
+    var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
+    var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
+    var junkVal;
+    var obStr;
+    var numReversed;
+    var totalWords="";
+    var inWords=new Array();
+    var finalWord="";
+    var i,j;
+    var actnumber;
+
+
+    junkVal=value;
+    junkVal=Math.floor(junkVal);
+    obStr=new String(junkVal);
+    numReversed=obStr.split("");
+    actnumber=numReversed.reverse();
+    var iWordsLength=numReversed.length;
+    if(Number(junkVal) >=0)
+    {
+        //do nothing
+
+    }
+    else{
+        alert('wrong Number cannot be converted');
+        return false;
+    }
+    if(Number(junkVal)==0){
+        this.feeinword=obStr+''+'Rupees Zero Only';
+        return false;
+    }
+    if(actnumber.length>9){
+        alert('Oops!!!! the Number is too big to covertes');
+        return false;
+    }
+
+    
+    j=0;
+    for(i=0; i<iWordsLength; i++)
+    {
+        switch(i)
+        {
+        case 0:
+            if(actnumber[i]==0 || actnumber[i+1]==1 ) {
+                inWords[j]='';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]];
+            }
+            inWords[j]=inWords[j]+' Only';
+            break;
+        case 1:
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
+            break;
+        case 2:
+            if(actnumber[i]==0) {
+                inWords[j]='';
+            }
+            else if(actnumber[i-1]!=0 && actnumber[i-2]!=0) {
+                inWords[j]=iWords[actnumber[i]]+' Hundred and';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]]+' Hundred';
+            }
+            break;
+        case 3:
+            if(actnumber[i]==0 || actnumber[i+1]==1) {
+                inWords[j]='';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]];
+            }
+            if(actnumber[i+1] != 0 || actnumber[i] > 0){
+                inWords[j]=inWords[j]+" Thousand";
+            }
+            break;
+        case 4:
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
+            break;
+        case 5:
+            if(actnumber[i]==0 || actnumber[i+1]==1) {
+                inWords[j]='';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]];
+            }
+            if(actnumber[i+1] != 0 || actnumber[i] > 0){
+                inWords[j]=inWords[j]+" Lakh";
+            }
+            break;
+        case 6:
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
+            break;
+        case 7:
+            if(actnumber[i]==0 || actnumber[i+1]==1 ){
+                inWords[j]='';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]];
+            }
+            inWords[j]=inWords[j]+" Crore";
+            break;
+        case 8:
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
+            break;
+        default:
+            break;
         }
-      }
+        j++;
+    }
+
+    inWords.reverse();
+    for(i=0; i<inWords.length; i++)
+     {
+        finalWord+=inWords[i];
+    }
+    this.feeinword='Rs'+'  '+finalWord;
+
+},
+
+ email:function(e){
+              alert('sending email');
+            //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=Receipt"+document.title+"&body=.receipt"+escape(window.location.href);
+            var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
+              window.location.href = link;
+        },
+
+        print:function(){
+
+              this.$.pdf.hidden=true;
+              this.$.email.hidden=true;
+              this.$.print.hidden=true;
+
+
+            if (!window.print){
+            alert("You need NS4.x to use this print button!")
+            return
+            }
+            window.print()
+
+
+              this.$.pdf.hidden=false;
+              this.$.email.hidden=false;
+              this.$.print.hidden=false;
+              /*var pc=document.getElementById('canvas').innerHTML;
+          var oc=document.body.innerHTML;
+          document.body.innerHTML=pc;
+
+            if (!window.print){
+            alert("You need NS4.x to use this print button!")
+            return
+            }
+            window.print();
+
+             document.body.innerHTML=oc;
+             /*w=window.open();
+             w.document.write(document.getElementById(d)[0].innerHTML);
+             w.print();
+             w.close();*/
+        }
+      
     });
   })();
   </script>

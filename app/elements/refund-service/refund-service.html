@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         method="post"
         id="refundajax"
         url="{{refundurl}}"
+        params="{{refundparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="refundResponse"
@@ -37,6 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         method="post"
         id="getverifyajax"
         url="{{getverifyurl}}"
+        params="{{getverifyparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="getverifyResponse"
@@ -77,6 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function()
   {
 var refundid;
+var school=sessionStorage.getItem("sch");
     Polymer({
       is: 'refund-service',
 
@@ -84,6 +87,9 @@ var refundid;
      {
 
       this.refundurl=sessionStorage.getItem("addrinfo")+"/refund-card";
+      var obj={"schol":""}
+        obj.schol=school;
+        this.refundparam=obj;
         this.$.refundajax.generateRequest();
       },
       refundResponse:function(e)
@@ -96,7 +102,8 @@ var refundid;
       {
         //alert('aa');
         this.approvalurl=sessionStorage.getItem("addrinfo")+"/approval-card";
-         var obj={"studid":"","status":"","flag":""}
+         var obj={"studid":"","status":"","flag":"","schol":""}
+         obj.schol=school;
         obj.studid=stdid;
         obj.status=status;
         obj.flag=flag;
@@ -119,6 +126,9 @@ var refundid;
      {
 
       this.getverifyurl=sessionStorage.getItem("addrinfo")+"/getverify";
+      var obj={"schol":""}
+        obj.schol=school;
+        this.getverifyparam=obj;
         this.$.getverifyajax.generateRequest();
       },
       getverifyResponse:function(e)
@@ -130,7 +140,8 @@ var refundid;
       {
         refundid=stdid;
          this.refundchequeurl=sessionStorage.getItem("addrinfo")+"/refundcheque";
-        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":""}
+        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","schol":""}
+        obj.schol=school;
         obj.studid=stdid;
         obj.name=name;
         obj.chequenum=chequeno;
@@ -143,7 +154,8 @@ var refundid;
       refundchequeResponse:function(e)
       {
     this.updaterefundchequeurl=sessionStorage.getItem("addrinfo")+"/updaterefundcheque";
-    var obj={"studid":""}
+    var obj={"studid":"","schol":""}
+    obj.schol=school;
     obj.studid=refundid;
     this.updaterefundchequeparam=obj;
     this.$.updaterefundchequeajax.generateRequest();

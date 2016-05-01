@@ -27,6 +27,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+       .cheque
+      {
+         @apply(--layout-horizontal);
+      }
     </style>
     <html>
     <form method="post" action="">
@@ -44,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
 
         <div class="body1">
-        <h1>FEE RECEIPT</h1>
+        <h1>FEE RECEIPT/ACKNOWLEDGEMENT</h1>
           <hr></hr>
           </div>
         <div class="body11">
@@ -88,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <table>
               <tr>
                 <td style="padding-bottom: 20%"> Class</td>
-                <td style="padding-bottom: 20%">: {{view.stnd}}/{{view.sec}}</td>
+                <td style="padding-bottom: 20%">: {{view.classname}}/{{view.section}}</td>
               </tr>
               <tr>
                 <td>Session</td>
@@ -152,7 +156,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
             
           </div>
-          
+           <hr id="ln3"></hr>
+           </template>
+           <div hidden$="{{chequeview}}" class="cheque">
+    
+        <div>Cheque No:{{cheqno}}</div>
+        <div>Cheque Date:{{cqdate}}</div>
+        <div>Bank Name:{{bank}}</div>
+          <hr id="ln3"></hr>
+    </div>
+          <cqreceipt-card id="cq"></cqreceipt-card>
        
             <div class="body8">
               <h3><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></h3>
@@ -160,25 +173,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <div class="body9">
               <div class="l8">
-              <div><p>1.  Fee to be paid by Cash / Cheque / Demand Draft only</p></div>
-              <div><p>2.  Cheque / Demand Draft to be made in the name of <strong>"SAMSIDH EDUCATIONAL SOCIETY"</strong></p></div>
-              <div><p>3.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be paid by Cash / DD.</p></div>
-              <div><h4>4.  FEES ONCE PAID WILL NOT BE REFUNDED AT ANY GIVEN CIRCUMSTANCES</h4></div>
+              <div><p>1.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be paid by Cash / DD.</p></div>
+              <div><h4>2.  FEES ONCE PAID WILL NOT BE REFUNDED AT ANY GIVEN CIRCUMSTANCES</h4></div>
              </div> 
-              
-              
-              
-              
-
-            
+        
             <div class="r8">
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
-  </template>
+ 
     </body>
-    <div id="editor"></div>
-
-    
     </form>
     </html>
     <div>
@@ -196,9 +199,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </tr>
     </table>
            
-      <template  is="dom-repeat" items="{{chequearr}}" as="view">
-       <cqreceipt-card style="margin-top: 5%;" cheqno="{{view.cheno}}" bank="{{view.bknm}}" cqdate="{{view.cqdate}}"></cqreceipt-card>
-      </template>
           </div>
   </template>
   <script>
@@ -239,7 +239,19 @@ var specialElementHandlers = {
       is: 'receipt-card',
 
       ready:function(){
+        this.chequeview=true;
 
+      },
+      chequearray:function(charr)
+      {
+        this.chequeview=false;
+        this.cheqno=charr.cheno;
+        this.cqdate=charr.cqdate;
+        this.bank=charr.bknm;
+      },
+      chequereceiptarr:function(chqarr)
+      {
+      this.$.cq.receiptarr=chqarr;
       },
       convertrs:function(value) 
       {

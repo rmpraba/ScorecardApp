@@ -330,6 +330,7 @@
     var cashcount;
     var chequecount;
     var rstudid;
+    var chequearr=[];
 
 
     Polymer({
@@ -397,7 +398,11 @@
         if(pay1success=='success')
         {
             alert("Paid Successfully");
+            document.querySelector('zonetostudent-card').gotozone();
         }
+      },
+      generatereceipt:function()
+      {
         this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
         this.$.receiptseqajax.generateRequest();
       },
@@ -442,41 +447,90 @@
       },
      getstureceiptResponse:function(e)
      {
-
+    var recarr1=[];
       var recarr=[];
       var cheqarr=[];
       var  getstu=e.detail.response.returnval;
       var dt=new Date();
 var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
 var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
-var feezxc=receiptcreate[0].installfee;
+for(var i=0;i<receiptcreate.length;i++)
+{
+  if(receiptcreate[i].instype=="installment1")
+  {
+var feezxc=receiptcreate[i].installfee;
 document.querySelector('receipt-card').convertrs(feezxc);
-//alert(dadname+'   '+recstudid);
-//receiptcreate.push(getstu);
+
+
 var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
 recobj.receiptno=receiptid;
 recobj.studname=getstu[0].student_name;
-recobj.stnd=getstu[0].classname;
-recobj.sec=getstu[0].section;
-recobj.installtype=receiptcreate[0].instype;
-recobj.installfee=receiptcreate[0].installfee;
-recobj.paytype=receiptcreate[0].paytype;
+recobj.classname=getstu[0].classname;
+recobj.section=getstu[0].section;
+recobj.installtype=receiptcreate[i].instype;
+recobj.installfee=receiptcreate[i].installfee;
+recobj.paytype=receiptcreate[i].paytype;
 recobj.today=todate;
 recobj.stid=recstudid;
 recobj.session=yr;
 recobj.parent=dadname;
- //alert(JSON.stringify(recobj));
 recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;
-        var pt=receiptcreate[0].paytype;
+        var pt=receiptcreate[i].paytype;
        if(pt=='Cheque'){
+        for(var i=0;i<chequearr.length;i++)
+        {
+          if(chequearr[i].installtype==receiptcreate[i].instype)
+          {
             var cqobj={"cheno":"","cqdate":"","bknm":""}
-            cqobj.cheno=chenum;
-            cqobj.cqdate=chedate;
-            cqobj.bknm=banknm;
+            cqobj.cheno=chequearr[i].chequenum;
+            cqobj.cqdate=chequearr[i].chequedate;
+            cqobj.bknm=chequearr[i].bankname;
             cheqarr.push(cqobj);
-            document.querySelector('receipt-card').chequearr=cheqarr;
+            document.querySelector('receipt-card').chequearray(cqobj);
+          }
+          }
         }
+      }
+else if(receiptcreate[i].instype=="installment2")
+  {
+    
+var recobj1={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
+recobj1.receiptno=receiptid;
+recobj1.studname=getstu[0].student_name;
+recobj1.classname=getstu[0].classname;
+recobj1.section=getstu[0].section;
+recobj1.installtype=receiptcreate[i].instype;
+recobj1.installfee=receiptcreate[i].installfee;
+recobj1.paytype=receiptcreate[i].paytype;
+recobj1.today=todate;
+recobj1.stid=recstudid;
+recobj1.session=yr;
+recobj1.parent=dadname;
+recarr1.push(recobj1);
+       var feeinw=recobj1.installfee;
+        document.querySelector('cqreceipt-card').convertrss(feeinw);
+        document.querySelector('cqreceipt-card').receiptarr=recarr1;
+          var pt1=receiptcreate[i].paytype;
+       if(pt1=='Cheque')
+       {
+        
+        for(var j=0;j<chequearr.length;j++)
+        {
+        
+          if(chequearr[j].installtype==recobj1.installtype)
+          {
+            var cqobj={"cheno":"","cqdate":"","bknm":""}
+            cqobj.cheno=chequearr[j].chequenum;
+            cqobj.cqdate=chequearr[j].chequedate;
+            cqobj.bknm=chequearr[j].bankname;
+            cheqarr.push(cqobj);
+            document.querySelector('cqreceipt-card').chequearray(cqobj);
+          }
+          }
+        }
+      }
+}
         document.querySelector('transport-app').setPage("receipt","Fee Receipt");
      },
      chequeinfo:function(stdid,name,chequenum,bankname,chequedate,installtype)
@@ -494,7 +548,7 @@ recarr.push(recobj);
         obj.installtype=installtype;
         obj.chequestatus="processing";
         this.chequedetailsparam=obj;
-
+        chequearr.push(obj);
         this.$.chequedetailsajax.generateRequest();
 
      },

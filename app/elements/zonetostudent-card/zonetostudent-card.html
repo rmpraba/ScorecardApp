@@ -181,7 +181,7 @@ One-Way
     var datebox;
     var feepay;
     var chequearray;
-
+var count=0;
 var todat;
 var mode='Two-Way';
 var dat2=new Date();
@@ -216,15 +216,25 @@ var dat2=new Date();
         this.$.oneway.disabled=true;
          this.$.twoway.disabled=true;
          this.$.but.disabled=true;
+         
          },
        Fnfeepayment:function(feearr)
        {
         feepay=feearr;
-        //alert(JSON.stringify(feearr));
+        
        },
        Fnchequepayment:function(chequearr)
        {
              chequearray=chequearr;
+       },
+       gotozone:function()
+       {
+        count++;
+        if(count==1)
+        {
+          document.querySelector('transportfee-service').generatereceipt();
+        }
+        
        },
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
@@ -258,7 +268,8 @@ var dat2=new Date();
      {
 
       this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
-    }
+     }
+     count=0;
     if(chequearray.length>0)
     {
       for(var i=0;i<chequearray.length;i++)

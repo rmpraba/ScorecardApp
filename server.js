@@ -768,7 +768,7 @@ app.post('/zonefee-card',  urlencodedParser,function (req, res)
 app.post('/getnameofstu-card',  urlencodedParser,function (req, res)
 {
 
-       connection.query('SELECT student_name from student_details where id=(select student_id from student_fee where status="mapped")',
+       connection.query('SELECT student_name from student_details where id in (select student_id from student_fee where status="mapped")',
        	function(err, rows)
        	{
 		if(!err)
@@ -1129,7 +1129,7 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
 				res.status(200).json({'returnval': rows});
 			} else {
 				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
+				res.status(200).json({'returnval': ''});
 			}
 		} else {
 			console.log(err);
@@ -1139,19 +1139,15 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
 
 app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
 	var tripid={"school_type":req.query.tripid};
-	
-		//console.log(tripid);
          var route_id={"drop_route_id":req.query.routeid};
 
     connection.query('SELECT student_id,(select student_name from student_details where id=student_id)as name,(select point_name from point where id=drop_point)  as pick from student_point where ? and ?',[route_id,tripid],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){
-				//console.log(rows);
 				res.status(200).json({'returnval': rows});
 			} else {
-				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
+				res.status(200).json({'returnval': ''});
 			}
 		} else {
 			console.log(err);

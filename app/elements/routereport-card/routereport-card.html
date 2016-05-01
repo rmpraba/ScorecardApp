@@ -196,7 +196,6 @@
       }
     },
       FnItemSelected:function(e){
-        this.querySelector("paper-tabs").style.visibility='visible';
         this.$.print.hidden=false;
         routeid= e.target.selectedItem.value;
         //alert(e.target.selectedItem.value);
@@ -206,6 +205,8 @@
       },
       show:function()
       {
+        this.querySelector("paper-tabs").style.visibility='visible';
+        
           this.$.service.studentroutereport(routeid,triptype,pickordrop);
       },
       Fntrip:function(e)

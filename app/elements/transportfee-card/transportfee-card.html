@@ -45,13 +45,12 @@
    <button  class="collapse" on-click="toggle2"  hidden$="{{hide}}">Transport Fee</button>
    
 <iron-collapse id="type">
-<div class="transportheadtabs">
+<div class="collapse1">
           <paper-tabs>
             <paper-tab>Installment Type</paper-tab>
             <paper-tab>Amount</paper-tab>
             <paper-tab>Date</paper-tab>
             <paper-tab>Mode of Payment</paper-tab>
-            <paper-tab>Paid Date</paper-tab>
           </paper-tabs>
       </div>
       <div style="margin-left:12%;"> 
@@ -59,6 +58,9 @@
           <installtype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
           </installtype-card>
       </template>
+   </div>
+    <div >
+      <paper-button  id="{{id}}" on-click="payfee">PAY</paper-button>
    </div>
 </iron-collapse>
       <transportfee-service id="service"></transportfee-service>
@@ -86,8 +88,44 @@
   var s= document.querySelector("#type");
     s.opened=false;
 },
+ Fnfeepayment:function(feearr)
+       {
+        feepay=feearr;
+        
+       },
+       Fnchequepayment:function(chequearr)
+       {
+             chequearray=chequearr;
+       },
+       gotozone:function()
+       {
+        count++;
+        if(count==1)
+        {
+          document.querySelector('transportfee-service').generatereceipt();
+        }
+        
+       },
+       payfee:function()
+    {
+ 
+     for(var i=0;i<feepay.length;i++)
+     {
+
+      this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
+     }
+     count=0;
+    if(chequearray.length>0)
+    {
+      for(var i=0;i<chequearray.length;i++)
+      {
+        this.$.service.chequeinfo(chequearray[i].studid,chequearray[i].studname,chequearray[i].chequenum,chequearray[i].bankname,chequearray[i].chequedate,chequearray[i].installtype);
+      }
+    }
+    },
    autocompletename(nameitem)
    {
+    alert(namearr);
 namearr=nameitem;
    },
    FnInputChanged:function(e){

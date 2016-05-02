@@ -228,6 +228,7 @@
         method="post"
         id="receiptseqajax"
         url="{{receiptsequrl}}"
+         params="{{receiptseqparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="receiptseqResponse"
@@ -389,8 +390,9 @@
      {
        rstudid=studid;
        this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
-        var obj={"studid":"","installfee":"","paytype":"","instype":""}
+        var obj={"studid":"","schol":"","installfee":"","paytype":"","instype":""}
         obj.studid=studid;
+        obj.schol=sessionStorage.getItem("sch");
         obj.installfee=install;
         obj.paytype=paytype;
         obj.instype=instype;
@@ -410,6 +412,9 @@
       generatereceipt:function()
       {
         this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
+        var obj={"schol":""}
+      obj.schol=sessionStorage.getItem("sch");
+      this.receiptseqparam=obj;
         this.$.receiptseqajax.generateRequest();
       },
       receiptseqResponse:function(e)
@@ -424,7 +429,8 @@
         this.updatereceiptparam =obj;
         this.$.updatereceiptseqajax.generateRequest();
          this.receiptnourl=sessionStorage.getItem("addrinfo")+"/receiptnoinfee";
-        var obj={"receiptno":"","studid":""}
+        var obj={"receiptno":"","studid":"","schol":""}
+         obj.schol=sessionStorage.getItem("sch");
         obj.receiptno=receiptid;
         obj.studid =rstudid;
         this.receiptnoparam =obj;
@@ -435,8 +441,9 @@
       {
         recstudid=receiptcreate[0].studid;
           this.getstureceipturl=sessionStorage.getItem("addrinfo")+"/getstureceipt";
-           var obj={"stid":""}
+           var obj={"stid":"","schol":""}
             obj.stid=recstudid;
+            obj.schol=sessionStorage.getItem("sch");
            this.getstureceiptparam =obj;
         this.$.getstureceiptajax.generateRequest();
 
@@ -545,7 +552,7 @@ recarr1.push(recobj1);
       chedate=chequedate;
       banknm=bankname;
       this.chequedetailsurl=sessionStorage.getItem("addrinfo")+"/chequedetails";
-        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":""}
+        var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","installtype":"","chequestatus":"","schol":""}
         obj.studid=stdid;
         obj.name=name;
         obj.chequenum=chequenum;
@@ -554,6 +561,7 @@ recarr1.push(recobj1);
         obj.installtype=installtype;
         obj.chequestatus="processing";
         this.chequedetailsparam=obj;
+         obj.schol=sessionStorage.getItem("sch");
         chequearr.push(obj);
         this.$.chequedetailsajax.generateRequest();
 
@@ -871,7 +879,6 @@ document.querySelector('transportfee-card').installmentarr=installarr;
 
 //alert(JSON.stringify(e.detail.response));
 document.querySelector('zonetostudent-card').installmentarr=installarr;
-document.querySelector('zonetostudent-card').payoption(installarr);
      },
 
      checkchequedetails:function()

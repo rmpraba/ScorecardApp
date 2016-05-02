@@ -123,7 +123,8 @@ var amt;
         }
       },
        payment:function(e)
-      {alert('1');
+      {
+        //alert('1');
         paytype = (e.target.selectedItem.textContent).trim();
 
        for(var i=0;i<pushitem.length;i++)
@@ -135,12 +136,12 @@ var amt;
        }
 
         if(paytype=="Cheque")
-        { alert('2');
+        {// alert('2');
            this.chequeno="";
            this.banknam="";
            type=this.installtype;
           amt=this.installamt;
-          alert(amt+''+type);
+         // alert(amt+''+type);
         var id = 'animated';
         var dialog = document.getElementById(id);
         dialog.open();

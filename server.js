@@ -452,9 +452,9 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 	});
 
 app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
-{
+{ var schoolx={"school_id":req.query.schol};
 
-       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee)',
+       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee where ?)',[schoolx],
        	function(err, rows)
        	{
 		if(!err)
@@ -498,6 +498,7 @@ app.post('/namepick',  urlencodedParser,function (req, res)
 {
 	var id={"id":req.query.id};
 	var req={"transport_required":'yes'};
+	var schoolx={"school_id":req.query.schol};
 		//console.log('in server...');
       	connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[id,req,schoolx],
        		function(err, rows)
@@ -521,15 +522,16 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
 {
 		var route_id=req.query.routept;
 		var studid=req.query.studid;
-		var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT id, point_name from point where route_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=? and ?)))',[route_id,studid,schoolx],
+		var schoolx=req.query.schol;
+		console.log(req.query.schol);
+       connection.query('SELECT id, point_name from point where route_id=? and school_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=?)))',[route_id,schoolx,studid],
        	function(err, rows)
        	{
 		if(!err)
 		{
 		if(rows.length>0)
 		{
-			//console.log(rows);
+			console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -1916,7 +1918,8 @@ app.post('/receiptnoinfee',  urlencodedParser,function (req, res)
 app.post('/getstureceipt',  urlencodedParser,function (req, res)
 {
 	var stuid=req.query.stid;
-	    connection.query('select student_name ,(select class from class_details where id=class_id) as classname, (select section from class_details where id=class_id) as section from student_details where id= ? ',[stuid],
+	var schoolx={"school_id":req.query.schol};
+	    connection.query('select student_name ,(select class from class_details where id=class_id) as classname, (select section from class_details where id=class_id) as section from student_details where id= ? and ?',[stuid,schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)

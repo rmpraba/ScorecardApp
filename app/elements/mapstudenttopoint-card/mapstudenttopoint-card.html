@@ -94,6 +94,9 @@
         {
           this.$.search.hidden=false;
           this.$.maps.selectname();
+          this.studentarr=[];
+          document.querySelector('#gradeselect').selected=-1;
+
         }
         else
         {
@@ -102,10 +105,12 @@
 
         },
         classes1:function(e){
+          this.studentarr=[];
           this.class = (e.target.selectedItem.value);
           this.$.maps.classpick(this.class);
           this.$.submitbutton.hidden=false;
            this.$.search.hidden=true;
+           document.querySelector("#selectbox").checked=false;
         },
         autocompletename(nameitem){
           namearr=nameitem;

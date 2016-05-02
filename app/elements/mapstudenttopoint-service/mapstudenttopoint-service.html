@@ -21,6 +21,7 @@
     method="post"
     id="selectnameajax"
     url="{{selectnameurl}}"
+    params="{{selectnameparam}}"
     handle-as="json"
     content-type="application/json"
     on-response="selectnameResponse"
@@ -112,6 +113,9 @@
       },
       selectname:function(){
         this.selectnameurl = sessionStorage.getItem("addrinfo")+"/selectnameforpoint";
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");;
+        this.selectnameparam=obj;
         this.$.selectnameajax.generateRequest();
       },
       selectnameResponse:function(e){;
@@ -121,7 +125,7 @@
       namepick:function(cla){
         this.namepickurl = sessionStorage.getItem("addrinfo")+"/namepick";
         var obj={"id":"","schol":""}
-        obj.schol=school;
+        obj.schol=sessionStorage.getItem("sch");
         obj.id=cla;
         this.namepickparam=obj;
         this.$.namepickajax.generateRequest();
@@ -134,7 +138,7 @@
         this.classpickurl = sessionStorage.getItem("addrinfo")+"/classpick";
         var obj={"classes":"","schol":""}
         obj.classes=cla;
-        obj.schol=school;
+        obj.schol=sessionStorage.getItem("sch");;
         this.classpickparam=obj;
         this.$.classpickajax.generateRequest();
       },
@@ -153,7 +157,7 @@
             obj.pickpoint=itemarr[i].pickpoint;
             obj.droppoint=itemarr[i].droppoint;
             obj.flag=1;
-            obj.schol=school;
+            obj.schol=sessionStorage.getItem("sch");;
             this.studentpointurl=sessionStorage.getItem("addrinfo")+"/submiturl";
                  this.studentpointparam=obj;
             this.$.studentpointajax.generateRequest();

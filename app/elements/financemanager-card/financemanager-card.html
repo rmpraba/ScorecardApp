@@ -47,6 +47,7 @@
     </div>
   </body>
     <transport-service id="transportservice"></transport-service>
+     <transportfee-service id="trservice"></transportfee-service>
 </template>
 <script>
 (function() {
@@ -93,6 +94,7 @@
       },
         chequedetails:function()
       {
+        this.$.trservice.checkchequedetails();
          document.querySelector('transport-app').setPage("chequedetail","Cheque Detail");
 
       },

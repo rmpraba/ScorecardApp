@@ -152,6 +152,7 @@
         method="post"
         id="checkchequedetailsajax"
         url="{{checkchequedetailsurl}}"
+        params="{{checkchequedetailsparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="checkchequedetailsResponse"
@@ -886,6 +887,9 @@ document.querySelector('zonetostudent-card').payoption(installarr);
      checkchequedetails:function()
      {
          this.checkchequedetailsurl=sessionStorage.getItem("addrinfo")+"/checkchequedetails";
+         var obj={"schol":""}
+            obj.schol=sessionStorage.getItem("sch");
+           this.checkchequedetailsparam =obj;
         this.$.checkchequedetailsajax.generateRequest(); 
      },
      checkchequedetailsResponse:function(e)
@@ -949,6 +953,10 @@ document.querySelector('zonetostudent-card').payoption(installarr);
         {
             paidstatus="bounce";
         }
+        else if(uchequestatus=="cancelled")
+        {
+          paidstatus="cancelled";
+        }
 
         this.updatestuchequeurl=sessionStorage.getItem("addrinfo")+"/updatestucheque";
         var obj={"chequename":"","installtype":"","paidstatus":""}
@@ -958,6 +966,11 @@ document.querySelector('zonetostudent-card').payoption(installarr);
         this.updatestuchequeparam=obj;
         //alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest(); 
+     },
+     updatestuchequeResponse:function(e)
+     {
+      document.querySelector('chequedetail-card').refreshchequedetail();
+
      },
       datepickinsta1:function(e){
         this.datepickinsta1url=sessionStorage.getItem("addrinfo")+"/datepickinsta1";

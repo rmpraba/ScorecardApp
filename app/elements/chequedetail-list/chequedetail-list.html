@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <h4>ADD CHEQUE DETAILS</h4>
   <div class="field"><paper-checkbox  id="process" class="checkbox" on-change="Fnprocess" style="padding-top: 1%; width: 20%;">Processing</paper-checkbox></div>
   <div class="field"><paper-checkbox id="bounce" class="checkbox" on-change="Fnbounce" style="padding-top: 1%; width: 20%;">Bounce</paper-checkbox></div>
- <div>
+  <div class="field"><paper-checkbox id="cancelled" class="checkbox" on-change="Fncancelled" style="padding-top: 1%; width: 20%;">Cancel</paper-checkbox></div>
  </paper-dialog>
     </div>
    <transportfee-service id="service"></transportfee-service>
@@ -64,6 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         document.querySelector('#process').checked=false;
         document.querySelector('#bounce').checked=false;
+
         chqid=this.chequeno;
        if(e.target.checked==false)
        {
@@ -85,7 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          dialog.opened=false;
          if(e.target.checked==true)
        {
-        alert(chqid);
+        
          document.querySelector('chequedetail-card').FnChangestatus(chqid,"processing");
        }
       },
@@ -96,8 +97,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          dialog.opened=false;
          if(e.target.checked==true)
        {
-        alert(chqid);
+        
          document.querySelector('chequedetail-card').FnChangestatus(chqid,"bounce");
+       }
+      },
+      Fncancelled:function(e)
+      {
+        var id = 'animated';
+        var dialog = document.getElementById(id);
+         dialog.opened=false;
+         if(e.target.checked==true)
+       {
+        
+         document.querySelector('chequedetail-card').FnChangestatus(chqid,"cancelled");
        }
       },
      

@@ -297,11 +297,17 @@
     }
    }
     if(name=="Admin Manager")  {
-    if(currpage=="approveddiscount"){
+    if(currpage=="approvediscount"){
       //document.querySelector('approveddiscount-card').FnClear();
-      document.querySelector('approveddiscount-card').ready();
+      document.querySelector('approvediscount-card').ready();
       document.querySelector('app-card').setPage("transportapp");
-      document.querySelector('transport-app').setPage("transportadmin","Admin Manager");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+    }
+    if(currpage=="nodata"){
+      //document.querySelector('approveddiscount-card').FnClear();
+      document.querySelector('nodata-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
     }
   }
  }

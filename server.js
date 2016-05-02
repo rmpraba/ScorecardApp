@@ -94,7 +94,7 @@ app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
 app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 {
 		
-		var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop,"distance":req.query.distance,"school_id":req.query.schol};
+		var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop,"distance_from_school":req.query.distance,"school_id":req.query.schol};
 		//console.log('in server...'+routename);
 		//console.log(rouname);
 	    connection.query('insert into point set ?',[rouname],
@@ -151,8 +151,8 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 app.post('/sequence' ,  urlencodedParser,function (req, res)
 {
 	
-		var schoolx={"school_id":req.query.schol};
-	    connection.query('select count(id) as count from point where ?',[schoolx],
+		//var schoolx={"school_id":req.query.schol};
+	    connection.query('select count(id) as count from point',
        	function(err, rows)
        	{
       	if(!err)
@@ -497,10 +497,10 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 app.post('/namepick',  urlencodedParser,function (req, res)
 {
 	var id={"id":req.query.id};
-	var req={"transport_required":'yes'};
+	var req1={"transport_required":'yes'};
 	var schoolx={"school_id":req.query.schol};
-		//console.log('in server...');
-      	connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[id,req,schoolx],
+		console.log(req.query.schol);
+      	connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[id,req1,schoolx],
        		function(err, rows)
        	{
 		if(!err)

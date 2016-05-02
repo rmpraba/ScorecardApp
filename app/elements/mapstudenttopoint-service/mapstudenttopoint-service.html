@@ -41,7 +41,6 @@
   >
   </iron-ajax>
   <iron-ajax
-    auto
     method="post"
     id="namepickajax"
     url="{{namepickurl}}"
@@ -128,9 +127,11 @@
         obj.schol=sessionStorage.getItem("sch");
         obj.id=cla;
         this.namepickparam=obj;
+        alert(JSON.stringify(obj));
         this.$.namepickajax.generateRequest();
       },
-      namepickResponse:function(e){
+      namepickResponse:function(e)
+      {
         var student=e.detail.response.returnval;
         document.querySelector('mapstudenttopoint-card').studentarr=student;
       },

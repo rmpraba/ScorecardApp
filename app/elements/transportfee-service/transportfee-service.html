@@ -374,7 +374,7 @@
      },
      getnameofstu:function()
      {
-      //alert('hi');
+      
       this.getnameofstuurl=sessionStorage.getItem("addrinfo")+"/getnameofstu-card";
       var obj={"schol":""}
       obj.schol=sessionStorage.getItem("sch");
@@ -459,7 +459,7 @@
      },
      getreceiptinfoResponse:function(e){
         dadname=e.detail.response.returnval[0].parent_name;
-       // alert(dadname);
+       
       },
      getstureceiptResponse:function(e)
      {
@@ -707,7 +707,7 @@ recarr1.push(recobj1);
       date2=new Date(d2);
       install2date=date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
         var installdata=e.detail.response;
-        //alert(feepercent+''+discountfee);
+        
         for(var i=0;i<installdata.length;i++)
         {
              var paidstatus;
@@ -715,8 +715,7 @@ recarr1.push(recobj1);
              var paymode;
              var installstatus;
              var fine;
-            //alert(feepercent);
-            //alert(installdata[i].amt_percentage);
+            
             if(installdata[i].install_type=="installment1")
             {
                 if(install1fee>0 && install1status!="bounce")
@@ -771,9 +770,7 @@ recarr1.push(recobj1);
             obj.installstatus=installstatus;
             installarr.push(obj);
         }
-        //alert(JSON.stringify(installarr));
-
-//alert(JSON.stringify(e.detail.response));
+       
 document.querySelector('transportfee-card').installmentarr=installarr;
 
      },

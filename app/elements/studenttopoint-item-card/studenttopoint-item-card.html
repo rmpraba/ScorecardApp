@@ -22,6 +22,9 @@
       <li class="ro">
         <fieldset>
           <ul>
+          <div class="check-box">
+            <paper-checkbox id="selectbox" on-change="changeHandler"></paper-checkbox>
+          </div>
             <li class="row">
               <div class="detail">
                 <div class="field" style="padding: 0 1% 0 1%;">
@@ -78,13 +81,6 @@
             </li>
           </ul>
         </fieldset>
-      </li>
-      <li class="row">
-        <div class="detail">
-          <div class="field">
-              <paper-checkbox id="selectbox" on-change="changeHandler"></paper-checkbox>
-          </div>
-        </div>
       </li>
     </ul>
     <mapstudenttopoint-services id="mapstud"></mapstudenttopoint-services>

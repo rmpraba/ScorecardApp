@@ -294,6 +294,7 @@
         method="post"
         id="discountreportbynameajax"
         url="{{discountreportbynameurl}}"
+        params="{{discountreportbynameparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="discountreportbynameResponse"
@@ -649,6 +650,7 @@ recarr1.push(recobj1);
      },
      sendrequestResponse:function(e){
         var result=e.detail.response.returnval;
+        document.querySelector('discountstudent-card').discountrefresh();
         if(result=='success')
         {
             alert('Request sent');
@@ -1165,10 +1167,17 @@ document.querySelector('zonetostudent-card').payoption(installarr);
       }, 
       pendingResponse:function(e){
         var pending=e.detail.response.returnval;
+        if(e.detail.response.returnval=='invalid')
+        {
+           document.querySelector('transport-app').setPage("nodata","Pending Fee Report");
+        }
         document.querySelector('pending-card').pendingarr=pending;
       },
        discountbyname:function(){
        this.discountreportbynameurl=sessionStorage.getItem("addrinfo")+"/discountbyname";
+       var obj={"schol":""}
+      obj.schol=sessionStorage.getItem("sch");
+      this.discountreportbynameparam=obj;
        this.$.discountreportbynameajax.generateRequest();
       },
       discountreportbynameResponse:function(e){

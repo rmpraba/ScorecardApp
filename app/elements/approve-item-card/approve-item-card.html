@@ -97,7 +97,7 @@ height: 40%
        <paper-item id="lb">Given Reason:</paper-item><paper-item >{{reason}}</paper-item>
     </div>
     <div class="layout">
-    <paper-item id="lb">Acceptable Discount:</paper-item><paper-input class="field" label="Acceptable discount" on-change="accdiscount"value="{{accdis}}"></paper-input>
+    <paper-item id="lb">Acceptable Discount:</paper-item><paper-input class="field" allowed-pattern="[0-9]" label="Acceptable discount" on-change="accdiscount"value="{{accdis}}"></paper-input>
     <div class="check-box">
       <paper-checkbox id="cancel" on-change="changeHandler" >Reject Discount</paper-checkbox>
     </div>

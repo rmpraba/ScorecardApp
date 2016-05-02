@@ -1024,7 +1024,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         
         this.getapprovalverifyurl=sessionStorage.getItem("addrinfo")+"/getapprovalverify";
         var obj={"schol":""}
-        obj.schol=school;
+        obj.schol=sessionStorage.getItem("sch");;
         this.getapprovalverifyparam=obj;
         this.$.getapprovalverifyajax.generateRequest();
       },

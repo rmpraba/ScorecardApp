@@ -88,13 +88,17 @@ var school=sessionStorage.getItem("sch");
 
       this.refundurl=sessionStorage.getItem("addrinfo")+"/refund-card";
       var obj={"schol":""}
-        obj.schol=school;
+        obj.schol=sessionStorage.getItem("sch");
         this.refundparam=obj;
         this.$.refundajax.generateRequest();
       },
       refundResponse:function(e)
       {
         var refundresult=e.detail.response.returnval;
+        if(e.detail.response.returnval=='invalid')
+        {
+        document.querySelector('transport-app').setPage("nodata","Cancellation Approval");
+        }
         // alert(JSON.stringify(e.detail.response.returnval));
          document.querySelector('refund-list').refundarr=refundresult;
       },
@@ -103,7 +107,7 @@ var school=sessionStorage.getItem("sch");
         //alert('aa');
         this.approvalurl=sessionStorage.getItem("addrinfo")+"/approval-card";
          var obj={"studid":"","status":"","flag":"","schol":""}
-         obj.schol=school;
+         obj.schol=sessionStorage.getItem("sch");;
         obj.studid=stdid;
         obj.status=status;
         obj.flag=flag;
@@ -127,12 +131,16 @@ var school=sessionStorage.getItem("sch");
 
       this.getverifyurl=sessionStorage.getItem("addrinfo")+"/getverify";
       var obj={"schol":""}
-        obj.schol=school;
+        obj.schol=sessionStorage.getItem("sch");
         this.getverifyparam=obj;
         this.$.getverifyajax.generateRequest();
       },
       getverifyResponse:function(e)
       {
+        if(e.detail.response.returnval=='invalid')
+        {
+        document.querySelector('transport-app').setPage("nodata","Refund Verification");
+        }
         var refundresult=e.detail.response.returnval;
          document.querySelector('refundverify-card').refundarr=refundresult;
       },
@@ -141,7 +149,7 @@ var school=sessionStorage.getItem("sch");
         refundid=stdid;
          this.refundchequeurl=sessionStorage.getItem("addrinfo")+"/refundcheque";
         var obj={"studid":"","name":"","chequenum":"","bankname":"","chequedate":"","schol":""}
-        obj.schol=school;
+        obj.schol=sessionStorage.getItem("sch");
         obj.studid=stdid;
         obj.name=name;
         obj.chequenum=chequeno;
@@ -155,7 +163,7 @@ var school=sessionStorage.getItem("sch");
       {
     this.updaterefundchequeurl=sessionStorage.getItem("addrinfo")+"/updaterefundcheque";
     var obj={"studid":"","schol":""}
-    obj.schol=school;
+    obj.schol=sessionStorage.getItem("sch");
     obj.studid=refundid;
     this.updaterefundchequeparam=obj;
     this.$.updaterefundchequeajax.generateRequest();

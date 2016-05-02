@@ -57,23 +57,13 @@
       {
         document.querySelector('transport-app').setPage("cancellation","Transport Cancellation");
       },
-      report:function()
-      {
-      this.$.transportservice.generatereportbyname();
-      document.querySelector('transport-app').setPage("generatereport","Generate Report");
-      },
+      
       routereport:function(){
       this.$.transportservice.generateroutereport();
       document.querySelector('transport-app').setPage("generateroutereport","Route Report");
-      },
-      importexcel:function()
-      {
-        document.querySelector('transport-app').setPage("importexcel","Import Excel");
-      },
-      stpass:function()
-      {
-        document.querySelector('transport-app').setPage("pass","Student Bus Pass");
       }
+    
+     
       
 
   });

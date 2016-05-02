@@ -893,7 +893,7 @@ var schoolx={"school_id":req.query.schol};
 		else
 		{
 			console.log(err);
-			res.status(200).json({'returnval': ''});
+			res.status(200).json({'returnval': 'invalid'});
 		}
 	}
 });
@@ -1358,7 +1358,7 @@ app.post('/getverify',  urlencodedParser,function (req, res)
 			}
 			else
 			{
-			res.status(200).json('invalid');
+			res.status(200).json({'returnval':'invalid'});
 			}
 		}
 		else
@@ -1937,8 +1937,10 @@ app.post('/getstureceipt',  urlencodedParser,function (req, res)
 
 app.post('/refundcheque',  urlencodedParser,function (req, res)
 {
-	var studid={"student_id":req.query.studid,"name":req.query.name,"chequeno":req.query.chequenum,"bankname":req.query.bankname,"chequedate":req.query.chequedate,"school_id":req.query.schol};
-	    connection.query('insert into refundchequedetail  set ?',[studid],
+	var dat=req.query.chequedate;
+	var d=new Date(dat);
+	var studid={"student_id":req.query.studid,"student_name":req.query.name,"cheque_no":req.query.chequenum,"bank_name":req.query.bankname,"cheque_date":d,"school_id":req.query.schol};
+	    connection.query('insert into refund set ?',[studid],
        	function(err, rows){
 		if(!err){
 			

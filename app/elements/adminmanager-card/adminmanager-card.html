@@ -39,7 +39,7 @@ top:35%;
        <paper-icon-button class="iconbutton" src="../../images/approval.jpg" on-click="approval"></paper-icon-button>
     </div>
   </body>
-     <refund-service id="service"></refund-service>
+     <refund-service id="rservice"></refund-service>
   </template>
   <script>
   (function() {
@@ -57,8 +57,8 @@ top:35%;
       },
        approval:function()
       {
-      this.$.service.refundreq();
-      document.querySelector('transport-app').setPage("approval","Refund Approval");
+      this.$.rservice.refundreq();
+      document.querySelector('transport-app').setPage("approval"," Cancellation Approval");
       }
 
 

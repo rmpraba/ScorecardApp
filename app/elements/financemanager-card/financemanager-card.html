@@ -2,6 +2,8 @@
 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../transport-service/transport-service.html">
 <link rel="import" href="../transportfee-service/transportfee-service.html">
+<link rel="import" href="../refund-service/refund-service.html">
+
  <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
  <dom-module id="financemanager-card">
  <template> 
@@ -48,6 +50,7 @@
   </body>
     <transport-service id="transportservice"></transport-service>
      <transportfee-service id="trservice"></transportfee-service>
+     <refund-service id="rservice"></refund-service>
 </template>
 <script>
 (function() {
@@ -59,21 +62,13 @@
       ready: function() {
        
       },
-      zone:function()
-      {
-        document.querySelector('transport-app').setPage("zonetostudent","zone to student");
-      },
       report:function()
       {
         document.querySelector('transport-app').setPage("generatereport","Generate Report");
       },
-      
-      transportfee:function()
-      {
-         document.querySelector('transport-app').setPage("transportfee","Transport Fee");
-      },
       discount:function()
       {
+         this.$.trservice.discountbyname();
         document.querySelector('transport-app').setPage("discount","Fee Discount");
       },
       discountverify:function()
@@ -83,6 +78,7 @@
       },
       refundverify:function()
       {
+         this.$.rservice.getverify();
          document.querySelector('transport-app').setPage("refundverify","Refund Verification");
 
       },
@@ -104,18 +100,10 @@
       },
       pend:function()
       {
+        this.$.trservice.pending();
         document.querySelector('transport-app').setPage("pending","Pending Fee Reports");
       },
 
-
-         pointallocation:function()
-      {
-        document.querySelector('transport-app').setPage("mapstudenttopoint","Map Student to point");
-      },
-      routeallocation:function()
-      {
-        document.querySelector('transport-app').setPage("mappointtoroute","Map Point to Route");
-      },
       cancel:function()
       {
         document.querySelector('transport-app').setPage("cancellation","Transport Cancellation");

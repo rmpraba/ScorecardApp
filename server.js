@@ -1988,8 +1988,41 @@ app.post('/updaterecpno',  urlencodedParser,function (req, res)
 		}
 	});
 });
+app.post('/selectclasses',  urlencodedParser,function (req, res){
+	connection.query('select class, section, id from class_details',
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
-
+app.post('/addstudent',  urlencodedParser,function (req, res){
+	var collection={"id":req.query.student_id, "student_name":req.query.student_name,"class_id":req.query.stu_class,"school_type":req.query.stu_schooltype, "transport_required":req.query.stu_transport};
+    connection.query('insert into student_details set ?',[collection],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+				console.log(rows);
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 
 function setvalue()

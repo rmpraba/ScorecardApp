@@ -1,0 +1,149 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../transport-service/transport-service.html">
+<link rel="import" href="../datepicker-card/datepicker-card.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<dom-module id="student-detail-card">
+  <template>
+    <style>
+      .flex-vertical {
+        @apply(--layout-vertical);
+      }
+      .flexchild-vertical {
+        @apply(--layout-horizontal);
+      }
+    </style>
+    <div class="container add-student">
+      <div class="flex-verticals">
+        <div class="flexchild-vertical">
+          <div class="field">
+            <paper-input label="Student Name" value="{{student_name}}" required auto-validate error-message="needs a name!"></paper-input>
+          </div>
+            <div class="drop-down">
+              <paper-dropdown-menu label="Select Class">
+                <paper-menu class="dropdown-content" on-iron-select="classes" valueattr="value" >
+                  <template  is="dom-repeat" items="{{select_class}}" as="view">
+                    <paper-item value="{{view.id}}">{{view.class}} - {{view.section}}</paper-item>
+                  </template>
+                </paper-menu>
+              </paper-dropdown-menu>
+            </div>
+        </div>
+      </div>
+      <div class="flex-verticals">
+        <div class="flexchild-vertical">
+          <div class="drop-down" >
+            <paper-dropdown-menu label="School-Type">
+              <paper-menu class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
+                <paper-listbox class="dropdown-content">
+                  <paper-item value="Pre-Primary">Pre-Primary</paper-item>
+                  <paper-item value="Primary">Primary</paper-item>
+                  <paper-item value="Secondary">Secondary</paper-item>
+                  <paper-item value="Higher-Secondary">Higher-Secondary</paper-item>
+                </paper-listbox>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+          <div class="date">
+            <datepicker-card></datepicker-card>
+          </div>
+        </div>
+      </div>
+      <div class="flex-verticals">
+        <div class="flexchild-vertical">
+          <div class="field">
+            <paper-input label="Parent Name" value="{{parent_name}}" required auto-validate error-message="needs a name!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-input label="Parent Email" value="{{parent_email}}" required auto-validate error-message="needs a name!"></paper-input>
+          </div>
+        </div>
+      </div>
+      <div class="flex-verticals">
+        <div class="flexchild-vertical">
+          <div class="field">
+            <paper-input label="Parent Mobile" value="{{parent_mobile}}" required auto-validate error-message="needs a name!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-textarea value="{{address_1}}" error-message="needs address!" label="Address Line 1" required ></paper-textarea>
+          </div>
+        </div>
+      </div>
+      <div class="flex-verticals">
+        <div class="flexchild-vertical">
+          <div class="field">
+            <paper-textarea value="{{address_2}}" error-message="needs address!" label="Address Line 2" required ></paper-textarea>
+          </div>
+          <div class="field">
+            <paper-textarea value="{{address_3}}" error-message="needs address!" label="Address Line 3" required ></paper-textarea>
+          </div>
+        </div>
+      </div>
+      <div class="flex-verticals">
+        <div class="flexchild-vertical">
+          <div class="field">
+            <paper-textarea value="{{city}}" error-message="needs town!" label="City / Town" required ></paper-textarea>
+          </div>
+          <div class="field">
+            <paper-textarea value="{{pincode}}" error-message="needs pincode!" label="pincode" required ></paper-textarea>
+          </div>
+        </div>
+      </div>
+      <div class="flex-verticals">
+        <div class="flexchild-vertical">
+          <div class="drop-down" >
+            <paper-dropdown-menu label="Transport Required">
+              <paper-menu class="dropdown-content" on-iron-select="transport_required" valueattr="value" >
+                <paper-listbox class="dropdown-content">
+                  <paper-item value="yes">yes</paper-item>
+                  <paper-item value="no">no</paper-item>
+                </paper-listbox>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+        </div>
+      </div>
+      <div class="button">
+        <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+      </div>
+    </div>
+    <transport-service id="service"></transport-service>
+  </template>
+  <script>
+  (function() {
+      var stu_class;
+      var stu_schooltype;
+      var stu_transport;
+      var student_id;
+    'use strict';
+
+    Polymer({
+      is: 'student-detail-card',
+
+      ready:function(){
+        this.$.service.classesx();
+      },
+      classes:function(e){
+        stu_class = e.target.selectedItem.value;
+      },
+      schooltype:function(e){
+        stu_schooltype = e.target.selectedItem.value;
+      },
+      transport_required:function(e){
+        stu_transport = e.target.selectedItem.value;
+      },
+      click:function(){
+        student_id = "ENR11610";
+        this.$.service.addstudent(student_id, this.student_name,stu_class, stu_schooltype, stu_transport, this.parent_name, this.parent_email,this.parent_mobile,this.address_1,this.address_2,this.address_3,this.city,this.pincode);
+      }
+    });
+  })();
+  </script>
+</dom-module>

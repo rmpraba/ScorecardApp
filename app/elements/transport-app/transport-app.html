@@ -28,6 +28,7 @@
 <link rel="import" href="../chequedetail-card/chequedetail-card.html">
 <link rel="import" href="../nodata-card/nodata-card.html">
 <link rel="import" href="../studentpass-card/studentpass-card.html">
+<link rel="import" href="../student-detail-card/student-detail-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -127,6 +128,9 @@
           <section data-category="pending">
             <pending-card></pending-card>
           </section>
+          <section data-category="addstudent">
+            <student-detail-card></student-detail-card>
+          </section>
           </iron-pages>
        </div>
        <div class="footer"></div>
@@ -202,6 +206,10 @@
    else if((currpage=='pending')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='pending';
+    }
+   else if((currpage=='addstudent')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+      //alert('in in');
+      this.page='addstudent';
     }
   }
   else if(name=="Admin Manager"){

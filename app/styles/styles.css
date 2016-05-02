@@ -13,6 +13,9 @@ section{
     height: 100%;
     width: 100%;
 }
+.check-box{
+    float: right;
+}
 .head{
     background-color:#1E2021 ; 
     text-align: center; 

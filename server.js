@@ -512,7 +512,7 @@ app.post('/namepick',  urlencodedParser,function (req, res)
 		}
 		else
 		{
-			res.status(200).json({'returnval': 'invalid'});
+			res.status(200).json({'returnval': ''});
 		}
 	}
 

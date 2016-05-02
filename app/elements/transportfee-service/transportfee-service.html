@@ -272,6 +272,7 @@
         method="post"
         id="pendingajax"
         url="{{pendingurl}}"
+         params="{{pendingparam}}"
         handle-as="json"
         content-type="application/json"
         on-response="pendingResponse"
@@ -560,8 +561,9 @@ recarr1.push(recobj1);
         obj.chequedate=chequedate;
         obj.installtype=installtype;
         obj.chequestatus="processing";
+        obj.schol=sessionStorage.getItem("sch");
         this.chequedetailsparam=obj;
-         obj.schol=sessionStorage.getItem("sch");
+         
         chequearr.push(obj);
         this.$.chequedetailsajax.generateRequest();
 
@@ -928,9 +930,11 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         uchequestatus=chequestatus;
         uinstalltype=installtype;
          this.updatechequedetailurl=sessionStorage.getItem("addrinfo")+"/updatechequedetail";
-        var obj={"chequestatus":"","chequenum":""}
+        var obj={"chequestatus":"","chequenum":"","schol":""}
         obj.chequestatus=chequestatus;
         obj.chequenum=chequenum;
+        obj.schol=sessionStorage.getItem("sch");
+
         this.updatechequedetailparam=obj;
         this.$.updatechequedetailajax.generateRequest(); 
      },
@@ -941,7 +945,7 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         {
             paidstatus="paid";
         }
-        else
+        else if(uchequestatus=="bounce")
         {
             paidstatus="bounce";
         }
@@ -956,11 +960,13 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         this.$.updatestuchequeajax.generateRequest(); 
      },
       datepickinsta1:function(e){
-        this.datepickinsta1url="http://localhost:8081/datepickinsta1";
-        var obj={"e":""}
+        this.datepickinsta1url=sessionStorage.getItem("addrinfo")+"/datepickinsta1";
+        var obj={"dates":"","schol":""}
+
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
+        obj.schol=sessionStorage.getItem("sch");
         this.datepickinsta1param=obj;
         this.$.datepickinsta1ajax.generateRequest();
       },
@@ -974,11 +980,12 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         //document.querySelector('feereports-card').feereportarr1=feeresultinsta1;
       },
       datepickinsta2:function(e){
-        this.datepickinsta2url="http://localhost:8081/datepickinsta2";
-        var obj={"e":""}
+        this.datepickinsta2url=sessionStorage.getItem("addrinfo")+"/datepickinsta2";
+        var obj={"dates":"","schol":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
+        obj.schol=sessionStorage.getItem("sch");
         this.datepickinsta2param=obj;
         this.$.datepickinsta2ajax.generateRequest();
       },
@@ -1033,11 +1040,12 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         //}
       },
       datepickinsta1cheque:function(e){
-        this.datepickinsta1chequeurl="http://localhost:8081/datepickinsta1cheque";
-        var obj={"e":""}
+        this.datepickinsta1chequeurl=sessionStorage.getItem("addrinfo")+"/datepickinsta1cheque";
+        var obj={"dates":"","schol":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
+         obj.schol=sessionStorage.getItem("sch");
         this.datepickinsta1chequeparam=obj;
         this.$.datepickinsta1chequeajax.generateRequest();
       },
@@ -1051,11 +1059,12 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
         //document.querySelector('feereports-card').feereportarr1cheque=feeresultinsta1cheque;
       },
       datepickinsta2cheque:function(e){
-        this.datepickinsta2chequeurl="http://localhost:8081/datepickinsta2cheque";
-        var obj={"e":""}
+        this.datepickinsta2chequeurl=sessionStorage.getItem("addrinfo")+"/datepickinsta2cheque";
+        var obj={"dates":"","schol":""}
         var condate = new Date(e);
         var todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         obj.dates=todate;
+         obj.schol=sessionStorage.getItem("sch");
         this.datepickinsta2chequeparam=obj;
         this.$.datepickinsta2chequeajax.generateRequest();
       },
@@ -1136,6 +1145,9 @@ document.querySelector('zonetostudent-card').installmentarr=installarr;
       },
       pending:function(){
         this.pendingurl=sessionStorage.getItem("addrinfo")+"/pending";
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        this.pendingparam=obj;
         this.$.pendingajax.generateRequest();
       }, 
       pendingResponse:function(e){

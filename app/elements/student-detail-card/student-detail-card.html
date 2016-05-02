@@ -122,6 +122,7 @@
       var stu_schooltype;
       var stu_transport;
       var student_id;
+      var parent_id;
     'use strict';
 
     Polymer({
@@ -134,14 +135,15 @@
         stu_class = e.target.selectedItem.value;
       },
       schooltype:function(e){
-        stu_schooltype = e.target.selectedItem.value;
+        stu_schooltype = (e.target.selectedItem.textContent).trim();
       },
       transport_required:function(e){
-        stu_transport = e.target.selectedItem.value;
+        stu_transport = (e.target.selectedItem.textContent).trim();
       },
       click:function(){
         student_id = "ENR11610";
-        this.$.service.addstudent(student_id, this.student_name,stu_class, stu_schooltype, stu_transport, this.parent_name, this.parent_email,this.parent_mobile,this.address_1,this.address_2,this.address_3,this.city,this.pincode);
+        parent_id = "PRT11610"
+        this.$.service.addstudent(student_id, this.student_name,stu_class, stu_schooltype, stu_transport, this.parent_name, this.parent_email,this.parent_mobile,this.address_1,this.address_2,this.address_3,this.city,this.pincode, this.parent_id);
       }
     });
   })();

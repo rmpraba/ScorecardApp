@@ -2006,14 +2006,14 @@ app.post('/selectclasses',  urlencodedParser,function (req, res){
 });
 
 app.post('/addstudent',  urlencodedParser,function (req, res){
-	var collection={"id":req.query.student_id, "student_name":req.query.student_name,"class_id":req.query.stu_class,"school_type":req.query.stu_schooltype, "transport_required":req.query.stu_transport};
+
+	var collection={"school_id":req.query.schol,"id":req.query.student_id, "student_name":req.query.student_name,"class_id":req.query.stu_class,"school_type":req.query.stu_schooltype, "transport_required":req.query.stu_transport, "dob":req.query.dob};
     connection.query('insert into student_details set ?',[collection],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
 			{
 				res.status(200).json({'returnval': rows});
-				console.log(rows);
 			} else {
 				console.log(err);
 				res.status(200).json({'returnval': ''});
@@ -2024,6 +2024,24 @@ app.post('/addstudent',  urlencodedParser,function (req, res){
 	});
 });
 
+app.post('/addparent',  urlencodedParser,function (req, res){
+
+	var collection={"school_id":req.query.schol,"id":req.query.parent_id,"student_id":req.query.student_id, "parent_name":req.query.parent_name,"email":req.query.parent_email,"mobile":req.query.parent_mobile, "city/town":req.query.address_1, "address 2":req.query.address_2, "address 3":req.query.address_3,"city/town":req.query.city,"pincode":req.query.pincode};
+    connection.query('insert into parent set ?',[collection],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': 'success'});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 function setvalue()
 {

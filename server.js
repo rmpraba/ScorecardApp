@@ -2006,7 +2006,7 @@ app.post('/selectclasses',  urlencodedParser,function (req, res){
 });
 
 app.post('/addstudent',  urlencodedParser,function (req, res){
-	var collection={"id":req.query.student_id, "student_name":req.query.student_name,"class_id":req.query.stu_class,"school_type":req.query.stu_schooltype, "transport_required":req.query.stu_transport};
+	var collection={"id":req.query.student_id, "student_name":req.query.student_name,"class_id":req.query.stu_class,"school_type":req.query.stu_schooltype, "transport_required":req.query.stu_transport,"school_id":req.query.schol,"dob":req.query.dob};
     connection.query('insert into student_details set ?',[collection],
        	function(err, rows){
 		if(!err){
@@ -2024,6 +2024,25 @@ app.post('/addstudent',  urlencodedParser,function (req, res){
 	});
 });
 
+
+app.post('/addparent',  urlencodedParser,function (req, res){
+	var collection={"student_id":req.query.student_id,"parent_name":req.query.parentname,"email":req.query.pemail,"mobile":req.query.pmobile,"address1":req.query.addr1,"address2":req.query.addr2,"address3":req.query.addr3,"city":req.query.city,"pincode":req.query.pincode,"school_id":req.query.schol};
+    connection.query('insert into parent set ?',[collection],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+				console.log(rows);
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 function setvalue()
 {

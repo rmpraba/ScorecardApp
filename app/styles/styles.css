@@ -684,6 +684,8 @@ text-align: center;
    border-color: #888888;
    border-style: dotted;
    border-width: 2px;
+   margin-left: -20%;
+   margin-top: -15%;
 }
 .pass .front .header{
    @apply(--layout-horizontal);
@@ -742,7 +744,7 @@ text-align: center;
    border-width: 2px;
    width: 5.5cm;
   height: 8.5cm;
-  margin-left: 28%;
+  margin-left: 8%;
 margin-top: -41%;
 }
 .pass .back .body3{

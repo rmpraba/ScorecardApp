@@ -48,6 +48,12 @@
     this.date=new Date();
     this.$.dialog.toggle();
   },
+  setinstalldate:function(installdate)
+  {
+    var d1=installdate;
+    this.showdate=d1;
+     localStorage.setItem("localsess_curr_date",this.showdate);
+  },
   FnDismissDialog:function(e)
   {
     if (e.detail.confirmed)

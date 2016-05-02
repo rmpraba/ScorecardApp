@@ -49,18 +49,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
-            </div>
+            
        <paper-dialog id="animated">
 <h4>ADD CHEQUE DETAILS</h4>
- <div  class="layout"> <paper-input required allowed-pattern="^[1-9][0-9]*$" error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
- <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z]" error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
+ <div  class="layout"> <paper-input required allowed-pattern="^[1-9][0-9]*$" error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input> </div>
+ <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z]" error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input> </div>
  <div>
  <zonedatepicker-card></zonedatepicker-card></div>
 <div class="buttons">
   <paper-button id="{{installtype}}" on-click="add">ADD</paper-button>
 </div>     
  </paper-dialog>
-   
+   </div>
 <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
@@ -137,6 +137,7 @@ var amt;
 
         if(paytype=="Cheque")
         {// alert('2');
+      document.querySelector('zonedatepicker-card').setinstalldate(this.paydate);
            this.chequeno="";
            this.banknam="";
            type=this.installtype;

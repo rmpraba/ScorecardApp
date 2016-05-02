@@ -149,22 +149,23 @@ One-Way
 
 <paper-input id="status" class="field" value="{{status}}"></paper-input>
 </div>
+
 <div hidden$="{{hidepayoption}}">
 <div  class="collapse" on-click="toggle2">Transport Fee</div>
 <div  class="horizontalframe">
   <div style="width: 25%;">
-  <paper-checkbox style="margin-left: 25%" id="lumsum" class="checkbox" on-change="lumsumHandler">LUMSUM</paper-checkbox></div>
+  <paper-checkbox style="margin-left: 25%" id="lumsum" class="checkbox" on-change="lumsumHandler">LUMPSUM</paper-checkbox></div>
 <div style="width: 100%;">
 <paper-checkbox style="margin-left: 3%" id="install" class="checkbox" on-change="installHandler">INSTALLMENT</paper-checkbox></div>
 </div>
 </div>
+
 <div hidden$="{{hidetransport}}">
 
 <div class="collapse1">
           <paper-tabs>
             <paper-tab>Installment Type</paper-tab>
             <paper-tab>Amount</paper-tab>
-            <paper-tab>Date</paper-tab>
             <paper-tab>Mode of Payment</paper-tab>
           </paper-tabs>
       </div>
@@ -178,6 +179,7 @@ One-Way
    </div>
    </div> 
     </div>
+
     <div hidden$="{{hidetransport1}}">
 
 <div class="collapse1">
@@ -264,19 +266,17 @@ var dat2=new Date();
         if(e.target.checked==true)
         {
            document.querySelector("#install").checked=false;
-         this.hidetransport1=false;
-         this.hidetransport=true;
-        var date1=new Date();
-      var installdate=date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+         this.hidetransport1=true;
+         this.hidetransport=false;
          var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":""}
          obj.installtype="installment1";
          obj.amount=this.fee;
-         obj.paydate=installdate;
          obj.feestudid=this.id;
          obj.paidstatus=false;
+         obj.paydate=sessionStorage.getItem("installdate");
          obj.feestudname=this.value;
          arr.push(obj);
-         this.installmentarr1=arr;
+         this.installmentarr=arr;
         }
        },
        installHandler:function(e)
@@ -286,12 +286,16 @@ var dat2=new Date();
           document.querySelector("#lumsum").checked=false;
           this.hidetransport=false;
           this.hidetransport1=true;
+          this.installmentarr=payarrr;
 
         }
        },
        payoption:function(payarr)
        {
-payarrr=payarr;
+        var installdate
+        payarrr=payarr;
+        installdate=payarrr[0].paydate;
+        sessionStorage.setItem("installdate",installdate);
        },
        gotozone:function()
        {

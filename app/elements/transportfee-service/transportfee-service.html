@@ -879,10 +879,8 @@ document.querySelector('transportfee-card').installmentarr=installarr;
             obj.installstatus=installstatus;
             installarr.push(obj);
         }
-        //alert(JSON.stringify(installarr));
-
-//alert(JSON.stringify(e.detail.response));
 document.querySelector('zonetostudent-card').installmentarr=installarr;
+document.querySelector('zonetostudent-card').payoption(installarr);
      },
 
      checkchequedetails:function()

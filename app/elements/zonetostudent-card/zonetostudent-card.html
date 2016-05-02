@@ -80,7 +80,7 @@
 <div class="hrspace">
       <div class="drop-down" >
         <paper-dropdown-menu label="Select the Zone">
-          <paper-menu class="dropdown-content" on-iron-select="zoned" valueattr="value" >
+          <paper-menu id="zone" class="dropdown-content" on-iron-select="zoned" valueattr="value" >
             <template  is="dom-repeat" items="{{itemarr}}" as="view">
               <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
             </template>
@@ -249,6 +249,21 @@ var dat2=new Date();
          this.$.but.disabled=true;
          this.hidepayoption=true;
          
+         },
+          FnClear:function(){
+          this.value="";
+          this.stnd="";
+          this.grade="";
+          this.id="";
+          this.date="";
+          this.fee="";
+          this.zfromdate="";
+          this.ztodate="";
+          document.querySelector('#zone').selected=-1;
+          document.querySelector('#yearly').checked=false;
+          document.querySelector('#custom').checked=false;
+          document.querySelector('#oneway').checked=false;
+          document.querySelector('#twoway').checked=false;
          },
        Fnfeepayment:function(feearr)
        {

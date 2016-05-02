@@ -251,6 +251,24 @@
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
     }
+    if(currpage=="transportfee"){
+      document.querySelector('transportfee-card').FnClear();
+      document.querySelector('transportfee-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+    if(currpage=="pending"){
+      //document.querySelector('pending-card').FnClear();
+      document.querySelector('pending-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+    if(currpage=="receipt"){
+      //document.querySelector('receipt-card').FnClear();
+      document.querySelector('receipt-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
    }
    if(name=="Transport Admin")  {
     if(currpage=="mapstudenttopoint"){

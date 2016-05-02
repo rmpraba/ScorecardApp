@@ -65,6 +65,9 @@
       this.$.service.datepickinsta2cheque(this.date);
       document.querySelector('feereports-card').showpapertab();
       }
+    },
+    FnClear:function(){
+      this.showdate = moment(this.$.picker.date).format('L');
     }
 });
   </script>

@@ -30,7 +30,7 @@
     </style>
     <div class="feereports-card">
       <div class="date">
-        <datepicker1-card></datepicker1-card>
+        <datepicker1-card id="dp"></datepicker1-card>
       </div>
       <div class="field" id="by1"><paper-item><h1>By Cash</h1></paper-item></div>
       <div class="headtabs" id="tabs1">
@@ -120,6 +120,18 @@
         this.$.tabs2.hidden=true;
         this.$.by1.hidden=true;
         this.$.by2.hidden=true;
+      },
+      FnClear:function(){
+        this.feereportarrcheque="";
+        this.feereportarr="";
+        this.total_collection_cheque="";
+        this.students_paid_by_cash="";
+        this.students_paid_by_cheque="";
+        this.total_students_paid="";
+        this.total_collection_cash="";
+        this.total_collection_cheque="";
+        this.total_collection="";
+        this.$.dp.FnClear();
       },
       showpapertab:function(){
         this.$.print.hidden=false;

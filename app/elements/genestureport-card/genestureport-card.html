@@ -34,6 +34,11 @@
         this.$.service.generatereportbyname();
         this.querySelector('paper-listbox').style.visibility='hidden';
       },
+      FnClear:function(){
+        this.value="";
+        this.itemArray="";
+        this.reportarr="";
+      },
       autocompletename(nameitem)
       {
         namearr=nameitem;

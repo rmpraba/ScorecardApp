@@ -679,7 +679,7 @@ var school=sessionStorage.getItem("sch");
         //alert('hi service');
         this.getnameurl=sessionStorage.getItem("addrinfo")+"/getname";
         var obj={"schol":""}
-        obj.schol=school;
+        obj.schol=sessionStorage.getItem("sch");
         this.getnameparam=obj;
         this.$.getnameajax.generateRequest();
       },
@@ -688,7 +688,7 @@ var school=sessionStorage.getItem("sch");
             var iditem=e1.detail.response.returnval;
             //document.querySelector('zonetostudent-card').studentidarr=iditem;
             document.querySelector('zonetostudent-card').autocompletearr(iditem);
-            //document.querySelector('studentpass-card').autocompletearr(iditem);
+            document.querySelector('studentpass-card').autocompletearr(iditem);
             //alert(JSON.stringify(document.querySelector('zonetostudent-card').namearr));
       },
 

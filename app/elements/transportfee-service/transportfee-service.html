@@ -305,7 +305,7 @@
 
      <script>
   (function() {
-  
+  var dademail;
     var zonename;
     var stuid;
     var feez="";
@@ -459,6 +459,7 @@
      },
      getreceiptinfoResponse:function(e){
         dadname=e.detail.response.returnval[0].parent_name;
+        dademail=e.detail.response.returnval[0].email;
        
       },
      getstureceiptResponse:function(e)
@@ -478,7 +479,7 @@ var feezxc=receiptcreate[i].installfee;
 document.querySelector('receipt-card').convertrs(feezxc);
 
 
-var recobj={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
+var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
 recobj.receiptno=receiptid;
 recobj.studname=getstu[0].student_name;
 recobj.classname=getstu[0].classname;
@@ -490,6 +491,7 @@ recobj.today=todate;
 recobj.stid=recstudid;
 recobj.session=yr;
 recobj.parent=dadname;
+recobj.email=dademail;
 recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;
         var pt=receiptcreate[i].paytype;

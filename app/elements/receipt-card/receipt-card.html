@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
@@ -200,6 +201,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </table>
            
           </div>
+
+ 
+    <iron-ajax
+      id="mailsendajax"
+      url="{{mailsendurl}}"
+      params='{{mailsendparam}}'
+      method="post"
+      handle-as="json"
+      content-type="application/json"
+      on-response="FnmailsendResponse">
+    </iron-ajax>
+
   </template>
   <script>
 
@@ -223,9 +236,7 @@ $(document).ready(function() {
 
   (function() {
     'use strict';
-
-
-      
+     
 
 var specialElementHandlers = {
     '#editor': function (element, renderer) {
@@ -409,10 +420,30 @@ var specialElementHandlers = {
 },
 
  email:function(e){
-              alert('sending email');
+  alert(JSON.stringify(this.receiptarr));
+
+             /* alert('sending email');
             //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=Receipt"+document.title+"&body=.receipt"+escape(window.location.href);
             var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
-              window.location.href = link;
+              window.location.href = link;*/
+      var obj={"receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":""};
+      var receiptno=receiptarr[0].receiptno;
+      var today=receiptarr[0].today;
+      var studname=receiptarr[0].studname;
+      var classname=receiptarr[0].classname;
+      var parentname=receiptarr[0].parent;
+      var session=receiptarr[0].session;
+      var installtype=receiptarr[0].installtype;
+      var installfee=receiptarr[0].installfee;
+      var parentemail=receiptarr[0].email;
+      this.mailsendparam=obj;
+      alert(JSON.stringify(obj));
+      this.mailsendurl=sessionStorage.getItem("addrinfo")+"/mailsend";
+      this.$.mailsendajax.generateRequest();
+      },
+      FnmailsendResponse:function(e){
+        alert(JSON.stringify(e.detail.response));
+      
         },
 
         print:function(){

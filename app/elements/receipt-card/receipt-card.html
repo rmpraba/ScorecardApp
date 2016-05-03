@@ -81,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   Parent Name
                 </td>
                 <td>
-                  : {{view.parent}}
+                  : {{parent}}
                 </td>
               </tr>
             </table>
@@ -181,6 +181,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="r8">
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
+            <div hidden>{{parentemail}}</div>
  
     </body>
     </form>
@@ -431,13 +432,13 @@ var specialElementHandlers = {
       obj.today=this.receiptarr[0].today;
       obj.studname=this.receiptarr[0].studname;
       obj.classname=this.receiptarr[0].classname;
-      obj.parentname=this.receiptarr[0].parent;
+      obj.parentname=this.parent;
       obj.session=this.receiptarr[0].session;
       obj.installtype=this.receiptarr[0].installtype;
       obj.installfee=this.receiptarr[0].installfee;
-      obj.parentemail=this.receiptarr[0].email;
+      obj.parentemail=this.parentemail;
       this.mailsendparam=obj;
-      alert(JSON.stringify(obj));
+      //alert(JSON.stringify(obj));
       this.mailsendurl=sessionStorage.getItem("addrinfo")+"/mailsend";
       this.$.mailsendajax.generateRequest();
       },

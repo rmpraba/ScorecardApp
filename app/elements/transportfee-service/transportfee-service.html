@@ -460,6 +460,10 @@
      getreceiptinfoResponse:function(e){
         dadname=e.detail.response.returnval[0].parent_name;
         dademail=e.detail.response.returnval[0].email;
+        document.querySelector('receipt-card').parent=dadname;
+        document.querySelector('receipt-card').parentemail=dademail;
+        document.querySelector('cqreceipt-card').parent=dadname;
+        document.querySelector('cqreceipt-card').parentemail=dademail;
        
       },
      getstureceiptResponse:function(e)

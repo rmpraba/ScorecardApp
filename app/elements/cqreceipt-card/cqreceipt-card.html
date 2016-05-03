@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
-
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
       <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   Parent Name
                 </td>
                 <td>
-                  : {{view.parent}}
+                  : {{parent}}
                 </td>
               </tr>
             </table>
@@ -153,9 +153,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="hrspace">Bank Name:{{bank}}</div>
     </div>
     <hr id="ln3"></hr>
+    <div hidden>{{parentemail}}</div>
     </div>   
   </template>
-    
+   <iron-ajax
+      id="mailsendajax"
+      url="{{mailsendurl}}"
+      params='{{mailsendparam}}'
+      method="post"
+      handle-as="json"
+      content-type="application/json"
+      on-response="FnmailsendResponse">
+    </iron-ajax>  
   </template>
   <script>
 
@@ -345,10 +354,24 @@ var specialElementHandlers = {
 },
 
  email:function(e){
-              alert('sending email');
-            //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=Receipt"+document.title+"&body=.receipt"+escape(window.location.href);
-            var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
-              window.location.href = link;
+            var obj={"receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":""};
+      obj.receiptno=this.receiptarr[0].receiptno;
+      obj.today=this.receiptarr[0].today;
+      obj.studname=this.receiptarr[0].studname;
+      obj.classname=this.receiptarr[0].classname;
+      obj.parentname=this.parent;
+      obj.session=this.receiptarr[0].session;
+      obj.installtype=this.receiptarr[0].installtype;
+      obj.installfee=this.receiptarr[0].installfee;
+      obj.parentemail=this.parentemail;
+      this.mailsendparam=obj;
+      //alert(JSON.stringify(obj));
+      this.mailsendurl=sessionStorage.getItem("addrinfo")+"/mailsend";
+      this.$.mailsendajax.generateRequest();
+        },
+         FnmailsendResponse:function(e){
+        alert(JSON.stringify(e.detail.response));
+      
         },
 
         print:function(){

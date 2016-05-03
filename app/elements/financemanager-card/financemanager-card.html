@@ -38,11 +38,11 @@
        <paper-icon-button class="iconbutton" src="../../images/deductions.png" on-click="refundverify"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/fee_reports.png" on-click="feereports"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/pendingreport.jpg" on-click="pend"></paper-icon-button>
+       <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
     </div>
      <div class="frontpage">
-         <paper-icon-button class="iconbutton" src="../../images/add_user.png" on-click="add"></paper-icon-button>
-     
-      <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
+         
+      
       
     </div>
   </body>
@@ -109,15 +109,10 @@
       routereport:function(){
       this.$.transportservice.generateroutereport();
       document.querySelector('transport-app').setPage("generateroutereport","Route Report");
-      },
-     
-     
-       add:function()
-      {
-        document.querySelector('transport-app').setPage("addstudent","Add Student");
-        this.$.service.classesx();
       }
-      
+     
+     
+     
       
 
   });

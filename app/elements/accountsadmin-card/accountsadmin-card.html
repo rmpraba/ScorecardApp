@@ -28,7 +28,8 @@
       
       
       <paper-icon-button class="iconbutton" src="../../images/transportation.png" on-click="transportfee"></paper-icon-button>
-       
+       <paper-icon-button class="iconbutton" src="../../images/add_user.png" on-click="add"></paper-icon-button>
+     
        <paper-icon-button class="iconbutton" src="../../images/fee_reports.png" on-click="feereports"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/pendingreport.jpg" on-click="pend"></paper-icon-button>
    
@@ -97,7 +98,13 @@
       pend:function()
       {
         document.querySelector('transport-app').setPage("pending","Pending Fee Reports");
+      },
+        add:function()
+      {
+        document.querySelector('transport-app').setPage("addstudent","Add Student");
+        this.$.service.classesx();
       }
+      
      
       
 

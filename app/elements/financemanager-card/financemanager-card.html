@@ -29,7 +29,6 @@
     
       <paper-icon-button class="iconbutton" src="../../images/reports.png" on-click="report"></paper-icon-button>
       
-      
        <paper-icon-button class="iconbutton" src="../../images/cheque.png" on-click="chequedetails"></paper-icon-button>
         <paper-icon-button class="iconbutton" src="../../images/discount.png" on-click="discount"></paper-icon-button>
       </div>
@@ -37,15 +36,14 @@
      
       <paper-icon-button class="iconbutton" src="../../images/verify.jpg" on-click="discountverify"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/deductions.png" on-click="refundverify"></paper-icon-button>
-       <paper-icon-button class="iconbutton" src="../../images/receipt.png" on-click="receipt"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/fee_reports.png" on-click="feereports"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/pendingreport.jpg" on-click="pend"></paper-icon-button>
     </div>
      <div class="frontpage">
-     
+         <paper-icon-button class="iconbutton" src="../../images/add_user.png" on-click="add"></paper-icon-button>
      
       <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
-      <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
+      
     </div>
   </body>
     <transport-service id="transportservice"></transport-service>
@@ -113,10 +111,11 @@
       document.querySelector('transport-app').setPage("generateroutereport","Route Report");
       },
      
-      stpass:function()
+     
+       add:function()
       {
-         this.$.transportservice.getname();
-        document.querySelector('transport-app').setPage("pass","Student Bus Pass");
+        document.querySelector('transport-app').setPage("addstudent","Add Student");
+        this.$.service.classesx();
       }
       
       

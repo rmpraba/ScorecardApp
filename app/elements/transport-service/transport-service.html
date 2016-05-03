@@ -1341,8 +1341,11 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
             
         },
         addstudentResponse:function(e){
-            //var addstudent=e.detail.response.returnval; 
-            //alert(addstudent);
+  var addstudent=e.detail.response.returnval; 
+            if(addstudent=='success')
+            {
+                    alert('student details are added successfully');
+            }
         }
     });
  })();

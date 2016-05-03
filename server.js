@@ -2010,14 +2010,10 @@ app.post('/addstudent',  urlencodedParser,function (req, res){
     connection.query('insert into student_details set ?',[collection],
        	function(err, rows){
 		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
+			
+				res.status(200).json({'returnval':'success'});
 				console.log(rows);
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': ''});
-			}
+			
 		} else {
 			console.log(err);
 		}
@@ -2030,15 +2026,11 @@ app.post('/addparent',  urlencodedParser,function (req, res){
     connection.query('insert into parent set ?',[collection],
        	function(err, rows){
 		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
+			
+				res.status(200).json({'returnval':'sucess'});
 				console.log(rows);
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': ''});
-			}
-		} else {
+			} 
+		 else {
 			console.log(err);
 		}
 	});

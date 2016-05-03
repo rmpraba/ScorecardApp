@@ -1307,19 +1307,19 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
             var select_class=e.detail.response.returnval; 
             document.querySelector('student-detail-card').select_class=select_class;
         }, 
-        addstudent:function(student_id,student_name,stu_class, stu_schooltype,stu_transport, parent_name,parent_email, parent_mobile, address_1, address_2, address_3, city, pincode,dob){
+        addstudent:function(student_id,first_name, last_name,stu_class, stu_schooltype,stu_transport, parent_name,parent_email, parent_mobile, address_1, address_2, address_3, city, pincode,dob){
             this.addstudenturl=sessionStorage.getItem("addrinfo")+"/addstudent";
             var obj={"student_id":"","student_name":"","stu_class":"","stu_schooltype":"","stu_transport":"","dob":"","schol":""}
-            
+            alert(name);
             obj.student_id = student_id;
-            obj.student_name=student_name;
+            obj.student_name=first_name+" "+last_name;
             obj.stu_class=stu_class;
             obj.stu_schooltype=stu_schooltype;
             obj.stu_transport=stu_transport;
             obj.dob=dob;
             obj.schol=sessionStorage.getItem("sch");
             this.addstudentparam=obj;
-            //alert(JSON.stringify(obj));
+            alert(JSON.stringify(obj));
             this.$.addstudentajax.generateRequest();
 
             this.addparenturl=sessionStorage.getItem("addrinfo")+"/addparent";

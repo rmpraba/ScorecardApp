@@ -2051,7 +2051,7 @@ app.post('/addstudent',  urlencodedParser,function (req, res){
 		if(!err){
 			
 				res.status(200).json({'returnval':'success'});
-				console.log(rows);
+				//console.log(rows);
 			
 		} else {
 			console.log(err);
@@ -2067,7 +2067,7 @@ app.post('/addparent',  urlencodedParser,function (req, res){
 		if(!err){
 			
 				res.status(200).json({'returnval':'sucess'});
-				console.log(rows);
+				//console.log(rows);
 			} 
 		 else {
 			console.log(err);

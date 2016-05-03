@@ -46,7 +46,7 @@ server.send({
   {data:"<html><table><tr><td>Receiptno:"+receiptno+" </td><td>Receipt date:"+today+"</td>"+
   "<tr><td>Student Name:"+studname+" </td><td>Class:"+classname+"</td>"+
   "<tr><td>Parent Name:"+parentname+" </td><td>Session:"+session+"</td>"+
-  "<tr><td>Installment Type:"+installtype+" </td><td>Installment Fees:"+installfee+"</td>"+  
+  "<tr><td>Installment Type:"+installtype+" </td><td>Installment Fees:"+installfee+"</td></tr></table>"+  
   "</html>", alternative:true}
    ]
 }, function(err, message) { console.log(err || message); }); 

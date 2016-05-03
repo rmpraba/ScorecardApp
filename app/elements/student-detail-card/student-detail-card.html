@@ -27,14 +27,14 @@
    <div class="layframe">
         <div class="horizontalframe">
     <div class="hrspace">
-            <paper-input label="Student Id" value="{{student_id}}" required auto-validate error-message="needs a student id!"></paper-input>
+            <paper-input label="Student Id" value="{{student_id}}" required error-message="needs a student id!"></paper-input>
           </div>
          <div class="hrspace">
-            <paper-input label="Student Name" value="{{student_name}}" allowed-pattern="[a-zA-Z]" required auto-validate error-message="needs a name!"></paper-input>
+            <paper-input label="Student Name" value="{{student_name}}" allowed-pattern="[a-zA-Z]" required  error-message="needs a name!"></paper-input>
           </div>
             <div class="drop-down">
               <paper-dropdown-menu label="Select Class">
-                <paper-menu class="dropdown-content" on-iron-select="classes" valueattr="value" >
+                <paper-menu id="selectclass" class="dropdown-content" on-iron-select="classes" valueattr="value" >
                   <template  is="dom-repeat" items="{{select_class}}" as="view">
                     <paper-item value="{{view.id}}">{{view.class}} - {{view.section}}</paper-item>
                   </template>
@@ -46,7 +46,7 @@
         <div class="horizontalframe">
     <div class="hrspace">
             <paper-dropdown-menu label="class-Type">
-              <paper-menu class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
+              <paper-menu id="schooltype" class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
                 <paper-listbox class="dropdown-content">
                   <paper-item value="Pre-Primary">Pre-Primary</paper-item>
                   <paper-item value="Primary">Primary</paper-item>
@@ -60,16 +60,16 @@
             <studentdatepicker-card></studentdatepicker-card>
           </div>
                   <div class="hrspace">
-            <paper-input label="Parent Name" value="{{parent_name}}" allowed-pattern="[a-zA-Z]" required auto-validate error-message="needs a name!"></paper-input>
+            <paper-input label="Parent Name" value="{{parent_name}}" allowed-pattern="[a-zA-Z]" required error-message="needs a name!"></paper-input>
           </div>
         </div>
 
       <div class="horizontalframe">
     <div class="hrspace">
-            <paper-input label="Parent Email" value="{{parent_email}}" required auto-validate error-message="needs a name!"></paper-input>
+            <paper-input label="Parent Email" value="{{parent_email}}" required error-message="needs a name!"></paper-input>
           </div>
            <div class="hrspace">
-            <paper-input label="Parent Mobile" value="{{parent_mobile}}" required auto-validate error-message="needs a name!"></paper-input>
+            <paper-input label="Parent Mobile" value="{{parent_mobile}}" required error-message="needs a name!"></paper-input>
           </div>
           <div class="hrspace">
             <paper-input value="{{address_1}}" error-message="needs address!" label="Address Line 1" required ></paper-input>
@@ -92,7 +92,7 @@
           </div>
           <div class="drop-down" >
             <paper-dropdown-menu label="Transport Required">
-              <paper-menu class="dropdown-content" on-iron-select="transport_required" valueattr="value" >
+              <paper-menu id="trans" class="dropdown-content" on-iron-select="transport_required" valueattr="value" >
                 <paper-listbox class="dropdown-content">
                   <paper-item value="yes">yes</paper-item>
                   <paper-item value="no">no</paper-item>
@@ -120,6 +120,22 @@
 
       ready:function(){
         this.$.service.classesx();
+      },
+      FnClear:function(){
+        this.student_id="";
+        this.student_name="";
+        this.parent_name="";
+        this.parent_email="";
+        this.parent_mobile="";
+        this.address_1="";
+        this.address_2="";
+        this.address_3="";
+        this.city="";
+        this.pincode="";
+        document.querySelector('#trans').selected=-1;
+        document.querySelector('#selectclass').selected=-1;
+        document.querySelector('#schooltype').selected=-1;
+
       },
       classes:function(e){
         stu_class = e.target.selectedItem.value;

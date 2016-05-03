@@ -235,9 +235,9 @@
  },
   home:function(){
    var name=sessionStorage.getItem("userinfo");
-   alert(name);
+   //alert(name);
    var currpage=localStorage.getItem("curr_sess_page");
-   alert(currpage);
+   //alert(currpage);
     if(name=="Accounts Admin")  {
     if(currpage=="zonetostudent"){
       document.querySelector('zonetostudent-card').FnClear();
@@ -266,6 +266,12 @@
     if(currpage=="receipt"){
       //document.querySelector('receipt-card').FnClear();
       document.querySelector('receipt-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+    if(currpage=="addstudent"){
+      document.querySelector('student-detail-card').FnClear();
+      document.querySelector('student-detail-card').ready();
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
     }

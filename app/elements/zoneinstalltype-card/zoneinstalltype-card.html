@@ -169,7 +169,7 @@ var amt;
 
         add:function()
     {
-      if(this.chequeno==""&&this.banknam=="")
+      if(this.chequeno==""||this.banknam=="")
       {
           this.$.chequeno.validate();
           this.$.banknam.validate();
@@ -182,6 +182,8 @@ var amt;
        var id = 'animated';
       var dialog = document.getElementById(id);
       dialog.opened=false;
+      this.chequeno="";
+      this.banknam="";
        var obj={"installamt":"","studid":"","paytype":"","installtype":""}
         obj.installamt=amt;
         obj.studid=this.studid;

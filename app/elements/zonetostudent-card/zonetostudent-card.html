@@ -624,6 +624,10 @@ click:function(e)
     else{
       this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value); 
       this.hidepayoption=false;
+      document.querySelector("#install").checked=true;
+      this.hidetransport=false;
+          this.hidetransport1=true;
+          this.installmentarr=payarrr;
 
     }
      

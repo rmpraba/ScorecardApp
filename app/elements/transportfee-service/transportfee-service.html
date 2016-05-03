@@ -477,8 +477,10 @@ var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
 var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
 for(var i=0;i<receiptcreate.length;i++)
 {
+  
   if(receiptcreate[i].instype=="installment1")
   {
+    
 var feezxc=receiptcreate[i].installfee;
 document.querySelector('receipt-card').convertrs(feezxc);
 
@@ -500,10 +502,11 @@ recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;
         var pt=receiptcreate[i].paytype;
        if(pt=='Cheque'){
-        for(var i=0;i<chequearr.length;i++)
+        for(var j=0;j<chequearr.length;j++)
         {
-          if(chequearr[i].installtype==receiptcreate[i].instype)
+          if(chequearr[j].installtype==receiptcreate[i].instype)
           {
+            
             var cqobj={"cheno":"","cqdate":"","bknm":""}
             cqobj.cheno=chequearr[i].chequenum;
             cqobj.cqdate=chequearr[i].chequedate;
@@ -514,7 +517,7 @@ recarr.push(recobj);
           }
         }
       }
-else if(receiptcreate[i].instype=="installment2")
+ else if(receiptcreate[i].instype=="installment2")
   {
     
 var recobj1={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}

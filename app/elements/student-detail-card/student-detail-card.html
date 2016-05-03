@@ -13,21 +13,24 @@
 <dom-module id="student-detail-card">
   <template>
     <style>
-      .flex-vertical {
-        @apply(--layout-vertical);
-      }
-      .flexchild-vertical {
+       .horizontalframe
+  {
+
         @apply(--layout-horizontal);
-      }
+        
+  }
+  .hrspace
+  {
+    padding: 1%;
+  }
     </style>
-    <div class="container add-student">
-      <div class="flex-verticals">
-        <div class="flexchild-vertical">
-        <div class="field">
-            <paper-input label="Student Name" value="{{student_id}}" required auto-validate error-message="needs a student id!"></paper-input>
+   <div class="layframe">
+        <div class="horizontalframe">
+    <div class="hrspace">
+            <paper-input label="Student Id" value="{{student_id}}" required auto-validate error-message="needs a student id!"></paper-input>
           </div>
-          <div class="field">
-            <paper-input label="Student Name" value="{{student_name}}" required auto-validate error-message="needs a name!"></paper-input>
+         <div class="hrspace">
+            <paper-input label="Student Name" value="{{student_name}}" allowed-pattern="[a-zA-Z]" required auto-validate error-message="needs a name!"></paper-input>
           </div>
             <div class="drop-down">
               <paper-dropdown-menu label="Select Class">
@@ -39,10 +42,9 @@
               </paper-dropdown-menu>
             </div>
         </div>
-      </div>
-      <div class="flex-verticals">
-        <div class="flexchild-vertical">
-          <div class="drop-down" >
+      
+        <div class="horizontalframe">
+    <div class="hrspace">
             <paper-dropdown-menu label="class-Type">
               <paper-menu class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
                 <paper-listbox class="dropdown-content">
@@ -54,47 +56,39 @@
               </paper-menu>
             </paper-dropdown-menu>
           </div>
-          <div class="date">
+         <div class="hrspace">
             <studentdatepicker-card></studentdatepicker-card>
           </div>
-                  <div class="field">
-            <paper-input label="Parent Name" value="{{parent_name}}" required auto-validate error-message="needs a name!"></paper-input>
+                  <div class="hrspace">
+            <paper-input label="Parent Name" value="{{parent_name}}" allowed-pattern="[a-zA-Z]" required auto-validate error-message="needs a name!"></paper-input>
           </div>
         </div>
 
-      </div>
-      <div class="flex-verticals">
-        <div class="flexchild-vertical">
-          
-          <div class="field">
+      <div class="horizontalframe">
+    <div class="hrspace">
             <paper-input label="Parent Email" value="{{parent_email}}" required auto-validate error-message="needs a name!"></paper-input>
           </div>
-           <div class="field">
+           <div class="hrspace">
             <paper-input label="Parent Mobile" value="{{parent_mobile}}" required auto-validate error-message="needs a name!"></paper-input>
           </div>
-          <div class="field">
-            <paper-textarea value="{{address_1}}" error-message="needs address!" label="Address Line 1" required ></paper-textarea>
+          <div class="hrspace">
+            <paper-input value="{{address_1}}" error-message="needs address!" label="Address Line 1" required ></paper-input>
           </div>
         </div>
-      </div>
-      <div class="flex-verticals">
-        <div class="flexchild-vertical">
-          <div class="field">
-            <paper-textarea value="{{address_2}}" error-message="needs address!" label="Address Line 2" required ></paper-textarea>
+    <div class="horizontalframe">
+    <div class="hrspace">
+            <paper-input value="{{address_2}}" error-message="needs address!" label="Address Line 2" required ></paper-input>
           </div>
-          <div class="field">
-            <paper-textarea value="{{address_3}}" error-message="needs address!" label="Address Line 3" required ></paper-textarea>
+          <div class="hrspace">
+            <paper-input value="{{address_3}}" error-message="needs address!" label="Address Line 3" required ></paper-input>
           </div>
-          <div class="field">
-            <paper-textarea value="{{city}}" error-message="needs town!" label="City / Town" required ></paper-textarea>
+          <div class="hrspace">
+            <paper-input value="{{city}}" error-message="needs town!" allowed-pattern="[a-zA-Z]" label="City / Town" required ></paper-input>
           </div>
         </div>
-      </div>
-      <div class="flex-verticals">
-        <div class="flexchild-vertical">
-          
-          <div class="field">
-            <paper-textarea value="{{pincode}}" error-message="needs pincode!" label="pincode" required ></paper-textarea>
+     <div class="horizontalframe">
+    <div class="hrspace">
+            <paper-input value="{{pincode}}" error-message="needs pincode!" label="pincode" required ></paper-input>
           </div>
           <div class="drop-down" >
             <paper-dropdown-menu label="Transport Required">
@@ -107,7 +101,6 @@
             </paper-dropdown-menu>
           </div>
         </div>
-      </div>
       <div class="button">
         <paper-button id="button" class="button" on-click="click">Submit</paper-button>
       </div>

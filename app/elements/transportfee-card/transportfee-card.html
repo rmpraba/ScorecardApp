@@ -77,6 +77,13 @@
         //this.$.service.getinstalltype();
         
    },
+   FnClear:function(){
+        this.hide=true;       
+        this.value="";
+        this.feearr="";
+        this.installmentarr="";
+        this.hidecollapse1();
+      },
    toggle2: function(e)
       {
       var s=document.querySelector("#type"); 
@@ -125,7 +132,7 @@
     },
    autocompletename(nameitem)
    {
-    alert(namearr);
+    //alert(namearr);
 namearr=nameitem;
    },
    FnInputChanged:function(e){

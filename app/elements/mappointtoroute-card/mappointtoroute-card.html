@@ -17,14 +17,14 @@
       <div class="dupframe">
         <div class="drop-down">
           <paper-dropdown-menu label="Route" id="route" required  errorMessage ="please select the route" >
-            <paper-menu class="dropdown-content" on-iron-select="rootname" valueattr="value" >
+            <paper-menu id="routemenu" class="dropdown-content" on-iron-select="rootname" valueattr="value" >
               <template  is="dom-repeat" items="{{routearr}}" as="view">
                 <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
           <paper-dropdown-menu label="Trip" id="tripnoo" required error-message="select the trip">
-            <paper-menu class="dropdown-content" on-iron-select="tripnum" valueattr="value"  >
+            <paper-menu id="tripmenu" class="dropdown-content" on-iron-select="tripnum" valueattr="value"  >
               <paper-item value="1">1</paper-item>
                 <paper-item value="2">2</paper-item>
               
@@ -60,6 +60,13 @@
             this.$.button.hidden=true;
             this.$.create.hidden=true;
             this.$.select.getroute();
+          },
+           FnClear:function(){
+            document.querySelector('#routemenu').selected=-1;
+            document.querySelector('#tripmenu').selected=-1;
+            this.routearr="";
+            this.triparr="";
+            this.itemarr="";
           },
           rootname:function(e){
             routename = (e.target.selectedItem.textContent).trim();

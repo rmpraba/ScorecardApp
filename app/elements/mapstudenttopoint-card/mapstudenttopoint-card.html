@@ -83,6 +83,14 @@
           this.$.submitbutton.hidden=true;
           this.$.search.hidden=true;
         },
+        FnClear:function(){
+          this.classarr="";
+          this.value="";
+          this.itemArray="";
+          this.studentarr="";
+          document.querySelector('#gradeselect').selected=-1;
+          document.querySelector('#selectbox').checked=false;
+        },
         refreshmappoint:function()
         {
           this.studentarr=[];

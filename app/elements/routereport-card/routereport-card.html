@@ -55,7 +55,7 @@
       <div style="padding-right: 2%;">
       <div class="drop-down" >
         <paper-dropdown-menu label="Select the Trip">
-          <paper-menu class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
+          <paper-menu id="trip" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
               <paper-item value="1">1</paper-item>
               <paper-item value="2">2</paper-item>
           </paper-menu>
@@ -66,7 +66,7 @@
        <div style="padding-right: 2%;">
       <div class="drop-down" >
         <paper-dropdown-menu label="Select PickUp or Drop">
-          <paper-menu class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
+          <paper-menu id="pickdrop" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
             
               <paper-item value="pickup">Pickup</paper-item>
               <paper-item value="drop">Drop</paper-item>
@@ -128,6 +128,15 @@
         this.querySelector("paper-tabs").style.visibility='hidden';
         this.$.print.hidden=true;
         this.$.grndtot.hidden=true;
+      },
+        FnClear:function(){
+        this.vaue="";
+        document.querySelector('#trip').selected=-1;
+        document.querySelector('#pickdrop').selected=-1;
+        this.itemArray="";
+        this.reportarr="";
+        this.no_of_student="";
+        namearr="";
       },
       autocompletename(nameitem){
         namearr=nameitem;

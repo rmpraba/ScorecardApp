@@ -1,10 +1,11 @@
 var express    = require("express");
  var mysql      = require('mysql');
+ var email   = require("emailjs/email");
  var connection = mysql.createConnection({
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'transport4'
+   database : 'transport'
  });
 var bodyParser = require('body-parser');
  var app = express();
@@ -15,6 +16,44 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.get('/', function (req, res) {
    res.sendFile("app/index.html" );
 })
+
+app.post('/mailsend', urlencodedParser,function (req, res) {
+var receiptno=req.query.receiptno;
+var today=req.query.today;
+var studname=req.query.studname;
+var classname=req.query.classname;
+var parentname=req.query.parentname;
+var session=req.query.session;
+var installtype=req.query.installtype;
+var installfee=req.query.installfee;
+var parentemail=req.query.parentemail;
+console.log(parentemail);
+var server  = email.server.connect({
+   user:    "samsidhmlzs@gmail.com", 
+   password:"samsidhhsr", 
+   host:    "smtp.gmail.com", 
+   ssl:     true
+
+});
+// send the message and get a callback with an error or details of the message that was sent
+server.send({
+   text:    "FEE RECEIPT/ACKNOWLEDGEMENT", 
+   from:    "rsamsidhmlzs@gmail.com", 
+   to:       parentemail,   
+   subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
+    attachment: 
+   [
+  {data:"<html><table><tr><td>Receiptno:"+receiptno+" </td><td>Receipt date:"+today+"</td>"+
+  "<tr><td>Student Name:"+studname+" </td><td>Class:"+classname+"</td>"+
+  "<tr><td>Parent Name:"+parentname+" </td><td>Session:"+session+"</td>"+
+  "<tr><td>Installment Type:"+installtype+" </td><td>Installment Fees:"+installfee+"</td>"+  
+  "</html>", alternative:true}
+   ]
+}, function(err, message) { console.log(err || message); }); 
+res.status(200).json('mail sent');
+
+});
+
 //select the username and password from login table
 app.post('/login-card',  urlencodedParser,function (req, res)
 {
@@ -2010,14 +2049,10 @@ app.post('/addstudent',  urlencodedParser,function (req, res){
     connection.query('insert into student_details set ?',[collection],
        	function(err, rows){
 		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
+			
+				res.status(200).json({'returnval':'success'});
 				console.log(rows);
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': ''});
-			}
+			
 		} else {
 			console.log(err);
 		}
@@ -2030,15 +2065,11 @@ app.post('/addparent',  urlencodedParser,function (req, res){
     connection.query('insert into parent set ?',[collection],
        	function(err, rows){
 		if(!err){
-			if(rows.length>0)
-			{
-				res.status(200).json({'returnval': rows});
+			
+				res.status(200).json({'returnval':'sucess'});
 				console.log(rows);
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': ''});
-			}
-		} else {
+			} 
+		 else {
 			console.log(err);
 		}
 	});

@@ -29,6 +29,7 @@
       
       <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
      
      
     </div>
@@ -61,6 +62,11 @@
       routereport:function(){
       this.$.transportservice.generateroutereport();
       document.querySelector('transport-app').setPage("generateroutereport","Route Report");
+      },
+       stpass:function()
+      {
+         this.$.transportservice.getname();
+        document.querySelector('transport-app').setPage("pass","Student Bus Pass");
       }
     
      

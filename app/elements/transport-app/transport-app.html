@@ -143,7 +143,7 @@
    var currpage=localStorage.getItem("curr_sess_page");
    if(name=="Transport Admin")  {
     //alert('in');
-    this.page="transportadmin";
+    /*this.page="transportadmin";
     if((currpage=='mappointtoroute')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='mappointtoroute';
@@ -171,11 +171,11 @@
     else if((currpage=='pass')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='pass';
-    }
+    }*/
   }
   else if(name=="Accounts Admin"){
    this.page="accountadmin"; 
-   if((currpage=='zonetostudent')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+   /*if((currpage=='zonetostudent')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='zonetostudent';
     }
@@ -210,14 +210,14 @@
    else if((currpage=='addstudent')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='addstudent';
-    }
+    }*/
   }
   else if(name=="Admin Manager"){
    this.page="adminmanager"; 
-   if((currpage=='approvediscount')&&(localStorage.getItem("curr_sess_homepage")!="1")){
+   /*if((currpage=='approvediscount')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='approvediscount';
-    }
+    }*/
   }
   },
   setPage:function(page,title){
@@ -232,6 +232,141 @@
   window.location.href="../index.html";
 
    //document.querySelector('app-card').setPage("loginpage");
+ },
+  home:function(){
+   var name=sessionStorage.getItem("userinfo");
+   alert(name);
+   var currpage=localStorage.getItem("curr_sess_page");
+   alert(currpage);
+    if(name=="Accounts Admin")  {
+    if(currpage=="zonetostudent"){
+      document.querySelector('zonetostudent-card').FnClear();
+      document.querySelector('zonetostudent-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+    if(currpage=="feereports"){
+      document.querySelector('feereports-card').FnClear();
+      document.querySelector('feereports-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+    if(currpage=="transportfee"){
+      document.querySelector('transportfee-card').FnClear();
+      document.querySelector('transportfee-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+    if(currpage=="pending"){
+      //document.querySelector('pending-card').FnClear();
+      document.querySelector('pending-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+    if(currpage=="receipt"){
+      //document.querySelector('receipt-card').FnClear();
+      document.querySelector('receipt-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+    }
+   }
+   if(name=="Transport Admin")  {
+    if(currpage=="mapstudenttopoint"){
+      document.querySelector('mapstudenttopoint-card').FnClear();
+      document.querySelector('mapstudenttopoint-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
+     if(currpage=="mappointtoroute"){
+      document.querySelector('mappointtoroute-card').FnClear();
+      document.querySelector('mappointtoroute-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
+    if(currpage=="cancellation"){
+      document.querySelector('cancellation-card').FnClear();
+      document.querySelector('cancellation-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
+    if(currpage=="generateroutereport"){
+      document.querySelector('routereport-card').FnClear();
+      document.querySelector('routereport-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
+   }
+    if(name=="Admin Manager")  {
+    if(currpage=="approvediscount"){
+      //document.querySelector('approveddiscount-card').FnClear();
+      document.querySelector('approvediscount-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+    }
+    if(currpage=="nodata"){
+      //document.querySelector('approveddiscount-card').FnClear();
+      document.querySelector('nodata-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+    }
+
+  }
+  if(name=="Finance Manager")  {
+    if(currpage=="generatereport"){
+      document.querySelector('genestureport-card').FnClear();
+      document.querySelector('genestureport-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+    if(currpage=="chequedetail"){
+      //document.querySelector('genestureport-card').FnClear();
+      document.querySelector('chequedetail-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+    if(currpage=="discount"){
+      document.querySelector('discountstudent-card').FnClear();
+      document.querySelector('discountstudent-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+    if(currpage=="nodata"){
+      //document.querySelector('approveddiscount-card').FnClear();
+      document.querySelector('nodata-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+     document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+    if(currpage=="refundverify"){
+      //document.querySelector('refundverify-card').FnClear();
+      document.querySelector('refundverify-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+    if(currpage=="feereports"){
+      document.querySelector('feereports-card').FnClear();
+      document.querySelector('feereports-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+     if(currpage=="pending"){
+      //document.querySelector('pending-card').FnClear();
+      document.querySelector('pending-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+     if(currpage=="generateroutereport"){
+      document.querySelector('routereport-card').FnClear();
+      document.querySelector('routereport-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+    if(currpage=="pass"){
+      document.querySelector('studentpass-card').FnClear();
+      document.querySelector('studentpass-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+  }
  }
   });
 

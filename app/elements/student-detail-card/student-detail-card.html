@@ -1,6 +1,6 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../transport-service/transport-service.html">
-<link rel="import" href="../datepicker-card/datepicker-card.html">
+<link rel="import" href="../studentdatepicker-card/studentdatepicker-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
@@ -23,6 +23,9 @@
     <div class="container add-student">
       <div class="flex-verticals">
         <div class="flexchild-vertical">
+        <div class="field">
+            <paper-input label="Student Name" value="{{student_id}}" required auto-validate error-message="needs a student id!"></paper-input>
+          </div>
           <div class="field">
             <paper-input label="Student Name" value="{{student_name}}" required auto-validate error-message="needs a name!"></paper-input>
           </div>
@@ -40,7 +43,7 @@
       <div class="flex-verticals">
         <div class="flexchild-vertical">
           <div class="drop-down" >
-            <paper-dropdown-menu label="School-Type">
+            <paper-dropdown-menu label="class-Type">
               <paper-menu class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
                 <paper-listbox class="dropdown-content">
                   <paper-item value="Pre-Primary">Pre-Primary</paper-item>
@@ -52,23 +55,21 @@
             </paper-dropdown-menu>
           </div>
           <div class="date">
-            <datepicker-card></datepicker-card>
+            <studentdatepicker-card></studentdatepicker-card>
+          </div>
+                  <div class="field">
+            <paper-input label="Parent Name" value="{{parent_name}}" required auto-validate error-message="needs a name!"></paper-input>
           </div>
         </div>
+
       </div>
       <div class="flex-verticals">
         <div class="flexchild-vertical">
-          <div class="field">
-            <paper-input label="Parent Name" value="{{parent_name}}" required auto-validate error-message="needs a name!"></paper-input>
-          </div>
+          
           <div class="field">
             <paper-input label="Parent Email" value="{{parent_email}}" required auto-validate error-message="needs a name!"></paper-input>
           </div>
-        </div>
-      </div>
-      <div class="flex-verticals">
-        <div class="flexchild-vertical">
-          <div class="field">
+           <div class="field">
             <paper-input label="Parent Mobile" value="{{parent_mobile}}" required auto-validate error-message="needs a name!"></paper-input>
           </div>
           <div class="field">
@@ -84,20 +85,17 @@
           <div class="field">
             <paper-textarea value="{{address_3}}" error-message="needs address!" label="Address Line 3" required ></paper-textarea>
           </div>
-        </div>
-      </div>
-      <div class="flex-verticals">
-        <div class="flexchild-vertical">
           <div class="field">
             <paper-textarea value="{{city}}" error-message="needs town!" label="City / Town" required ></paper-textarea>
           </div>
-          <div class="field">
-            <paper-textarea value="{{pincode}}" error-message="needs pincode!" label="pincode" required ></paper-textarea>
-          </div>
         </div>
       </div>
       <div class="flex-verticals">
         <div class="flexchild-vertical">
+          
+          <div class="field">
+            <paper-textarea value="{{pincode}}" error-message="needs pincode!" label="pincode" required ></paper-textarea>
+          </div>
           <div class="drop-down" >
             <paper-dropdown-menu label="Transport Required">
               <paper-menu class="dropdown-content" on-iron-select="transport_required" valueattr="value" >
@@ -122,7 +120,6 @@
       var stu_schooltype;
       var stu_transport;
       var student_id;
-      var parent_id;
     'use strict';
 
     Polymer({
@@ -141,9 +138,8 @@
         stu_transport = (e.target.selectedItem.textContent).trim();
       },
       click:function(){
-        student_id = "ENR11610";
-        parent_id = "PRT11610"
-        this.$.service.addstudent(student_id, this.student_name,stu_class, stu_schooltype, stu_transport, this.parent_name, this.parent_email,this.parent_mobile,this.address_1,this.address_2,this.address_3,this.city,this.pincode, this.parent_id);
+       this.dob=localStorage.getItem("localsess_dob_date");
+        this.$.service.addstudent(this.student_id, this.student_name,stu_class, stu_schooltype, stu_transport, this.parent_name, this.parent_email,this.parent_mobile,this.address_1,this.address_2,this.address_3,this.city,this.pincode,this.dob);
       }
     });
   })();

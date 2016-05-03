@@ -496,7 +496,8 @@
         debounce-duration="300"
         >
   </iron-ajax>
-  <iron-ajax
+
+   <iron-ajax
         method="post"
         id="addparentajax"
         url="{{addparenturl}}"
@@ -536,8 +537,7 @@
     var address_3;
     var city;
     var pincode;
-    var parent_id;
-    var school=sessionStorage.getItem("sch");
+var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
       
@@ -1307,51 +1307,42 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
             var select_class=e.detail.response.returnval; 
             document.querySelector('student-detail-card').select_class=select_class;
         }, 
-        addstudent:function(student_id,student_name,stu_class, stu_schooltype, stu_transport, parent_name,parent_email, parent_mobile, address_1, address_2, address_3, city, pincode, parent_id){
+        addstudent:function(student_id,student_name,stu_class, stu_schooltype,stu_transport, parent_name,parent_email, parent_mobile, address_1, address_2, address_3, city, pincode,dob){
             this.addstudenturl=sessionStorage.getItem("addrinfo")+"/addstudent";
-            var dob = localStorage.getItem("localsess_curr_date",this.showdate);
-            var obj={"student_id":"","student_name":"","stu_class":"","stu_schooltype":"","stu_transport":"","dob":"", "schol":""}
-            obj.schol=sessionStorage.getItem("sch");
-            parent_name=parent_name;
-            parent_mobile=parent_mobile;
+            var obj={"student_id":"","student_name":"","stu_class":"","stu_schooltype":"","stu_transport":"","dob":"","schol":""}
+            
             obj.student_id = student_id;
             obj.student_name=student_name;
-            parent_email=parent_email;
-            address_1=address_1;
-            address_2 = address_2;
-            address_3=address_3;
-            parent_id = parent_id;
-            city=city;
-            pincode=pincode;
             obj.stu_class=stu_class;
             obj.stu_schooltype=stu_schooltype;
             obj.stu_transport=stu_transport;
-            obj.dob = dob;
+            obj.dob=dob;
+            obj.schol=sessionStorage.getItem("sch");
             this.addstudentparam=obj;
+            //alert(JSON.stringify(obj));
             this.$.addstudentajax.generateRequest();
+
+            this.addparenturl=sessionStorage.getItem("addrinfo")+"/addparent";
+       var obj1={"schol":"","student_id":"","parentname":"","pemail":"","pmobile":"","addr1":"","addr2":"","addr3":"","city":"","pincode":""}
+            obj1.schol=sessionStorage.getItem("sch");
+            obj1.student_id = student_id;
+            obj1.parentname=parent_name;
+            obj1.pmobile=parent_mobile;
+            obj1.pemail=parent_email;
+            obj1.addr1=address_1;
+            obj1.addr2 = address_2;
+            obj1.addr3=address_3;
+            obj1.city=city;
+            obj1.pincode=pincode;
+            this.addparentparam=obj1;
+            //alert(JSON.stringify(obj1));
+            this.$.addparentajax.generateRequest();
+            
+            
         },
         addstudentResponse:function(e){
-            var obj={"schol":"","parent_name":"","parent_email":"","parent_mobile":"","address_1":"","address_2":"", "address_3":"","city":"","pincode":"","parent_id":"",}
-            obj.schol=sessionStorage.getItem("sch");
-            obj.parent_name=parent_name;
-            obj.parent_email=parent_email;
-            obj.parent_mobile=parent_mobile;
-            obj.address_1 = address_1;
-            obj.address_2 = address_2;
-            obj.address_3 = address_3;
-            obj.city = city;
-            obj.pincode = pincode;
-            obj.parent_id = parent_id;
-            this.addparentparam=obj;
-            this.$.addparentajax.generateRequest();
-        }, 
-        addparentResponse:function(e){
-            var result=e.detail.response.returnval;
-            if(result=="success"){
-              alert('Added successfully');
-            } else {
-              alert('Not Added');
-            }
+            //var addstudent=e.detail.response.returnval; 
+            //alert(addstudent);
         }
     });
  })();

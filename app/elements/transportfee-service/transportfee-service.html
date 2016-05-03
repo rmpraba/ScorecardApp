@@ -236,6 +236,32 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+ <iron-ajax
+        method="post"
+        id="feereportajax"
+        url="{{feereporturl}}"
+         params="{{feereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="feereportResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+
+  <iron-ajax
+        method="post"
+        id="chequereportajax"
+        url="{{chequereporturl}}"
+         params="{{chequereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="chequereportResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
    <iron-ajax
         method="post"
         id="updatereceiptseqajax"
@@ -336,7 +362,8 @@
     var chequecount;
     var rstudid;
     var chequearr=[];
-
+    var todate;
+var chequereportarr;
 
     Polymer({
       is: "transportfee-service",
@@ -980,6 +1007,142 @@ document.querySelector('zonetostudent-card').payoption(installarr);
       document.querySelector('chequedetail-card').refreshchequedetail();
 
      },
+      feereport:function(dat)
+      {
+        var condate = new Date(dat);
+         todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate()
+        alert(dat);
+        alert(todate);
+         this.chequereporturl=sessionStorage.getItem("addrinfo")+"/chequereport";
+        var obj={"dates":"","schol":""}
+        obj.dates=todate;
+        obj.schol=sessionStorage.getItem("sch");
+        this.chequereportparam=obj;
+        this.$.chequereportajax.generateRequest();
+        this.feereporturl=sessionStorage.getItem("addrinfo")+"/feereport";
+        var obj={"dates":"","schol":""}
+        obj.dates=todate;
+        obj.schol=sessionStorage.getItem("sch");
+        this.feereportparam=obj;
+        this.$.feereportajax.generateRequest();
+
+        
+
+      },
+chequereportResponse:function(e)
+      {
+        alert(JSON.stringify(e.detail.response.returnval));
+        chequereportarr=e.detail.response.returnval;
+
+},
+      feereportResponse:function(e)
+      {
+        var feeinstall1arr=[];
+        var feeinstall2arr=[];
+        var chequeinstall1arr=[];
+        var chequeinstall2arr=[];
+         alert(JSON.stringify(e.detail.response.returnval));
+         var feereports;
+         feereports=e.detail.response.returnval;
+         var cashcount=0;
+         var chequecount=0;
+         var cashtotal1=0;
+         var cashtotal2=0;
+         var chequetotal1=0;
+         var chequetotal2=0;
+
+         for(var i=0;i<feereports.length;i++)
+         {
+          if(feereports[i].modeofpayment1=="Cash" && feereports[i].installment_1Date==todate)
+          {
+            var obj={"student_id":"","name":"","receiptno":"","installment1":""}
+            obj.student_id=feereports[i].student_id;
+            obj.name=feereports[i].name;
+            obj.receiptno=feereports[i].receipt_no;
+            obj.installment1=feereports[i].installment_1;
+            feeinstall1arr.push(obj);
+            cashcount++;
+            cashtotal1=parseInt(cashtotal1)+parseInt(feereports[i].installment_1);
+          }
+
+          if(feereports[i].modeofpayment2=="Cash" && feereports[i].installment_2Date==todate)
+          {
+            var obj3={"student_id":"","name":"","receiptno":"","installment2":""}
+            obj3.student_id=feereports[i].student_id;
+            obj3.name=feereports[i].name;
+            obj3.receiptno=feereports[i].receipt_no;
+            obj3.installment2=feereports[i].installment_2;
+            feeinstall2arr.push(obj3);
+             cashcount++;
+             cashtotal2=parseInt(cashtotal2)+parseInt(feereports[i].installment_2);
+          }
+
+
+
+           if(feereports[i].modeofpayment1=="Cheque" && feereports[i].installment_1Date==todate)
+          {
+            chequecount++;
+            for(var j=0;j<chequereportarr.length;j++)
+            {
+              if(chequereportarr[j].student_id==feereports[i].student_id && chequereportarr[j].installtype=="installment1") 
+              {  
+            var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":""}
+            obj1.student_id=feereports[i].student_id;
+            obj1.name=feereports[i].name;
+            obj1.receiptno=feereports[i].receipt_no;
+            obj1.installment1=feereports[i].installment_1;
+            obj1.chequeno=chequereportarr[j].cheque_no;
+            obj1.bankname=chequereportarr[j].bank_name;
+            obj1.chequedate=chequereportarr[j].cheque_date;
+            chequeinstall1arr.push(obj1);
+            chequetotal1=parseInt(chequetotal1)+parseInt(feereports[i].installment_1);
+              }
+            }
+          }
+
+ if(feereports[i].modeofpayment2=="Cheque" && feereports[i].installment_2Date==todate)
+          {
+            chequecount++;
+            for(var j=0;j<chequereportarr.length;j++)
+            {
+              if(chequereportarr[j].student_id==feereports[i].student_id && chequereportarr[j].installtype=="installment2") 
+              {  
+                alert('s');
+            var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":""}
+            obj4.student_id=feereports[i].student_id;
+            obj4.name=feereports[i].name;
+            obj4.receiptno=feereports[i].receipt_no;
+            obj4.installment2=feereports[i].installment_2;
+            obj4.chequeno=chequereportarr[j].cheque_no;
+            obj4.bankname=chequereportarr[j].bank_name;
+            obj4.chequedate=chequereportarr[j].cheque_date;
+            chequeinstall2arr.push(obj4);
+             chequetotal2=parseInt(chequetotal2)+parseInt(feereports[i].installment_2);
+              }
+            }
+          }
+
+
+        }
+
+document.querySelector('feereports-card').feereportarrcheque1=chequeinstall1arr;
+document.querySelector('feereports-card').feereportarrcheque2=chequeinstall2arr;
+document.querySelector('feereports-card').feereportarr1=feeinstall1arr;
+document.querySelector('feereports-card').feereportarr2=feeinstall2arr;
+document.querySelector('feereports-card').cash1=cashtotal1;
+document.querySelector('feereports-card').cash2=cashtotal2;
+document.querySelector('feereports-card').cheque1=chequetotal1;
+document.querySelector('feereports-card').cheque2=chequetotal2;
+document.querySelector('feereports-card').stucash=cashcount;
+document.querySelector('feereports-card').stucheque=chequecount;
+document.querySelector('feereports-card').totalpaid=parseInt(cashcount)+parseInt(chequecount);
+document.querySelector('feereports-card').totalcash=parseInt(cashtotal1)+parseInt(cashtotal2);
+document.querySelector('feereports-card').totalcheque=parseInt(chequetotal1)+parseInt(chequetotal2);
+document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+parseInt(cashtotal2)+parseInt(chequetotal1)+parseInt(chequetotal2);
+
+      },
+
+
       datepickinsta1:function(e){
         this.datepickinsta1url=sessionStorage.getItem("addrinfo")+"/datepickinsta1";
         var obj={"dates":"","schol":""}

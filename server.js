@@ -1644,6 +1644,59 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 	
 });
 });
+
+app.post('/feereport',  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+	var dat1={"installment_1Date":req.query.dates};
+	var dat2={"installment_2Date":req.query.dates};
+	console.log('come');
+       connection.query('Select student_id,receipt_no,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id) as name from student_fee  where (? or ?) and ?',[dat1,dat2,schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': ''});
+		}
+	}
+});
+	});
+
+
+
+app.post('/chequereport',  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+	var dat1={"installment_1Date":req.query.dates};
+	var dat2={"installment_2Date":req.query.dates};
+	console.log('come');
+       connection.query('Select * from cheque_details where student_id in (select student_id from student_fee  where (? or ?) and ?)',[dat1,dat2,schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': ''});
+		}
+	}
+});
+	});
+
+
+
 app.post('/datepickinsta1',  urlencodedParser,function (req, res)
 {
 	var date={"installment_1Date":req.query.dates};

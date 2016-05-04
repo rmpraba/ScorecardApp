@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
  <link rel="import" href="../transport-service/transport-service.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 
@@ -91,6 +92,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
   </div>
      <transport-service id="root"></transport-service>
+
+     <iron-ajax
+        auto
+        id="numberreadajax"
+        url="../../configfile/coordinator.json"
+        params="{{numberreadparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="numberreadResponse"
+        debounce-duration="300"
+        >
+    </iron-ajax>
   </template>
 
 
@@ -106,8 +119,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'studentpass-card',
     ready:function(){
      // alert('hi');
+        
         this.$.root.getname();
         this.querySelector('paper-listbox').style.visibility='hidden';
+      },
+      callnumberservice:function(){
+        this.$.numberreadajax.generateRequest();
+      },
+      numberreadResponse:function(e){
+        //alert(JSON.stringify(e.detail.response));
+        var no=e.detail.response
+        this.coorno=no[0].conumber;
       },
       FnClear:function(){
         this.studname="";
@@ -128,7 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.drop="";
       },
        email:function(e){
-              alert('sending email');
+              //alert('sending email');
             //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=pass"+document.title+"&body=.pass"+escape(window.location.href);
             var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
               window.location.href = link;

@@ -237,7 +237,7 @@
    var name=sessionStorage.getItem("userinfo");
    //alert(name);
    var currpage=localStorage.getItem("curr_sess_page");
-   alert(currpage);
+   //alert(currpage);
     if(name=="Accounts Admin")  {
       document.querySelector('transportfee-service').FnClear();
     if(currpage=="zonetostudent"){
@@ -308,6 +308,12 @@
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
     }
+   if(currpage=="pass"){
+      document.querySelector('studentpass-card').FnClear();
+      document.querySelector('studentpass-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
    }
     if(name=="Admin Manager")  {
     if(currpage=="approvediscount"){
@@ -373,12 +379,7 @@
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
     }
-    if(currpage=="pass"){
-      document.querySelector('studentpass-card').FnClear();
-      document.querySelector('studentpass-card').ready();
-      document.querySelector('app-card').setPage("transportapp");
-      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
-    }
+   
   }
  }
   });

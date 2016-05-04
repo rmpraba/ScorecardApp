@@ -270,8 +270,8 @@ var dat2=new Date();
      todate="";
      fromdat="";
      datebox="";
-     feepay="";
-     chequearray="";
+     feepay=[];
+     chequearray=[];
 count=0;
  todat;
  mode='Two-Way';
@@ -377,6 +377,9 @@ count=0;
         this.$.service.chequeinfo(chequearray[i].studid,chequearray[i].studname,chequearray[i].chequenum,chequearray[i].bankname,chequearray[i].chequedate,chequearray[i].installtype);
       }
     }
+    feepay=[];
+    chequearray=[];
+
     },
     autocompletearr:function(autocompletearr)
     {

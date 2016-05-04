@@ -27,12 +27,15 @@
       .fields{
         @apply(--layout-horizontal);
       }
+      #by1 paper-item, #by2 paper-item{
+        width: 100%;
+      }
     </style>
     <div class="feereports-card">
       <div class="date">
         <datepicker1-card id="dp"></datepicker1-card>
       </div>
-      <div class="field" id="by1"><paper-item><h1>By Cash:Installment1</h1></paper-item></div>
+      <div class="field" id="by1"><paper-item><h1>By Cash : Installment 1</h1></paper-item></div>
       
       <div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
@@ -51,7 +54,7 @@
         </div>
 
 
-        <div class="field" id="by1"><paper-item><h1>By Cash:Installment2</h1></paper-item></div>
+        <div class="field" id="by1"><paper-item><h1>By Cash : Installment 2</h1></paper-item></div>
       
       <div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
@@ -68,7 +71,7 @@
           <paper-item>Total Collection by Cash</paper-item>
           <paper-item>{{cash2}}</paper-item>
         </div>
-      <div class="field" id="by2"><paper-item><h1>By Cheque:Installment1</h1></paper-item></div>
+      <div class="field" id="by2"><paper-item><h1>By Cheque : Installment 1</h1></paper-item></div>
        
       <div class="headtabs" id="tabs2">
           <paper-tabs selected="0">
@@ -89,7 +92,7 @@
         </div>
 
 
- <div class="field" id="by2"><paper-item><h1>By Cheque:Installment2</h1></paper-item></div>
+ <div class="field" id="by2"><paper-item><h1>By Cheque : Installment 2</h1></paper-item></div>
        
       <div class="headtabs" id="tabs2">
           <paper-tabs selected="0">

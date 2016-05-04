@@ -239,7 +239,14 @@
    var currpage=localStorage.getItem("curr_sess_page");
    //alert(currpage);
     if(name=="Accounts Admin")  {
+      document.querySelector('transportfee-service').ready();
       document.querySelector('transportfee-service').FnClear();
+       /*document.querySelector('receipt-card').FnClear();
+      document.querySelector('receipt-card').ready();
+      document.querySelector('cqreceipt-card').FnClear();
+      document.querySelector('cqreceipt-card').ready();
+       document.querySelector('zoneinstalltype-card').FnClear();
+      document.querySelector('zoneinstalltype-card').ready();*/
     if(currpage=="zonetostudent"){
       document.querySelector('zonetostudent-card').FnClear();
       document.querySelector('zonetostudent-card').ready();
@@ -267,6 +274,10 @@
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
     }
     if(currpage=="receipt"){
+      document.querySelector('zonetostudent-card').FnClear();
+      document.querySelector('zonetostudent-card').ready();
+      document.querySelector('zoneinstalltype-card').FnClear();
+      document.querySelector('zoneinstalltype-card').ready();
       document.querySelector('receipt-card').FnClear();
       document.querySelector('receipt-card').ready();
       document.querySelector('cqreceipt-card').FnClear();

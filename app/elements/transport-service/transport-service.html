@@ -1191,6 +1191,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
           var status=e.detail.response.returnval;
               if(status=='mapped'){
                 alert('The student is already mapped You Cannot Map again');
+                document.querySelector('zonetostudent-card').FnClear();    
               }
             document.querySelector('zonetostudent-card').status=status;
         },

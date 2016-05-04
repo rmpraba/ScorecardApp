@@ -494,7 +494,7 @@ margin-top: 1%;
     margin-left: 1%;
 }
 .receipt .body11 .lb2{
-    margin-left: 52%;
+    margin-left: 50%;
     margin-top: 1%;
 }
 .receipt .body11 .val2{
@@ -585,7 +585,7 @@ text-align: left;
 
 .receipt .body5 .l15 .word{
 text-align: left;  
-margin-left: 90%;
+margin-left: 40%;
 margin-top: -25%;
 width: auto;
 @apply(--layout-horizontal);

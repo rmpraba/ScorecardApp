@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    <template is="dom-repeat" items="{{receiptarr}}" as="view">
    
         <div class="header">
-        <div class="logo"><img src="../../images/zeesouth.png"/></div>
+        <div class="logo"><img style="width: 185%; height: 182%;" src="../../images/zeesouth.png"/></div>
         <div class="heading">
           <div class="title">Mount Litera Zee School-South Bangalore</div>
           <div class="address">South Bangalore #58/4, Haralur Road, Kudlu, HSR Extension, Bangalore - 560068 Phone : 080-65468341</div>
@@ -137,17 +137,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="body5">
            
             <div class="l15">
-              <paper-item class="lb">Transport fee Paid</paper-item>
+            
            
             <div class="word">
-              <paper-item>: {{feeinword}}</paper-item>
+              In Words : {{feeinword}}
             </div> </div>
 
             <div class="r5">
               <paper-item style="width: 80px; margin-top: -1%;"> Total fees :</paper-item>
               
               <div class="cash">
-                <paper-input class="button" on-change="convertrs" value="{{view.installfee}}"></paper-input>
+                <paper-input style="width: 60px;" on-change="convertrs" value="{{view.installfee}}"></paper-input>
             </div>
 </div>
           </div>
@@ -187,17 +187,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </body>
     </form>
     </html>
-    <div>
+    <div style="margin-top: 10%;">
     <table>
       <tr >
         <td>
-           <paper-button style="height: 35px;" class="button" id="pdf">Save as PDF</paper-button>
+           <paper-button class="button" id="pdf" >Save as PDF</paper-button>
         </td>
         <td>
-          <paper-button style="height: 35px;" class="button" id="email" on-click="email">Send email</paper-button>
+          <paper-button  class="button" id="email" on-click="email">Send email</paper-button>
         </td>
         <td>
-          <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
+          <paper-button class="button"  id="print" on-click="print">Print</paper-button>
         </td>
       </tr>
     </table>
@@ -488,7 +488,6 @@ var specialElementHandlers = {
              w.print();
              w.close();*/
         }
-      
     });
   })();
   </script>

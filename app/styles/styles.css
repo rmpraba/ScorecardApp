@@ -461,7 +461,7 @@ paper-button{
 .receipt .header .heading{
     width: 80%;
     height: 7%;
-    margin-left: 14.5%;
+    margin-left: 13.5%;
     margin-top: -14%;
     text-align: center;
 }
@@ -494,7 +494,7 @@ margin-top: 1%;
     margin-left: 1%;
 }
 .receipt .body11 .lb2{
-    margin-left: 50%;
+    margin-left: 48%;
     margin-top: 1%;
 }
 .receipt .body11 .val2{
@@ -571,13 +571,13 @@ margin-left: 20%;
 }
 
 .receipt .body5{
-    margin-top: -2%
+    margin-top: 0%
    @apply(--layout-horizontal);
 }
 
 
 .receipt .body5 .l15{
-margin-left: 2%;
+margin-left: -10%;
 display: inline-block;
 @apply(--layout-horizontal);
 text-align: left;  
@@ -586,8 +586,8 @@ text-align: left;
 .receipt .body5 .l15 .word{
 text-align: left;  
 margin-left: 40%;
-margin-top: -25%;
-width: auto;
+margin-top: -10%;
+width: 100%;
 @apply(--layout-horizontal);
     }
 
@@ -607,7 +607,7 @@ margin-top: -23.5%;
     
 }
 .receipt .body6{
- margin-left: 0%;  
+ margin-left: 2%;  
  margin-top: 0%;
 @apply(--layout-horizontal);
 text-align: left;

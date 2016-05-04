@@ -207,10 +207,12 @@
       FnItemSelected:function(e){
         this.$.print.hidden=false;
         routeid= e.target.selectedItem.value;
+        routename=e.target.selectedItem.textContent.trim();
         //alert(e.target.selectedItem.value);
         //this.$.service.routereport(routeid);
         this.itemArray=[];
         this.querySelector('paper-listbox').selected=-1;
+        this.value=routename;
       },
       show:function()
       {

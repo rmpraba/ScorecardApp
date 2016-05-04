@@ -20,11 +20,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
       <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
 
-
+<style type="text/css">
+  
+</style>
 <dom-module id="studentpass-card">
   <template>
-
-   <img id="imgRes" height="1px" width="1px" />
+  <div class="student-image" >
+   <img id="imgRes">
+  </div>
     <div class="left">
 
           <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
@@ -50,8 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <hr></hr>
         <div class="body2">
           <div class="studimg">
-            <img style="width: 35%; height: 25%; margin-top: 0%;" 
-            src="images/{{sid}}.jpg"/>
+            <img style="min-height: 12%;min-width: 18%; margin-top: 5%; height: 18%; width: 27%;border: 1px solid;"src="images/{{sid}}.jpg" alt="Paste photo here"/>
           </div>
           <div class="studetail">
           <p>{{studname}}</p>
@@ -102,7 +104,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var item=[];//name field
     Polymer({
       is: 'studentpass-card',
-
     ready:function(){
      // alert('hi');
         this.$.root.getname();

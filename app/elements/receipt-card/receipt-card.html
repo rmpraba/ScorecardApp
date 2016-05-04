@@ -32,6 +32,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
          @apply(--layout-horizontal);
       }
+      .hrspace
+      {
+        padding-left: 2%;
+      }
     </style>
     <html>
     <form method="post" action="">
@@ -162,11 +166,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            </template>
            <div hidden$="{{chequeview}}" class="cheque">
     
-        <div>Cheque No:{{cheqno}}</div>
-        <div>Cheque Date:{{cqdate}}</div>
-        <div>Bank Name:{{bank}}</div>
-          <hr id="ln3"></hr>
+        <div class="hrspace">Cheque No:{{cheqno}}</div>
+        <div class="hrspace">Cheque Date:{{cqdate}}</div>
+        <div class="hrspace">Bank Name:{{bank}}</div>
+          <!-- <hr id="ln3"></hr> -->
     </div>
+    <hr id="ln3"></hr>
           <cqreceipt-card id="cq"></cqreceipt-card>
        
             <div class="body8">

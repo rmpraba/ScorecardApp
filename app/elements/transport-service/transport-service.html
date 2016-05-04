@@ -541,7 +541,33 @@ var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
       
-     
+     FnClear:function(){
+  point="";
+     trip="";
+     pick="";
+     drop="";
+     routeidd="";
+     routetrip="";
+     totalfee="";
+     months="";
+     calcfee="";
+     cancelfee="";
+     cancelpaid="";
+     cusfee="";
+     yearlyfee="";
+     val="";
+    oneway="";
+     zstuname="";
+     distance="";
+     parent_name="";
+     parent_mobile="";
+     parent_email="";
+     address_1="";
+     address_2="";
+     address_3="";
+     city="";
+     pincode="";
+     },
        getroute:function()
       {
         this.getrouteurl=sessionStorage.getItem("addrinfo")+"/getroute";

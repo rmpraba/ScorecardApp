@@ -264,6 +264,22 @@ var dat2=new Date();
           document.querySelector('#custom').checked=false;
           document.querySelector('#oneway').checked=false;
           document.querySelector('#twoway').checked=false;
+           payarrr=[];
+     item=[];//name field
+     fromdate="";
+     todate="";
+     fromdat="";
+     datebox="";
+     feepay="";
+     chequearray="";
+count=0;
+ todat;
+ mode='Two-Way';
+ dat2=new Date();
+ today = dat2.getFullYear()+"/"+(dat2.getMonth()+1)+"/"+dat2.getDate();
+
+ name=sessionStorage.getItem("userinfo");
+ status='mapped';
          },
        Fnfeepayment:function(feearr)
        {

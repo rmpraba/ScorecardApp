@@ -237,11 +237,14 @@
    var name=sessionStorage.getItem("userinfo");
    //alert(name);
    var currpage=localStorage.getItem("curr_sess_page");
-   //alert(currpage);
+   alert(currpage);
     if(name=="Accounts Admin")  {
+      document.querySelector('transportfee-service').FnClear();
     if(currpage=="zonetostudent"){
       document.querySelector('zonetostudent-card').FnClear();
       document.querySelector('zonetostudent-card').ready();
+       document.querySelector('zoneinstalltype-card').FnClear();
+      document.querySelector('zoneinstalltype-card').ready();
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
     }
@@ -264,8 +267,10 @@
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
     }
     if(currpage=="receipt"){
-      //document.querySelector('receipt-card').FnClear();
+      document.querySelector('receipt-card').FnClear();
       document.querySelector('receipt-card').ready();
+      document.querySelector('cqreceipt-card').FnClear();
+      document.querySelector('cqreceipt-card').ready();
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
     }
@@ -277,6 +282,8 @@
     }
    }
    if(name=="Transport Admin")  {
+    document.querySelector('mapstudenttopoint-service').FnClear();
+    document.querySelector('transport-service').FnClear();
     if(currpage=="mapstudenttopoint"){
       document.querySelector('mapstudenttopoint-card').FnClear();
       document.querySelector('mapstudenttopoint-card').ready();

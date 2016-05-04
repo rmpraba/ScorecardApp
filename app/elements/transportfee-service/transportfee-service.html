@@ -367,7 +367,43 @@ var chequereportarr;
 
     Polymer({
       is: "transportfee-service",
+      FnClear:function(){var dademail;
+    zonename="";
+    stuid="";
+    feez="";
+    fromd="";
+    tod="";
+    studname="";
+    feeresult="";
+    uchequeno="";
+    uchequestatus="";
+    uinstalltype="";
+    receiptcreate=[];
+    receiptid="";
+    feeresultinsta1="";
+    collection1="";
+    collection1cheque="";
+    total_collection_cash="";
+    collectreport=[];
+    recstudid="";
+    dadname="";
+    chenum="";
+    chedate="";
+    banknm="";
+    feeresultinsta1="";
+    feeresultinsta2="";
+    feeresultinsta1cheque="";
+    feeresultinsta2cheque="";
+    cashcount="";
+    chequecount="";
+    rstudid="";
+    chequearr=[];
+    todate="";
+    chequereportarr="";
+
+      },
         generatefee:function(studid)
+      
      {
       
       this.generatefeeurl=sessionStorage.getItem("addrinfo")+"/reportfee-card";
@@ -435,8 +471,11 @@ var chequereportarr;
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
         {
+            document.querySelector('zonetostudent-card').FnClear();
+            document.querySelector('zonetostudent-card').ready();
             alert("Paid Successfully");
             document.querySelector('zonetostudent-card').gotozone();
+
         }
       },
       generatereceipt:function()
@@ -535,9 +574,9 @@ recarr.push(recobj);
           {
             
             var cqobj={"cheno":"","cqdate":"","bknm":""}
-            cqobj.cheno=chequearr[i].chequenum;
-            cqobj.cqdate=chequearr[i].chequedate;
-            cqobj.bknm=chequearr[i].bankname;
+            cqobj.cheno=chequearr[j].chequenum;
+            cqobj.cqdate=chequearr[j].chequedate;
+            cqobj.bknm=chequearr[j].bankname;
             cheqarr.push(cqobj);
             document.querySelector('receipt-card').chequearray(cqobj);
           }

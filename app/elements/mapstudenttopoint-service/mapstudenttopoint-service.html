@@ -106,6 +106,9 @@
         this.selectclassurl = sessionStorage.getItem("addrinfo")+"/selectclass";
         this.$.selectclassajax.generateRequest();
       },
+      FnClear:function(){
+        len=0;
+      },
       selectclassResponse:function(e){
         var classdetail=e.detail.response.returnval;
         document.querySelector('mapstudenttopoint-card').classarr=classdetail;

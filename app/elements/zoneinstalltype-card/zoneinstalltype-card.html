@@ -77,10 +77,22 @@ var amt;
 
     Polymer({
       is: 'zoneinstalltype-card',
+
  ready:function()
  {
   
    //this.enable=true;
+ },
+ FnClear:function(){
+   paytype="";
+   chequenum="";
+bankname="";
+ ck='null';
+ dt="";
+ pushitem=[];
+ chequeitem=[];
+ type="";
+ amt="";
  },
       checkinstall:function(pstatus)
 

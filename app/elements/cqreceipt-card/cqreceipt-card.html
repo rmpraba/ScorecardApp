@@ -171,24 +171,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   (function() {
     'use strict';
-
-
-      
-
 var specialElementHandlers = {
     '#editor': function (element, renderer) {
         return true;
     }
 };
-
-
-
     Polymer({
       is: 'cqreceipt-card',
 
       ready:function(){
   this.chequeview=true;
 
+      },
+      FnClear:function(){
+        this.receiptarr="";
+        this.parentname="";
+        this.cheqno="";
+        this.cqdate="";
+        this.bank="";
       },
       chequearray:function(charr)
       {

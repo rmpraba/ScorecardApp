@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
             </div>
-       <paper-dialog id="animated" >
+       <paper-dialog id="chequeinfo">
 <h4>ADD CHEQUE DETAILS</h4>
  <div  class="layout"> <paper-input required error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
  <div  class="layout"> <paper-input required  error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
@@ -140,7 +140,7 @@ var amt;
            this.banknam="";
            type=this.installtype;
           amt=this.installamt;
-        var id = 'animated';
+        var id = 'chequeinfo';
         var dialog = document.getElementById(id);
         dialog.open();
        
@@ -159,7 +159,7 @@ var amt;
      showdialog:function()
      {
       
- var id = 'animated';
+       var id = 'chequeinfo';
         var dialog = document.getElementById(id);
         dialog.open();
      },
@@ -176,7 +176,7 @@ var amt;
       chequenum=this.chequeno;
       bankname=this.banknam;
      
-       var id = 'animated';
+       var id = 'chequeinfo';
       var dialog = document.getElementById(id);
       dialog.opened=false;
        var obj={"installamt":"","studid":"","paytype":"","installtype":""}

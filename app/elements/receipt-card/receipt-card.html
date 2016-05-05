@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <html>
     <form method="post" action="">
-    <body id="receipt">
+    <body id="receipt1">
     <img id="imgRes" height="1px" width="1px" />
      <div class="receipt" >
     <div id="canvas" style="background-image:url(fimage/1.jpg)">
@@ -54,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
 
         <div class="body1">
-        <h1>FEE RECEIPT</h1>
+        <h1>FEE {{view.title}}</h1>
           <hr></hr>
           </div>
         <div class="body11">
@@ -188,11 +188,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
             <div hidden>{{parentemail}}</div>
- 
-    </body>
-    </form>
-    </html>
-    <div style="margin-top: 10%;">
+ </div>
+ </div>
+  <div style="margin-top: 10%;">
     <table>
       <tr >
         <td>
@@ -206,8 +204,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </td>
       </tr>
     </table>
-           
-          </div>
+     </div>
+    </body>
+    </form>
+    </html>
 
  
     <iron-ajax

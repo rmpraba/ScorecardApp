@@ -535,13 +535,14 @@ var chequereportarr;
       },
      getstureceiptResponse:function(e)
      {
+      var title;
     var recarr1=[];
       var recarr=[];
       var cheqarr=[];
       var  getstu=e.detail.response.returnval;
       //alert(JSON.stringify(getstu));
       var dt=new Date();
-var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
+var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
 var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
 for(var i=0;i<receiptcreate.length;i++)
 {
@@ -551,7 +552,14 @@ for(var i=0;i<receiptcreate.length;i++)
     
 var feezxc=receiptcreate[i].installfee;
 document.querySelector('receipt-card').convertrs(feezxc);
-
+if(receiptcreate[i].paytype=="Cash")
+{
+title="RECEIPT";
+}
+else
+{
+  title="ACKNOWNLODGEMENT";
+}
 
 var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
 recobj.receiptno=receiptid;
@@ -568,6 +576,7 @@ recobj.parent=dadname;
 recobj.email=dademail;
 recobj.schoolname=sessionStorage.getItem("schoolname");
 recobj.schooladdr=sessionStorage.getItem("schooladdr");
+recobj.title=title;
 recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;
         var pt=receiptcreate[i].paytype;
@@ -590,6 +599,14 @@ recarr.push(recobj);
  else if(receiptcreate[i].instype=="installment2")
   {
     
+    if(receiptcreate[i].paytype=="Cash")
+{
+title="RECEIPT";
+}
+else
+{
+  title="ACKNOWNLODGEMENT";
+}
 var recobj1={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
 recobj1.receiptno=receiptid;
 recobj1.studname=getstu[0].student_name;
@@ -602,6 +619,7 @@ recobj1.today=todate;
 recobj1.stid=recstudid;
 recobj1.session=yr;
 recobj1.parent=dadname;
+recobj1.title=title;
 recarr1.push(recobj1);
        var feeinw=recobj1.installfee;
         document.querySelector('cqreceipt-card').convertrss(feeinw);

@@ -67,15 +67,16 @@
       {
           this.showdate = moment(this.$.picker.date).format('L');
           localStorage.setItem("localsess_curr_date",this.showdate);
-          document.querySelector('zoneinstalltype-card').showdialog();
+          //document.querySelector('zoneinstalltype-card').showdialog();
         }
         else
         {
           alert("please select the future date");
           this.showdate="";
-          document.querySelector('zoneinstalltype-card').showdialog();
+          //document.querySelector('zoneinstalltype-card').showdialog();
         }
       }
+      document.querySelector('zoneinstalltype-card').showdialog();
     }
 });
   </script>

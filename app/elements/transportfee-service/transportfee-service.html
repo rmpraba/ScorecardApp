@@ -541,7 +541,14 @@ var chequereportarr;
       var  getstu=e.detail.response.returnval;
       //alert(JSON.stringify(getstu));
       var dt=new Date();
-var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
+      var m_names = new Array("Jan", "Feb", "Mar", 
+"Apr", "May", "Jun", "Jul", "Aug", "Sep", 
+"Oct", "Nov", "Dec");
+var curr_date = dt.getDate();
+var curr_month = dt.getMonth();
+var curr_year = dt.getFullYear();
+var todate = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+//var todate=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
 var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
 for(var i=0;i<receiptcreate.length;i++)
 {
@@ -1129,14 +1136,25 @@ chequereportResponse:function(e)
               if(chequereportarr[j].student_id==feereports[i].student_id && chequereportarr[j].installtype=="installment1") 
               {  
             var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
+            var dt1=new Date(feereports[i].installment_1Date);
+            var dt2=new Date(chequereportarr[j].cheque_date);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dt1.getDate();
+            var curr_month = dt1.getMonth();
+            var curr_year = dt1.getFullYear();
+            var curr_datecheque = dt2.getDate();
+            var curr_monthcheque = dt2.getMonth();
+            var curr_yearcheque = dt2.getFullYear();
+            var todateinsta1 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            var todatecheque1 = curr_datecheque + "-" + m_names[curr_monthcheque]+ "-" + curr_yearcheque;
             obj1.student_id=feereports[i].student_id;
             obj1.name=feereports[i].name;
             obj1.receiptno=feereports[i].receipt_no;
             obj1.installment1=feereports[i].installment_1;
             obj1.chequeno=chequereportarr[j].cheque_no;
             obj1.bankname=chequereportarr[j].bank_name;
-            obj1.chequedate=chequereportarr[j].cheque_date;
-            obj1.createddate=feereports[i].installment_1Date;
+            obj1.chequedate=todatecheque1;
+            obj1.createddate=todateinsta1;
             chequeinstall1arr.push(obj1);
             chequetotal1=parseInt(chequetotal1)+parseInt(feereports[i].installment_1);
               }
@@ -1152,14 +1170,26 @@ chequereportResponse:function(e)
               {  
                 
             var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
+            var dt3=new Date(feereports[i].installment_2Date);
+            var dt4=new Date(chequereportarr[j].cheque_date);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date1 = dt3.getDate();
+            var curr_month1 = dt3.getMonth();
+            var curr_year1 = dt3.getFullYear();
+            var curr_datecheque1 = dt4.getDate();
+            var curr_monthcheque1 = dt4.getMonth();
+            var curr_yearcheque1 = dt4.getFullYear();
+            var todateinsta2 = curr_date1 + "-" + m_names[curr_month1]+ "-" + curr_year1;
+            var todatecheque2 = curr_datecheque1 + "-" + m_names[curr_monthcheque1]+ "-" + curr_yearcheque1;
+
             obj4.student_id=feereports[i].student_id;
             obj4.name=feereports[i].name;
             obj4.receiptno=feereports[i].receipt_no;
             obj4.installment2=feereports[i].installment_2;
             obj4.chequeno=chequereportarr[j].cheque_no;
             obj4.bankname=chequereportarr[j].bank_name;
-            obj4.chequedate=chequereportarr[j].cheque_date;
-            obj4.createddate=feereports[i].installment_2Date;
+            obj4.chequedate=todatecheque2;
+            obj4.createddate=todateinsta2;
             chequeinstall2arr.push(obj4);
              chequetotal2=parseInt(chequetotal2)+parseInt(feereports[i].installment_2);
               }

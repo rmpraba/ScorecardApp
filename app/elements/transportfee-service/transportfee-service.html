@@ -845,9 +845,16 @@ recarr1.push(recobj1);
             }
             //alert(installdata[i].amt_percentage);
             var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":""}
+
+            var dtpaydate=new Date(installdata[i].paydate);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dtpaydate.getDate();
+            var curr_month = dtpaydate.getMonth();
+            var curr_year = dtpaydate.getFullYear();
+            var todateinsta = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
             obj.installtype=installdata[i].install_type;
             obj.amount=((parseInt(feepercent)-parseInt(discountfee))/100)*parseInt(installdata[i].amt_percentage)+parseInt(fine);
-            obj.paydate=installdata[i].paydate;
+            obj.paydate=todateinsta;
             obj.installdate=paiddate;
             obj.paidstatus=paidstatus;
             obj.paymentmode=paymode;

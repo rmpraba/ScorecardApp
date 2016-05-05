@@ -50,10 +50,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
             
-       <paper-dialog id="animated">
+       <paper-dialog id="animated" modal>
 <h4>ADD CHEQUE DETAILS</h4>
  <div  class="layout"> <paper-input required allowed-pattern="^[1-9][0-9]*$" error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input> </div>
- <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z]" error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input> </div>
+ <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z ]" error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input> </div>
  <div>
  <zonedatepicker-card></zonedatepicker-card></div>
 <div class="buttons">
@@ -74,6 +74,7 @@ var pushitem=[];
 var chequeitem=[];
 var type;
 var amt;
+var checkboxcount=2;
 
     Polymer({
       is: 'zoneinstalltype-card',
@@ -114,29 +115,41 @@ bankname="";
       {
         if(e.target.checked==true)
         {
-         
-          if(ck!='null')
-          {
-            if(ck!=this.installtype)
-            {
-          document.getElementById(ck).checked = false;
-          document.getElementById(dt).disabled = true;
+
+         checkboxcount++;
+         document.querySelector('zonetostudent-card').ckcount(checkboxcount);
           this.enable=false;
-        }
-         }
-          ck=this.installtype;
-          dt=this.paydate;
-          document.getElementById(dt).disabled = false;
-           this.enable=false;
         }
         else
         {
+
+          checkboxcount--;
+          document.querySelector('zonetostudent-card').ckcount(checkboxcount);
           this.enable=true;
+        for(var i=0;i<pushitem.length;i++)
+       {
+       if(this.installtype==pushitem[i].installtype)
+       {
+        pushitem.splice(i,1);
+       }
+       }
+    
+        for(var i=0;i<chequeitem.length;i++)
+       {
+       if(this.installtype==chequeitem[i].installtype)
+       {
+        chequeitem.splice(i,1);
+       }
+       }
+
+       document.querySelector('zonetostudent-card').Fnfeepayment(pushitem);
+        document.querySelector('zonetostudent-card').Fnchequepayment(chequeitem);
+
         }
       },
        payment:function(e)
       {
-        //alert('1');
+        
         paytype = (e.target.selectedItem.textContent).trim();
 
        for(var i=0;i<pushitem.length;i++)
@@ -147,8 +160,16 @@ bankname="";
        }
        }
 
+       for(var i=0;i<chequeitem.length;i++)
+       {
+       if(this.installtype==chequeitem[i].installtype)
+       {
+        chequeitem.splice(i,1);
+       }
+       }
+
         if(paytype=="Cheque")
-        {// alert('2');
+        {
       document.querySelector('zonedatepicker-card').setinstalldate(this.paydate);
            this.chequeno="";
            this.banknam="";
@@ -178,6 +199,13 @@ bankname="";
         var dialog = document.getElementById(id);
         dialog.open();
      },
+     cancelreq:function()
+     {
+    pushitem=[];
+    chequeitem=[];
+    document.querySelector('paper-menu').selected=-1;
+
+     },
 
         add:function()
     {
@@ -201,6 +229,9 @@ bankname="";
         obj.studid=this.studid;
         obj.paytype=paytype;
         obj.installtype=type;
+
+      
+
         pushitem.push(obj);
         this.chequedate=localStorage.getItem("localsess_curr_date");
 var obj1={"studid":"","studname":"","chequenum":"","bankname":"","chequedate":"","installtype":""}
@@ -210,6 +241,7 @@ obj1.chequenum=chequenum;
 obj1.bankname=bankname;
 obj1.chequedate=this.chequedate;
 obj1.installtype=type;
+
 chequeitem.push(obj1);
         document.querySelector('zonetostudent-card').Fnfeepayment(pushitem);
         document.querySelector('zonetostudent-card').Fnchequepayment(chequeitem);

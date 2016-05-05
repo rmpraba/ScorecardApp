@@ -1300,11 +1300,11 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         },
         getppnameResponse:function(e){
             var pickupoint=e.detail.response.returnval[0].point_name;
-            document.querySelector('studentpass-card').pickup=pickupoint;
+            document.querySelector('studentpass-card').pickup=pickupoint.toLowerCase();
         },
         getdpnameResponse:function(e){
             var droppoint=e.detail.response.returnval[0].point_name;
-            document.querySelector('studentpass-card').drop=droppoint;
+            document.querySelector('studentpass-card').drop=droppoint.toLowerCase();
         },
         getpassclassResponse:function(e){
             var standard=e.detail.response.returnval[0].class;

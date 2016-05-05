@@ -231,8 +231,12 @@
 
         var role=e.detail.response.returnval[0].role_name;
         school=e.detail.response.returnval[0].school;
+        var name=e.detail.response.returnval[0].name;
+        var address=e.detail.response.returnval[0].addr;
         sessionStorage.setItem("sch",school);
-        //alert('School ID is '+school);
+        sessionStorage.setItem("schoolname",name);
+        sessionStorage.setItem("schooladdr",address);
+        //alert('School ID is '+name);
        if(role=="Transport Admin")
       {
         sessionStorage.setItem("userinfo",role);

@@ -47,8 +47,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="header">
         <div class="logo"><img style="width: 18%; height: 12%; margin-top: 5%;" src="../../images/zeesouth.png"/></div>
         <div class="heading">
-          <div class="title">Mount Litera Zee School-South Bangalore</div>
-          <div class="address">South Bangalore #58/4, Haralur Road, Kudlu, HSR Extension, Bangalore - 560068 Phone : 080-65468341</div>
+          <div class="title">{{schoolname}}</div>
+          <div class="address">{{schooladdr}}</div>
         </div>
         </div>
          <hr></hr>
@@ -119,7 +119,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'studentpass-card',
     ready:function(){
      // alert('hi');
-        
+        this.schoolname=sessionStorage.getItem("schoolname");
+        this.schooladdr=sessionStorage.getItem("schooladdr");
         this.$.root.getname();
         this.querySelector('paper-listbox').style.visibility='hidden';
       },

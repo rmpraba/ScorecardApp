@@ -566,6 +566,8 @@ recobj.stid=recstudid;
 recobj.session=yr;
 recobj.parent=dadname;
 recobj.email=dademail;
+recobj.schoolname=sessionStorage.getItem("schoolname");
+recobj.schooladdr=sessionStorage.getItem("schooladdr");
 recarr.push(recobj);
         document.querySelector('receipt-card').receiptarr=recarr;
         var pt=receiptcreate[i].paytype;

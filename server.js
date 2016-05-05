@@ -60,7 +60,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 	var id={"id":req.query.username};
 	var username={"id":req.query.username};
     var password={"password":req.query.password};
-       connection.query('SELECT role_name,(select school_id from employee where ?) as school  from role where id=(select role_id from employee where ? and ?) ',[id,username,password],
+       connection.query('SELECT role_name,(select school_id from employee where ?) as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr from role where id=(select role_id from employee where ? and ?) ',[id,username,password],
        	function(err, rows)
        	{
 		if(!err)

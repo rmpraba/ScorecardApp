@@ -79,8 +79,8 @@
 
 <div class="hrspace">
       <div class="drop-down" >
-        <paper-dropdown-menu label="Select the Zone">
-          <paper-menu id="zone" class="dropdown-content" on-iron-select="zoned" valueattr="value" >
+        <paper-dropdown-menu label="Select the Zone" >
+          <paper-menu id="zone" class="dropdown-content" required on-iron-select="zoned" valueattr="value" >
             <template  is="dom-repeat" items="{{itemarr}}" as="view">
               <paper-item value="{{view.id}}">{{view.zone_name}}</paper-item>
             </template>
@@ -91,7 +91,7 @@
 </div>
 <div class="horizontalframe">
 <div class="fee">
-          <paper-input  readonly label="Fees" id="dad" value="{{fee}}"></paper-input></div>
+          <paper-input  required  readonly label="Fees" id="dad" value="{{fee}}"></paper-input></div>
 
 <div>
  <paper-input id="zdate1"  value="{{zfromdate}}"></paper-input> </div>
@@ -104,39 +104,16 @@
 <div  style="width: 170%;" class="horizontalframe" >
     <div style="width: 150%;">
             Complete Year
-            <paper-checkbox style="margin-left: 3%" id="yearly" class="checkbox" on-change="fullHandler"></paper-checkbox></div>
-    <div style="width: 150%;">
-            Custom
-            <paper-checkbox style="margin-left: 3%" id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox></div>
-            </div>
+            <paper-checkbox style="margin-left: 3%" id="yearly" readonly class="checkbox" on-change="fullHandler"></paper-checkbox></div>
+            <div style="width: 100%;">
+  Two-Way
+<paper-checkbox style="margin-left: 3%" id="twoway" readonly class="checkbox" on-change="twowayHandler"></paper-checkbox> </div>
+   
+  </div>
+  </div>
   </div>
 
-<div class="verticalframe hrrspace" style="margin-left: 6%; margin-top: 3%;">
 
-
-  <div class="horizontalframe">   
-
-<div >
-            <fromdatepicker-card id="date1"></fromdatepicker-card></div>
-<div >
-            <todatepicker-card id="date2"></todatepicker-card></div>
-<div class="vrspace">
-          <paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
-</div>
-</div>
-</div>
-</div>
-<div class="mode">
-<p style="font-weight: 500; font-size: large; margin-left: 0%;">Mode Of Travel:</p>
-<div style="width: 70%;" class="horizontalframe" >
-  <div style="width: 25%;">
-One-Way
-  <paper-checkbox style="margin-left: 25%" id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox></div>
-<div style="width: 100%;">
-  Two-Way
-<paper-checkbox style="margin-left: 3%" id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
-</div>
-</div>
 <div style="margin-top: 5%; margin-left: 20%;" class="horizontalframe hrspace" id="but">
 
 <div>
@@ -198,6 +175,30 @@ One-Way
    </div>
    </div> 
     </div>
+<paper-dialog id="confirmbox" modal>
+<h4>Do You Want Continue to Pay</h4>
+           <paper-tabs>
+            <paper-tab>Installment Type</paper-tab>
+            <paper-tab>Amount</paper-tab>
+            <paper-tab>Mode of Payment</paper-tab>
+          </paper-tabs>
+<template  is="dom-repeat" items="{{continuearr}}" as="view">
+<div  class="horizontalframe">
+<paper-item >{{view.installtype}}</paper-item>
+<paper-item >{{view.installamt}}</paper-item>
+<paper-item >{{view.paytype}}</paper-item>
+</div>
+</template>
+<div  class="horizontalframe">
+<div class="buttons">
+  <paper-button  on-click="Confirm">CONFIRM</paper-button>
+</div>  
+<div class="buttons">
+  <paper-button  on-click="cancel">CANCEL</paper-button>
+</div>      
+ </paper-dialog>
+
+
   </body>
     <transport-service id="root"></transport-service>
     <transportfee-service id="service"></transportfee-service>
@@ -212,6 +213,7 @@ One-Way
     var datebox;
     var feepay;
     var chequearray;
+    var boxcount=2;
 var count=0;
 var todat;
 var mode='Two-Way';
@@ -229,22 +231,15 @@ var dat2=new Date();
         this.$.root.getzone();
         this.$.root.getname();
         this.querySelector('paper-listbox').style.visibility='hidden';
-        this.$.date1.hidden=true;
-       
-        this.$.date2.hidden=true;
-        this.$.datebox.hidden=true;
         this.$.status.hidden=true;
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
         this.$.dad.disabled=true;
         this.$.dad1.disabled=true;
         this.$.dad2.disabled=true;
-        //this.$.dad3.disabled=true;
         this.$.dad4.disabled=true;
         this.$.dad5.disabled=true;
         this.$.yearly.disabled=true;
-        this.$.custom.disabled=true;
-        this.$.oneway.disabled=true;
          this.$.twoway.disabled=true;
          this.$.but.disabled=true;
          this.hidepayoption=true;
@@ -261,17 +256,15 @@ var dat2=new Date();
           this.ztodate="";
           document.querySelector('#zone').selected=-1;
           document.querySelector('#yearly').checked=false;
-          document.querySelector('#custom').checked=false;
-          document.querySelector('#oneway').checked=false;
           document.querySelector('#twoway').checked=false;
+          document.querySelector('#lumsum').checked=false;
            payarrr=[];
-     item=[];//name field
-     fromdate="";
-     todate="";
-     fromdat="";
-     datebox="";
-     feepay=[];
-     chequearray=[];
+           fromdate="";
+           todate="";
+           fromdat="";
+           datebox="";
+           feepay=[];
+           chequearray=[];
 count=0;
  todat;
  mode='Two-Way';
@@ -283,6 +276,7 @@ count=0;
          },
        Fnfeepayment:function(feearr)
        {
+  
         feepay=feearr;
         
        },
@@ -343,15 +337,11 @@ count=0;
       this.$.root.gettermdate(this.grade);
       this.$.root.studzone(this.id);
       this.$.dad.disabled=false;
-      this.$.yearly.disabled=false;
-      this.$.custom.disabled=false;
-      this.$.oneway.disabled=false;
-         this.$.twoway.disabled=false;
+      this.$.yearly.disabled=true;
+         this.$.twoway.disabled=true;
           this.$.but.disabled=false;
-      document.querySelector("#yearly").checked=true;
-      
+      document.querySelector("#yearly").checked=true;      
       document.querySelector("#twoway").checked=true;
-
     },
     setzonedate:function(zonefromdate,zonetodate)
     {
@@ -360,11 +350,50 @@ count=0;
           todat =new Date(zonetodate);
            this.$.root.calc(temp);
     },
+    ckcount:function(checkcount)
+    {
+      
+     boxcount=checkcount;
+    },
    
     payfee:function()
     {
- 
-     for(var i=0;i<feepay.length;i++)
+      
+     if(boxcount==feepay.length)
+     {
+      var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.open();
+        this.continuearr=feepay;
+     /* for(var i=0;i<feepay.length;i++)
+     {
+
+      this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
+     }
+     count=0;
+    if(chequearray.length>0)
+    {
+      for(var i=0;i<chequearray.length;i++)
+      {
+        this.$.service.chequeinfo(chequearray[i].studid,chequearray[i].studname,chequearray[i].chequenum,chequearray[i].bankname,chequearray[i].chequedate,chequearray[i].installtype);
+      }
+    }
+    feepay=[];
+    chequearray=[];*/
+     }
+     else
+     {
+      alert('The checkbox is checked but not given value');
+     }
+     
+
+    },
+    Confirm:function()
+    {
+      var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.opened=false;
+   for(var i=0;i<feepay.length;i++)
      {
 
       this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
@@ -379,7 +408,13 @@ count=0;
     }
     feepay=[];
     chequearray=[];
-
+    },
+    cancel:function()
+    {
+        document.querySelector('zoneinstalltype-card').cancelreq();
+        var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.opened=false;
     },
     autocompletearr:function(autocompletearr)
     {
@@ -618,9 +653,14 @@ twowayHandler:function(event){
 
 click:function(e)
     {
-
-
-
+  
+      if(this.fee=="")
+        {
+           this.$.dad.validate();
+          
+        }
+       else
+       {
         fromdate=fromdat.getFullYear()+"/"+(fromdat.getMonth()+1)+"/"+fromdat.getDate();
         todate=todat.getFullYear()+"/"+(todat.getMonth()+1)+"/"+todat.getDate();
         //alert(fromdate+'   '+todate);
@@ -632,12 +672,12 @@ click:function(e)
     else if(this.status=='mapped')
     {
       alert('You Cannot Mapped Again');
-      ready();
+      FnClear();
       document.querySelector("#yearly").checked=false;
-      document.querySelector("#custom").checked=false;
-      document.querySelector("#datebox").checked=false;
+      //document.querySelector("#custom").checked=false;
+      //document.querySelector("#datebox").checked=false;
       document.querySelector("#twoway").checked=false;
-      document.querySelector("#oneway").checked=false;
+      //document.querySelector("#oneway").checked=false;
 
     }
     else{
@@ -650,7 +690,7 @@ click:function(e)
 
     }
      
-
+}
     },
 clickdate:function()
 {

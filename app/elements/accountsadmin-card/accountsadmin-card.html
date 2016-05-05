@@ -94,6 +94,9 @@
       feereports:function()
       {
         document.querySelector('transport-app').setPage("feereports","Fee Reports");
+        var dt=new Date();
+        var todate=dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
+        this.$.trservice.feereport(todate);
       },
       pend:function()
       {

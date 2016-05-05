@@ -79,13 +79,14 @@
             <paper-tab>Name</paper-tab>
             <paper-tab>Bank Name</paper-tab>
             <paper-tab>Cheque No</paper-tab>
+            <paper-tab>Created Date</paper-tab>
             <paper-tab>Cheque Date</paper-tab>
             <paper-tab>Receipt No</paper-tab>
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>
       <template  is="dom-repeat" items="{{feereportarrcheque1}}" as="views">
-        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.name}}" bankname="{{views.bankname}}" chequeno="{{views.chequeno}}" chequedate="{{views.chequedate}}" receiptno="{{views.receiptno}}" feepaid="{{views.installment1}}"></feereportscheque-item-card>
+        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.name}}" bankname="{{views.bankname}}" chequeno="{{views.chequeno}}" createddate="{{views.createddate}}"chequedate="{{views.chequedate}}" receiptno="{{views.receiptno}}" feepaid="{{views.installment1}}"></feereportscheque-item-card>
       </template>
         <div class="total-collection" id="totcol2">
           <paper-item>Total Collection  by Cheque</paper-item><paper-item>{{cheque1}}</paper-item>
@@ -100,13 +101,14 @@
             <paper-tab>Name</paper-tab>
             <paper-tab>Bank Name</paper-tab>
             <paper-tab>Cheque No</paper-tab>
+            <paper-tab>Created Date</paper-tab>
             <paper-tab>Cheque Date</paper-tab>
             <paper-tab>Receipt No</paper-tab>
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>
       <template  is="dom-repeat" items="{{feereportarrcheque2}}" as="views">
-        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.name}}" bankname="{{views.bankname}}" chequeno="{{views.chequeno}}" chequedate="{{views.chequedate}}" receiptno="{{views.receiptno}}" feepaid="{{views.installment2}}"></feereportscheque-item-card>
+        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.name}}" bankname="{{views.bankname}}" chequeno="{{views.chequeno}}" createddate="{{views.createddate}}" chequedate="{{views.chequedate}}" receiptno="{{views.receiptno}}" feepaid="{{views.installment2}}"></feereportscheque-item-card>
       </template>
         <div class="total-collection" id="totcol2">
           <paper-item>Total Collection  by Cheque</paper-item><paper-item>{{cheque2}}</paper-item>
@@ -152,14 +154,6 @@
     Polymer({
       is: 'feereports-card',
       ready:function(){
-        this.$.print.hidden=true;
-        this.$.totcol1.hidden=true;
-        this.$.totcol2.hidden=true;
-        this.$.grndtot.hidden=true;
-        this.$.tabs1.hidden=true;
-        this.$.tabs2.hidden=true;
-        this.$.by1.hidden=true;
-        this.$.by2.hidden=true;
       },
       FnClear:function(){
         this.feereportarrcheque="";

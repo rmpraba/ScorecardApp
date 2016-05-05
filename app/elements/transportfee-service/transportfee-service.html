@@ -1051,8 +1051,8 @@ document.querySelector('zonetostudent-card').payoption(installarr);
       feereport:function(dat)
       {
         var condate = new Date(dat);
-         todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate()
-       // alert(dat);
+        todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate()
+        // alert(dat);
         //alert(todate);
          this.chequereporturl=sessionStorage.getItem("addrinfo")+"/chequereport";
         var obj={"dates":"","schol":""}
@@ -1076,8 +1076,7 @@ chequereportResponse:function(e)
         chequereportarr=e.detail.response.returnval;
 
 },
-      feereportResponse:function(e)
-      {
+      feereportResponse:function(e){
         var feeinstall1arr=[];
         var feeinstall2arr=[];
         var chequeinstall1arr=[];
@@ -1127,7 +1126,7 @@ chequereportResponse:function(e)
             {
               if(chequereportarr[j].student_id==feereports[i].student_id && chequereportarr[j].installtype=="installment1") 
               {  
-            var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":""}
+            var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
             obj1.student_id=feereports[i].student_id;
             obj1.name=feereports[i].name;
             obj1.receiptno=feereports[i].receipt_no;
@@ -1135,6 +1134,7 @@ chequereportResponse:function(e)
             obj1.chequeno=chequereportarr[j].cheque_no;
             obj1.bankname=chequereportarr[j].bank_name;
             obj1.chequedate=chequereportarr[j].cheque_date;
+            obj1.createddate=feereports[i].installment_1Date;
             chequeinstall1arr.push(obj1);
             chequetotal1=parseInt(chequetotal1)+parseInt(feereports[i].installment_1);
               }
@@ -1149,7 +1149,7 @@ chequereportResponse:function(e)
               if(chequereportarr[j].student_id==feereports[i].student_id && chequereportarr[j].installtype=="installment2") 
               {  
                 
-            var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":""}
+            var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
             obj4.student_id=feereports[i].student_id;
             obj4.name=feereports[i].name;
             obj4.receiptno=feereports[i].receipt_no;
@@ -1157,6 +1157,7 @@ chequereportResponse:function(e)
             obj4.chequeno=chequereportarr[j].cheque_no;
             obj4.bankname=chequereportarr[j].bank_name;
             obj4.chequedate=chequereportarr[j].cheque_date;
+            obj4.createddate=feereports[i].installment_2Date;
             chequeinstall2arr.push(obj4);
              chequetotal2=parseInt(chequetotal2)+parseInt(feereports[i].installment_2);
               }

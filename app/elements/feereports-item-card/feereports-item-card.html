@@ -30,10 +30,16 @@
     </style>
     <div class="container flex-vertical">
       <div class="flexchild-vertical feereport">
-          <div class="field" style="width: 28%;"><paper-item>{{studentid}}</paper-item></div>
-          <div class="field" style="width: 35%;"><paper-item>{{studentname}}</paper-item></div>
-          <div class="field" style="width: 35%;"><paper-item>{{receiptno}}</paper-item></div>
-          <div class="field" style="width: 33%;"><paper-item>{{feepaid}}</paper-item></div>
+        <table style="border: 1px solid; width: 100%;">
+          <tbody>
+            <tr>
+              <td style="width: 20%;"><paper-item>{{studentid}}</paper-item></td>
+              <td style="width: 30%;"><paper-item>{{studentname}}</paper-item></td>
+              <td style="width: 27%;"><paper-item>{{receiptno}}</paper-item></td>
+              <td style="width: 30%;"><paper-item>{{feepaid}}</paper-item></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </template>

@@ -286,9 +286,12 @@ count=0;
        },
        lumsumHandler:function(e)
        {
+        
         var arr=[];
         if(e.target.checked==true)
         {
+          boxcount=1;
+        document.querySelector('zoneinstalltype-card').lumpsumct(boxcount);
            document.querySelector("#install").checked=false;
          this.hidetransport1=true;
          this.hidetransport=false;
@@ -305,8 +308,11 @@ count=0;
        },
        installHandler:function(e)
        {
+
         if(e.target.checked==true)
         {
+          boxcount=2;
+        document.querySelector('zoneinstalltype-card').lumpsumct(boxcount);
           document.querySelector("#lumsum").checked=false;
           this.hidetransport=false;
           this.hidetransport1=true;

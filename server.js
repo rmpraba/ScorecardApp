@@ -157,13 +157,13 @@ app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 		
 		var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop,"distance_from_school":req.query.distance,"school_id":req.query.schol};
 		//console.log('in server...'+routename);
-		//console.log(rouname);
+		console.log(rouname);
 	    connection.query('insert into point set ?',[rouname],
        	function(err, rows)
        	{
 		if(!err)
 		{
-			//console.log('inserted');
+			console.log('inserted');
 			res.status(200).json({'returnval': 'success'});
 		}
 		else
@@ -180,10 +180,7 @@ app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 
 app.post('/routeid' ,  urlencodedParser,function (req, res)
 {
-		
-		 var routename={"route_name":req.query.routename};
-		 var schoolx={"school_id":req.query.schol};
-	    connection.query('select * from route where ? and ?',[routename,schoolx], 
+	    connection.query('select point_count from sequence',
        	function(err, rows)
        	{
 		if(!err)
@@ -195,7 +192,7 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 			}
 			else
 			{
-			res.status(200).json({'returnval': 'invalid'});
+			res.status(200).json({'returnval': ''});
 			}
 		}
 		else
@@ -212,8 +209,8 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 app.post('/sequence' ,  urlencodedParser,function (req, res)
 {
 	
-		//var schoolx={"school_id":req.query.schol};
-	    connection.query('select count(id) as count from point',
+		var point={"point_count":req.query.pointcount};
+	    connection.query('update sequence set ?',[point],
        	function(err, rows)
        	{
       	if(!err)
@@ -592,7 +589,7 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-			console.log(rows);
+			//console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -701,6 +698,36 @@ app.post('/gettrip' ,  urlencodedParser,function (req, res)
 	
 });
 	});
+
+app.post('/getrouteid' ,  urlencodedParser,function (req, res)
+{
+		
+		 var routen={"route_name":req.query.routename};
+		 var schoolx={"school_id":req.query.schol};
+		 console.log('in server...');
+		 console.log(routen);
+	    connection.query('select * from route where ? and ?',[routen,schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+			console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+
 app.post('/cancellation',  urlencodedParser,function (req, res)
 {
 

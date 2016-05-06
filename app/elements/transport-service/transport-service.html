@@ -508,6 +508,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="getrouteidajax"
+        url="{{getrouteidurl}}"
+        params="{{getrouteidparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getrouteidResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     </template>
 
   <script>
@@ -517,6 +528,7 @@
     var pick;
     var drop;
     var routeidd;
+    var pointcount;
     var routetrip="";
     var totalfee;
     var months;
@@ -537,6 +549,7 @@
     var address_3;
     var city;
     var pincode;
+    var rouid;
 var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
@@ -630,23 +643,21 @@ var school=sessionStorage.getItem("sch");
       },
       routeidResponse:function(e)
       {
-        //alert('routeid');
-        routeidd=e.detail.response.returnval[0].id;
-         this.sequenceurl=sessionStorage.getItem("addrinfo")+"/sequence";
-         var obj={"schol":""}
-        obj.schol=sessionStorage.getItem("sch");
+        pointcount=(e.detail.response.returnval[0].point_count)+1;
+        this.sequenceurl=sessionStorage.getItem("addrinfo")+"/sequence";
+        var obj={"pointcount":""}
+        obj.pointcount=pointcount;
         this.sequenceparam=obj;
-         this.$.sequenceajax.generateRequest();
+        this.$.sequenceajax.generateRequest();
 
       },
       sequenceResponse:function(e)
       {
-        //alert('seqence');
-        var seq=(e.detail.response.returnval[0].count)+1;
+        var seq=pointcount;
         var obj={"id":"","routes":"","points":"","trip":"","pick":"","drop":"","distance":"","schol":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.id="p"+seq;
-        obj.routes=routeidd;
+        obj.routes=sessionStorage.getItem("routid");
         obj.points=point;
         obj.trip=trip;
         obj.pick=pick;
@@ -885,11 +896,28 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         this.gettripparam=obj;
         //alert(JSON.stringify(obj));
         this.$.gettripajax.generateRequest();
+
+
+
+         this.getrouteidurl=sessionStorage.getItem("addrinfo")+"/getrouteid";
+        var obj1={"routename":"","schol":""}
+        obj1.schol=sessionStorage.getItem("sch");
+        obj1.routename=routename;
+        this.getrouteidparam=obj1;
+      alert(JSON.stringify(obj1));
+        this.$.getrouteidajax.generateRequest();
+
+      },
+      getrouteidResponse:function(e){
+        rouid=e.detail.response.returnval[0].id;
+        sessionStorage.setItem("routid",rouid);
       },
       gettripResponse:function(e1)
           { 
             //alert('i m back');
           var tripdetails=e1.detail.response.returnval;
+          var xx = e1.detail.response.returnval[0].id;
+          alert(JSON.stringify(tripdetails));
           //alert(JSON.stringify(routedetails));
           document.querySelector('mappointtoroute-card').triparr=tripdetails;
       },

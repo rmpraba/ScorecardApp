@@ -61,13 +61,6 @@
             this.$.create.hidden=true;
             this.$.select.getroute();
           },
-           FnClear:function(){
-            document.querySelector('#routemenu').selected=-1;
-            document.querySelector('#tripmenu').selected=-1;
-            this.routearr="";
-            this.triparr="";
-            this.itemarr="";
-          },
           rootname:function(e){
             routename = (e.target.selectedItem.textContent).trim();
             this.$.select.gettrip(routename);
@@ -77,7 +70,7 @@
             tripno = (e.target.selectedItem.textContent).trim();
             this.$.select.getroutedetail(tripno);
             sessionStorage.setItem("trip",tripno);
-            this.$.button.hidden=false;
+            //this.$.button.hidden=false;
             this.$.create.hidden=false;
           },
           refreshdeletedata:function()
@@ -123,5 +116,5 @@
           },
         });
     })();
-  </script>
+    </script>
 </dom-module>

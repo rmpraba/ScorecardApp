@@ -117,11 +117,9 @@
        payfee:function()
     {
  
-     for(var i=0;i<feepay.length;i++)
-     {
-
-      this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
-     }
+    sessionStorage.setItem("recflag","1");
+        this.$.service.payfee(feepay);
+     
      count=0;
     if(chequearray.length>0)
     {

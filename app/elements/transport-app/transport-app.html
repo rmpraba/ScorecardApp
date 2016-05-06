@@ -276,8 +276,11 @@
     if(currpage=="receipt"){
       document.querySelector('zonetostudent-card').FnClear();
       document.querySelector('zonetostudent-card').ready();
+      if(sessionStorage.getItem("recflag")=="0")
+      {
       document.querySelector('zoneinstalltype-card').FnClear();
       document.querySelector('zoneinstalltype-card').ready();
+      }
       document.querySelector('receipt-card').FnClear();
       document.querySelector('receipt-card').ready();
       document.querySelector('cqreceipt-card').FnClear();

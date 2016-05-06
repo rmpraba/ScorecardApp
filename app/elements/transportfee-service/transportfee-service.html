@@ -367,6 +367,8 @@ var chequereportarr;
 var rpayfee;
 var receiptseq;
 var ackseq;
+var rcount=0;
+var paycount;
 
     Polymer({
       is: "transportfee-service",
@@ -464,14 +466,19 @@ var ackseq;
       this.receiptseqparam=obj;
       this.$.receiptseqajax.generateRequest();
       rpayfee=payfees;
+      paycount=payfees.length;
      },
      payfeeResponse:function(e)
      {
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
-        {
+        {  rcount++;
             alert("Paid Successfully");
-            document.querySelector('zonetostudent-card').gotozone();
+            if(rcount==paycount)
+            {
+              document.querySelector('transportfee-service').generatereceipt();
+            }
+            //document.querySelector('zonetostudent-card').gotozone();
 
         }
       },

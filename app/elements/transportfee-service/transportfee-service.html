@@ -1145,7 +1145,7 @@ chequereportResponse:function(e)
             var obj={"student_id":"","name":"","receiptno":"","installment1":""}
             obj.student_id=feereports[i].student_id;
             obj.name=feereports[i].name;
-            obj.receiptno=feereports[i].receipt_no;
+            obj.receiptno=feereports[i].receipt_no1;
             obj.installment1=feereports[i].installment_1;
             feeinstall1arr.push(obj);
             cashcount++;
@@ -1157,7 +1157,7 @@ chequereportResponse:function(e)
             var obj3={"student_id":"","name":"","receiptno":"","installment2":""}
             obj3.student_id=feereports[i].student_id;
             obj3.name=feereports[i].name;
-            obj3.receiptno=feereports[i].receipt_no;
+            obj3.receiptno=feereports[i].receipt_no2;
             obj3.installment2=feereports[i].installment_2;
             feeinstall2arr.push(obj3);
              cashcount++;
@@ -1176,7 +1176,7 @@ chequereportResponse:function(e)
             var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
             obj1.student_id=feereports[i].student_id;
             obj1.name=feereports[i].name;
-            obj1.receiptno=feereports[i].receipt_no;
+            obj1.receiptno=feereports[i].receipt_no1;
             obj1.installment1=feereports[i].installment_1;
             obj1.chequeno=chequereportarr[j].cheque_no;
             obj1.bankname=chequereportarr[j].bank_name;
@@ -1199,7 +1199,7 @@ chequereportResponse:function(e)
             var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
             obj4.student_id=feereports[i].student_id;
             obj4.name=feereports[i].name;
-            obj4.receiptno=feereports[i].receipt_no;
+            obj4.receiptno=feereports[i].receipt_no2;
             obj4.installment2=feereports[i].installment_2;
             obj4.chequeno=chequereportarr[j].cheque_no;
             obj4.bankname=chequereportarr[j].bank_name;

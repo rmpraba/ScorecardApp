@@ -899,6 +899,7 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 		 status={"install2_status":paidstatus};
 		  rec={"receipt_no2":req.query.receiptno};
 	    }
+	    console.log(req.query.instype);
 	    console.log(studid);
 	    console.log(mode);
 	    console.log(install1);
@@ -2021,9 +2022,10 @@ app.post('/acksequence',  urlencodedParser,function (req, res)
 
 app.post('/updatereceiptsequence',  urlencodedParser,function (req, res)
 {
-	var scid={"schoolid":req.query.schoolid};
+	var scid={"school_id":req.query.schoolid};
     var seq=req.query.sequence;
-	    connection.query('update receiptsequence set sequence=?+1  where ? ',[seq,scid],
+    var ackseq=req.query.ackseq;
+	    connection.query('update receiptsequence set sequence=? , ackseq=?  where ? ',[seq,ackseq,scid],
        	function(err, rows){
 		if(!err)
 		{

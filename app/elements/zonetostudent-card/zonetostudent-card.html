@@ -330,8 +330,9 @@ count=0;
        gotozone:function()
        {
         count++;
-        if(count==1)
+        if(count==boxcount)
         {
+          alert(count);
           document.querySelector('transportfee-service').generatereceipt();
         }
         
@@ -358,7 +359,7 @@ count=0;
     },
     ckcount:function(checkcount)
     {
-      
+      //alert(checkcount);
      boxcount=checkcount;
     },
    
@@ -399,11 +400,12 @@ count=0;
       var id = 'confirmbox';
         var dialog = document.getElementById(id);
         dialog.opened=false;
-   for(var i=0;i<feepay.length;i++)
+        this.$.service.payfee(feepay);
+   /*for(var i=0;i<feepay.length;i++)
      {
 
       this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
-     }
+     }*/
      count=0;
     if(chequearray.length>0)
     {

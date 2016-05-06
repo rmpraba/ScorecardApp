@@ -364,6 +364,9 @@
     var chequearr=[];
     var todate;
 var chequereportarr;
+var rpayfee;
+var receiptseq;
+var ackseq;
 
     Polymer({
       is: "transportfee-service",
@@ -453,27 +456,20 @@ var chequereportarr;
       
       document.querySelector('transportfee-card').autocompletename(nameitem);
      },
-     payfee:function(install,studid,paytype,instype)
+     payfee:function(payfees)
      {
-       rstudid=studid;
-       this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
-        var obj={"studid":"","schol":"","installfee":"","paytype":"","instype":""}
-        obj.studid=studid;
-        obj.schol=sessionStorage.getItem("sch");
-        obj.installfee=install;
-        obj.paytype=paytype;
-        obj.instype=instype;
-        this.payfeeparam=obj;
-        receiptcreate.push(obj);
-        this.$.payfeeajax.generateRequest();
+      this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
+      var obj={"schol":""}
+      obj.schol=sessionStorage.getItem("sch");
+      this.receiptseqparam=obj;
+      this.$.receiptseqajax.generateRequest();
+      rpayfee=payfees;
      },
      payfeeResponse:function(e)
      {
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
         {
-            document.querySelector('zonetostudent-card').FnClear();
-            document.querySelector('zonetostudent-card').ready();
             alert("Paid Successfully");
             document.querySelector('zonetostudent-card').gotozone();
 
@@ -481,34 +477,63 @@ var chequereportarr;
       },
       generatereceipt:function()
       {
-        this.receiptsequrl=sessionStorage.getItem("addrinfo")+"/receiptsequence";
-        var obj={"schol":""}
-      obj.schol=sessionStorage.getItem("sch");
-      this.receiptseqparam=obj;
-        this.$.receiptseqajax.generateRequest();
+    
+        this.updatereceiptsequrl=sessionStorage.getItem("addrinfo")+"/updatereceiptsequence";
+        var obj={"schoolid":"","sequence":"","ackseq":""}
+        obj.schoolid=sessionStorage.getItem("sch");
+        obj.sequence =receiptseq;
+        obj.ackseq=ackseq;
+        this.updatereceiptparam =obj;
+        this.$.updatereceiptseqajax.generateRequest();
       },
       receiptseqResponse:function(e)
       {
         var receiptschoolid=e.detail.response.returnval[0].schoolid;
-        var receiptseq=e.detail.response.returnval[0].sequence;
-        receiptid=receiptschoolid+receiptseq;
-        this.updatereceiptsequrl=sessionStorage.getItem("addrinfo")+"/updatereceiptsequence";
-        var obj={"schoolid":"","sequence":""}
-        obj.schoolid=receiptschoolid;
-        obj.sequence =receiptseq;
-        this.updatereceiptparam =obj;
-        this.$.updatereceiptseqajax.generateRequest();
-         this.receiptnourl=sessionStorage.getItem("addrinfo")+"/receiptnoinfee";
-        var obj={"receiptno":"","studid":"","schol":""}
-         obj.schol=sessionStorage.getItem("sch");
-        obj.receiptno=receiptid;
-        obj.studid =rstudid;
-        this.receiptnoparam =obj;
-        this.$.receiptnoajax.generateRequest();
+         receiptseq=e.detail.response.returnval[0].sequence;
+         ackseq=e.detail.response.returnval[0].ackseq;
+        for(var i=0;i<rpayfee.length;i++)
+        {
+        if(rpayfee[i].paytype=="Cash")
+        {
+         this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
+        var obj={"studid":"","schol":"","installfee":"","paytype":"","instype":"","receiptno":""}
+        obj.studid=rpayfee[i].studid;
+        obj.schol=sessionStorage.getItem("sch");
+        obj.installfee=rpayfee[i].installamt;
+        obj.paytype=rpayfee[i].paytype;
+        obj.instype=rpayfee[i].installtype;
+        obj.receiptno="REC"+receiptseq;
+        this.payfeeparam=obj;
+        receiptcreate.push(obj);
+        this.$.payfeeajax.generateRequest(); 
+        receiptseq++;
+      }
+      else
+      {
+         this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
+        var obj={"studid":"","schol":"","installfee":"","paytype":"","instype":"","receiptno":""}
+        obj.studid=rpayfee[i].studid;
+        obj.schol=sessionStorage.getItem("sch");
+        obj.installfee=rpayfee[i].installamt;
+        obj.paytype=rpayfee[i].paytype;
+        obj.instype=rpayfee[i].installtype;
+        obj.receiptno="ACK"+ackseq;
+        this.payfeeparam=obj;
+        receiptcreate.push(obj);
+        this.$.payfeeajax.generateRequest(); 
+        ackseq++;
+      }
+
+        }
+
+         
+
+       
 
       },
       updatereceiptseqResponse:function()
       {
+        //alert('come');
         recstudid=receiptcreate[0].studid;
           this.getstureceipturl=sessionStorage.getItem("addrinfo")+"/getstureceipt";
            var obj={"stid":"","schol":""}
@@ -561,13 +586,14 @@ else
   title="ACKNOWNLODGEMENT";
 }
 
-var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
+var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":""}
 recobj.receiptno=receiptid;
 recobj.studname=getstu[0].student_name;
 recobj.classname=getstu[0].classname;
 recobj.section=getstu[0].section;
 recobj.installtype=receiptcreate[i].instype;
 recobj.installfee=receiptcreate[i].installfee;
+recobj.receiptno=receiptcreate[i].receiptno;
 recobj.paytype=receiptcreate[i].paytype;
 recobj.today=todate;
 recobj.stid=recstudid;
@@ -607,7 +633,7 @@ else
 {
   title="ACKNOWNLODGEMENT";
 }
-var recobj1={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":""}
+var recobj1={"receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":""}
 recobj1.receiptno=receiptid;
 recobj1.studname=getstu[0].student_name;
 recobj1.classname=getstu[0].classname;
@@ -615,6 +641,7 @@ recobj1.section=getstu[0].section;
 recobj1.installtype=receiptcreate[i].instype;
 recobj1.installfee=receiptcreate[i].installfee;
 recobj1.paytype=receiptcreate[i].paytype;
+recobj1.receiptno=receiptcreate[i].receiptno;
 recobj1.today=todate;
 recobj1.stid=recstudid;
 recobj1.session=yr;

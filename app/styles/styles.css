@@ -586,7 +586,7 @@ text-align: left;
 .receipt .body5 .l15 .word{
 text-align: left;  
 margin-left: 40%;
-margin-top: -10%;
+margin-top: 4% !important;
 width: 100%;
 @apply(--layout-horizontal);
     }

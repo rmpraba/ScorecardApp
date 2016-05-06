@@ -143,12 +143,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="l15">
             
            
-            <div class="word">
+            <div class="word" style="margin-top: 5px;">
               In Words : {{feeinword}}
             </div> </div>
 
             <div class="r5">
-              <paper-item style="width: 80px; margin-top: -1%;"> Total fees :</paper-item>
+              <paper-item style="width: 80px; margin-top: 2%;"> Total fees :</paper-item>
               
               <div class="cash">
                 <paper-input style="width: 60px; margin-top: 5px;" on-change="convertrs" value="{{view.installfee}}"></paper-input>
@@ -196,13 +196,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <table>
       <tr >
         <td>
-           <paper-button class="button" id="pdf" style="height: 34px;" >Save as PDF</paper-button>
+           <paper-button class="button" id="pdf" style="height: 34px !important;" >PDF</paper-button>
         </td>
         <td>
-          <paper-button  class="button" id="email" style="height: 34px;" on-click="email">Send email</paper-button>
+          <paper-button  class="button" id="email" style="height: 34px  !important;" on-click="email">Email</paper-button>
         </td>
         <td>
-          <paper-button class="button"  id="print" style="height: 34px;" on-click="print">Print</paper-button>
+          <paper-button class="button"  id="print" style="height: 34px  !important;" on-click="print">Print</paper-button>
         </td>
       </tr>
     </table>

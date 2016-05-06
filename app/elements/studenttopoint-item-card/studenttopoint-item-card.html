@@ -181,9 +181,16 @@
       droppoints:function(e){
         droppoint = (e.target.selectedItem.value);
       }, 
-      changeHandler:function(event){ 
+      changeHandler:function(e){ 
         var box = document.querySelector("#selectbox");
+        if(e.target.checked==true)
+        {
         document.querySelector('mapstudenttopoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint); 
+        }
+        else
+        {
+          document.querySelector('mapstudenttopoint-card').removestud(this.studentid);
+        }
     }
   });
   })();

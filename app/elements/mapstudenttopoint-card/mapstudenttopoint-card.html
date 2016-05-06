@@ -221,8 +221,18 @@
             obj.pickpoint=pickpoint;
             obj.droppoint=droppoint;
             itemarray.push(obj);
-            
+            alert(JSON.stringify(obj));
            },
+           removestud:function(std)
+           {
+              for(var i=0;i<itemarray.length;i++)
+       {
+       if(std==itemarray[i].studentid)
+       {
+        itemarray.splice(i,1);
+       }
+       }
+           }
       });
     })();
   </script>

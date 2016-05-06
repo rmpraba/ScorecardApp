@@ -136,6 +136,7 @@
         obj.schol=sessionStorage.getItem("sch");
         this.routepointparam=obj;
         this.$.routepoint.generateRequest();
+        this.$.selectbox.disabled=true;
       }, 
       routepointResponse:function(e){
         var route=e.detail.response.returnval;
@@ -177,6 +178,7 @@
         pickpoint = (e.target.selectedItem.value);
         this.selectpoint=pickpoint;
         droppoint=pickpoint;
+        this.$.selectbox.disabled=false;
       },
       droppoints:function(e){
         droppoint = (e.target.selectedItem.value);

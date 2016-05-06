@@ -574,8 +574,13 @@ var paycount;
       var  getstu=e.detail.response.returnval;
       //alert(JSON.stringify(getstu));
       var dt=new Date();
-var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
-var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
+      //var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+      var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
+      var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+      var curr_date = dt.getDate();
+      var curr_month = dt.getMonth();
+      var curr_year = dt.getFullYear();
+      var todate = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
 for(var i=0;i<receiptcreate.length;i++)
 {
   

@@ -171,11 +171,16 @@ bankname="";
 
         if(paytype=="Cheque")
         {
-      document.querySelector('zonedatepicker-card').setinstalldate(this.paydate);
+
            this.chequeno="";
            this.banknam="";
            type=this.installtype;
           amt=this.installamt;
+           if(type=="installment2")
+          {
+            
+         document.querySelector('zonedatepicker-card').setinstalldate(this.paydate);
+          }
          // alert(amt+''+type);
         var id = 'animated';
         var dialog = document.getElementById(id);
@@ -211,7 +216,7 @@ bankname="";
      },
      cancelcheque:function()
      {
-      document.querySelector('#paymodemenu').selected=-1;
+      //document.querySelector('#paymodemenu').selected=-1;
       var id = 'animated';
       var dialog = document.getElementById(id);
       dialog.close();

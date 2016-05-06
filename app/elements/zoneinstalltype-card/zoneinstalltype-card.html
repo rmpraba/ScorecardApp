@@ -31,26 +31,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div  class="layout">
-   
     <paper-checkbox style="margin: 1% 0 0 2%;" id="{{installtype}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" checked on-change="payinstall"></paper-checkbox>
-   <paper-item >{{installtype}}</paper-item>
-   <paper-item id="{{paydate}}" >{{installamt}}</paper-item>
+    <div class="fieldsmall" style="width: 10%;margin-left: 5%;"><paper-item >{{installtype}}</paper-item></div>
+    <div class="fieldsmall" style="width: 10%;margin-left:27%;"><paper-item id="{{paydate}}" >{{installamt}}</paper-item></div>
    <!--<paper-item >{{paydate}}</paper-item>-->
-    <div class="drop-down">
-            <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paydate}}"   label="---Select the Mode of Payment---">
-                <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
-                   <paper-item value="Cheque" id="{{installtype}}">Cheque</paper-item>
-                    <paper-item value="Cash" id="{{installtype}}">Cash</paper-item>
-                </paper-menu>
-            </paper-dropdown-menu>
-          </div>
-          <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
-           
-    
-            <template is="dom-if" if="{{checkinstall(paidstatus)}}">
-            </template>
+    <div class="drop-down" style="margin-left:20%;">
+      <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paymode}}"   label="---Select the Mode of Payment---">
+        <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
+          <paper-item value="Cheque" id="{{installtype}}">Cheque</paper-item>
+          <paper-item value="Cash" id="{{installtype}}">Cash</paper-item>
+        </paper-menu>
+      </paper-dropdown-menu>
+    </div>
+    <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
+    <template is="dom-if" if="{{checkinstall(paidstatus)}}"></template>
             
-       <paper-dialog id="animated">
+       <paper-dialog id="animated" modal>
 <h4>ADD CHEQUE DETAILS</h4>
  <div  class="layout"> <paper-input required allowed-pattern="^[1-9][0-9]*$" error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input> </div>
  <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z ]" error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input> </div>
@@ -58,6 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  <zonedatepicker-card></zonedatepicker-card></div>
 <div class="buttons">
   <paper-button id="{{installtype}}" on-click="add">ADD</paper-button>
+  <paper-button id="{{installtype}}" on-click="cancelcheque">cancel</paper-button>
 </div>     
  </paper-dialog>
    </div>
@@ -207,8 +204,17 @@ bankname="";
      {
     pushitem=[];
     chequeitem=[];
-    document.querySelector('paper-menu').selected=-1;
+    document.querySelector('#paymodemenu').selected=-1;
+    document.querySelector('#installment1').selected=-1;
+    document.querySelector('#installment2').selected=-1;
 
+     },
+     cancelcheque:function()
+     {
+      document.querySelector('#paymodemenu').selected=-1;
+      var id = 'animated';
+      var dialog = document.getElementById(id);
+      dialog.close();
      },
 
         add:function()

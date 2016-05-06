@@ -12,6 +12,18 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+   <iron-ajax
+        method="post"
+        id="checkschoolajax"
+        url="{{checkschoolurl}}"
+        params="{{checkschoolparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="checkschoolResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <!--pass the user name and password for signin-->
   <iron-ajax
         method="post"
@@ -213,6 +225,23 @@
         sessionStorage.setItem("addrinfo",addr);
         //alert(JSON.stringify(e.detail.response.address));
       },
+
+       checkschool:function(uname)
+      {
+        username=uname;
+        this.checkschoolurl=sessionStorage.getItem("addrinfo")+"/checkschool-card";
+        var obj={"username":""}
+        obj.username=uname;
+        this.checkschoolparam=obj;
+        this.$.checkschoolajax.generateRequest();
+      },
+      checkschoolResponse:function(e)
+      {
+
+        var schol=e.detail.response.returnval[0].name;
+        document.querySelector('login-card').schname=schol;
+      },
+
      //fetch the username and password from logincard and pass to the loginajax
       logincheck:function(uname,pass)
       {

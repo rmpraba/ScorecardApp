@@ -23,11 +23,11 @@
     <!--component which invokes the predefined date picker control-->
     <div class="card">
       <paper-input class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
-      <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog">
+      <paper-dialog id="dialog2" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
-          <paper-button dialog-dismiss>Cancel</paper-button>
-          <paper-button dialog-confirm>OK</paper-button>
+          <paper-button >Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog">OK</paper-button>
         </div>
       </paper-dialog>
     </div>
@@ -46,7 +46,7 @@
   },
   FnShowDialog:function(){
     this.date=new Date();
-    this.$.dialog.toggle();
+    this.$.dialog2.toggle();
   },
   setinstalldate:function(installdate)
   {
@@ -56,8 +56,7 @@
   },
   FnDismissDialog:function(e)
   {
-    if (e.detail.confirmed)
-     {
+    
       var pickdate=moment(this.$.picker.date).format('L');
       var dd1=new Date();
       var dd2=new Date(pickdate);
@@ -67,6 +66,9 @@
       {
           this.showdate = moment(this.$.picker.date).format('L');
           localStorage.setItem("localsess_curr_date",this.showdate);
+           var id = 'dialog2';
+          var dialog = document.getElementById(id);
+      dialog.close();
           //document.querySelector('zoneinstalltype-card').showdialog();
         }
         else
@@ -75,7 +77,7 @@
           this.showdate="";
           //document.querySelector('zoneinstalltype-card').showdialog();
         }
-      }
+      
       document.querySelector('zoneinstalltype-card').showdialog();
     }
 });

@@ -32,11 +32,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div  class="layout">
    
-    <paper-checkbox style="margin: 1% 0 0 2%;" id="{{installtype}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" checked on-change="payinstall"></paper-checkbox>
-   <paper-item >{{installtype}}</paper-item>
-   <paper-item >{{installamt}}</paper-item>
-   <paper-item >{{paydate}}</paper-item>
-    <div class="drop-down">
+    <paper-checkbox style="margin: 1% 0 0 -10%;" id="{{installtype}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" checked on-change="payinstall"></paper-checkbox>
+   <div class="fieldsmall" style="width: 10%;margin-left: 4%;"><paper-item >{{installtype}}</paper-item></div>
+   <div class="fieldsmall" style="width: 10%;margin-left:20%;"><paper-item >{{installamt}}</paper-item></div>
+   <div class="fieldsmall" style="width: 10%;margin-left:16%;"><paper-item >{{paydate}}</paper-item></div>
+    <div class="drop-down" style="margin-left:14%;">
             <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paydate}}"   label="---Select the Mode of Payment---">
                 <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
                    <paper-item value="Cheque" id="{{installtype}}">Cheque</paper-item>
@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="{{checkinstall(paidstatus)}}">
             </template>
             </div>
-       <paper-dialog id="chequeinfo">
+       <paper-dialog id="chequeinfo" modal>
 <h4>ADD CHEQUE DETAILS</h4>
  <div  class="layout"> <paper-input required error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
  <div  class="layout"> <paper-input required  error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
@@ -158,14 +158,16 @@ var amt;
      },
      showdialog:function()
      {
-      
+    
        var id = 'chequeinfo';
         var dialog = document.getElementById(id);
         dialog.open();
      },
 
-        add:function()
+        add:function(e)
     {
+
+    
       if(this.chequeno==""&&this.banknam=="")
       {
           this.$.chequeno.validate();
@@ -199,6 +201,7 @@ chequeitem.push(obj1);
 
       }
     }
+    
     
     });
   })();

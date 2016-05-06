@@ -53,6 +53,28 @@ server.send({
 res.status(200).json('mail sent');
 
 });
+app.post('/checkschool-card',  urlencodedParser,function (req, res)
+{
+	var id={"id":req.query.username};
+	
+       connection.query('SELECT name from md_school where id=(select school_id from employee where ?) ',[id],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+      	
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+            
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
 
 //select the username and password from login table
 app.post('/login-card',  urlencodedParser,function (req, res)
@@ -292,7 +314,7 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
-	var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0)";
+	var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0)";
 	   // console.log(queryy);
 	    connection.query(queryy,
        	function(err, rows)
@@ -866,6 +888,7 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 		 install1={"installment_1":req.query.installfee};
 		 install1date={"installment_1Date":instalment1date};
 		 status={"install1_status":paidstatus};
+		 rec={"receipt_no1":req.query.receiptno};
 	    }
 	    else
 	    {
@@ -874,9 +897,15 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 		 install1={"installment_2":req.query.installfee};
 		 install1date={"installment_2Date":instalment1date}
 		 status={"install2_status":paidstatus};
+		  rec={"receipt_no2":req.query.receiptno};
 	    }
-	    //console.log(studid);
-	    connection.query('update  student_fee set ?,?,?,? where ? and ?',[mode,install1,install1date,status,studid,schoolx],
+	    console.log(studid);
+	    console.log(mode);
+	    console.log(install1);
+	    console.log(install1date);
+	    console.log(status);
+	    console.log(rec);
+	    connection.query('update  student_fee set ?,?,?,?,? where ? and ?',[mode,install1,install1date,status,rec,studid,schoolx],
        	function(err, rows) 
        	{
 		if(!err)
@@ -1967,6 +1996,29 @@ app.post('/receiptsequence',  urlencodedParser,function (req, res)
 	});
 });
 
+
+app.post('/acksequence',  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+	    connection.query('Select * from acksequence where ?',[schoolx],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+
+
 app.post('/updatereceiptsequence',  urlencodedParser,function (req, res)
 {
 	var scid={"schoolid":req.query.schoolid};
@@ -1985,13 +2037,39 @@ app.post('/updatereceiptsequence',  urlencodedParser,function (req, res)
 	});
 });
 
-
+app.post('/updateacksequence',  urlencodedParser,function (req, res)
+{
+	var scid={"schoolid":req.query.schoolid};
+    var seq=req.query.sequence;
+	    connection.query('update acksequence set ackseq=?+1  where ? ',[seq,scid],
+       	function(err, rows){
+		if(!err)
+		{
+			
+				res.status(200).json({'returnval': 'success'});
+			
+		}
+		 else {
+			console.log(err);
+		}
+	});
+});
 
 app.post('/receiptnoinfee',  urlencodedParser,function (req, res)
 {
-	var rid={"receipt_no":req.query.receiptno};
+	var rid;
+	if(req.query.installtype=="installment1")
+	{
+	 rid={"receipt_no1":req.query.receiptno}; 
+    }
+    else
+    {
+     rid={"receipt_no2":req.query.receiptno}; 
+    }
     var sid={"student_id":req.query.studid};
     var schoolx={"school_id":req.query.schol};
+    console.log(req.query.installtype);
+    console.log(rid);
 	    connection.query('update student_fee set ?  where ? and ?',[rid,sid,schoolx],
        	function(err, rows){
 		if(!err)
@@ -2006,7 +2084,35 @@ app.post('/receiptnoinfee',  urlencodedParser,function (req, res)
 	});
 });
 
+app.post('/acknoinfee',  urlencodedParser,function (req, res)
+{
+	var rid;
+	if(req.query.installtype=="installment1")
+	{
+	 rid={"receipt_no1":req.query.ackno}; 
+    }
+    else
+    {
+     rid={"receipt_no2":req.query.ackno}; 
+    }
+    var sid={"student_id":req.query.studid};
 
+    var schoolx={"school_id":req.query.schol};
+     console.log(req.query.installtype);
+    console.log(rid);
+	    connection.query('update student_fee set ?  where ? and ?',[rid,sid,schoolx],
+       	function(err, rows){
+		if(!err)
+		{
+			
+				res.status(200).json({'returnval': 'success'});
+			
+		}
+		 else {
+			console.log(err);
+		}
+	});
+});
 app.post('/getstureceipt',  urlencodedParser,function (req, res)
 {
 	var stuid=req.query.stid;

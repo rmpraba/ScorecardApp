@@ -184,9 +184,9 @@
           </paper-tabs>
 <template  is="dom-repeat" items="{{continuearr}}" as="view">
 <div  class="horizontalframe">
-<paper-item >{{view.installtype}}</paper-item>
-<paper-item >{{view.installamt}}</paper-item>
-<paper-item >{{view.paytype}}</paper-item>
+          <div class="field" style="width: 33%;margin-left: 5%;"><paper-item>{{view.installtype}}</paper-item></div>
+          <div class="field" style="width: 33%; margin-left: 5%;"><paper-item>{{view.installamt}}</paper-item></div>
+          <div class="field" style="width: 33%;margin-left: 3%;"><paper-item>{{view.paytype}}</paper-item></div>
 </div>
 </template>
 <div  class="horizontalframe">

@@ -904,7 +904,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         obj1.schol=sessionStorage.getItem("sch");
         obj1.routename=routename;
         this.getrouteidparam=obj1;
-      alert(JSON.stringify(obj1));
+      //alert(JSON.stringify(obj1));
         this.$.getrouteidajax.generateRequest();
 
       },
@@ -917,7 +917,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
             //alert('i m back');
           var tripdetails=e1.detail.response.returnval;
           var xx = e1.detail.response.returnval[0].id;
-          alert(JSON.stringify(tripdetails));
+          //alert(JSON.stringify(tripdetails));
           //alert(JSON.stringify(routedetails));
           document.querySelector('mappointtoroute-card').triparr=tripdetails;
       },
@@ -1367,7 +1367,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         addstudent:function(student_id,first_name, last_name,stu_class, stu_schooltype,stu_transport, parent_name,parent_email, parent_mobile, address_1, address_2, address_3, city, pincode,dob){
             this.addstudenturl=sessionStorage.getItem("addrinfo")+"/addstudent";
             var obj={"student_id":"","student_name":"","stu_class":"","stu_schooltype":"","stu_transport":"","dob":"","schol":""}
-            alert(name);
+            //alert(name);
             obj.student_id = student_id;
             obj.student_name=first_name+" "+last_name;
             obj.stu_class=stu_class;
@@ -1376,7 +1376,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
             obj.dob=dob;
             obj.schol=sessionStorage.getItem("sch");
             this.addstudentparam=obj;
-            alert(JSON.stringify(obj));
+            //alert(JSON.stringify(obj));
             this.$.addstudentajax.generateRequest();
 
             this.addparenturl=sessionStorage.getItem("addrinfo")+"/addparent";

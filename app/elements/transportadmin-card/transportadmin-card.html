@@ -4,6 +4,7 @@
  <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
  <link rel="import" href="../refund-service/refund-service.html">
  <link rel="import" href="../transport-service/transport-service.html">
+ <link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">
  <dom-module id="transportadmin-card">
  <template>
  <style > 
@@ -34,6 +35,7 @@
      
     </div>
   </body>
+  <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
    <refund-service id="service"></refund-service>
    <transport-service id="transportservice"></transport-service>
 </template>
@@ -49,14 +51,18 @@
       pointallocation:function()
       {
         document.querySelector('transport-app').setPage("mapstudenttopoint","Map Student to point");
+        this.$.maps.selectclass();
+
       },
       routeallocation:function()
       {
         document.querySelector('transport-app').setPage("mappointtoroute","Map Point to Route");
+        this.$.transportservice.getroute();
       },
       cancel:function()
       {
         document.querySelector('transport-app').setPage("cancellation","Transport Cancellation");
+        this.$.transportservice.name();
       },
       
       routereport:function(){

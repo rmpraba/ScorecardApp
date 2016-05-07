@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
  <link rel="import" href="../refund-service/refund-service.html">
+ <link rel="import" href="../transportfee-service/transportfee-service.html">
  <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 
 <dom-module id="adminmanager-card">
@@ -40,6 +41,7 @@ top:35%;
     </div>
   </body>
      <refund-service id="rservice"></refund-service>
+     <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
   (function() {
@@ -54,6 +56,8 @@ top:35%;
  discount:function()
       {
         document.querySelector('transport-app').setPage("approvediscount","Discount Approval");
+
+  this.$.service.discountbyname();
       },
        approval:function()
       {

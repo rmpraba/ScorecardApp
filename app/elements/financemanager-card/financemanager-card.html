@@ -54,7 +54,7 @@
 (function() {
     'use strict';
   Polymer({
-
+ 
     is: "financemanager-card",
     
       ready: function() {
@@ -63,6 +63,7 @@
       report:function()
       {
         document.querySelector('transport-app').setPage("generatereport","Generate Report");
+         this.$.transportservice.generatereportbyname();
       },
       discount:function()
       {

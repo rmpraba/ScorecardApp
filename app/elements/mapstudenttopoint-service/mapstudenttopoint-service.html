@@ -105,6 +105,7 @@
       selectclass:function(){
         this.selectclassurl = sessionStorage.getItem("addrinfo")+"/selectclass";
         this.$.selectclassajax.generateRequest();
+        school=sessionStorage.getItem("sch");
       },
       FnClear:function(){
         len=0;

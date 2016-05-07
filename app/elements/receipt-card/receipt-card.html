@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <form method="post" action="">
     <body id="receipt1">
     <img id="imgRes" height="1px" width="1px" />
-     <div class="receipt" >
+     <div id="canvas1" class="receipt" style="height: 29cm;" >
     <div id="canvas" style="background-image:url(fimage/1.jpg)">
    <template is="dom-repeat" items="{{receiptarr}}" as="view">
    
@@ -73,10 +73,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="lb3">
             <table >
               <tr>
-                <td style="padding-bottom: 13%">
+                <td style="padding-bottom: 10%">
                     Student Name
                 </td>
-                <td style="padding-bottom: 13%">
+                <td style="padding-bottom: 10%">
                   : {{view.studname}}
                 </td>
               </tr>
@@ -97,8 +97,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="lb5">
             <table>
               <tr>
-                <td style="padding-bottom: 20%"> Class</td>
-                <td style="padding-bottom: 20%">: {{view.classname}}/{{view.section}}</td>
+                <td style="padding-bottom: 15%"> Class</td>
+                <td style="padding-bottom: 15%">: {{view.classname}}/{{view.section}}</td>
               </tr>
               <tr>
                 <td>Session</td>
@@ -126,12 +126,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <div class="body4">
             <div class="l4">
-              <paper-item> SL.No.</paper-item>
+              <paper-item> 1.</paper-item>
             </div>
             <div class="l14">
-              <div style="margin-top: 15%;">Transport fee</div><div style="margin-top: -20%; margin-left: 100%;">({{view.installtype}})</div>
+              <div style="margin-top: 8%;">Transport fee</div><div style="margin-top: -20%; margin-left: 100%;">({{view.installtype}})</div>
             </div>
-            <div class="r4" style="margin-bottom: 3%;">
+            <div class="r4">
               <paper-item>{{view.installfee}}</paper-item>
             </div>
 
@@ -143,15 +143,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="l15">
             
            
-            <div class="word" style="margin-top: 5px;">
+            <div class="word" style="margin-top: 3px;">
               In Words : {{feeinword}}
             </div> </div>
 
             <div class="r5">
-              <paper-item style="width: 80px; margin-top: 2%;"> Total fees :</paper-item>
+              <paper-item style="width: 80px; margin-top: 6%;"> Total fees :</paper-item>
               
               <div class="cash">
-                <paper-input style="width: 60px; margin-top: 5px;" on-change="convertrs" value="{{view.installfee}}"></paper-input>
+                <paper-input style="width: 60px; margin-top: 3px;" on-change="convertrs" value="{{view.installfee}}"></paper-input>
             </div>
 </div>
           </div>
@@ -162,8 +162,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
             
           </div>
-           <hr id="ln3"></hr>
-           </template>
            <div hidden$="{{chequeview}}" class="cheque">
     
         <div class="hrspace">Cheque No:{{cheqno}}</div>
@@ -171,27 +169,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="hrspace">Bank Name:{{bank}}</div>
           <!-- <hr id="ln3"></hr> -->
     </div>
-    <hr id="ln3"></hr>
+           <hr id="ln3"></hr>
+           </template>
           <cqreceipt-card id="cq"></cqreceipt-card>
-       
             <div class="body8">
-              <h3><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></h3>
+              <h3 style="margin: 0;"><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></h3>
             </div>
-
             <div class="body9">
               <div class="l8">
               <div><p>1.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be paid by Cash / DD.</p></div>
               <div><p>2.  Fees once paid will not be refunded at any given circumstances</p></div>
               <div><p>3.  Cheque Subject to realization</p></div>
               <div><p>4.  Please retain this receipt for future correspondence</p></div>
-             </div> 
-        
+             </div>
             <div class="r8">
             <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
             <div hidden>{{parentemail}}</div>
  </div>
  </div>
+
   <div style="margin-top: 10%;">
     <table>
       <tr >
@@ -207,12 +204,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </tr>
     </table>
      </div>
-    </body>
-    </form>
-    </html>
-
- 
-    <iron-ajax
+      <iron-ajax
       id="mailsendajax"
       url="{{mailsendurl}}"
       params='{{mailsendparam}}'
@@ -223,12 +215,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </iron-ajax>
 
   </template>
+    </body>
+    </form>
+    </html>
+
+ 
+   
   <script>
 
   $(window).load(function(){
 $(document).ready(function() {
     $('#pdf').click(function() {       
-        html2canvas($("#canvas"), {
+        html2canvas($("#canvas1"), {
             onrendered: function(canvas) {         
                 var imgData = canvas.toDataURL('image/png'); 
                 $("#imgRes").attr("src", imgData);             

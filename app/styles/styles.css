@@ -483,7 +483,7 @@ paper-button{
 .receipt .body11{
     @apply(--layout-horizontal);
     display: flex;
-    margin-top: 1%;
+    margin-top: 0%;
 }
 .receipt .body11 .lb1{
 margin-left: 1%;
@@ -586,7 +586,7 @@ text-align: left;
 .receipt .body5 .l15 .word{
 text-align: left;  
 margin-left: 40%;
-margin-top: 4% !important;
+margin-top: 0% !important;
 width: 100%;
 @apply(--layout-horizontal);
     }
@@ -624,7 +624,7 @@ text-align: center;
 .receipt .body9{
     @apply(--layout-horizontal);
     margin-left: 1%;
-    margin-top: 2%;
+    margin-top:0%;
     width: 94%;
  
 }
@@ -639,7 +639,7 @@ text-align: center;
     @apply(--layout-horizontal);    
     text-align: left;
     float: right;
-    margin-top: 4%;
+    margin-top: 0%;
     margin-right: 5%;
 }
 .receipt .button{

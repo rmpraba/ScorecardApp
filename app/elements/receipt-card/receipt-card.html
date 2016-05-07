@@ -41,12 +41,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <form method="post" action="">
     <body id="receipt1">
     <img id="imgRes" height="1px" width="1px" />
-     <div id="canvas1" class="receipt" >
+     <div id="canvas1" class="receipt" style="height: 29cm;" >
     <div id="canvas" style="background-image:url(fimage/1.jpg)">
    <template is="dom-repeat" items="{{receiptarr}}" as="view">
    
         <div class="header">
-        <div class="logo"><img style="width: 185%; height: 178%;" src="../../images/zeesouth.png"/></div>
+        <div class="logo"><img style="width: 185%; height: 182%;" src="../../images/zeesouth.png"/></div>
         <div class="heading">
           <div class="title">{{view.schoolname}}</div>
           <div class="address">{{view.schooladdr}}</div>
@@ -177,13 +177,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div class="body9">
               <div class="l8">
-              <div>1.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be paid by Cash / DD.</div>
-              <div>2.  Fees once paid will not be refunded at any given circumstances</div>
-              <div>3.  Cheque Subject to realization</div>
-              <div>4.  Please retain this receipt for future correspondence</div>
+              <div><p>1.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be paid by Cash / DD.</p></div>
+              <div><p>2.  Fees once paid will not be refunded at any given circumstances</p></div>
+              <div><p>3.  Cheque Subject to realization</p></div>
+              <div><p>4.  Please retain this receipt for future correspondence</p></div>
              </div>
             <div class="r8">
-            <strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></div>
+            <p><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED</strong></p></div>
             </div>
             <div hidden>{{parentemail}}</div>
  </div>
@@ -193,7 +193,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <table>
       <tr >
         <td>
-           <paper-button class="button" id="pdf" on-click="pdf" style="height: 34px !important;" >PDF</paper-button>
+           <paper-button class="button" id="pdf" style="height: 34px !important;" >PDF</paper-button>
         </td>
         <td>
           <paper-button  class="button" id="email" style="height: 34px  !important;" on-click="email">Email</paper-button>
@@ -223,7 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    
   <script>
 
-  /*$(window).load(function(){
+ /* $(window).load(function(){
 $(document).ready(function() {
     $('#pdf').click(function() {       
         html2canvas($("#canvas1"), {
@@ -232,9 +232,7 @@ $(document).ready(function() {
                 $("#imgRes").attr("src", imgData);             
                 var doc = new jsPDF('p', 'mm');
                 doc.addImage(imgData, 'PNG', 10, 8);
-                var studentid = this.receiptarr[0].receiptid;
-                alert(studentid);
-                doc.save(studentid+'.pdf');
+                doc.save('{{view.stid}}.pdf');
             }
         });
     });
@@ -253,6 +251,8 @@ var specialElementHandlers = {
     }
 };
 
+
+
     Polymer({
       is: 'receipt-card',
 
@@ -267,6 +267,17 @@ var specialElementHandlers = {
         this.cqdate="";
         this.bank="";
       },
+      chequearray:function(charr)
+      {
+        this.chequeview=false;
+        this.cheqno=charr.cheno;
+        this.cqdate=charr.cqdate;
+        this.bank=charr.bknm;
+      },
+      chequereceiptarr:function(chqarr)
+      {
+      this.$.cq.receiptarr=chqarr;
+      },
       pdf:function(e){
         var no=this.receiptarr[0].receiptno;
         html2canvas($("#canvas1"), {
@@ -280,17 +291,6 @@ var specialElementHandlers = {
                 doc.save(no+'.pdf');
             }
         });
-      },
-      chequearray:function(charr)
-      {
-        this.chequeview=false;
-        this.cheqno=charr.cheno;
-        this.cqdate=charr.cqdate;
-        this.bank=charr.bknm;
-      },
-      chequereceiptarr:function(chqarr)
-      {
-      this.$.cq.receiptarr=chqarr;
       },
       convertrs:function(value) 
       {

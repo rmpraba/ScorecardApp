@@ -1193,7 +1193,25 @@ chequereportResponse:function(e)
             obj1.chequeno=chequereportarr[j].cheque_no;
             obj1.bankname=chequereportarr[j].bank_name;
             obj1.chequedate=chequereportarr[j].cheque_date;
-            obj1.createddate=feereports[i].installment_1Date;
+            var dt1=new Date(feereports[i].installment_1Date);
+            //var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+            var yr=dt1.getFullYear()+' - '+(dt1.getFullYear()+1);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dt1.getDate();
+            var curr_month = dt1.getMonth();
+            var curr_year = dt1.getFullYear();
+            var createddate1 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            obj1.createddate=createddate1;
+
+            var dt2=new Date(chequereportarr[j].cheque_date);
+            //var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+            var yr=dt2.getFullYear()+' - '+(dt2.getFullYear()+1);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dt2.getDate();
+            var curr_month = dt2.getMonth();
+            var curr_year = dt2.getFullYear();
+            var chequedate1 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            obj1.chequedate=chequedate1;
             chequeinstall1arr.push(obj1);
             chequetotal1=parseInt(chequetotal1)+parseInt(feereports[i].installment_1);
               }
@@ -1215,8 +1233,26 @@ chequereportResponse:function(e)
             obj4.installment2=feereports[i].installment_2;
             obj4.chequeno=chequereportarr[j].cheque_no;
             obj4.bankname=chequereportarr[j].bank_name;
-            obj4.chequedate=chequereportarr[j].cheque_date;
-            obj4.createddate=feereports[i].installment_2Date;
+
+            var dt3=new Date(feereports[i].installment_2Date);
+            //var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+            var yr=dt3.getFullYear()+' - '+(dt3.getFullYear()+1);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dt3.getDate();
+            var curr_month = dt3.getMonth();
+            var curr_year = dt3.getFullYear();
+            var createddate2 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            obj4.createddate=createddate2;
+
+            var dt4=new Date(chequereportarr[j].cheque_date);
+            //var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+            var yr=dt4.getFullYear()+' - '+(dt4.getFullYear()+1);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dt4.getDate();
+            var curr_month = dt4.getMonth();
+            var curr_year = dt4.getFullYear();
+            var chequedate2 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            obj4.chequedate=chequedate2;
             chequeinstall2arr.push(obj4);
              chequetotal2=parseInt(chequetotal2)+parseInt(feereports[i].installment_2);
               }

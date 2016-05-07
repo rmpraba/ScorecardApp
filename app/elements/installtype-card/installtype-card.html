@@ -105,6 +105,13 @@ var amt;
         }
         else
         {
+          if(this.installtype=="installment1")
+         {
+          alert('Kindly pay the Installment1 First');
+          this.$.installtype.checked=true;
+         }
+         else
+         {
           this.enable=true;
           for(var i=0;i<pushitem.length;i++)
        {
@@ -125,6 +132,7 @@ var amt;
         document.querySelector('transportfee-card').Fnchequepayment(chequeitem);
 
         }
+      }
       },
        payment:function(e)
       {

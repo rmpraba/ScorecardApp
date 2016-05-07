@@ -83,6 +83,7 @@
           this.$.submitbutton.hidden=true;
           this.$.search.hidden=true;
            this.$.maps.selectclass();
+           this.$.submitbutton.disabled=true;
         },
         FnClear:function(){
           this.classarr="";
@@ -188,8 +189,11 @@
           }
         },
         FnItemSelected:function(e){
-         this.studid= e.target.selectedItem.value
+         this.studid= e.target.selectedItem.value;
+         var studname = (e.target.selectedItem.textContent).trim();
+
           //alert(e.target.selectedItem.value);
+          this.value=studname;
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);
           this.itemArray=[];
@@ -223,6 +227,7 @@
             obj.droppoint=droppoint;
             itemarray.push(obj);
            // alert(JSON.stringify(obj));
+            this.$.submitbutton.disabled=false;
            },
            removestud:function(std)
            {

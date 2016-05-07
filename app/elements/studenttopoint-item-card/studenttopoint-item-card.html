@@ -28,17 +28,17 @@
             <li class="row">
               <div class="detail">
                 <div class="field" style="padding: 0 1% 0 1%;">
-                    <paper-input class="field" value="{{studentid}}"></paper-input>
+                    <paper-input readonly class="field" value="{{studentid}}"></paper-input>
                 </div>
                 <div class="field"  style="padding: 0 1% 0 1%;">
-                    <paper-input  class="field" value="{{studentname}}"></paper-input>
+                    <paper-input readonly class="field" value="{{studentname}}"></paper-input>
                 </div>
               </div>
             </li>
             <li class="row">
               <div class="detail">
                 <div class="field">
-                  <paper-dropdown-menu label="Pick-up Route">
+                  <paper-dropdown-menu id="set" label="Pick-up Route">
                     <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{routearr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
@@ -47,7 +47,7 @@
                   </paper-dropdown-menu>
                 </div>
                 <div class="field">
-                  <paper-dropdown-menu label="Pick-up Point">
+                  <paper-dropdown-menu id="set1" label="Pick-up Point">
                     <paper-menu class="dropdown-content" on-iron-select="pickpoints" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{pointarr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
@@ -60,7 +60,7 @@
             <li class="row">
               <div class="detail">
                 <div class="field">
-                  <paper-dropdown-menu label="Drop Route">
+                  <paper-dropdown-menu id="set2" label="Drop Route">
                     <paper-menu class="dropdown-content" on-iron-select="droproute" selected="{{selectid}}" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{routearr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
@@ -69,7 +69,7 @@
                   </paper-dropdown-menu>
                 </div>
                 <div class="field">
-                  <paper-dropdown-menu label="Drop Point">
+                  <paper-dropdown-menu id="set3" label="Drop Point">
                     <paper-menu class="dropdown-content" on-iron-select="droppoints" selected="{{selectpoint}}" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{droparr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
@@ -78,6 +78,8 @@
                   </paper-dropdown-menu>
                 </div>
               </div>
+              </li>
+              
             </li>
           </ul>
         </fieldset>
@@ -188,10 +190,21 @@
         if(e.target.checked==true)
         {
         document.querySelector('mapstudenttopoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint); 
+    
+       this.$.set.disabled=true;
+       this.$.set1.disabled=true;
+       this.$.set2.disabled=true;
+       this.$.set3.disabled=true;
+
         }
         else
         {
           document.querySelector('mapstudenttopoint-card').removestud(this.studentid);
+ 
+        this.$.set.disabled=false;
+       this.$.set1.disabled=false;
+       this.$.set2.disabled=false;
+       this.$.set3.disabled=false;        
         }
     }
   });

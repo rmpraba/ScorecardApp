@@ -56,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="studimg">
             <img style="min-height: 12%;min-width: 18%; margin-top: 5%; height: 18%; width: 27%;border: 1px solid;"src="images/{{sid}}.jpg" alt="Paste photo here"/>
           </div>
-          <div class="studetail">
+          <div class="studetail"> 
           <p>{{studname}}</p>
              <p>{{stnd}} - {{sec}}</p>
             </div>
@@ -68,19 +68,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <div class="body3">
         <div class="backimg">
         <div class="backdetails">
-                  <p>Address:S/O,{{parent}}<br>
-                  {{address1}}<br>
-                  {{town}}-{{pin}}</p>
+                  <p>Address:
+                  S/O,{{parent}} ,
+                  {{address1}},<br>
+                  {{address2}},<br>
+                  {{address3}} 
+                  {{town}}-{{pin}}.</p>
                   <hr></hr>
                   <p>Pick pt:{{pickup}}</p>
                   <p>Drop pt:{{drop}}</p>
                   <hr></hr>
                   <p>Parents Mob:{{mobno}}</p>
-                  <p>Blood Group:{{blood}}</p>
-                  
-
                   <hr></hr>
-                  <p>Transport Coordinator no:{{coorno}}</p>
+                  <p>Transport Coordinator no:<br>{{coorno}}</p>
         </div>
         </div>
         </div>
@@ -150,7 +150,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.pin="";
         this.pickup="";
         this.drop="";
-        item=[];
       },
        email:function(e){
               //alert('sending email');

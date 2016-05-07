@@ -249,6 +249,7 @@ var dat2=new Date();
          this.$.twoway.disabled=true;
          this.$.but.disabled=true;
          this.hidepayoption=true;
+         boxcount=2;
          
          },
           FnClear:function(){
@@ -335,12 +336,7 @@ count=0;
        },
        gotozone:function()
        {
-        count++;
-        if(count==boxcount)
-        {
-          alert(count);
-          document.querySelector('transportfee-service').generatereceipt();
-        }
+        
         
        },
     zoned:function(e){
@@ -413,7 +409,7 @@ count=0;
 
      }
      }
-     alert(JSON.stringify(payarray));
+     //alert(JSON.stringify(payarray));
      this.continuearr=payarray;
    }
 

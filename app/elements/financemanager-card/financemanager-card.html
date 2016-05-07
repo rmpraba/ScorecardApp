@@ -81,12 +81,7 @@
          document.querySelector('transport-app').setPage("refundverify","Refund Verification");
 
       },
-       receipt:function()
-      {
-         document.querySelector('transport-app').setPage("receipt","Fee Receipt");
-         //window.location.href="../elements/receipt.html";
 
-      },
         chequedetails:function()
       {
         this.$.trservice.checkchequedetails();
@@ -103,10 +98,6 @@
         document.querySelector('transport-app').setPage("pending","Pending Fee Reports");
       },
 
-      cancel:function()
-      {
-        document.querySelector('transport-app').setPage("cancellation","Transport Cancellation");
-      },
       routereport:function(){
       this.$.transportservice.generateroutereport();
       document.querySelector('transport-app').setPage("generateroutereport","Route Report");

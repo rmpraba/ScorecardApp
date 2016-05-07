@@ -56,42 +56,13 @@
         this.$.service.getname();
         this.$.service.getzone();
       },
-      report:function()
-      {
-        document.querySelector('transport-app').setPage("generatereport","Generate Report");
-      },
-      
+     
       transportfee:function()
       {
          this.$.trservice.getnameofstu();
          document.querySelector('transport-app').setPage("transportfee","Transport Fee");
       },
-      discount:function()
-      {
-        document.querySelector('transport-app').setPage("discount","Fee Discount");
-      },
-      discountverify:function()
-      {
-        
-        document.querySelector('transport-app').setPage("discountverify","Discount Verification");
-      },
-      refundverify:function()
-      {
-         document.querySelector('transport-app').setPage("refundverify","Refund Verification");
-
-      },
-       receipt:function()
-      {
-         document.querySelector('transport-app').setPage("receipt","Fee Receipt");
-         //window.location.href="../elements/receipt.html";
-
-      },
-        chequedetails:function()
-      {
-         document.querySelector('transport-app').setPage("chequedetail","Cheque Detail");
-         this.$.trservice.checkchequedetails();
-
-      },
+            
       feereports:function()
       {
         document.querySelector('transport-app').setPage("feereports","Fee Reports");
@@ -102,6 +73,7 @@
       pend:function()
       {
         document.querySelector('transport-app').setPage("pending","Pending Fee Reports");
+         this.$.trservice.pending();
       },
         add:function()
       {

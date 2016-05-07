@@ -61,7 +61,6 @@
           <paper-tabs>
             <paper-tab>Installment Type</paper-tab>
             <paper-tab>Amount</paper-tab>
-            <paper-tab>Date</paper-tab>
             <paper-tab>Mode of Payment</paper-tab>
           </paper-tabs>
       </div>
@@ -75,6 +74,37 @@
       <paper-button  id="{{id}}" on-click="payfee">PAY</paper-button>
    </div>
 </iron-collapse>
+<div class="confirm-fee">
+  <paper-dialog id="confirmbox1" modal>
+  <h4>Do You Want Continue to Pay</h4>
+             <paper-tabs>
+              <paper-tab>Installment Type</paper-tab>
+              <paper-tab>Amount</paper-tab>
+              <paper-tab>Mode of Payment</paper-tab>
+               <paper-tab>Cheque No</paper-tab>
+              <paper-tab>Bank Name</paper-tab>
+              <paper-tab>Cheque Date</paper-tab>
+            </paper-tabs>
+  <template  is="dom-repeat" items="{{continuearr}}" as="view">
+  <div  class="horizontalframe">
+            <paper-item>{{view.installtype}}</paper-item>
+            <paper-item>{{view.installamt}}</paper-item>
+            <paper-item>{{view.paytype}}</paper-item>
+            <paper-item>{{view.chequenum}}</paper-item>
+            <paper-item>{{view.bankname}}</paper-item>
+            <paper-item>{{view.chequedate}}</paper-item>
+  </div>
+  </template>
+  <div  class="horizontalframe">
+    <div class="buttons hrspace" >
+      <paper-button  on-click="Confirm">CONFIRM</paper-button>
+    </div>  
+    <div class="buttons hrspace">
+      <paper-button  on-click="cancel">CANCEL</paper-button>
+    </div> 
+  </div>     
+   </paper-dialog>
+</div>
       <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
@@ -131,10 +161,62 @@
        },
        payfee:function()
     {
- 
-    sessionStorage.setItem("recflag","1");
+      var payarray=[];
+      var id = 'confirmbox1';
+        var dialog = document.getElementById(id);
+        dialog.open();
+        this.continuearr=feepay;
+
+  for(var i=0;i<feepay.length;i++)
+     {
+        if(feepay[i].paytype=="Cheque")
+         {
+           for(var j=0;j<chequearray.length;j++)
+         {
+        if(feepay[i].installtype==chequearray[j].installtype)
+        {
+        var obj={"installtype":"","installamt":"","paytype":"","chequenum":"","bankname":"","chequedate":""}
+        
+      obj.installamt=feepay[i].installamt;
+      obj.paytype=feepay[i].paytype;
+      obj.installtype=feepay[i].installtype;
+      obj.chequenum=chequearray[j].chequenum;
+      obj.bankname=chequearray[j].bankname;
+      obj.chequedate=chequearray[j].chequedate;
+      payarray.push(obj);
+    }
+  }
+}
+  else
+  {
+ var obj={"installtype":"","installamt":"","paytype":"","chequenum":"","bankname":"","chequedate":""}
+        
+      obj.installamt=feepay[i].installamt;
+      obj.paytype=feepay[i].paytype;
+      obj.installtype=feepay[i].installtype;
+      obj.chequenum="-";
+      obj.bankname="-";
+      obj.chequedate="-";
+      payarray.push(obj);
+
+     }
+     }
+     //alert(JSON.stringify(payarray));
+     this.continuearr=payarray;
+    },
+    Confirm:function()
+    {
+      var id = 'confirmbox1';
+        var dialog = document.getElementById(id);
+        dialog.opened=false;
+         sessionStorage.setItem("recflag","1");
         this.$.service.payfee(feepay);
-     
+
+   /*for(var i=0;i<feepay.length;i++)
+     {
+
+      this.$.service.payfee(feepay[i].installamt,feepay[i].studid,feepay[i].paytype,feepay[i].installtype);
+     }*/
      count=0;
     if(chequearray.length>0)
     {
@@ -143,6 +225,8 @@
         this.$.service.chequeinfo(chequearray[i].studid,chequearray[i].studname,chequearray[i].chequenum,chequearray[i].bankname,chequearray[i].chequedate,chequearray[i].installtype);
       }
     }
+    feepay=[];
+    chequearray=[];
     },
    autocompletename(nameitem)
    {

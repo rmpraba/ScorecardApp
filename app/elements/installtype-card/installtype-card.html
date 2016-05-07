@@ -35,7 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-checkbox style="margin: 1% 0 0 -10%;" id="{{installtype}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" checked on-change="payinstall"></paper-checkbox>
    <div class="fieldsmall" style="width: 10%;margin-left: 4%;"><paper-item >{{installtype}}</paper-item></div>
    <div class="fieldsmall" style="width: 10%;margin-left:20%;"><paper-item >{{installamt}}</paper-item></div>
-   <div class="fieldsmall" style="width: 10%;margin-left:16%;"><paper-item >{{paydate}}</paper-item></div>
     <div class="drop-down" style="margin-left:14%;">
             <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paydate}}"   label="---Select the Mode of Payment---">
                 <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
@@ -52,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
        <paper-dialog id="chequeinfo" modal>
 <h4>ADD CHEQUE DETAILS</h4>
- <div  class="layout"> <paper-input required allowed-pattern="^[1-9][0-9]*$" error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
+ <div  class="layout"> <paper-input required allowed-pattern="[0-9]" error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
  <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z ]"  error-message="needs BankName!"  id="banknam" label="Enter the Bank Name" value="{{banknam}}"> </paper-input></div>
  <div>
  <datepicker-card></datepicker-card></div>
@@ -102,24 +101,29 @@ var amt;
       {
         if(e.target.checked==true)
         {
-         
-          if(ck!='null')
-          {
-            if(ck!=this.installtype)
-            {
-          document.getElementById(ck).checked = false;
-          document.getElementById(dt).disabled = true;
-          this.enable=false;
-        }
-         }
-          ck=this.installtype;
-          dt=this.paydate;
-          document.getElementById(dt).disabled = false;
            this.enable=false;
         }
         else
         {
           this.enable=true;
+          for(var i=0;i<pushitem.length;i++)
+       {
+       if(this.installtype==pushitem[i].installtype)
+       {
+        pushitem.splice(i,1);
+       }
+       }
+    
+        for(var i=0;i<chequeitem.length;i++)
+       {
+       if(this.installtype==chequeitem[i].installtype)
+       {
+        chequeitem.splice(i,1);
+       }
+        }
+        document.querySelector('transportfee-card').Fnfeepayment(pushitem);
+        document.querySelector('transportfee-card').Fnchequepayment(chequeitem);
+
         }
       },
        payment:function(e)
@@ -134,12 +138,25 @@ var amt;
        }
        }
 
+       for(var i=0;i<chequeitem.length;i++)
+       {
+       if(this.installtype==chequeitem[i].installtype)
+       {
+        chequeitem.splice(i,1);
+       }
+       }
+
         if(paytype=="Cheque")
         { 
            this.chequeno="";
            this.banknam="";
            type=this.installtype;
           amt=this.installamt;
+          if(type=="installment2")
+          {
+            
+         document.querySelector('datepicker-card').setinstalldate(this.paydate);
+          }
         var id = 'chequeinfo';
         var dialog = document.getElementById(id);
         dialog.open();
@@ -181,6 +198,8 @@ var amt;
        var id = 'chequeinfo';
       var dialog = document.getElementById(id);
       dialog.opened=false;
+      this.chequeno="";
+      this.banknam="";
        var obj={"installamt":"","studid":"","paytype":"","installtype":""}
         obj.installamt=amt;
         obj.studid=this.studid;

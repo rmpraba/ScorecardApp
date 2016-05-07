@@ -473,7 +473,7 @@ var paycount;
         var pay1success=e.detail.response.returnval;
         if(pay1success=='success')
         {  rcount++;
-            alert("Paid Successfully");
+            //alert("Paid Successfully");
             if(rcount==paycount)
             {
               document.querySelector('transportfee-service').generatereceipt();
@@ -921,13 +921,11 @@ recarr1.push(recobj1);
        
        if(install1fee<=0 && install2fee<=0)
        {
-        alert('1');
         var allow=true;
         document.querySelector('transportfee-card').paymenttype(allow,installarr,feestudid,totalfee);
        }
        else
        {
-        alert('2');
         var allow=false;
         document.querySelector('transportfee-card').paymenttype(allow,installarr,feestudid,totalfee);
        }

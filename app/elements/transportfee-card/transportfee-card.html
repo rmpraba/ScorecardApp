@@ -223,11 +223,9 @@ namearr=nameitem;
    },
    paymenttype:function(allowtype,installarr,stdid,total)
    {
-    alert(installarr);
 instalarr=installarr;
 stddid=stdid;
 totalfee=total;
-   // alert(allowtype);
 if(allowtype==false)
 {
   this.$.lumsump.disabled=true;
@@ -236,7 +234,6 @@ if(allowtype==false)
 }
 else
 {
-  //alert('come');
    document.querySelector("#instal").checked=true;
    this.$.lumsump.disabled=false;
   this.$.instal.disabled=false;

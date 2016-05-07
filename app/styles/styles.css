@@ -468,7 +468,7 @@ paper-button{
 }
 .receipt{
    width: 21cm;
-
+   margin-top: -1%;
 }
 .receipt .header{
    @apply(--layout-horizontal);
@@ -520,12 +520,9 @@ margin-top: 1%;
  margin-top: 1%;
     margin-left: 1%;   
 }
-.receipt .body11 #ln2{
-    
-    
-}
+
 .receipt #ln2{
-    margin-top: 2%;
+    margin-top: 1%;
 }
 .receipt .body2{
     display: contents;
@@ -542,8 +539,7 @@ margin-top: 1%;
 }
 
 .receipt .body2 .lb5{
-    margin-top: 
-    margin-left: 20%;
+    margin-left: 0%;
     width: auto;
     text-align: left;
     float: left;
@@ -585,7 +581,7 @@ margin-left: 20%;
  margin-left: 43%;       
 }
 .receipt #ln5{
-    margin-top: 1%;
+    margin-top: 0%;
     width: 98%;
     
 }
@@ -653,13 +649,15 @@ text-align: center;
     text-align: left;
     float: left;
     width: 100%;
+    margin-top: 2%;
+    margin-left: 2%;
 }
 
 .receipt .body9 .r8{
     @apply(--layout-horizontal);    
     text-align: left;
     float: right;
-    margin-top: 0%;
+    margin-top: 2%;
     margin-right: 5%;
 }
 .receipt .button{

@@ -120,7 +120,7 @@
     <paper-button class="button" on-click="click">Submit</paper-button>
   </div>
   <div style="margin-left: 5%;">
-    <paper-button class="button" on-click="ready">Cancel</paper-button>
+    <paper-button class="button" on-click="FnClear">Cancel</paper-button>
   </div>
 
 <paper-input id="status" class="field" value="{{status}}"></paper-input>
@@ -283,6 +283,10 @@ count=0;
 
  name=sessionStorage.getItem("userinfo");
  status='mapped';
+ document.querySelector('zonetostudent-card').ready();
+ this.hidepayoption=true;
+this.hidetransport=true;
+          this.hidetransport1=true;
          },
        Fnfeepayment:function(feearr)
        {
@@ -453,6 +457,7 @@ count=0;
         var id = 'confirmbox';
         var dialog = document.getElementById(id);
         dialog.opened=false;
+
     },
     autocompletearr:function(autocompletearr)
     {

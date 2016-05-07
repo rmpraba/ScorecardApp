@@ -512,7 +512,7 @@ app.post('/selectclass',  urlencodedParser,function (req, res)
 app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
 { var schoolx={"school_id":req.query.schol};
 
-       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee where ?)',[schoolx],
+       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee where ?) and id not in (Select student_id from student_point)',[schoolx],
        	function(err, rows)
        	{
 		if(!err)

@@ -24,6 +24,12 @@
   margin-top : 10px;
   width: 100%
   }
+   .horizontalframe
+  {
+
+        @apply(--layout-horizontal);
+        
+  }
   .sp
   {
     padding-right: 10%;
@@ -45,6 +51,12 @@
    <button  class="collapse" on-click="toggle2"  hidden$="{{hide}}">Transport Fee</button>
    
 <iron-collapse id="type">
+<div  class="horizontalframe" style="margin-top: 2%;">
+  <div style="width: 25%; ">
+  <paper-checkbox style="margin-left: 25%" id="lumsump" class="checkbox" on-change="lumsumHandler">LUMPSUM</paper-checkbox></div>
+<div style="width: 100%;">
+<paper-checkbox style="margin-left: 3%" id="instal" class="checkbox" on-change="installHandler1">INSTALLMENT</paper-checkbox></div>
+</div>
 <div class="collapse1">
           <paper-tabs>
             <paper-tab>Installment Type</paper-tab>
@@ -68,6 +80,9 @@
   <script>
    (function() {
     var namearr=[];
+    var stddid;
+    var totalfee;
+    var instalarr=[];
     Polymer({
       is: "transportfee-card",
       ready: function() {
@@ -205,7 +220,57 @@ namearr=nameitem;
     document.querySelector("#itemlist1").selected=-1;
     this.$.service.generatefee(this.studid);
     this.hide=false;
-   }
+   },
+   paymenttype:function(allowtype,installarr,stdid,total)
+   {
+    alert(installarr);
+instalarr=installarr;
+stddid=stdid;
+totalfee=total;
+   // alert(allowtype);
+if(allowtype==false)
+{
+  this.$.lumsump.disabled=true;
+  this.$.instal.disabled=true;
+
+}
+else
+{
+  //alert('come');
+   document.querySelector("#instal").checked=true;
+   this.$.lumsump.disabled=false;
+  this.$.instal.disabled=false;
+}
+   },
+    lumsumHandler:function(e)
+       {
+        
+        var arr=[];
+        if(e.target.checked==true)
+        {
+           document.querySelector("#instal").checked=false;
+             var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":""}
+         obj.installtype="installment1";
+         obj.amount=totalfee;
+         obj.feestudid=stddid;
+         obj.paidstatus=false;
+         obj.paydate=sessionStorage.getItem("installdate");
+         //obj.feestudname=this.value;
+         arr.push(obj);
+         this.installmentarr=arr;
+        }
+
+
+      },
+        installHandler1:function(e)
+       {
+
+        if(e.target.checked==true)
+        {
+          document.querySelector("#lumsump").checked=false;
+          this.installmentarr=instalarr;
+        }
+      }
 
     });
     })();

@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    <!--<paper-item >{{paydate}}</paper-item>-->
     <div class="drop-down" style="margin-left:20%;">
       <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{paymode}}"   label="---Select the Mode of Payment---">
-        <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="payment" valueattr="value" >
+        <paper-menu class="dropdown-content" id="paymodemenu" selected="{{selectmode}}" on-iron-select="payment" valueattr="value" >
           <paper-item value="Cheque" id="{{installtype}}">Cheque</paper-item>
           <paper-item value="Cash" id="{{installtype}}">Cash</paper-item>
         </paper-menu>
@@ -209,13 +209,14 @@ bankname="";
      {
     pushitem=[];
     chequeitem=[];
-    document.querySelector('#paymodemenu').selected=-1;
-    document.querySelector('#installment1').selected=-1;
-    document.querySelector('#installment2').selected=-1;
+    document.querySelectorAll('#paymodemenu').selected=-1;
+    //document.querySelector('#installment1').selected=-1;
+   // document.querySelector('#installment2').selected=-1;
 
      },
      cancelcheque:function()
      {
+      this.selectmode=-1;
       //document.querySelector('#paymodemenu').selected=-1;
       var id = 'animated';
       var dialog = document.getElementById(id);

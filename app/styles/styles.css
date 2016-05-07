@@ -85,6 +85,13 @@ paper-button{
     width: 60%;
     margin: 0 0 0 20%;
 }
+.confirm-fee paper-dialog{
+    position:absolute;
+    width:800px;
+    left: 50%;
+    margin-left: -400px; // 1/2 width
+    margin-top: 0px; // 1/2 height
+}
 .logindialog .button{
     width: 40%;
     margin: 5% 0 0 30%;

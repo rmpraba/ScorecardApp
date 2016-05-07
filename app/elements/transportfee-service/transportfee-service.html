@@ -631,6 +631,7 @@ recarr.push(recobj);
             cqobj.bknm=chequearr[j].bankname;
             cheqarr.push(cqobj);
             document.querySelector('receipt-card').chequearray(cqobj);
+            document.querySelector('receipt-card').pdf(recstudid);
           }
           }
         }

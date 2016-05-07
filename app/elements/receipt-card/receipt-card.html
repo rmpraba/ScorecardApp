@@ -193,7 +193,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <table>
       <tr >
         <td>
-           <paper-button class="button" id="pdf" style="height: 34px !important;" >PDF</paper-button>
+           <paper-button class="button" id="pdf" on-click="pdf" style="height: 34px !important;" >PDF</paper-button>
         </td>
         <td>
           <paper-button  class="button" id="email" style="height: 34px  !important;" on-click="email">Email</paper-button>
@@ -223,7 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    
   <script>
 
-  $(window).load(function(){
+  /*$(window).load(function(){
 $(document).ready(function() {
     $('#pdf').click(function() {       
         html2canvas($("#canvas1"), {
@@ -232,12 +232,14 @@ $(document).ready(function() {
                 $("#imgRes").attr("src", imgData);             
                 var doc = new jsPDF('p', 'mm');
                 doc.addImage(imgData, 'PNG', 10, 8);
-                doc.save('RECEIPT.pdf');
+                var studentid = this.receiptarr[0].receiptid;
+                alert(studentid);
+                doc.save(studentid+'.pdf');
             }
         });
     });
 });
-});
+});*/
 
 
 
@@ -250,8 +252,6 @@ var specialElementHandlers = {
         return true;
     }
 };
-
-
 
     Polymer({
       is: 'receipt-card',
@@ -266,6 +266,20 @@ var specialElementHandlers = {
         this.cheqno="";
         this.cqdate="";
         this.bank="";
+      },
+      pdf:function(e){
+        var no=this.receiptarr[0].receiptno;
+        html2canvas($("#canvas1"), {
+            onrendered: function(canvas) {
+
+                var imgData = canvas.toDataURL('image/png'); 
+                $("#imgRes").attr("src", imgData);             
+                var doc = new jsPDF('p', 'mm');
+                doc.addImage(imgData, 'PNG', 10, 8);
+                //var studentid = e;
+                doc.save(no+'.pdf');
+            }
+        });
       },
       chequearray:function(charr)
       {

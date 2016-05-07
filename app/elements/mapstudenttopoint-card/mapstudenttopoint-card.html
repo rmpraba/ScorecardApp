@@ -86,6 +86,7 @@
            this.$.submitbutton.disabled=true;
         },
         FnClear:function(){
+          this.$.submitbutton.hidden=true;
           this.classarr="";
           this.value="";
           this.itemArray="";
@@ -205,7 +206,7 @@
             this.$.maps.submit(itemarray);
             itemarray=[];
              document.querySelector('#gradeselect').selected=-1;
-             this.$.submitbutton.hidden=true;
+            // this.$.submitbutton.hidden=true;
            },
            FnGetItemsz:function(studentid,pickroute,droproute,pickpoint,droppoint)
            {

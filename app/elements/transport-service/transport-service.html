@@ -2,7 +2,6 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <dom-module id="transport-service">
   <template>
-  
 <iron-ajax
         method="post"
         id="getrouteajax"
@@ -1367,7 +1366,6 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         addstudent:function(student_id,first_name, last_name,stu_class, stu_schooltype,stu_transport, parent_name,parent_email, parent_mobile, address_1, address_2, address_3, city, pincode,dob){
             this.addstudenturl=sessionStorage.getItem("addrinfo")+"/addstudent";
             var obj={"student_id":"","student_name":"","stu_class":"","stu_schooltype":"","stu_transport":"","dob":"","schol":""}
-            //alert(name);
             obj.student_id = student_id;
             obj.student_name=first_name+" "+last_name;
             obj.stu_class=stu_class;
@@ -1376,7 +1374,6 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
             obj.dob=dob;
             obj.schol=sessionStorage.getItem("sch");
             this.addstudentparam=obj;
-            //alert(JSON.stringify(obj));
             this.$.addstudentajax.generateRequest();
 
             this.addparenturl=sessionStorage.getItem("addrinfo")+"/addparent";
@@ -1399,7 +1396,6 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         },
         addstudentResponse:function(e){
   var addstudent=e.detail.response.returnval; 
-  alert('student details are added successfully');
             if(addstudent=='success')
             {
                     alert('student details are added successfully');

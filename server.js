@@ -409,6 +409,33 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 	});
 
 
+app.post('/stupassgetname' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+		var trans_req={"transport_required":"yes"};
+	    connection.query('select student_name from student_details where id in (select student_id from student_point)and ? and ?',[trans_req,schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			//console.log(rows);	
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+
+
 app.post('/getstudetail' ,  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};

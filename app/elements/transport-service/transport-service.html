@@ -105,6 +105,19 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+<iron-ajax
+        method="post"
+        id="stupassgetnameajax"
+        url="{{stupassgetnameurl}}"
+        params="{{stupassgetnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="stupassgetnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
   <iron-ajax
         method="post"
         id="getstudetailajax"
@@ -760,15 +773,29 @@ var school=sessionStorage.getItem("sch");
         this.getnameparam=obj;
         this.$.getnameajax.generateRequest();
       },
+        stupassgetname:function()
+      {
+        //alert('hi service');
+        this.stupassgetnameurl=sessionStorage.getItem("addrinfo")+"/stupassgetname";
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        this.stupassgetnameparam=obj;
+        this.$.stupassgetnameajax.generateRequest();
+      },
       getnameResponse:function(e1)
           {
             var iditem=e1.detail.response.returnval;
             //document.querySelector('zonetostudent-card').studentidarr=iditem;
             document.querySelector('zonetostudent-card').autocompletearr(iditem);
-            document.querySelector('studentpass-card').autocompletearr(iditem);
+            //document.querySelector('studentpass-card').autocompletearr(iditem);
             //alert(JSON.stringify(document.querySelector('zonetostudent-card').namearr));
       },
-
+ stupassgetnameResponse:function(e1)
+          {
+            var iditem1=e1.detail.response.returnval;
+            document.querySelector('studentpass-card').autocompletearr(iditem1);
+           
+      },
       getstudetail:function(studid)
       {
         this.getstudetailurl=sessionStorage.getItem("addrinfo")+"/getstudetail";

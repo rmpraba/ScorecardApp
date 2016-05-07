@@ -175,40 +175,43 @@
    </div>
    </div> 
     </div>
-<paper-dialog id="confirmbox" modal>
-<h4>Do You Want Continue to Pay</h4>
-           <paper-tabs>
-            <paper-tab>Installment Type</paper-tab>
-            <paper-tab>Amount</paper-tab>
-            <paper-tab>Mode of Payment</paper-tab>
-             <paper-tab>Cheque No</paper-tab>
-            <paper-tab>Bank Name</paper-tab>
-            <paper-tab>Cheque Date</paper-tab>
-          </paper-tabs>
-<template  is="dom-repeat" items="{{continuearr}}" as="view">
-<div  class="horizontalframe">
-          <paper-item>{{view.installtype}}</paper-item>
-          <paper-item>{{view.installamt}}</paper-item>
-          <paper-item>{{view.paytype}}</paper-item>
-          <paper-item>{{view.chequenum}}</paper-item>
-          <paper-item>{{view.bankname}}</paper-item>
-          <paper-item>{{view.chequedate}}</paper-item>
-</div>
-</template>
-<div  class="horizontalframe">
-<div class="buttons hrspace" >
-  <paper-button  on-click="Confirm">CONFIRM</paper-button>
-</div>  
-<div class="buttons hrspace">
-  <paper-button  on-click="cancel">CANCEL</paper-button>
-</div>      
- </paper-dialog>
-
-
+  </div>
   </body>
+<div class="confirm-fee">
+  <paper-dialog id="confirmbox" modal>
+  <h4>Do You Want Continue to Pay</h4>
+             <paper-tabs>
+              <paper-tab>Installment Type</paper-tab>
+              <paper-tab>Amount</paper-tab>
+              <paper-tab>Mode of Payment</paper-tab>
+               <paper-tab>Cheque No</paper-tab>
+              <paper-tab>Bank Name</paper-tab>
+              <paper-tab>Cheque Date</paper-tab>
+            </paper-tabs>
+  <template  is="dom-repeat" items="{{continuearr}}" as="view">
+  <div  class="horizontalframe">
+            <paper-item>{{view.installtype}}</paper-item>
+            <paper-item>{{view.installamt}}</paper-item>
+            <paper-item>{{view.paytype}}</paper-item>
+            <paper-item>{{view.chequenum}}</paper-item>
+            <paper-item>{{view.bankname}}</paper-item>
+            <paper-item>{{view.chequedate}}</paper-item>
+  </div>
+  </template>
+  <div  class="horizontalframe">
+    <div class="buttons hrspace" >
+      <paper-button  on-click="Confirm">CONFIRM</paper-button>
+    </div>  
+    <div class="buttons hrspace">
+      <paper-button  on-click="cancel">CANCEL</paper-button>
+    </div> 
+  </div>     
+   </paper-dialog>
+</div>
     <transport-service id="root"></transport-service>
     <transportfee-service id="service"></transportfee-service>
 </template>
+
 <script>
  (function() {
   var payarrr=[];

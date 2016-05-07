@@ -25,6 +25,11 @@ section{
     height: 6%;
     font-size: 2em;
 }
+@media print
+{
+.head {display:none;}
+.action-buttons{display: none;}
+}
 .routereport
 {
     @apply(--layout-horizontal); 
@@ -618,7 +623,7 @@ display: flex;
 .receipt .body8{
     @apply(--layout-horizontal);
 text-align: center;
- margin-top: 3%;
+ margin-top: 1%;
  
 }
 .receipt .body9{

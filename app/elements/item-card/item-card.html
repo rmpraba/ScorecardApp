@@ -23,7 +23,7 @@
             <li class="row">
               <div class="detail">
                 <div class="layout">
-                  <paper-input label="Point" class="field" value={{points}}></paper-input>
+                  <paper-input label="Point" id="pt" class="field"required error-message="needs Point Name!" value={{points}}></paper-input>
                 </div>
               </div>
             </li>
@@ -44,7 +44,7 @@
             <li class="row">
               <div class="detail"> 
                 <div class="layout">
-                 <paper-input label="distance" class="field" value={{distance}}></paper-input>
+                 <paper-input label="distance" id="dist" required allowed-pattern="[0-9]" class="field"  error-message="needs Distance!" value={{distance}}></paper-input>
                 </div>
               </div>
             </li>
@@ -73,10 +73,18 @@
         n=n+1;
       },
       insert:function(e){
+if(this.points=="" || this.distance=="")
+        {
+           this.$.pt.validate();
+           this.$.distance.validate();
+        }
+else
+{
         alert('Add button is clicked');
         var route=sessionStorage.getItem("route");
         var tripn=sessionStorage.getItem("trip");
         this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,this.distance);
+      }
       }
     });
   })();

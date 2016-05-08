@@ -12,7 +12,7 @@
 <link rel="import" href="../studenttopoint-item-card/studenttopoint-item-card.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <dom-module id="mapstudenttopoint-card">
-  <template>  
+  <template>
   <style>
   .card{
    @apply(--layout-center);
@@ -30,7 +30,8 @@
     padding-left: 3%;
     padding-top: 5%;
   }
-  
+
+
   </style>
     <body>
       <div class = "mapstudenttopoint-card">
@@ -49,7 +50,7 @@
           <div class="hrspace">
               <paper-checkbox id="selectbox" on-change="changeHandler">Select by Name</paper-checkbox>
           </div>
-         
+
         </div>
          <div id="search">
             <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
@@ -79,11 +80,12 @@
       Polymer({
         is:"mapstudenttopoint-card",
         ready:function(){
-         
+
           this.$.submitbutton.hidden=true;
           this.$.search.hidden=true;
            this.$.maps.selectclass();
            this.$.submitbutton.disabled=true;
+
         },
         FnClear:function(){
           this.$.submitbutton.hidden=true;
@@ -107,6 +109,7 @@
           this.$.maps.selectname();
           this.studentarr=[];
           document.querySelector('#gradeselect').selected=-1;
+          document.getElementById("submitbutton").style.background="grey";
 
         }
         else
@@ -122,6 +125,7 @@
           this.$.submitbutton.hidden=false;
            this.$.search.hidden=true;
            document.querySelector("#selectbox").checked=false;
+          document.getElementById("submitbutton").style.background="grey";
         },
         autocompletename(nameitem){
           namearr=nameitem;
@@ -198,8 +202,7 @@
           this.$.submitbutton.hidden=false;
           this.$.maps.namepick(this.studid);
           this.itemArray=[];
-          this.querySelector('paper-listbox').selected=-1;;
-          
+          this.querySelector('paper-listbox').selected=-1;
         },
         click:function()
         {
@@ -229,6 +232,7 @@
             itemarray.push(obj);
            // alert(JSON.stringify(obj));
             this.$.submitbutton.disabled=false;
+             document.getElementById("submitbutton").style.background="black";
            },
            removestud:function(std)
            {
@@ -239,6 +243,8 @@
         itemarray.splice(i,1);
        }
        }
+             this.$.submitbutton.disabled=true;
+             document.getElementById("submitbutton").style.background="grey";
            }
       });
     })();

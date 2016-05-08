@@ -27,36 +27,50 @@ var session=req.query.session;
 var installtype=req.query.installtype;
 var installfee=req.query.installfee;
 var parentemail=req.query.parentemail;
+  var mode=req.query.paymode;
+  var words=req.query.word;
+  var receipttitle=req.query.title;
 console.log(parentemail);
 var server  = email.server.connect({
-   user:    "samsidhmlzs@gmail.com", 
-   password:"samsidhhsr", 
-   host:    "smtp.gmail.com", 
+   user:    "srirupikaallias@yahoo.com",
+   password:"choculate",
+   host:    "smtp.mail.yahoo.com",
    ssl:     true
 
 });
 // send the message and get a callback with an error or details of the message that was sent
 server.send({
-   text:    "FEE RECEIPT/ACKNOWLEDGEMENT", 
-   from:    "rsamsidhmlzs@gmail.com", 
-   to:       parentemail,   
+   text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
+   from:    "srirupikaallias@yahoo.com",
+   to:       "ntamilselvimca@gmail.com",
    subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
-    attachment: 
-   [
-  {data:"<html><table><tr><td>Receiptno:"+receiptno+" </td><td>Receipt date:"+today+"</td>"+
-  "<tr><td>Student Name:"+studname+" </td><td>Class:"+classname+"</td>"+
-  "<tr><td>Parent Name:"+parentname+" </td><td>Session:"+session+"</td>"+
-  "<tr><td>Installment Type:"+installtype+" </td><td>Installment Fees:"+installfee+"</td></tr></table>"+  
-  "</html>", alternative:true}
+    attachment:
+
+      [
+        {data:"<html><body class='receipt'><table><caption style='text-align: center;'><strong>FEE "+receipttitle+"</strong></caption></caption>" +
+        "<tr><td class='left1'><strong>Receipt No : </strong>"+receiptno+"</td><td style='width: 110px;' class='center1'></td><td class='right1'><strong>Receipt Date : </strong>"+today+"</td></tr>" +
+        "<tr><td class='left1'><strong>Student Name : </strong>"+studname+"</td><td class='center1'></td><td class='right1'><strong>Class : </strong>"+classname+"</td></tr>" +
+        "<tr><td class='left1'><strong>Parent Name : </strong>"+parentname+"</td><td class='center1'></td><td class='right1'><strong>Session : </strong>"+session+"</td></tr></table>" +
+        "<table><tr><td style='width: 50px; text-align: center;' class='left2'><strong>SL.No</strong></td><td style='width: 280px; text-align: center;' class='center2'><strong>Particulars</strong></td><td style='text-align: right;' class='right2'><strong>Amount</strong></td></tr>" +
+        "<tr><td class='left2' style='text-align: center;'>1.</td><td class='center2' style='text-align: center;'><strong>Transportfee : </strong>"+installtype+"</td><td class='right2'style='text-align: center;'>"+installfee+"</td></tr></table>" +
+        "<table><tr><td class='left3'><strong>In Words : </strong>"+words+"</td><td class='right3'><strong>Total :</strong>"+installfee+"</td></tr>" +
+        "<tr><td class='left3'><strong>Mode of Payments : </strong>"+mode+"</td><td class='right3'></td></tr></table>" +
+        "<div class='terms'><div class='head'><strong><U>TERMS AND CONDITIONS</U></strong></div>" +
+        "<div class='body'><p>1.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will <br>be levied and the amount has to be paid by Cash / DD.</p>" +
+        "<p>2.  Fees once paid will not be refunded at any given circumstances.</p>" +
+        "<p>3.  Cheque Subject to realization.</p>" +
+        "<p>4.  Please retain this receipt for future correspondence.</p></div>" +
+        "<div class='foot'><strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED.</strong></div></div></body></html>", alternative:true}
+
    ]
-}, function(err, message) { console.log(err || message); }); 
+}, function(err, message) { console.log(err || message); });
 res.status(200).json('mail sent');
 
 });
 app.post('/checkschool-card',  urlencodedParser,function (req, res)
 {
 	var id={"id":req.query.username};
-	
+
        connection.query('SELECT name from md_school where id=(select school_id from employee where ?) ',[id],
        	function(err, rows)
        	{
@@ -64,12 +78,12 @@ app.post('/checkschool-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-      	
+
 			res.status(200).json({'returnval': rows});
 		}
 		else
 		{
-            
+
 			res.status(200).json({'returnval': 'invalid'});
 		}
 	}
@@ -89,12 +103,12 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-      	
+
 			res.status(200).json({'returnval': rows});
 		}
 		else
 		{
-            
+
 			res.status(200).json({'returnval': 'invalid'});
 		}
 	}
@@ -104,7 +118,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 //select the route
 
 app.post('/getroute' ,  urlencodedParser,function (req, res)
-{	
+{
 		var schoolx={"school_id":req.query.schol};
 	    connection.query('select route_name from route where ?',[schoolx],
        	function(err, rows)
@@ -154,7 +168,7 @@ app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
 
 app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 {
-		
+
 		var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop,"distance_from_school":req.query.distance,"school_id":req.query.schol};
 		//console.log('in server...'+routename);
 		console.log(rouname);
@@ -172,8 +186,8 @@ app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-		
-	
+
+
 });
 	});
 
@@ -199,16 +213,16 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 		{
 			console.log('No data Fetched'+err);
 		}
-		
-		
-	
+
+
+
 });
 	});
 
 
 app.post('/sequence' ,  urlencodedParser,function (req, res)
 {
-	
+
 		var point={"point_count":req.query.pointcount};
 	    connection.query('update sequence set ?',[point],
        	function(err, rows)
@@ -217,7 +231,7 @@ app.post('/sequence' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				
+
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -316,8 +330,8 @@ app.post('/setzone' ,  urlencodedParser,function (req, res)
 	    connection.query(queryy,
        	function(err, rows)
        	{
-      	
-		
+
+
 			if(!err)
 			{
 			res.status(200).json({'returnval': 'success'});
@@ -327,12 +341,12 @@ app.post('/setzone' ,  urlencodedParser,function (req, res)
 				console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 			}
-		
+
 });
 	});
 
 app.post('/getstd' ,  urlencodedParser,function (req, res)
-{	
+{
 	    connection.query('select distinct class from class_details ',
        	function(err, rows)
        	{
@@ -393,7 +407,7 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-			//console.log(rows);	
+			//console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -420,7 +434,7 @@ app.post('/stupassgetname' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-			//console.log(rows);	
+			//console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -447,7 +461,7 @@ app.post('/getstudetail' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				
+
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -465,7 +479,7 @@ app.post('/getstudetail' ,  urlencodedParser,function (req, res)
 
 
 app.post('/getroute' ,  urlencodedParser,function (req, res)
-{	
+{
 	    connection.query('select route_name from md_route',
        	function(err, rows)
        	{
@@ -655,16 +669,16 @@ app.post('/routedroppoint',  urlencodedParser,function (req, res)
 app.post('/routepoint',  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT * from route where ?',[schoolx], 
-       	function(err, rows) 
+       connection.query('SELECT * from route where ?',[schoolx],
+       	function(err, rows)
        	{
 		if(!err)
 		{
 		if(rows.length>0)
 		{
-			 
+
 			res.status(200).json({'returnval': rows});
-			
+
 		}
 		else
 		{
@@ -679,7 +693,7 @@ app.post('/submiturl',  urlencodedParser,function (req, res)
 		var mappointtostudent={"student_id":req.query.studentid,"school_type":req.query.class_id,"pickup_route_id":req.query.pickroute,"pickup_point":req.query.pickpoint,"drop_route_id":req.query.droproute, "drop_point":req.query.droppoint,"flag":req.query.flag,"school_id":req.query.schol};
 		//console.log(mappointtostudent);
 	    connection.query('insert into student_point set ?',[mappointtostudent],
-       	function(err, rows) 
+       	function(err, rows)
        	{
 		if(!err)
 		{
@@ -690,14 +704,14 @@ app.post('/submiturl',  urlencodedParser,function (req, res)
 			//console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
-});    
+
+});
 	});
 
 
 app.post('/gettrip' ,  urlencodedParser,function (req, res)
 {
-		
+
 		 var routen={"route_name":req.query.triproute};
 		 var schoolx={"school_id":req.query.schol};
 		 //console.log('in server...');
@@ -721,14 +735,14 @@ app.post('/gettrip' ,  urlencodedParser,function (req, res)
 		{
 			console.log('No data Fetched'+err);
 		}
-		
-	
+
+
 });
 	});
 
 app.post('/getrouteid' ,  urlencodedParser,function (req, res)
 {
-		
+
 		 var routen={"route_name":req.query.routename};
 		 var schoolx={"school_id":req.query.schol};
 		 console.log('in server...');
@@ -803,7 +817,7 @@ app.post('/proceedcancel',  urlencodedParser,function (req, res){
 	var collection={"student_id":req.query.student_id,"student_name":req.query.student_name,"months_used":req.query.months_used,"refund_amount":req.query.refund_amount, "flag":3,"status":"Requested", "reason":req.query.reason, "status":'Requested',"school_id":req.query.schol};
     connection.query('insert into cancellation set ?',[collection],
 	function(err, rows){
-		
+
 		if(!err)
 			{
 			res.status(200).json({'returnval': 'success'});
@@ -871,7 +885,7 @@ app.post('/reportfee-card',  urlencodedParser,function (req, res)
 app.post('/zonefee-card',  urlencodedParser,function (req, res)
 {
 
-	
+
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
@@ -961,7 +975,7 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 	    console.log(status);
 	    console.log(rec);
 	    connection.query('update  student_fee set ?,?,?,?,? where ? and ?',[mode,install1,install1date,status,rec,studid,schoolx],
-       	function(err, rows) 
+       	function(err, rows)
        	{
 		if(!err)
 		{
@@ -972,15 +986,15 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
-});    
+
+});
 	});
 app.post('/chequedetails',  urlencodedParser,function (req, res)
 {
-		
+
 		var studid={"school_id":req.query.schol,"student_id":req.query.studid,"name":req.query.name,"cheque_no":req.query.chequenum,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate,"installtype":req.query.installtype,"cheque_status":req.query.chequestatus};
 	    connection.query('insert into cheque_details  set ?',[studid],
-       	function(err, rows) 
+       	function(err, rows)
        	{
 		if(!err)
 		{
@@ -992,7 +1006,7 @@ app.post('/chequedetails',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-});    
+});
 	});
 
 
@@ -1025,7 +1039,7 @@ var schoolx={"school_id":req.query.schol};
 
 app.post('/approval-card',  urlencodedParser,function (req, res)
 {
-		
+
 
 
 		var studid={"student_id":req.query.studid};
@@ -1033,11 +1047,11 @@ app.post('/approval-card',  urlencodedParser,function (req, res)
 				var vale={"status":req.query.status,"flag":req.query.flag};
 		//console.log(studid);
 	    connection.query('update  cancellation set ? where ? and ?',[vale,studid,schoolx],
-       	function(err, rows) 
+       	function(err, rows)
        	{
 		if(!err)
 		{
-			
+
 			res.status(200).json({'returnval': 'success'});
 		}
 		else
@@ -1045,8 +1059,8 @@ app.post('/approval-card',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': ''});
 		}
-	
-});    
+
+});
 	});
 
 app.post('/name',  urlencodedParser,function (req, res){
@@ -1074,7 +1088,7 @@ app.post('/name',  urlencodedParser,function (req, res){
 	});
 
 app.post('/getfeedata' ,  urlencodedParser,function (req, res)
-{	
+{
 		var studid=req.query.studid;
 		//console.log(studid);
 	    connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where student_id=(select id from student_details where student_name=?)',[studid],
@@ -1100,7 +1114,7 @@ app.post('/getfeedata' ,  urlencodedParser,function (req, res)
 
 
 app.post('/getfeezone' ,  urlencodedParser,function (req, res)
-{	
+{
 		var zoneid={"id":req.query.zone};
 	    connection.query('select zone_name from md_zone where ?',[zoneid],
        	function(err, rows)
@@ -1125,7 +1139,7 @@ app.post('/getfeezone' ,  urlencodedParser,function (req, res)
 
 
 app.post('/getfeename' ,  urlencodedParser,function (req, res)
-{	
+{
 		var stid={"id":req.query.sid};
 	    connection.query('select student_name,school_type from student_details where ?',[stid],
        	function(err, rows)
@@ -1150,7 +1164,7 @@ app.post('/getfeename' ,  urlencodedParser,function (req, res)
 
 app.post('/sendrequest',  urlencodedParser,function (req, res)
 {
-	
+
     var queryyz="insert into md_discount values('"+req.query.schol+"','"+req.query.stid+"','"+req.query.stname+"','"+req.query.schooltypezx+"','"+req.query.zoname+"',"+req.query.feesx+",STR_TO_DATE('"+req.query.fromdatx+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todatx+"','%Y/%m/%d'),'"+req.query.disamtx+"','"+req.query.reasonx+"','Requested',3,STR_TO_DATE('"+req.query.todayx+"','%Y/%m/%d'),null,null)";
 	   // console.log(queryyz);
 	    connection.query(queryyz,
@@ -1165,7 +1179,7 @@ app.post('/sendrequest',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
+
 });
 	});
 
@@ -1317,14 +1331,14 @@ app.post('/deletemappoint-card',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
+
 });
 });
 
 
 app.post('/getstudapproval',  urlencodedParser,function (req, res)
 {
-		
+
 		var schoolx={"school_id":req.query.schol};
 	    connection.query('SELECT * from md_discount where flag=3 and ?',[schoolx],
        	function(err, rows)
@@ -1333,7 +1347,7 @@ app.post('/getstudapproval',  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				
+
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -1345,7 +1359,7 @@ app.post('/getstudapproval',  urlencodedParser,function (req, res)
 		{
 			console.log('No data Fetched'+err);
 		}
-	
+
 });
 	});
 
@@ -1367,14 +1381,14 @@ app.post('/confirmdisc',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
+
 });
 	});
 
 
 app.post('/getapprovalverify',  urlencodedParser,function (req, res)
 {
-	
+
 		var schoolx={"school_id":req.query.schol};
 	    connection.query('SELECT * from md_discount where flag=2 and ?',[schoolx],
        	function(err, rows)
@@ -1383,7 +1397,7 @@ app.post('/getapprovalverify',  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				
+
 			res.status(200).json(rows);
 			}
 			else
@@ -1395,7 +1409,7 @@ app.post('/getapprovalverify',  urlencodedParser,function (req, res)
 		{
 			console.log('No data Fetched'+err);
 		}
-	
+
 });
 	});
 
@@ -1417,7 +1431,7 @@ app.post('/confirmedfee',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
+
 });
 	});
 
@@ -1438,14 +1452,14 @@ app.post('/confirmfee',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
+
 });
 	});
 
 
 app.post('/cancelledfee',  urlencodedParser,function (req, res)
 {
-	
+
     var val={"stud_id":req.query.stid};
 	var vari={"status":req.query.status,"flag":req.query.flag};
 	    connection.query('update md_discount set ? where ? ',[vari,val],
@@ -1460,7 +1474,7 @@ app.post('/cancelledfee',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
+
 });
 	});
 
@@ -1488,7 +1502,7 @@ app.post('/getverify',  urlencodedParser,function (req, res)
 		{
 			console.log('No data Fetched'+err);
 		}
-	
+
 });
 	});
 
@@ -1505,7 +1519,7 @@ app.post('/getclass',  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-				
+
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -1517,7 +1531,7 @@ app.post('/getclass',  urlencodedParser,function (req, res)
 		{
 			console.log('No data Fetched'+err);
 		}
-	
+
 });
 	});
 
@@ -1599,7 +1613,7 @@ app.post('/getstudzone',  urlencodedParser,function (req, res)
 		{
 			console.log('No data Fetched'+err);
 		}
-	
+
 });
 	});
 
@@ -1611,8 +1625,8 @@ app.post('/updatezone' ,  urlencodedParser,function (req, res)
 	    connection.query(queryy,
        	function(err, rows)
        	{
-      	
-		
+
+
 			if(!err)
 			{
 			res.status(200).json({'returnval': 'success'});
@@ -1622,7 +1636,7 @@ app.post('/updatezone' ,  urlencodedParser,function (req, res)
 				console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 			}
-		
+
 });
 	});
 
@@ -1657,20 +1671,20 @@ app.post('/updatechequedetail',  urlencodedParser,function (req, res)
     var cno={"cheque_no":req.query.chequenum};
     var schoolx={"school_id":req.query.schol};
        connection.query('update cheque_details set ? where ? and ?', [cstatus,cno,schoolx],
-       	function(err, rows) 
+       	function(err, rows)
        	{
 		if(!err)
 		{
-		
+
 			// console.log('cyes');
 			res.status(200).json({'returnval': 'success'});
-			
+
 		}
 		else
 		{
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
+
 });
 });
 
@@ -1711,21 +1725,21 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 
 	chequename={"student_id":req.query.chequename}
        connection.query('update student_fee set ?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,fine1,fine2,chequename],
-       	function(err, rows) 
+       	function(err, rows)
        	{
 		if(!err)
 		{
-		
+
 			// console.log('ccyes');
 			res.status(200).json({'returnval': 'success'});
-			
+
 		}
 		else
 		{
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});
 		}
-	
+
 });
 });
 
@@ -1787,8 +1801,8 @@ app.post('/datepickinsta1',  urlencodedParser,function (req, res)
 	var mode= {"modeofpayment1":"Cash"};
 	var schoolx=req.query.schol;
 	    connection.query('Select f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_1 from student_fee f left join student_details d on f.student_id=d.id where ? and ? and d.school_id=?',[date, mode,schoolx],
-       	function(err, rows){	
-       		var itemarr = new Array();	
+       	function(err, rows){
+       		var itemarr = new Array();
        		if(!err){
 		       	if(rows.length>0){
 			        for(var i=0;i<rows.length;i++){
@@ -1816,8 +1830,8 @@ app.post('/datepickinsta1cheque',  urlencodedParser,function (req, res)
 	var mode= {"modeofpayment1":"Cheque"};
 	var schoolx=req.query.schol;
 	    connection.query('select f.student_id, f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_1, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ? and d.school_id=?',[date, mode,schoolx],
-       	function(err, rows){	
-       		var itemarr = new Array();	
+       	function(err, rows){
+       		var itemarr = new Array();
        		if(!err){
 		       	if(rows.length>0){
 			        for(var i=0;i<rows.length;i++){
@@ -1849,7 +1863,7 @@ app.post('/datepickinsta2',  urlencodedParser,function (req, res)
 	var schoolx=req.query.schol;
 	    connection.query('Select f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_2 from student_fee f left join student_details d on f.student_id=d.id where ? and ? and d.school_id=?',[date, mode,schoolx],
        	function(err, rows){
-       		var itemarr = new Array();	
+       		var itemarr = new Array();
 		if(!err){
 	       	if(rows.length>0){
 		        for(var i=0;i<rows.length;i++){
@@ -1873,13 +1887,13 @@ app.post('/datepickinsta2',  urlencodedParser,function (req, res)
 });
 app.post('/datepickinsta2cheque',  urlencodedParser,function (req, res)
 {
-	
+
 	var date={"installment_2Date":req.query.dates};
 	var mode= {"modeofpayment2":"Cheque"};
 	var schoolx=req.query.schol;
 	    connection.query('select f.student_id, d.student_name, f.receipt_no, f.fees,f.installment_2, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ? and d.school_id=?',[date, mode,schoolx],
-       	function(err, rows){	
-       		var itemarr = new Array();	
+       	function(err, rows){
+       		var itemarr = new Array();
        		if(!err){
 		       	if(rows.length>0){
 			        for(var i=0;i<rows.length;i++){
@@ -1928,7 +1942,7 @@ app.post('/pending',  urlencodedParser,function (req, res)
 app.post('/getpassdetail',  urlencodedParser,function (req, res)
 
 {
-	
+
 	var date4={"student_id":req.query.stid};
 	    connection.query('Select * from student_point where ?',[date4],
        	function(err, rows){
@@ -1950,7 +1964,7 @@ app.post('/getpassdetail',  urlencodedParser,function (req, res)
 
 app.post('/getpointname',  urlencodedParser,function (req, res)
 {
-	
+
 	var date5={"id":req.query.point};
 	    connection.query('Select distinct point_name from point where ?',[date5],
        	function(err, rows){
@@ -1971,7 +1985,7 @@ app.post('/getpointname',  urlencodedParser,function (req, res)
 
 app.post('/getpassname',  urlencodedParser,function (req, res)
 {
-	
+
 	var date5={"student_name":req.query.stid};
 	    connection.query('Select * from student_details where ?',[date5],
        	function(err, rows){
@@ -1993,7 +2007,7 @@ app.post('/getpassname',  urlencodedParser,function (req, res)
 
 app.post('/getpassclass',  urlencodedParser,function (req, res)
 {
-	
+
 	var date5={"id":req.query.class};
 	    connection.query('Select * from class_details where ?',[date5],
        	function(err, rows){
@@ -2083,9 +2097,9 @@ app.post('/updatereceiptsequence',  urlencodedParser,function (req, res)
        	function(err, rows){
 		if(!err)
 		{
-			
+
 				res.status(200).json({'returnval': 'success'});
-			
+
 		}
 		 else {
 			console.log(err);
@@ -2101,9 +2115,9 @@ app.post('/updateacksequence',  urlencodedParser,function (req, res)
        	function(err, rows){
 		if(!err)
 		{
-			
+
 				res.status(200).json({'returnval': 'success'});
-			
+
 		}
 		 else {
 			console.log(err);
@@ -2116,11 +2130,11 @@ app.post('/receiptnoinfee',  urlencodedParser,function (req, res)
 	var rid;
 	if(req.query.installtype=="installment1")
 	{
-	 rid={"receipt_no1":req.query.receiptno}; 
+	 rid={"receipt_no1":req.query.receiptno};
     }
     else
     {
-     rid={"receipt_no2":req.query.receiptno}; 
+     rid={"receipt_no2":req.query.receiptno};
     }
     var sid={"student_id":req.query.studid};
     var schoolx={"school_id":req.query.schol};
@@ -2130,9 +2144,9 @@ app.post('/receiptnoinfee',  urlencodedParser,function (req, res)
        	function(err, rows){
 		if(!err)
 		{
-			
+
 				res.status(200).json({'returnval': 'success'});
-			
+
 		}
 		 else {
 			console.log(err);
@@ -2145,11 +2159,11 @@ app.post('/acknoinfee',  urlencodedParser,function (req, res)
 	var rid;
 	if(req.query.installtype=="installment1")
 	{
-	 rid={"receipt_no1":req.query.ackno}; 
+	 rid={"receipt_no1":req.query.ackno};
     }
     else
     {
-     rid={"receipt_no2":req.query.ackno}; 
+     rid={"receipt_no2":req.query.ackno};
     }
     var sid={"student_id":req.query.studid};
 
@@ -2160,9 +2174,9 @@ app.post('/acknoinfee',  urlencodedParser,function (req, res)
        	function(err, rows){
 		if(!err)
 		{
-			
+
 				res.status(200).json({'returnval': 'success'});
-			
+
 		}
 		 else {
 			console.log(err);
@@ -2197,9 +2211,9 @@ app.post('/refundcheque',  urlencodedParser,function (req, res)
 	    connection.query('insert into refund set ?',[studid],
        	function(err, rows){
 		if(!err){
-			
+
 				res.status(200).json({'returnval': 'success'});
-			} 
+			}
 		 else {
 			console.log(err);
 		}
@@ -2217,7 +2231,7 @@ connection.query('update cancellation set flag=1,status="closed" where ? and ?',
        	if(!err){
 			//console.log('suc');
 				res.status(200).json({'returnval': 'success'});
-			} 
+			}
 		 else {
 			console.log(err);
 		}
@@ -2233,9 +2247,9 @@ app.post('/updaterecpno',  urlencodedParser,function (req, res)
        	function(err, rows){
 		if(!err)
 		{
-			
+
 				res.status(200).json({'returnval': 'success'});
-			
+
 		}
 		 else {
 			console.log(err);
@@ -2264,10 +2278,10 @@ app.post('/addstudent',  urlencodedParser,function (req, res){
     connection.query('insert into student_details set ?',[collection],
        	function(err, rows){
 		if(!err){
-			
+
 				res.status(200).json({'returnval':'success'});
 				//console.log(rows);
-			
+
 		} else {
 			console.log(err);
 		}
@@ -2280,10 +2294,10 @@ app.post('/addparent',  urlencodedParser,function (req, res){
     connection.query('insert into parent set ?',[collection],
        	function(err, rows){
 		if(!err){
-			
+
 				res.status(200).json({'returnval':'sucess'});
 				//console.log(rows);
-			} 
+			}
 		 else {
 			console.log(err);
 		}

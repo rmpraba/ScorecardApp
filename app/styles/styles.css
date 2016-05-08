@@ -17,9 +17,9 @@ section{
     float: right;
 }
 .head{
-    background-color:#1E2021 ; 
-    text-align: center; 
-    color: #ffffff;  
+    background-color:#1E2021 ;
+    text-align: center;
+    color: #ffffff;
     padding: 1% 0;
     font-weight: bolder;
     height: 6%;
@@ -32,7 +32,7 @@ section{
 }
 .routereport
 {
-    @apply(--layout-horizontal); 
+    @apply(--layout-horizontal);
     margin: 4% 0 4% 24%;
 }
 .route-detail{
@@ -40,27 +40,27 @@ section{
 }
 .footer{
     font-weight: bold;
-    bottom: 0; 
+    bottom: 0;
     position: absolute;
 }
 paper-button{
-    background: #252626 !important;
+    background: #252626;
     color: white;
 }
 .class-drop{
     width: 100%;
 }
 .frame{
-    table-layout: auto; 
-    margin-left: 33%; 
+    table-layout: auto;
+    margin-left: 33%;
     margin-top: 7%;
 }
 .dupframe{
-    margin-left: 20%; 
+    margin-left: 20%;
     margin-top: 4%;
 }
 .dupframe .drop-down{
-    margin-left: 20%; 
+    margin-left: 20%;
     margin-top: 4%;
 }
 .logindialog{
@@ -111,51 +111,51 @@ paper-button{
 
 .zonetostudent-card .left{
         text-align: left;
-       
+
    @apply(--layout-vertical);
-   
+
 
 }
 .zonetostudent-card .right{
-    
+
         text-align: left;
         margin-left: 50%;
         width: 100%;
        @apply(--layout-vertical);
-  
+
 }
 
 
 .zonetostudent-card .left1{
         text-align: left;
-       
+
    @apply(--layout-vertical);
-   
+
 
 }
 .zonetostudent-card .right1{
-    
+
         text-align: left;
         margin-left: 180%;
         width: 100%;
        @apply(--layout-vertical);
-  
+
 }
 .zonetostudent-card .right2{
-    
+
         text-align: left;
         margin-left: 205%;
         width: 100%;
        @apply(--layout-vertical);
-  
+
 }
 .zonetostudent-card .right3{
-    
+
         text-align: left;
         margin-left: 300%;
         width: 100%;
        @apply(--layout-vertical);
-  
+
 }
 .layframe .buttons{
     margin-left: -6%;
@@ -278,7 +278,7 @@ li{
 .dupframe .checkbox{
   position: absolute;
   right: 22.5%;
-  margin-top: -65px; 
+  margin-top: -65px;
 }
 .dupframe .buttons{
     margin-left: 30%;
@@ -367,7 +367,7 @@ ul li #new-button{
 
 
 /*Do not Change*/
-.content-main { 
+.content-main {
     padding: 55px 45px 45px;
     margin-left: 15%;
     transition: all 0.3s linear 0s;
@@ -439,22 +439,22 @@ ul li #new-button{
     margin: 2% 0 2% 20%;
   }
   .reports{
-    margin:0% 0% 2% 0%; 
+    margin:0% 0% 2% 0%;
   }
 paper-button{
     height: 16%;
   }
 .butto{
-    margin:3% 0 0 3%; 
+    margin:3% 0 0 3%;
 }
 .headtabs{
     width: 80%;
-    margin-left:9%; 
+    margin-left:9%;
 }
 .transportheadtabs{
     background-color: #668cff;
     width: 62%;
-    margin-left:11%; 
+    margin-left:11%;
     margin-top: 5%;
     font-weight:bold;
     font-size: large;
@@ -513,12 +513,12 @@ margin-top: 1%;
     margin-left: 1%;
 }
 .receipt .body11 .lb2{
-    margin-left: 48%;
+    margin-left: 46%;
     margin-top: 1%;
 }
 .receipt .body11 .val2{
  margin-top: 1%;
-    margin-left: 1%;   
+    margin-left: 1%;
 }
 
 .receipt #ln2{
@@ -544,13 +544,13 @@ margin-top: 1%;
     text-align: left;
     float: left;
     @apply(--layout-horizontal);
-    
+
 }
 
 .receipt #ln3{
-    
+
     width: 98%;
-    
+
 }
 .receipt .body3{
     display: flex;
@@ -559,31 +559,31 @@ margin-top: 1%;
 }
 
 .receipt .body3 .l13{
-margin-left: 20%;    
+margin-left: 20%;
 }
 .receipt .body3 .r3{
- margin-left: 40%;       
+ margin-left: 40%;
 }
 .receipt #ln4{
     margin-top: -1%;
     width: 98%;
-    
+
 }
 .receipt .body4{
     display: flex;
-   
+
 }
 
 .receipt .body4 .l14{
 
 }
 .receipt .body4 .r4{
- margin-left: 43%;       
+ margin-left: 43%;
 }
 .receipt #ln5{
     margin-top: 0%;
     width: 98%;
-    
+
 }
 
 .receipt .body5{
@@ -596,11 +596,11 @@ margin-left: 20%;
 margin-left: -10%;
 display: inline-block;
 @apply(--layout-horizontal);
-text-align: left;  
+text-align: left;
 }
 
 .receipt .body5 .l15 .word{
-text-align: left;  
+text-align: left;
 margin-left: 40%;
 margin-top: 0% !important;
 width: 100%;
@@ -608,8 +608,8 @@ width: 100%;
     }
 
 .receipt .body5 .r5{
- margin-left: 65%;       
- text-align: left;  
+ margin-left: 65%;
+ text-align: left;
  margin-top: -6%;
 }
 .receipt .body5 .r5 .cash{
@@ -620,14 +620,14 @@ margin-top: -23.5%;
 .receipt #ln6{
     margin-top: 0%;
     width: 98%;
-    
+
 }
 .receipt .body6{
- margin-left: 2%;  
+ margin-left: 2%;
  margin-top: 0%;
 @apply(--layout-horizontal);
 text-align: left;
-float: left;     
+float: left;
 display: flex;
 }
 
@@ -635,29 +635,20 @@ display: flex;
     @apply(--layout-horizontal);
 text-align: center;
  margin-top: 1%;
- 
+
 }
-.receipt .body9{
+
+.receipt .body8 .l8{
     @apply(--layout-horizontal);
-    margin-left: 1%;
-    margin-top:0%;
-    width: 94%;
- 
-}
-.receipt .body9 .l8{
-    @apply(--layout-horizontal);    
     text-align: left;
     float: left;
-    width: 100%;
-    margin-top: 2%;
     margin-left: 2%;
 }
 
-.receipt .body9 .r8{
-    @apply(--layout-horizontal);    
+.receipt .body8 .r8{
+    @apply(--layout-vertical);
     text-align: left;
     float: right;
-    margin-top: 2%;
     margin-right: 5%;
 }
 .receipt .button{
@@ -665,13 +656,13 @@ text-align: center;
     margin-top: 10%;
     height: 100%;
     width: auto;
-    @apply(--layout-horizontal);    
+    @apply(--layout-horizontal);
 }
 
 .layframe .buttons{
 text-align: center;
-    @apply(--layout-horizontal); 
-    margin-top: 5%;   
+    @apply(--layout-horizontal);
+    margin-top: 5%;
 }
 .layframe .buttons .submit{
     margin-left: -65%;
@@ -679,7 +670,7 @@ text-align: center;
 .layframe .buttons .cancel{
     margin-top: -4.5%;
     margin-left: -13%;
-    
+
 }
 .layframe .button{
     height: 5%;
@@ -693,7 +684,7 @@ text-align: center;
 .pass{
     width: 21cm;
   height: 29.7cm;
-    @apply(--layout-horizontal); 
+    @apply(--layout-horizontal);
     margin-left: 20%;
     margin-top: 15%;
 }
@@ -713,7 +704,7 @@ text-align: center;
    margin-top: -3%;
 }
 .pass .front .header .logo{
-    
+
 }
 .pass .front .header .heading{
     width: 80%;
@@ -742,14 +733,14 @@ text-align: center;
 .pass .front .body2{
     @apply(--layout-horizontal);
     margin-top: 10%;
-    
+
 }
 .pass .front .body2 .studimg{
     @apply(--layout-center);
     text-align: center;
     @apply(--layout-vertical);
-    
-     
+
+
 }
 
 .pass .front .body2 .studetail{
@@ -780,7 +771,7 @@ margin-left: 2%;
 }
 
 .dd{
-    @apply(--layout-horizontal);   
+    @apply(--layout-horizontal);
     display: flex;
 }
 .dd .left{
@@ -809,18 +800,18 @@ margin-left: 2%;
 }
 .feereports-card .grand-total{
     width: 100%;
-    margin:5% 0 0 27%; 
+    margin:5% 0 0 27%;
 }
 .add-student{
     margin: 0 0 0 25%;
 }
 .add-student .field, .add-student .drop-down{
-  margin: 0 5% 0 5%;  
+  margin: 0 5% 0 5%;
 }
 .add-student .date{
     margin: 0 -3% 0 0;
 }
 .add-student .button{
-    margin: 3% 0% 0 13%; 
+    margin: 3% 0% 0 13%;
 }
 </style>

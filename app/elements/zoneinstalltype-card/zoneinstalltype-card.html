@@ -185,8 +185,11 @@ bankname="";
           amt=this.installamt;
            if(type=="installment2")
           {
-            
-         document.querySelector('zonedatepicker-card').setinstalldate(this.paydate);
+            //alert(this.paydate);
+           var  d1=new Date(this.paydate);
+            var fromdatey=d1.getDate()+"/"+(d1.getMonth()+1)+"/"+d1.getFullYear(); 
+            //alert(fromdatey);
+         document.querySelector('zonedatepicker-card').setinstalldate(fromdatey);
           }
          // alert(amt+''+type);
         var id = 'animated';

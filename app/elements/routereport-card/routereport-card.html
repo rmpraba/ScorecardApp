@@ -205,7 +205,7 @@
       }
     },
       FnItemSelected:function(e){
-        this.$.print.hidden=false;
+       
         routeid= e.target.selectedItem.value;
         routename=e.target.selectedItem.textContent.trim();
         //alert(e.target.selectedItem.value);
@@ -213,11 +213,19 @@
         this.itemArray=[];
         this.querySelector('paper-listbox').selected=-1;
         this.value=routename;
+         this.reportarr="";
+        this.no_of_student="";
+        document.querySelector('#trip').selected=-1;
+        document.querySelector('#pickdrop').selected=-1;
+        this.querySelector("paper-tabs").style.visibility='hidden';
+        this.$.print.hidden=true;
+        this.$.grndtot.hidden=true;
       },
       show:function()
       {
+         this.$.print.hidden=false;
         this.querySelector("paper-tabs").style.visibility='visible';
-        
+         this.$.grndtot.hidden=false;
           this.$.service.studentroutereport(routeid,triptype,pickordrop);
       },
       Fntrip:function(e)
@@ -228,7 +236,7 @@ triptype=(e.target.selectedItem.textContent).trim();;
       },
       Fnpickordrop:function(e){
         pickordrop=(e.target.selectedItem.textContent).trim();
-        this.$.grndtot.hidden=false;
+       
       },
       print:function(){
         this.$.print.hidden=true;

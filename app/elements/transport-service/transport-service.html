@@ -432,6 +432,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="getzonedetailajax"
+        url="{{getzonedetailurl}}"
+        params="{{getzonedetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getzonedetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <iron-ajax
         method="post"
         id="getppnameajax"
@@ -440,6 +451,28 @@
         handle-as="json"
         content-type="application/json"
         on-response="getppnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getpickrouajax"
+        url="{{getpickrouurl}}"
+        params="{{getpickrouparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getpickrouResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getdroprouajax"
+        url="{{getdroprouurl}}"
+        params="{{getdroprouparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getdroprouResponse"
         debounce-duration="300"
         >
   </iron-ajax>
@@ -1311,6 +1344,19 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
               this.getpassnameparam=obj;
               this.$.getpassnameajax.generateRequest();
       },
+      getzonedetail:function(studid){
+        this.getzonedetailurl=sessionStorage.getItem("addrinfo")+"/getzonedetail";
+        var obj={"stid":"","schol":""}
+        obj.stid=studid;
+        obj.schol=sessionStorage.getItem("sch");
+        this.getzonedetailparam=obj;
+        this.$.getzonedetailajax.generateRequest();
+      },
+      getzonedetailResponse:function(e){
+        var zonename=e.detail.response.returnval[0].zone_name;
+        document.querySelector('studentpass-card').zone=zonename.toLowerCase();
+
+      },
       getpassnameResponse:function(e){
           var idst=e.detail.response.returnval[0].id;
           var classid=e.detail.response.returnval[0].class_id;
@@ -1339,6 +1385,8 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
        getpassdetailResponse:function(e){
         var pp=e.detail.response.returnval[0].pickup_point;
         var dp=e.detail.response.returnval[0].drop_point;
+        var pickrou = e.detail.response.returnval[0].pickup_route_id;
+        var droprou = e.detail.response.returnval[0].drop_route_id;
 
           this.getppnameurl=sessionStorage.getItem("addrinfo")+"/getpointname";
               var obj={"point":""}
@@ -1350,7 +1398,19 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
           var obj2={"point":""}
           obj2.point=dp;
           this.getdpnameparam=obj2;
-          this.$.getdpnameajax.generateRequest();     
+          this.$.getdpnameajax.generateRequest();   
+
+          this.getpickrouurl=sessionStorage.getItem("addrinfo")+"/getroutename";
+          var obj3={"route":""}
+          obj3.route=pickrou;
+          this.getpickrouparam=obj3;
+          this.$.getpickrouajax.generateRequest();   
+
+          this.getdroprouurl=sessionStorage.getItem("addrinfo")+"/getroutename";
+          var obj4={"route":""}
+          obj4.route=droprou;
+          this.getdroprouparam=obj4;
+          this.$.getdroprouajax.generateRequest();   
         },
         getppnameResponse:function(e){
             var pickupoint=e.detail.response.returnval[0].point_name;
@@ -1359,6 +1419,14 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         getdpnameResponse:function(e){
             var droppoint=e.detail.response.returnval[0].point_name;
             document.querySelector('studentpass-card').drop=droppoint.toLowerCase();
+        },
+        getpickrouResponse:function(e){
+            var pickuproute=e.detail.response.returnval[0].route_name;
+            document.querySelector('studentpass-card').pickuprout=pickuproute.toLowerCase();
+        },
+        getdroprouResponse:function(e){
+            var droproute=e.detail.response.returnval[0].route_name;
+            document.querySelector('studentpass-card').droprout=droproute.toLowerCase();
         },
         getpassclassResponse:function(e){
             var standard=e.detail.response.returnval[0].class;

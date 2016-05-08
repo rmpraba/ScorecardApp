@@ -166,6 +166,7 @@
         obj.studid=this.studentid;
         this.routedroppointparam=obj;
         this.$.routedroppoint.generateRequest();
+         this.$.selectbox.disabled=true;
       },
       pickpointsResponse:function(e){
         var points=e.detail.response.returnval;
@@ -184,6 +185,7 @@
       },
       droppoints:function(e){
         droppoint = (e.target.selectedItem.value);
+         this.$.selectbox.disabled=false;
       }, 
       changeHandler:function(e){ 
         var box = document.querySelector("#selectbox");

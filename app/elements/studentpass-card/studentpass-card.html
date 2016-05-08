@@ -57,8 +57,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <img style="min-height: 12%;min-width: 18%; margin-top: 5%; height: 18%; width: 27%;border: 1px solid;"src="images/{{sid}}.jpg" alt="Paste photo here"/>
           </div>
           <div class="studetail"> 
-          <p>{{studname}}</p>
-             <p>{{stnd}} - {{sec}}</p>
+          <p style="font-size: 16px;">{{studname}}</p>
+          <p style="font-size: 16px;">{{stnd}} - {{sec}}</p>
+          <p style="font-size: 16px;">Zone - {{zone}}</p>
             </div>
         </div>
 
@@ -75,8 +76,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   {{address3}} 
                   {{town}}-{{pin}}.</p>
                   <hr></hr>
-                  <p>Pick pt:{{pickup}}</p>
-                  <p>Drop pt:{{drop}}</p>
+                  <p style="margin: 4px 0 4px 0;">Pick Route:{{pickuprout}}</p>
+                  <p style="margin: 4px 0 4px 0;">Pick pt:{{pickup}}</p>
+                  <p style="margin: 4px 0 4px 0;">Drop Route:{{droprout}}</p>
+                  <p style="margin: 4px 0 4px 0;">Drop pt:{{drop}}</p>
+
                   <hr></hr>
                   <p>Parents Mob:{{mobno}}</p>
                   <hr></hr>
@@ -241,6 +245,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.studname=this.studid;
     this.value=this.studid;
     this.$.root.getpassdetail(this.studid);
+    this.$.root.getzonedetail(this.studid);
   }
     });
   })();

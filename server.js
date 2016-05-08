@@ -1968,12 +1968,53 @@ app.post('/getpointname',  urlencodedParser,function (req, res)
 	});
 });
 
+app.post('/getroutename',  urlencodedParser,function (req, res)
+{
+	
+	var date5={"id":req.query.route};
+	    connection.query('Select distinct route_name from route where ?',[date5],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 app.post('/getpassname',  urlencodedParser,function (req, res)
 {
 	
 	var date5={"student_name":req.query.stid};
 	    connection.query('Select * from student_details where ?',[date5],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+app.post('/getzonedetail',  urlencodedParser,function (req, res)
+{
+	
+	var date5={"student_id":req.query.stid};
+	var schoolx={"school_id":req.query.schol};
+	    connection.query('select zone_name from md_zone where id in (SELECT `zone_id` FROM `student_fee` WHERE `student_id` in (SELECT `id` FROM `student_details` WHERE ? or ?))',[date5, schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)

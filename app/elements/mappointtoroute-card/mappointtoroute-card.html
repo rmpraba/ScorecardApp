@@ -61,6 +61,13 @@
             this.$.create.hidden=true;
             this.$.select.getroute();
           },
+          FnClear:function()
+          {
+            this.$.routemenu.selected=-1;
+            this.$.tripmenu.selected=-1;
+            this.itemarr=[];
+
+          },
           rootname:function(e){
             routename = (e.target.selectedItem.textContent).trim();
             this.$.select.gettrip(routename);

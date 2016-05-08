@@ -27,20 +27,20 @@
    <div class="layframe">
         <div class="horizontalframe">
     <div class="hrspace">
-            <paper-input label="Student Id" value="{{student_id}}" required error-message="needs a student id!"></paper-input>
+            <paper-input label="Student Id" value="{{student_id}}" id="stdid" required error-message="needs a student id!"></paper-input>
           </div>
          <div class="hrspace">
-            <paper-input label="First Name" value="{{first_name}}" allowed-pattern="[a-zA-Z  ]" required  error-message="needs a name!"></paper-input>
+            <paper-input label="First Name" value="{{first_name}}" id="fname" required allowed-pattern="[a-zA-Z  ]" required  error-message="needs a name!"></paper-input>
           </div>
          <div class="hrspace">
-            <paper-input label="Last Name" value="{{last_name}}" allowed-pattern="[a-zA-Z  ]" required  error-message="needs a name!"></paper-input>
+            <paper-input label="Last Name" value="{{last_name}}"  id="lname" required allowed-pattern="[a-zA-Z  ]" required  error-message="needs a name!"></paper-input>
           </div>
         </div>
       
         <div class="horizontalframe">
             <div class="drop-down">
               <paper-dropdown-menu label="Select Class">
-                <paper-menu id="selectclass" class="dropdown-content" on-iron-select="classes" valueattr="value" >
+                <paper-menu id="selectclass" required error-message="needs a class!" class="dropdown-content" on-iron-select="classes" valueattr="value" >
                   <template  is="dom-repeat" items="{{select_class}}" as="view">
                     <paper-item value="{{view.id}}">{{view.class}} - {{view.section}}</paper-item>
                   </template>
@@ -49,7 +49,7 @@
             </div>
     <div class="hrspace">
             <paper-dropdown-menu label="class-Type">
-              <paper-menu id="schooltype" class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
+              <paper-menu id="scholtype" required error-message="needs a Class Type!" class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
                 <paper-listbox class="dropdown-content">
                   <paper-item value="Pre-Primary">Pre-Primary</paper-item>
                   <paper-item value="Primary">Primary</paper-item>
@@ -66,32 +66,32 @@
 
       <div class="horizontalframe">
                   <div class="hrspace">
-            <paper-input label="Parent Name" value="{{parent_name}}" allowed-pattern="[a-zA-Z ]" required error-message="needs a name!"></paper-input>
+            <paper-input label="Parent Name" value="{{parent_name}}" id="pname" allowed-pattern="[a-zA-Z ]" required error-message="needs a name!"></paper-input>
           </div>
     <div class="hrspace">
-            <paper-input label="Parent Email" value="{{parent_email}}" required error-message="needs a name!"></paper-input>
+            <paper-input label="Parent Email" value="{{parent_email}}" id="pemail" required error-message="needs a name!"></paper-input>
           </div>
            <div class="hrspace">
-            <paper-input label="Parent Mobile" value="{{parent_mobile}}" required error-message="needs a name!"></paper-input>
+            <paper-input label="Parent Mobile" value="{{parent_mobile}}" id="pmobile" required error-message="needs a name!"></paper-input>
           </div>
         </div>
     <div class="horizontalframe">
           <div class="hrspace">
-            <paper-input value="{{address_1}}" error-message="needs address!" label="Address Line 1" required ></paper-input>
+            <paper-input value="{{address_1}}" id="addr1" error-message="needs address!" label="Address Line 1" required ></paper-input>
           </div>
     <div class="hrspace">
-            <paper-input value="{{address_2}}" error-message="needs address!" label="Address Line 2" required ></paper-input>
+            <paper-input value="{{address_2}}"  id="addr2" error-message="needs address!" label="Address Line 2" required ></paper-input>
           </div>
           <div class="hrspace">
-            <paper-input value="{{address_3}}" error-message="needs address!" label="Address Line 3" required ></paper-input>
+            <paper-input value="{{address_3}}" id="addr3" error-message="needs address!" label="Address Line 3" required ></paper-input>
           </div>
         </div>
      <div class="horizontalframe">
           <div class="hrspace">
-            <paper-input value="{{city}}" error-message="needs town!" allowed-pattern="[a-zA-Z]" label="City / Town" required ></paper-input>
+            <paper-input value="{{city}}" id="city" error-message="needs town!" allowed-pattern="[a-zA-Z]" label="City / Town" required ></paper-input>
           </div>
     <div class="hrspace">
-            <paper-input value="{{pincode}}" error-message="needs pincode!" label="pincode" required ></paper-input>
+            <paper-input value="{{pincode}}" id="pincode" error-message="needs pincode!" label="pincode" required ></paper-input>
           </div>
           <div class="drop-down" >
             <paper-dropdown-menu label="Transport Required">
@@ -154,8 +154,29 @@
         stu_transport = (e.target.selectedItem.textContent).trim();
       },
       click:function(){
+        if(this.student_id==""||this.first_name==""||this.last_name==""||this.stu_class==""||this.stu_schooltype==""||this.stu_transport==""||this.parent_name==""||this
+          .parent_email==""||this.parent_mobile==""||this.address_1==""||this.city==""||this.pincode=="")
+        {
+          this.$.stdid.validate();
+          this.$.fname.validate();
+          this.$.lname.validate();
+          this.$.pname.validate();
+          this.$.city.validate();
+          this.$.pincode.validate();
+          this.$.pemail.validate();
+          this.$.pmobile.validate();
+          this.$.addr1.validate();
+         // document.querySelector('#scholtype').validate();
+          //this.$.selectclass.validate();
+
+
+
+        }
+        else
+        {
        this.dob=localStorage.getItem("localsess_dob_date");
         this.$.service.addstudent(this.student_id, this.first_name,this.last_name,stu_class, stu_schooltype, stu_transport, this.parent_name, this.parent_email,this.parent_mobile,this.address_1,this.address_2,this.address_3,this.city,this.pincode,this.dob);
+      }
       }
     });
   })();

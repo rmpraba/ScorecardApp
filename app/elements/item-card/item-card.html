@@ -76,14 +76,18 @@
 if(this.points=="" || this.distance=="")
         {
            this.$.pt.validate();
-           this.$.distance.validate();
+           this.$.dist.validate();
         }
 else
 {
-        alert('Add button is clicked');
+        //alert('Add button is clicked');
         var route=sessionStorage.getItem("route");
         var tripn=sessionStorage.getItem("trip");
         this.$.insert.insertpoint(route,this.points,localStorage.getItem("curr_sess_pickuptime"),localStorage.getItem("curr_sess_droptime"),tripn,this.distance);
+        this.points="";
+        this.distance="";
+        document.querySelector('timepicker-card').FnClear();
+        document.querySelector('timepicker1-card').FnClear();
       }
       }
     });

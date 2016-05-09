@@ -162,8 +162,11 @@ var amt;
           amt=this.installamt;
           if(type=="installment2")
           {
-            
-         document.querySelector('datepicker-card').setinstalldate(this.paydate);
+              var  d1=new Date(this.paydate);
+            var fromdatey=d1.getDate()+"/"+(d1.getMonth()+1)+"/"+d1.getFullYear(); 
+            //alert(fromdatey);
+         //document.querySelector('zonedatepicker-card').setinstalldate(fromdatey);
+         document.querySelector('datepicker-card').setinstalldate(fromdatey);
           }
         var id = 'chequeinfo';
         var dialog = document.getElementById(id);

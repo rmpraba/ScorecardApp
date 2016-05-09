@@ -17,6 +17,7 @@
 </style>
 <template>
   <legend align="center"></legend>
+  <paper-input hidden class="field" value="{{schooltype}}"></paper-input>
   <div class="card">
     <ul>
       <li class="ro">
@@ -42,7 +43,7 @@
                     <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
                       <template  is="dom-repeat" items="{{routearr}}" as="view">
                         <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
-                      </template>s
+                      </template>
                     </paper-menu>
                   </paper-dropdown-menu>
                 </div>
@@ -79,7 +80,7 @@
                 </div>
               </div>
               </li>
-              
+
             </li>
           </ul>
         </fieldset>
@@ -88,7 +89,6 @@
     <mapstudenttopoint-services id="mapstud"></mapstudenttopoint-services>
   </div>
   <iron-ajax
-    auto
     method="post"
     id="selectpointajax"
     url="{{selectpointurl}}"
@@ -100,7 +100,6 @@
   >
   </iron-ajax>
     <iron-ajax
-    auto
     method="post"
     id="routedroppoint"
     url="{{routedroppointurl}}"
@@ -129,6 +128,7 @@
       var pickpoint;
       var droproute;
       var droppoint;
+    var scholtype;
       var school=sessionStorage.getItem("sch");
     Polymer({
       is: "studenttopoint-item-card",
@@ -139,42 +139,63 @@
         this.routepointparam=obj;
         this.$.routepoint.generateRequest();
         this.$.selectbox.disabled=true;
-      }, 
+      },
       routepointResponse:function(e){
         var route=e.detail.response.returnval;
         this.routearr=route;
       },
       pickroute:function(e){
         pickroute = (e.target.selectedItem.value);
-       
+
         droproute=pickroute;
         this.selectid=pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/pickpoints";
-        var obj={"routept":"","studid":"","schol":""};
+        var obj={"routept":"","studid":"","schol":"","schooltype":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.routept=pickroute;
         obj.studid=this.studentid;
+
+        scholtype=this.schooltype;
+        if(scholtype=='Primary')
+        {
+          obj.schooltype=1;
+        }
+        else {
+          obj.schooltype=2;
+        }
+
         this.routepickpointparam=obj;
         this.$.selectpointajax.generateRequest();
       },
       droproute:function(e){
         droproute = (e.target.selectedItem.value);
         this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/routedroppoint";
-        var obj={"routedroppt":"","studid":"","schol":""};
+        var obj={"routedroppt":"","studid":"","schol":"","schooltype":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.routedroppt=droproute;
         obj.studid=this.studentid;
+
+        scholtype=this.schooltype;
+        if(scholtype=='Primary')
+        {
+          obj.schooltype=1;
+        }
+        else {
+          obj.schooltype=2;
+        }
         this.routedroppointparam=obj;
         this.$.routedroppoint.generateRequest();
          this.$.selectbox.disabled=true;
       },
       pickpointsResponse:function(e){
         var points=e.detail.response.returnval;
-        
+          //this.droparr=points;
         this.pointarr=points;
       },
       droppointsResponse:function(e){
+
         var points=e.detail.response.returnval;
+        this.droparr=[];
         this.droparr=points;
       },
       pickpoints:function(e){
@@ -186,13 +207,13 @@
       droppoints:function(e){
         droppoint = (e.target.selectedItem.value);
          this.$.selectbox.disabled=false;
-      }, 
-      changeHandler:function(e){ 
+      },
+      changeHandler:function(e){
         var box = document.querySelector("#selectbox");
         if(e.target.checked==true)
         {
-        document.querySelector('mapstudenttopoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint); 
-    
+        document.querySelector('mapstudenttopoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint);
+
        this.$.set.disabled=true;
        this.$.set1.disabled=true;
        this.$.set2.disabled=true;
@@ -202,11 +223,11 @@
         else
         {
           document.querySelector('mapstudenttopoint-card').removestud(this.studentid);
- 
+
         this.$.set.disabled=false;
        this.$.set1.disabled=false;
        this.$.set2.disabled=false;
-       this.$.set3.disabled=false;        
+       this.$.set3.disabled=false;
         }
     }
   });

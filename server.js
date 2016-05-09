@@ -575,7 +575,7 @@ app.post('/classpick',  urlencodedParser,function (req, res)
 	var class_id={"school_type":req.query.classes};
 	var req={"transport_required":'yes'};
 		//console.log('in server...');
-      	connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[class_id,req,schoolx],
+      	connection.query('select id , student_name, school_type from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[class_id,req,schoolx],
        		function(err, rows)
        	{
 		if(!err)
@@ -599,7 +599,7 @@ app.post('/namepick',  urlencodedParser,function (req, res)
 	var req1={"transport_required":'yes'};
 	var schoolx={"school_id":req.query.schol};
 		console.log(req.query.schol);
-      	connection.query('select id , student_name from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[id,req1,schoolx],
+      	connection.query('select id , student_name, school_type from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[id,req1,schoolx],
        		function(err, rows)
        	{
 		if(!err)
@@ -622,8 +622,9 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
 		var route_id=req.query.routept;
 		var studid=req.query.studid;
 		var schoolx=req.query.schol;
-		console.log(req.query.schol);
-       connection.query('SELECT id, point_name from point where route_id=? and school_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=?)))',[route_id,schoolx,studid],
+  var trip=req.query.schooltype;
+		//console.log(req.query.schol);
+       connection.query('SELECT id, point_name from point where route_id=? and school_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=?))) and trip=?',[route_id,schoolx,studid,trip],
        	function(err, rows)
        	{
 		if(!err)
@@ -649,8 +650,10 @@ app.post('/routedroppoint',  urlencodedParser,function (req, res)
 {
 		var route_id=req.query.routedroppt;
 		var studid=req.query.studid;
-		var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT id, point_name from point where route_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=? and ?)))',[route_id,studid,schoolx],
+  var trip=req.query.schooltype;
+		var schoolx=req.query.schol;
+
+       connection.query('SELECT id, point_name from point where route_id=? and school_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=?))) and trip=?',[route_id,schoolx,studid,trip],
        	function(err, rows)
        	{
 		if(!err)
@@ -1984,7 +1987,7 @@ app.post('/getpointname',  urlencodedParser,function (req, res)
 
 app.post('/getroutename',  urlencodedParser,function (req, res)
 {
-	
+
 	var date5={"id":req.query.route};
 	    connection.query('Select distinct route_name from route where ?',[date5],
        	function(err, rows){
@@ -2025,7 +2028,7 @@ app.post('/getpassname',  urlencodedParser,function (req, res)
 
 app.post('/getzonedetail',  urlencodedParser,function (req, res)
 {
-	
+
 	var date5={"student_id":req.query.stid};
 	var schoolx={"school_id":req.query.schol};
 	    connection.query('select zone_name from md_zone where id in (SELECT `zone_id` FROM `student_fee` WHERE `student_id` in (SELECT `id` FROM `student_details` WHERE ? or ?))',[date5, schoolx],

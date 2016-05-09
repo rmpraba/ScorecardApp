@@ -187,7 +187,11 @@ bankname="";
           {
             //alert(this.paydate);
            var  d1=new Date(this.paydate);
-            var fromdatey=d1.getDate()+"/"+(d1.getMonth()+1)+"/"+d1.getFullYear(); 
+           if(d1.getDate()<10)
+            var d="0"+d1.getDate();
+          if((d1.getMonth()+1)<10)
+            var m="0"+(d1.getMonth()+1);
+            var fromdatey=d+"/"+m+"/"+d1.getFullYear(); 
             //alert(fromdatey);
          document.querySelector('zonedatepicker-card').setinstalldate(fromdatey);
           }

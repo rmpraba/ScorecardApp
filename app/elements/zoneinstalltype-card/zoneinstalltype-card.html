@@ -45,7 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
     <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
     <template is="dom-if" if="{{checkinstall(paidstatus)}}"></template>
-            
+
        <paper-dialog id="animated" modal>
 <h4>ADD CHEQUE DETAILS</h4>
  <div  class="layout"> <paper-input required allowed-pattern="[0-9]" error-message="needs Cheque number!"  id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input> </div>
@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <div class="buttons">
   <paper-button id="{{installtype}}" on-click="add">ADD</paper-button>
   <paper-button id="{{installtype}}" on-click="cancelcheque">cancel</paper-button>
-</div>     
+</div>
  </paper-dialog>
    </div>
 <transportfee-service id="service"></transportfee-service>
@@ -122,7 +122,7 @@ bankname="";
         }
         else
         {
-        
+
          if(this.installtype=="installment1")
          {
           alert('Kindly pay the Installment1 First');
@@ -140,7 +140,7 @@ bankname="";
         pushitem.splice(i,1);
        }
        }
-    
+
         for(var i=0;i<chequeitem.length;i++)
        {
        if(this.installtype==chequeitem[i].installtype)
@@ -157,7 +157,7 @@ bankname="";
       },
        payment:function(e)
       {
-        
+
         paytype = (e.target.selectedItem.textContent).trim();
 
        for(var i=0;i<pushitem.length;i++)
@@ -183,6 +183,7 @@ bankname="";
            this.banknam="";
            type=this.installtype;
           amt=this.installamt;
+          document.querySelector('zonedatepicker-card').passinstalltype(type);
            if(type=="installment2")
           {
             //alert(this.paydate);
@@ -191,7 +192,7 @@ bankname="";
             var d="0"+d1.getDate();
           if((d1.getMonth()+1)<10)
             var m="0"+(d1.getMonth()+1);
-            var fromdatey=d+"/"+m+"/"+d1.getFullYear(); 
+            var fromdatey=d+"/"+m+"/"+d1.getFullYear();
             //alert(fromdatey);
          document.querySelector('zonedatepicker-card').setinstalldate(fromdatey);
           }
@@ -199,7 +200,7 @@ bankname="";
         var id = 'animated';
         var dialog = document.getElementById(id);
         dialog.open();
-       
+
        }
        else
        {
@@ -214,7 +215,7 @@ bankname="";
      },
      showdialog:function()
      {
-      
+
  var id = 'animated';
         var dialog = document.getElementById(id);
         dialog.open();
@@ -248,7 +249,7 @@ bankname="";
       {
       chequenum=this.chequeno;
       bankname=this.banknam;
-     
+
        var id = 'animated';
       var dialog = document.getElementById(id);
       dialog.close();
@@ -260,7 +261,7 @@ bankname="";
         obj.paytype=paytype;
         obj.installtype=type;
 
-      
+
 
         pushitem.push(obj);
         this.chequedate=localStorage.getItem("localsess_curr_date");
@@ -278,7 +279,7 @@ chequeitem.push(obj1);
 
       }
     }
-    
+
     });
   })();
   </script>

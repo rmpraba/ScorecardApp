@@ -400,7 +400,7 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};
 		var trans_req={"transport_required":"yes"};
-	    connection.query('select student_name from student_details where ? and ?',[trans_req,schoolx],
+	    connection.query('select student_name from student_details where id NOT IN(Select student_id from student_fee where status="mapped") and ? and ?',[trans_req,schoolx],
        	function(err, rows)
        	{
       	if(!err)
@@ -2346,6 +2346,27 @@ app.post('/addparent',  urlencodedParser,function (req, res){
 			console.log(err);
 		}
 	});
+});
+
+app.post('/getparentname',  urlencodedParser,function (req, res){
+
+  var stuid = req.query.studid;
+  var schoolx=req.query.schol;
+  console.log('In Server');
+  connection.query('select * from parent where student_id=(select id from student_details where student_name=?) and school_id=?',[stuid,schoolx],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        { console.log(rows);
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
 });
 
 function setvalue()

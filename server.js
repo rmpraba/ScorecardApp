@@ -32,8 +32,8 @@ var parentemail=req.query.parentemail;
   var receipttitle=req.query.title;
 console.log(parentemail);
 var server  = email.server.connect({
-   user:    "srirupikaallias@yahoo.com",
-   password:"choculate",
+   user:    "samsidhgroup@yahoo.com",
+   password:"mlzsinstitutions",
    host:    "smtp.mail.yahoo.com",
    ssl:     true
 
@@ -41,8 +41,8 @@ var server  = email.server.connect({
 // send the message and get a callback with an error or details of the message that was sent
 server.send({
    text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
-   from:    "srirupikaallias@yahoo.com",
-   to:       "ntamilselvimca@gmail.com",
+   from:    "samsidhgroup@yahoo.com",
+   to:       parentemail,
    subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
     attachment:
 

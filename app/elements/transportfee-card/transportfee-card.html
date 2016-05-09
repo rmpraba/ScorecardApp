@@ -182,7 +182,13 @@
       obj.installtype=feepay[i].installtype;
       obj.chequenum=chequearray[j].chequenum;
       obj.bankname=chequearray[j].bankname;
-      obj.chequedate=chequearray[j].chequedate;
+      var dt=new Date(chequearray[j].chequedate);
+      var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+      var curr_date = dt.getDate();
+      var curr_month = dt.getMonth();
+      var curr_year = dt.getFullYear();
+      var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+      obj.chequedate=todatez;
       payarray.push(obj);
     }
   }

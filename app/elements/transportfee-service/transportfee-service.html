@@ -627,7 +627,13 @@ recarr.push(recobj);
 
             var cqobj={"cheno":"","cqdate":"","bknm":""}
             cqobj.cheno=chequearr[j].chequenum;
-            cqobj.cqdate=chequearr[j].chequedate;
+            var dt=new Date(chequearr[j].chequedate);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dt.getDate();
+            var curr_month = dt.getMonth();
+            var curr_year = dt.getFullYear();
+            var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            cqobj.cqdate=todatez;
             cqobj.bknm=chequearr[j].bankname;
             cheqarr.push(cqobj);
             document.querySelector('receipt-card').chequearray(cqobj);
@@ -677,7 +683,14 @@ recarr1.push(recobj1);
           {
             var cqobj={"cheno":"","cqdate":"","bknm":""}
             cqobj.cheno=chequearr[j].chequenum;
-            cqobj.cqdate=chequearr[j].chequedate;
+
+            var dt=new Date(chequearr[j].chequedate);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dt.getDate();
+            var curr_month = dt.getMonth();
+            var curr_year = dt.getFullYear();
+            var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            cqobj.cqdate=todatez;
             cqobj.bknm=chequearr[j].bankname;
             cheqarr.push(cqobj);
             document.querySelector('cqreceipt-card').chequearray(cqobj);

@@ -36,6 +36,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         padding-left: 2%;
       }
+      #send{
+
+        margin-left: 120px;
+        height: 25%;
+      }
+      paper-dialog{
+        width: 25%;
+      }
+      paper-item{
+        width: 70%;
+      }
     </style>
     <html>
     <form method="post" action="">
@@ -191,7 +202,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <table>
       <tr >
         <td>
-           <paper-button class="button" id="pdf" style="height: 34px !important;" on-click="pdf">PDF</paper-button>
+           <paper-button class="button" id="pdf" style="height: 34px !important;" on-click="downloadpdf">PDF</paper-button>
         </td>
         <td>
           <paper-button  class="button" id="email" style="height: 34px  !important;" on-click="email">Email</paper-button>
@@ -202,6 +213,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </tr>
     </table>
      </div>
+
+    <paper-dialog id="emaildialog">
+    <paper-item>Verify/Change Email id here..</paper-item>
+    <paper-input value={{stud}} label="Student name"></paper-input>
+    <paper-input value={{parent}} label="Parent name"></paper-input>
+    <paper-input value="{{parentemail}}" label="Parent email id"></paper-input>
+    <paper-button id="send" on-click="changemail">send</paper-button>
+    </paper-dialog>
+
       <iron-ajax
       id="mailsendajax"
       url="{{mailsendurl}}"
@@ -268,7 +288,7 @@ var install2;
 
       ready:function(){
         this.chequeview=true;
-
+        this.flag=0;
       },
       FnClear:function(){
         this.receiptarr="";
@@ -276,6 +296,69 @@ var install2;
         this.cheqno="";
         this.cqdate="";
         this.bank="";
+      },
+      changemail:function(){
+        this.flag=1;
+        this.email=this.parentemail;
+
+        this.$.emaildialog.toggle();     
+          var obj={"chequeno":"","chequedate":"","bank":"","receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
+      obj.receiptno=this.receiptarr[0].receiptno;
+      obj.today=this.receiptarr[0].today;
+      obj.studname=this.receiptarr[0].studname;
+      obj.classname=this.receiptarr[0].classname;
+      obj.parentname=this.parent;
+      obj.session=this.receiptarr[0].session;
+      obj.installtype=this.receiptarr[0].installtype;
+      obj.installfee=this.receiptarr[0].installfee;
+      if(this.flag==1)
+      obj.parentemail=this.email;
+      else
+       obj.parentemail=this.parentemail; 
+   obj.title=this.receiptarr[0].title;
+   obj.paymode=this.receiptarr[0].paytype;
+   //alert(JSON.stringify(obj.paymode))
+  
+   obj.word=this.feeinword;
+   if(this.receiptarr[0].paytype!='Cash'){
+   obj.chequeno=this.cheqno;
+   obj.chequedate=this.cqdate;
+   obj.bank=this.bank;
+   }
+   else{
+   obj.chequeno="NA";
+   obj.chequedate="NA";
+   obj.bank="NA";
+   }
+
+   this.mailsendparam=obj;
+   this.mailsendurl=sessionStorage.getItem("addrinfo")+"/mailsend";
+   this.$.mailsendajax.generateRequest();
+
+   installarr.push(obj);
+   if(install2.length>0){
+     var obj1={"chequeno":"","chequedate":"","bank":"","receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
+        obj1.chequeno=install2[0].cheqno;
+        obj1.chequedate=install2[0].chequedate;
+        obj1.bank=install2[0].bank;
+     obj1.receiptno=install2[0].receiptno;
+     obj1.today=install2[0].today;
+     obj1.studname=install2[0].studname;
+     obj1.classname=install2[0].classname;
+     obj1.parentname=this.parent;
+     obj1.session=install2[0].session;
+     obj1.installtype=install2[0].installtype;
+     obj1.installfee=install2[0].installfee;
+     obj1.title=install2[0].title;
+     obj1.paymode=install2[0].paytype;
+     obj1.word=this.feeinword;
+
+     this.mailsendparam=obj1;
+     this.mailsendurl=sessionStorage.getItem("addrinfo")+"/mailsend";
+     this.$.mailsendajax.generateRequest();
+     installarr.push(obj1);
+
+}
       },
       chequearray:function(charr)
       {
@@ -445,56 +528,13 @@ var install2;
 },
 
  email:function(e){
-  //alert(JSON.stringify(this.receiptarr));
-  //alert(this.receiptarr[0].receiptno);
-             /* alert('sending email');
-            //window.location.href="mailto:kartiksubu.krs@gmail.com?subject=Receipt"+document.title+"&body=.receipt"+escape(window.location.href);
-            var link = 'mailto:kartiksubu.krs@gmail.com?subject=skr2903krr@gmail.com'+document.getElementById('canvas').value+'&body='+document.getElementById('canvas').value;
-              window.location.href = link;*/
+  this.stud=this.receiptarr[0].studname;
+  this.$.emaildialog.toggle();
 
 
 
-
-
-
-
-      var obj={"receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
-      obj.receiptno=this.receiptarr[0].receiptno;
-      obj.today=this.receiptarr[0].today;
-      obj.studname=this.receiptarr[0].studname;
-      obj.classname=this.receiptarr[0].classname;
-      obj.parentname=this.parent;
-      obj.session=this.receiptarr[0].session;
-      obj.installtype=this.receiptarr[0].installtype;
-      obj.installfee=this.receiptarr[0].installfee;
-      obj.parentemail=this.parentemail;
-   obj.title=this.receiptarr[0].title;
-   obj.paymode=this.receiptarr[0].paytype;
-   obj.word=this.feeinword;
-   this.mailsendparam=obj;
-   this.mailsendurl=sessionStorage.getItem("addrinfo")+"/mailsend";
-   this.$.mailsendajax.generateRequest();
-
-   installarr.push(obj);
-   if(install2.length>0){
-     var obj1={"receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
-     obj1.receiptno=install2[0].receiptno;
-     obj1.today=install2[0].today;
-     obj1.studname=install2[0].studname;
-     obj1.classname=install2[0].classname;
-     obj1.parentname=this.parent;
-     obj1.session=install2[0].session;
-     obj1.installtype=install2[0].installtype;
-     obj1.installfee=install2[0].installfee;
-     obj1.title=install2[0].title;
-     obj1.paymode=install2[0].paytype;
-     obj1.word=this.feeinword;
-
-     this.mailsendparam=obj1;
-     this.mailsendurl=sessionStorage.getItem("addrinfo")+"/mailsend";
-     this.$.mailsendajax.generateRequest();
-     installarr.push(obj1);
-   }
+    
+   
     //alert(JSON.stringify(installarr));
 
       },
@@ -540,7 +580,7 @@ var install2;
              w.print();
              w.close();*/
         },
-      pdf:function(){
+      downloadpdf:function(){
         var no=this.receiptarr[0].stid;
         html2canvas($("#canvas1"), {
           onrendered: function(canvas) {

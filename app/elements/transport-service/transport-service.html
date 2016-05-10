@@ -902,7 +902,7 @@ var school=sessionStorage.getItem("sch");
           {
             var iditem2=e1.detail.response.returnval;
             document.querySelector('feereceipt-card').autocompletearr(iditem2);
-           
+
       },
       getstudetail:function(studid)
       {
@@ -915,7 +915,7 @@ var school=sessionStorage.getItem("sch");
 
         this.parentnameurl=sessionStorage.getItem("addrinfo")+"/getparentname";
         this.parentnameparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.parentdetailajax.generateRequest();
       },
       parentnameResponse:function(e){
@@ -1474,13 +1474,13 @@ this.getfeechequeurl=sessionStorage.getItem("addrinfo")+"/getfeecheque";
 
 
 getfeechequeResponse:function(e)
-{ 
+{
   var feecheque=e.detail.response.returnval;
   var title1;
- 
+
         var recarr=[];
         var recarr1=[];
-        
+
         var dt=new Date();
       //var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
       var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);

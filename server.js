@@ -454,7 +454,31 @@ app.post('/stupassgetname' ,  urlencodedParser,function (req, res)
 });
 	});
 
-
+app.post('/stufeegetname' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+		var trans_req={"transport_required":"yes"};
+	    connection.query('select student_name from student_details where id in (select student_id from student_fee where installment_1>0)and ? and ?',[trans_req,schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
 app.post('/getstudetail' ,  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};
@@ -2030,7 +2054,45 @@ app.post('/getpassname',  urlencodedParser,function (req, res)
 	});
 });
 
+app.post('/getfeedetail',  urlencodedParser,function (req, res)
+{
 
+	var name={"student_name":req.query.stid};
+	    connection.query('Select * from student_fee where student_id=(select id from student_details where ?)',[name],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+app.post('/getfeeparent',  urlencodedParser,function (req, res)
+{
+ var id=req.query.stid;
+ console.log(id);
+	var name={"id":req.query.stid};
+	    connection.query('Select class,section,(select parent_name from parent where student_id =?) as parentname,(select email from parent where student_id =?) as parentmail from class_details where id=(select class_id from student_details where id=?)',[id,id,id],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 app.post('/getzonedetail',  urlencodedParser,function (req, res)
 {
 

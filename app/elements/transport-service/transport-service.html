@@ -117,6 +117,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="stufeegetnameajax"
+        url="{{stufeegetnameurl}}"
+        params="{{stufeegetnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="stufeegetnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
 
   <iron-ajax
         method="post"
@@ -498,6 +509,28 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="getfeedetailajax"
+        url="{{getfeedetailurl}}"
+        params="{{getfeedetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfeedetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getfeeparentajax"
+        url="{{getfeeparenturl}}"
+        params="{{getfeeparentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfeeparentResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <iron-ajax
         method="post"
         id="getpassclassajax"
@@ -607,6 +640,8 @@
     var city;
     var pincode;
     var rouid;
+    var feedet;
+    var studentname;
 var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
@@ -827,6 +862,15 @@ var school=sessionStorage.getItem("sch");
         this.stupassgetnameparam=obj;
         this.$.stupassgetnameajax.generateRequest();
       },
+       stufeegetname:function()
+      {
+        //alert('hi service');
+        this.stufeegetnameurl=sessionStorage.getItem("addrinfo")+"/stufeegetname";
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        this.stufeegetnameparam=obj;
+        this.$.stufeegetnameajax.generateRequest();
+      },
       getnameResponse:function(e1)
           {
             var iditem=e1.detail.response.returnval;
@@ -840,6 +884,12 @@ var school=sessionStorage.getItem("sch");
             var iditem1=e1.detail.response.returnval;
             document.querySelector('studentpass-card').autocompletearr(iditem1);
 
+      },
+       stufeegetnameResponse:function(e1)
+          {
+            var iditem2=e1.detail.response.returnval;
+            document.querySelector('feereceipt-card').autocompletearr(iditem2);
+           
       },
       getstudetail:function(studid)
       {
@@ -1365,6 +1415,15 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
               this.getpassnameparam=obj;
               this.$.getpassnameajax.generateRequest();
       },
+       getfeedetail:function(studid){
+        studentname=studid;
+          this.getfeedetailurl=sessionStorage.getItem("addrinfo")+"/getfeedetail";
+              var obj={"stid":""}
+              obj.stid=studid;
+              this.getfeedetailparam=obj;
+              this.$.getfeedetailajax.generateRequest();
+      },
+
       getzonedetail:function(studid){
         this.getzonedetailurl=sessionStorage.getItem("addrinfo")+"/getzonedetail";
         var obj={"stid":"","schol":""}
@@ -1378,6 +1437,146 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         document.querySelector('studentpass-card').zone=zonename.toLowerCase();
 
       },
+      getfeedetailResponse:function(e)
+      {
+          feedet=e.detail.response.returnval;
+          //alert(feedet[0].student_id);
+ this.getfeeparenturl=sessionStorage.getItem("addrinfo")+"/getfeeparent";
+              var obj={"stid":""}
+              obj.stid=feedet[0].student_id;
+              this.getfeeparentparam=obj;
+              this.$.getfeeparentajax.generateRequest();
+
+},
+getfeeparentResponse:function(e)
+{
+  var title1;
+  var feeparent=e.detail.response.returnval;
+        var recarr=[];
+        var recarr1=[];
+        
+        var dt=new Date();
+      //var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+      var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
+//alert(JSON.stringify(e.detail.response.returnval));
+var feezxc=feedet[0].installment_1;
+  document.querySelector('transport-app').setPage("receipt","Receipt");
+document.querySelector('receipt-card').convertrs(feezxc);
+//alert(installment_1Date);
+var dt1=new Date(feedet[0].installment_1Date);
+
+ var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+      var curr_date = dt1.getDate();
+      var curr_month = dt1.getMonth();
+      var curr_year = dt1.getFullYear();
+      var todate = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+
+if(feedet[0].modeofpayment1=="Cash")
+{
+title="RECEIPT";
+}
+else
+{
+  title="RECEIPT";
+}
+
+var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":""}
+recobj.receiptno=feedet[0].receipt_no1;
+recobj.studname=studentname;
+recobj.classname=feeparent[0].class;
+recobj.section=feeparent[0].section;
+recobj.installtype="installment1";
+recobj.installfee=feedet[0].installment_1;
+recobj.paytype=feedet[0].modeofpayment1;
+recobj.today=todate;
+recobj.stid=feedet[0].student_id;
+recobj.session=yr;
+recobj.parent=feeparent[0].parentname;
+recobj.email=feeparent[0].parentmail;
+recobj.schoolname=sessionStorage.getItem("schoolname");
+recobj.schooladdr=sessionStorage.getItem("schooladdr");
+recobj.title=title;
+recarr.push(recobj);
+document.querySelector('receipt-card').parentemail=feeparent[0].parentmail;
+        document.querySelector('receipt-card').receiptarr=recarr;
+        var pt=feedet[0].modeofpayment1;
+       if(pt=='Cheque')
+       {
+       }
+       if(feedet[0].installment_2>0)
+       {
+          var recarr1=[];
+        var dt2=new Date();
+      //var todate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+      var yr2=dt2.getFullYear()+' - '+(dt2.getFullYear()+1);
+      // alert(JSON.stringify(e.detail.response.returnval));
+var feezxc=feedet[0].installment_2;
+  //document.querySelector('transport-app').setPage("receipt","Receipt");
+document.querySelector('cqreceipt-card').convertrss(feezxc);
+//alert(installment_1Date);
+var dt3=new Date(feedet[0].installment_2Date);
+
+ var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+      var curr_date = dt3.getDate();
+      var curr_month = dt3.getMonth();
+      var curr_year = dt3.getFullYear();
+      var todate1 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+
+if(feedet[0].modeofpayment2=="Cash")
+{
+title1="RECEIPT";
+}
+else
+{
+  title1="ACKNOWLEDGEMENT";
+}
+
+var recobj1={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":""}
+recobj1.receiptno=feedet[0].receipt_no2;
+recobj1.studname=studentname;
+recobj1.classname=feeparent[0].class;
+recobj1.section=feeparent[0].section;
+recobj1.installtype="installment2";
+recobj1.installfee=feedet[0].installment_2;
+recobj1.paytype=feedet[0].modeofpayment2;
+recobj1.today=todate1;
+recobj1.stid=feedet[0].student_id;
+recobj1.session=yr2;
+recobj1.parent=feeparent[0].parentname;
+recobj1.email=feeparent[0].parentmail;
+recobj1.schoolname=sessionStorage.getItem("schoolname");
+recobj1.schooladdr=sessionStorage.getItem("schooladdr");
+recobj1.title=title1;
+recarr1.push(recobj1);
+document.querySelector('cqreceipt-card').parentemail=feeparent[0].parentmail;
+
+document.querySelector('cqreceipt-card').receiptarr=recarr1;
+
+       }
+       
+
+          /*  var cqobj={"cheno":"","cqdate":"","bknm":""}
+            cqobj.cheno=chequearr[j].chequenum;
+            var dt=new Date(chequearr[j].chequedate);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = dt.getDate();
+            var curr_month = dt.getMonth();
+            var curr_year = dt.getFullYear();
+            var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            cqobj.cqdate=todatez;
+            cqobj.bknm=chequearr[j].bankname;
+            cheqarr.push(cqobj);
+            document.querySelector('receipt-card').chequearray(cqobj);
+            document.querySelector('receipt-card').pdf(recstudid);
+          }
+          }
+        }
+      }*/
+
+
+
+      },
+
       getpassnameResponse:function(e){
           var idst=e.detail.response.returnval[0].id;
           var classid=e.detail.response.returnval[0].class_id;

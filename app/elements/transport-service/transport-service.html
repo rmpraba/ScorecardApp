@@ -531,6 +531,18 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+  <iron-ajax
+        method="post"
+        id="getfeechequeajax"
+        url="{{getfeechequeurl}}"
+        params="{{getfeechequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfeechequeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <iron-ajax
         method="post"
         id="getpassclassajax"
@@ -642,6 +654,7 @@
     var rouid;
     var feedet;
     var studentname;
+    var feeparent;
 var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
@@ -1450,8 +1463,21 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
 },
 getfeeparentResponse:function(e)
 {
+
+feeparent=e.detail.response.returnval;
+this.getfeechequeurl=sessionStorage.getItem("addrinfo")+"/getfeecheque";
+              var obj={"stid":""}
+              obj.stid=feedet[0].student_id;
+              this.getfeechequeparam=obj;
+              this.$.getfeechequeajax.generateRequest();
+            },
+
+
+getfeechequeResponse:function(e)
+{ 
+  var feecheque=e.detail.response.returnval;
   var title1;
-  var feeparent=e.detail.response.returnval;
+ 
         var recarr=[];
         var recarr1=[];
         
@@ -1502,6 +1528,26 @@ document.querySelector('receipt-card').parentemail=feeparent[0].parentmail;
         var pt=feedet[0].modeofpayment1;
        if(pt=='Cheque')
        {
+         for(var j=0;j<feecheque.length;j++)
+        {
+          if(feecheque[j].installtype=="installment1")
+          {
+
+            var cqobj={"cheno":"","cqdate":"","bknm":""}
+            cqobj.cheno=feecheque[j].cheque_no;
+            var chdt=new Date(feecheque[j].cheque_date);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = chdt.getDate();
+            var curr_month = chdt.getMonth();
+            var curr_year = chdt.getFullYear();
+            var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            cqobj.cqdate=todatez;
+            cqobj.bknm=feecheque[j].bank_name;
+            //cheqarr.push(cqobj);
+            document.querySelector('receipt-card').chequearray(cqobj);
+            //document.querySelector('receipt-card').downloadpdf(recstudid);
+          }
+          }
        }
        if(feedet[0].installment_2>0)
        {
@@ -1551,30 +1597,33 @@ recarr1.push(recobj1);
 document.querySelector('cqreceipt-card').parentemail=feeparent[0].parentmail;
 
 document.querySelector('cqreceipt-card').receiptarr=recarr1;
+ var pt1=feedet[0].modeofpayment2;
+       if(pt1=='Cheque')
+       {
+  for(var j=0;j<feecheque.length;j++)
+        {
+          if(feecheque[j].installtype=="installment2")
+          {
 
-       }
-       
-
-          /*  var cqobj={"cheno":"","cqdate":"","bknm":""}
-            cqobj.cheno=chequearr[j].chequenum;
-            var dt=new Date(chequearr[j].chequedate);
+            var cqobj1={"cheno":"","cqdate":"","bknm":""}
+            cqobj1.cheno=feecheque[j].cheque_no;
+            var chdt1=new Date(feecheque[j].cheque_date);
             var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
-            var curr_date = dt.getDate();
-            var curr_month = dt.getMonth();
-            var curr_year = dt.getFullYear();
-            var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
-            cqobj.cqdate=todatez;
-            cqobj.bknm=chequearr[j].bankname;
-            cheqarr.push(cqobj);
-            document.querySelector('receipt-card').chequearray(cqobj);
-            document.querySelector('receipt-card').pdf(recstudid);
+            var curr_date = chdt1.getDate();
+            var curr_month = chdt1.getMonth();
+            var curr_year = chdt1.getFullYear();
+            var todatezz = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            cqobj1.cqdate=todatezz;
+            cqobj1.bknm=feecheque[j].bank_name;
+            //cheqarr.push(cqobj);
+            document.querySelector('cqreceipt-card').chequearray(cqobj1);
+            //document.querySelector('receipt-card').downloadpdf(recstudid);
           }
           }
-        }
-      }*/
+       }
 
 
-
+}
       },
 
       getpassnameResponse:function(e){

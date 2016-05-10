@@ -2093,6 +2093,27 @@ app.post('/getfeeparent',  urlencodedParser,function (req, res)
 		}
 	});
 });
+
+app.post('/getfeecheque',  urlencodedParser,function (req, res)
+{
+ var id=req.query.stid;
+ console.log(id);
+	
+	    connection.query('Select * from cheque_details where student_id=?',[id],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 app.post('/getzonedetail',  urlencodedParser,function (req, res)
 {
 

@@ -4,6 +4,8 @@
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../transport-service/transport-service.html">
+<link rel="import" href="../edit-cheque-item-card/edit-cheque-item-card.html">
+<link rel="import" href="../edit-cheque2-item-card/edit-cheque2-item-card.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 
 <dom-module id="editcheque-card">
@@ -51,48 +53,15 @@
             <paper-tab>Bank Name</paper-tab>
             <paper-tab>Cheque Date</paper-tab>
           </paper-tabs>
-          <template  is="dom-repeat" items="{{editarr1}}" as="view">
-            <div  class="horizontalframe">
-              <div class="fields" style="margin-left: 3%;">
-                <paper-item>{{view.installtype}}</paper-item>
-              </div>
-              <div class="fields" style="margin-left: 6%;">
-                <paper-item>{{view.installamt}}</paper-item>
-              </div>
-              <div class="fields" style="margin-left: 2%;">
-                <paper-item>{{view.paytype}}</paper-item>
-              </div>
-              <div class="fields" style="margin-left: 4%;">
-                <paper-input value="{{view.chequenum}}"></paper-input>
-              </div>
-              <div class="fields" style="margin-left: 3%;">
-                <paper-input value="{{view.bankname}}"></paper-input>
-              </div>
-              <div class="fields" style="margin-left: 2%;">
-                <paper-input value={{view.chequedate}}></paper-input>
-              </div>
-            </div>
+           <template  is="dom-repeat" items="{{editarr1}}" as="view">
+            <edit-cheque-item-card installtype1="{{view.installtype1}}" installamt1="{{view.installamt1}}" paytype1="{{view.paytype1}}" chequenum1="{{view.chequenum1}}" bankname1="{{view.bankname1}}" chequedate1="{{view.chequedate1}}"></edit-cheque-item-card>
           </template>
-          <template  is="dom-repeat" items="{{editarr2}}" as="view"><div  class="horizontalframe">
-              <div class="fields" style="margin-left: 3%;">
-                <paper-item>{{view.installtype}}</paper-item>
-              </div>
-              <div class="fields" style="margin-left: 6%;">
-                <paper-item>{{view.installamt}}</paper-item>
-              </div>
-              <div class="fields" style="margin-left: 2%;">
-                <paper-item>{{view.paytype}}</paper-item>
-              </div>
-              <div class="fields" style="margin-left: 4%;">
-                <paper-input value="{{view.chequenum}}"></paper-input>
-              </div>
-              <div class="fields" style="margin-left: 3%;">
-                <paper-input value="{{view.bankname}}"></paper-input>
-              </div>
-              <div class="fields" style="margin-left: 2%;">
-                <paper-input value={{view.chequedate}}></paper-input>
-              </div>
+          <template  is="dom-repeat" items="{{editarr2}}" as="views">
+            <edit-cheque2-item-card installtype2="{{views.installtype2}}" installamt2="{{views.installamt2}}" paytype2="{{views.paytype2}} "chequenum2="{{views.chequenum2}}" bankname2="{{views.bankname2}}" chequedate2="{{views.chequedate2}}"></edit-cheque2-item-card>
           </template>
+          <div class="button">
+            <paper-button class="button" on-click="click">Submit</paper-button>
+          </div>
         </div>
       </div>
       <transport-service id="service"></transport-service>
@@ -188,6 +157,9 @@
     document.querySelector('#chequename').selected=-1;
     this.studname=this.studid;
     this.$.service.editcheque(this.studname);
+  },
+  click:function(e){
+    this.$.service.updatecheque();
   }
     });
   })();

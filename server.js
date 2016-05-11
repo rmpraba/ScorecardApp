@@ -2456,6 +2456,70 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
     });
 });
 
+app.post('/getchequedetailsbyname' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+	    connection.query('select student_name from student_details where id in (select student_id from student_fee)and ?',[schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+app.post('/getchequedetails' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+		var student_name={"student_name":req.query.student_name};
+	   var name={"student_name":req.query.stid};
+	    connection.query('Select * from student_fee where student_id=(select id from student_details where ? and ?)',[student_name,schoolx],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+	});
+app.post('/geteditcheque',  urlencodedParser,function (req, res)
+{
+ var id=req.query.stid;
+ console.log(id);
+	
+	    connection.query('Select * from cheque_details where student_id=?',[id],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 function setvalue()
 {
 	console.log("calling setvalue.....");

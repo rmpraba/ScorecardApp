@@ -135,6 +135,9 @@
           <section data-category="addstudent">
             <student-detail-card></student-detail-card>
           </section>
+          <section data-category="editcheque">
+            <editcheque-card></editcheque-card>
+          </section>
           </iron-pages>
        </div>
        <div class="footer"></div>
@@ -372,7 +375,18 @@
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
     }
-    if(currpage=="nodata"){
+    if(currpage=="editcheque"){
+      document.querySelector('editcheque-card').FnClear();
+      document.querySelector('editcheque-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }
+    if(currpage=="discount"){
+      document.querySelector('discountstudent-card').FnClear();
+      document.querySelector('discountstudent-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+    }if(currpage=="nodata"){
       //document.querySelector('approveddiscount-card').FnClear();
       document.querySelector('nodata-card').ready();
       document.querySelector('app-card').setPage("transportapp");

@@ -1,0 +1,195 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../transport-service/transport-service.html">
+<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+
+<dom-module id="editcheque-card">
+  <template>
+    <style type="text/css">
+      .fields{
+        @apply(--layout-horizontal);
+        width: 100%;
+      }
+      .flds, .horizontalframe{
+        @apply(--layout-horizontal);
+      }
+      .flds .fields paper-item{
+        width: 100%;
+      }
+      .detail{
+        margin-top: 3%;
+      }
+    </style>
+    <div class="left">
+      <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+      <paper-listbox class="dropdown-content" id="chequename" on-iron-select="FnItemSelected">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <paper-item>{{item.itemdes}}</paper-item>
+        </template>
+      </paper-listbox>
+      </div>
+      <div class="payment details" id="payment">
+        <div class="flds">
+          <div class="fields">
+            <paper-item>Student Id</paper-item>
+            <paper-item>{{id}}</paper-item>
+          </div>
+          <div class="fields">
+            <paper-item>Student Name</paper-item>
+            <paper-item>{{name}}</paper-item>
+          </div>
+        </div>
+        <div class="detail">
+          <paper-tabs>
+            <paper-tab>Installment Type</paper-tab>
+            <paper-tab>Amount</paper-tab>
+            <paper-tab>Mode of Payment</paper-tab>
+            <paper-tab>Cheque No</paper-tab>
+            <paper-tab>Bank Name</paper-tab>
+            <paper-tab>Cheque Date</paper-tab>
+          </paper-tabs>
+          <template  is="dom-repeat" items="{{editarr1}}" as="view">
+            <div  class="horizontalframe">
+              <div class="fields" style="margin-left: 3%;">
+                <paper-item>{{view.installtype}}</paper-item>
+              </div>
+              <div class="fields" style="margin-left: 6%;">
+                <paper-item>{{view.installamt}}</paper-item>
+              </div>
+              <div class="fields" style="margin-left: 2%;">
+                <paper-item>{{view.paytype}}</paper-item>
+              </div>
+              <div class="fields" style="margin-left: 4%;">
+                <paper-input value="{{view.chequenum}}"></paper-input>
+              </div>
+              <div class="fields" style="margin-left: 3%;">
+                <paper-input value="{{view.bankname}}"></paper-input>
+              </div>
+              <div class="fields" style="margin-left: 2%;">
+                <paper-input value={{view.chequedate}}></paper-input>
+              </div>
+            </div>
+          </template>
+          <template  is="dom-repeat" items="{{editarr2}}" as="view"><div  class="horizontalframe">
+              <div class="fields" style="margin-left: 3%;">
+                <paper-item>{{view.installtype}}</paper-item>
+              </div>
+              <div class="fields" style="margin-left: 6%;">
+                <paper-item>{{view.installamt}}</paper-item>
+              </div>
+              <div class="fields" style="margin-left: 2%;">
+                <paper-item>{{view.paytype}}</paper-item>
+              </div>
+              <div class="fields" style="margin-left: 4%;">
+                <paper-input value="{{view.chequenum}}"></paper-input>
+              </div>
+              <div class="fields" style="margin-left: 3%;">
+                <paper-input value="{{view.bankname}}"></paper-input>
+              </div>
+              <div class="fields" style="margin-left: 2%;">
+                <paper-input value={{view.chequedate}}></paper-input>
+              </div>
+          </template>
+        </div>
+      </div>
+      <transport-service id="service"></transport-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var namearr;
+
+    Polymer({
+      is: 'editcheque-card',
+       ready:function()
+       {
+       this.$.service.getchequedetailsbyname();
+      },
+        autocompletearr:function(autocompletearr)
+    {
+         namearr=autocompletearr;
+    },
+    FnClear:function()
+    {
+    this.value="";
+    },
+    FnInputChanged:function(e){
+     if(e.keyCode==13|| e.keyCode==40)
+        this.querySelector('paper-listbox').focus();
+      var arr=[];
+      arr.push({"itemdes":"-----Select-----"});
+      this.querySelector('paper-listbox').style.visibility='visible';
+      if(e.keyCode==8){
+        this.itemflag="true";
+        this.itemval="";
+        //alert('yes');
+        var len=(this.value).length;
+        if(len<=1){
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.itemArray="";
+          this.itemval="";
+        }
+        if(len>1){
+          this.querySelector('paper-listbox').style.visibility='visible';
+          var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+          for(var i=0;i<namearr.length;i++)
+          {
+            var subval=((namearr[i].student_name).trim()).substring(0,backsubval.length);
+            if((subval).toUpperCase()==(backsubval).toUpperCase())
+            {
+              var obj={"itemdes":"","itemid":""};
+              obj.itemdes=namearr[i].student_name;
+              obj.itemid=namearr[i].student_id;
+              arr.push(obj);
+            }
+          }
+          this.itemArray=arr;
+        }
+      }
+      if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+        if(this.itemflag=="true") {
+          this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+          this.itemflag="false";
+        }
+        else
+        this.itemval = this.value +String.fromCharCode((e.keyCode));
+        if(this.itemval.length>0)
+        {
+          for(var i=0;i<namearr.length;i++){
+            var subval=((namearr[i].student_name).trim()).substring(0,this.itemval.length);
+            if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+              var obj={"itemdes":"","itemid":""};
+              obj.itemdes=namearr[i].student_name;
+              obj.itemid=namearr[i].student_id;
+              arr.push(obj);
+            }
+          }
+          if(arr.length>0)
+            this.itemArray=arr;
+          else {
+            var obj={"itemdes":"","itemid":""};
+              obj.itemdes=namearr[i].student_name;
+              obj.itemid=namearr[i].student_id;
+              arr.push(obj);
+            this.itemArray=arr;
+          }
+        }
+      }
+
+    },
+     FnItemSelected:function(e)
+   {
+       this.querySelector('paper-listbox').style.visibility='hidden';
+    this.studid = e.target.selectedItem.textContent.trim();
+    this.itemArray=[];
+    document.querySelector('#chequename').selected=-1;
+    this.studname=this.studid;
+    this.$.service.editcheque(this.studname);
+  }
+    });
+  })();
+  </script>
+</dom-module>

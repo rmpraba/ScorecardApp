@@ -30,6 +30,7 @@
 <link rel="import" href="../nodata-card/nodata-card.html">
 <link rel="import" href="../studentpass-card/studentpass-card.html">
 <link rel="import" href="../student-detail-card/student-detail-card.html">
+<link rel="import" href="../feereports2-card/feereports2-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -138,6 +139,9 @@
           <section data-category="editcheque">
             <editcheque-card></editcheque-card>
           </section>
+          <section data-category="feereports2">
+            <feereports2-card></feereports2-card>
+          </section>
           </iron-pages>
        </div>
        <div class="footer"></div>
@@ -181,7 +185,7 @@
     }*/
   }
   else if(name=="Accounts Admin"){
-   this.page="accountadmin"; 
+   this.page="accountadmin";
    /*if((currpage=='zonetostudent')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='zonetostudent';
@@ -201,11 +205,11 @@
     else if((currpage=='discountverify')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='discountverify';
-    } 
+    }
     else if((currpage=='receipt')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='receipt';
-    } 
+    }
     else if((currpage=='feereports')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='feereports';
@@ -220,7 +224,7 @@
     }*/
   }
   else if(name=="Admin Manager"){
-   this.page="adminmanager"; 
+   this.page="adminmanager";
    /*if((currpage=='approvediscount')&&(localStorage.getItem("curr_sess_homepage")!="1")){
       //alert('in in');
       this.page='approvediscount';
@@ -336,6 +340,7 @@
     }
    if(currpage=="pass"){
       document.querySelector('studentpass-card').FnClear();
+     document.querySelector('passtemplate-card').FnClear();
       document.querySelector('studentpass-card').ready();
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
@@ -354,6 +359,11 @@
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
     }
+      if(currpage=="feereports2"){
+
+        document.querySelector('app-card').setPage("transportapp");
+        document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+      }
 
   }
   if(name=="Finance Manager")  {
@@ -416,7 +426,7 @@
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
     }
-   
+
   }
  }
   });

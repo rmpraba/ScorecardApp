@@ -5,7 +5,7 @@ var express    = require("express");
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'transport'
+   database : 'transport4'
  });
 var bodyParser = require('body-parser');
  var app = express();
@@ -1777,10 +1777,10 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 app.post('/feereport',  urlencodedParser,function (req, res)
 {
 	var schoolx={"school_id":req.query.schol};
-	var dat1={"installment_1Date":req.query.dates};
-	var dat2={"installment_2Date":req.query.dates};
+  var dat1={"installment_1Date":req.query.dates};
+  var dat2={"installment_2Date":req.query.dates};
 	console.log('come');
-       connection.query('Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id) as name from student_fee  where (? or ?) and ?',[dat1,dat2,schoolx],
+  connection.query('Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id) as name from student_fee  where (? or ?) and ?',[dat1,dat2,schoolx],
        	function(err, rows)
        	{
 		if(!err)
@@ -1803,10 +1803,10 @@ app.post('/feereport',  urlencodedParser,function (req, res)
 app.post('/chequereport',  urlencodedParser,function (req, res)
 {
 	var schoolx={"school_id":req.query.schol};
-	var dat1={"installment_1Date":req.query.dates};
-	var dat2={"installment_2Date":req.query.dates};
+  var dat1={"installment_1Date":req.query.dates};
+  var dat2={"installment_2Date":req.query.dates};
 	console.log('come');
-       connection.query('Select * from cheque_details where student_id in (select student_id from student_fee  where (? or ?) and ?)',[dat1,dat2,schoolx],
+  connection.query('Select * from cheque_details where student_id in (select student_id from student_fee  where (? or ?) and ?)',[dat1,dat2,schoolx],
        	function(err, rows)
        	{
 		if(!err)
@@ -1823,6 +1823,58 @@ app.post('/chequereport',  urlencodedParser,function (req, res)
 	}
 });
 	});
+
+app.post('/feereport2',  urlencodedParser,function (req, res)
+{
+  var schoolx={"school_id":req.query.schol};
+  var dat1=req.query.dates1;
+  var dat2=req.query.dates2;
+  console.log('come');
+  connection.query('Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2, (select student_name from student_details where id=student_id) as name from student_fee  where ((installment_1Date>=? and installment_1Date<=?) or (installment_2Date>=? and installment_2Date<=?)) and ?',[dat1,dat2,dat1,dat2,schoolx],
+    function(err, rows)
+    {
+      if(!err)
+      {
+        if(rows.length>0)
+        {
+          console.log(rows);
+          res.status(200).json({'returnval': rows});
+        }
+        else
+        {
+          console.log(err);
+          res.status(200).json({'returnval': ''});
+        }
+      }
+    });
+});
+
+
+
+app.post('/chequereport2',  urlencodedParser,function (req, res)
+{
+  var schoolx={"school_id":req.query.schol};
+  var dat1=req.query.dates1;
+  var dat2=req.query.dates2;
+  console.log('come');
+  connection.query('Select * from cheque_details where student_id in (select student_id from student_fee  where ((installment_1Date>=? and installment_1Date<=?) or (installment_2Date>=? and installment_2Date<=?)) and ?)',[dat1,dat2,dat1,dat2,schoolx],
+    function(err, rows)
+    {
+      if(!err)
+      {
+        if(rows.length>0)
+        {
+          console.log(rows);
+          res.status(200).json({'returnval': rows});
+        }
+        else
+        {
+          console.log(err);
+          res.status(200).json({'returnval': ''});
+        }
+      }
+    });
+});
 
 
 
@@ -1997,7 +2049,8 @@ app.post('/getpointname',  urlencodedParser,function (req, res)
 {
 
 	var date5={"id":req.query.point};
-	    connection.query('Select distinct point_name from point where ?',[date5],
+  var schoolx={"school_id":req.query.schol};
+	    connection.query('Select distinct point_name from point where ? and ?',[date5,schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -2017,7 +2070,8 @@ app.post('/getroutename',  urlencodedParser,function (req, res)
 {
 
 	var date5={"id":req.query.route};
-	    connection.query('Select distinct route_name from route where ?',[date5],
+  var schoolx={"school_id":req.query.schol};
+	    connection.query('Select distinct route_name from route where ? and ?',[date5,schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -2036,12 +2090,14 @@ app.post('/getroutename',  urlencodedParser,function (req, res)
 app.post('/getpassname',  urlencodedParser,function (req, res)
 {
 
-	var date5={"student_name":req.query.stid};
-	    connection.query('Select * from student_details where ?',[date5],
+	var date5={"id":req.query.stid};
+  var schoolx={"school_id":req.query.schol};
+	    connection.query('Select * from student_details where ? and ?',[date5,schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
 			{
+        console.log(rows);
 				res.status(200).json({'returnval': rows});
 			} else {
 				console.log(err);
@@ -2057,7 +2113,8 @@ app.post('/getfeedetail',  urlencodedParser,function (req, res)
 {
 
 	var name={"student_name":req.query.stid};
-	    connection.query('Select * from student_fee where student_id=(select id from student_details where ?)',[name],
+  var schoolx={"school_id":req.query.schol};
+	    connection.query('Select * from student_fee where student_id=(select id from student_details where ? and ?)',[name,schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -2140,7 +2197,8 @@ app.post('/getpassclass',  urlencodedParser,function (req, res)
 {
 
 	var date5={"id":req.query.class};
-	    connection.query('Select * from class_details where ?',[date5],
+  var schoolx={"school_id":req.query.schol};
+	    connection.query('Select * from class_details where ?',[date5,schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -2504,7 +2562,7 @@ app.post('/geteditcheque',  urlencodedParser,function (req, res)
 {
  var id=req.query.stid;
  console.log(id);
-	
+
 	    connection.query('Select * from cheque_details where student_id=?',[id],
        	function(err, rows){
 		if(!err){
@@ -2520,6 +2578,30 @@ app.post('/geteditcheque',  urlencodedParser,function (req, res)
 		}
 	});
 });
+
+app.post('/getclasspass',  urlencodedParser,function (req, res)
+{
+  var clasx=req.query.id;
+  var schoolx=req.query.schol;
+
+  connection.query('Select * from student_point where school_type=? and school_id=?',[clasx,schoolx],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        {
+          //console.log(rows);
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
 function setvalue()
 {
 	console.log("calling setvalue.....");

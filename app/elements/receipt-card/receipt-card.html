@@ -216,8 +216,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-dialog id="emaildialog">
     <paper-item>Verify/Change Email id here..</paper-item>
-    <paper-input value={{stud}} label="Student name"></paper-input>
-    <paper-input value={{parent}} label="Parent name"></paper-input>
+    <paper-input readonly value={{stud}} label="Student name"></paper-input>
+    <paper-input readonly value={{parent}} label="Parent name"></paper-input>
     <paper-input value="{{parentemail}}" label="Parent email id"></paper-input>
     <paper-button id="send" on-click="changemail">send</paper-button>
     </paper-dialog>
@@ -301,7 +301,7 @@ var install2;
         this.flag=1;
         this.email=this.parentemail;
 
-        this.$.emaildialog.toggle();     
+        this.$.emaildialog.toggle();
           var obj={"chequeno":"","chequedate":"","bank":"","receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
       obj.receiptno=this.receiptarr[0].receiptno;
       obj.today=this.receiptarr[0].today;
@@ -314,11 +314,11 @@ var install2;
       if(this.flag==1)
       obj.parentemail=this.email;
       else
-       obj.parentemail=this.parentemail; 
+       obj.parentemail=this.parentemail;
    obj.title=this.receiptarr[0].title;
    obj.paymode=this.receiptarr[0].paytype;
    //alert(JSON.stringify(obj.paymode))
-  
+
    obj.word=this.feeinword;
    if(this.receiptarr[0].paytype!='Cash'){
    obj.chequeno=this.cheqno;
@@ -533,8 +533,8 @@ var install2;
 
 
 
-    
-   
+
+
     //alert(JSON.stringify(installarr));
 
       },

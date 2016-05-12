@@ -38,9 +38,11 @@ top:35%;
     
       <paper-icon-button label="Discount Approval"class="iconbutton" src="../../images/discount2.png" on-click="discount"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/approval.jpg" on-click="approval"></paper-icon-button>
+       <paper-icon-button class="iconbutton" src="../../images/change-password.png" on-click="password"></paper-icon-button>
     </div>
   </body>
      <refund-service id="rservice"></refund-service>
+     <login-service id="login"></login-service>
      <transportfee-service id="service"></transportfee-service>
   </template>
   <script>
@@ -63,8 +65,11 @@ top:35%;
       {
       this.$.rservice.refundreq();
       document.querySelector('transport-app').setPage("approval"," Cancellation Approval");
+      },
+      password:function(){
+        this.$.login.getroles();
+        document.querySelector('transport-app').setPage("password"," Change Password");
       }
-
 
     });
   })();

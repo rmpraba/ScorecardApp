@@ -2520,16 +2520,64 @@ app.post('/geteditcheque',  urlencodedParser,function (req, res)
 		}
 	});
 });
-function setvalue()
+app.post('/getroles',  urlencodedParser,function (req, res)
 {
+	var schoolx={"school_id":req.query.schol};
+	connection.query('SELECT r.role_name, r.id, e.password FROM role r JOIN employee e ON e.role_id = r.id where ?',[schoolx],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+app.post('/getpassword',  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+	var role={"role_id":req.query.role};
+	connection.query('SELECT password FROM employee where ? and ? ',[role,schoolx],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+app.post('/changepassword',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol};
+	var role={"role_id":req.query.role};
+	var password={"password":req.query.confirmpassword};
+    connection.query('update employee set ? where ? and ?',[password,role,schoolx],
+       	function(err, rows){
+		if(!err){
+			res.status(200).json({'returnval': 'success'});
+		} else {
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	});
+});
+function setvalue(){
 	console.log("calling setvalue.....");
 }
-
 var server = app.listen(8081, function () {
-
-  var host = server.address().address
-  var port = server.address().port
-
-  console.log("Example app listening at http://%s:%s", host, port)
-
+var host = server.address().address
+var port = server.address().port
+console.log("Example app listening at http://%s:%s", host, port)
 })

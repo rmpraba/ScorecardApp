@@ -30,6 +30,7 @@
 <link rel="import" href="../nodata-card/nodata-card.html">
 <link rel="import" href="../studentpass-card/studentpass-card.html">
 <link rel="import" href="../student-detail-card/student-detail-card.html">
+<link rel="import" href="../password-card/password-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -137,6 +138,9 @@
           </section>
           <section data-category="editcheque">
             <editcheque-card></editcheque-card>
+          </section>
+          <section data-category="password">
+            <password-card></password-card>
           </section>
           </iron-pages>
        </div>
@@ -351,6 +355,12 @@
     if(currpage=="nodata"){
       //document.querySelector('approveddiscount-card').FnClear();
       document.querySelector('nodata-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+    }
+    if(currpage=="password"){
+      document.querySelector('password-card').FnClear();
+      document.querySelector('password-card').ready();
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
     }

@@ -203,6 +203,36 @@
         debounce-duration="300"
         >
   </iron-ajax>
+<iron-ajax
+        method="post"
+        id="getrolesajax"
+        url="{{getrolesurl}}"
+        params="{{getrolesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getrolesResponse"
+        debounce-duration="300"
+        >
+<iron-ajax
+        method="post"
+        id="getpasswordajax"
+        url="{{getpasswordurl}}"
+        params="{{getpasswordparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getpasswordResponse"
+        debounce-duration="300"
+        >
+<iron-ajax
+        method="post"
+        id="changepasswordajax"
+        url="{{changepasswordurl}}"
+        params="{{changepasswordparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="changepasswordResponse"
+        debounce-duration="300"
+        >
   </template>
 
   <script>
@@ -216,6 +246,7 @@
     var disid="";
     var username="";
     var school="";
+    var getpassword="";
     Polymer({
       is: "login-service",
 
@@ -534,7 +565,58 @@
           var fee=e.detail.response.returnval[0].fees;
         document.querySelector('app-card').setPage("createzonecard","createzone");
         document.querySelector('zone-card').fee=fee;        
-      }
+      },
+      getroles:function(e){
+        this.getrolesurl=sessionStorage.getItem("addrinfo")+"/getroles";
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        this.getrolesparam=obj;
+        this.$.getrolesajax.generateRequest();
+      }, 
+      getrolesResponse:function(e){
+        var roleitem=e.detail.response.returnval;
+        document.querySelector('password-card').autocompletearr(roleitem);
+      }, 
+      getpassword:function(role){
+        this.getpasswordurl=sessionStorage.getItem("addrinfo")+"/getpassword";
+        var obj={"schol":"", "role":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.role=role;
+        this.getpasswordparam=obj;
+        this.$.getpasswordajax.generateRequest();
+
+      }, 
+      getpasswordResponse:function(e){
+        getpassword = e.detail.response.returnval[0].password;
+      }, 
+      changepassword:function(role, oldpassword, newpassword, confirmpassword){
+        var confirmpass = confirmpassword;
+        var oldpass = oldpassword;
+        var newpass = newpassword;
+        if(getpassword == oldpass){
+          if(confirmpass == newpass){
+            this.changepasswordurl=sessionStorage.getItem("addrinfo")+"/changepassword";
+            var obj={"role":"","confirmpassword":"","schol":""};
+            obj.role=role;
+            obj.confirmpassword=confirmpassword;
+            obj.schol=sessionStorage.getItem("sch");
+            this.changepasswordparam=obj;
+            this.$.changepasswordajax.generateRequest();
+          } else {
+            alert("Entered Password and Confirm Password are not same");
+          }
+        } else {
+            alert("Old Password is not correct");
+        }
+
+      },
+      changepasswordResponse:function(e){
+        var password=e.detail.response.returnval;
+        if(password=='success'){
+          alert('Password Changed');
+        }
+      },
+
        });
       
       

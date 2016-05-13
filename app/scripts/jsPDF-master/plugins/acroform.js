@@ -6,8 +6,10 @@
  * http://opensource.org/licenses/mit-license
  */
 
-(AcroForm = function (jsPDFAPI) {
+(window.AcroForm = function (jsPDFAPI) {
     'use strict';
+    
+    var AcroForm = window.AcroForm;
 
     AcroForm.scale = function (x) {
         return (x * (acroformPlugin.internal.scaleFactor / 1));// 1 = (96 / 72)
@@ -78,7 +80,7 @@
             type: 'reference',
             object: object
         };
-        jsPDF.API.annotationPlugin.annotations[this.internal.getCurrentPageInfo().pageNumber].push(options);
+        jsPDF.API.annotationPlugin.annotations[this.internal.getPageInfo(object.page).pageNumber].push(options);
     };
 
     var putForm = function (formObject) {
@@ -217,10 +219,10 @@
             var key = i;
             var form = fieldArray[i];
             // Start Writing the Object
-            this.internal.newObjectDeferredBegin(form.objId);
+            this.internal.newObjectDeferredBegin(form && form.objId);
 
             var content = "";
-            content += (form.getString());
+            content += form ? form.getString() : '';
             this.internal.out(content);
 
             delete fieldArray[key];
@@ -243,6 +245,7 @@
             // try to put..
             putForm.call(this, fieldObject);
         }
+        fieldObject.page = this.acroformPlugin.internal.getCurrentPageInfo().pageNumber;
         return this;
     };
 
@@ -401,6 +404,8 @@
         putForm.call(this, options);
     };
 })(jsPDF.API);
+
+var AcroForm = window.AcroForm;
 
 AcroForm.internal = {};
 
@@ -757,10 +762,10 @@ AcroForm.internal.toPdfString = function (string) {
     string = string || "";
 
     // put Bracket at the Beginning of the String
-    if (String.indexOf('(', 0) !== 0) {
+    if (string.indexOf('(') !== 0) {
         string = '(' + string;
     }
-
+    
     if (string.substring(string.length - 1) != ')') {
         string += '(';
     }
@@ -1043,7 +1048,14 @@ AcroForm.Field = function () {
 
     Object.defineProperty(this, 'hasAppearanceStream', {
         enumerable: false,
-        configurable: true
+        configurable: true,
+        writable: true
+    });
+
+    Object.defineProperty(this, 'page', {
+        enumerable: false,
+        configurable: true,
+        writable: true
     });
 };
 AcroForm.Field.FieldNum = 0;
@@ -1088,9 +1100,11 @@ AcroForm.ChoiceField = function () {
         configurable: false
     });
     this.hasAppearanceStream = true;
-    this.V.get = function () {
-        AcroForm.internal.toPdfString();
-    };
+    Object.defineProperty(this, 'V', {
+        get: function() {
+            AcroForm.internal.toPdfString();
+        }
+    });
 };
 AcroForm.internal.inherit(AcroForm.ChoiceField, AcroForm.Field);
 window["ChoiceField"] = AcroForm.ChoiceField;
@@ -1296,6 +1310,16 @@ AcroForm.TextField = function () {
      */
         //this.doNotScroll = false;
 
+    var _MaxLen = false;
+    Object.defineProperty(this, 'MaxLen', {
+        enumerable: true,
+        get: function () {
+            return _MaxLen;
+        },
+        set: function (val) {
+            _MaxLen = val;
+        }
+    });
 
     Object.defineProperty(this, 'hasAppearanceStream', {
         enumerable: false,
@@ -1567,32 +1591,32 @@ AcroForm.internal.calculateCoordinates = function (x, y, w, h) {
             x[2] = AcroForm.scale(x[2]);
             x[3] = AcroForm.scale(x[3]);
 
-            coordinates.lowerLeft_X = x[0] | 0;
-            coordinates.lowerLeft_Y = (mmtopx.call(this, this.internal.pageSize.height) - x[3] - x[1]) | 0;
-            coordinates.upperRight_X = x[0] + x[2] | 0;
-            coordinates.upperRight_Y = (mmtopx.call(this, this.internal.pageSize.height) - x[1]) | 0;
+            coordinates.lowerLeft_X = x[0] || 0;
+            coordinates.lowerLeft_Y = (mmtopx.call(this, this.internal.pageSize.height) - x[3] - x[1]) || 0;
+            coordinates.upperRight_X = x[0] + x[2] || 0;
+            coordinates.upperRight_Y = (mmtopx.call(this, this.internal.pageSize.height) - x[1]) || 0;
         } else {
             x = AcroForm.scale(x);
             y = AcroForm.scale(y);
             w = AcroForm.scale(w);
             h = AcroForm.scale(h);
-            coordinates.lowerLeft_X = x | 0;
-            coordinates.lowerLeft_Y = this.internal.pageSize.height - y | 0;
-            coordinates.upperRight_X = x + w | 0;
-            coordinates.upperRight_Y = this.internal.pageSize.height - y + h | 0;
+            coordinates.lowerLeft_X = x || 0;
+            coordinates.lowerLeft_Y = this.internal.pageSize.height - y || 0;
+            coordinates.upperRight_X = x + w || 0;
+            coordinates.upperRight_Y = this.internal.pageSize.height - y + h || 0;
         }
     } else {
         // old method, that is fallback, if we can't get the pageheight, the coordinate-system starts from lower left
         if (Array.isArray(x)) {
-            coordinates.lowerLeft_X = x[0] | 0;
-            coordinates.lowerLeft_Y = x[1] | 0;
-            coordinates.upperRight_X = x[0] + x[2] | 0;
-            coordinates.upperRight_Y = x[1] + x[3] | 0;
+            coordinates.lowerLeft_X = x[0] || 0;
+            coordinates.lowerLeft_Y = x[1] || 0;
+            coordinates.upperRight_X = x[0] + x[2] || 0;
+            coordinates.upperRight_Y = x[1] + x[3] || 0;
         } else {
-            coordinates.lowerLeft_X = x | 0;
-            coordinates.lowerLeft_Y = y | 0;
-            coordinates.upperRight_X = x + w | 0;
-            coordinates.upperRight_Y = y + h | 0;
+            coordinates.lowerLeft_X = x || 0;
+            coordinates.lowerLeft_Y = y || 0;
+            coordinates.upperRight_X = x + w || 0;
+            coordinates.upperRight_Y = y + h || 0;
         }
     }
 

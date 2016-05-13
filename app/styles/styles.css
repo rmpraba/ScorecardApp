@@ -683,6 +683,8 @@ text-align: center;
 }
 .pass{
 
+    width: 21cm;
+    height: 29cm;
     @apply(--layout-horizontal);
     margin-left: 20%;
     margin-top: 15%;

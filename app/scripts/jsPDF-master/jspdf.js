@@ -260,7 +260,7 @@ var jsPDF = (function (global) {
                 out('endstream');
             },
             putPages = function () {
-                var n, p, arr, i, deflater, adler32, adler32cs, wPt, hPt;
+                var n, p, arr, i, deflater, adler32, adler32cs, wPt, hPt, pageObjectNumbers = [];
 
                 adler32cs = global.adler32cs || jsPDF.adler32cs;
                 if (compress && typeof adler32cs === 'undefined') {
@@ -270,7 +270,7 @@ var jsPDF = (function (global) {
                 // outToPages = false as set in endDocument(). out() writes to content.
 
                 for (n = 1; n <= page; n++) {
-                    newObject();
+                    pageObjectNumbers.push(newObject());
                     wPt = (pageWidth = pagedim[n].width) * k;
                     hPt = (pageHeight = pagedim[n].height) * k;
                     out('<</Type /Page');
@@ -313,7 +313,7 @@ var jsPDF = (function (global) {
                 out('<</Type /Pages');
                 var kids = '/Kids [';
                 for (i = 0; i < page; i++) {
-                    kids += (3 + 2 * i) + ' 0 R ';
+                    kids += pageObjectNumbers[i] + ' 0 R ';
                 }
                 out(kids + ']');
                 out('/Count ' + page);
@@ -1303,7 +1303,7 @@ var jsPDF = (function (global) {
                         }
                         prevX = x;
                         text = da[0] + ") Tj\n";
-                        for (i = 1, len = da.length; i < len; i++) {
+                        for (var i = 1, len = da.length; i < len; i++) {
                             var delta = maxLineLength - lineWidths[i];
                             if (align === "center") delta /= 2;
                             // T* = x-offset leading Td ( text )

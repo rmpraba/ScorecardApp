@@ -7,7 +7,6 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
@@ -15,10 +14,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
-<link rel="import" href="..\..\scripts/jquery-1.6.2.js">
-<link rel="import" href="..\..\scripts/jquery-ui.js">
-<link rel="import" href="..\..\scripts/jsPDF-1.2.60/jspdf.debug.js">
-<link rel="import" href="..\..\scripts/html2canvas.js">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
 <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
 <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
@@ -219,8 +214,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-dialog id="emaildialog">
     <paper-item>Verify/Change Email id here..</paper-item>
-    <paper-input readonly value={{stud}} label="Student name"></paper-input>
-    <paper-input readonly value={{parent}} label="Parent name"></paper-input>
+    <paper-input value={{stud}} label="Student name"></paper-input>
+    <paper-input value={{parent}} label="Parent name"></paper-input>
     <paper-input value="{{parentemail}}" label="Parent email id"></paper-input>
     <paper-button id="send" on-click="changemail">send</paper-button>
     </paper-dialog>
@@ -304,7 +299,7 @@ var install2;
         this.flag=1;
         this.email=this.parentemail;
 
-        this.$.emaildialog.toggle();
+        this.$.emaildialog.toggle();     
           var obj={"chequeno":"","chequedate":"","bank":"","receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
       obj.receiptno=this.receiptarr[0].receiptno;
       obj.today=this.receiptarr[0].today;
@@ -317,11 +312,11 @@ var install2;
       if(this.flag==1)
       obj.parentemail=this.email;
       else
-       obj.parentemail=this.parentemail;
+       obj.parentemail=this.parentemail; 
    obj.title=this.receiptarr[0].title;
    obj.paymode=this.receiptarr[0].paytype;
    //alert(JSON.stringify(obj.paymode))
-
+  
    obj.word=this.feeinword;
    if(this.receiptarr[0].paytype!='Cash'){
    obj.chequeno=this.cheqno;
@@ -536,8 +531,8 @@ var install2;
 
 
 
-
-
+    
+   
     //alert(JSON.stringify(installarr));
 
       },

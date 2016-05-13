@@ -80,12 +80,10 @@
       Polymer({
         is:"mapstudenttopoint-card",
         ready:function(){
-
           this.$.submitbutton.hidden=true;
           this.$.search.hidden=true;
-           this.$.maps.selectclass();
-           this.$.submitbutton.disabled=true;
-
+          this.$.maps.selectclass();
+          this.$.submitbutton.disabled=true;
         },
         FnClear:function(){
           this.$.submitbutton.hidden=true;

@@ -1823,30 +1823,29 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             //alert(JSON.stringify(e.detail.response.returnval));
             var id = e.detail.response.returnval[0].student_id;
             var name = e.detail.response.returnval[0].name;
-            alert(id+" "+name);
-            var obj={"installtype":"","installamt":"","paytype":"","chequenum":"","bankname":"","chequedate":""}
-            obj.installamt=editchequedetail[0].installment_1;
-            obj.paytype=editchequedetail[0].modeofpayment1;
-            obj.installtype="installment1";
+            var obj={"installtype1":"","installamt1":"","paytype1":"","chequenum1":"","bankname1":"","chequedate1":""}
+            obj.installamt1=editchequedetail[0].installment_1;
+            obj.paytype1=editchequedetail[0].modeofpayment1;
+            obj.installtype1="installment1";
             if(editchequedetail[0].modeofpayment1=="Cheque"){
                 for(var i=0;i<editcq.length;i++){
                     if(editcq[i].installtype=="installment1"){
-                        obj.chequenum=editcq[i].cheque_no;
-                        obj.bankname=editcq[i].bank_name;
-                        obj.chequedate=editcq[i].cheque_date;
+                        obj.chequenum1=editcq[i].cheque_no;
+                        obj.bankname1=editcq[i].bank_name;
+                        obj.chequedate1=editcq[i].cheque_date;
                     } 
                 }
             }
-            var obj1={"installtype":"","installamt":"","paytype":"","chequenum":"","bankname":"","chequedate":""}
-            obj1.installamt=editchequedetail[0].installment_2;
-            obj1.paytype=editchequedetail[0].modeofpayment2;
-            obj1.installtype="installment2";
+            var obj1={"installtype2":"","installamt2":"","paytype2":"","chequenum2":"","bankname2":"","chequedate2":""}
+            obj1.installamt2=editchequedetail[0].installment_2;
+            obj1.paytype2=editchequedetail[0].modeofpayment2;
+            obj1.installtype2="installment2";
             if(editchequedetail[0].modeofpayment2=="Cheque"){
                 for(var j=0;j<editcq.length;j++){
                     if(editcq[j].installtype=="installment2"){
-                        obj1.chequenum=editcq[j].cheque_no;
-                        obj1.bankname=editcq[j].bank_name;
-                        obj1.chequedate=editcq[j].cheque_date;
+                        obj1.chequenum2=editcq[j].cheque_no;
+                        obj1.bankname2=editcq[j].bank_name;
+                        obj1.chequedate2=editcq[j].cheque_date;
                     } 
                 }
             } 

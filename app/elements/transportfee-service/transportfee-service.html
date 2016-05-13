@@ -561,11 +561,6 @@ var paycount;
       }
 
         }
-
-
-
-
-
       },
       updatereceiptseqResponse:function()
       {
@@ -577,13 +572,9 @@ var paycount;
             obj.schol=sessionStorage.getItem("sch");
            this.getstureceiptparam =obj;
         this.$.getstureceiptajax.generateRequest();
-
         this.getreceiptinfourl=sessionStorage.getItem("addrinfo")+"/getparentinfo";
-
            this.getreceiptinfoparam =obj;
         this.$.getreceiptinfoajax.generateRequest();
-
-
      },
      getreceiptinfoResponse:function(e){
         dadname=e.detail.response.returnval[0].parent_name;

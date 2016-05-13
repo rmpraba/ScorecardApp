@@ -31,6 +31,7 @@
 <link rel="import" href="../studentpass-card/studentpass-card.html">
 <link rel="import" href="../student-detail-card/student-detail-card.html">
 <link rel="import" href="../feereports2-card/feereports2-card.html">
+<link rel="import" href="../password-card/password-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -141,6 +142,9 @@
           </section>
           <section data-category="feereports2">
             <feereports2-card></feereports2-card>
+            </section>
+          <section data-category="password">
+            <password-card></password-card>
           </section>
           </iron-pages>
        </div>
@@ -364,6 +368,12 @@
         document.querySelector('app-card').setPage("transportapp");
         document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
       }
+    if(currpage=="password"){
+      document.querySelector('password-card').FnClear();
+      document.querySelector('password-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+    }
 
   }
   if(name=="Finance Manager")  {

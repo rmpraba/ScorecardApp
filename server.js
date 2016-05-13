@@ -198,6 +198,7 @@ app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 
 app.post('/routeid' ,  urlencodedParser,function (req, res)
 {
+
 	    connection.query('select point_count from sequence',
        	function(err, rows)
        	{
@@ -2026,9 +2027,9 @@ app.post('/pending',  urlencodedParser,function (req, res)
 app.post('/getpassdetail',  urlencodedParser,function (req, res)
 
 {
-
+	var schoolx={"school_id":req.query.schol};
 	var date4={"student_id":req.query.stid};
-	    connection.query('Select * from student_point where ?',[date4],
+	    connection.query('Select * from student_point where ? and ?',[date4,schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -2091,7 +2092,7 @@ app.post('/getroutename',  urlencodedParser,function (req, res)
 app.post('/getpassname',  urlencodedParser,function (req, res)
 {
 
-	var date5={"id":req.query.stid};
+	var date5={"student_name":req.query.stid};
   var schoolx={"school_id":req.query.schol};
 	    connection.query('Select * from student_details where ? and ?',[date5,schoolx],
        	function(err, rows){
@@ -2199,7 +2200,7 @@ app.post('/getpassclass',  urlencodedParser,function (req, res)
 
 	var date5={"id":req.query.class};
   var schoolx={"school_id":req.query.schol};
-	    connection.query('Select * from class_details where ?',[date5,schoolx],
+	    connection.query('Select * from class_details where ? and ?',[date5,schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)

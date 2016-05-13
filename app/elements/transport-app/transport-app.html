@@ -32,6 +32,7 @@
 <link rel="import" href="../student-detail-card/student-detail-card.html">
 <link rel="import" href="../feereports2-card/feereports2-card.html">
 <link rel="import" href="../password-card/password-card.html">
+<link rel="import" href="../routecreate-card/routecreate-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -145,6 +146,9 @@
             </section>
           <section data-category="password">
             <password-card></password-card>
+          </section>
+          <section data-category="addroute">
+            <routecreate-card></routecreate-card>
           </section>
           </iron-pages>
        </div>
@@ -344,10 +348,17 @@
     }
    if(currpage=="pass"){
       document.querySelector('studentpass-card').FnClear();
-     document.querySelector('passtemplate-card').FnClear();
+     //document.querySelector('passtemplate-card').FnClear();
       document.querySelector('studentpass-card').ready();
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
+    if(currpage=="addroute"){
+      //document.querySelector('studentpass-card').FnClear();
+     //document.querySelector('passtemplate-card').FnClear();
+      //document.querySelector('studentpass-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("addroute","Add Route");
     }
    }
     if(name=="Admin Manager")  {

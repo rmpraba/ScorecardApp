@@ -5,7 +5,7 @@ var express    = require("express");
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'transport4'
+   database : 'transport'
  });
 var bodyParser = require('body-parser');
  var app = express();
@@ -1728,6 +1728,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 	var installtype=req.query.installtype;
 	var fine1=0;
 	var fine2=0;
+	var installamt;
 	if(installtype=="installment1")
 	{
 		if(req.query.paidstatus=="bounce")
@@ -1739,6 +1740,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 			fine1=0;
 		}
 		chequestatus={"install1_status":req.query.paidstatus};
+
 		//updatefine={"install1_fine":install1_fine+fine};
 	}
 	else
@@ -1754,15 +1756,19 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
          chequestatus={"install2_status":req.query.paidstatus};
           //updatefine={"install2_fine":install2_fine+fine};
 	}
+console.log(installtype);
+console.log(chequestatus);
+
 
 	chequename={"student_id":req.query.chequename}
+	console.log(chequename);
        connection.query('update student_fee set ?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,fine1,fine2,chequename],
        	function(err, rows)
        	{
 		if(!err)
 		{
 
-			// console.log('ccyes');
+			 console.log('ccyes');
 			res.status(200).json({'returnval': 'success'});
 
 		}

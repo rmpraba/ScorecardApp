@@ -1119,48 +1119,61 @@ document.querySelector('zonetostudent-card').payoption(installarr);
         document.querySelector('chequedetail-card').Fnchequedetail(chequedetail);
 
      },
-     updatechequedetail:function(chequestatus,chequenum,installtype,cname)
+     updatechequedetail:function(chqdetail)
      {
-        uchequeno=cname;
-        uchequestatus=chequestatus;
-        uinstalltype=installtype;
+       for(var i=0;i<chqdetail.length;i++)
+        {
+
+        uchequeno=chqdetail[i].cheque_no;
+        uchequestatus=chqdetail[i].cheque_status;
+        uinstalltype=chqdetail[i].installtype;
          this.updatechequedetailurl=sessionStorage.getItem("addrinfo")+"/updatechequedetail";
         var obj={"chequestatus":"","chequenum":"","schol":""}
-        obj.chequestatus=chequestatus;
-        obj.chequenum=chequenum;
+        obj.chequestatus=uchequestatus;
+        obj.chequenum=uchequeno;
         obj.schol=sessionStorage.getItem("sch");
 
         this.updatechequedetailparam=obj;
         this.$.updatechequedetailajax.generateRequest();
+      }
      },
      updatechequedetailResponse:function(e)
      {
-        var paidstatus;
-        if(uchequestatus=="cleared")
+     },
+     updatestudentcheque:function(chqdetail)
+     {
+      //alert(JSON.stringify(chqdetail));
+       var paidstatus;
+       for(var j=0;j<chqdetail.length;j++)
         {
-            paidstatus="paid";
-        }
-        else if(uchequestatus=="bounce")
+
+       
+        if(chqdetail[j].cheque_status=="cleared")
+        {
+            paidstatus="paid";        }
+        else if(chqdetail[j].cheque_status=="bounce")
         {
             paidstatus="bounce";
         }
-        else if(uchequestatus=="cancelled")
+        else if(chqdetail[j].cheque_status=="cancelled")
         {
           paidstatus="cancelled";
         }
 
         this.updatestuchequeurl=sessionStorage.getItem("addrinfo")+"/updatestucheque";
         var obj={"chequename":"","installtype":"","paidstatus":""}
-        obj.chequename=uchequeno;
-        obj.installtype=uinstalltype;
+        obj.chequename=chqdetail[j].student_id;
+        obj.installtype=chqdetail[j].installtype;
         obj.paidstatus=paidstatus;
         this.updatestuchequeparam=obj;
         //alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest();
+      }
      },
      updatestuchequeResponse:function(e)
      {
-      document.querySelector('chequedetail-card').refreshchequedetail();
+      //alert('come');
+      //document.querySelector('chequedetail-card').refreshchequedetail();
 
      },
       feereport:function(dat)

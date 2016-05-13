@@ -12,14 +12,10 @@
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
 <dom-module id="feereports2-card">
-  <template>
+    <template>
     <style>
       :host {
         display: block;
-      }
-      .date{
-        @apply(--layout-horizontal);
-
       }
       .headtabs{
         width: 90% !important;
@@ -35,8 +31,12 @@
       #by1 paper-item, #by2 paper-item{
         width: 100%;
       }
+      .date{
+       @apply(--layout-horizontal);
+       margin-top: 5%; 
+      }
     </style>
-    <div class="feereports2-card">
+    <div class="feereports-card">
       <div class="date" style="margin-left: 30%;">
         <table>
           <tr style="height: 100px;">
@@ -49,7 +49,7 @@
         <paper-button style="height: 100px;margin-top: 5%;" id="but" class="button" on-click="search">Search</paper-button>
       </div>
       <div class="field" id="by1"><paper-item><h1>By Cash : Installment 1</h1></paper-item></div>
-
+      
       <div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
@@ -68,7 +68,7 @@
 
 
         <div class="field" id="by1"><paper-item><h1>By Cash : Installment 2</h1></paper-item></div>
-
+      
       <div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
@@ -85,7 +85,7 @@
           <paper-item>{{cash2}}</paper-item>
         </div>
       <div class="field" id="by2"><paper-item><h1>By Cheque : Installment 1</h1></paper-item></div>
-
+       
       <div class="headtabs" id="tabs2">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
@@ -107,7 +107,7 @@
 
 
  <div class="field" id="by2"><paper-item><h1>By Cheque : Installment 2</h1></paper-item></div>
-
+       
       <div class="headtabs" id="tabs2">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
@@ -190,7 +190,7 @@ var fromdate;
         this.$.but.disabled=false;
       },
       search:function(){
-        alert('hi   '+fromdate+'    '+todate);
+        //alert('hi   '+fromdate+'    '+todate);
         this.$.service.feereport2(fromdate,todate);
         this.$.print.hidden=false;
         this.$.totcol1.hidden=false;
@@ -214,3 +214,5 @@ var fromdate;
   })();
   </script>
 </dom-module>
+
+

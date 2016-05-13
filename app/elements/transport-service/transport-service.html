@@ -1446,8 +1446,9 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
        getfeedetail:function(studid){
         studentname=studid;
           this.getfeedetailurl=sessionStorage.getItem("addrinfo")+"/getfeedetail";
-              var obj={"stid":""}
+              var obj={"stid":"","schol":""}
               obj.stid=studid;
+              obj.schol=sessionStorage.getItem("sch");
               this.getfeedetailparam=obj;
               this.$.getfeedetailajax.generateRequest();
       },
@@ -1525,7 +1526,7 @@ var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"",
 recobj.receiptno=feedet[0].receipt_no1;
 recobj.studname=studentname;
 recobj.classname=feeparent[0].class;
-recobj.section=feeparent[0].section;
+//recobj.section=feeparent[0].section;
 recobj.installtype="installment1";
 recobj.installfee=feedet[0].installment_1;
 recobj.paytype=feedet[0].modeofpayment1;

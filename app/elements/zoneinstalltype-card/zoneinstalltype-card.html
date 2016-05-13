@@ -97,6 +97,7 @@ bankname="";
       {
         if(pstatus==true)
         {
+
            //alert(pstatus);
            this.hidden1=false;
            this.hidden2=true;
@@ -104,6 +105,8 @@ bankname="";
         }
         else
         {
+
+          this.selectmode=-1;
           this.hidden1=true;
           this.hidden2=false;
         }
@@ -224,7 +227,9 @@ bankname="";
      {
     pushitem=[];
     chequeitem=[];
-    document.querySelectorAll('#paymodemenu').selected=-1;
+    //document.querySelectorAll('#paymodemenu').selected=-1;
+       //this.$.paymodemenu.selected=-1;
+       //this.selectmode=-1;
     //document.querySelector('#installment1').selected=-1;
    // document.querySelector('#installment2').selected=-1;
 

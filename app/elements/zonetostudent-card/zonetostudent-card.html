@@ -152,7 +152,7 @@
       </div>
       <div class="collapse1">
       <template  is="dom-repeat" items="{{installmentarr}}" as="view">
-          <zoneinstalltype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
+          <zoneinstalltype-card installtype="{{view.installtype}}"  installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
           </zoneinstalltype-card>
       </template>
       <div >
@@ -172,7 +172,7 @@
       </div>
       <div class="collapse1">
       <template  is="dom-repeat" items="{{installmentarr1}}" as="view">
-          <zoneinstalltype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
+          <zoneinstalltype-card installtype="{{view.installtype}}" installamt="{{view.amount}}"  paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
           </zoneinstalltype-card>
       </template>
       <div >
@@ -467,10 +467,35 @@ this.hidetransport=true;
     },
     cancel:function()
     {
-        document.querySelector('zoneinstalltype-card').cancelreq();
+       document.querySelector('zoneinstalltype-card').cancelreq();
+//document.querySelectorAll('zoneinstalltype-card').selectmode=-1;
+      //this.installmentarr="";
         var id = 'confirmbox';
         var dialog = document.getElementById(id);
         dialog.opened=false;
+      boxcount=2;
+      document.querySelector('zoneinstalltype-card').lumpsumct(boxcount);
+      document.querySelector("#lumsum").checked=false;
+
+      if(this.installmentarr.length>0)
+      {
+
+        this.installmentarr1=payarrr;
+        this.installmentarr="";
+        this.hidetransport=true;
+        this.hidetransport1=false;
+
+      }
+      else
+      {
+
+        this.installmentarr=payarrr;
+        this.installmentarr1="";
+        this.hidetransport=false;
+        this.hidetransport1=true;
+      }
+
+
 
     },
     autocompletearr:function(autocompletearr)

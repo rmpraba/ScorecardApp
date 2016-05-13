@@ -1829,7 +1829,7 @@ app.post('/feereport2',  urlencodedParser,function (req, res)
   var schoolx={"school_id":req.query.schol};
   var dat1=req.query.dates1;
   var dat2=req.query.dates2;
-  console.log('come');
+  console.log('come server fee');
   connection.query('Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2, (select student_name from student_details where id=student_id) as name from student_fee  where ((installment_1Date>=? and installment_1Date<=?) or (installment_2Date>=? and installment_2Date<=?)) and ?',[dat1,dat2,dat1,dat2,schoolx],
     function(err, rows)
     {
@@ -1856,7 +1856,7 @@ app.post('/chequereport2',  urlencodedParser,function (req, res)
   var schoolx={"school_id":req.query.schol};
   var dat1=req.query.dates1;
   var dat2=req.query.dates2;
-  console.log('come');
+  console.log('come server cheque');
   connection.query('Select * from cheque_details where student_id in (select student_id from student_fee  where ((installment_1Date>=? and installment_1Date<=?) or (installment_2Date>=? and installment_2Date<=?)) and ?)',[dat1,dat2,dat1,dat2,schoolx],
     function(err, rows)
     {

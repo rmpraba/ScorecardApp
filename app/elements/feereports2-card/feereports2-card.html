@@ -46,7 +46,7 @@
 
           </tr>
         </table>
-        <paper-button style="height: 100px;margin-top: 5%; background-color: grey;" id="but" class="button" on-click="search">Search</paper-button>
+        <paper-button style="height: 100px;margin-top: 5%;" id="but" class="button" on-click="search">Search</paper-button>
       </div>
       <div class="field" id="by1"><paper-item><h1>By Cash : Installment 1</h1></paper-item></div>
 
@@ -188,7 +188,6 @@ var fromdate;
       showpapertab2:function(showtime2){
         todate=showtime2;
         this.$.but.disabled=false;
-        document.getElementById("but").style.background="black";
       },
       search:function(){
         alert('hi   '+fromdate+'    '+todate);

@@ -1199,6 +1199,7 @@ document.querySelector('zonetostudent-card').payoption(installarr);
         obj.dates2=todate2;
         obj.schol=sessionStorage.getItem("sch");
         this.chequereport2param=obj;
+        alert(JSON.stringify(obj));
         this.$.chequereport2ajax.generateRequest();
         this.feereport2url=sessionStorage.getItem("addrinfo")+"/feereport2";
         var obj1={"dates1":"","dates2":"","schol":""}
@@ -1206,6 +1207,7 @@ document.querySelector('zonetostudent-card').payoption(installarr);
         obj1.dates2=todate2;
         obj1.schol=sessionStorage.getItem("sch");
         this.feereport2param=obj1;
+        alert(JSON.stringify(obj1));
         this.$.feereport2ajax.generateRequest();
 
 

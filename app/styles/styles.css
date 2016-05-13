@@ -815,4 +815,13 @@ margin-left: 2%;
 .add-student .button{
     margin: 3% 0% 0 13%;
 }
+.routecreate{
+    @apply(--layout-horizontal);
+    margin-left: 30%;
+    margin-top: 10%;
+    display: flex;
+}
+
+
+
 </style>

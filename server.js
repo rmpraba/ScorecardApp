@@ -175,7 +175,7 @@ app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 
 		var rouname={"id":req.query.id,"point_name":req.query.points,"route_id":req.query.routes,"trip":req.query.trip,"pickup_time":req.query.pick,"drop_time":req.query.drop,"distance_from_school":req.query.distance,"school_id":req.query.schol};
 		//console.log('in server...'+routename);
-		console.log(rouname);
+		//console.log(rouname);
 	    connection.query('insert into point set ?',[rouname],
        	function(err, rows)
        	{
@@ -199,7 +199,8 @@ app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 app.post('/routeid' ,  urlencodedParser,function (req, res)
 {
 
-	    connection.query('select point_count from sequence',
+	var p={"id":req.query.id};
+	    connection.query('select count from sequence where ?',[p],
        	function(err, rows)
        	{
 		if(!err)
@@ -227,9 +228,9 @@ app.post('/routeid' ,  urlencodedParser,function (req, res)
 
 app.post('/sequence' ,  urlencodedParser,function (req, res)
 {
-
-		var point={"point_count":req.query.pointcount};
-	    connection.query('update sequence set ?',[point],
+		var id={"id":req.query.id};
+		var point={"count":req.query.pointcoun};
+	    connection.query('update sequence set ? WHERE ?',[point,id],
        	function(err, rows)
        	{
       	if(!err)
@@ -2665,6 +2666,31 @@ app.post('/changepassword',  urlencodedParser,function (req, res){
 		}
 	});
 });
+
+
+app.post('/createroute' ,  urlencodedParser,function (req, res)
+{
+		var scho={"school_id":req.query.schol,"id":req.query.id,"route_name":req.query.routes};
+		//console.log(' in  route create'+scho);
+	    connection.query('insert into route set ?',[scho],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			console.log('inserted');
+			res.status(200).json({'returnval': 'success'});
+		}
+		else
+		{
+			console.log("error");
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+
+
+});
+	});
+
 
 function setvalue(){
 	console.log("calling setvalue.....");

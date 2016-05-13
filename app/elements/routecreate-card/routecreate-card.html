@@ -9,15 +9,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <dom-module id="routecreate-card">
   <template>
     <style>
       :host {
         display: block;
       }
+     
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="routecreate">
+    
+      <div class="left" style="margin-top: 2%;">
+            <paper-item>Route Name : </paper-item>
+      </div>
+      <div class="center">
+        <paper-input  class="field" value="{{routename}}"></paper-input>
+      </div>
+      <div class="right" style="margin-top: 2%;margin-left: 8%;">
+        <paper-button class="button" on-click="create">ADD</paper-button>
+      </div>
+    </div>
+    <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
   </template>
   <script>
   (function() {
@@ -26,13 +42,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'routecreate-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'routecreate-card',
-          notify: true
-        }
+      ready:function(){
+       
+      },
+      create:function(){
+        this.$.maps.createroute(this.routename);
+      },
+      FnClear:function(){
+        this.routename="";
       }
+
+
     });
   })();
   </script>

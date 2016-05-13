@@ -1831,7 +1831,7 @@ app.post('/feereport2',  urlencodedParser,function (req, res)
   //var dat2=req.query.dates2;
   
   //console.log('come server fee');
-  connection.query("Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2, (select student_name from student_details where id = student_id and school_id='"+req.query.schol+"') as name from student_fee  where (installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) and school_id='"+req.query.schol+"'",
+  connection.query("Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2, (select student_name from student_details where id = student_id and school_id='"+req.query.schol+"') as name from student_fee  where ((installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d'))) and school_id='"+req.query.schol+"'",
     function(err, rows)
     {
       if(!err)
@@ -1858,7 +1858,7 @@ app.post('/chequereport2',  urlencodedParser,function (req, res)
   var dat1=req.query.dates1;
   var dat2=req.query.dates2;
   //console.log('come server cheque');
-  connection.query("select * from cheque_details where student_id in (select student_id from student_fee where (installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) and ?)",[schoolx],
+  connection.query("select * from cheque_details where student_id in (select student_id from student_fee where (installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) and school_id='"+req.query.schol+"') and school_id='"+req.query.schol+"'",
     function(err, rows)
     {
       if(!err)

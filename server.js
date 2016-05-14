@@ -1735,6 +1735,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 		if(req.query.paidstatus=="bounce")
 		{
 			fine1=250;
+			installamt={"installment_1":0};
 		}
 		else
 		{
@@ -1749,6 +1750,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 		if(req.query.paidstatus=="bounce")
 		{
 			fine2=250;
+			installamt={"installment_2":0};
 		}
 		else
 		{
@@ -1763,7 +1765,7 @@ console.log(chequestatus);
 
 	chequename={"student_id":req.query.chequename}
 	console.log(chequename);
-       connection.query('update student_fee set ?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,fine1,fine2,chequename],
+       connection.query('update student_fee set ?,?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,installamt,fine1,fine2,chequename],
        	function(err, rows)
        	{
 		if(!err)
@@ -2694,6 +2696,26 @@ app.post('/createroute' ,  urlencodedParser,function (req, res)
 
 });
 	});
+
+app.post('/verify',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol};
+	var role={"id":req.query.stid};
+    connection.query('select * from student_details where ? and ?',[role,schoolx],
+       	function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				//console.log(rows);
+				res.status(200).json({'returnval': 'success'});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 
 function setvalue(){

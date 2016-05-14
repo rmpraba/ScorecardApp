@@ -639,6 +639,17 @@
           debounce-duration="300"
         >
         </iron-ajax>
+        <iron-ajax
+          method="post"
+          id="verifyajax"
+          url="{{verifyurl}}"
+          params="{{verifyparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="verifyResponse"
+          debounce-duration="300"
+        >
+        </iron-ajax>
     </template>
   <script>
   (function() {
@@ -1794,6 +1805,8 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             {
                     alert('Student added successfully');
             }
+            document.querySelector('student-detail-card').FnClear();
+            document.querySelector('student-detail-card').ready();
         },
         getchequedetailsbyname:function(e){
            this.getchequedetailsbynameurl=sessionStorage.getItem("addrinfo")+"/getchequedetailsbyname";
@@ -1870,6 +1883,24 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             document.querySelector('editcheque-card').editarr2=chequearr2;
             document.querySelector('editcheque-card').id=id;
             document.querySelector('editcheque-card').name=name;
+        },
+        verify:function(id){
+            this.verifyurl=sessionStorage.getItem("addrinfo")+"/verify";
+            var obj={"schol":"","stid":""}
+            obj.schol=sessionStorage.getItem("sch");
+            obj.stid=id;
+            this.verifyparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.verifyajax.generateRequest();
+        },
+        verifyResponse:function(e){
+        var res=e.detail.response.returnval;
+        if(res=='success')
+        {
+            alert('The Id Is Already Exist Please Change it');
+            var d='';
+            document.querySelector('student-detail-card').student_id=d;
+        }
         }
     });
  })();

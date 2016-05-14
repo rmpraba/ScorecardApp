@@ -27,7 +27,7 @@
    <div class="layframe">
         <div class="horizontalframe">
     <div class="hrspace">
-            <paper-input label="Student Id" value="{{student_id}}" id="stdid" required error-message="needs a student id!"></paper-input>
+            <paper-input label="Student Id" value="{{student_id}}" id="stdid" on-change="verify" required error-message="needs a student id!"></paper-input>
           </div>
          <div class="hrspace">
             <paper-input label="First Name" value="{{first_name}}" id="fname" required allowed-pattern="[a-zA-Z  ]" required  error-message="needs a name!"></paper-input>
@@ -41,7 +41,8 @@
             <div class="drop-down">
               <paper-dropdown-menu label="Select Class">
                 <paper-menu id="selectclass" required error-message="needs a class!" class="dropdown-content" on-iron-select="classes" valueattr="value" >
-                  <template  is="dom-repeat" items="{{select_class}}" as="view">
+                  <paper-item value=0>< - - Select Class - - ></paper-item>
+                                  <template  is="dom-repeat" items="{{select_class}}" as="view">
                     <paper-item value="{{view.id}}">{{view.class}} - {{view.section}}</paper-item>
                   </template>
                 </paper-menu>
@@ -51,6 +52,7 @@
             <paper-dropdown-menu label="class-Type">
               <paper-menu id="schooltype" required error-message="needs a Class Type!" class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
                 <paper-listbox class="dropdown-content">
+                <paper-item value=0>< - - Select Grade - - ></paper-item>
                   <paper-item value="Pre-Primary">Pre-Primary</paper-item>
                   <paper-item value="Primary">Primary</paper-item>
                   <paper-item value="Secondary">Secondary</paper-item>
@@ -72,7 +74,7 @@
             <paper-input label="Parent Email" value="{{parent_email}}" id="pemail" required error-message="needs a name!"></paper-input>
           </div>
            <div class="hrspace">
-            <paper-input label="Parent Mobile" value="{{parent_mobile}}" id="pmobile" required error-message="needs a name!"></paper-input>
+            <paper-input label="Parent Mobile" value="{{parent_mobile}}" id="pmobile" required allowed-pattern="[0-9]" error-message="needs a name!"></paper-input>
           </div>
         </div>
     <div class="horizontalframe">
@@ -91,7 +93,7 @@
             <paper-input value="{{city}}" id="city" error-message="needs town!" allowed-pattern="[a-zA-Z]" label="City / Town" required ></paper-input>
           </div>
     <div class="hrspace">
-            <paper-input value="{{pincode}}" id="pincode" error-message="needs pincode!" label="pincode" required ></paper-input>
+            <paper-input value="{{pincode}}" id="pincode" error-message="needs pincode!" label="pincode" allowed-pattern="[0-9 ]"required ></paper-input>
           </div>
           <div class="drop-down" >
             <paper-dropdown-menu label="Transport Required">
@@ -126,7 +128,8 @@
       },
       FnClear:function(){
         this.student_id="";
-        this.student_name="";
+        this.first_name="";
+         this.last_name="";
         this.parent_name="";
         this.parent_email="";
         this.parent_mobile="";
@@ -135,9 +138,9 @@
         this.address_3="";
         this.city="";
         this.pincode="";
-        document.querySelector('#trans').selected=-1;
-        document.querySelector('#selectclass').selected=-1;
-        document.querySelector('#schooltype').selected=-1;
+        document.querySelector('#trans').selected=-5;
+        document.querySelector('#selectclass').selected=0;
+        document.querySelector('#schooltype').selected=0;
         stu_class="";
       stu_schooltype="";
       stu_transport="";
@@ -177,7 +180,10 @@
        this.dob=localStorage.getItem("localsess_dob_date");
         this.$.service.addstudent(this.student_id, this.first_name,this.last_name,stu_class, stu_schooltype, stu_transport, this.parent_name, this.parent_email,this.parent_mobile,this.address_1,this.address_2,this.address_3,this.city,this.pincode,this.dob);
       }
-      }
+      },
+    verify:function(){
+      this.$.service.verify(this.student_id);
+    }
     });
   })();
   </script>

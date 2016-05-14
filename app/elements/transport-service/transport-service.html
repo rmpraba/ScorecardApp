@@ -554,6 +554,7 @@
             method="post"
             id="classesajax"
             url="{{classurl}}"
+            params="{{classparam}}"
             handle-as="json"
             content-type="application/json"
             on-response="classesResponse"
@@ -1751,6 +1752,9 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         },
         classesx:function(){
             this.classurl = sessionStorage.getItem("addrinfo")+"/selectclasses";
+            var obj={"schol":""}
+            obj.schol=sessionStorage.getItem("sch");
+            this.classparam=obj;
             this.$.classesajax.generateRequest();
         },
         classesResponse:function(e){

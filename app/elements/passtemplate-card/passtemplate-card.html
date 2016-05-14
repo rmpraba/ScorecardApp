@@ -9,30 +9,366 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../transport-service/transport-service.html">
+<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+<script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+<script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+
 
 <dom-module id="passtemplate-card">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <div>Hello from <span>{{foo}}</span></div>
+  <style type="text/css">
+  .passtemp{
+
+    @apply(--layout-horizontal);
+    margin-left: 20%;
+    margin-top: 5%;
+}
+.passtemp .front{
+   width: 5.5cm;
+  height: 8.5cm;
+  background: linear-gradient(#408CD9,#5398DD,#66A3E1,#79AEE4,#8CBAE8,#A0C6EC,#B3D1F0,#CFE2F6,#ECF4FB,#FFFFFF);
+  border-radius: 15px;
+   border-color: #888888;
+   border-style: dotted;
+   border-width: 2px;
+   margin-left: -20%;
+   margin-top: -15%;
+}
+.passtemp .front .header{
+   @apply(--layout-horizontal);
+   margin-top: -3%;
+}
+.passtemp .front .header .logo{
+
+}
+.passtemp .front .header .heading{
+    width: 80%;
+    height: 7%;
+    margin-top: -20%;
+    margin-left: 14.5%;
+    text-align: center;
+}
+.passtemp .front .header .title{
+    font-size: small;
+    font-weight: 300;
+    margin-top: 60.75%;
+    margin-left: -90%;
+}
+.passtemp .front .header .address{
+    font-size: xx-small;
+    font-weight: 100;
+    width: 140%;
+    margin-left: -63%;
+}
+.passtemp .front .body1{
+
+    margin-top: 0%;
+    text-align: center;
+    @apply(--layout-horizontal);
+}
+.passtemp .front .body2{
+    @apply(--layout-horizontal);
+    margin-top: 10%;
+
+}
+.passtemp .front .body2 .studimg{
+    @apply(--layout-center);
+    text-align: center;
+    @apply(--layout-vertical);
+
+
+}
+
+.passtemp .front .body2 .studetail{
+    font-size: large;
+    font-weight: bolder;
+    text-align: center;
+    @apply(--layout-center);
+    margin-top: 50%;
+    margin-left: -54%;
+}
+.passtemp .back{
+    border-radius: 15px;
+   border-color: #888888;
+   border-style: dotted;
+   border-width: 2px;
+   width: 5.5cm;
+  height: 8.5cm;
+  margin-left: 82%;
+margin-top: -154%;
+}
+.passtemp .back .body3{
+margin-top: 6%;
+margin-left: 2%;
+}
+
+</style>
+<div class="temp">
+    <div class="student-image" >
+      <img id="imgRes">
+    </div>
+
+    <div class="passtemp">
+      <div id="canvas" style="background-image:url(fimage/1.jpg)">
+
+        <div class="front">
+
+
+          <div class="header">
+            <div class="logo"><img style="width: 25%; height: 14%; margin-top: 40%; margin-left: 5%;" src="../../images/zeesouth.png"/></div>
+            <div class="heading">
+              <div class="title">{{schoolname}}</div>
+              <div class="address">{{schooladdr}}</div>
+            </div>
+          </div>
+          <hr></hr>
+          <div class="body2">
+            <div class="studimg">
+              <img style="min-height: 12%;min-width: 18%; margin-top: 5%; margin-left: 70%; width: 50%;border: 1px solid;"src="images/{{sid}}.jpg" alt="Paste photo here"/>
+            </div>
+            <div class="studetail">
+              <p style="font-size: 16px;">{{studname}}</p>
+              <p style="font-size: 16px;">{{stnd}} - {{sec}}</p>
+              <p style="font-size: 16px;">Zone - {{zone}}</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="back">
+         <div class="body3">
+        <div class="backimg">
+        <div class="backdetails">
+                  <p style="font-size: 13px;"><strong>Address:</strong>
+                  S/O,{{parent}} ,
+                  {{address1}},
+                  {{address2}},
+                  {{address3}}, 
+                  {{town}}-{{pin}}.</p>
+                  <hr></hr>
+                  <div><p style="margin: 4px 0 4px 0; display: inline;font-size: 13px;font-weight: bold;">Pickup Route:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{pickuprout}}</p></div>
+                  <div><p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Pickup Point:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{pickup}}</p></div>
+                  <div><p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Drop Route:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{droprout}}</p></div>
+                  <div><p style="margin: 4px 0 4px 0; display: inline;font-weight: bold;font-size: 13px;">Drop Point:</p><p style="margin: 4px 0 4px 0;text-transform: capitalize; display: inline;font-size: 12px;">{{drop}}</p></div>
+                  <hr></hr>
+                  <div><strong>Parents Mob:</strong> {{mobno}}</div>
+                  <hr></hr>
+                  <div><strong>Transport Coordinator no: </strong><br>{{coorno}}</div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+      </div>
+      </div>
+    </div>
+
+
+    <iron-ajax
+    auto
+      method="post"
+      id="getpasssecajax"
+      url="{{getpasssecurl}}"
+      params="{{getpasssecparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getpasssecResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    
+    <iron-ajax
+    auto
+      method="post"
+      id="getparentinfoajax"
+      url="{{getparentinfourl}}"
+      params="{{getparentinfoparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getparentinfoResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+    auto
+      method="post"
+      id="getstudpointoajax"
+      url="{{getstudpointurl}}"
+      params="{{getstudpointparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getstudpointResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+        auto
+        id="numberreadajax"
+        url="../../configfile/coordinator.json"
+        params="{{numberreadparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="numberreadResponse"
+        debounce-duration="300"
+        >
+    </iron-ajax>
   </template>
   <script>
   (function() {
     'use strict';
-
+            var sid;
+             var passarr=[];
+    var stname;
+    var pickupoint;
+    var droppoint;
+    var pickuproute;
+    var droproute;
+    var dad1;
+    var add1;
+    var add2;
+    var add3;
+    var add4;
+    var pin;
+    var mob;
+    var standard;
+    var section;
+    var len;
+    var c=0;
+    var coor;
     Polymer({
       is: 'passtemplate-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'passtemplate-card',
-          notify: true
-        }
+      ready:function(){
+
+      },
+      FnClear:function(){
+        this.studname="";
+        this.stnd="";
+        this.sec="";
+        this.mobno="";
+        this.blood="";
+        this.value="";
+        this.itemArray="";
+        this.sid="";
+        this.parent="";
+        this.address1="";
+        this.address2="";
+        this.town="";
+        this.pin="";
+        this.pickup="";
+        this.drop="";
+      },
+      fngetid:function(starrx){
+        var starr = starrx;
+        len=starrx.length;
+        for (var i = 0; i < starrx.length; i++) {
+
+        sid = starr[i].student_id;
+        
+
+        this.getpasssecurl = sessionStorage.getItem("addrinfo") + "/getpasssec";
+        var obj0 = {"stid": "", "schol": ""}
+        obj0.stid = sid;
+        obj0.schol = sessionStorage.getItem("sch");
+        this.getpasssecparam = obj0;
+        this.$.getpasssecajax.generateRequest();
+
+          this.getparentinfourl = sessionStorage.getItem("addrinfo") + "/getparentinfo";
+          var obj1 = {"stid": "", "schol": ""}
+        obj1.stid = sid;
+        obj1.schol = sessionStorage.getItem("sch");
+          this.getparentinfoparam = obj1;
+          this.$.getparentinfoajax.generateRequest();
+
+
+          this.getstudpointurl =sessionStorage.getItem("addrinfo") + "/getstudpoint";
+          var obj2 = {"stid": "", "schol": ""}
+        obj2.stid = sid;
+        obj2.schol = sessionStorage.getItem("sch");
+        this.getstudpointparam=obj;
+        //alert(JSON.stringify(obj0));
+        this.$.getstudpointoajax.generateRequest();
+
+
+        this.$.numberreadajax.generateRequest();
+      
+     
       }
+
+      },
+       numberreadResponse:function(e){
+        //alert(JSON.stringify(e.detail.response));
+        var no=e.detail.response;
+        coor=no[0].conumber;
+      },
+     getpasssecResponse:function(e){
+      stname=e.detail.response.returnval[0].student_name;
+      standard=e.detail.response.returnval[0].class;
+      section=e.detail.response.returnval[0].section;
+     },
+     getstudpointResponse:function(e){
+      var srsd=e.detail.response.returnval;
+        pickuproute = srsd[0].pickup_route_id;
+        pickupoint = srsd[0].pickup_point;
+        droproute = srsd[0].drop_route_id;
+        droppoint = srsd[0].drop_point;
+        alert('names ..'+pickuproute+'   '+pickupoint+'   '+droproute+'  '+droppoint);
+         
+     },
+     
+      getpassclassResponse:function(e){
+        standard=e.detail.response.returnval[0].class;
+        section=e.detail.response.returnval[0].section;
+      },
+      getparentinfoResponse:function(e){
+
+        dad1=e.detail.response.returnval[0].parent_name;
+        add1=e.detail.response.returnval[0].address1;
+        add2=e.detail.response.returnval[0].address2;
+        add3=e.detail.response.returnval[0].address3;
+        add4=e.detail.response.returnval[0].city;
+        pin=e.detail.response.returnval[0].pincode;
+        mob=e.detail.response.returnval[0].mobile;
+
+
+var obj={"stid":"","stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr":"","dad1":"","add1":"","add2":"","add3":"","add4":"","pin":"","mob":"","coorno":"","schoolname":"","schooladdr":""}
+        obj.stid=sid;
+      obj.stname=stname;
+        obj.stnd=standard;
+        obj.sec=section;
+        obj.pickp=pickupoint;
+        obj.pickr=pickuproute;
+        obj.dropp=droppoint;
+        obj.dropr=droproute;
+        obj.dad1=dad1;
+        obj.add1=add1;
+        obj.add2=add2;
+        obj.add3=add3;
+        obj.add4=add4;
+        obj.pin=pin;
+        obj.mob=mob;
+        obj.coorno=coor;
+        obj.schoolname=sessionStorage.getItem("schoolname");
+        obj.schooladdr=sessionStorage.getItem("schooladdr");
+        passarr.push(obj);
+        alert('final arr is .. '+JSON.stringify(passarr));
+        c++;
+        if(c==len){
+          alert('c is '+c+'  '+len);
+        document.querySelector('studentpass-card').passarr1=passarr;
+        c=0;}
+      
+      }
+      
+
     });
   })();
   </script>

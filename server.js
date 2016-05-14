@@ -5,7 +5,7 @@ var express    = require("express");
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'transport'
+   database : 'transport4'
  });
 var bodyParser = require('body-parser');
  var app = express();
@@ -1757,19 +1757,19 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
          chequestatus={"install2_status":req.query.paidstatus};
           //updatefine={"install2_fine":install2_fine+fine};
 	}
-console.log(installtype);
-console.log(chequestatus);
+//console.log(installtype);
+//console.log(chequestatus);
 
 
 	chequename={"student_id":req.query.chequename}
-	console.log(chequename);
+//	console.log(chequename);
        connection.query('update student_fee set ?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,fine1,fine2,chequename],
        	function(err, rows)
        	{
 		if(!err)
 		{
 
-			 console.log('ccyes');
+//			 console.log('ccyes');
 			res.status(200).json({'returnval': 'success'});
 
 		}
@@ -2145,7 +2145,7 @@ app.post('/getfeedetail',  urlencodedParser,function (req, res)
 app.post('/getfeeparent',  urlencodedParser,function (req, res)
 {
  var id=req.query.stid;
- console.log(id);
+ //console.log(id);
 	var name={"id":req.query.stid};
 	    connection.query('Select class,section,(select parent_name from parent where student_id =?) as parentname,(select email from parent where student_id =?) as parentmail from class_details where id=(select class_id from student_details where id=?)',[id,id,id],
        	function(err, rows){
@@ -2166,7 +2166,7 @@ app.post('/getfeeparent',  urlencodedParser,function (req, res)
 app.post('/getfeecheque',  urlencodedParser,function (req, res)
 {
  var id=req.query.stid;
- console.log(id);
+ //console.log(id);
 
 	    connection.query('Select * from cheque_details where student_id=?',[id],
        	function(err, rows){
@@ -2459,7 +2459,8 @@ app.post('/updaterecpno',  urlencodedParser,function (req, res)
 	});
 });
 app.post('/selectclasses',  urlencodedParser,function (req, res){
-	connection.query('select class, section, id from class_details',
+	var schoolx={"school_id":req.query.schol};
+	connection.query('select class, section, id from class_details where ?',[schoolx],
        	function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -2694,6 +2695,75 @@ app.post('/createroute' ,  urlencodedParser,function (req, res)
 
 });
 	});
+
+
+app.post('/getstudetails',  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+	var role={"school_type":req.query.temp};
+	connection.query('SELECT student_id FROM student_point where ? and ? ',[role,schoolx],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+app.post('/getpasssec',  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+	var role={"id":req.query.stid};
+	connection.query('Select student_name,(select class from class_details where id=class_id) as class,(select section from class_details where id=class_id) as section from student_details where ? and ?',[role,schoolx],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+
+app.post('/getstudpoint',  urlencodedParser,function (req, res)
+{
+	
+	connection.query("SELECT student_id,(select route_name from route where id=pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=drop_route_id and school_id='SCH001') as drop_route_id,(select point_name from point where id=pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=drop_point and school_id='"+req.query.schol+"') as drop_point FROM student_point where student_id='"+req.query.stid+"' and school_id='"+req.query.schol+"'" ,
+		function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		 else {
+			console.log(err);
+		}
+	});
+});
+
+
 
 
 function setvalue(){

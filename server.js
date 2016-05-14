@@ -1788,7 +1788,7 @@ app.post('/feereport',  urlencodedParser,function (req, res)
   var dat1={"installment_1Date":req.query.dates};
   var dat2={"installment_2Date":req.query.dates};
 	console.log('come');
-  connection.query('Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id) as name from student_fee  where (? or ?) and ?',[dat1,dat2,schoolx],
+  connection.query('Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id and ?) as name from student_fee  where (? or ?) and ?',[schoolx,dat1,dat2,schoolx],
        	function(err, rows)
        	{
 		if(!err)
@@ -1802,6 +1802,10 @@ app.post('/feereport',  urlencodedParser,function (req, res)
 			console.log(err);
 			res.status(200).json({'returnval': ''});
 		}
+	}
+	else
+	{
+		console.log(err);
 	}
 });
 	});

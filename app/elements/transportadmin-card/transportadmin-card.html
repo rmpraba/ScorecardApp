@@ -31,7 +31,8 @@
       <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
-      <paper-icon-button class="iconbutton" src="../../images/routescreate.png" on-click="addroute"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/addroute.png" on-click="addroute"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/routescreate.png" on-click="passtemp"></paper-icon-button>
 
 
     </div>
@@ -79,6 +80,9 @@
       addroute:function()
       {
         document.querySelector('transport-app').setPage("addroute","Add Route");
+      },
+      passtemp:function(){
+        document.querySelector('transport-app').setPage("passtemp","STudent PAss");
       }
 
 

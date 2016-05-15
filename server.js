@@ -33,7 +33,7 @@ var parentemail=req.query.parentemail;
   var chequedate=req.query.chequedate;
   var chequeno=req.query.chequeno;
   var bank=req.query.bank;
-console.log(parentemail);
+//console.log(parentemail);
 var server  = email.server.connect({
    user:    "samsidhgroup@yahoo.com",
    password:"mlzsinstitutions",
@@ -628,7 +628,7 @@ app.post('/namepick',  urlencodedParser,function (req, res)
 	var id={"id":req.query.id};
 	var req1={"transport_required":'yes'};
 	var schoolx={"school_id":req.query.schol};
-		console.log(req.query.schol);
+		//console.log(req.query.schol);
       	connection.query('select id , student_name, school_type from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[id,req1,schoolx],
        		function(err, rows)
        	{
@@ -778,8 +778,8 @@ app.post('/getrouteid' ,  urlencodedParser,function (req, res)
 
 		 var routen={"route_name":req.query.routename};
 		 var schoolx={"school_id":req.query.schol};
-		 console.log('in server...');
-		 console.log(routen);
+		 //console.log('in server...');
+		 //console.log(routen);
 	    connection.query('select * from route where ? and ?',[routen,schoolx],
        	function(err, rows)
        	{
@@ -787,7 +787,7 @@ app.post('/getrouteid' ,  urlencodedParser,function (req, res)
 		{
 			if(rows.length>0)
 			{
-			console.log(rows);
+			//console.log(rows);
 			res.status(200).json({'returnval': rows});
 			}
 			else
@@ -1000,13 +1000,13 @@ app.post('/payfee-card',  urlencodedParser,function (req, res)
 		 status={"install2_status":paidstatus};
 		  rec={"receipt_no2":req.query.receiptno};
 	    }
-	    console.log(req.query.instype);
-	    console.log(studid);
-	    console.log(mode);
-	    console.log(install1);
-	    console.log(install1date);
-	    console.log(status);
-	    console.log(rec);
+	    //console.log(req.query.instype);
+	    //console.log(studid);
+	    //console.log(mode);
+	    //console.log(install1);
+	    //console.log(install1date);
+	    //console.log(status);
+	    //console.log(rec);
 	    connection.query('update  student_fee set ?,?,?,?,? where ? and ?',[mode,install1,install1date,status,rec,studid,schoolx],
        	function(err, rows)
        	{
@@ -1765,7 +1765,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 
 	chequename={"student_id":req.query.chequename}
 
-	console.log(chequename);
+	//console.log(chequename);
        connection.query('update student_fee set ?,?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,installamt,fine1,fine2,chequename],
 
        	function(err, rows)
@@ -1791,7 +1791,7 @@ app.post('/feereport',  urlencodedParser,function (req, res)
 	var schoolx={"school_id":req.query.schol};
   var dat1={"installment_1Date":req.query.dates};
   var dat2={"installment_2Date":req.query.dates};
-	console.log('come');
+	//console.log('come');
   connection.query("Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where (? or ?) and school_id='"+req.query.schol+"'",[dat1,dat2],
        	function(err, rows)
        	{
@@ -1799,7 +1799,7 @@ app.post('/feereport',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
-			console.log(rows);
+			//console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -1822,7 +1822,7 @@ app.post('/chequereport',  urlencodedParser,function (req, res)
 	var schoolx={"school_id":req.query.schol};
   var dat1={"installment_1Date":req.query.dates};
   var dat2={"installment_2Date":req.query.dates};
-	console.log('come');
+	//console.log('come');
   connection.query('Select * from cheque_details where student_id in (select student_id from student_fee  where (? or ?) and ?)',[dat1,dat2,schoolx],
        	function(err, rows)
        	{
@@ -2115,7 +2115,7 @@ app.post('/getpassname',  urlencodedParser,function (req, res)
 		if(!err){
 			if(rows.length>0)
 			{
-        console.log(rows);
+        //console.log(rows);
 				res.status(200).json({'returnval': rows});
 			} else {
 				console.log(err);
@@ -2345,8 +2345,8 @@ app.post('/receiptnoinfee',  urlencodedParser,function (req, res)
     }
     var sid={"student_id":req.query.studid};
     var schoolx={"school_id":req.query.schol};
-    console.log(req.query.installtype);
-    console.log(rid);
+    //console.log(req.query.installtype);
+    //console.log(rid);
 	    connection.query('update student_fee set ?  where ? and ?',[rid,sid,schoolx],
        	function(err, rows){
 		if(!err)
@@ -2375,8 +2375,8 @@ app.post('/acknoinfee',  urlencodedParser,function (req, res)
     var sid={"student_id":req.query.studid};
 
     var schoolx={"school_id":req.query.schol};
-     console.log(req.query.installtype);
-    console.log(rid);
+     //console.log(req.query.installtype);
+   // console.log(rid);
 	    connection.query('update student_fee set ?  where ? and ?',[rid,sid,schoolx],
        	function(err, rows){
 		if(!err)
@@ -2516,12 +2516,12 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
 
   var stuid = req.query.studid;
   var schoolx=req.query.schol;
-  console.log('In Server');
+  //console.log('In Server');
   connection.query('select * from parent where student_id=(select id from student_details where student_name=?) and school_id=?',[stuid,schoolx],
     function(err, rows){
       if(!err){
         if(rows.length>0)
-        { console.log(rows);
+        { //console.log(rows);
           res.status(200).json({'returnval': rows});
         } else {
           console.log(err);
@@ -2580,7 +2580,7 @@ app.post('/getchequedetails' ,  urlencodedParser,function (req, res)
 app.post('/geteditcheque',  urlencodedParser,function (req, res)
 {
  var id=req.query.stid;
- console.log(id);
+ //console.log(id);
 
 	    connection.query('Select * from cheque_details where student_id=?',[id],
        	function(err, rows){
@@ -2687,7 +2687,7 @@ app.post('/createroute' ,  urlencodedParser,function (req, res)
        	{
 		if(!err)
 		{
-			console.log('inserted');
+			//console.log('inserted');
 			res.status(200).json({'returnval': 'success'});
 		}
 		else
@@ -2764,7 +2764,7 @@ app.post('/getstudetails',  urlencodedParser,function (req, res)
 
 app.post('/getpasssec',  urlencodedParser,function (req, res)
 {
-	console.log('In server..');
+	//console.log('In server..');
 	var role={"id":req.query.stid};
 	connection.query("select sd.student_name,(select class from class_details where id=sd.class_id and school_id='"+req.query.schol+"') as standard,(select section from class_details where id=sd.class_id and school_id='"+req.query.schol+"') as section,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'",
     function(err, rows){

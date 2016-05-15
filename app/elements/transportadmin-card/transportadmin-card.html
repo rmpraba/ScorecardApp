@@ -27,13 +27,16 @@
     <div class="frontpage">
       <paper-icon-button class="iconbutton" src="../../images/points.png" on-click="pointallocation"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/allocation.png" on-click="routeallocation"></paper-icon-button>
-
       <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/routescreate.png" on-click="addroute"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/bus.png" on-click="bus"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/attender.png" on-click="attender"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/addroute.png" on-click="addroute"></paper-icon-button>
-
-
+      <paper-icon-button class="iconbutton" src="../../images/routescreate.png" on-click="passtemp"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/bus_route.png" on-click="bustoroute"></paper-icon-button>
     </div>
   </body>
   <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
@@ -79,12 +82,30 @@
       addroute:function()
       {
         document.querySelector('transport-app').setPage("addroute","Add Route");
+      },
+      bus:function()
+      {
+        document.querySelector('transport-app').setPage("bus","Add Bus Details");
+        this.$.transportservice.bus_count();
+      },
+      driver:function()
+      {
+        document.querySelector('transport-app').setPage("driver","Add Driver Details");
+          this.$.transportservice.driver_count();
+      },
+      attender:function()
+      {
+        document.querySelector('transport-app').setPage("attender","Add Attender Details");
+        this.$.transportservice.attender_count();
+      },
+    bustoroute:function()
+    {
+      document.querySelector('transport-app').setPage("bustoroute","Bus to Route");
+      //this.$.transportservice.attender_count();
+    },
+      passtemp:function(){
+        document.querySelector('transport-app').setPage("passtemp","STudent PAss");
       }
-     
-
-
-
-
   });
 </script>
 </dom-module>

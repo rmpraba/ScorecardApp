@@ -1,0 +1,131 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../transport-service/transport-service.html">
+<link rel="import" href="../studentdatepicker-card/studentdatepicker-card.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../licence_expiry_datepicker-card/licence_expiry_datepicker-card.html">
+
+<dom-module id="driver-card">
+  <template>
+    <style>
+      .card {
+        margin:5% 0 0 27%;
+      }
+      .field{
+        width: 70%;
+      }
+      .fields{
+        width: 36%;
+        padding: 0 0.25% 0 0%;
+      }
+      .card .fields paper-input{
+        width:95%;
+      }
+      .card .field paper-input{
+        width:70%;
+      }
+      .card .field{
+      }
+      .card .address paper-textarea{
+        width: 70%;
+       }
+      .horizontalframes{
+        @apply(--layout-horizontal);
+        width: 100% !important;
+      }
+      .horizontal .field paper-input{
+        width: 100%;
+      }
+      .button{
+        margin:2% 0 0 27%;
+      }
+    </style>
+    <div class="card">
+      <div class="horizontalframes">
+        <div class="fields ">
+          <paper-input label="First Name" value="{{first_name}}" id="fname" allowed-pattern="[a-zA-Z ]" required error-message="needs a name!"></paper-input>
+        </div>
+        <div class="fields">
+          <paper-input label="Last Name" value="{{last_name}}" id="lname" allowed-pattern="[a-zA-Z ]" required error-message="needs a name!"></paper-input>
+        </div>
+      </div>
+      <div class="horizontalframes">
+        <div class="fields">
+          <paper-input label="Mobile No" value="{{mobile_no}}" id="mobile" allowed-pattern="[0-9]" required error-message="needs a name!"></paper-input>
+        </div>
+        <div class="fields">
+          <paper-input label="Licence No" value="{{licence_no}}" id="licence" allowed-pattern="[a-zA-Z0-9]" required error-message="needs a name!"></paper-input>
+        </div>
+      </div>
+      <div class="horizontal">
+        <div class="date" style="margin-left: -2%;">
+          <licence_expiry_datepicker-card></licence_expiry_datepicker-card>
+        </div>
+      </div>
+      <div class="horizontal">
+        <div class="address">
+          <paper-textarea value="{{address_1}}" id="address_1"  error-message="needs Address" label="Address Line 1" required ></paper-textarea>
+        </div>
+        <div class="address">
+          <paper-textarea value="{{address_2}}" id="address_2"  error-message="needs Address" label="Address Line 2" required ></paper-textarea>
+        </div>
+      </div>
+      <div class="horizontal">
+        <div class="address">
+          <paper-textarea value="{{address_3}}" id="address_3"  error-message="needs Address" label="Address Line 3" required ></paper-textarea>
+        </div>
+        <div class="field">
+          <paper-input label="City" value="{{city}}" id="city" allowed-pattern="[a-zA-Z]" required error-message="needs a city!"></paper-input>
+        </div>
+      </div>
+      <div class="horizontalframes">
+        <div class="field">
+          <paper-input label="Pincode" value="{{pincode}}" id="pincode" allowed-pattern="[0-9]" required error-message="needs a pincode!"></paper-input>
+        </div>
+      </div>
+    </div>
+    <div class="button">
+      <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+    </div>
+    <transport-service id="service"></transport-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'driver-card',
+      ready:function(){
+
+      },
+      click:function(){
+        if(this.first_name==""||this.last_name==""||this.mobile_no==""||this.licence_no==""||this.address_1==""||this.address_2==""||this
+                        .address_3==""||this.city==""||this.pincode=="")
+        {
+          this.$.first_name.validate();
+          this.$.last_name.validate();
+          this.$.mobile_no.validate();
+          this.$.licence_no.validate();
+          this.$.address_1.validate();
+          this.$.address_2.validate();
+          this.$.address_3.validate();
+          this.$.city.validate();
+          this.$.pincode.validate();
+        }
+        else
+        {
+          this.lic_exp=localStorage.getItem("localsess_lic_exp_date");
+          this.$.service.driver(this.first_name,this.last_name,this.mobile_no, this.licence_no,this.address_1,this.address_2,this.address_3,this.city,this.pincode,this.lic_exp);
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

@@ -1846,7 +1846,7 @@ app.post('/feereport2',  urlencodedParser,function (req, res)
   //var schoolx={"school_id":req.query.schol};
   //var dat1=req.query.dates1;
   //var dat2=req.query.dates2;
-  
+
   //console.log('come server fee');
   connection.query("Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2, (select student_name from student_details where id = student_id and school_id='"+req.query.schol+"') as name from student_fee  where ((installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d'))) and school_id='"+req.query.schol+"'",
     function(err, rows)
@@ -2700,6 +2700,24 @@ app.post('/createroute' ,  urlencodedParser,function (req, res)
 
 });
 	});
+app.post('/driver_count' ,  urlencodedParser,function (req, res)
+{
+	var scho={"school_id":req.query.schol};
+	connection.query('select driver_count from sequence where ?',[scho],
+			function(err, rows){
+				if(!err){
+					if(rows.length>0)
+					{
+						res.status(200).json({'returnval': rows});
+					} else {
+						console.log(err);
+						res.status(200).json({'returnval': 'invalid'});
+					}
+				} else {
+					console.log(err);
+				}
+			});
+});
 
 app.post('/verify',  urlencodedParser,function (req, res){
 	var schoolx={"school_id":req.query.schol};
@@ -2767,6 +2785,193 @@ app.post('/getpasssec',  urlencodedParser,function (req, res)
 
 
 
+app.post('/getstudpoint',  urlencodedParser,function (req, res)
+{
+
+	connection.query("SELECT student_id,(select route_name from route where id=pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=drop_route_id and school_id='SCH001') as drop_route_id,(select point_name from point where id=pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=drop_point and school_id='"+req.query.schol+"') as drop_point FROM student_point where student_id='"+req.query.stid+"' and school_id='"+req.query.schol+"'" ,
+		function(err, rows){
+		if(!err){
+			if(rows.length>0)
+			{
+				console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		 else {
+			console.log(err);
+		}
+	});
+});
+
+app.post('/driver',  urlencodedParser,function (req, res){
+	var collection={school_id:req.query.schol,id:req.query.id,first_name:req.query.first_name,last_name:req.query.last_name,mobile_no:req.query.mobile_no, licence_no:req.query.licence_no,address_1:req.query.address_1,address_2:req.query.address_2,
+		address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode,licence_exp_date:req.query.lic_exp};
+	//console.log(collection);
+	connection.query('insert into driver set ?',[collection],
+			function(err, rows){
+				if(!err)
+				{
+					res.status(200).json({'returnval': 'success'});
+				}
+				else
+				{
+					console.log(err);
+					res.status(200).json({'returnval': 'invalid'});
+				}
+			});
+});
+app.post('/attender_count' ,  urlencodedParser,function (req, res)
+{
+	var scho={"school_id":req.query.schol};
+	connection.query('select attender_count from sequence where ?',[scho],
+			function(err, rows){
+				if(!err){
+					if(rows.length>0)
+					{
+						res.status(200).json({'returnval': rows});
+					} else {
+						console.log(err);
+						res.status(200).json({'returnval': 'invalid'});
+					}
+				} else {
+					console.log(err);
+				}
+			});
+});
+
+app.post('/attender',  urlencodedParser,function (req, res){
+	var collection={school_id:req.query.schol,id:req.query.id,first_name:req.query.first_name,last_name:req.query.last_name,mobile_no:req.query.mobile_no, address_1:req.query.address_1,address_2:req.query.address_2,address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode};
+	//console.log(collection);
+	connection.query('insert into attender set ?',[collection],
+			function(err, rows){
+
+				if(!err)
+				{
+					res.status(200).json({'returnval': 'success'});
+				}
+				else
+				{
+					console.log(err);
+					res.status(200).json({'returnval': 'invalid'});
+				}
+			});
+});
+app.post('/increasedriverid' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  var driver_id = {"driver_count":req.query.driver_id};
+  connection.query('update sequence set ? WHERE ?',[driver_id,scho],
+    function(err, rows)
+    {
+      if(!err)
+      {
+        if(rows.length>0)
+        {
+
+          res.status(200).json({'returnval': rows});
+        }
+        else
+        {
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      }
+      else
+      {
+        console.log('No data Fetched'+err);
+      }
+    });
+});
+
+app.post('/increaseattenderid' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  var attender_id = {"attender_count":req.query.attender_id};
+  connection.query('update sequence set ? WHERE ?',[attender_id,scho],
+    function(err, rows)
+    {
+      if(!err)
+      {
+        if(rows.length>0)
+        {
+
+          res.status(200).json({'returnval': rows});
+        }
+        else
+        {
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      }
+      else
+      {
+        console.log('No data Fetched'+err);
+      }
+    });
+});
+
+app.post('/bus_count' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  connection.query('select bus_count from sequence where ?',[scho],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        {
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+app.post('/increasebusid' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  var bus_id = {"bus_count":req.query.bus_id};
+  connection.query('update sequence set ? WHERE ?',[bus_id,scho],
+    function(err, rows)
+    {
+      if(!err)
+      {
+        if(rows.length>0)
+        {
+
+          res.status(200).json({'returnval': rows});
+        }
+        else
+        {
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      }
+      else
+      {
+        console.log('No data Fetched'+err);
+      }
+    });
+});
+app.post('/bus',  urlencodedParser,function (req, res){
+  var collection={school_id:req.query.schol,id:req.query.id,made_model:req.query.made,no_of_seats:req.query.no_of_seats,insurance_no:req.query.insurance_no, insurance_company:req.query.insurance_co,last_service_date:req.query.last_service,insurance_due_date:req.query.insurance_exp, next_service_date:req.query.next_service};
+  //console.log(collection);
+  connection.query('insert into bus set ?',[collection],
+    function(err, rows){
+
+      if(!err)
+      {
+        res.status(200).json({'returnval': 'success'});
+      }
+      else
+      {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    });
+});
 
 function setvalue(){
 	console.log("calling setvalue.....");

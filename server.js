@@ -35,8 +35,8 @@ var parentemail=req.query.parentemail;
   var bank=req.query.bank;
 console.log(parentemail);
 var server  = email.server.connect({
-   user:    "kartiksubu.krs@yahoo.com",
-   password:"kartik2903",
+   user:    "samsidhgroup@yahoo.com",
+   password:"mlzsinstitutions",
    host:    "smtp.mail.yahoo.com",
    ssl:     true
 
@@ -44,8 +44,8 @@ var server  = email.server.connect({
 // send the message and get a callback with an error or details of the message that was sent
 server.send({
    text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
-   from:    "kartiksubu.krs@yahoo.com",
-   to:      "kartiksubu.krs@gmail.com",
+   from:    "samsidhgroup@yahoo.com",
+   to:      parentemail,
    subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
     attachment:
 
@@ -1792,13 +1792,14 @@ app.post('/feereport',  urlencodedParser,function (req, res)
   var dat1={"installment_1Date":req.query.dates};
   var dat2={"installment_2Date":req.query.dates};
 	console.log('come');
-  connection.query('Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id and ?) as name from student_fee  where (? or ?) and ?',[schoolx,dat1,dat2,schoolx],
+  connection.query("Select student_id,receipt_no1,receipt_no2,fees,installment_1,installment_2,installment_1Date,installment_2Date,modeofpayment1,modeofpayment2,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where (? or ?) and school_id='"+req.query.schol+"'",[dat1,dat2],
        	function(err, rows)
        	{
 		if(!err)
 		{
 		if(rows.length>0)
 		{
+			console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -2745,9 +2746,9 @@ app.post('/getstudetails',  urlencodedParser,function (req, res)
 
 app.post('/getpasssec',  urlencodedParser,function (req, res)
 {
-	var schoolx={"school_id":req.query.schol};
+	console.log('In server..');
 	var role={"id":req.query.stid};
-	connection.query('Select student_name,(select class from class_details where id=class_id) as class,(select section from class_details where id=class_id) as section from student_details where ? and ?',[role,schoolx],
+	connection.query("select sd.student_name,(select class from class_details where id=sd.class_id and school_id='"+req.query.schol+"') as standard,(select section from class_details where id=sd.class_id and school_id='"+req.query.schol+"') as section,(select zone_name from md_zone where id=sf.zone_id and school_id='"+req.query.schol+"') as zone_name,(select route_name from route where id=sp.pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=sp.drop_route_id and school_id='"+req.query.schol+"') as drop_route_id,(select point_name from point where id=sp.pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=sp.drop_point and school_id='"+req.query.schol+"') as drop_point,p.parent_name,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode from student_details sd join student_fee sf on (sd.id=sf.student_id) join student_point sp on(sf.student_id=sp.student_id) join parent p on(p.student_id=sp.student_id) where sp.student_id='"+req.query.stid+"' and sp.school_id='"+req.query.schol+"'",
     function(err, rows){
 		if(!err){
 			if(rows.length>0)
@@ -2759,29 +2760,6 @@ app.post('/getpasssec',  urlencodedParser,function (req, res)
 				res.status(200).json({'returnval': 'invalid'});
 			}
 		} else {
-			console.log(err);
-		}
-	});
-});
-
-
-
-app.post('/getstudpoint',  urlencodedParser,function (req, res)
-{
-	
-	connection.query("SELECT student_id,(select route_name from route where id=pickup_route_id and school_id='"+req.query.schol+"') as pickup_route_id,(select route_name from route where id=drop_route_id and school_id='SCH001') as drop_route_id,(select point_name from point where id=pickup_point and school_id='"+req.query.schol+"') as pickup_point,(select point_name from point where id=drop_point and school_id='"+req.query.schol+"') as drop_point FROM student_point where student_id='"+req.query.stid+"' and school_id='"+req.query.schol+"'" ,
-		function(err, rows){
-		if(!err){
-			if(rows.length>0)
-			{
-				console.log(rows);
-				res.status(200).json({'returnval': rows});
-			} else {
-				console.log(err);
-				res.status(200).json({'returnval': 'invalid'});
-			}
-		}
-		 else {
 			console.log(err);
 		}
 	});

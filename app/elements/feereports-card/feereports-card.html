@@ -41,12 +41,13 @@
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
+            <paper-tab>Grade/Section</paper-tab>
             <paper-tab>Receipt No</paper-tab>
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>
       <template  is="dom-repeat" items="{{feereportarr1}}" as="view">
-            <paper-tab>Grade/Section</paper-tab>
+        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.name}}" standard="{{view.standard}}" section="{{view.section}}" receiptno="{{view.receiptno}}" feepaid="{{view.installment1}}"></feereports-item-card>
       </template>
         <div class="total-collection" id="totcol1">
           <paper-item>Total Collection by Cash</paper-item>
@@ -60,12 +61,13 @@
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
+            <paper-tab>Grade/Section</paper-tab>
             <paper-tab>Receipt No</paper-tab>
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>
       <template  is="dom-repeat" items="{{feereportarr2}}" as="view">
-            <paper-tab>Grade/Section</paper-tab>
+        <feereports-item-card studentid="{{view.student_id}}" studentname="{{view.name}}" standard="{{view.standard}}" section="{{view.section}}" receiptno="{{view.receiptno}}" feepaid="{{view.installment2}}"></feereports-item-card>
       </template>
         <div class="total-collection" id="totcol1">
           <paper-item>Total Collection by Cash</paper-item>

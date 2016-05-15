@@ -639,6 +639,28 @@
           debounce-duration="300"
         >
         </iron-ajax>
+        <iron-ajax
+                method="post"
+                id="driverajax"
+                url="{{driverurl}}"
+                params="{{driverparam}}"
+                handle-as="json"
+                content-type="application/json"
+                on-response="driverResponse"
+                debounce-duration="300"
+        >
+        </iron-ajax>
+        <iron-ajax
+                method="post"
+                id="drivercountajax"
+                url="{{drivercounturl}}"
+                params="{{drivercountparam}}"
+                handle-as="json"
+                content-type="application/json"
+                on-response="drivercountResponse"
+                debounce-duration="300"
+        >
+        </iron-ajax>
     </template>
   <script>
   (function() {
@@ -672,7 +694,9 @@
     var feedet;
     var studentname;
     var feeparent;
-    var editchequedetail
+    var editchequedetail;
+      var driver_count;
+      var attender_count;
 var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
@@ -1864,12 +1888,92 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             } 
             chequearr1.push(obj);
             chequearr2.push(obj1);
-            alert(JSON.stringify(chequearr1));
-            alert(JSON.stringify(chequearr2));
+            //alert(JSON.stringify(chequearr1));
+            //alert(JSON.stringify(chequearr2));
             document.querySelector('editcheque-card').editarr1=chequearr1;
             document.querySelector('editcheque-card').editarr2=chequearr2;
             document.querySelector('editcheque-card').id=id;
             document.querySelector('editcheque-card').name=name;
+        },
+        driver_count:function(){
+            this.drivercounturl = sessionStorage.getItem("addrinfo")+"/driver_count";
+            var obj = {"schol":""};
+            obj.schol=sessionStorage.getItem("sch");
+            this.drivercountparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.drivercountajax.generateRequest();
+        },
+        drivercountResponse:function(e){
+            driver_count = e.detail.response.returnval[0].driver_count;
+            //alert(JSON.stringify(driver_count));
+        },
+        driver:function(first_name,last_name,mobile_no,licence_no,address_1,address_2,address_3,city,pincode,lic_exp){
+            this.driverurl = sessionStorage.getItem("addrinfo")+"/driver";
+            var driver_id = "Driver "+''+driver_count + 1;
+            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","licence_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"","lic_exp":"", "schol":""};
+            obj.first_name=first_name;
+            obj.last_name=last_name;
+            obj.mobile_no=mobile_no;
+            obj.licence_no=licence_no;
+            obj.address_1=address_1;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.address_2=address_2;
+            obj.address_3=address_3;
+            obj.city=city;
+            obj.pincode=pincode;
+            obj.id = driver_id;
+            obj.lic_exp=lic_exp;
+            this.driverparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.driverajax.generateRequest();
+        },
+        driverResponse:function(e){
+            var result=e.detail.response.returnval;
+            if(result=="success"){
+                alert('Driver Details Added');
+            } else {
+                alert('Error! Driver Details Not Added');
+            }
+            
+        },
+        attender_count:function(){
+            this.attendercounturl = sessionStorage.getItem("addrinfo")+"/attender_count";
+            var obj = {"schol":""};
+            obj.schol=sessionStorage.getItem("sch");
+            this.attendercountparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.attendercountajax.generateRequest();
+        },
+        attendercountResponse:function(e){
+            attender_count = e.detail.response.returnval[0].attender_count;
+            //alert(JSON.stringify(driver_count));
+        },
+        attender:function(first_name,last_name,mobile_no,address_1,address_2,address_3,city,pincode){
+            this.attenderurl = sessionStorage.getItem("addrinfo")+"/attender";
+            var attender_id = "Attender "+''+attender_count + 1;
+            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"", "schol":""};
+            obj.first_name=first_name;
+            obj.last_name=last_name;
+            obj.mobile_no=mobile_no;
+            obj.address_1=address_1;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.address_2=address_2;
+            obj.address_3=address_3;
+            obj.city=city;
+            obj.pincode=pincode;
+            obj.id = attender_id;
+            this.attenderparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.attenderajax.generateRequest();
+        },
+        attenderResponse:function(e){
+            var result=e.detail.response.returnval;
+            if(result=="success"){
+                alert('Attender Details Added');
+            } else {
+                alert('Error! Attender Details Not Added');
+            }
+
         }
     });
  })();

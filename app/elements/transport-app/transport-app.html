@@ -33,6 +33,9 @@
 <link rel="import" href="../feereports2-card/feereports2-card.html">
 <link rel="import" href="../password-card/password-card.html">
 <link rel="import" href="../routecreate-card/routecreate-card.html">
+<link rel="import" href="../bus-card/bus-card.html">
+<link rel="import" href="../driver-card/driver-card.html">
+<link rel="import" href="../attender-card/attender-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -149,6 +152,15 @@
           </section>
           <section data-category="addroute">
             <routecreate-card></routecreate-card>
+          </section>
+          <section data-category="bus">
+            <bus-card></bus-card>
+          </section>
+          <section data-category="driver">
+            <driver-card></driver-card>
+          </section>
+          <section data-category="attender">
+            <attender-card></attender-card>
           </section>
           </iron-pages>
        </div>
@@ -356,6 +368,27 @@
     if(currpage=="addroute"){
       //document.querySelector('studentpass-card').FnClear();
      document.querySelector('routecreate-card').FnClear();
+      //document.querySelector('studentpass-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
+    if(currpage=="bus"){
+      //document.querySelector('studentpass-card').FnClear();
+      document.querySelector('bus-card').FnClear();
+      //document.querySelector('studentpass-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
+    if(currpage=="driver"){
+      //document.querySelector('studentpass-card').FnClear();
+      document.querySelector('driver-card').FnClear();
+      //document.querySelector('studentpass-card').ready();
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+    }
+    if(currpage=="attender"){
+      //document.querySelector('studentpass-card').FnClear();
+      document.querySelector('attender-card').FnClear();
       //document.querySelector('studentpass-card').ready();
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");

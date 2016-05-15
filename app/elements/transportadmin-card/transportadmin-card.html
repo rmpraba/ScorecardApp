@@ -32,6 +32,9 @@
       <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/routescreate.png" on-click="addroute"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/bus.png" on-click="bus"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/attender.png" on-click="attender"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button>
 
 
     </div>
@@ -79,11 +82,20 @@
       addroute:function()
       {
         document.querySelector('transport-app').setPage("addroute","Add Route");
+      },
+      bus:function()
+      {
+        document.querySelector('transport-app').setPage("bus","Add Bus Details");
+      },
+      driver:function()
+      {
+        document.querySelector('transport-app').setPage("driver","Add Driver Details");
+          this.$.transportservice.driver_count();
+      },
+      attender:function()
+      {
+        document.querySelector('transport-app').setPage("attender","Add Attender Details");
       }
-
-
-
-
   });
 </script>
 </dom-module>

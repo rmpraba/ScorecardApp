@@ -267,6 +267,9 @@ margin-left: 2%;
         this.pin="";
         this.pickup="";
         this.drop="";
+        this.zone="";
+        this.pickuprout="";
+        this.droprout="";
       },
       fngetid:function(starrx){
         var starr = starrx;
@@ -281,7 +284,7 @@ margin-left: 2%;
         obj0.stid = sid;
         obj0.schol = sessionStorage.getItem("sch");
         this.getpasssecparam = obj0;
-        alert(JSON.stringify(obj0));
+        //alert(JSON.stringify(obj0));
         this.$.getpasssecajax.generateRequest();
 
          
@@ -298,7 +301,7 @@ margin-left: 2%;
         coor=no[0].conumber;
       },
      getpasssecResponse:function(e){
-      alert(JSON.stringify(e.detail.response));
+      //alert(JSON.stringify(e.detail.response));
       stname=e.detail.response.returnval[0].student_name;
       standard=e.detail.response.returnval[0].standard;
       section=e.detail.response.returnval[0].section;
@@ -338,10 +341,10 @@ var obj={"stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr"
         obj.schoolname=sessionStorage.getItem("schoolname");
         obj.schooladdr=sessionStorage.getItem("schooladdr");
         passarr.push(obj);
-        alert('final arr is .. '+JSON.stringify(passarr));
+        //alert('final arr is .. '+JSON.stringify(passarr));
         c++;
         if(c==len){
-          alert('c is '+c+'  '+len);
+        //  alert('c is '+c+'  '+len);
         document.querySelector('studentpass-card').passarr1=passarr;
         c=0;}
       

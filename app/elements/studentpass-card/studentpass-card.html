@@ -115,7 +115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div></div>
     <div class="buttons">
-         <paper-button class="button" id="print" on-click="print">Print</paper-button>
+         <paper-button style="margin-top: 3%"class="button" id="print" on-click="print">Print</paper-button>
       </div>
   </div>
      <transport-service id="root"></transport-service>
@@ -171,7 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.mobno="";
         this.blood="";
         this.value="";
-        this.itemArray="";
+        //this.itemArray="";
         this.sid="";
         this.parent="";
         this.address1="";
@@ -180,6 +180,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.pin="";
         this.pickup="";
         this.drop="";
+          this.$.pass.hidden=false;
+          document.querySelector("#checkbox").checked=false;
+           this.$.text.hidden=false;
       },
        email:function(e){
               //alert('sending email');
@@ -277,6 +280,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.pin="";
         this.pickup="";
         this.drop="";
+        this.zone="";
+        this.pickuprout="";
+        this.droprout="";
     },
      FnItemSelected:function(e)
    {

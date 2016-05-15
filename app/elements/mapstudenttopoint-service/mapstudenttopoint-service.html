@@ -131,6 +131,18 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- below ajax to get the list of student id belong to that grade and their details -->
+   <iron-ajax
+      method="post"
+      id="getclasspassajax"
+      url="{{getclasspassurl}}"
+      params="{{getclasspassparams}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getclasspassResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -263,7 +275,22 @@
           alert('Route creation failed');
       }
       document.querySelector('routecreate-card').FnClear();
-    }
+    },
+    getgradedata:function(temp){
+    this.getclasspassurl = sessionStorage.getItem("addrinfo")+"/getclasspass";
+      var obj={"id":"","schol":""}
+      obj.schol=sessionStorage.getItem("sch");
+      obj.id=temp;
+      this.getclasspassparams=obj;
+      //alert(JSON.stringify(obj));
+      this.$.getclasspassajax.generateRequest();
+      },
+      getclasspassResponse:function(e) {
+        //alert('2 ');
+        var starr = e.detail.response.returnval;
+        //alert(JSON.stringify(starr));
+        document.querySelector('passtemplate-card').fngetid(starr);
+      }
     });
   })();
   </script>

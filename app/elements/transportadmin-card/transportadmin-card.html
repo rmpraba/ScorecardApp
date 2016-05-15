@@ -35,6 +35,8 @@
       <paper-icon-button class="iconbutton" src="../../images/bus.png" on-click="bus"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/attender.png" on-click="attender"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/addroute.png" on-click="addroute"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/routescreate.png" on-click="passtemp"></paper-icon-button>
 
 
     </div>
@@ -95,6 +97,9 @@
       attender:function()
       {
         document.querySelector('transport-app').setPage("attender","Add Attender Details");
+      }
+      passtemp:function(){
+        document.querySelector('transport-app').setPage("passtemp","STudent PAss");
       }
   });
 </script>

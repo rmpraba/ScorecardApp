@@ -683,8 +683,7 @@ text-align: center;
 }
 .pass{
 
-    width: 21cm;
-    height: 29cm;
+    
     @apply(--layout-horizontal);
     margin-left: 20%;
     margin-top: 15%;
@@ -821,7 +820,10 @@ margin-left: 2%;
     margin-top: 10%;
     display: flex;
 }
-
+.passtemp{
+    @apply(--layout-horizontal-wrap);
+    @apply(--layout-vertical-wrap);
+}
 
 
 </style>

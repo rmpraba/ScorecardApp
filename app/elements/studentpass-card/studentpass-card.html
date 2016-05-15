@@ -12,9 +12,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\..\bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../transport-service/transport-service.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+<link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">
 
  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
@@ -29,16 +31,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <div class="student-image" >
    <img id="imgRes">
   </div>
-    <div class="left">
+    <div class="left" >
 
-          <paper-input class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-input id="text"class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item>{{item.itemdes}}</paper-item>
         </template>
       </paper-listbox>
+
+      <paper-checkbox id="checkbox" class="checkbox" on-change="changehandler">Select by Grade</paper-checkbox>
+
+      <div id="selectclass" >
+        <paper-dropdown-menu   label="Select Grade">
+          <paper-menu class="dropdown-content" id="gradeselect" on-iron-select="class" attr-for-selected="value" >
+              <paper-item value="1">Primary</paper-item>            
+              <paper-item value="2">Pre-Primary</paper-item>
+            
+          </paper-menu>
+        </paper-dropdown-menu>
       </div>
-    <div class="pass">
+
+      </div>
+<div id="passtemp">
+       <template  is="dom-repeat" items="{{passarr1}}" as="view">
+      <div class="itemcards">
+        <passtemplate-card schoolname="{{view.schoolname}}" schooladdr="{{view.schooladdr}}" sid="{{view.stid}}" studname="{{view.stname}}" stnd="{{view.stnd}}" sec="{{view.sec}}" zone="{{view.zone}}" parent="{{view.dad1}}" address1="{{view.add1}}" address2="{{view.add2}}" address3="{{view.add3}}" town="{{view.add4}}" pin="{{view.pin}}" pickuprout="{{view.pickr}}" pickup="{{view.pickp}}" droprout="{{view.dropr}}" drop="{{view.dropp}}" mobno="{{view.mob}}" coorno="{{view.coorno}}"></passtemplate-card>
+      </div>
+
+    </template>
+</div>
+
+    <div id="pass"class="pass">
   <div id="canvas" style="background-image:url(fimage/1.jpg)">
 
       <div class="front">
@@ -69,9 +93,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <div class="body3">
         <div class="backimg">
         <div class="backdetails">
-                  <p style="font-size: 13px;">Address:
+                  <p style="font-size: 13px;"><strong>Address:</strong>
                   S/O,{{parent}} ,
-                  {{address1}},<br>
+                  {{address1}},
                   {{address2}},
                   {{address3}}, 
                   {{town}}-{{pin}}.</p>
@@ -95,6 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
   </div>
      <transport-service id="root"></transport-service>
+     <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
 
      <iron-ajax
         auto
@@ -118,6 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
     var namearr=[];
+    var num;
     Polymer({
       is: 'studentpass-card',
     ready:function(){
@@ -126,6 +152,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.schooladdr=sessionStorage.getItem("schooladdr");
         this.$.root.stupassgetname();
         this.querySelector('paper-listbox').style.visibility='hidden';
+        this.$.selectclass.hidden=true;
+        this.$.passtemp.hidden=true;
       },
     
       callnumberservice:function(){
@@ -260,7 +288,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.value=this.studid;
     this.$.root.getpassdetail(this.studid);
     this.$.root.getzonedetail(this.studid);
+  },
+  changehandler:function(e)
+  {
+   //alert('hello');
+    if(e.target.checked==true){
+     // alert('select by class is clicked');
+      this.$.selectclass.hidden=false;
+      this.$.text.hidden=true;
+      this.$.pass.hidden=true;
+      this.$.passtemp.hidden=false;
+    }
+    else
+    {
+     this.$.selectclass.hidden=true; 
+     this.$.text.hidden=false;
+     this.$.pass.hidden=false;
+      this.$.passtemp.hidden=true;
+    }
+  },
+  class:function(e){
+
+    var val=(e.target.selectedItem.textContent).trim();
+    if(val=='Primary')
+    {
+        num=1;
+    }
+    else
+    {
+        num=2; 
+    }
+    //alert(num);
+    this.$.maps.getgradedata(num);
   }
+
+
+
     });
   })();
   </script>

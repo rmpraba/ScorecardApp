@@ -554,6 +554,7 @@
             method="post"
             id="classesajax"
             url="{{classurl}}"
+            params="{{classparam}}"
             handle-as="json"
             content-type="application/json"
             on-response="classesResponse"
@@ -661,6 +662,17 @@
                 debounce-duration="300"
         >
         </iron-ajax>
+        <iron-ajax
+          method="post"
+          id="verifyajax"
+          url="{{verifyurl}}"
+          params="{{verifyparam}}"
+          handle-as="json"
+          content-type="application/json"
+          on-response="verifyResponse"
+          debounce-duration="300"
+        >
+        </iron-ajax>
     </template>
   <script>
   (function() {
@@ -702,20 +714,20 @@ var school=sessionStorage.getItem("sch");
       is: "transport-service",
 
      FnClear:function(){
-  point="";
-     trip="";
-     pick="";
-     drop="";
-     routeidd="";
-     routetrip="";
-     totalfee="";
-     months="";
-     calcfee="";
-     cancelfee="";
-     cancelpaid="";
-     cusfee="";
-     yearlyfee="";
-     val="";
+    point="";
+    trip="";
+    pick="";
+    drop="";
+    routeidd="";
+    routetrip="";
+    totalfee="";
+    months="";
+    calcfee="";
+    cancelfee="";
+    cancelpaid="";
+    cusfee="";
+    yearlyfee="";
+    val="";
     oneway="";
      zstuname="";
      distance="";
@@ -1030,9 +1042,8 @@ var school=sessionStorage.getItem("sch");
       },
       studentroutereport:function(routeid,tripid,pickordrop)
       {
-        if(pickordrop=="Pickup")
-        {
-this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickroute-report-card";
+        if(pickordrop=="Pickup"){
+        this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickroute-report-card";
         var obj={"routeid":"","tripid":"","schol":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.routeid=routeid;
@@ -1040,9 +1051,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         this.studentpickroutereportparam=obj;
         //alert(JSON.stringify(obj));
         this.$.studentpickroutereportajax.generateRequest();
-      }
-      else
-      {
+      } else {
         this.studentdroproutereporturl=sessionStorage.getItem("addrinfo")+"/studentdroproute-report-card";
         var obj={"routeid":"","tripid":"","schol":""}
         obj.schol=sessionStorage.getItem("sch");
@@ -1775,6 +1784,9 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         },
         classesx:function(){
             this.classurl = sessionStorage.getItem("addrinfo")+"/selectclasses";
+            var obj={"schol":""}
+            obj.schol=sessionStorage.getItem("sch");
+            this.classparam=obj;
             this.$.classesajax.generateRequest();
         },
         classesResponse:function(e){
@@ -1818,6 +1830,8 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             {
                     alert('Student added successfully');
             }
+            document.querySelector('student-detail-card').FnClear();
+            document.querySelector('student-detail-card').ready();
         },
         getchequedetailsbyname:function(e){
            this.getchequedetailsbynameurl=sessionStorage.getItem("addrinfo")+"/getchequedetailsbyname";
@@ -1973,7 +1987,24 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             } else {
                 alert('Error! Attender Details Not Added');
             }
-
+        },
+        verify:function(id){
+            this.verifyurl=sessionStorage.getItem("addrinfo")+"/verify";
+            var obj={"schol":"","stid":""}
+            obj.schol=sessionStorage.getItem("sch");
+            obj.stid=id;
+            this.verifyparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.verifyajax.generateRequest();
+        },
+        verifyResponse:function(e){
+        var res=e.detail.response.returnval;
+        if(res=='success')
+        {
+            alert('The Id Is Already Exist Please Change it');
+            var d='';
+            document.querySelector('student-detail-card').student_id=d;
+        }
         }
     });
  })();

@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../transport-service/transport-service.html">
+<link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
@@ -93,7 +94,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     text-align: center;
     @apply(--layout-center);
     margin-top: 50%;
-    margin-left: -54%;
+    margin-left: -47%;
 }
 .passtemp .back{
     border-radius: 15px;
@@ -170,7 +171,7 @@ margin-left: 2%;
       </div>
       </div>
     </div>
-
+<mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
 
     <iron-ajax
     auto
@@ -224,8 +225,8 @@ margin-left: 2%;
   <script>
   (function() {
     'use strict';
-            var sid;
-             var passarr=[];
+    var sid;
+    var passarr=[];
     var stname;
     var pickupoint;
     var droppoint;
@@ -243,6 +244,7 @@ margin-left: 2%;
     var len;
     var c=0;
     var coor;
+    var zonename;
     Polymer({
       is: 'passtemplate-card',
 
@@ -279,24 +281,10 @@ margin-left: 2%;
         obj0.stid = sid;
         obj0.schol = sessionStorage.getItem("sch");
         this.getpasssecparam = obj0;
+        alert(JSON.stringify(obj0));
         this.$.getpasssecajax.generateRequest();
 
-          this.getparentinfourl = sessionStorage.getItem("addrinfo") + "/getparentinfo";
-          var obj1 = {"stid": "", "schol": ""}
-        obj1.stid = sid;
-        obj1.schol = sessionStorage.getItem("sch");
-          this.getparentinfoparam = obj1;
-          this.$.getparentinfoajax.generateRequest();
-
-
-          this.getstudpointurl =sessionStorage.getItem("addrinfo") + "/getstudpoint";
-          var obj2 = {"stid": "", "schol": ""}
-        obj2.stid = sid;
-        obj2.schol = sessionStorage.getItem("sch");
-        this.getstudpointparam=obj;
-        //alert(JSON.stringify(obj0));
-        this.$.getstudpointoajax.generateRequest();
-
+         
 
         this.$.numberreadajax.generateRequest();
       
@@ -310,37 +298,27 @@ margin-left: 2%;
         coor=no[0].conumber;
       },
      getpasssecResponse:function(e){
+      alert(JSON.stringify(e.detail.response));
       stname=e.detail.response.returnval[0].student_name;
-      standard=e.detail.response.returnval[0].class;
+      standard=e.detail.response.returnval[0].standard;
       section=e.detail.response.returnval[0].section;
-     },
-     getstudpointResponse:function(e){
-      var srsd=e.detail.response.returnval;
-        pickuproute = srsd[0].pickup_route_id;
-        pickupoint = srsd[0].pickup_point;
-        droproute = srsd[0].drop_route_id;
-        droppoint = srsd[0].drop_point;
-        alert('names ..'+pickuproute+'   '+pickupoint+'   '+droproute+'  '+droppoint);
-         
-     },
-     
-      getpassclassResponse:function(e){
-        standard=e.detail.response.returnval[0].class;
-        section=e.detail.response.returnval[0].section;
-      },
-      getparentinfoResponse:function(e){
-
-        dad1=e.detail.response.returnval[0].parent_name;
-        add1=e.detail.response.returnval[0].address1;
-        add2=e.detail.response.returnval[0].address2;
-        add3=e.detail.response.returnval[0].address3;
-        add4=e.detail.response.returnval[0].city;
-        pin=e.detail.response.returnval[0].pincode;
-        mob=e.detail.response.returnval[0].mobile;
+      zonename=e.detail.response.returnval[0].zone_name;
+      pickuproute=e.detail.response.returnval[0].pickup_route_id;
+      droproute=e.detail.response.returnval[0].drop_route_id;
+      pickupoint=e.detail.response.returnval[0].pickup_point;
+      droppoint=e.detail.response.returnval[0].drop_point;
+      dad1=e.detail.response.returnval[0].parent_name;
+      mob=e.detail.response.returnval[0].mobile;
+      add1=e.detail.response.returnval[0].address1;
+      add2=e.detail.response.returnval[0].address2;
+      add3=e.detail.response.returnval[0].address3;
+      add4=e.detail.response.returnval[0].city;
+      pin=e.detail.response.returnval[0].pincode;
 
 
-var obj={"stid":"","stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr":"","dad1":"","add1":"","add2":"","add3":"","add4":"","pin":"","mob":"","coorno":"","schoolname":"","schooladdr":""}
-        obj.stid=sid;
+
+    
+var obj={"stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":"","dropr":"","dad1":"","add1":"","add2":"","add3":"","add4":"","pin":"","mob":"","coorno":"","schoolname":"","schooladdr":"","zonename":""}
       obj.stname=stname;
         obj.stnd=standard;
         obj.sec=section;
@@ -356,6 +334,7 @@ var obj={"stid":"","stname":"","stnd":"","sec":"","pickp":"","pickr":"","dropp":
         obj.pin=pin;
         obj.mob=mob;
         obj.coorno=coor;
+        obj.zonename=zonename;
         obj.schoolname=sessionStorage.getItem("schoolname");
         obj.schooladdr=sessionStorage.getItem("schooladdr");
         passarr.push(obj);

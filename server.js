@@ -1720,6 +1720,47 @@ app.post('/updatechequedetail',  urlencodedParser,function (req, res)
 
 });
 });
+app.post('/bouncechequedetail',  urlencodedParser,function (req, res)
+{
+	var sid={"student_id":req.query.studid};
+    var schoolx={"school_id":req.query.schol};
+       connection.query('select * from student_fee where ? and ?', [sid,schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+
+			// console.log('cyes');
+			res.status(200).json({'returnval': rows});
+
+		}
+		else
+		{
+			res.status(200).json({'returnval': 'invalid'});
+		}
+
+});
+});
+app.post('/insertbouncecheque',  urlencodedParser,function (req, res)
+{
+	var sid={"student_id":req.query.std,"school_id":req.query.schoolid,"installmenttype":req.query.installtype,"amount":req.query.installamt,"cheque_no":req.query.chequeno,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate,"receipt_no":req.query.installtyperep,"cheque_status":req.query.chequestatus};
+       connection.query('insert into bounce_chequedetails set ?', [sid],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+
+			// console.log('cyes');
+			res.status(200).json({'returnval': 'success'});
+
+		}
+		else
+		{
+			res.status(200).json({'returnval': 'invalid'});
+		}
+
+});
+});
 
 app.post('/updatestucheque',  urlencodedParser,function (req, res)
 {

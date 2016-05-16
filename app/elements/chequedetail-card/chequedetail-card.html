@@ -81,6 +81,7 @@ FnChangestatus:function(chqid,st)
       {
         this.$.service.updatechequedetail(chqdetail);
         this.$.service.updatestudentcheque(chqdetail);
+        this.$.service.bouncechequedetail(chqdetail);
        for(var i=0;i<chqdetail.length;i++)
         {
 

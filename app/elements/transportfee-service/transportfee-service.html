@@ -170,6 +170,28 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="insertbouncechequeajax"
+        url="{{insertbouncechequeurl}}"
+         params="{{insertbouncechequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertbouncechequeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="bouncechequedetailajax"
+        url="{{bouncechequedetailurl}}"
+         params="{{bouncechequedetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="bouncechequedetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
    <iron-ajax
         method="post"
         id="updatestuchequeajax"
@@ -396,6 +418,8 @@ var receiptseq;
 var ackseq;
 var rcount=0;
 var paycount;
+var bouncechequearr=[];
+var bouncestuarr=[];
 
     Polymer({
       is: "transportfee-service",
@@ -1123,7 +1147,6 @@ document.querySelector('zonetostudent-card').payoption(installarr);
      {
        for(var i=0;i<chqdetail.length;i++)
         {
-
         uchequeno=chqdetail[i].cheque_no;
         uchequestatus=chqdetail[i].cheque_status;
         uinstalltype=chqdetail[i].installtype;
@@ -1136,12 +1159,73 @@ document.querySelector('zonetostudent-card').payoption(installarr);
         this.updatechequedetailparam=obj;
         this.$.updatechequedetailajax.generateRequest();
       }
+     
+     },
+     bouncechequedetail:function(chqdetail)
+     {
+       for(var i=0;i<chqdetail.length;i++)
+        {
+               if(chqdetail[i].cheque_status=="bounce"||chqdetail[i].cheque_status=="cancelled")
+               {
+                this.bouncechequedetailurl=sessionStorage.getItem("addrinfo")+"/bouncechequedetail";
+                var obj={"installtype":"","studid":"","schol":""}
+                obj.installtype=chqdetail[i].installtype;
+                obj.studid=chqdetail[i].student_id;
+                obj.schol=sessionStorage.getItem("sch");
+                this.bouncechequedetailparam=obj;
+                this.$.bouncechequedetailajax.generateRequest();
+                bouncechequearr.push(chqdetail[i]);
+               }
+        }
+ //alert(JSON.stringify(bouncechequearr));
+     },
+     bouncechequedetailResponse:function(e)
+     {
+     bouncestuarr.push(e.detail.response.returnval);
+     //alert(JSON.stringify(bouncestuarr));
      },
      updatechequedetailResponse:function(e)
      {
+      
      },
      updatestudentcheque:function(chqdetail)
      {
+      var installamt;
+      var installtyperep;
+for(var l=0;l<bouncechequearr.length;l++)
+{
+  for(var m=0;m<bouncestuarr.length;m++)
+  {
+    if(bouncechequearr[l].student_id==bouncestuarr[m].student_id)
+    {
+      if(bouncechequearr[l].installtype=="installment1")
+      {
+       installamt=bouncestuarr[m].installment_1;
+       installtyperep=bouncestuarr[m].receipt_no1;
+      }
+      else
+      {
+        installamt=bouncestuarr[m].installment_2;
+       installtyperep=bouncestuarr[m].receipt_no2;
+      }
+      var ob={"std":"","schoolid":"","installtype":"","installamt":"","chequeno":"","bankname":"","chequedate":"","chequestatus":"","receiptno":""}
+      ob.std=bouncechequearr[l].student_id;
+      ob.schoolid=sessionStorage.getItem("sch");
+      ob.installtype=bouncechequearr[l].installtype;
+      ob.installamt=installamt;
+      ob.chequeno=bouncechequearr[l].cheque_no;
+      ob.bankname=bouncechequearr[l].bank_name;
+      ob.chequedate= bouncechequearr[l].cheque_date;
+      ob.chequestatus=bouncechequearr[l].cheque_status;
+      ob.receiptno=installtyperep;
+      this.insertbouncechequeurl=sessionStorage.getItem("addrinfo")+"/insertbouncecheque";  
+      this.insertbouncechequeparam=ob;
+      this.$.insertbouncechequeajax.generateRequest();
+    }
+  }
+}
+
+
       //alert(JSON.stringify(chqdetail));
        var paidstatus;
        for(var j=0;j<chqdetail.length;j++)
@@ -1153,6 +1237,7 @@ document.querySelector('zonetostudent-card').payoption(installarr);
             paidstatus="paid";        }
         else if(chqdetail[j].cheque_status=="bounce")
         {
+
             paidstatus="bounce";
         }
         else if(chqdetail[j].cheque_status=="cancelled")

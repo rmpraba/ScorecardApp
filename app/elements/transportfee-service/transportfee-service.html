@@ -1344,9 +1344,11 @@ for(var l=0;l<bouncechequearr.length;l++)
          {
           if(feereports[i].modeofpayment1=="Cash" && (feereports[i].installment_1Date==todate))
           {
-            var obj={"student_id":"","name":"","receiptno":"","installment1":""}
+            var obj={"student_id":"","name":"","receiptno":"","installment1":"","standard":"","section":""}
             obj.student_id=feereports[i].student_id;
             obj.name=feereports[i].name;
+            obj.standard=feereports[i].standard;
+            obj.section=feereports[i].section;
             obj.receiptno=feereports[i].receipt_no1;
             obj.installment1=feereports[i].installment_1;
             feeinstall1arr.push(obj);
@@ -1356,9 +1358,11 @@ for(var l=0;l<bouncechequearr.length;l++)
 
           if(feereports[i].modeofpayment2=="Cash" && feereports[i].installment_2Date==todate)
           {
-            var obj3={"student_id":"","name":"","receiptno":"","installment2":""}
+            var obj3={"student_id":"","name":"","receiptno":"","installment2":"","standard":"","section":""}
             obj3.student_id=feereports[i].student_id;
             obj3.name=feereports[i].name;
+            obj3.standard=feereports[i].standard;
+            obj3.section=feereports[i].section;
             obj3.receiptno=feereports[i].receipt_no2;
             obj3.installment2=feereports[i].installment_2;
             feeinstall2arr.push(obj3);
@@ -1375,9 +1379,11 @@ for(var l=0;l<bouncechequearr.length;l++)
             {
               if(chequereportarr[j].student_id==feereports[i].student_id && chequereportarr[j].installtype=="installment1")
               {
-            var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
+            var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":"","createddate":"","standard":"","section":""}
             obj1.student_id=feereports[i].student_id;
             obj1.name=feereports[i].name;
+            obj1.standard=feereports[i].standard;
+            obj1.section=feereports[i].section;
             obj1.receiptno=feereports[i].receipt_no1;
             obj1.installment1=feereports[i].installment_1;
             obj1.chequeno=chequereportarr[j].cheque_no;
@@ -1416,9 +1422,11 @@ for(var l=0;l<bouncechequearr.length;l++)
               if(chequereportarr[j].student_id==feereports[i].student_id && chequereportarr[j].installtype=="installment2")
               {
 
-            var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
+            var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":"","createddate":"","standard":"","section":""}
             obj4.student_id=feereports[i].student_id;
             obj4.name=feereports[i].name;
+            obj4.standard=feereports[i].standard;
+            obj4.section=feereports[i].section;
             obj4.receiptno=feereports[i].receipt_no2;
             obj4.installment2=feereports[i].installment_2;
             obj4.chequeno=chequereportarr[j].cheque_no;
@@ -1489,9 +1497,11 @@ document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+p
           if(feereports[i].modeofpayment1=="Cash")
           {
             //alert('Cash installment1');
-            var obj={"student_id":"","name":"","receiptno":"","installment1":""}
+            var obj={"student_id":"","name":"","receiptno":"","installment1":"","standard":"","section":""}
             obj.student_id=feereports[i].student_id;
             obj.name=feereports[i].name;
+            obj.standard=feereports[i].standard;
+            obj.section=feereports[i].section;
             obj.receiptno=feereports[i].receipt_no1;
             obj.installment1=feereports[i].installment_1;
             feeinstall1arr.push(obj);
@@ -1501,9 +1511,11 @@ document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+p
 
           if(feereports[i].modeofpayment2=="Cash")
           {
-            var obj3={"student_id":"","name":"","receiptno":"","installment2":""}
+            var obj3={"student_id":"","name":"","receiptno":"","installment2":"","standard":"","section":""}
             obj3.student_id=feereports[i].student_id;
             obj3.name=feereports[i].name;
+            obj3.standard=feereports[i].standard;
+            obj3.section=feereports[i].section;
             obj3.receiptno=feereports[i].receipt_no2;
             obj3.installment2=feereports[i].installment_2;
             feeinstall2arr.push(obj3);
@@ -1520,9 +1532,11 @@ document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+p
             {
               if(chequereportarr1[j].student_id==feereports[i].student_id && chequereportarr1[j].installtype=="installment1")
               {
-            var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
+            var obj1={"student_id":"","name":"","receiptno":"","installment1":"","chequeno":"","bankname":"","chequedate":"","createddate":"","standard":"","section":""}
             obj1.student_id=feereports[i].student_id;
             obj1.name=feereports[i].name;
+            obj1.standard=feereports[i].standard;
+            obj1.section=feereports[i].section;
             obj1.receiptno=feereports[i].receipt_no1;
             obj1.installment1=feereports[i].installment_1;
             obj1.chequeno=chequereportarr1[j].cheque_no;
@@ -1561,9 +1575,11 @@ document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+p
               if(chequereportarr1[j].student_id==feereports[i].student_id && chequereportarr1[j].installtype=="installment2")
               {
 
-            var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":"","createddate":""}
+            var obj4={"student_id":"","name":"","receiptno":"","installment2":"","chequeno":"","bankname":"","chequedate":"","createddate":"","standard":"","section":""}
             obj4.student_id=feereports[i].student_id;
             obj4.name=feereports[i].name;
+            obj4.standard=feereports[i].standard;
+            obj4.section=feereports[i].section;
             obj4.receiptno=feereports[i].receipt_no2;
             obj4.installment2=feereports[i].installment_2;
             obj4.chequeno=chequereportarr1[j].cheque_no;

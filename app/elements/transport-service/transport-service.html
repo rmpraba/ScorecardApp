@@ -641,6 +641,28 @@
         >
         </iron-ajax>
         <iron-ajax
+                method="post"
+                id="driverajax"
+                url="{{driverurl}}"
+                params="{{driverparam}}"
+                handle-as="json"
+                content-type="application/json"
+                on-response="driverResponse"
+                debounce-duration="300"
+        >
+        </iron-ajax>
+        <iron-ajax
+                method="post"
+                id="drivercountajax"
+                url="{{drivercounturl}}"
+                params="{{drivercountparam}}"
+                handle-as="json"
+                content-type="application/json"
+                on-response="drivercountResponse"
+                debounce-duration="300"
+        >
+        </iron-ajax>
+        <iron-ajax
           method="post"
           id="verifyajax"
           url="{{verifyurl}}"
@@ -651,6 +673,83 @@
           debounce-duration="300"
         >
         </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="increasedriveridajax"
+        url="{{increasedriveridurl}}"
+        params="{{increasedriveridparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="increasedriveridResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="increaseattenderidajax"
+        url="{{increaseattenderidurl}}"
+        params="{{increaseattenderidparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="increaseattenderidResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
+      <iron-ajax
+      method="post"
+      id="attenderajax"
+      url="{{attenderurl}}"
+      params="{{attenderparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="attenderResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="attendercountajax"
+        url="{{attendercounturl}}"
+        params="{{attendercountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="attendercountResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="increasebusidajax"
+        url="{{increasebusidurl}}"
+        params="{{increasebusidparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="increasebusidResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="busajax"
+        url="{{busurl}}"
+        params="{{busparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="busResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="buscountajax"
+        url="{{buscounturl}}"
+        params="{{buscountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="buscountResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
     </template>
   <script>
   (function() {
@@ -684,26 +783,29 @@
     var feedet;
     var studentname;
     var feeparent;
-    var editchequedetail
+    var editchequedetail;
+      var driver_count;
+      var attender_counts;
+    var bus_counts;
 var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
 
      FnClear:function(){
-  point="";
-     trip="";
-     pick="";
-     drop="";
-     routeidd="";
-     routetrip="";
-     totalfee="";
-     months="";
-     calcfee="";
-     cancelfee="";
-     cancelpaid="";
-     cusfee="";
-     yearlyfee="";
-     val="";
+    point="";
+    trip="";
+    pick="";
+    drop="";
+    routeidd="";
+    routetrip="";
+    totalfee="";
+    months="";
+    calcfee="";
+    cancelfee="";
+    cancelpaid="";
+    cusfee="";
+    yearlyfee="";
+    val="";
     oneway="";
      zstuname="";
      distance="";
@@ -1018,9 +1120,8 @@ var school=sessionStorage.getItem("sch");
       },
       studentroutereport:function(routeid,tripid,pickordrop)
       {
-        if(pickordrop=="Pickup")
-        {
-this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickroute-report-card";
+        if(pickordrop=="Pickup"){
+        this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickroute-report-card";
         var obj={"routeid":"","tripid":"","schol":""}
         obj.schol=sessionStorage.getItem("sch");
         obj.routeid=routeid;
@@ -1028,9 +1129,7 @@ this.studentpickroutereporturl=sessionStorage.getItem("addrinfo")+"/studentpickr
         this.studentpickroutereportparam=obj;
         //alert(JSON.stringify(obj));
         this.$.studentpickroutereportajax.generateRequest();
-      }
-      else
-      {
+      } else {
         this.studentdroproutereporturl=sessionStorage.getItem("addrinfo")+"/studentdroproute-report-card";
         var obj={"routeid":"","tripid":"","schol":""}
         obj.schol=sessionStorage.getItem("sch");
@@ -1711,7 +1810,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
           obj3.route=pickrou;
           obj3.schol=sessionStorage.getItem("sch");
           this.getpickrouparam=obj3;
-          //alert(JSON.stringify(obj3));
+
           this.$.getpickrouajax.generateRequest();
 
           this.getdroprouurl=sessionStorage.getItem("addrinfo")+"/getroutename";
@@ -1753,7 +1852,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             var add4=e.detail.response.returnval[0].city;
             var pin=e.detail.response.returnval[0].pincode;
             var mob=e.detail.response.returnval[0].mobile;
-            //alert(dad1+'    '+add1+'  '+add2+'  '+add3+'  '+add4+'   '+pin+'  '+mob);
+
             document.querySelector('studentpass-card').parent=dad1;
             document.querySelector('studentpass-card').address1=add1;
             document.querySelector('studentpass-card').address2=add2;
@@ -1865,7 +1964,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
                         obj.chequenum1=editcq[i].cheque_no;
                         obj.bankname1=editcq[i].bank_name;
                         obj.chequedate1=editcq[i].cheque_date;
-                    } 
+                    }
                 }
             }
             var obj1={"installtype2":"","installamt2":"","paytype2":"","chequenum2":"","bankname2":"","chequedate2":""}
@@ -1878,17 +1977,114 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
                         obj1.chequenum2=editcq[j].cheque_no;
                         obj1.bankname2=editcq[j].bank_name;
                         obj1.chequedate2=editcq[j].cheque_date;
-                    } 
+                    }
                 }
-            } 
+            }
             chequearr1.push(obj);
             chequearr2.push(obj1);
-           // alert(JSON.stringify(chequearr1));
-           // alert(JSON.stringify(chequearr2));
+
             document.querySelector('editcheque-card').editarr1=chequearr1;
             document.querySelector('editcheque-card').editarr2=chequearr2;
             document.querySelector('editcheque-card').id=id;
             document.querySelector('editcheque-card').name=name;
+        },
+        driver_count:function(){
+            this.drivercounturl = sessionStorage.getItem("addrinfo")+"/driver_count";
+            var obj = {"schol":""};
+            obj.schol=sessionStorage.getItem("sch");
+            this.drivercountparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.drivercountajax.generateRequest();
+        },
+        drivercountResponse:function(e){
+            driver_count = e.detail.response.returnval[0].driver_count;
+            //alert(JSON.stringify(driver_count));
+        },
+        driver:function(first_name,last_name,mobile_no,licence_no,address_1,address_2,address_3,city,pincode,lic_exp){
+            this.driverurl = sessionStorage.getItem("addrinfo")+"/driver";
+            var driver_id = "Driver "+''+driver_count + 1;
+            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","licence_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"","lic_exp":"", "schol":""};
+            obj.first_name=first_name;
+            obj.last_name=last_name;
+            obj.mobile_no=mobile_no;
+            obj.licence_no=licence_no;
+            obj.address_1=address_1;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.address_2=address_2;
+            obj.address_3=address_3;
+            obj.city=city;
+            obj.pincode=pincode;
+            obj.id = driver_id;
+            obj.lic_exp=lic_exp;
+            this.driverparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.driverajax.generateRequest();
+
+        },
+        increasedriveridResponse:function(){
+          var result=e.detail.response.returnval;
+        },
+        driverResponse:function(e){
+            var result=e.detail.response.returnval;
+            if(result=="success"){
+                alert('Driver Details Added');
+              this.increasedriveridurl=sessionStorage.getItem("addrinfo")+"/increasedriverid";
+              var obj1={"driver_id":"","schol":""}
+              obj1.driver_id=driver_count + 1;
+              obj1.schol=sessionStorage.getItem("sch");
+              this.increasedriveridparam=obj1;
+              this.$.increasedriveridajax.generateRequest();
+            } else {
+                alert('Error! Driver Details Not Added');
+            }
+
+        },
+        attender_count:function(){
+            this.attendercounturl = sessionStorage.getItem("addrinfo")+"/attender_count";
+            var obj = {"schol":""};
+            obj.schol=sessionStorage.getItem("sch");
+            this.attendercountparam=obj;
+            //alert(JSON.stringify(obj));
+            this.$.attendercountajax.generateRequest();
+        },
+        attendercountResponse:function(e){
+            attender_counts = e.detail.response.returnval[0].attender_count;
+        },
+        attender:function(first_name,last_name,mobile_no,address_1,address_2,address_3,city,pincode){
+            this.attenderurl = sessionStorage.getItem("addrinfo")+"/attender";
+            var  increase1 = attender_counts +1;
+            var attender_id = "Attender "+increase1;
+            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"", "schol":""};
+            obj.first_name=first_name;
+            obj.last_name=last_name;
+            obj.mobile_no=mobile_no;
+            obj.address_1=address_1;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.address_2=address_2;
+            obj.address_3=address_3;
+            obj.city=city;
+            obj.pincode=pincode;
+            obj.id = attender_id;
+            this.attenderparam=obj;
+            this.$.attenderajax.generateRequest();
+
+        },
+      increaseattenderidResponse:function(){
+        var result=e.detail.response.returnval;
+      },
+        attenderResponse:function(e){
+            var result=e.detail.response.returnval;
+            if(result=="success"){
+                alert('Attender Details Added');
+                this.increaseattenderidurl=sessionStorage.getItem("addrinfo")+"/increaseattenderid";
+                var obj1={"attender_id":"","schol":""}
+                obj1.attender_id=attender_counts + 1;
+                obj1.schol=sessionStorage.getItem("sch");
+                this.increaseattenderidparam=obj1;
+                this.$.increaseattenderidajax.generateRequest();
+            } else {
+                alert('Error! Attender Details Not Added');
+            }
         },
         verify:function(id){
             this.verifyurl=sessionStorage.getItem("addrinfo")+"/verify";
@@ -1907,7 +2103,55 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             var d='';
             document.querySelector('student-detail-card').student_id=d;
         }
+        },
+      bus_count:function(){
+        this.buscounturl = sessionStorage.getItem("addrinfo")+"/bus_count";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.buscountparam=obj;
+       // alert(JSON.stringify(obj));
+        this.$.buscountajax.generateRequest();
+      },
+      buscountResponse:function(e){
+        bus_counts = e.detail.response.returnval[0].bus_count;
+       // alert(JSON.stringify(bus_counts));
+      },
+      bus:function(made,no_of_seats,insurance_no,insurance_co,last_service,insurance_exp,next_service){
+        this.busurl = sessionStorage.getItem("addrinfo")+"/bus";
+        var  increase1 = bus_counts +1;
+        var bus_id = "Bus "+increase1;
+       // alert(bus_id);
+        var obj={"id":"","made":"","no_of_seats":"","insurance_no":"","insurance_co":"","last_service":"","insurance_exp":"","next_service":"", "schol":""};
+        obj.made=made;
+        obj.no_of_seats=no_of_seats;
+        obj.insurance_no=insurance_no;
+        obj.insurance_co=insurance_co;
+        obj.schol=sessionStorage.getItem("sch");
+        obj.last_service=last_service;
+        obj.insurance_exp=insurance_exp;
+        obj.next_service=next_service;
+        obj.id = bus_id;
+        this.busparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.busajax.generateRequest();
+      },
+      increasebusidResponse:function(){
+        var result=e.detail.response.returnval;
+      },
+      busResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result=="success"){
+          alert('Bus Details Added');
+          this.increasebusidurl=sessionStorage.getItem("addrinfo")+"/increasebusid";
+          var obj1={"bus_id":"","schol":""}
+          obj1.bus_id=bus_counts + 1;
+          obj1.schol=sessionStorage.getItem("sch");
+          this.increasebusidparam=obj1;
+          this.$.increasebusidajax.generateRequest();
+        } else {
+          alert('Error! Bus Details Not Added');
         }
+      },
     });
  })();
 </script>

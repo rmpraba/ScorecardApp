@@ -3103,6 +3103,25 @@ app.post('/bustoroutesubmit',  urlencodedParser,function (req, res){
       }
     });
 });
+app.post('/busreport' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  connection.query('select route_id,(select route_name from route where id = route_id) as route_name, trip,bus_id,(select made_model from bus where id = bus_id) as bus_model, driver_id,(select first_name from driver where id = driver_id) as driver_firstname,(select last_name from driver where id = driver_id) as driver_lastname,(select mobile_no from driver where id = driver_id) as driver_mobile, attender_id, (select first_name from attender where id = attender_id) as attender_firstname,(select last_name from attender where id = attender_id) as attender_lastname,(select mobile_no from attender where id = attender_id) as attender_mobile from route_bus where ?',[scho],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        {
+        //console.log(rows);
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
 function setvalue(){
 	console.log("calling setvalue.....");
 }

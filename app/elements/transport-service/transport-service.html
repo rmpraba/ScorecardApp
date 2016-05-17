@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <dom-module id="transport-service">
     <template>
@@ -769,6 +769,17 @@
         handle-as="json"
         content-type="application/json"
         on-response="bustoroutesubmitResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="busreportajax"
+        url="{{busreporturl}}"
+        params="{{busreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="busreportResponse"
         debounce-duration="300"
       >
       </iron-ajax>
@@ -2214,6 +2225,18 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
           alert('Error! Bus to Route Not Allocated');
         }
       },
+      busreport:function(){
+        this.busreporturl = sessionStorage.getItem("addrinfo")+"/busreport";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.busreportparam=obj;
+       // alert(JSON.stringify(obj));
+        this.$.busreportajax.generateRequest();
+      },
+      busreportResponse:function(e){
+        var busreport=e.detail.response.returnval;
+        document.querySelector('bus-report').busreportarr=busreport;
+      }
     });
  })();
 </script>

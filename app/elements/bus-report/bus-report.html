@@ -1,15 +1,12 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../transport-service/transport-service.html">
+<link rel="import" href="../bus-report-card/bus-report-card.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
 <dom-module id="bus-report">
   <template>
     <style>
@@ -17,7 +14,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="card">
+      <div class="headtabs" id="tabs1">
+        <paper-tabs selected="0">
+          <paper-tab>Route ID</paper-tab>
+          <paper-tab>Route Name</paper-tab>
+          <paper-tab>Bus ID & Name</paper-tab>
+          <paper-tab>Driver Name</paper-tab>
+          <paper-tab>Driver Mobile</paper-tab>
+          <paper-tab>Attender Name</paper-tab>
+          <paper-tab>Attender Mobile</paper-tab>
+        </paper-tabs>
+      </div>
+     <div class="template">
+      <template  is="dom-repeat" items="{{busreportarr}}" as="view">
+        <bus-report-card routeid="{{view.route_id}}" routename="{{view.route_name}}" trip="{{view.trip}}" busid="{{view.bus_id}}" busmodel="{{view.bus_model}}" driverfirstname="{{view.driver_firstname}}" driverlastname="{{view.driver_lastname}}" drivermobile="{{view.driver_mobile}}" attenderfirstname="{{view.attender_firstname}}" attenderlastname="{{view.attender_lastname}}" attendermobile="{{view.attender_mobile}}"></bus-report-card>
+      </template>
+     </div> 
+    </div>
   </template>
   <script>
   (function() {

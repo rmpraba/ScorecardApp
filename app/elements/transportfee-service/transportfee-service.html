@@ -1182,19 +1182,19 @@ document.querySelector('zonetostudent-card').payoption(installarr);
      },
      bouncechequedetailResponse:function(e)
      {
-      //alert('2come');
+     // alert('2come');
      bouncestuarr.push(e.detail.response.returnval[0]);
       var installamt;
       var installtyperep;
-     // alert(bouncechequearr.length+''+bouncestuarr.length);
-     // alert('1'+JSON.stringify(bouncechequearr));
-    //   alert('2'+JSON.stringify(bouncestuarr));
+     //alert(bouncechequearr.length+''+bouncestuarr.length);
+    //alert('1'+JSON.stringify(bouncechequearr));
+     //alert('2'+JSON.stringify(bouncestuarr));
 for(var l=0;l<bouncechequearr.length;l++)
 {
   //alert('1');
   for(var m=0;m<bouncestuarr.length;m++)
   {
-   // alert('2');
+   //alert('2');
     if(bouncechequearr[l].student_id==bouncestuarr[m].student_id)
     {
       //alert('3');
@@ -1267,8 +1267,7 @@ for(var l=0;l<bouncechequearr.length;l++)
         //alert(JSON.stringify(obj));
         this.$.updatestuchequeajax.generateRequest();
       }
-      bouncestuarr=[];
-      bouncechequearr=[];
+      
      },
      updatestuchequeResponse:function(e)
      {
@@ -1279,7 +1278,7 @@ for(var l=0;l<bouncechequearr.length;l++)
       feereport:function(dat)
       {
         var condate = new Date(dat);
-        todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate()
+        todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
         // alert(dat);
         //alert(todate);
          this.chequereporturl=sessionStorage.getItem("addrinfo")+"/chequereport";
@@ -1322,8 +1321,6 @@ for(var l=0;l<bouncechequearr.length;l++)
         this.feereport2param=obj1;
         //alert(JSON.stringify(obj1));
         this.$.feereport2ajax.generateRequest();
-
-
 
       },
 

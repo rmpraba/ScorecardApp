@@ -1777,7 +1777,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 		if(req.query.paidstatus=="bounce")
 		{
 			fine1=250;
-			installamt={"installment_1":0};
+			//installamt={"installment_1":0};
 		}
 		else
 		{
@@ -1792,7 +1792,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 		if(req.query.paidstatus=="bounce")
 		{
 			fine2=250;
-			installamt={"installment_2":0};
+			//installamt={"installment_2":0};
 		}
 		else
 		{
@@ -1808,7 +1808,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
 	chequename={"student_id":req.query.chequename}
 
 	//console.log(chequename);
-       connection.query('update student_fee set ?,?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,installamt,fine1,fine2,chequename],
+       connection.query('update student_fee set ?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,fine1,fine2,chequename],
 
        	function(err, rows)
        	{

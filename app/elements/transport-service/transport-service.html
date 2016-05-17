@@ -750,6 +750,28 @@
         debounce-duration="300"
       >
       </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="bustorouteajax"
+        url="{{bustorouteurl}}"
+        params="{{bustorouteparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="bustorouteResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
+      <iron-ajax
+        method="post"
+        id="bustoroutesubmitajax"
+        url="{{bustoroutesubmiturl}}"
+        params="{{bustoroutesubmitparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="bustoroutesubmitResponse"
+        debounce-duration="300"
+      >
+      </iron-ajax>
     </template>
   <script>
   (function() {
@@ -784,9 +806,14 @@
     var studentname;
     var feeparent;
     var editchequedetail;
-      var driver_count;
-      var attender_counts;
+    var driver_count;
+    var attender_counts;
     var bus_counts;
+    var bustoroute;
+    var routetobus;
+    var bustoschool;
+    var bustodriver;
+    var bustoattender;
 var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
@@ -1753,7 +1780,6 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
           }
        }
 
-
 }
       },
 
@@ -2150,6 +2176,42 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
           this.$.increasebusidajax.generateRequest();
         } else {
           alert('Error! Bus Details Not Added');
+        }
+      },
+      bustoroute:function(){
+        this.bustorouteurl = sessionStorage.getItem("addrinfo")+"/bustoroute";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.bustorouteparam=obj;
+       // alert(JSON.stringify(obj));
+        this.$.bustorouteajax.generateRequest();
+      },
+      bustorouteResponse:function(e){
+        bustoroute = e.detail.response.returnval;
+        document.querySelector('bus-route-card').routearray=bustoroute;
+      },
+      bustoroutesubmit:function(itemarr){
+        len=itemarr.length;
+        for(var i=0;i<itemarr.length;i++){
+          var obj={"routeid":"","bus":"","driver":"","attender":"","trip":"","schol":""};
+          obj.routeid=itemarr[i].routeid;
+          obj.bus=itemarr[i].bus;
+          obj.driver=itemarr[i].driver;
+          obj.attender=itemarr[i].attender;
+          obj.trip=itemarr[i].trip;
+          obj.schol=sessionStorage.getItem("sch");;
+          this.bustoroutesubmiturl=sessionStorage.getItem("addrinfo")+"/bustoroutesubmit";
+          this.bustoroutesubmitparam=obj;
+          alert(JSON.stringify(obj));
+          this.$.bustoroutesubmitajax.generateRequest();
+        }
+    },
+    bustoroutesubmitResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result=="success"){
+          alert('Bus to Route Allocated');
+        } else {
+          alert('Error! Bus to Route Not Allocated');
         }
       },
     });

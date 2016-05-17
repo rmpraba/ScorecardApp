@@ -192,9 +192,8 @@
           }
         },
         FnItemSelected:function(e){
-         this.studid= e.target.selectedItem.value;
-         var studname = (e.target.selectedItem.textContent).trim();
-
+          this.studid= e.target.selectedItem.value;
+          var studname = (e.target.selectedItem.textContent).trim();
           //alert(e.target.selectedItem.value);
           this.value=studname;
           this.$.submitbutton.hidden=false;
@@ -202,15 +201,14 @@
           this.itemArray=[];
           this.querySelector('paper-listbox').selected=-1;
         },
-        click:function()
-        {
-            this.$.maps.submit(itemarray);
-            itemarray=[];
-             document.querySelector('#gradeselect').selected=-1;
-             this.value="";
-            // this.$.submitbutton.hidden=true;
-           },
-           FnGetItemsz:function(studentid,pickroute,droproute,pickpoint,droppoint)
+        click:function(){
+          this.$.maps.submit(itemarray);
+          itemarray=[];
+          document.querySelector('#gradeselect').selected=-1;
+          this.value="";
+          // this.$.submitbutton.hidden=true;
+        },
+        FnGetItemsz:function(studentid,pickroute,droproute,pickpoint,droppoint)
            {
             var trip;
             if(this.class=="Primary")

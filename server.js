@@ -3013,7 +3013,95 @@ app.post('/bus',  urlencodedParser,function (req, res){
       }
     });
 });
+app.post('/bustoroute' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  connection.query('select id, route_name from route where ?',[scho],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        {
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+app.post('/routetobus' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  connection.query('select  id, made_model from bus where ?',[scho],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        {
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+app.post('/bustodriver' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  connection.query('select id, first_name,last_name from driver where ?',[scho],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        {
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+app.post('/bustoattender' ,  urlencodedParser,function (req, res)
+{
+  var scho={"school_id":req.query.schol};
+  connection.query('select id, first_name, last_name from attender where ?',[scho],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        {
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+app.post('/bustoroutesubmit',  urlencodedParser,function (req, res){
+  var collection={school_id:req.query.schol,route_id:req.query.routeid,trip:req.query.trip,bus_id:req.query.bus,driver_id:req.query.driver, attender_id:req.query.attender};
+  //console.log(collection);
+  connection.query('insert into route_bus set ?',[collection],
+    function(err, rows){
 
+      if(!err)
+      {
+        res.status(200).json({'returnval': 'success'});
+      }
+      else
+      {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    });
+});
 function setvalue(){
 	console.log("calling setvalue.....");
 }

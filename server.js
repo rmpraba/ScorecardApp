@@ -1743,7 +1743,8 @@ app.post('/bouncechequedetail',  urlencodedParser,function (req, res)
 });
 app.post('/insertbouncecheque',  urlencodedParser,function (req, res)
 {
-	var sid={"student_id":req.query.std,"school_id":req.query.schoolid,"installmenttype":req.query.installtype,"amount":req.query.installamt,"cheque_no":req.query.chequeno,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate,"receipt_no":req.query.installtyperep,"cheque_status":req.query.chequestatus};
+	//console.log('come');
+	var sid={"student_id":req.query.std,"school_id":req.query.schoolid,"installmenttype":req.query.installtype,"amount":req.query.installamt,"cheque_no":req.query.chequeno,"bank_name":req.query.bankname,"cheque_date":req.query.chequedate,"receipt_no":req.query.receiptno,"cheque_status":req.query.chequestatus};
        connection.query('insert into bounce_chequedetails set ?', [sid],
        	function(err, rows)
        	{

@@ -2850,7 +2850,7 @@ app.post('/getstudpoint',  urlencodedParser,function (req, res)
 
 app.post('/driver',  urlencodedParser,function (req, res){
 	var collection={school_id:req.query.schol,id:req.query.id,first_name:req.query.first_name,last_name:req.query.last_name,mobile_no:req.query.mobile_no, licence_no:req.query.licence_no,address_1:req.query.address_1,address_2:req.query.address_2,
-		address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode,licence_exp_date:req.query.lic_exp};
+		address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode,licence_exp_date:req.query.lic_exp, since_when_employed:req.query.since_when_employed};
 	//console.log(collection);
 	connection.query('insert into driver set ?',[collection],
 			function(err, rows){
@@ -2885,8 +2885,8 @@ app.post('/attender_count' ,  urlencodedParser,function (req, res)
 });
 
 app.post('/attender',  urlencodedParser,function (req, res){
-	var collection={school_id:req.query.schol,id:req.query.id,first_name:req.query.first_name,last_name:req.query.last_name,mobile_no:req.query.mobile_no, address_1:req.query.address_1,address_2:req.query.address_2,address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode};
-	//console.log(collection);
+	var collection={school_id:req.query.schol,id:req.query.id,first_name:req.query.first_name,last_name:req.query.last_name,mobile_no:req.query.mobile_no, address_1:req.query.address_1,address_2:req.query.address_2,address_3:req.query.address_3, city:req.query.city, pincode:req.query.pincode,since_when_employed:req.query.since_when_employed};
+	console.log(collection);
 	connection.query('insert into attender set ?',[collection],
 			function(err, rows){
 
@@ -2998,7 +2998,7 @@ app.post('/increasebusid' ,  urlencodedParser,function (req, res)
     });
 });
 app.post('/bus',  urlencodedParser,function (req, res){
-  var collection={school_id:req.query.schol,id:req.query.id,made_model:req.query.made,no_of_seats:req.query.no_of_seats,insurance_no:req.query.insurance_no, insurance_company:req.query.insurance_co,last_service_date:req.query.last_service,insurance_due_date:req.query.insurance_exp, next_service_date:req.query.next_service};
+  var collection={school_id:req.query.schol,id:req.query.id,made_model:req.query.made,no_of_seats:req.query.no_of_seats,insurance_no:req.query.insurance_no, insurance_company:req.query.insurance_co,last_service_date:req.query.last_service,insurance_due_date:req.query.insurance_exp, next_service_date:req.query.next_service, make_year:req.query.make_year};
   //console.log(collection);
   connection.query('insert into bus set ?',[collection],
     function(err, rows){
@@ -3035,7 +3035,7 @@ app.post('/bustoroute' ,  urlencodedParser,function (req, res)
 app.post('/routetobus' ,  urlencodedParser,function (req, res)
 {
   var scho={"school_id":req.query.schol};
-  connection.query('select  id, made_model from bus where ?',[scho],
+  connection.query('select  id, made_model, no_of_seats from bus where ?',[scho],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3087,7 +3087,7 @@ app.post('/bustoattender' ,  urlencodedParser,function (req, res)
     });
 });
 app.post('/bustoroutesubmit',  urlencodedParser,function (req, res){
-  var collection={school_id:req.query.schol,route_id:req.query.routeid,trip:req.query.trip,bus_id:req.query.bus,driver_id:req.query.driver, attender_id:req.query.attender};
+  var collection={school_id:req.query.schol,route_id:req.query.routeid,trip:req.query.trip,bus_id:req.query.bus,driver_id:req.query.driver, attender_id:req.query.attender, updated_by:req.query.updated_by};
   //console.log(collection);
   connection.query('insert into route_bus set ?',[collection],
     function(err, rows){
@@ -3121,6 +3121,44 @@ app.post('/busreport' ,  urlencodedParser,function (req, res)
         console.log(err);
       }
     });
+});
+app.post('/noofstudentsinroute',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol};
+        var pickuproute_id={"pickup_route_id":req.query.routeid};
+        var droproute_id={"drop_route_id":req.query.routeid};
+    connection.query('SELECT student_id from student_point where ? or ? and ?',[pickuproute_id,droproute_id,schoolx],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+app.post('/noofseats',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol};
+	var bus = {"id":req.query.bus};
+	//console.log("in server");
+    connection.query('SELECT no_of_seats from bus where ? and ?',[schoolx, bus],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
 });
 function setvalue(){
 	console.log("calling setvalue.....");

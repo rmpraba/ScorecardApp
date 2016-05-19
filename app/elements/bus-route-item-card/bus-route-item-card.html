@@ -9,6 +9,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../confirmation-card/confirmation-card.html">
 
 <dom-module id="bus-route-item-card">
   <template>
@@ -68,6 +75,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </li>
         </ul>
     </div>
+      <div class="template">
+        <template  is="dom-repeat">
+          <confirmation-card></confirmation-card>
+        </template>
+      </div>
     <iron-ajax
       method="post"
       id="routetobusajax"
@@ -101,6 +113,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
       >
     </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="noofstudentsinrouteajax"
+      url="{{noofstudentsinrouteurl}}"
+      params="{{noofstudentsinrouteparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="noofstudentsinrouteResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="noofseatsajax"
+      url="{{noofseatsurl}}"
+      params="{{noofseatsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="noofseatsResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <confirmation-card id="confirm"></confirmation-card>
   </template>
   <script>
   (function() {
@@ -108,6 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var bus;
     var driver;
     var attender;
+    var noofseats;
     Polymer({
       is: 'bus-route-item-card',
       ready:function(){
@@ -136,7 +172,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       routetobusResponse:function(e){
         this.routetobus = e.detail.response.returnval;
-        //alert(JSON.stringify(this.routetobus));
       },
       bustodriverResponse:function(e){
         this.bustodriver = e.detail.response.returnval;
@@ -148,6 +183,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       bus:function(e){
         bus = (e.target.selectedItem.value);
+
+        this.noofseatsurl=sessionStorage.getItem("addrinfo")+"/noofseats";
+        var obj={"schol":"", "bus":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.bus = bus;
+        this.noofseatsparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.noofseatsajax.generateRequest();
+
+        this.noofstudentsinrouteurl=sessionStorage.getItem("addrinfo")+"/noofstudentsinroute";
+        var obj={"routeid":"","schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.routeid=this.routeid;
+        this.noofstudentsinrouteparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.noofstudentsinrouteajax.generateRequest();
+
+      },
+      noofseatsResponse:function(e){
+        noofseats = e.detail.response.returnval[0].no_of_seats;
+        alert(noofseats);
       },
       driver:function(e){
         driver = (e.target.selectedItem.value);
@@ -168,7 +224,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.set1.disabled=false;
           this.$.set2.disabled=false;
           this.$.set3.disabled=false;
-        }
+        },
+      noofstudentsinrouteResponse:function(e)
+      {
+        var routereportresult=e.detail.response.returnval;
+        var no_of_students = routereportresult.length;
+        this.$.confirm.confirmz(no_of_students, noofseats);
+      }
     });
   })();
   </script>

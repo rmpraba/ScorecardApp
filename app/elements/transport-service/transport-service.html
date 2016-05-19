@@ -825,7 +825,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
     var bustoschool;
     var bustodriver;
     var bustoattender;
-var school=sessionStorage.getItem("sch");
+    var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
 
@@ -1166,6 +1166,8 @@ var school=sessionStorage.getItem("sch");
         obj.tripid=tripid;
         this.studentpickroutereportparam=obj;
         //alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
+        //alert('hi');
         this.$.studentpickroutereportajax.generateRequest();
       } else {
         this.studentdroproutereporturl=sessionStorage.getItem("addrinfo")+"/studentdroproute-report-card";
@@ -1174,7 +1176,6 @@ var school=sessionStorage.getItem("sch");
         obj.routeid=routeid;
         obj.tripid=tripid;
         this.studentdroproutereportparam=obj;
-        //alert(JSON.stringify(obj));
         this.$.studentdroproutereportajax.generateRequest();
       }
       },
@@ -2037,10 +2038,12 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             driver_count = e.detail.response.returnval[0].driver_count;
             //alert(JSON.stringify(driver_count));
         },
-        driver:function(first_name,last_name,mobile_no,licence_no,address_1,address_2,address_3,city,pincode,lic_exp){
+        driver:function(first_name,last_name,mobile_no,licence_no,address_1,address_2,address_3,city,pincode,lic_exp, when_employed){
             this.driverurl = sessionStorage.getItem("addrinfo")+"/driver";
-            var driver_id = "Driver "+''+driver_count + 1;
-            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","licence_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"","lic_exp":"", "schol":""};
+            var  increase1 = driver_count +1;
+            var driver_id = "Driver "+increase1;
+            //alert(driver_id);
+            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","licence_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"","lic_exp":"", "schol":"","since_when_employed":""};
             obj.first_name=first_name;
             obj.last_name=last_name;
             obj.mobile_no=mobile_no;
@@ -2053,12 +2056,13 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             obj.pincode=pincode;
             obj.id = driver_id;
             obj.lic_exp=lic_exp;
+            obj.since_when_employed = when_employed;
             this.driverparam=obj;
             //alert(JSON.stringify(obj));
             this.$.driverajax.generateRequest();
 
         },
-        increasedriveridResponse:function(){
+        increasedriveridResponse:function(e){
           var result=e.detail.response.returnval;
         },
         driverResponse:function(e){
@@ -2087,11 +2091,11 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         attendercountResponse:function(e){
             attender_counts = e.detail.response.returnval[0].attender_count;
         },
-        attender:function(first_name,last_name,mobile_no,address_1,address_2,address_3,city,pincode){
+        attender:function(first_name,last_name,mobile_no,address_1,address_2,address_3,city,pincode,when_employed){
             this.attenderurl = sessionStorage.getItem("addrinfo")+"/attender";
             var  increase1 = attender_counts +1;
             var attender_id = "Attender "+increase1;
-            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"", "schol":""};
+            var obj={"id":"","first_name":"","last_name":"","mobile_no":"","address_1":"","address_2":"","address_3":"","city":"","pincode":"", "schol":"","since_when_employed":""};
             obj.first_name=first_name;
             obj.last_name=last_name;
             obj.mobile_no=mobile_no;
@@ -2102,13 +2106,14 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             obj.city=city;
             obj.pincode=pincode;
             obj.id = attender_id;
+            obj.since_when_employed = when_employed;
             this.attenderparam=obj;
+            //alert(JSON.stringify(obj));
             this.$.attenderajax.generateRequest();
-
         },
-      increaseattenderidResponse:function(){
-        var result=e.detail.response.returnval;
-      },
+        increaseattenderidResponse:function(e){
+            var result=e.detail.response.returnval;
+        },
         attenderResponse:function(e){
             var result=e.detail.response.returnval;
             if(result=="success"){
@@ -2153,12 +2158,12 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         bus_counts = e.detail.response.returnval[0].bus_count;
        // alert(JSON.stringify(bus_counts));
       },
-      bus:function(made,no_of_seats,insurance_no,insurance_co,last_service,insurance_exp,next_service){
+      bus:function(made,no_of_seats,insurance_no,insurance_co,last_service,insurance_exp,next_service, make_year){
         this.busurl = sessionStorage.getItem("addrinfo")+"/bus";
         var  increase1 = bus_counts +1;
         var bus_id = "Bus "+increase1;
        // alert(bus_id);
-        var obj={"id":"","made":"","no_of_seats":"","insurance_no":"","insurance_co":"","last_service":"","insurance_exp":"","next_service":"", "schol":""};
+        var obj={"id":"","made":"","no_of_seats":"","insurance_no":"","insurance_co":"","last_service":"","insurance_exp":"","next_service":"", "schol":"", "make_year":""};
         obj.made=made;
         obj.no_of_seats=no_of_seats;
         obj.insurance_no=insurance_no;
@@ -2168,11 +2173,12 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         obj.insurance_exp=insurance_exp;
         obj.next_service=next_service;
         obj.id = bus_id;
+        obj.make_year = make_year;
         this.busparam=obj;
         //alert(JSON.stringify(obj));
         this.$.busajax.generateRequest();
       },
-      increasebusidResponse:function(){
+      increasebusidResponse:function(e){
         var result=e.detail.response.returnval;
       },
       busResponse:function(e){
@@ -2204,16 +2210,17 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       bustoroutesubmit:function(itemarr){
         len=itemarr.length;
         for(var i=0;i<itemarr.length;i++){
-          var obj={"routeid":"","bus":"","driver":"","attender":"","trip":"","schol":""};
+          var obj={"routeid":"","bus":"","driver":"","attender":"","trip":"","schol":"","updated_by":""};
           obj.routeid=itemarr[i].routeid;
           obj.bus=itemarr[i].bus;
           obj.driver=itemarr[i].driver;
           obj.attender=itemarr[i].attender;
           obj.trip=itemarr[i].trip;
-          obj.schol=sessionStorage.getItem("sch");;
+          obj.schol=sessionStorage.getItem("sch");
+          obj.updated_by = sessionStorage.getItem("userinfo");
           this.bustoroutesubmiturl=sessionStorage.getItem("addrinfo")+"/bustoroutesubmit";
           this.bustoroutesubmitparam=obj;
-          alert(JSON.stringify(obj));
+          //alert(JSON.stringify(obj));
           this.$.bustoroutesubmitajax.generateRequest();
         }
     },
@@ -2230,7 +2237,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         var obj = {"schol":""};
         obj.schol=sessionStorage.getItem("sch");
         this.busreportparam=obj;
-       // alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.busreportajax.generateRequest();
       },
       busreportResponse:function(e){

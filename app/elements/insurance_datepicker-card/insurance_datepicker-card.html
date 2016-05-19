@@ -21,7 +21,7 @@
     </style>
     <!--component which invokes the predefined date picker control-->
     <div class="card">
-      <paper-input label="Insurance Expiry Date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+      <paper-input label="Insurance Next Renewal Date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
       <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">

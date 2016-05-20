@@ -15,6 +15,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bus-route-item-card/bus-route-item-card.html">
 
 <dom-module id="confirmation-card">
   <template>
@@ -24,20 +26,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div class="confirmation">
-      <paper-dialog id="confirmbox" modal>
-        <h2>Header</h2>
-          Total No of Seats Available :
-          Total No of Students Mapped :
-        <div class="buttons">
-          <paper-button dialog-dismiss>Cancel</paper-button>
-          <paper-button dialog-confirm>Accept</paper-button>
-        </div>
+      <paper-dialog id="seat" modal>
+      <h2>More No of students Mapped</h2>
+      <paper-dialog-scrollable>
+        <paper-item>Total No of Seats Available :{{noseat}}</paper-item><br>
+        <paper-item>Total No of Students Mapped :{{nostudent}}</paper-item>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-dismiss on-click="accept">Accept</paper-button>
+      </div>
       </paper-dialog>
     </div>
   </template>
   <script>
   (function() {
     'use strict';
+    var noofstudent;
+    var noofseat;
 
     Polymer({
       is: 'confirmation-card',
@@ -45,13 +51,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
       confirmz:function(noofstudents, noofseats){
-        var noofstudent = noofstudents;
-        var noofseat = noofseats;
-        var id = 'confirmbox';
-        var dialog = document.querySelector('#confirmbox');
-        if (noofstudent > noofseat) {
-          dialog.toggle();
+        this.noofstudent = noofstudents;
+        this.noofseat = noofseats;
+        if (this.noofstudent > this.noofseat) {
+          document.querySelector('#seat').open();
+          document.querySelector('bus-route-item-card').disablecheckboxz();
+          alert(this.noofstudent);
+          alert(this.noofseat);
         }
+      },
+      accept:function(){
+        document.querySelector('bus-route-item-card').checkboxz();
       }
     });
   })();

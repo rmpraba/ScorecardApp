@@ -2075,6 +2075,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
               obj1.schol=sessionStorage.getItem("sch");
               this.increasedriveridparam=obj1;
               this.$.increasedriveridajax.generateRequest();
+                document.querySelector('driver-card').FnClear();
             } else {
                 alert('Error! Driver Details Not Added');
             }
@@ -2124,6 +2125,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
                 obj1.schol=sessionStorage.getItem("sch");
                 this.increaseattenderidparam=obj1;
                 this.$.increaseattenderidajax.generateRequest();
+                document.querySelector('attender-card').FnClear();
             } else {
                 alert('Error! Attender Details Not Added');
             }
@@ -2191,6 +2193,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
           obj1.schol=sessionStorage.getItem("sch");
           this.increasebusidparam=obj1;
           this.$.increasebusidajax.generateRequest();
+          document.querySelector('bus-card').FnClear();
         } else {
           alert('Error! Bus Details Not Added');
         }
@@ -2228,6 +2231,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         var result=e.detail.response.returnval;
         if(result=="success"){
           alert('Bus to Route Allocated');
+          document.querySelector('bus-route-card').FnClear();
         } else {
           alert('Error! Bus to Route Not Allocated');
         }

@@ -72,15 +72,15 @@
       </div>
       <div class="horizontalframes">
         <div class="date">
-          <last_service_datepicker-card></last_service_datepicker-card>
+          <last_service_datepicker-card id="last_service"></last_service_datepicker-card>
         </div>
         <div class="date">
-          <next_service_datepicker-card></next_service_datepicker-card>
+          <next_service_datepicker-card id="next_service"></next_service_datepicker-card>
         </div>
       </div>
       <div class="horizontalframes">        
         <div class="date">
-          <insurance_datepicker-card></insurance_datepicker-card>
+          <insurance_datepicker-card id="insurance"></insurance_datepicker-card>
         </div>
         <div class="date">
           <paper-input label="Make Year" value="{{make_year}}" id="make_year" allowed-pattern="[0-9]" required error-message="need a year!"></paper-input>
@@ -100,6 +100,19 @@
       is: 'bus-card',
       ready:function(){
 
+      },
+      FnClear:function(){
+        this.made="";
+        this.no_of_seats="";
+        this.insurance_no="";
+        this.insurance_co="";
+        this.last_service="";
+        this.insurance_exp="";
+        this.next_service="";
+        this.make_year="";
+        this.$.last_service.FnClear();
+        this.$.next_service.FnClear();
+        this.$.insurance.FnClear();
       },
       click:function(){
         this.next_service=localStorage.getItem("localsess_next_service");

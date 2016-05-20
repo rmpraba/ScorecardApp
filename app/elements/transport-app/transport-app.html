@@ -292,11 +292,11 @@
     if(name=="Accounts Admin")  {
       document.querySelector('transportfee-service').ready();
       document.querySelector('transportfee-service').FnClear();
-       /*document.querySelector('receipt-card').FnClear();
+      /*document.querySelector('receipt-card').FnClear();
       document.querySelector('receipt-card').ready();
       document.querySelector('cqreceipt-card').FnClear();
       document.querySelector('cqreceipt-card').ready();
-       document.querySelector('zoneinstalltype-card').FnClear();
+      document.querySelector('zoneinstalltype-card').FnClear();
       document.querySelector('zoneinstalltype-card').ready();*/
     if(currpage=="zonetostudent"){
       document.querySelector('app-card').setPage("transportapp");
@@ -434,6 +434,14 @@
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
       //document.querySelector('studentpass-card').FnClear();
       document.querySelector('attender-card').FnClear();
+      //document.querySelector('studentpass-card').ready();
+      
+    }
+    if(currpage=="busreport"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      //document.querySelector('studentpass-card').FnClear();
+      document.querySelector('bus-report').FnClear();
       //document.querySelector('studentpass-card').ready();
       
     }

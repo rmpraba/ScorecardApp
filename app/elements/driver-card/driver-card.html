@@ -111,6 +111,18 @@
       ready:function(){
 
       },
+      FnClear:function(){
+        this.first_name="";
+        this.last_name="";
+        this.mobile_no="";
+        this.licence_no="";
+        this.address_1="";
+        this.address_2="";
+        this.address_3="";
+        this.city="";
+        this.pincode="";
+        this.$.when_employed.FnClear();
+      },
       click:function(){
         if(this.first_name==""||this.last_name==""||this.mobile_no==""||this.licence_no==""||this.address_1==""||this.address_2==""||this
                         .address_3==""||this.city==""||this.pincode=="")

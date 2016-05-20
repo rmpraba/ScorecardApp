@@ -62,7 +62,7 @@
       </div>
       <div class="horizontal">
         <div class="date" style="margin-left: -2%;">
-          <since-when-employed-card></since-when-employed-card>
+          <since-when-employed-card id="when_employed"></since-when-employed-card>
         </div>
       </div>
       <div class="horizontal">
@@ -115,7 +115,18 @@
           this.when_employed = localStorage.getItem("localsess_since_when_employed");
           this.$.service.attender(this.first_name,this.last_name,this.mobile_no, this.address_1,this.address_2,this.address_3,this.city,this.pincode, this.when_employed);
         }
-      }
+      },
+      FnClear:function(){
+        this.first_name="";
+        this.last_name="";
+        this.mobile_no="";
+        this.address_1="";
+        this.address_2="";
+        this.address_3="";
+        this.city="";
+        this.pincode="";
+        this.$.when_employed.FnClear();
+      },
     });
   })();
   </script>

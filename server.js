@@ -2998,7 +2998,7 @@ app.post('/increasebusid' ,  urlencodedParser,function (req, res)
     });
 });
 app.post('/bus',  urlencodedParser,function (req, res){
-  var collection={school_id:req.query.schol,id:req.query.id,made_model:req.query.made,no_of_seats:req.query.no_of_seats,insurance_no:req.query.insurance_no, insurance_company:req.query.insurance_co,last_service_date:req.query.last_service,insurance_due_date:req.query.insurance_exp, next_service_date:req.query.next_service, make_year:req.query.make_year};
+  var collection={school_id:req.query.schol,id:req.query.id,made_model:req.query.made,no_of_seats:req.query.no_of_seats,insurance_no:req.query.insurance_no, insurance_company:req.query.insurance_co,last_service_date:req.query.last_service,insurance_due_date:req.query.insurance_exp, next_service_date:req.query.next_service, make_year:req.query.make_year, bus_no:req.query.bus_no};
   //console.log(collection);
   connection.query('insert into bus set ?',[collection],
     function(err, rows){

@@ -32,7 +32,7 @@
                     </div>
                     <div class="field">
                       <paper-dropdown-menu id="set1" label="Bus">
-                        <paper-menu class="dropdown-content" on-iron-select="bus" attr-for-selected="value" >
+                        <paper-menu class="dropdown-content" on-iron-select="bus" attr-for-selected="value">
                           <template  is="dom-repeat" items="{{routetobus}}" as="view">
                             <paper-item value="{{view.id}}">{{view.made_model}}</paper-item>
                           </template>
@@ -143,7 +143,7 @@
         var obj = {"schol":""};
         obj.schol=sessionStorage.getItem("sch");
         this.routetobusparam=obj;
-       // alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.routetobusajax.generateRequest();
 
 
@@ -151,7 +151,7 @@
         var obj = {"schol":""};
         obj.schol=sessionStorage.getItem("sch");
         this.bustodriverparam=obj;
-       // alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.bustodriverajax.generateRequest();
 
 
@@ -159,8 +159,14 @@
         var obj = {"schol":""};
         obj.schol=sessionStorage.getItem("sch");
         this.bustoattenderparam=obj;
-       // alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.bustoattenderajax.generateRequest();
+      },
+      Fnclear:function(){
+        document.querySelector('#set1').selected = -1;
+        document.querySelector('#set2').selected = -1;
+        document.querySelector('#set3').selected = -1;
+        document.querySelector('#selectbox').checked = false;
       },
       routetobusResponse:function(e){
         this.routetobus = e.detail.response.returnval;

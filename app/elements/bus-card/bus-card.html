@@ -58,8 +58,16 @@
         <div class="fields ">
           <paper-input label="Make" value="{{made}}" id="made" allowed-pattern="[a-zA-Z ]" required error-message="needs a name!"></paper-input>
         </div>
+        <div class="date">
+          <paper-input label="Make Year" value="{{make_year}}" id="make_year" allowed-pattern="[0-9a-zA-Z ]" required error-message="need a year!"></paper-input>
+        </div>
+      </div>
+      <div class="horizontalframes">
         <div class="fields">
-          <paper-input label="Number of Seats" value="{{no_of_seats}}" id="no_of_seats" allowed-pattern="[0-9]" required error-message="needs a name!"></paper-input>
+          <paper-input label="Bus Number" value="{{bus_no}}" id="bus_no" allowed-pattern="[a-zA-Z0-9 ]" required error-message="needs a name!"></paper-input>
+        </div>
+        <div class="fields">
+          <paper-input label="Number of Seats" value="{{no_of_seats}}" id="no_of_seats" allowed-pattern="[0-9]" required error-message="need bus number!"></paper-input>
         </div>
       </div>
       <div class="horizontalframes">
@@ -81,9 +89,6 @@
       <div class="horizontalframes">        
         <div class="date">
           <insurance_datepicker-card id="insurance"></insurance_datepicker-card>
-        </div>
-        <div class="date">
-          <paper-input label="Make Year" value="{{make_year}}" id="make_year" allowed-pattern="[0-9]" required error-message="need a year!"></paper-input>
         </div>
       </div>
     </div>
@@ -110,6 +115,7 @@
         this.insurance_exp="";
         this.next_service="";
         this.make_year="";
+        this.bus_no="";
         this.$.last_service.FnClear();
         this.$.next_service.FnClear();
         this.$.insurance.FnClear();
@@ -119,7 +125,7 @@
         this.insurance_exp=localStorage.getItem("localsess_insurance_exp_date");
         this.last_service=localStorage.getItem("localsess_last_service");
         if(this.made==""||this.no_of_seats==""||this.insurance_no==""||this.insurance_co==""||this.last_service==""||this
-            .insurance_exp==""||this.next_service==""||this.make_year==""){
+            .insurance_exp==""||this.next_service==""||this.make_year==""||this.bus_no==""){
           this.$.made.validate();
           this.$.no_of_seats.validate();
           this.$.insurance_no.validate();
@@ -128,8 +134,9 @@
           this.$.insurance_exp.validate();
           this.$.next_service.validate();
           this.$.make_year.validate();
+          this.$.bus_no.validate();
         } else {
-          this.$.service.bus(this.made,this.no_of_seats,this.insurance_no, this.insurance_co,this.last_service,this.insurance_exp,this.next_service,this.make_year);
+          this.$.service.bus(this.made,this.no_of_seats,this.insurance_no, this.insurance_co,this.last_service,this.insurance_exp,this.next_service,this.make_year,this.bus_no);
         }
       }
     });

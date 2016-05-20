@@ -2160,12 +2160,12 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         bus_counts = e.detail.response.returnval[0].bus_count;
        // alert(JSON.stringify(bus_counts));
       },
-      bus:function(made,no_of_seats,insurance_no,insurance_co,last_service,insurance_exp,next_service, make_year){
+      bus:function(made,no_of_seats,insurance_no,insurance_co,last_service,insurance_exp,next_service, make_year, bus_no){
         this.busurl = sessionStorage.getItem("addrinfo")+"/bus";
         var  increase1 = bus_counts +1;
         var bus_id = "Bus "+increase1;
        // alert(bus_id);
-        var obj={"id":"","made":"","no_of_seats":"","insurance_no":"","insurance_co":"","last_service":"","insurance_exp":"","next_service":"", "schol":"", "make_year":""};
+        var obj={"id":"","made":"","no_of_seats":"","insurance_no":"","insurance_co":"","last_service":"","insurance_exp":"","next_service":"", "schol":"", "make_year":"", "bus_no":""};
         obj.made=made;
         obj.no_of_seats=no_of_seats;
         obj.insurance_no=insurance_no;
@@ -2176,6 +2176,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         obj.next_service=next_service;
         obj.id = bus_id;
         obj.make_year = make_year;
+        obj.bus_no = bus_no;
         this.busparam=obj;
         //alert(JSON.stringify(obj));
         this.$.busajax.generateRequest();
@@ -2232,6 +2233,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         if(result=="success"){
           alert('Bus to Route Allocated');
           document.querySelector('bus-route-card').FnClear();
+          document.querySelector('bus-route-item-card').FnClear();
         } else {
           alert('Error! Bus to Route Not Allocated');
         }

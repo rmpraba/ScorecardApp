@@ -26,11 +26,11 @@
       </paper-tabs>
       <template is="dom-repeat" items="{{itemArray}}" as="item">
       <div class="itemcard">
-      <paper-item>{{item.sno}}</paper-item>
-      <paper-item>{{item.schoolname}}</paper-item>
-      <paper-item>{{item.paidcount}}</paper-item>
-      <paper-item>{{item.allocated}}</paper-item>
-      <paper-item>{{item.pending}}</paper-item>
+        <div class="field" style="width:11%;margin: 2% 0 2% 6%!important;"><paper-item>{{item.sno}}</paper-item></div>
+        <div class="field" style="width: 15%;margin: 2% 0 2% 3%!important;"><paper-item>{{item.schoolname}}</paper-item></div>
+        <div class="field" style="width: 12%;margin: 2% 0 2% 8%!important;"><paper-item>{{item.paidcount}}</paper-item></div>
+        <div class="field" style="width: 9%;margin: 2% 0 2% 12%!important;"><paper-item>{{item.allocated}}</paper-item></div>
+        <div class="field" style="width: 8%;margin: 2% 0 2% 13%!important;"><paper-item>{{item.pending}}</paper-item></div>
       </div>
       </template>
       <!--Fetching ccosolidated report-->

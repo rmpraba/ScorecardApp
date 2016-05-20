@@ -40,6 +40,7 @@ top:35%;
        <paper-icon-button class="iconbutton" src="../../images/approval.jpg" on-click="approval"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/fee_reports.png" on-click="feereports"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/change-password.png" on-click="password"></paper-icon-button>
+       <paper-icon-button class="iconbutton" src="../../images/fee_reports.png" on-click="consolidatereport"></paper-icon-button>
     </div>
   </body>
      <refund-service id="rservice"></refund-service>
@@ -56,24 +57,27 @@ top:35%;
         ready: function() {
 
       },
- discount:function()
+      discount:function()
       {
         document.querySelector('transport-app').setPage("approvediscount","Discount Approval");
-
-  this.$.service.discountbyname();
+        this.$.service.discountbyname();
       },
-       approval:function()
+      approval:function()
       {
-      this.$.rservice.refundreq();
-      document.querySelector('transport-app').setPage("approval"," Cancellation Approval");
+        this.$.rservice.refundreq();
+        document.querySelector('transport-app').setPage("approval"," Cancellation Approval");
       },
       feereports:function()
       {
         document.querySelector('transport-app').setPage("feereports2","Fee Reports");
-    },
+      },
       password:function(){
         this.$.login.getroles();
         document.querySelector('transport-app').setPage("password"," Change Password");
+      },
+      consolidatereport:function(){
+        document.querySelector('transport-app').setPage("consolidatedreport","Consolidated Report");
+        document.querySelector('consolidated-report').consolidatedreportreadService();
       }
 
     });

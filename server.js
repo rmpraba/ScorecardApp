@@ -3160,6 +3160,32 @@ app.post('/noofseats',  urlencodedParser,function (req, res){
 		}
 	});
 });
+
+app.post('/consolidatedreportread',  urlencodedParser,function (req, res){
+	
+    connection.query('select (select name from md_school where id=school_id) as schoolname,count(student_id) as paidcount from student_fee group by school_id',
+    function(err, rows){
+		if(!err){
+			res.status(200).json({'returnval': rows});
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+app.post('/consolidatedallocatedreportread',  urlencodedParser,function (req, res){
+	
+    connection.query('select (select name from md_school where id=school_id) as schoolname,count(student_id) as allocatedcount from student_point group by school_id',
+    function(err, rows){
+		if(!err){
+			res.status(200).json({'returnval': rows});
+		} else {
+			console.log(err);
+		}
+	});
+});
+
 function setvalue(){
 	console.log("calling setvalue.....");
 }

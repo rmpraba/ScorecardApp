@@ -1,0 +1,103 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tab/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="consolidated-report">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .itemcard{
+         @apply(--layout-horizontal);
+      }
+    </style>
+    <div>
+      <paper-tabs selected="0" noink id="ptab">          
+            <paper-tab>S.No</paper-tab>
+            <paper-tab>School Name</paper-tab>
+            <paper-tab>No of children paid</paper-tab>
+            <paper-tab>No of children allocated to route</paper-tab>
+            <paper-tab>Pending</paper-tab>          
+      </paper-tabs>
+      <template is="dom-repeat" items="{{itemArray}}" as="item">
+      <div class="itemcard">
+      <paper-item>{{item.sno}}</paper-item>
+      <paper-item>{{item.schoolname}}</paper-item>
+      <paper-item>{{item.paidcount}}</paper-item>
+      <paper-item>{{item.allocated}}</paper-item>
+      <paper-item>{{item.pending}}</paper-item>
+      </div>
+      </template>
+      <!--Fetching ccosolidated report-->
+    <iron-ajax
+      id="consolidatedreportreadajax"
+      url="{{consolidatedreportreadurl}}"
+      params='{{consolidatedreportreadparam}}'
+      method="post"
+      handle-as="json"
+      content-type="application/json"
+      on-response="consolidatedreportreadResponse">
+    </iron-ajax>
+      <!--Fetching ccosolidated report-->
+    <iron-ajax
+      id="consolidatedallocatedreportreadajax"
+      url="{{consolidatedallocatedreportreadurl}}"
+      params='{{consolidatedallocatedreportreadparam}}'
+      method="post"
+      handle-as="json"
+      content-type="application/json"
+      on-response="consolidatedallocatedreportreadResponse">
+    </iron-ajax>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var paidarr=[];
+    var allocatearr=[];
+    Polymer({
+      is: 'consolidated-report',
+
+      ready:function(){
+          this.consolidatedreportreadurl=sessionStorage.getItem("addrinfo")+"/consolidatedreportread";
+          this.$.consolidatedreportreadajax.generateRequest();
+      },
+      consolidatedreportreadService:function(){
+          this.consolidatedreportreadurl=sessionStorage.getItem("addrinfo")+"/consolidatedreportread";
+          this.$.consolidatedreportreadajax.generateRequest();
+      },
+      consolidatedreportreadResponse:function(e){
+        paidarr=e.detail.response.returnval;
+        alert(JSON.stringify(paidarr));
+        //if(paidarr.length>0)
+        //{
+          this.consolidatedallocatedreportreadurl=sessionStorage.getItem("addrinfo")+"/consolidatedallocatedreportread";
+          this.$.consolidatedallocatedreportreadajax.generateRequest();
+        //}
+      },
+      consolidatedallocatedreportreadResponse:function(e){
+        allocatearr=e.detail.response.returnval;
+        // alert(JSON.stringify(allocatearr));
+        // alert(paidarr[0].schoolname);
+        // alert(allocatearr[0].schoolname);
+        for(var i=0;i<paidarr.length;i++){
+            paidarr[i].sno=i+1;
+          if(paidarr[i].schoolname==allocatearr[i].schoolname){
+            // alert('yes');
+            paidarr[i].allocated=allocatearr[i].allocatedcount;
+            paidarr[i].pending=parseInt(paidarr[i].paidcount)-parseInt(paidarr[i].allocated);
+          }
+        }
+        // alert(JSON.stringify(paidarr));
+        this.itemArray=paidarr;
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

@@ -365,6 +365,13 @@
       document.querySelector('student-detail-card').ready();
       
     }
+    if(currpage=="zonechange"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("accountadmin","Accounts Admin");
+      //document.querySelector('zonechange-card').FnClear();
+      document.querySelector('zonechange-card').ready();
+      
+    }
    }
    if(name=="Transport Admin")  {
     document.querySelector('mapstudenttopoint-service').FnClear();

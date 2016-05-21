@@ -30,18 +30,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        setFiles: function(e, detail, sender)
         {
   var formData = new FormData();
-  alert(JSON.stringify(this.$.file.files[0][0]));
+  //alert(JSON.stringify(this.$.file.files[0][0]));
   var f=this.$.file.files[0]
   var rawFile = new XMLHttpRequest();
     rawFile.open("GET", f, false);
-    alert(rawFile);
-    alert(rawFile.respostText);
+    //alert(rawFile);
+    //alert(rawFile.respostText);
   var handle=fopen(f, "r");
   var filesop;
   while((filesop = fgetcsv(handle, 1000, ",")) !== false)
 {
 var name = filesop[0];
-alert(name);
+//alert(name);
 }
 
  /* for (var i = 0, f; f = sender.files[i]; ++i)
@@ -50,7 +50,7 @@ alert(name);
     formData.append(sender.name, f,this.$.name.value || f.name);
   }*/
 
-alert(formData);
+//alert(formData);
   //this.$.ajax.body = formData;
   // Override default type set by core-ajax.
   // Allow browser to set the mime multipart content type itself. 

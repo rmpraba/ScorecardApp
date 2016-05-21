@@ -27,7 +27,7 @@
     </style>
     <div class="card">
       <div class="field" style="margin-left: 40%;margin-top: 3%;">
-        <paper-dropdown-menu id="set" label="Trip">
+        <paper-dropdown-menu id="tripzz" label="Trip">
           <paper-menu class="dropdown-content" on-iron-select="trip" attr-for-selected="value" >
             <paper-item value="1">1</paper-item>
             <paper-item value="2">2</paper-item>
@@ -50,6 +50,7 @@
     'use strict';
     var tripz;
     var itemarray=[];
+    var routearray =[];
     Polymer({
       is: 'bus-route-card',
       ready:function(){
@@ -94,6 +95,9 @@
       },
       FnClear:function(){
         itemarray = "";
+        document.querySelector('#tripzz').selected = -1;
+        routearray = "";
+        //document.querySelector('bus-route-item-card').Fnclear();
       },
     });
   })();

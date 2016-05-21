@@ -23,7 +23,7 @@
             <fieldset>
               <ul>
                 <div class="check-box">
-                  <paper-checkbox id="selectbox" on-change="changeHandler"></paper-checkbox>
+                  <paper-checkbox id="selectboxes" on-change="changeHandler"></paper-checkbox>
                 </div>
                 <li class="row">
                   <div class="detail">
@@ -31,7 +31,7 @@
                         <paper-input readonly class="field" value="{{route}}"></paper-input>
                     </div>
                     <div class="field">
-                      <paper-dropdown-menu id="set1" label="Bus">
+                      <paper-dropdown-menu id="sets1" label="Bus">
                         <paper-menu class="dropdown-content" on-iron-select="bus" attr-for-selected="value">
                           <template  is="dom-repeat" items="{{routetobus}}" as="view">
                             <paper-item value="{{view.id}}">{{view.made_model}}</paper-item>
@@ -42,7 +42,7 @@
                   </div>
                   <div class="detail">
                     <div class="field">
-                      <paper-dropdown-menu id="set2" label="Driver">
+                      <paper-dropdown-menu id="sets2" label="Driver">
                         <paper-menu class="dropdown-content" on-iron-select="driver" attr-for-selected="value" >
                           <template  is="dom-repeat" items="{{bustodriver}}" as="view">
                             <paper-item value="{{view.id}}">{{view.first_name}}{{view.last_name}}</paper-item>
@@ -51,7 +51,7 @@
                       </paper-dropdown-menu>
                     </div>
                     <div class="field">
-                      <paper-dropdown-menu id="set3" label="Attender">
+                      <paper-dropdown-menu id="sets3" label="Attender">
                         <paper-menu class="dropdown-content" on-iron-select="attender" attr-for-selected="value" >
                           <template  is="dom-repeat" items="{{bustoattender}}" as="view">
                             <paper-item value="{{view.id}}">{{view.first_name}}{{view.last_name}}</paper-item>
@@ -163,10 +163,11 @@
         this.$.bustoattenderajax.generateRequest();
       },
       Fnclear:function(){
-        document.querySelector('#set1').selected = -1;
-        document.querySelector('#set2').selected = -1;
-        document.querySelector('#set3').selected = -1;
-        document.querySelector('#selectbox').checked = false;
+        alert('hi');
+        document.querySelector('#sets1').selected = -1;
+        document.querySelector('#sets2').selected = -1;
+        document.querySelector('#sets3').selected = -1;
+        document.querySelector('#selectboxes').checked = false;
       },
       routetobusResponse:function(e){
         this.routetobus = e.detail.response.returnval;
@@ -210,18 +211,18 @@
         attender = (e.target.selectedItem.value);
       },
       changeHandler:function(e){
-        var box = document.querySelector("#selectbox");
+        var box = document.querySelector("#selectboxes");
         if(e.target.checked==true){
           document.querySelector('bus-route-card').FnGetItemsz(this.routeid,bus,driver,attender);
-          this.$.set1.disabled=true;
-          this.$.set2.disabled=true;
-          this.$.set3.disabled=true;
+          this.$.sets1.disabled=true;
+          this.$.sets2.disabled=true;
+          this.$.sets3.disabled=true;
         } else {
           document.querySelector('bus-route-card').removestud(this.routeid);
         }
-          this.$.set1.disabled=false;
-          this.$.set2.disabled=false;
-          this.$.set3.disabled=false;
+          this.$.sets1.disabled=false;
+          this.$.sets2.disabled=false;
+          this.$.sets3.disabled=false;
         },
       noofstudentsinrouteResponse:function(e)
       {
@@ -233,11 +234,11 @@
       },
       disablecheckboxz:function(){
         //alert('hiz');
-        this.$.selectbox.disabled =true;
+        this.$.selectboxes.disabled =true;
       },
       checkboxz:function(){
         //alert('hi');
-        this.$.selectbox.disabled =false;
+        this.$.selectboxes.disabled =false;
       },
     });
   })();

@@ -473,6 +473,12 @@
       document.querySelector('password-card').ready();
       
     }
+    if(currpage=="consolidatedreport"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+      //document.querySelector('password-card').FnClear();
+      document.querySelector('consolidated-report').ready();
+    }
 
   }
   if(name=="Finance Manager")  {

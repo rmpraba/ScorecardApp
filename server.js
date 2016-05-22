@@ -3452,18 +3452,20 @@ app.post('/valuesinsta1cheque',  urlencodedParser,function (req, res)
 {
 	var date={"installment_1Date":req.query.dates};
 	var mode= {"modeofpayment1":"Cheque"};
-	var schoolx=req.query.schol;
-	    connection.query('select f.student_id, f.student_id, d.student_name, f.receipt_no1, f.fees,f.installment_1, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ? and d.school_id=?',[date, mode,schoolx],
+	var installtype = {"installtype":"installment1"}
+	    connection.query("Select f.student_id,f.receipt_no1,f.fees,f.installment_1,(select d.student_name from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"') as name,(select (select z.class from class_details z where z.id=d.class_id and d.school_id='"+req.query.schol+"') from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"')as standard,(select (select z.section from class_details z where z.id=d.class_id and d.school_id='"+req.query.schol+"') from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"')as section, c.cheque_date, c.bank_name, c.cheque_no from student_fee f join cheque_details c on f.student_id = c.student_id where (? and ? and ?)",[date, mode,installtype],
        	function(err, rows){
        		var itemarr = new Array();
        		if(!err){
 		       	if(rows.length>0){
 			        for(var i=0;i<rows.length;i++){
-			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":"","cheque_no":"","bank_name":"","cheque_date":"",};
+			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","standard":"","section":"","installment_1":"","cheque_no":"","bank_name":"","cheque_date":"",};
 			            obj.student_id=rows[i].student_id;
 			            obj.student_name=rows[i].student_name;
-			            obj.receipt_no=rows[i].receipt_no;
+			            obj.receipt_no=rows[i].receipt_no1;
 			            obj.fees=rows[i].fees;
+			            obj.standard = rows[i].standard;
+			            obj.section = rows[i].section;
 			            obj.installment_1=rows[i].installment_1;
 			            obj.cheque_no=rows[i].cheque_no;
 			            obj.bank_name=rows[i].bank_name;
@@ -3485,21 +3487,24 @@ app.post('/valuesinsta2cheque',  urlencodedParser,function (req, res)
 {
 	var date={"installment_2Date":req.query.dates};
 	var mode= {"modeofpayment2":"Cheque"};
-	var schoolx=req.query.schol;
-	    connection.query('select f.student_id, f.student_id, d.student_name, f.receipt_no2, f.fees,f.installment_2, c.cheque_no, c.bank_name, c.cheque_date from student_fee f inner join student_details d on f.student_id = d.id inner join cheque_details c on f.student_id = c.student_id where ? and ? and d.school_id=?',[date, mode,schoolx],
+	var installtype = {"installtype":"installment2"}
+	    connection.query("Select f.student_id,f.receipt_no2,f.fees,f.installment_2Date,f.installment_2,(select d.student_name from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"') as name,(select (select z.class from class_details z where z.id=d.class_id and d.school_id='"+req.query.schol+"') from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"')as standard,(select (select z.section from class_details z where z.id=d.class_id and d.school_id='"+req.query.schol+"') from student_details d where d.id=f.student_id and f.school_id='"+req.query.schol+"')as section, c.cheque_date, c.bank_name, c.cheque_no from student_fee f join cheque_details c on f.student_id = c.student_id where (? and ? and ?)",[date, mode,installtype],
        	function(err, rows){
        		var itemarr = new Array();
        		if(!err){
 		       	if(rows.length>0){
 			        for(var i=0;i<rows.length;i++){
-			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":"","cheque_no":"","bank_name":"","cheque_date":"",};
+			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","standard":"","section":"","installment_1":"","cheque_no":"","bank_name":"","cheque_date":"","created_date":""};
 			            obj.student_id=rows[i].student_id;
 			            obj.student_name=rows[i].student_name;
-			            obj.receipt_no=rows[i].receipt_no;
+			            obj.receipt_no=rows[i].receipt_no2;
 			            obj.fees=rows[i].fees;
+			            obj.standard = rows[i].standard;
+			            obj.section = rows[i].section;
 			            obj.installment_1=rows[i].installment_2;
 			            obj.cheque_no=rows[i].cheque_no;
 			            obj.bank_name=rows[i].bank_name;
+			            obj.created_date=rows[i].installment_2Date;
 			            obj.cheque_date=rows[i].cheque_date;
 			            itemarr.push(obj);
 			        }
@@ -3513,50 +3518,23 @@ app.post('/valuesinsta2cheque',  urlencodedParser,function (req, res)
 	        }
 	});
 });
-app.post('/valuesinsta1cash',  urlencodedParser,function (req, res)
-{
-	var date={"installment_1Date":req.query.dates};
-	var mode= {"modeofpayment1":"Cash"};
-	var schoolx=req.query.schol;
-	    connection.query('Select f.student_id, d.student_name, f.receipt_no1, f.fees,f.installment_1 from student_fee f left join student_details d on f.student_id=d.id where ? and ? and d.school_id=?',[date, mode,schoolx],
-       	function(err, rows){
-       		var itemarr = new Array();
-       		if(!err){
-		       	if(rows.length>0){
-			        for(var i=0;i<rows.length;i++){
-			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":""};
-			            obj.student_id=rows[i].student_id;
-			            obj.student_name=rows[i].student_name;
-			            obj.receipt_no=rows[i].receipt_no;
-			            obj.fees=rows[i].fees;
-			            obj.installment_1=rows[i].installment_1;
-			            itemarr.push(obj);
-			        }
-		           	//console.log(JSON.stringify(itemarr));
-					res.status(200).json({'returnval': itemarr});
-		        } else {
-		            res.status(200).json({'returnval': ''});
-		        }
-	        } else {
-	          console.log(err);
-	        }
-	});
-});  
 app.post('/valuesinsta2cash',  urlencodedParser,function (req, res)
 {
 	var date={"installment_2Date":req.query.dates};
-	var mode= {"modeofpayment1":"Cash"};
-	var schoolx=req.query.schol;
-	    connection.query('Select f.student_id, d.student_name, f.receipt_no2, f.fees,f.installment_2 from student_fee f left join student_details d on f.student_id=d.id where ? and ? and d.school_id=?',[date, mode,schoolx],
+	var mode= {"modeofpayment2":"Cash"};
+	var schol=req.query.schol;
+	    connection.query("Select student_id,receipt_no2,fees,installment_2,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where (? and ?) and school_id='"+req.query.schol+"'",[date, mode],
        	function(err, rows){
        		var itemarr = new Array();
        		if(!err){
 		       	if(rows.length>0){
 			        for(var i=0;i<rows.length;i++){
-			            var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":""};
+			            var obj={"student_id":"","student_name":"","receipt_no":"","standard":"","section":"","fees":"","installment_1":""};
 			            obj.student_id=rows[i].student_id;
-			            obj.student_name=rows[i].student_name;
-			            obj.receipt_no=rows[i].receipt_no;
+			            obj.standard = rows[i].standard;
+			            obj.section = rows[i].section;
+			            obj.student_name=rows[i].name;
+			            obj.receipt_no=rows[i].receipt_no2;
 			            obj.fees=rows[i].fees;
 			            obj.installment_1=rows[i].installment_2;
 			            itemarr.push(obj);
@@ -3570,7 +3548,38 @@ app.post('/valuesinsta2cash',  urlencodedParser,function (req, res)
 	          console.log(err);
 	        }
 	});
-});
+});  
+app.post('/valuesinsta1cash',  urlencodedParser,function (req, res)
+{
+	var date={"installment_1Date":req.query.dates};
+	var mode= {"modeofpayment1":"Cash"};
+	var schol=req.query.schol;
+	    connection.query("Select student_id,receipt_no1,fees,installment_1,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where (? and ?) and school_id='"+req.query.schol+"'",[date, mode],
+       	function(err, rows){
+       		var itemarr = new Array();
+       		if(!err){
+		       	if(rows.length>0){
+			        for(var i=0;i<rows.length;i++){
+			            var obj={"student_id":"","student_name":"","receipt_no":"","standard":"","section":"","fees":"","installment_1":""};
+			            obj.student_id=rows[i].student_id;
+			            obj.standard = rows[i].standard;
+			            obj.section = rows[i].section;
+			            obj.student_name=rows[i].name;
+			            obj.receipt_no=rows[i].receipt_no1;
+			            obj.fees=rows[i].fees;
+			            obj.installment_1=rows[i].installment_1;
+			            itemarr.push(obj);
+			        }
+		           	//console.log(JSON.stringify(itemarr));
+					res.status(200).json({'returnval': itemarr});
+		        } else {
+		            res.status(200).json({'returnval': ''});
+		        }
+	        } else {
+	          console.log(err);
+	        }
+	});
+}); 
 
 app.post('/mapbustoroute',  urlencodedParser,function (req, res){
 	var schoolx={"school_id":req.query.schol,"route_id":req.query.route,"bus_id":req.query.bus,"driver_id":req.query.driver,"attender_id":req.query.attender,"trip":req.query.trip,"updated_by":req.query.updatedby,"updated_date":req.query.updateon};

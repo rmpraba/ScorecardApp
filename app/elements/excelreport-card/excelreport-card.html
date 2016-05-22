@@ -6,6 +6,7 @@
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../excelreport-service/excelreport-service.html">
+<link rel="import" href="../excelreportcash-card/excelreportcash-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
 <dom-module id="excelreport-card">
@@ -49,6 +50,21 @@
           </paper-menu>
         </paper-dropdown-menu>
       </div>
+      <div class="headtabs" id="tabs1">
+          <paper-tabs selected="0">
+            <paper-tab>ID</paper-tab>
+            <paper-tab>Name</paper-tab>
+            <paper-tab>Grade/Section</paper-tab>
+            <paper-tab>Receipt No</paper-tab>
+            <paper-tab>Fee Paid</paper-tab>
+          </paper-tabs>
+      </div>
+      <template  is="dom-repeat" items="{{excelcasharr}}" as="view">
+        <excelreportcash-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" standard="{{view.standard}}" section ="{{view.section}}" receiptno="{{view.receipt_no}}" feepaid="{{view.installment_1}}"></excelreportcash-card>
+      </template>
+      <template  is="dom-repeat" items="{{excelchequearr}}" as="views">
+        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.student_name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bank_name}}" chequeno="{{views.cheque_no}}" createddate="{{views.created_date}}" chequedate="{{views.cheque_date}}" receiptno="{{views.receipt_no}}" feepaid="{{views.installment_1}}" fees="{{views.fees}}"></feereportscheque-item-card>
+      </template>
     </div>
     <excelreport-service id="excelservice"></excelreport-service>
   </template>
@@ -61,15 +77,8 @@
 
     Polymer({
       is: 'excelreport-card',
-<<<<<<< HEAD
     installment:function(e){
       installment = (e.target.selectedItem.textContent).trim();
-=======
-    modeofpayment:function(){
-      //date = ;
-      installment = (e.target.selectedItem.textContent).trim();;
-      modeofpayment = (e.target.selectedItem.textContent).trim();;
->>>>>>> 1d0057b652dd19ae0a4f8d2d16c96a5822a79175
     },
     modeofpayment:function(e){
       date = localStorage.getItem("localsess_curr_date");

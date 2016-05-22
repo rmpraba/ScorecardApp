@@ -262,7 +262,10 @@ zfee=e.detail.response.returnval[0].fees;
       },
       getzonechangefeeResponse:function(e)
       {
+        alert(remainfee);
           totalfee=e.detail.response.returnval[0].fees;
+          alert(totalfee);
+          alert(totalfee-remainfee);
           document.querySelector('zonechange-card').fee=totalfee;
       },
        getzonechangetermdate:function(grade)

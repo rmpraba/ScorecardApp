@@ -124,7 +124,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 app.post('/getroute' ,  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};
-	    connection.query('select route_name from route where ?',[schoolx],
+	    connection.query('select * from route where ?',[schoolx],
        	function(err, rows)
        	{
       	if(!err)
@@ -1896,14 +1896,20 @@ app.post('/updatezone' ,  urlencodedParser,function (req, res)
 
 app.post('/checkchequedetails',  urlencodedParser,function (req, res)
 {
+	console.log('come');
 	var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT * from cheque_details where cheque_status="processing" and ?',[schoolx],
+	var startdate=req.query.fromdate;
+	var todate=req.query.todate;
+console.log(startdate);
+console.log(todate);
+       connection.query('SELECT * from cheque_details where cheque_status="processing" and ? and cheque_date between ? and ?',[schoolx,startdate,todate],
        	function(err, rows)
        	{
 		if(!err)
 		{
 		if(rows.length>0)
 		{
+			console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else
@@ -3565,6 +3571,21 @@ app.post('/valuesinsta2cash',  urlencodedParser,function (req, res)
 	        }
 	});
 });
+
+app.post('/mapbustoroute',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol,"route_id":req.query.route,"bus_id":req.query.bus,"driver_id":req.query.driver,"attender_id":req.query.attender,"trip":req.query.trip,"updated_by":req.query.updatedby,"updated_date":req.query.updateon};
+    connection.query('insert into route_bus set ?',[schoolx],
+       	function(err, rows){
+		if(!err){
+			res.status(200).json({'returnval': 'success'});
+			console.log('inserted');
+		} else {
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	});
+});
+
 function setvalue(){
 	console.log("calling setvalue.....");
 }

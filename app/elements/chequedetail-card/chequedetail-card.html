@@ -11,6 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../transportfee-service/transportfee-service.html">
 <link rel="import" href="../chequedetail-list/chequedetail-list.html">
+<link rel="import" href="../fchequedatepicker-card/fchequedatepicker-card.html">
+<link rel="import" href="../tchequedatepicker-card/tchequedatepicker-card.html">
 <dom-module id="chequedetail-card">
   <template>
     <style>
@@ -22,7 +24,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
         margin: 0 auto;
       }
+      
+      .horizontalframe
+  {
+
+        @apply(--layout-horizontal);
+        padding-left: 35%;
+
+  }
+
     </style>
+    <div class="horizontalframe">
+     <div><fchequedatepicker-card id="dp"></fchequedatepicker-card></div>
+     <div><tchequedatepicker-card></tchequedatepicker-card></div>
+     <paper-button style="height: 100px;margin-top: 3%;"  id="but" class="button" on-click="search">Search</paper-button>
+    </div>
     <div class="collapse1">
           <paper-tabs>
             <paper-tab >ID</paper-tab>
@@ -46,17 +62,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     var chqdetail=[];
+    var fromdate;
+    var todate;
 
     Polymer({
       is: 'chequedetail-card',
 ready:function()
 {
-  this.$.service.checkchequedetails();
+  this.$.button.hidden=true;
+  //this.$.service.checkchequedetails();
 },
 refreshchequedetail:function()
 {
-this.$.service.checkchequedetails();
+//this.$.service.checkchequedetails();
 },
+showfromcheque:function(showdate1)
+{
+  fromdate=showdate1;
+},
+showtocheque:function(showdate2)
+{
+  todate=showdate2;
+},
+ search:function()
+ {
+// alert('1');
+ this.$.service.checkchequedetails(fromdate,todate);
+ this.$.button.hidden=false;
+ },
 Fnchequedetail:function(chequedetail)
 {
  chqdetail=chequedetail;

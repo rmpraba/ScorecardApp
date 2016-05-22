@@ -141,6 +141,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             debounce-duration="300"
             >
         </iron-ajax>
+         <iron-ajax
+            method="post"
+            id="getzonenamedetailajax"
+            url="{{getzonenamedetailurl}}"
+            params="{{getzonenamedetailparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="getzonenamedetailResponse"
+            debounce-duration="300"
+            >
+        </iron-ajax>
   </template>
 
   <script>
@@ -162,6 +173,7 @@ var feemon;
 var remainfee;
 var mon;
 var previouszone;
+var prevzonefee;
     Polymer({
       is:'zonechange-service',
         getzonechangename:function()
@@ -204,7 +216,39 @@ var previouszone;
 zinstall1=e.detail.response.returnval[0].installment_1;
 zinstall2=e.detail.response.returnval[0].installment_2;
 zfee=e.detail.response.returnval[0].fees;
+zid=e.detail.response.returnval[0].zone_id;
+ this.getzonenamedetailurl=sessionStorage.getItem("addrinfo")+"/getzonenamedetail";
+        var obj={"zoneid":"","schol":""};
+        obj.zoneid=zid;
+        obj.schol=sessionStorage.getItem("sch");
+        this.getzonenamedetailparam=obj;
+        this.$.getzonenamedetailajax.generateRequest();
+ //document.querySelector('zonechange-card').prevzone=previouszone;
+ document.querySelector('zonechange-card').prevzonefee=zfee;
 //alert(zfee);
+      },
+      getzonenamedetailResponse:function(e)
+      {
+document.querySelector('zonechange-card').prevzone=e.detail.response.returnval[0].zone_name;
+      },
+      calculatedays:function(selectdate)
+      {
+    // alert(fromdate1+''+selectdate);
+ var startdate=new Date(fromdate1);
+ var selectdat=new Date(selectdate);
+              var monfee=(selectdat.getFullYear()-startdate.getFullYear())*12;
+             mon-=startdate.getMonth()+1;
+             mon+=selectdat.getMonth();
+             var mm=mon+2;
+             //alert(mm);
+             document.querySelector('zonechange-card').prevmonth=mm;
+
+             prevzonefee=(zfee/10);
+             usedfee=prevzonefee*mm;
+             document.querySelector('zonechange-card').prevusedfee=usedfee;
+             remainfee=(parseInt(zinstall1)+parseInt(zinstall2))-parseInt(usedfee);
+             document.querySelector('zonechange-card').prevremainfee=remainfee;
+//alert(remainfee);
       },
       zonechangeparentnameResponse:function(e)
       {
@@ -222,7 +266,7 @@ zfee=e.detail.response.returnval[0].fees;
             document.querySelector('zonechange-card').grade=gradename;
             document.querySelector('zonechange-card').date=dob;
             document.querySelector('zonechange-card').id=stdid;
-
+            document.querySelector('zonechange-service').getzonechangetermdate(gradename);
             this.zonechangeclassurl=sessionStorage.getItem("addrinfo")+"/getzonechangeclass";
             var obj1={"class":"","schol":""}
             obj1.class=classz;
@@ -262,11 +306,18 @@ zfee=e.detail.response.returnval[0].fees;
       },
       getzonechangefeeResponse:function(e)
       {
-        alert(remainfee);
+        //alert(remainfee);
           totalfee=e.detail.response.returnval[0].fees;
-          alert(totalfee);
-          alert(totalfee-remainfee);
+          //alert(totalfee);
+          var actualfee=totalfee-remainfee;
+          if(actualfee>0)
+           {
+          document.querySelector('zonechange-card').fee=actualfee;
+        }
+        else
+        {
           document.querySelector('zonechange-card').fee=totalfee;
+        }
       },
        getzonechangetermdate:function(grade)
        {

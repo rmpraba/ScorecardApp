@@ -41,6 +41,7 @@
        <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/edit-cheque.png" on-click="editcheque"></paper-icon-button>
         <paper-icon-button class="iconbutton" src="../../images/bouncecheque.png" on-click="bouncecheque"></paper-icon-button>
+        <paper-icon-button class="iconbutton" src="../../images/excel-report.png" on-click="excelreport"></paper-icon-button>
     </div>
      <div class="frontpage">
          
@@ -114,6 +115,10 @@
       editcheque:function(){
         this.$.transportservice.getchequedetailsbyname();
         document.querySelector('transport-app').setPage("editcheque","Edit Cheque Details");
+      },
+      excelreport:function(){
+        //this.$.transportservice.getchequedetailsbyname();
+        document.querySelector('transport-app').setPage("excelreport","Excel Report");
       }
      
      

@@ -190,6 +190,9 @@
           <section data-category="consolidatedreport">
             <consolidated-report></consolidated-report>
           </section>
+          <section data-category="excelreport">
+            <excelreport-card></excelreport-card>
+          </section>
           </iron-pages>
        </div>
        <div class="footer"></div>
@@ -567,7 +570,12 @@
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
       document.querySelector('routereport-card').FnClear();
       document.querySelector('routereport-card').ready();
-      
+    }
+    if(currpage=="excelreport"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+      //document.querySelector('password-card').FnClear();
+      document.querySelector('excelreport-card').ready();
     }
 
   }

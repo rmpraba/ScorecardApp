@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../exceldatepicker-card/exceldatepicker-card.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../excelreport-service/excelreport-service.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
+<dom-module id="excelreport-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .headtabs{
+        width: 90% !important;
+        margin: 0 !important;
+      }
+      .total-collection{
+        @apply(--layout-horizontal);
+        margin: 5% 0% 5% 60%;
+      }
+      .fields{
+        @apply(--layout-horizontal);
+      }
+      #by1 paper-item, #by2 paper-item{
+        width: 100%;
+      }
+    </style>
+    <div class="card">
+      <div class="date">
+        <exceldatepicker-card id="exceldate"></exceldatepicker-card>
+      </div>
+      <div class="intallment drop-down">
+        <paper-dropdown-menu label="Installment Type" id="installment" required error-message="select the Installment Type">
+          <paper-menu id="tripmenu" class="dropdown-content" on-iron-select="installment" valueattr="value"  >
+            <paper-item value="1">Installment 1</paper-item>
+            <paper-item value="2">Installment 2</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+      <div class="modeofpayment drop-down">
+        <paper-dropdown-menu label="Mode of Payment" id="modeofpayment" required error-message="select the mode of payment">
+          <paper-menu id="tripmenu" class="dropdown-content" on-iron-select="modeofpayment" valueattr="value"  >
+            <paper-item value="Cash">Cash</paper-item>
+            <paper-item value="Cheque">Cheque</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+
+    var date;
+    var installment;
+    var modeofpayment;
+
+    Polymer({
+      is: 'excelreport-card',
+    modeofpayment:function(){
+      date = ;
+      installment = (e.target.selectedItem.textContent).trim();;
+      modeofpayment = (e.target.selectedItem.textContent).trim();;
+    },
+
+    });
+  })();
+  </script>
+</dom-module>

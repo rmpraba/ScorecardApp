@@ -124,7 +124,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
 app.post('/getroute' ,  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};
-	    connection.query('select route_name from route where ?',[schoolx],
+	    connection.query('select * from route where ?',[schoolx],
        	function(err, rows)
        	{
       	if(!err)
@@ -3441,6 +3441,24 @@ app.post('/consolidatedallocatedreportread',  urlencodedParser,function (req, re
 		}
 	});
 });
+
+
+
+app.post('/mapbustoroute',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol,"route_id":req.query.route,"bus_id":req.query.bus,"driver_id":req.query.driver,"attender_id":req.query.attender,"trip":req.query.trip,"updated_by":req.query.updatedby,"updated_date":req.query.updateon};
+    connection.query('insert into route_bus set ?',[schoolx],
+       	function(err, rows){
+		if(!err){
+			res.status(200).json({'returnval': 'success'});
+		} else {
+			console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	});
+});
+
+
+
 
 function setvalue(){
 	console.log("calling setvalue.....");

@@ -783,6 +783,50 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         debounce-duration="300"
       >
       </iron-ajax>
+      <iron-ajax
+      method="post"
+      id="routetobusajax"
+      url="{{routetobusurl}}"
+      params="{{routetobusparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="routetobusResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="bustodriverajax"
+      url="{{bustodriverurl}}"
+      params="{{bustodriverparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="bustodriverResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="bustoattenderajax"
+      url="{{bustoattenderurl}}"
+      params="{{bustoattenderparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="bustoattenderResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="mapbustorouteajax"
+      url="{{mapbustorouteurl}}"
+      params="{{mapbustorouteparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="mapbustorouteResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
     </template>
   <script>
   (function() {
@@ -868,6 +912,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       {
          a2=e1.detail.response.returnval;
         document.querySelector('mappointtoroute-card').routearr=a2;
+        document.querySelector('vehicleroute-card').routes=a2;
       },
        getroutedetail:function(tripno)
       {
@@ -1216,9 +1261,19 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         this.$.getrouteidajax.generateRequest();
 
       },
+      getrouteid:function(rout){
+            this.getrouteidurl=sessionStorage.getItem("addrinfo")+"/getrouteid";
+        var obj1={"routename":"","schol":""}
+        obj1.schol=sessionStorage.getItem("sch");
+        obj1.routename=rout;
+        this.getrouteidparam=obj1;
+      //alert(JSON.stringify(obj1));
+        this.$.getrouteidajax.generateRequest();
+      },
       getrouteidResponse:function(e){
         rouid=e.detail.response.returnval[0].id;
         sessionStorage.setItem("routid",rouid);
+        document.querySelector('vehicleroute-card').routeid=rouid;
       },
       gettripResponse:function(e1)
           {
@@ -2249,6 +2304,71 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       busreportResponse:function(e){
         var busreport=e.detail.response.returnval;
         document.querySelector('bus-report').busreportarr=busreport;
+      },
+      busdetails:function(){
+         this.routetobusurl = sessionStorage.getItem("addrinfo")+"/routetobus";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.routetobusparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.routetobusajax.generateRequest();
+
+
+        this.bustodriverurl = sessionStorage.getItem("addrinfo")+"/bustodriver";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.bustodriverparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.bustodriverajax.generateRequest();
+
+
+        this.bustoattenderurl = sessionStorage.getItem("addrinfo")+"/bustoattender";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.bustoattenderparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.bustoattenderajax.generateRequest();
+    },
+     routetobusResponse:function(e){
+        var routetobus = e.detail.response.returnval;
+        document.querySelector('vehicleroute-card').routetobus=routetobus;
+      },
+      bustodriverResponse:function(e){
+        var bustodriver = e.detail.response.returnval;
+        document.querySelector('vehicleroute-card').bustodriver=bustodriver;
+        //alert(JSON.stringify(this.bustodriver));
+      },
+      bustoattenderResponse:function(e){
+        var bustoattender = e.detail.response.returnval;
+        document.querySelector('vehicleroute-card').bustoattender=bustoattender;
+        //alert(JSON.stringify(this.bustoattender));
+      },
+      mapbustoroute:function(route,bus,driver,attender,val){
+            var today = dat2.getDate()+"/"+(dat2.getMonth()+1)+"/"+dat2.getFullYear();
+
+        this.mapbustorouteurl = sessionStorage.getItem("addrinfo")+"/mapbustoroute";
+        var obj = {"schol":"","route":"","bus":"","driver":"","attender":"","trip":"","updatedby":"","updateon":""};
+        obj.schol=sessionStorage.getItem("sch");
+        obj.route=route;
+        obj.bus=bus;
+        obj.driver=driver;
+        obj.attender=attender;
+        obj.trip=val;
+        obj.updatedby=sessionStorage.getItem("userinfo");
+        obj.updateon=today;
+        this.mapbustorouteparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.mapbustorouteajax.generateRequest();
+      },
+      mapbustorouteResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result=='success'){
+            alert("Mapping is Completed");
+        }
+        else
+        {
+            alert('Mapping is Failed');
+        }
       }
     });
  })();

@@ -50,6 +50,7 @@
         </paper-dropdown-menu>
       </div>
     </div>
+    <excelreport-service id="excelservice"></excelreport-service>
   </template>
   <script>
   (function() {
@@ -60,11 +61,14 @@
 
     Polymer({
       is: 'excelreport-card',
-    modeofpayment:function(){
-      date = ;
-      installment = (e.target.selectedItem.textContent).trim();;
-      modeofpayment = (e.target.selectedItem.textContent).trim();;
+    installment:function(e){
+      installment = (e.target.selectedItem.textContent).trim();
     },
+    modeofpayment:function(e){
+      date = localStorage.getItem("localsess_curr_date");
+      modeofpayment = (e.target.selectedItem.textContent).trim();
+      this.$.excelservice.values(date, installment, modeofpayment);
+    }
 
     });
   })();

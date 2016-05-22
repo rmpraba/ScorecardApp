@@ -15,12 +15,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <iron-ajax
         method="post"
-        id="generatefeeajax"
-        url="{{generatefeeurl}}"
-        params="{{generatefeeparam}}"
+        id="valuesinsta1cashajax"
+        url="{{valuesinsta1cashurl}}"
+        params="{{valuesinsta1cashparam}}"
         handle-as="json"
         content-type="application/json"
-        on-response="generatefeeResponse"
+        on-response="valuesinsta1cashResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="valuesinsta2cashajax"
+        url="{{valuesinsta2cashurl}}"
+        params="{{valuesinsta2cashparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="valuesinsta2cashResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="valuesinsta1chequeajax"
+        url="{{valuesinsta1chequeurl}}"
+        params="{{valuesinsta1chequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="valuesinsta1chequeResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="valuesinsta2chequeajax"
+        url="{{valuesinsta2chequeurl}}"
+        params="{{valuesinsta2chequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="valuesinsta2chequeResponse"
         debounce-duration="300"
         >
   </iron-ajax>
@@ -28,10 +61,69 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+    var todate;
     Polymer({
       is: 'excelreport-service',
-      
+
+      values:function(date, installment, modeofpayment){
+        var condate = new Date(date);
+        todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+        // alert(dat);
+        //alert(todate);
+        if(installment == "Installment 1"){
+          if(modeofpayment == "Cash"){
+            this.valuesinsta1cashurl=sessionStorage.getItem("addrinfo")+"/valuesinsta1cash";
+            var obj={"dates":"","schol":"","modeofpayment":""}
+            obj.dates=todate;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.modeofpayment = "Cash";
+            this.valuesinsta1cashparam=obj;
+            this.$.valuesinsta1cashajax.generateRequest();
+          } else {
+            this.valuesinsta1chequeurl=sessionStorage.getItem("addrinfo")+"/valuesinsta1cheque";
+            var obj={"dates":"","schol":"","modeofpayment":""}
+            obj.dates=todate;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.modeofpayment = "Cheque";
+            this.valuesinsta1chequeparam=obj;
+            this.$.valuesinsta1chequeajax.generateRequest();
+          }
+        } else {
+          if(modeofpayment == "Cash"){
+            this.valuesinsta2cashurl=sessionStorage.getItem("addrinfo")+"/valuesinsta2cash";
+            var obj={"dates":"","schol":"","modeofpayment":""}
+            obj.dates=todate;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.modeofpayment = modeofpayment;
+            this.valuesinsta2cashparam=obj;
+            this.$.valuesinsta2cashajax.generateRequest();
+          } else{
+            this.valuesinsta2chequeurl=sessionStorage.getItem("addrinfo")+"/valuesinsta2cheque";
+            var obj={"dates":"","schol":"","modeofpayment":""}
+            obj.dates=todate;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.modeofpayment = "Cheque";
+            this.valuesinsta2chequeparam=obj;
+            this.$.valuesinsta2chequeajax.generateRequest();
+          }
+        }
+      },
+      valuesinsta1cashResponse:function(e){
+        var result = e.detail.response.returnval;
+        alert(JSON.stringify(result));
+      },
+      valuesinsta2cashResponse:function(e){
+        var result = e.detail.response.returnval;
+        alert(JSON.stringify(result));
+      },
+      valuesinsta1chequeResponse:function(e){
+        var result = e.detail.response.returnval;
+        alert(JSON.stringify(result));
+      },
+      valuesinsta2chequeResponse:function(e){
+        var result = e.detail.response.returnval;
+        alert(JSON.stringify(result));
+      }
     });
   })();
   </script>

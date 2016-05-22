@@ -3450,6 +3450,7 @@ app.post('/mapbustoroute',  urlencodedParser,function (req, res){
        	function(err, rows){
 		if(!err){
 			res.status(200).json({'returnval': 'success'});
+			console.log('inserted');
 		} else {
 			console.log(err);
 			res.status(200).json({'returnval': 'invalid'});

@@ -25,6 +25,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .laybut{
+        @apply(--layout-horizontal);
+   @apply(--layout-center);
+   display: flex;
+   margin-left: 36%;
+      }
     </style>
     <div class="card2">
         <ul>
@@ -88,24 +94,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-button style="margin-left: 46%;margin-top: 2%" class="button" on-click="payfee">Submit</paper-button>
     </div>
     <div class="confirm-fee">
-  <paper-dialog id="confirmbox1" modal>
+  <paper-dialog id="confirmbox1ret" modal>
   <h4>Do You Want Proceed ?</h4>
              <paper-tabs>
-              <paper-tab>Total No of Seats : </paper-tab>
-              <paper-tab>Total No of Students : </paper-tab>
+              <paper-tab>Total No of Seats : {{noofseats}}</paper-tab>
+              <paper-tab>Total No of Students : {{noofstudents}}</paper-tab>
             </paper-tabs>
-  <div  class="horizontalframe">
-            <paper-item>{{noofseats}}</paper-item>
-            <paper-item>{{noofstudents}}</paper-item>
+<div class="laybut">
+<div> <paper-button style="height: 110px;" on-click="Confirm">CONFIRM</paper-button></div>
+  <div><paper-button style="height: 110px;" on-click="cancel">CANCEL</paper-button></div>
   </div>
-  <div  class="horizontalframe">
-    <div class="buttons hrspace" >
-      <paper-button  on-click="Confirm">CONFIRM</paper-button>
-    </div>  
-    <div class="buttons hrspace">
-      <paper-button  on-click="cancel">CANCEL</paper-button>
-    </div> 
-  </div>     
+      
    </paper-dialog>
 </div>
 
@@ -223,13 +222,13 @@ var attender;
        payfee:function()
     {
       
-      var id = 'confirmbox1';
+      var id = 'confirmbox1ret';
         var dialog = document.getElementById(id);
         dialog.open();
     },
     Confirm:function()
     {
-      var id = 'confirmbox1';
+      var id = 'confirmbox1ret';
         var dialog = document.getElementById(id);
         dialog.opened=false;
          this.$.root.mapbustoroute(this.route,bus,driver,attender,val);
@@ -237,7 +236,7 @@ var attender;
    },
    
    cancel:function(){
-          var id = 'confirmbox1';
+          var id = 'confirmbox1ret';
         var dialog = document.getElementById(id);
         dialog.opened=false;
    }

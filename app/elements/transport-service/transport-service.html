@@ -2344,7 +2344,8 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         //alert(JSON.stringify(this.bustoattender));
       },
       mapbustoroute:function(route,bus,driver,attender,val){
-            var today = dat2.getDate()+"/"+(dat2.getMonth()+1)+"/"+dat2.getFullYear();
+        var dat2=new Date();
+            var today = dat2.getFullYear()+"/"+(dat2.getMonth()+1)+"/"+dat2.getDate();
 
         this.mapbustorouteurl = sessionStorage.getItem("addrinfo")+"/mapbustoroute";
         var obj = {"schol":"","route":"","bus":"","driver":"","attender":"","trip":"","updatedby":"","updateon":""};

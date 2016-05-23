@@ -912,6 +912,33 @@ app.post('/chnamepick',  urlencodedParser,function (req, res)
 
 });
 	});
+app.post('/chprevpick',  urlencodedParser,function (req, res)
+{
+	var id={"student_id":req.query.studentid};
+	var schoolx={"school_id":req.query.schol};
+	console.log(req.query.schol);
+      	connection.query('select * from student_point where  ? and ?',[id,schoolx],
+       		function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+			console.log(rows);
+		}
+		else
+		{
+			res.status(200).json({'returnval': ''});
+		}
+	}
+	else
+	{
+		console.log(err);
+	}
+
+});
+	});
 app.post('/pickpoints',  urlencodedParser,function (req, res)
 {
 		var route_id=req.query.routept;

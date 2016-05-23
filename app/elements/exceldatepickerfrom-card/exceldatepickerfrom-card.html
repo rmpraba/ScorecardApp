@@ -8,7 +8,7 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-<dom-module id="exceldatepicker-card">
+<dom-module id="exceldatepickerfrom-card">
   <template>
     <style is="custom-style" include="paper-date-picker-dialog-style">
       .card {
@@ -22,7 +22,7 @@
     </style>
     <!--component which invokes the predefined date picker control-->
     <div class="card">
-      <paper-input label="To date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+      <paper-input label='From date' class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
       <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
@@ -39,11 +39,11 @@
     'use strict';
 
     Polymer({
-      is: 'exceldatepicker-card',
+      is: 'exceldatepickerfrom-card',
   ready:function()
   {
     this.showdate=moment(new Date()).format('L');
-    localStorage.setItem("localsess_curr_date",this.showdate);
+    localStorage.setItem("localsess_curr_fromdate",this.showdate);
     //this.$.excelservice.pickdate(this.showdate);
   },
   FnShowDialog:function(){
@@ -57,7 +57,7 @@
       var dd2=new Date(pickdate);
       var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
       this.showdate = moment(this.$.picker.date).format('L');
-      localStorage.setItem("localsess_curr_date",this.showdate);
+      localStorage.setItem("localsess_curr_fromdate",this.showdate);
       //this.$.service.datepickinsta1(this.date);
       //this.$.service.datepickinsta2(this.date);
       //this.$.service.datepickinsta1cheque(this.date);

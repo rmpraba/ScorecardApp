@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../excelreport-service/excelreport-service.html">
 <link rel="import" href="../excelreportcash-card/excelreportcash-card.html">
+<link rel="import" href="../exceldatepickerffrom-card/exceldatepickerfrom-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 
 <dom-module id="excelreport-card">
@@ -39,7 +40,7 @@
       }
       table{
         border-collapse: collapse;
-
+        margin-top: 5%;
       }
       #btn1{
         margin-top: 2%;
@@ -51,7 +52,7 @@
       }
       .topcard{
         @apply(--layout-horizontal);
-        margin-left: 25%;
+        margin-left: 15%;
       }
       exceldatepicker-card{
         width: 30%;
@@ -63,6 +64,7 @@
     </style>
     <div class="card">
     <div class="topcard">
+    <exceldatepickerfrom-card id="excelfromdate"></exceldatepickerfrom-card>
       <div class="date">
         <exceldatepicker-card id="exceldate"></exceldatepicker-card>
       </div>
@@ -86,7 +88,7 @@
       </div>
       <div class="cash" hidden$="{{hide1}}">
 
-      <div class="headtabs" id="tabs1">
+      <!--<div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
@@ -94,12 +96,13 @@
             <paper-tab>Receipt No</paper-tab>
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
-      </div>
+      </div>-->
 
       <table id="testTable1" border="1">
+      <tr><th>Student ID</th><th>Student Name</th><th>Parent Name</th><th>Section</th><th>Receipt Number</th><th>Amount</th></tr>
       <template  is="dom-repeat" items="{{excelcasharr}}" as="view">
         <!-- <excelreportcash-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" standard="{{view.standard}}" section ="{{view.section}}" receiptno="{{view.receipt_no}}" feepaid="{{view.installment_1}}"></excelreportcash-card> -->
-        <tr><td>{{view.student_id}}</td><td>{{view.student_name}}</td><td>{{view.grade}}</td>
+        <tr><td>{{view.student_id}}</td><td>{{view.student_name}}</td><td>{{view.parent_name}}</td><td>{{view.grade}}</td>
         <td>{{view.receipt_no}}</td><td>{{view.installment_1}}</td></tr>
       </template>
       </table>
@@ -107,7 +110,7 @@
       </div>
 
        <div class="cheque" hidden$="{{hide2}}"> 
-       <div class="headtabs" id="tabs1">
+       <!--<div class="headtabs" id="tabs1">
           <paper-tabs selected="0">
             <paper-tab>ID</paper-tab>
             <paper-tab>Name</paper-tab>
@@ -118,12 +121,15 @@
             <paper-tab>Cheque Date</paper-tab>
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
-      </div>
+      </div>-->
       <table id="testTable2" border="1">
+      <tr><th>Student ID</th><th>Student Name</th><th>Parent Name</th><th>Section</th><th>Receipt No</th><th>Cheque No</th>
+      <th>Bank Name</th><th>Cheque Date</th><th>Created Date</th><th>Amount</th>
+      </tr>
       <template  is="dom-repeat" items="{{excelchequearr}}" as="views">
         <!--<feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.student_name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bank_name}}" chequeno="{{views.cheque_no}}" createddate="{{views.created_date}}" chequedate="{{views.cheque_date}}" receiptno="{{views.receipt_no}}" feepaid="{{views.installment_1}}" fees="{{views.fees}}"></feereportscheque-item-card>-->
-        <tr><td>{{views.student_id}}</td><td>{{views.student_name}}</td><td>{{views.grade}}</td><td>{{views.receipt_no}}</td>
-        <td>{{views.cheque_no}}</td><td>{{views.bank_name}}</td><td>{{views.cheque_date}}</td><td>{{views.installment_1}}</td></tr>
+        <tr><td>{{views.student_id}}</td><td>{{views.student_name}}</td><td>{{views.parent_name}}</td><td>{{views.grade}}</td><td>{{views.receipt_no}}</td>
+        <td>{{views.cheque_no}}</td><td>{{views.bank_name}}</td><td>{{views.cheque_date}}</td><td>{{views.created_date}}</td><td>{{views.installment_1}}</td></tr>
       </template>
       </table>
       <input type="button" id="btn2" onclick="tableToExcel('testTable2', 'W3C Example Table')" value="Export to Excel">
@@ -159,7 +165,7 @@ var tableToExcel = (function() {
     var date;
     var installment;
     var modeofpayment;
-
+    var fromdate;
     Polymer({
       is: 'excelreport-card',
 
@@ -175,6 +181,7 @@ var tableToExcel = (function() {
     },
     modeofpayment:function(e){
       date = localStorage.getItem("localsess_curr_date");
+      fromdate = localStorage.getItem("localsess_curr_fromdate");
       modeofpayment = (e.target.selectedItem.textContent).trim();
       if(modeofpayment=='Cash'){
         this.hide1=false;
@@ -184,7 +191,7 @@ var tableToExcel = (function() {
         this.hide1=true;
         this.hide2=false;
       }
-      this.$.excelservice.values(date, installment, modeofpayment);
+      this.$.excelservice.values(date,fromdate, installment, modeofpayment);
     }
 
     });

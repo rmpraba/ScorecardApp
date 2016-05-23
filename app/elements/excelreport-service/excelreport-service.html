@@ -61,28 +61,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-    var todate;
+    var todate,fromdat;
     Polymer({
       is: 'excelreport-service',
 
-      values:function(date, installment, modeofpayment){
+      values:function(date,fromdate, installment, modeofpayment){
         var condate = new Date(date);
         todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+          var condate1 = new Date(fromdate);
+        fromdat=condate1.getFullYear()+"-"+(condate1.getMonth()+1)+"-"+condate1.getDate();
         // alert(dat);
         //alert(todate);
         if(installment == "Installment 1"){
           if(modeofpayment == "Cash"){
             this.valuesinsta1cashurl=sessionStorage.getItem("addrinfo")+"/valuesinsta1cash";
-            var obj={"dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
             obj.dates=todate;
+            obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
             obj.modeofpayment = "Cash";
             this.valuesinsta1cashparam=obj;
             this.$.valuesinsta1cashajax.generateRequest();
           } else {
             this.valuesinsta1chequeurl=sessionStorage.getItem("addrinfo")+"/valuesinsta1cheque";
-            var obj={"dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
             obj.dates=todate;
+            obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
             obj.modeofpayment = "Cheque";
             this.valuesinsta1chequeparam=obj;
@@ -91,16 +95,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else {
           if(modeofpayment == "Cash"){
             this.valuesinsta2cashurl=sessionStorage.getItem("addrinfo")+"/valuesinsta2cash";
-            var obj={"dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
             obj.dates=todate;
+            obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
             obj.modeofpayment = modeofpayment;
             this.valuesinsta2cashparam=obj;
             this.$.valuesinsta2cashajax.generateRequest();
           } else{
             this.valuesinsta2chequeurl=sessionStorage.getItem("addrinfo")+"/valuesinsta2cheque";
-            var obj={"dates":"","schol":"","modeofpayment":""}
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
             obj.dates=todate;
+            obj.fromdate=fromdat;
             obj.schol=sessionStorage.getItem("sch");
             obj.modeofpayment = "Cheque";
             this.valuesinsta2chequeparam=obj;
@@ -110,22 +116,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       valuesinsta1cashResponse:function(e){
         var result = e.detail.response.returnval;
-        //alert(JSON.stringify(result));
+        alert(JSON.stringify(result));
         document.querySelector('excelreport-card').excelcasharr=result;
       },
       valuesinsta2cashResponse:function(e){
         var result = e.detail.response.returnval;
-        //alert(JSON.stringify(result));
+        alert(JSON.stringify(result));
         document.querySelector('excelreport-card').excelcasharr=result;
       },
       valuesinsta1chequeResponse:function(e){
         var result = e.detail.response.returnval;
-
+        alert(JSON.stringify(result));
         document.querySelector('excelreport-card').excelchequearr=result;
       },
       valuesinsta2chequeResponse:function(e){
         var result = e.detail.response.returnval;
-        //alert(JSON.stringify(result));
+        alert(JSON.stringify(result));
         document.querySelector('excelreport-card').excelchequearr=result;
       }
     });

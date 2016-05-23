@@ -133,13 +133,8 @@
         <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.student_name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bank_name}}" chequeno="{{views.cheque_no}}" createddate="{{views.created_date}}" chequedate="{{views.cheque_date}}" receiptno="{{views.receipt_no}}" feepaid="{{views.installment_1}}" fees="{{views.fees}}"></feereportscheque-item-card>
       </template>-->
 
-      <template  is="dom-repeat" items="{{excelcasharr}}" as="view">
-        <excelreportcash-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" standard="{{view.standard}}" section ="{{view.section}}" receiptno="{{view.receipt_no}}" feepaid="{{view.installment_1}}"></excelreportcash-card>
-      </template>
-      <template  is="dom-repeat" items="{{excelchequearr}}" as="views">
-        <feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.student_name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bank_name}}" chequeno="{{views.cheque_no}}" createddate="{{views.created_date}}" chequedate="{{views.cheque_date}}" receiptno="{{views.receipt_no}}" feepaid="{{views.installment_1}}" fees="{{views.fees}}"></feereportscheque-item-card>
-      </template>
->>>>>>> origin/master
+     
+
     </div>
     
     <!-- <paper-button label="Add" on-click="tableToExcel('testTable', 'Table')">Export</paper-button> -->
@@ -167,13 +162,13 @@ var tableToExcel = (function() {
 
     Polymer({
       is: 'excelreport-card',
-<<<<<<< HEAD
+
       ready:function(){
         this.hide1=true;
         this.hide2=true;
       },
-=======
->>>>>>> origin/master
+
+
     installment:function(e){
       installment = (e.target.selectedItem.textContent).trim();
     },

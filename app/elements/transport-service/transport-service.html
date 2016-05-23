@@ -2365,6 +2365,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         var result=e.detail.response.returnval;
         if(result=='success'){
             alert("Mapping is Completed");
+            document.querySelector('vehicleroute-card').FnClear();
         }
         else
         {

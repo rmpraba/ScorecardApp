@@ -37,6 +37,7 @@
           <div class="field" style="width: 35%;"><paper-item>{{receiptno}}</paper-item></div>
           <div class="field" style="width: 33%;"><paper-item>{{feepaid}}</paper-item></div>
       </div>
+
       <paper-button label="Add" on-click="tableToExcel('testTable', 'W3C Example Table')">Export</paper-button>
     </div>
   </template>
@@ -54,6 +55,10 @@ var tableToExcel = (function() {
   }
 })()
 </script>
+
+    </div>
+  </template>
+
   <script>
   (function() {
 

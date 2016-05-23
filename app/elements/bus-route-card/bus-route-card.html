@@ -48,9 +48,6 @@
   <script>
   (function() {
     'use strict';
-    var tripz;
-    var itemarray=[];
-    var routearray =[];
     Polymer({
       is: 'bus-route-card',
       ready:function(){
@@ -94,9 +91,8 @@
         document.getElementById("submitbutton").style.background="grey";
       },
       FnClear:function(){
-        itemarray = "";
         document.querySelector('#tripzz').selected = -1;
-        routearray = "";
+        this.routearray=[];
         //document.querySelector('bus-route-item-card').Fnclear();
       },
     });

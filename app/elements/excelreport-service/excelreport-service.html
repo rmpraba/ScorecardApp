@@ -117,21 +117,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       valuesinsta1cashResponse:function(e){
         var result = e.detail.response.returnval;
         // alert(JSON.stringify(result));
+        for(var i=0;i<result.length;i++){
+          var dat=new Date(result[i].installment_date);
+          result[i].installment_date=dat.getDate()+"-"+(dat.getMonth()+1)+"-"+dat.getFullYear();
+
+        }
         document.querySelector('excelreport-card').excelcasharr=result;
       },
       valuesinsta2cashResponse:function(e){
         var result = e.detail.response.returnval;
+         for(var i=0;i<result.length;i++){
+          var dat=new Date(result[i].installment_date);
+          result[i].installment_date=dat.getDate()+"-"+(dat.getMonth()+1)+"-"+dat.getFullYear();
+
+        }
         // alert(JSON.stringify(result));
         document.querySelector('excelreport-card').excelcasharr=result;
       },
       valuesinsta1chequeResponse:function(e){
         var result = e.detail.response.returnval;
         // alert(JSON.stringify(result));
+         for(var i=0;i<result.length;i++){
+          var dat=new Date(result[i].created_date);
+          result[i].created_date=dat.getDate()+"-"+(dat.getMonth()+1)+"-"+dat.getFullYear();
+
+        }
         document.querySelector('excelreport-card').excelchequearr=result;
       },
       valuesinsta2chequeResponse:function(e){
         var result = e.detail.response.returnval;
         // alert(JSON.stringify(result));
+         for(var i=0;i<result.length;i++){
+          var dat=new Date(result[i].created_date);
+          result[i].created_date=dat.getDate()+"-"+(dat.getMonth()+1)+"-"+dat.getFullYear();
+
+        }
         document.querySelector('excelreport-card').excelchequearr=result;
       }
     });

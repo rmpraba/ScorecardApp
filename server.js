@@ -1239,7 +1239,8 @@ app.post('/zonefee-card',  urlencodedParser,function (req, res)
 	var stu_id={"id":req.query.studid};
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+	var schoolx={"school_id":req.query.schol};
+       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where (? or ? or ?)and ? )',[stu_id,class_id,stu_name,schoolx],
        	function(err, rows)
        	{
 		if(!err)
@@ -1625,7 +1626,7 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
 		//console.log(req.query.pickordrop);
          var route_id={"pickup_route_id":req.query.routeid};
 
-    connection.query('SELECT student_id,(select student_name from student_details where id=student_id)as name,(select point_name from point where id=pickup_point)  as pick from student_point where ? and ? and ?',[route_id,tripid,schoolx],
+    connection.query('SELECT student_id,(select student_name from student_details where id=student_id and ?)as name,(select point_name from point where id=pickup_point)  as pick from student_point where ? and ? and ?',[schoolx,route_id,tripid,schoolx],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){
@@ -1647,7 +1648,7 @@ app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
 		//console.log(tripid);
          var route_id={"drop_route_id":req.query.routeid};
 
-    connection.query('SELECT student_id,(select student_name from student_details where id=student_id)as name,(select point_name from point where id=drop_point)  as pick from student_point where ? and ? and ?',[route_id,tripid,schoolx],
+    connection.query('SELECT student_id,(select student_name from student_details where id=student_id and ?)as name,(select point_name from point where id=drop_point)  as pick from student_point where ? and ? and ?',[schoolx,route_id,tripid,schoolx],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){

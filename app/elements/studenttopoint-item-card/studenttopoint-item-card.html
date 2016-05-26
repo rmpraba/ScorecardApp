@@ -212,7 +212,8 @@
         var box = document.querySelector("#selectbox");
         if(e.target.checked==true)
         {
-        document.querySelector('mapstudenttopoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint);
+          //alert('sch'+this.schooltype);
+        document.querySelector('mapstudenttopoint-card').FnGetItemsz(this.studentid,pickroute,droproute,pickpoint,droppoint,this.schooltype);
 
        this.$.set.disabled=true;
        this.$.set1.disabled=true;

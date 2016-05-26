@@ -223,8 +223,8 @@ app.post('/insertpoint' ,  urlencodedParser,function (req, res)
 app.post('/routeid' ,  urlencodedParser,function (req, res)
 {
 
-	var p={"id":req.query.id};
-	    connection.query('select count from sequence where ?',[p],
+	//var p={"id":req.query.id};
+	    connection.query('select count from sequence',
        	function(err, rows)
        	{
 		if(!err)
@@ -254,7 +254,7 @@ app.post('/sequence' ,  urlencodedParser,function (req, res)
 {
 		var id={"id":req.query.id};
 		var point={"count":req.query.pointcoun};
-	    connection.query('update sequence set ? WHERE ?',[point,id],
+	    connection.query('update sequence set ?',[point],
        	function(err, rows)
        	{
       	if(!err)

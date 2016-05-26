@@ -208,13 +208,16 @@ var attender;
           this.$.root.getrouteid(routename);
           this.$.root.busdetails();
       },
-      tripzxc:function(e){
+      tripzxc:function(e)
+      {
           var routename=(e.target.selectedItem.textContent).trim();
           
-          if(routename=='Primary'){
+          if(routename=='Primary')
+          {
             val=1;
           }
-          else{
+          else
+          {
             val=2;
           }
           //alert(routename+'    '+val);

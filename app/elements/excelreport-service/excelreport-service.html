@@ -119,7 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // alert(JSON.stringify(result));
         for(var i=0;i<result.length;i++){
           var dat=new Date(result[i].installment_date);
-          result[i].installment_date=dat.getDate()+"-"+(dat.getMonth()+1)+"-"+dat.getFullYear();
+          result[i].installment_date=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
 
         }
         document.querySelector('excelreport-card').excelcasharr=result;
@@ -128,7 +128,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var result = e.detail.response.returnval;
          for(var i=0;i<result.length;i++){
           var dat=new Date(result[i].installment_date);
-          result[i].installment_date=dat.getDate()+"-"+(dat.getMonth()+1)+"-"+dat.getFullYear();
+          result[i].installment_date=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
 
         }
         // alert(JSON.stringify(result));
@@ -139,7 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // alert(JSON.stringify(result));
          for(var i=0;i<result.length;i++){
           var dat=new Date(result[i].created_date);
-          result[i].created_date=dat.getDate()+"-"+(dat.getMonth()+1)+"-"+dat.getFullYear();
+          result[i].created_date=dat.getDate()+"/"+(dat.getMonth()+1)+""+dat.getFullYear();
 
         }
         document.querySelector('excelreport-card').excelchequearr=result;
@@ -149,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // alert(JSON.stringify(result));
          for(var i=0;i<result.length;i++){
           var dat=new Date(result[i].created_date);
-          result[i].created_date=dat.getDate()+"-"+(dat.getMonth()+1)+"-"+dat.getFullYear();
+          result[i].created_date=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
 
         }
         document.querySelector('excelreport-card').excelchequearr=result;

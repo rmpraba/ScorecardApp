@@ -1240,6 +1240,10 @@ app.post('/zonefee-card',  urlencodedParser,function (req, res)
 	var class_id={"class_id":req.query.studid};
 	var stu_name={"student_name":req.query.studid};
 	var schoolx={"school_id":req.query.schol};
+	console.log(stu_id);
+	console.log(class_id);
+	console.log(stu_name);
+	console.log(schoolx);
        connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where (? or ? or ?)and ? )',[stu_id,class_id,stu_name,schoolx],
        	function(err, rows)
        	{
@@ -1247,6 +1251,7 @@ app.post('/zonefee-card',  urlencodedParser,function (req, res)
 		{
 		if(rows.length>0)
 		{
+			console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else

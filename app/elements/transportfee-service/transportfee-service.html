@@ -486,8 +486,9 @@ var bouncestuarr=[];
      {
 
       this.zonefeeurl=sessionStorage.getItem("addrinfo")+"/zonefee-card";
-        var obj={"studid":""}
+        var obj={"studid":"","schol":""}
         obj.studid=studid;
+        obj.schol=sessionStorage.getItem("sch");
         this.zonefeeparam=obj;
         this.$.zonefeeajax.generateRequest();
      },
@@ -893,6 +894,7 @@ recarr1.push(recobj1);
         var install1fine;
         var install2fine;
         var dadname;
+      
 
       feestudname=feeresult[0].student_name;
       feestudid=feeresult[0].id;
@@ -1106,6 +1108,7 @@ document.querySelector('transportfee-card').installmentarr=installarr;
             obj.installstatus=installstatus;
             installarr.push(obj);
         }
+        //alert(JSON.stringify(installarr));
 document.querySelector('zonetostudent-card').installmentarr=installarr;
 document.querySelector('zonetostudent-card').payoption(installarr);
      },

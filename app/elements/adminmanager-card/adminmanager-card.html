@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
  <link rel="import" href="../refund-service/refund-service.html">
  <link rel="import" href="../transportfee-service/transportfee-service.html">
+  <link rel="import" href="../transport-service/transport-service.html">
  <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 
 <dom-module id="adminmanager-card">
@@ -40,12 +41,14 @@ top:35%;
        <paper-icon-button class="iconbutton" src="../../images/approval.jpg" on-click="approval"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/fee_reports.png" on-click="feereports"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/change-password.png" on-click="password"></paper-icon-button>
+       <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/consolidated_report.png" on-click="consolidatereport"></paper-icon-button>
     </div>
   </body>
      <refund-service id="rservice"></refund-service>
      <login-service id="login"></login-service>
      <transportfee-service id="service"></transportfee-service>
+     <transport-service id="transportservice"></transport-service>
   </template>
   <script>
   (function() {
@@ -78,7 +81,13 @@ top:35%;
       consolidatereport:function(){
         document.querySelector('transport-app').setPage("consolidatedreport","Consolidated Report");
         document.querySelector('consolidated-report').consolidatedreportreadService();
-      }
+      },
+       cancel:function()
+      {
+        document.querySelector('transport-app').setPage("cancellation","Transport Cancellation");
+        this.$.transportservice.name();
+      },
+
 
     });
   })();

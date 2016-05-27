@@ -172,7 +172,9 @@
         this.$.selectnameajax.generateRequest();
       },
       selectnameResponse:function(e){;
+
         var nameitem=e.detail.response.returnval;
+        alert(JSON.stringify(nameitem));
         document.querySelector('mapstudenttopoint-card').autocompletename(nameitem);
       },
       namepick:function(cla){

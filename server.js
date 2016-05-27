@@ -1626,7 +1626,7 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
 		//console.log(req.query.pickordrop);
          var route_id={"pickup_route_id":req.query.routeid};
 
-    connection.query('SELECT student_id,(select student_name from student_details where id=student_id and ?)as name,(select point_name from point where id=pickup_point)  as pick from student_point where ? and ? and ?',[schoolx,route_id,tripid,schoolx],
+    connection.query('SELECT p.student_id,(select student_name from student_details where id=p.student_id and ?)as name,(select class from class_details where id=(select class_id from student_details where id=p.student_id and ?)) as std,(select parent_name from parent where student_id=p.student_id and ?) as pname,(select point_name from point where id=pickup_point)  as pick from student_point p where ? and ? and ?',[schoolx,schoolx,schoolx,route_id,tripid,schoolx],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){
@@ -1648,7 +1648,7 @@ app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
 		//console.log(tripid);
          var route_id={"drop_route_id":req.query.routeid};
 
-    connection.query('SELECT student_id,(select student_name from student_details where id=student_id and ?)as name,(select point_name from point where id=drop_point)  as pick from student_point where ? and ? and ?',[schoolx,route_id,tripid,schoolx],
+    connection.query('SELECT p.student_id,(select student_name from student_details where id=p.student_id and ?)as name,(select class from class_details where id=(select class_id from student_details where id=p.student_id and ?)) as std,(select parent_name from parent where student_id=p.student_id and ?) as pname,(select point_name from point where id=drop_point)  as pick from student_point p where ? and ? and ?',[schoolx,schoolx,schoolx,route_id,tripid,schoolx],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){

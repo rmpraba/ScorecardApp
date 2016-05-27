@@ -82,14 +82,16 @@
       </div>
       <div class="headtabs">
           <paper-tabs>
-            <paper-tab>Student Id</paper-tab>
+            <paper-tab>Route</paper-tab>
             <paper-tab>Name</paper-tab>
+            <paper-tab>ParentName</paper-tab>
+            <paper-tab>Grade</paper-tab>
             <paper-tab>Point</paper-tab>
           </paper-tabs>
       </div>
       <template  is="dom-repeat" items="{{reportarr}}" as="view">
         <div class="itemcards">
-          <routereport-item-card stid="{{view.student_id}}" name="{{view.name}}" pick="{{view.pick}}" ></routereport-item-card>
+          <routereport-item-card stid="{{view.student_id}}" name="{{view.name}}" pick="{{view.pick}}" routename="{{selectroute}}" parentname="{{view.pname}}" stnd="{{view.std}}" ></routereport-item-card>
         </div>
         <!-- <iron-collapse id="{{routeid}}"> -->
           <!-- <button  class="collapse" on-click="toggle">Route Id:{{routeid}}</button> -->
@@ -223,6 +225,7 @@
       },
       show:function()
       {
+      this.selectroute=routename;
          this.$.print.hidden=false;
         this.querySelector("paper-tabs").style.visibility='visible';
          this.$.grndtot.hidden=false;

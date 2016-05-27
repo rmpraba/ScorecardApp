@@ -18,7 +18,7 @@
       }
       .total-collection{
         @apply(--layout-horizontal);
-        margin-left: 70%;
+        margin:4% 0 0 60%;
       }
       .total-collection paper-item{
         font-weight: bold;
@@ -41,6 +41,13 @@
       .headtabs paper-tab{
         font-size: 1.15em;
         font-weight: bold !important;
+      }
+      table{
+        border-collapse: collapse;
+        margin-top: 5%;
+      }
+      #button{
+        @apply(--layout-horizontal);
       }
     </style>
     <div class="routereport">
@@ -80,34 +87,39 @@
       </div>
       </div>
       </div>
-      <div class="headtabs">
-          <paper-tabs>
-            <paper-tab>Route</paper-tab>
-            <paper-tab>Name</paper-tab>
-            <paper-tab>ParentName</paper-tab>
-            <paper-tab>Grade</paper-tab>
-            <paper-tab>Point</paper-tab>
-          </paper-tabs>
-      </div>
+      <table id="testTable2" border="1" style="margin-left: 24%;">
+      <tr id="tableheading"><th>Route</th><th>Name</th><th>Parent Name</th><th>Route</th><th>Point</th><th>Grade</th>
+      </tr>
       <template  is="dom-repeat" items="{{reportarr}}" as="view">
-        <div class="itemcards">
-          <routereport-item-card stid="{{view.student_id}}" name="{{view.name}}" pick="{{view.pick}}" routename="{{selectroute}}" parentname="{{view.pname}}" stnd="{{view.std}}" ></routereport-item-card>
-        </div>
-        <!-- <iron-collapse id="{{routeid}}"> -->
-          <!-- <button  class="collapse" on-click="toggle">Route Id:{{routeid}}</button> -->
-   
-        <!-- </iron-collapse> -->
+        <!--<feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.student_name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bank_name}}" chequeno="{{views.cheque_no}}" createddate="{{views.created_date}}" chequedate="{{views.cheque_date}}" receiptno="{{views.receipt_no}}" feepaid="{{views.installment_1}}" fees="{{views.fees}}"></feereportscheque-item-card>-->
+        <tr><td>{{view.student_id}}</td><td>{{view.name}}</td><td>{{view.pick}}</td><td>{{selectroute}}</td><td>{{view.pname}}</td><td>{{view.std}}</td></tr>
       </template>
+      </table>
+      </div>
       <div class="total-collection" id="grndtot" style="font-weight: bold !important;">
           <paper-item>Total students</paper-item>
           <paper-item>{{no_of_student}}</paper-item>
       </div>
       <div id="button">
         <paper-button class="button" style="margin: 4% 0 0 45%; height: 35px;" id="print" on-click="print">Print</paper-button>
+        <paper-button id="btn2" style="margin: 4% 0 0 4%; height: 35px;" onclick="tableToExcel('testTable2', 'W3C Example Table')" value="Export to Excel">Excel</paper-button>
       </div>
       <transport-service id="service"></transport-service>
     </template>
   </div>
+  <script type="text/javascript">
+    var tableToExcel = (function() {
+    var uri = 'data:application/vnd.ms-excel;base64,'
+      , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+      , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+      , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+    return function(table, name) {
+      if (!table.nodeType) table = document.getElementById(table)
+      var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+      window.location.href = uri + base64(format(template, ctx))
+    }
+  })()
+  </script>
   <script type="text/javascript">
   (function() {
     var namearr=[];
@@ -127,7 +139,9 @@
       },
       ready: function() {
         this.$.service.name();
-        this.querySelector("paper-tabs").style.visibility='hidden';
+        this.querySelector("#tableheading").style.visibility='hidden';
+        this.querySelector("#testTable2").style.visibility='hidden';
+        this.querySelector("#btn2").style.visibility='hidden';
         this.$.print.hidden=true;
         this.$.grndtot.hidden=true;
       },
@@ -219,7 +233,9 @@
         this.no_of_student="";
         document.querySelector('#trip').selected=-1;
         document.querySelector('#pickdrop').selected=-1;
-        this.querySelector("paper-tabs").style.visibility='hidden';
+        this.querySelector("#tableheading").style.visibility='hidden';
+        this.querySelector("#testTable2").style.visibility='hidden';
+        this.querySelector("#btn2").style.visibility='hidden';
         this.$.print.hidden=true;
         this.$.grndtot.hidden=true;
       },
@@ -227,7 +243,9 @@
       {
       this.selectroute=routename;
          this.$.print.hidden=false;
-        this.querySelector("paper-tabs").style.visibility='visible';
+        this.querySelector("#tableheading").style.visibility='visible';
+        this.querySelector("#testTable2").style.visibility='visible';
+        this.querySelector("#btn2").style.visibility='visible';
          this.$.grndtot.hidden=false;
           this.$.service.studentroutereport(routeid,triptype,pickordrop);
       },

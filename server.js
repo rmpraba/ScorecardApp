@@ -2316,7 +2316,7 @@ app.post('/chequereport2',  urlencodedParser,function (req, res)
   var dat1=req.query.dates1;
   var dat2=req.query.dates2;
   //console.log('come server cheque');
-  connection.query("select * from cheque_details where student_id in (select student_id from student_fee where (installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) and school_id='"+req.query.schol+"') and school_id='"+req.query.schol+"'",
+  connection.query("select * from cheque_details where student_id in (select student_id from student_fee where (installment_1Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) or (installment_2Date between STR_TO_DATE('"+req.query.dates1+"', '%Y-%m-%d') and STR_TO_DATE('"+req.query.dates2+"', '%Y-%m-%d')) and school_id='"+req.query.schol+"') and school_id='"+req.query.schol+"' and cheque_status!='bounce'",
     function(err, rows)
     {
       if(!err)

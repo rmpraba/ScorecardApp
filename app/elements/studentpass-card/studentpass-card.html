@@ -24,7 +24,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
 
 <style type="text/css">
-  
+  .horlayout
+  {
+      @apply(--layout-horizontal);
+  }
+  .left
+  {
+    top: 1px;
+  }
 </style>
 <dom-module id="studentpass-card">
   <template>
@@ -33,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </div>
     <div class="left" >
 
-          <paper-input id="text"class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-input id="text" class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item>{{item.itemdes}}</paper-item>
@@ -62,12 +69,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 </div>
 
-    <div id="pass"class="pass">
+    <div id="pass" class="pass">
   <div id="canvas" style="background-image:url(fimage/1.jpg)">
-
+<div class="horlayout">
       <div class="front">
-     
-
         <div class="header">
         <div class="logo"><img style="width: 18%; height: 12%; margin-top: 5%;" src="../../images/zeesouth.png"/></div>
         <div class="heading">
@@ -86,7 +91,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <p style="font-size: 16px;">Zone - {{zone}}</p>
             </div>
         </div>
-
   </div>
 
       <div class="back">
@@ -112,6 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         </div>
 
+      </div>
       </div>
     </div></div>
     <div class="buttons">
@@ -192,6 +197,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         print:function(){
           this.$.print.hidden=true;
+this.$.text.hidden=true;
+this.$.checkbox.hidden=true;
+this.$.selectclass.hidden=true;
             if (!window.print){
             alert("You need NS4.x to use this print button!")
             return
@@ -201,6 +209,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
          autocompletearr:function(autocompletearr)
     {
+      this.schoolname=sessionStorage.getItem("schoolname");
+        this.schooladdr=sessionStorage.getItem("schooladdr");
          namearr=autocompletearr;
     },
     FnInputChanged:function(e){

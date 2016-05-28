@@ -52,8 +52,8 @@
     </style>
     <div class="routereport">
       <div style="padding-right: 2%;">
-        <paper-input label="Enter Route" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
-        <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
+        <paper-input label="Enter Route" value="{{value}}" id="inputroute" on-keydown="FnInputChanged"></paper-input>
+        <paper-listbox id="selectitemlistZ" class="dropdown-content" on-iron-select="FnItemSelected">
           <template is="dom-repeat" items="{{itemArray}}" as="item">
             <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
           </template>
@@ -62,7 +62,7 @@
       <div style="padding-right: 2%;">
       <div class="drop-down" >
         <paper-dropdown-menu label="Select the Trip">
-          <paper-menu id="trip" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
+          <paper-menu id="selecttrip" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
               <paper-item value="1">1</paper-item>
               <paper-item value="2">2</paper-item>
           </paper-menu>
@@ -71,7 +71,7 @@
       </div>
       <div class="drop-down" style="padding-right: 2%;">
         <paper-dropdown-menu label="Select PickUp or Drop">
-          <paper-menu id="pickdrop" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
+          <paper-menu id="selectpickdrop" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
             
               <paper-item value="pickup">Pickup</paper-item>
               <paper-item value="drop">Drop</paper-item>
@@ -80,8 +80,8 @@
         </paper-dropdown-menu>
       </div>
         <div class="drop-down" >
-          <paper-dropdown-menu id="grade" label="Grade">
-            <paper-menu class="dropdown-content" on-iron-select="grade" attr-for-selected="value">
+          <paper-dropdown-menu  label="Grade">
+            <paper-menu id="selectgrade" class="dropdown-content" on-iron-select="grade" attr-for-selected="value">
               <template  is="dom-repeat" items="{{gradearr}}" as="view">
                 <paper-item value="{{view.id}}">{{view.class}}-{{view.section}}</paper-item>
               </template>
@@ -94,11 +94,11 @@
       </div>
       </div>
       <table id="gradewisetestTable" border="1" style="margin-left: 24%;">
-      <tr id="tableheading"><th>Route</th><th>Name</th><th>Parent Name</th><th>Route</th><th>Point</th><th>Grade</th>
+      <tr id="tableheading"><th>Route</th><th>Name</th><th>Parent Name</th><th>Mobile No</th><th>Route</th><th>Point</th><th>Grade</th><th>Zone</th>
       </tr>
       <template  is="dom-repeat" items="{{reportarr}}" as="view">
         <!--<feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.student_name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bank_name}}" chequeno="{{views.cheque_no}}" createddate="{{views.created_date}}" chequedate="{{views.cheque_date}}" receiptno="{{views.receipt_no}}" feepaid="{{views.installment_1}}" fees="{{views.fees}}"></feereportscheque-item-card>-->
-        <tr><td>{{view.student_id}}</td><td>{{view.name}}</td><td>{{view.pname}}</td><td>{{selectroute}}</td><td>{{view.pick}}</td><td>{{view.std}}</td></tr>
+        <tr><td>{{view.student_id}}</td><td>{{view.name}}</td><td>{{view.pname}}</td><td>{{view.mobile}}</td><td>{{selectroute}}</td><td>{{view.pick}}</td><td>{{view.std}}</td><td>{{view.zone}}</td></tr>
       </template>
       </table>
       </div>
@@ -146,8 +146,10 @@
       },
         FnClear:function(){
         this.vaue="";
-        document.querySelector('#trip').selected=-1;
-        document.querySelector('#pickdrop').selected=-1;
+        document.querySelector('#selecttrip').selected=-1;
+        document.querySelector('#selectpickdrop').selected=-1;
+        document.querySelector('#selectgrade').selected=-1;
+        document.querySelector('#selectitemlistZ').selected=-1;
         this.itemArray="";
         this.reportarr="";
         this.no_of_student="";
@@ -230,8 +232,8 @@
         this.value=routename;
          this.reportarr="";
         this.no_of_student="";
-        document.querySelector('#trip').selected=-1;
-        document.querySelector('#pickdrop').selected=-1;
+        document.querySelector('#selecttrip').selected=-1;
+        document.querySelector('#selectpickdrop').selected=-1;
         this.querySelector("#tableheading").style.visibility='hidden';
         this.querySelector("#gradewisetestTable").style.visibility='hidden';
         this.querySelector("#btn2").style.visibility='hidden';

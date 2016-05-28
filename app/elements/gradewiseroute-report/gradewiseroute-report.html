@@ -13,7 +13,7 @@
   <div class="routereport-card">
     <template>
     <style>
-      .routereport{
+      .graderoutereport{
         @apply(--layout-horizontal);
       }
       .total-collection{
@@ -50,10 +50,10 @@
         @apply(--layout-horizontal);
       }
     </style>
-    <div class="routereport">
+    <div class="graderoutereport">
       <div style="padding-right: 2%;">
         <paper-input label="Enter Route" value="{{value}}" id="inputroute" on-keydown="FnInputChanged"></paper-input>
-        <paper-listbox id="selectitemlistZ" class="dropdown-content" on-iron-select="FnItemSelected">
+        <paper-listbox id="selectitemlist" class="dropdown-content" on-iron-select="FnItemSelected">
           <template is="dom-repeat" items="{{itemArray}}" as="item">
             <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
           </template>
@@ -149,7 +149,7 @@
         document.querySelector('#selecttrip').selected=-1;
         document.querySelector('#selectpickdrop').selected=-1;
         document.querySelector('#selectgrade').selected=-1;
-        document.querySelector('#selectitemlistZ').selected=-1;
+        document.querySelector('#selectitemlist').selected=-1;
         this.itemArray="";
         this.reportarr="";
         this.no_of_student="";

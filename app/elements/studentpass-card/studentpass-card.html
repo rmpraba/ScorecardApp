@@ -40,12 +40,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </div>
     <div class="left" >
 
-          <paper-input id="text" class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+          <!--<paper-input id="text" class="field" label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item>{{item.itemdes}}</paper-item>
         </template>
-      </paper-listbox>
+      </paper-listbox>-->
 
       <paper-checkbox id="checkbox" class="checkbox" on-change="changehandler">Select by Grade</paper-checkbox>
 
@@ -156,7 +156,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.schoolname=sessionStorage.getItem("schoolname");
         this.schooladdr=sessionStorage.getItem("schooladdr");
         this.$.root.stupassgetname();
-        this.querySelector('paper-listbox').style.visibility='hidden';
+        //this.querySelector('paper-listbox').style.visibility='hidden';
         this.$.selectclass.hidden=true;
         this.$.passtemp.hidden=true;
       },
@@ -187,7 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.drop="";
           this.$.pass.hidden=false;
           document.querySelector("#checkbox").checked=false;
-           this.$.text.hidden=false;
+           //this.$.text.hidden=false;
       },
        email:function(e){
               //alert('sending email');
@@ -197,7 +197,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         print:function(){
           this.$.print.hidden=true;
-this.$.text.hidden=true;
+//this.$.text.hidden=true;
 this.$.checkbox.hidden=true;
 this.$.selectclass.hidden=true;
             if (!window.print){
@@ -206,7 +206,7 @@ this.$.selectclass.hidden=true;
             }
             window.print();
             this.$.print.hidden=false;
-            this.$.text.hidden=false;
+            //this.$.text.hidden=false;
             this.$.checkbox.hidden=false;
             //this.$.selectclass.hidden=false;
         },
@@ -216,7 +216,7 @@ this.$.selectclass.hidden=true;
         this.schooladdr=sessionStorage.getItem("schooladdr");
          namearr=autocompletearr;
     },
-    FnInputChanged:function(e){
+    /*FnInputChanged:function(e){
      if(e.keyCode==13|| e.keyCode==40)
         this.querySelector('paper-listbox').focus();
       var arr=[];
@@ -307,21 +307,21 @@ this.$.selectclass.hidden=true;
     this.value=this.studid;
     this.$.root.getpassdetail(this.studid);
     this.$.root.getzonedetail(this.studid);
-  },
+  },*/
   changehandler:function(e)
   {
    //alert('hello');
     if(e.target.checked==true){
      // alert('select by class is clicked');
       this.$.selectclass.hidden=false;
-      this.$.text.hidden=true;
+      //this.$.text.hidden=true;
       this.$.pass.hidden=true;
       this.$.passtemp.hidden=false;
     }
     else
     {
      this.$.selectclass.hidden=true; 
-     this.$.text.hidden=false;
+     //this.$.text.hidden=false;
      this.$.pass.hidden=false;
       this.$.passtemp.hidden=true;
     }

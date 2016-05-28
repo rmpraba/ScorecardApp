@@ -35,6 +35,10 @@ section{
     @apply(--layout-horizontal);
     margin: 4% 0 4% 24%;
 }
+.graderoutereport{
+    @apply(--layout-horizontal);
+    margin: 4% 0 4% 17%;
+}
 .route-detail{
     margin-left: 7%;
 }

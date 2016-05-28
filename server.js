@@ -3822,6 +3822,65 @@ app.post('/mapbustoroute',  urlencodedParser,function (req, res){
 	});
 });
 
+app.post('/getgrade',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol};
+    connection.query('select * from class_details where ?',[schoolx],
+    function(err, rows){
+		if(!err){
+			res.status(200).json({'returnval': rows});
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+app.post('/gradewisepickroute-report-card',  urlencodedParser,function (req, res){
+	var tripid={"school_type":req.query.tripid};
+	var schoolx={"school_id":req.query.schol};
+	var grade = {"class_id":req.query.grade};
+	//console.log(req.query.grade);
+    var route_id={"pickup_route_id":req.query.routeid};
+    var query="SELECT p.student_id,(select d.student_name from student_details d where id=p.student_id and school_id='"+req.query.schol+"')as name,(select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) as std,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname,(select point_name from point where id=pickup_point) as pick from student_point p where pickup_route_id='"+req.query.routeid+"' and school_type='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and (select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) is not null";
+    //console.log(query);
+    connection.query(query,
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+app.post('/gradewisedroproute-report-card',  urlencodedParser,function (req, res){
+	var tripid={"school_type":req.query.tripid};
+	var schoolx={"school_id":req.query.schol};
+	var grade = {"class_id":req.query.grade};
+	//console.log(tripid);
+    var route_id={"drop_route_id":req.query.routeid};
+
+    console.log('In Server');
+    var query="SELECT p.student_id,(select d.student_name from student_details d where id=p.student_id and school_id='"+req.query.schol+"')as name,(select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) as std,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname,(select point_name from point where id=pickup_point) as pick from student_point p where pickup_route_id='"+req.query.routeid+"' and school_type='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and (select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) is not null";
+    connection.query(query,
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				res.status(200).json({'returnval': rows});
+			} else {
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
 function setvalue(){
 	console.log("calling setvalue.....");
 }

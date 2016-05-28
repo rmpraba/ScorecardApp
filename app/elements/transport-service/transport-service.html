@@ -400,6 +400,24 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
             on-response="studentdroproutereportResponse">
         </iron-ajax>
         <iron-ajax
+            method="post"
+            id="gradewisepickroutereportajax"
+            url="{{gradewisepickroutereporturl}}"
+            params="{{gradewisepickroutereportparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="gradewisepickroutereportResponse">
+        </iron-ajax>
+        <iron-ajax
+            method="post"
+            id="gradewisedroproutereportajax"
+            url="{{gradewisedroproutereporturl}}"
+            params="{{gradewisedroproutereportparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="gradewisedroproutereportResponse">
+        </iron-ajax>
+        <iron-ajax
             id="onewayajax"
             url="{{onewayurl}}"
             handle-as="json"
@@ -827,6 +845,17 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       debounce-duration="300"
       >
     </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="getgradeajax"
+      url="{{getgradeurl}}"
+      params="{{getgradeparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getgradeResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
     </template>
   <script>
   (function() {
@@ -1186,6 +1215,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       generateroutereportResponse:function(e){
         var nameitem=e.detail.response.returnval;
         document.querySelector('routereport-card').autocompletename(nameitem);
+        document.querySelector('gradewiseroute-report').autocompletename(nameitem);
       },
       routereport:function(routeid){
         this.routereporturl=sessionStorage.getItem("addrinfo")+"/route-report-card";
@@ -1223,6 +1253,48 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         this.studentdroproutereportparam=obj;
         this.$.studentdroproutereportajax.generateRequest();
       }
+      },
+
+      gradewiseroutereport:function(routeid,tripid,pickordrop, grade)
+      {
+        if(pickordrop=="Pickup"){
+        this.gradewisepickroutereporturl=sessionStorage.getItem("addrinfo")+"/gradewisepickroute-report-card";
+        var obj={"routeid":"","tripid":"","schol":"","grade":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.routeid=routeid;
+        obj.tripid=tripid;
+        obj.grade=grade;
+        this.gradewisepickroutereportparam=obj;
+        //alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
+        //alert('hi');
+        this.$.gradewisepickroutereportajax.generateRequest();
+      } else {
+        this.gradewisedroproutereporturl=sessionStorage.getItem("addrinfo")+"/gradewisedroproute-report-card";
+        var obj={"routeid":"","tripid":"","schol":"","grade":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.routeid=routeid;
+        obj.tripid=tripid;
+        obj.grade=grade;
+        this.gradewisedroproutereportparam=obj;
+        this.$.gradewisedroproutereportajax.generateRequest();
+      }
+      },
+      gradewisepickroutereportResponse:function(e)
+      {
+        var routereportresult=e.detail.response.returnval;
+        var no_of_student = routereportresult.length;
+        document.querySelector('gradewiseroute-report').reportarr=routereportresult;
+        document.querySelector('gradewiseroute-report').no_of_student=no_of_student;
+        //alert(JSON.stringify(e.detail.response.returnval));
+      },
+       gradewisedroproutereportResponse:function(e)
+      {
+        var routereportresult=e.detail.response.returnval;
+        var no_of_student= routereportresult.length;
+        document.querySelector('gradewiseroute-report').reportarr=routereportresult;
+        document.querySelector('gradewiseroute-report').no_of_student=no_of_student;
+        //alert(JSON.stringify(e.detail.response.returnval));
       },
       studentpickroutereportResponse:function(e)
       {
@@ -2371,6 +2443,20 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         {
             alert('Mapping is Failed');
         }
+      },
+      getgrade:function(){
+        this.getgradeurl = sessionStorage.getItem("addrinfo")+"/getgrade";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.getgradeparam=obj;
+        //alert(JSON.stringify(obj));
+        //alert('hi');
+        this.$.getgradeajax.generateRequest();
+      },
+      getgradeResponse:function(e){
+        var gradearr=e.detail.response.returnval;
+        document.querySelector('gradewiseroute-report').gradearr=gradearr;
+        //alert(JSON.stringify(gradearr));
       }
     });
  })();

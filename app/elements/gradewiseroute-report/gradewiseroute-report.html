@@ -9,7 +9,7 @@
 <link rel="import" href="../transport-service/transport-service.html">
 <link rel="import" href="../routereport-item-card/routereport-item-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-<dom-module id="routereport-card">
+<dom-module id="gradewiseroute-report">
   <div class="routereport-card">
     <template>
     <style>
@@ -69,9 +69,7 @@
         </paper-dropdown-menu>
       </div>
       </div>
-
-       <div style="padding-right: 2%;">
-      <div class="drop-down" >
+      <div class="drop-down" style="padding-right: 2%;">
         <paper-dropdown-menu label="Select PickUp or Drop">
           <paper-menu id="pickdrop" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
             
@@ -81,13 +79,21 @@
           </paper-menu>
         </paper-dropdown-menu>
       </div>
-      </div>
+        <div class="drop-down" >
+          <paper-dropdown-menu id="grade" label="Grade">
+            <paper-menu class="dropdown-content" on-iron-select="grade" attr-for-selected="value">
+              <template  is="dom-repeat" items="{{gradearr}}" as="view">
+                <paper-item value="{{view.id}}">{{view.class}}-{{view.section}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
        <div class="buttons"  style="padding-top: 1%;">
          <paper-button class="button" id="rep" on-click="show">Show</paper-button>
       </div>
       </div>
       </div>
-      <table id="testTable2" border="1" style="margin-left: 24%;">
+      <table id="gradewisetestTable" border="1" style="margin-left: 24%;">
       <tr id="tableheading"><th>Route</th><th>Name</th><th>Parent Name</th><th>Route</th><th>Point</th><th>Grade</th>
       </tr>
       <template  is="dom-repeat" items="{{reportarr}}" as="view">
@@ -102,7 +108,7 @@
       </div>
       <div id="button">
         <paper-button class="button" style="margin: 4% 0 0 45%; height: 35px;" id="print" on-click="print">Print</paper-button>
-        <paper-button id="btn2" style="margin: 4% 0 0 4%; height: 35px;" onclick="tableToExcel('testTable2', 'W3C Example Table')" value="Export to Excel">Excel</paper-button>
+        <paper-button id="btn2" style="margin: 4% 0 0 4%; height: 35px;" onclick="tableToExcel('gradewisetestTable', 'W3C Example Table')" value="Export to Excel">Excel</paper-button>
       </div>
       <transport-service id="service"></transport-service>
     </template>
@@ -125,22 +131,15 @@
     var namearr=[];
     var routename;
     var triptype;
-    var pickordrop
+    var pickordrop;
+    var grade;
 
     Polymer({
-      is: 'routereport-card',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'routereport-card',
-          notify: true
-        }
-      },
+      is: 'gradewiseroute-report',
       ready: function() {
         this.$.service.name();
         this.querySelector("#tableheading").style.visibility='hidden';
-        this.querySelector("#testTable2").style.visibility='hidden';
+        this.querySelector("#gradewisetestTable").style.visibility='hidden';
         this.querySelector("#btn2").style.visibility='hidden';
         this.$.print.hidden=true;
         this.$.grndtot.hidden=true;
@@ -234,20 +233,24 @@
         document.querySelector('#trip').selected=-1;
         document.querySelector('#pickdrop').selected=-1;
         this.querySelector("#tableheading").style.visibility='hidden';
-        this.querySelector("#testTable2").style.visibility='hidden';
+        this.querySelector("#gradewisetestTable").style.visibility='hidden';
         this.querySelector("#btn2").style.visibility='hidden';
         this.$.print.hidden=true;
         this.$.grndtot.hidden=true;
+        this.$.service.getgrade();
+      },
+      grade:function(e){
+        grade=(e.target.selectedItem.value).trim();
       },
       show:function()
       {
       this.selectroute=routename;
          this.$.print.hidden=false;
         this.querySelector("#tableheading").style.visibility='visible';
-        this.querySelector("#testTable2").style.visibility='visible';
+        this.querySelector("#gradewisetestTable").style.visibility='visible';
         this.querySelector("#btn2").style.visibility='visible';
          this.$.grndtot.hidden=false;
-          this.$.service.studentroutereport(routeid,triptype,pickordrop);
+          this.$.service.gradewiseroutereport(routeid,triptype,pickordrop, grade);
       },
       Fntrip:function(e)
       {

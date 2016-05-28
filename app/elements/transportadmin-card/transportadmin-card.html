@@ -43,6 +43,7 @@
       <paper-icon-button class="iconbutton" src="../../images/bus_report.png" on-click="busreport"></paper-icon-button>
       
        <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
+       <paper-icon-button class="iconbutton" src="../../images/gradewise-route-report.png" on-click="gradewisereport"></paper-icon-button>
     </div>
   </body>
   <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
@@ -126,7 +127,13 @@
       routereport:function()
       {
       this.$.transportservice.generateroutereport();
+      this.$.transportservice.getgrade();
       document.querySelector('transport-app').setPage("generateroutereport","Route Report");
+      },
+      gradewisereport:function()
+      {
+      this.$.transportservice.generateroutereport();
+      document.querySelector('transport-app').setPage("gradewiseroute","Grade Wise Route Report");
       },
   });
 </script>

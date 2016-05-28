@@ -201,6 +201,9 @@
            <section data-category="changepoint">
           <changepoint-card></changepoint-card>
           </section>
+          <section data-category="gradewiseroute">
+            <gradewiseroute-report></gradewiseroute-report>
+          </section>
           </iron-pages>
        </div>
        <div class="footer"></div>
@@ -420,7 +423,12 @@
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
       document.querySelector('routereport-card').FnClear();
       document.querySelector('routereport-card').ready();
-      
+    }
+    if(currpage=="gradewiseroute"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      document.querySelector('gradewiseroute-report').FnClear();
+      document.querySelector('gradewiseroute-report').ready(); 
     }
    if(currpage=="pass"){
       document.querySelector('app-card').setPage("transportapp");
@@ -477,6 +485,14 @@
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
       //document.querySelector('studentpass-card').FnClear();
       document.querySelector('bus-report').FnClear();
+      //document.querySelector('studentpass-card').ready();
+      
+    }
+    if(currpage=="gradewiseroute"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      //document.querySelector('studentpass-card').FnClear();
+      document.querySelector('gradewiseroute-report').FnClear();
       //document.querySelector('studentpass-card').ready();
       
     }

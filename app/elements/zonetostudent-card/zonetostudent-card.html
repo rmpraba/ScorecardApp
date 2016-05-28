@@ -110,7 +110,7 @@
     <div style="width: 150%;">
             Complete Year
             <paper-checkbox style="margin-left: 3%" id="yearly" readonly class="checkbox" on-change="fullHandler"></paper-checkbox></div>
-            <div style="width: 100%;">
+            <div style="width: 100%;" id="twowayoption">
   Two-Way
 <paper-checkbox style="margin-left: 3%" id="twoway" readonly class="checkbox" on-change="twowayHandler"></paper-checkbox> </div>
 
@@ -118,7 +118,17 @@
   </div>
   </div>
 
-
+<div class="mode" id="moption">
+<p style="font-weight: 500; font-size: large; margin-left: 0%;">Mode Of Travel:</p>
+<div style="width: 70%;" class="horizontalframe" >
+  <div style="width: 25%;">
+One-Way
+  <paper-checkbox style="margin-left: 25%" id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox></div>
+<div style="width: 100%;">
+  Two-Way
+<paper-checkbox style="margin-left: 3%" id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
+</div>
+</div>
 <div style="margin-top: 5%; margin-left: 20%;" class="horizontalframe hrspace" id="but">
 
 <div>
@@ -260,6 +270,20 @@ var dat2=new Date();
          this.hidepayoption=true;
          boxcount=2;
 
+         },
+         changeoption:function()
+         {
+
+if(sessionStorage.getItem("sch")=='SCH003')
+{
+  this.$.moption.hidden=false;
+  this.$.twowayoption.hidden=true;
+
+}
+else
+{
+  this.$.moption.hidden=true;
+}
          },
           FnClear:function(){
           this.value="";

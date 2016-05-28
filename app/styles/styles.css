@@ -694,7 +694,7 @@ text-align: center;
     
     @apply(--layout-horizontal);
     margin-left: 20%;
-    margin-top: 10%;
+    margin-top: 15%;
 }
 .pass .front{
    width: 5.5cm;
@@ -765,17 +765,18 @@ text-align: center;
    border-width: 2px;
    width: 5.5cm;
   height: 8.5cm;
-
-margin-top: -30%;
+  position: fixed;
+  top:10%;
+  left:20%;
 }
 .pass .back .body3{
 margin-top: 6%;
 
 }
 .pass .buttons{
-    margin-top: 20%;
+    
     height: 20%;
-    margin-left: 10%;
+    margin-left: 20%;
 }
 
 .dd{

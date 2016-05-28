@@ -34,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 </style>
 <dom-module id="studentpass-card">
-  <template>
+  <template  style="margin-top:-0.5% !important;">
   <div class="student-image" >
    <img id="imgRes">
   </div>
@@ -206,6 +206,9 @@ this.$.selectclass.hidden=true;
             }
             window.print();
             this.$.print.hidden=false;
+            this.$.text.hidden=false;
+            this.$.checkbox.hidden=false;
+            //this.$.selectclass.hidden=false;
         },
          autocompletearr:function(autocompletearr)
     {

@@ -1676,7 +1676,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       getfeedetailResponse:function(e)
       {
           feedet=e.detail.response.returnval;
-          //alert(feedet[0].student_id);
+          alert(feedet[0].student_id);
  this.getfeeparenturl=sessionStorage.getItem("addrinfo")+"/getfeeparent";
               var obj={"stid":""}
               obj.stid=feedet[0].student_id;

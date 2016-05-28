@@ -67,9 +67,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       values:function(date,fromdate, installment, modeofpayment){
         var condate = new Date(date);
-        todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+         if(condate.getDate()<10){
+          var dat="0"+condate.getDate();
+        todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+dat;
+        }
+        else{
+          todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+        }
           var condate1 = new Date(fromdate);
-        fromdat=condate1.getFullYear()+"-"+(condate1.getMonth()+1)+"-"+condate1.getDate();
+          if(condate1.getDate()<10){
+          var dat1="0"+condate1.getDate();
+        fromdat=condate1.getFullYear()+"-"+(condate1.getMonth()+1)+"-"+dat1;
+        }
+        else{
+          fromdat=condate1.getFullYear()+"-"+(condate1.getMonth()+1)+"-"+condate1.getDate();
+        }
         // alert(dat);
         //alert(todate);
         if(installment == "Installment 1"){
@@ -139,7 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // alert(JSON.stringify(result));
          for(var i=0;i<result.length;i++){
           var dat=new Date(result[i].created_date);
-          result[i].created_date=dat.getDate()+"/"+(dat.getMonth()+1)+""+dat.getFullYear();
+          result[i].created_date=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
 
         }
         document.querySelector('excelreport-card').excelchequearr=result;

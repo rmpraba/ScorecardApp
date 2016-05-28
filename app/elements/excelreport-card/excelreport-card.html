@@ -98,7 +98,7 @@
           </paper-tabs>
       </div>-->
 
-      <table id="testTable1" border="1">
+      <table id="receiptTable1" border="1">
       <tr><th>Student ID</th><th>Student Name</th><th>Parent Name</th><th>Section</th><th>Receipt Number</th><th>Receipt Date</th><th>Amount</th></tr>
       <template  is="dom-repeat" items="{{excelcasharr}}" as="view">
         <!-- <excelreportcash-card studentid="{{view.student_id}}" studentname="{{view.student_name}}" standard="{{view.standard}}" section ="{{view.section}}" receiptno="{{view.receipt_no}}" feepaid="{{view.installment_1}}"></excelreportcash-card> -->
@@ -106,7 +106,7 @@
         <td>{{view.receipt_no}}</td><td>{{view.installment_date}}</td><td>{{view.installment_1}}</td></tr>
       </template>
       </table>
-      <input type="button" id="btn1" onclick="tableToExcel('testTable1', 'W3C Example Table')" value="Export to Excel">
+      <input type="button" id="btn1" onclick="tableToExcel('receiptTable1', 'Cash report')" value="Export to Excel">
       </div>
 
        <div class="cheque" hidden$="{{hide2}}"> 
@@ -122,7 +122,7 @@
             <paper-tab>Fee Paid</paper-tab>
           </paper-tabs>
       </div>-->
-      <table id="testTable2" border="1">
+      <table id="receiptTable2" border="1">
       <tr><th>Student ID</th><th>Student Name</th><th>Parent Name</th><th>Section</th><th>Receipt No</th><th>Cheque No</th>
       <th>Bank Name</th><th>Cheque Date</th><th>Created Date</th><th>Amount</th>
       </tr>
@@ -132,7 +132,7 @@
         <td>{{views.cheque_no}}</td><td>{{views.bank_name}}</td><td>{{views.cheque_date}}</td><td>{{views.created_date}}</td><td>{{views.installment_1}}</td></tr>
       </template>
       </table>
-      <input type="button" id="btn2" onclick="tableToExcel('testTable2', 'W3C Example Table')" value="Export to Excel">
+      <input type="button" id="btn2" onclick="tableToExcel('receiptTable2', 'Cheque Report')" value="Export to Excel">
       </div>
 
       <!--<template  is="dom-repeat" items="{{excelchequearr}}" as="views">

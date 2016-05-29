@@ -88,11 +88,11 @@
       </div>
       </div>
       <table id="testTable2" border="1" style="margin-left: 24%;">
-      <tr id="tableheading"><th>Route</th><th>Name</th><th>Parent Name</th><th>Route</th><th>Point</th><th>Grade</th>
+      <tr id="tableheading"><th>Student ID</th><th>Name</th><th>Parent Name</th><th>Mobile No</th><th>Route</th><th>Point</th><th>Grade</th>
       </tr>
       <template  is="dom-repeat" items="{{reportarr}}" as="view">
         <!--<feereportscheque-item-card studentid="{{views.student_id}}" studentname="{{views.student_name}}" standard="{{views.standard}}" section="{{views.section}}" bankname="{{views.bank_name}}" chequeno="{{views.cheque_no}}" createddate="{{views.created_date}}" chequedate="{{views.cheque_date}}" receiptno="{{views.receipt_no}}" feepaid="{{views.installment_1}}" fees="{{views.fees}}"></feereportscheque-item-card>-->
-        <tr><td>{{view.student_id}}</td><td>{{view.name}}</td><td>{{view.pname}}</td><td>{{selectroute}}</td><td>{{view.pick}}</td><td>{{view.std}}</td></tr>
+        <tr><td>{{view.student_id}}</td><td>{{view.name}}</td><td>{{view.pname}}</td><td>{{view.mobile}}</td><td>{{selectroute}}</td><td>{{view.pick}}</td><td>{{view.std}}</td></tr>
       </template>
       </table>
       </div>

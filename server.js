@@ -1631,7 +1631,7 @@ app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
 		//console.log(req.query.pickordrop);
          var route_id={"pickup_route_id":req.query.routeid};
 
-    connection.query('SELECT p.student_id,(select student_name from student_details where id=p.student_id and ?)as name,(select class from class_details where id=(select class_id from student_details where id=p.student_id and ?)) as std,(select parent_name from parent where student_id=p.student_id and ?) as pname,(select point_name from point where id=pickup_point)  as pick from student_point p where ? and ? and ?',[schoolx,schoolx,schoolx,route_id,tripid,schoolx],
+    connection.query('SELECT p.student_id,(select student_name from student_details where id=p.student_id and ?)as name,(select class from class_details where id=(select class_id from student_details where id=p.student_id and ?)) as std,(select m.mobile from parent m where student_id=p.student_id and ?) as mobile,(select parent_name from parent where student_id=p.student_id and ?) as pname,(select point_name from point where id=pickup_point)  as pick from student_point p where ? and ? and ?',[schoolx,schoolx,schoolx,schoolx,route_id,tripid,schoolx],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){
@@ -1653,7 +1653,7 @@ app.post('/studentdroproute-report-card',  urlencodedParser,function (req, res){
 		//console.log(tripid);
          var route_id={"drop_route_id":req.query.routeid};
 
-    connection.query('SELECT p.student_id,(select student_name from student_details where id=p.student_id and ?)as name,(select class from class_details where id=(select class_id from student_details where id=p.student_id and ?)) as std,(select parent_name from parent where student_id=p.student_id and ?) as pname,(select point_name from point where id=drop_point)  as pick from student_point p where ? and ? and ?',[schoolx,schoolx,schoolx,route_id,tripid,schoolx],
+    connection.query('SELECT p.student_id,(select student_name from student_details where id=p.student_id and ?)as name,(select class from class_details where id=(select class_id from student_details where id=p.student_id and ?)) as std,(select m.mobile from parent m where student_id=p.student_id and ?) as mobile,(select parent_name from parent where student_id=p.student_id and ?) as pname,(select point_name from point where id=drop_point)  as pick from student_point p where ? and ? and ?',[schoolx,schoolx,schoolx,schoolx,route_id,tripid,schoolx],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){
@@ -3867,7 +3867,7 @@ app.post('/gradewisedroproute-report-card',  urlencodedParser,function (req, res
 	//console.log(tripid);
     var route_id={"drop_route_id":req.query.routeid};
 
-    console.log('In Server');
+    //console.log('In Server');
     var query="SELECT p.student_id,(select d.student_name from student_details d where id=p.student_id and school_id='"+req.query.schol+"')as name,(select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) as std,(select parent_name from parent where student_id=p.student_id and school_id='"+req.query.schol+"') as pname,(select point_name from point where id=pickup_point) as pick from student_point p where pickup_route_id='"+req.query.routeid+"' and school_type='"+req.query.tripid+"' and school_id='"+req.query.schol+"' and (select c.class from class_details c where c.id=(select d.class_id from student_details d where d.id=p.student_id and d.school_id='"+req.query.schol+"' and d.class_id = '"+req.query.grade+"')) is not null";
     connection.query(query,
     function(err, rows){

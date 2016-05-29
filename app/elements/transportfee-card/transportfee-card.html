@@ -61,12 +61,13 @@
           <paper-tabs>
             <paper-tab>Installment Type</paper-tab>
             <paper-tab>Amount</paper-tab>
+             <paper-tab>Fine</paper-tab>
             <paper-tab>Mode of Payment</paper-tab>
           </paper-tabs>
       </div>
       <div style="margin-left:12%;"> 
       <template  is="dom-repeat" items="{{installmentarr}}" as="view">
-          <installtype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}">
+          <installtype-card installtype="{{view.installtype}}" installamt="{{view.amount}}" paydate="{{view.paydate}}" installdate="{{view.installdate}}" paidstatus="{{view.paidstatus}}" paymode="{{view.paymentmode}}" studid="{{view.feestudid}}" studname="{{view.feestudname}}" fineamount="{{view.fineamt}}">
           </installtype-card>
       </template>
    </div>

@@ -119,6 +119,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
 
           </div>
+           <hr id="ln5"></hr>
+          <div id="fineop">
+ Fine Amount:{{fine}}
+          </div>
           <hr id="ln5"></hr>
 
           <div class="body5">
@@ -134,7 +138,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-item style="width: 80px; margin-top: 6%;"> Total fees :</paper-item>
               
               <div class="cash">
-                <paper-input style="width: 60px; margin-top: 5px;" on-change="convertrss" value="{{view.installfee}}"></paper-input>
+                <paper-input style="width: 60px; margin-top: 5px;" on-change="convertrss" value="{{totalfee}}"></paper-input>
             </div>
 </div>
           </div>
@@ -198,8 +202,12 @@ var specialElementHandlers = {
         this.cqdate=charr.cqdate;
         this.bank=charr.bknm;
       },
-      convertrss:function(value) 
+      convertrss:function(value1,fineamt) 
       {
+      var value=parseInt(value1)+parseInt(fineamt);
+      this.totalfee=value;
+          this.fine=fineamt;
+        
         var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
     var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
     var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];

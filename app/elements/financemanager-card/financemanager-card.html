@@ -46,6 +46,7 @@
       
        <paper-icon-button class="iconbutton" src="../../images/discount.png" on-click="discount"></paper-icon-button>
         <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
+        <paper-icon-button class="iconbutton" src="../../images/summary_icon.png" on-click="summary"></paper-icon-button>
       </div>
      
     </div>
@@ -120,6 +121,12 @@
       excelreport:function(){
         //this.$.transportservice.getchequedetailsbyname();
         document.querySelector('transport-app').setPage("excelreport","Excel Report");
+      },
+      summary:function(){
+        //this.$.transportservice.getchequedetailsbyname();
+        this.$.transportservice.summary();
+        this.$.transportservice.summarydrop();
+        document.querySelector('transport-app').setPage("summary","Summary Route Report");
       }
      
      

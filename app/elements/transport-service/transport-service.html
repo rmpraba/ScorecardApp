@@ -856,6 +856,28 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       debounce-duration="300"
       >
     </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="summaryajax"
+      url="{{summaryurl}}"
+      params="{{summaryparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="summaryResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="summarydropajax"
+      url="{{summarydropurl}}"
+      params="{{summarydropparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="summarydropResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
     </template>
   <script>
   (function() {
@@ -2457,7 +2479,35 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         var gradearr=e.detail.response.returnval;
         document.querySelector('gradewiseroute-report').gradearr=gradearr;
         //alert(JSON.stringify(gradearr));
-      }
+      },
+      summary:function(){
+        this.summaryurl = sessionStorage.getItem("addrinfo")+"/summary";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.summaryparam=obj;
+        //alert(JSON.stringify(obj));
+        //alert('hi');
+        this.$.summaryajax.generateRequest();
+      },
+      summaryResponse:function(e){
+        var summaryarr=e.detail.response.returnval;
+        document.querySelector('summary-report').summaryarr=summaryarr;
+        //alert(JSON.stringify(summaryarr));
+      },
+      summarydrop:function(){
+        this.summarydropurl = sessionStorage.getItem("addrinfo")+"/summarydrop";
+        var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+        this.summarydropparam=obj;
+        //alert(JSON.stringify(obj));
+        //alert('hi');
+        this.$.summarydropajax.generateRequest();
+      },
+      summarydropResponse:function(e){
+        var summarydroparr=e.detail.response.returnval;
+        document.querySelector('summary-report').summarydroparr=summarydroparr;
+        //alert(JSON.stringify(summarydroparr));
+      },
     });
  })();
 </script>

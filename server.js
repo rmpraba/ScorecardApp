@@ -3882,6 +3882,44 @@ app.post('/gradewisedroproute-report-card',  urlencodedParser,function (req, res
 		}
 	});
 });
+app.post('/summary',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol};
+    var query="SELECT count(p.student_id)as total_students, SUM(f.installment_1 + f.installment_2) as fee_paid, SUM(f.fees) as total_fee, (select route_name from route where id = p.pickup_route_id) as route_name FROM student_fee f JOIN student_point p ON f.student_id = p.student_id WHERE p.school_id='"+req.query.schol+"' GROUP BY p.pickup_route_id";
+    //console.log(query);
+    connection.query(query,
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+app.post('/summarydrop',  urlencodedParser,function (req, res){
+	var schoolx={"school_id":req.query.schol};
+    var query="SELECT count(p.student_id)as total_students, SUM(f.installment_1 + f.installment_2) as fee_paid, SUM(f.fees) as total_fee, (select route_name from route where id = p.drop_route_id) as route_name FROM student_fee f JOIN student_point p ON f.student_id = p.student_id WHERE p.school_id='"+req.query.schol+"' GROUP BY p.drop_route_id";
+    //console.log(query);
+    connection.query(query,
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': ''});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 function setvalue(){
 	console.log("calling setvalue.....");

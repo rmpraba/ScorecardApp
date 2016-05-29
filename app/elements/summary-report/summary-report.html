@@ -1,0 +1,78 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../transport-service/transport-service.html">
+<link rel="import" href="../summary-item-card/summary-item-card.html">
+<link rel="import" href="../summarydrop-item-card/summarydrop-item-card.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
+<dom-module id="summary-report">
+  <template>
+    <style>
+      .label{
+        vertical-align: center;
+        margin-left: 45%;
+        margin-top: 4%;
+      }
+    </style>
+      <div class="pending-card">
+      <div class="label"><paper-item><h1>Pick Up</h1></paper-item></div>
+      <div class="headtabs">
+        <paper-tabs selected="0">
+          <paper-tab>Route</paper-tab>
+          <paper-tab>Total No Students</paper-tab>
+          <paper-tab>Fee Paid</paper-tab>
+          <paper-tab>Total Fee</paper-tab>
+        </paper-tabs>
+      </div>
+      <template  is="dom-repeat" items="{{summaryarr}}" as="view">
+        <summary-item-card route="{{view.route_name}}" totalstu="{{view.total_students}}" feepaid="{{view.fee_paid}}" fees="{{view.total_fee}}"></summary-item-card>
+      </template>
+      <div class="label"><paper-item><h1>Drop</h1></paper-item></div>
+      <div class="headtabs">
+        <paper-tabs selected="0">
+          <paper-tab>Route</paper-tab>
+          <paper-tab>Total No Students</paper-tab>
+          <paper-tab>Fee Paid</paper-tab>
+          <paper-tab>Total Fee</paper-tab>
+        </paper-tabs>
+      </div>
+      <template  is="dom-repeat" items="{{summarydroparr}}" as="views">
+        <summarydrop-item-card routes="{{views.route_name}}" totalstus="{{views.total_students}}" feepaids="{{views.fee_paid}}" feess="{{views.total_fee}}"></summarydrop-item-card>
+      </template>
+      <div id="button">
+        <paper-button class="button" style="margin-top: 0%; height: 35px;" id="print" on-click="print">Print</paper-button>
+      </div>
+      <transport-service id="service"></transport-service>
+      </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'summary-report',
+    ready:function(){
+    },
+    print:function(){
+      this.$.print.hidden=true;
+      if (!window.print){
+        alert("You need NS4.x to use this print button!")
+        return
+      }
+      window.print()
+      this.$.print.hidden=false;
+      },
+      FnClear:function(){
+        this.summaryarr="";
+      }
+    });
+  })();
+  </script>
+</dom-module>

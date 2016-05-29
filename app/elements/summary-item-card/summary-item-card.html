@@ -1,0 +1,55 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="summary-item-card">
+  <template>
+    <style is="custom-style">
+      .flex-vertical {
+        @apply(--layout-vertical);
+        height: 1px;
+        padding: 2% !important;
+        width: 90%;
+      }
+      .flexchild-vertical {
+        @apply(--layout-horizontal);
+      }
+      .flexchild-vertical paper-item{
+        width: 100%;
+      }
+      .flexchild-vertical .field{
+        padding: 0;
+      }
+    </style>
+    <div class="container flex-vertical">
+      <div class="flexchild-vertical">
+          <div class="field" style="width: 25%; margin-left: 5%;"><paper-item>{{route}}</paper-item></div>
+          <div class="field" style="width: 15%; margin-left: 3%;"><paper-item>{{totalstu}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: 11%;"><paper-item>{{feepaid}}</paper-item></div>
+          <div class="field" style="width: 10%; margin-left: 11%;"><paper-item>{{fees}}</paper-item></div>
+        <div class="flexchild-vertical">
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'summary-item-card',
+      ready:function(){
+
+      }
+    });
+  })();
+  </script>
+</dom-module>

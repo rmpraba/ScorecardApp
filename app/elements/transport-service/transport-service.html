@@ -878,6 +878,17 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       debounce-duration="300"
       >
     </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="attendancereportajax"
+      url="{{attendancereporturl}}"
+      params="{{attendancereportparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="attendancereportResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
     </template>
   <script>
   (function() {
@@ -2512,6 +2523,21 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         document.querySelector('summary-report').summarydroparr=summarydroparr;
         //alert(JSON.stringify(summarydroparr));
       },
+      attendancereport:function()
+      {
+         this.attendancereporturl = sessionStorage.getItem("addrinfo")+"/attendance-card";
+         var obj = {"schol":""};
+        obj.schol=sessionStorage.getItem("sch");
+         this.attendancereportparam=obj;
+        this.$.attendancereportajax.generateRequest();
+      },
+      attendancereportResponse:function(e)
+      {
+        //alert(JSON.stringify(e.detail.response.returnval));
+        var attendancearr=e.detail.response.returnval;
+        document.querySelector('attendance-card').attendancearr=attendancearr;
+
+      }
     });
  })();
 </script>

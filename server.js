@@ -3923,6 +3923,33 @@ app.post('/summarydrop',  urlencodedParser,function (req, res){
 	});
 });
 
+
+app.post('/attendance-card',  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+
+       connection.query('SELECT (select route_name from route where id=route_id) as route,(select count(*) from attendance where status="1" and trip=a.trip and mode_of_travel=a.mode_of_travel and route_id=a.route_id) as pcount,(select count(*) from attendance where status="0" and trip=a.trip and mode_of_travel=a.mode_of_travel and route_id=a.route_id ) as acount,count(*) as cnt,trip,mode_of_travel from attendance a  where ? group by route_id,trip,mode_of_travel ',[schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+	else
+	{
+		console.log(err);
+	}
+});
+	});
 function setvalue(){
 	console.log("calling setvalue.....");
 }

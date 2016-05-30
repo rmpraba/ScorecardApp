@@ -47,6 +47,8 @@
        <paper-icon-button class="iconbutton" src="../../images/discount.png" on-click="discount"></paper-icon-button>
         <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
         <paper-icon-button class="iconbutton" src="../../images/summary_icon.png" on-click="summary"></paper-icon-button>
+         <paper-icon-button class="iconbutton" src="../../images/summary_icon.png" on-click="attendancereport"></paper-icon-button>
+
       </div>
      
     </div>
@@ -127,6 +129,12 @@
         this.$.transportservice.summary();
         this.$.transportservice.summarydrop();
         document.querySelector('transport-app').setPage("summary","Summary Route Report");
+      },
+      attendancereport:function()
+      {
+        this.$.transportservice.attendancereport();
+        document.querySelector('transport-app').setPage("attendance","Attendance Report");
+
       }
      
      

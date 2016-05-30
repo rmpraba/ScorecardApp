@@ -1803,8 +1803,9 @@ getfeechequeResponse:function(e)
       var yr=dt.getFullYear()+' - '+(dt.getFullYear()+1);
 //alert(JSON.stringify(e.detail.response.returnval));
 var feezxc=feedet[0].installment_1;
+var fineamt=feedet[0].install1_fine;
   document.querySelector('transport-app').setPage("receipt","Receipt");
-document.querySelector('receipt-card').convertrs(feezxc);
+document.querySelector('receipt-card').convertrs(feezxc,fineamt);
 //alert(installment_1Date);
 var dt1=new Date(feedet[0].installment_1Date);
 
@@ -1823,7 +1824,7 @@ else
   title="RECEIPT";
 }
 
-var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":""}
+var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":"","fine":""}
 recobj.receiptno=feedet[0].receipt_no1;
 recobj.studname=studentname;
 recobj.classname=feeparent[0].class;
@@ -1832,6 +1833,7 @@ recobj.installtype="installment1";
 recobj.installfee=feedet[0].installment_1;
 recobj.paytype=feedet[0].modeofpayment1;
 recobj.today=todate;
+recobj.fine=feedet[0].install1_fine;
 recobj.stid=feedet[0].student_id;
 recobj.session=yr;
 document.querySelector('receipt-card').parent=feeparent[0].parentname;
@@ -1875,8 +1877,9 @@ document.querySelector('receipt-card').parentemail=feeparent[0].parentmail;
       var yr2=dt2.getFullYear()+' - '+(dt2.getFullYear()+1);
       // alert(JSON.stringify(e.detail.response.returnval));
 var feezxc=feedet[0].installment_2;
+var fineamt=feedet[0].install2_fine;
   //document.querySelector('transport-app').setPage("receipt","Receipt");
-document.querySelector('cqreceipt-card').convertrss(feezxc);
+document.querySelector('cqreceipt-card').convertrss(feezxc,fineamt);
 //alert(installment_1Date);
 var dt3=new Date(feedet[0].installment_2Date);
 
@@ -1895,7 +1898,7 @@ else
   title1="ACKNOWLEDGEMENT";
 }
 
-var recobj1={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":""}
+var recobj1={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":"","fine":""}
 recobj1.receiptno=feedet[0].receipt_no2;
 recobj1.studname=studentname;
 recobj1.classname=feeparent[0].class;
@@ -1905,6 +1908,7 @@ recobj1.installfee=feedet[0].installment_2;
 recobj1.paytype=feedet[0].modeofpayment2;
 recobj1.today=todate1;
 recobj1.stid=feedet[0].student_id;
+recobj1.fine=feedet[0].install2_fine;
 recobj1.session=yr2;
 //recobj1.parent=feeparent[0].parentname;
 document.querySelector('cqreceipt-card').parent=feeparent[0].parentname;

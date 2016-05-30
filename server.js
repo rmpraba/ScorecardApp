@@ -548,7 +548,7 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};
 		var trans_req={"transport_required":"yes"};
-	    connection.query('select student_name from student_details where id NOT IN(Select student_id from student_fee where status="mapped") and ? and ?',[trans_req,schoolx],
+	    connection.query('select student_name from student_details where id NOT IN(Select student_id from student_fee where status="mapped" and ?) and ? and ?',[trans_req,schoolx,schoolx],
        	function(err, rows)
        	{
       	if(!err)

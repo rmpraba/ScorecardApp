@@ -694,8 +694,8 @@ text-align: center;
     margin:15% 0 0 45%;
 }
 .pass{
-
-    
+    display: flex;
+    flex-direction: row;
     @apply(--layout-horizontal);
     margin-left: 20%;
     margin-top: 15%;
@@ -769,7 +769,8 @@ text-align: center;
    border-width: 2px;
    width: 5.5cm;
   height: 8.5cm;
-   margin-top: -30%;
+  margin-left: 80%;
+  margin-top: -155%;
 }
 .pass .back .body3{
 margin-top: 6%;

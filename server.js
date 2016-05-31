@@ -3927,8 +3927,9 @@ app.post('/summarydrop',  urlencodedParser,function (req, res){
 app.post('/attendance-card',  urlencodedParser,function (req, res)
 {
 	var schoolx={"school_id":req.query.schol};
+	var atdate={"att_date":req.query.adate};
 
-       connection.query('SELECT (select route_name from route where id=route_id) as route,(select count(*) from attendance where status="1" and trip=a.trip and mode_of_travel=a.mode_of_travel and route_id=a.route_id) as pcount,(select count(*) from attendance where status="0" and trip=a.trip and mode_of_travel=a.mode_of_travel and route_id=a.route_id ) as acount,count(*) as cnt,trip,mode_of_travel from attendance a  where ? group by route_id,trip,mode_of_travel ',[schoolx],
+       connection.query('SELECT (select route_name from route where id=route_id) as route,(select count(*) from attendance where status="1" and trip=a.trip and mode_of_travel=a.mode_of_travel and route_id=a.route_id) as pcount,(select count(*) from attendance where status="0" and trip=a.trip and mode_of_travel=a.mode_of_travel and route_id=a.route_id ) as acount,count(*) as cnt,trip,mode_of_travel from attendance a  where ? and ? group by route_id,trip,mode_of_travel ',[schoolx,atdate],
        	function(err, rows)
        	{
 		if(!err)

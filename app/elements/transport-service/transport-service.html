@@ -2523,11 +2523,13 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         document.querySelector('summary-report').summarydroparr=summarydroparr;
         //alert(JSON.stringify(summarydroparr));
       },
-      attendancereport:function()
+      attendancereport:function(attendancedate)
       {
+        //alert(attendancedate);
          this.attendancereporturl = sessionStorage.getItem("addrinfo")+"/attendance-card";
-         var obj = {"schol":""};
+         var obj = {"schol":"","adate":""};
         obj.schol=sessionStorage.getItem("sch");
+        obj.adate=attendancedate;
          this.attendancereportparam=obj;
         this.$.attendancereportajax.generateRequest();
       },

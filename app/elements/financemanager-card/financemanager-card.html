@@ -47,7 +47,7 @@
        <paper-icon-button class="iconbutton" src="../../images/discount.png" on-click="discount"></paper-icon-button>
         <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
         <paper-icon-button class="iconbutton" src="../../images/summary_icon.png" on-click="summary"></paper-icon-button>
-         <paper-icon-button class="iconbutton" src="../../images/summary_icon.png" on-click="attendancereport"></paper-icon-button>
+         <paper-icon-button class="iconbutton" src="../../images/attendance.png" on-click="attendancereport"></paper-icon-button>
 
       </div>
      
@@ -132,7 +132,7 @@
       },
       attendancereport:function()
       {
-        this.$.transportservice.attendancereport();
+        //this.$.transportservice.attendancereport();
         document.querySelector('transport-app').setPage("attendance","Attendance Report");
 
       }

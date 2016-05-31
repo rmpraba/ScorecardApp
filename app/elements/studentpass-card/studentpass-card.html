@@ -32,6 +32,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   {
     top: 1px;
   }
+  .itemcards:nth-child(odd){
+    margin-top: -2.0%;
+  }
+  .itemcards:nth-child(even){
+    padding-bottom:10px;
+  }
+  @media print {
+    .itemcards:nth-child(even){page-break-after: always;}
+  }
+  /*.itemcards:nth-child(odd){
+    margin-top: 1.5%;
+  }
+  .itemcards:nth-child(2){
+    margin-top: -1%;
+    
+  }*/
+  /*.itemcards{
+    margin-top: 10%;
+    height:40%;
+  }*/
 </style>
 <dom-module id="studentpass-card">
   <template  style="margin-top:-0.5% !important;">
@@ -62,10 +82,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
 <div id="passtemp">
        <template  is="dom-repeat" items="{{passarr1}}" as="view">
-      <div class="itemcards" style="padding: 12px 0 12px 0; margin-top: -11px;">
+      <div class="itemcards">
         <passtemplate-card schoolname="{{view.schoolname}}" schooladdr="{{view.schooladdr}}" sid="{{view.stid}}" studname="{{view.stname}}" stnd="{{view.stnd}}" sec="{{view.sec}}" zone="{{view.zonename}}" parent="{{view.dad1}}" address1="{{view.add1}}" address2="{{view.add2}}" address3="{{view.add3}}" town="{{view.add4}}" pin="{{view.pin}}" pickuprout="{{view.pickr}}" pickup="{{view.pickp}}" droprout="{{view.dropr}}" drop="{{view.dropp}}" mobno="{{view.mob}}" coorno="{{view.coorno}}"></passtemplate-card>
       </div>
-
     </template>
 </div>
 

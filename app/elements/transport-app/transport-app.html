@@ -46,6 +46,7 @@
 <link rel="import" href="../changepoint-card/changepoint-card.html">
 <link rel="import" href="../consolidated-report/consolidated-report.html">
 <link rel="import" href="../attendance-card/attendance-card.html">
+<link rel="import" href="../routestudent-card/routestudent-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -210,6 +211,9 @@
           </section>
            <section data-category="attendance">
             <attendance-card></attendance-card>
+          </section>
+          <section data-category="routestud">
+            <routestudent-card></routestudent-card>
           </section>
           </iron-pages>
        </div>
@@ -545,6 +549,11 @@
 
       //document.querySelector('password-card').FnClear();
       document.querySelector('consolidated-report').ready();
+
+    }
+     if(currpage=="routestud"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
 
     }
 

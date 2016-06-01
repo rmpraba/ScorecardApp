@@ -1,0 +1,62 @@
+ <!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+<dom-module id="routestudent-item-card">
+  <template>
+    <style is="custom-style">
+      .flex-vertical {
+        @apply(--layout-vertical);
+        height: 1px;
+        padding: 2% !important;
+        width: 90%;
+      }
+      .flexchild-vertical {
+        @apply(--layout-horizontal);
+      }
+      .flexchild-vertical paper-item{
+        width: 100%;
+      }
+      .flexchild-vertical .field{
+        padding: 0;
+        margin: 2% 0 2% 0;
+      }
+    </style>
+     <div class="container flex-vertical">
+      <div class="flexchild-vertical feereport">
+          <div class="field" style="width: 35%;"><paper-item>{{trip}}</paper-item></div>
+          <div class="field" style="width: 33%;"><paper-item>{{noofstud}}</paper-item></div>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'routestudent-item-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'routestudent-item-card',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

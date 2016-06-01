@@ -142,6 +142,29 @@
       on-response="getclasspassResponse"
       debounce-duration="300"
     >
+    <!-- take no of student to specific pickup route and trip -->
+     <iron-ajax
+      method="post"
+      id="pickdetailajax"
+      url="{{pickdetailurl}}"
+      params="{{pickdetailparams}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="pickdetailResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <!-- take no of student to specific drop route and trip -->
+     <iron-ajax
+      method="post"
+      id="dropdetailajax"
+      url="{{dropdetailurl}}"
+      params="{{dropdetailparams}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="dropdetailResponse"
+      debounce-duration="300"
+    >
     </iron-ajax>
   </template>
   <script>
@@ -292,6 +315,26 @@
         var starr = e.detail.response.returnval;
         //alert(JSON.stringify(starr));
         document.querySelector('passtemplate-card').fngetid(starr);
+      },
+      routedetail:function(){
+            this.pickdetailurl=sessionStorage.getItem("addrinfo")+"/pickdetail";
+            var obj={"schol":""}
+            obj.schol=sessionStorage.getItem("sch");
+            this.pickdetailparams=obj;
+            this.$.pickdetailajax.generateRequest();
+
+            this.dropdetailurl=sessionStorage.getItem("addrinfo")+"/dropdetail";
+            this.dropdetailparams=obj;
+            this.$.dropdetailajax.generateRequest();
+
+      },
+      pickdetailResponse:function(e){
+        var pickarr=e.detail.response.returnval;
+        document.querySelector('routestudent-card').pickdetailarr=pickarr;
+      },
+      dropdetailResponse:function(e){
+        var droparr=e.detail.response.returnval;
+        document.querySelector('routestudent-card').dropdetailarr=droparr;
       }
     });
   })();

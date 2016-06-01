@@ -3961,6 +3961,50 @@ app.post('/attendance-card',  urlencodedParser,function (req, res)
 	}
 });
 	});
+
+
+app.post('/pickdetail',  urlencodedParser,function (req, res){
+
+	var schoolx={"school_id":req.query.schol};
+    connection.query('select count(student_id)as total,school_type,(select route_name from route where id=pickup_route_id)as route_name from student_point where ? group by pickup_route_id',[schoolx],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+app.post('/dropdetail',  urlencodedParser,function (req, res){
+
+	var schoolx={"school_id":req.query.schol};
+    connection.query('select count(student_id)as total,school_type,(select route_name from route where id=drop_route_id)as route_name from student_point where ? group by drop_route_id',[schoolx],
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
+
+
+
+
 function setvalue(){
 	console.log("calling setvalue.....");
 }

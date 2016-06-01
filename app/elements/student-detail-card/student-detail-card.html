@@ -95,16 +95,7 @@
     <div class="hrspace">
             <paper-input value="{{pincode}}" id="pincode" error-message="needs pincode!" label="pincode" allowed-pattern="[0-9 ]"required ></paper-input>
           </div>
-          <div class="drop-down" >
-            <paper-dropdown-menu label="Transport Required">
-              <paper-menu id="trans" class="dropdown-content" on-iron-select="transport_required" valueattr="value" >
-                <paper-listbox class="dropdown-content" selected="0">
-                  <paper-item value="yes">yes</paper-item>
-                  <paper-item value="no">no</paper-item>
-                </paper-listbox>
-              </paper-menu>
-            </paper-dropdown-menu>
-          </div>
+         
         </div>
       <div class="button">
         <paper-button id="button" class="button" on-click="click">Submit</paper-button>
@@ -138,7 +129,7 @@
         this.address_3="";
         this.city="";
         this.pincode="";
-        document.querySelector('#trans').selected=-5;
+       // document.querySelector('#trans').selected=-5;
         document.querySelector('#selectclass').selected=0;
         document.querySelector('#schooltype').selected=0;
         stu_class="";
@@ -155,6 +146,7 @@
       },
       transport_required:function(e){
         stu_transport = (e.target.selectedItem.textContent).trim();
+        //alert(stu_transport);
       },
       click:function(){
         if(this.student_id==""||this.first_name==""||this.last_name==""||this.stu_class==""||this.stu_schooltype==""||this.stu_transport==""||this.parent_name==""||this

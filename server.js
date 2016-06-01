@@ -1291,7 +1291,17 @@ app.post('/getnameofstu-card',  urlencodedParser,function (req, res)
 app.post('/payfee-card',  urlencodedParser,function (req, res)
 {
 		var d = new Date();
-        var instalment1date=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+		var dat=d.getDate();
+		var ndat;
+		if(dat<10)
+		{
+         ndat="0"+dat;
+		}
+		else
+		{
+			ndat=dat;
+		}
+        var instalment1date=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+ndat;
 		var mode;
 		var install1;
 		var install1date;

@@ -248,6 +248,16 @@ document.querySelector('zonechange-card').prevzone=e.detail.response.returnval[0
     // alert(fromdate1+''+selectdate);
  var startdate=new Date(fromdate1);
  var selectdat=new Date(selectdate);
+
+ if(selectdat.getMonth()==startdate.getMonth())
+ {
+document.querySelector('zonechange-card').prevmonth=0;
+document.querySelector('zonechange-card').prevusedfee=0;
+remainfee=(parseInt(zinstall1)+parseInt(zinstall2));
+document.querySelector('zonechange-card').prevremainfee=remainfee;
+ }
+ else
+ {
               var monfee=(selectdat.getFullYear()-startdate.getFullYear())*12;
              mon-=startdate.getMonth()+1;
              mon+=selectdat.getMonth()+1;
@@ -260,6 +270,7 @@ document.querySelector('zonechange-card').prevzone=e.detail.response.returnval[0
              document.querySelector('zonechange-card').prevusedfee=usedfee;
              remainfee=(parseInt(zinstall1)+parseInt(zinstall2))-parseInt(usedfee);
              document.querySelector('zonechange-card').prevremainfee=remainfee;
+           }
 //alert(remainfee);
       },
       zonechangeparentnameResponse:function(e)

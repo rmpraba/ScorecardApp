@@ -1375,8 +1375,19 @@ for(var l=0;l<bouncechequearr.length;l++)
      },
       feereport:function(dat)
       {
+        var fdate;
+        //alert(dat);
         var condate = new Date(dat);
-        todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+condate.getDate();
+        if(condate.getDate()<10)
+        {
+fdate="0"+condate.getDate();
+        }
+
+        else
+        {
+          fdate=condate.getDate();
+        }
+        todate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+fdate;
         // alert(dat);
         //alert(todate);
          this.chequereporturl=sessionStorage.getItem("addrinfo")+"/chequereport";

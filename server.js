@@ -1,3 +1,4 @@
+
 var express    = require("express");
 var mysql      = require('mysql');
 var email   = require("emailjs/email");
@@ -35,16 +36,15 @@ app.post('/mailsend', urlencodedParser,function (req, res) {
   var bank=req.query.bank;
 //console.log(parentemail);
   var server  = email.server.connect({
-    user:    "samsidhgroup@yahoo.com",
-    password:"mlzsinstitutions",
+    user:    "mlzssamsidh@yahoo.com",
+    password:"bgl12345",
     host:    "smtp.mail.yahoo.com",
     ssl:     true
-
   });
 // send the message and get a callback with an error or details of the message that was sent
   server.send({
     text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
-    from:    "samsidhgroup@yahoo.com",
+    from:    "mlzssamsidh@yahoo.com",
     to:      parentemail,
     subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
     attachment:

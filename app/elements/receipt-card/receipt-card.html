@@ -15,8 +15,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
-<script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+<!--<script type="text/javascript" src="https://raw.githubusercontent.com/MrRio/jsPDF/master/dist/jspdf.debug.js"></script>-->
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.debug.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>-->
+<!--<script type="text/javascript" src="https://raw.githubusercontent.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script>-->
+<script type="text/javascript" src="../../scripts/jspdf.debug.js"></script>
+<script type="text/javascript" src="../../scripts/jspdf.min.js"></script>
 <script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+
 <link rel="import" href="../cqreceipt-card/cqreceipt-card.html">
 
 
@@ -24,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
       <style>
       :host {
+
         display: block;
       }
        .cheque
@@ -303,7 +310,7 @@ var install2;
         this.flag=1;
         this.email=this.parentemail;
 
-        this.$.emaildialog.toggle();     
+        this.$.emaildialog.toggle();
           var obj={"chequeno":"","chequedate":"","bank":"","receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
       obj.receiptno=this.receiptarr[0].receiptno;
       obj.today=this.receiptarr[0].today;
@@ -316,11 +323,11 @@ var install2;
       if(this.flag==1)
       obj.parentemail=this.email;
       else
-       obj.parentemail=this.parentemail; 
+       obj.parentemail=this.parentemail;
    obj.title=this.receiptarr[0].title;
    obj.paymode=this.receiptarr[0].paytype;
    //alert(JSON.stringify(obj.paymode))
-  
+
    obj.word=this.feeinword;
    if(this.receiptarr[0].paytype!='Cash'){
    obj.chequeno=this.cheqno;
@@ -379,7 +386,7 @@ var install2;
       var value=parseInt(value1)+parseInt(fineamt);
       this.totalfee=value;
       this.fine=fineamt;
-       
+
         var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
     var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
     var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
@@ -539,8 +546,8 @@ var install2;
 
 
 
-    
-   
+
+
     //alert(JSON.stringify(installarr));
 
       },

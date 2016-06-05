@@ -889,6 +889,28 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       debounce-duration="300"
       >
     </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="getstudentsforattendancepickupajax"
+      url="{{getstudentsforattendancepickupurl}}"
+      params="{{getstudentsforattendancepickupparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getstudentsforattendancepickupResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="getstudentsforattendancedropajax"
+      url="{{getstudentsforattendancedropurl}}"
+      params="{{getstudentsforattendancedropparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getstudentsforattendancedropResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
     </template>
   <script>
   (function() {
@@ -931,6 +953,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
     var bustoschool;
     var bustodriver;
     var bustoattender;
+    var routeidzzz;
     var school=sessionStorage.getItem("sch");
     Polymer({
       is: "transport-service",
@@ -972,9 +995,10 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       },
       getrouteResponse:function(e1)
       {
-         a2=e1.detail.response.returnval;
+        a2=e1.detail.response.returnval;
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
+        document.querySelector('addattendence-card').routes=a2;
       },
        getroutedetail:function(tripno)
       {
@@ -1283,6 +1307,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         obj.schol=sessionStorage.getItem("sch");
         obj.routeid=routeid;
         obj.tripid=tripid;
+        //alert(JSON.stringify(obj));
         this.studentdroproutereportparam=obj;
         this.$.studentdroproutereportajax.generateRequest();
       }
@@ -1332,8 +1357,10 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       studentpickroutereportResponse:function(e)
       {
         var routereportresult=e.detail.response.returnval;
+        alert(JSON.stringify(e.detail.response.returnval));
         var no_of_student = routereportresult.length;
         document.querySelector('routereport-card').reportarr=routereportresult;
+        document.querySelector('addattendence-card').reportarr=routereportresult;
         document.querySelector('routereport-card').no_of_student=no_of_student;
         //alert(JSON.stringify(e.detail.response.returnval));
       },
@@ -1345,6 +1372,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         document.querySelector('routereport-card').no_of_student=no_of_student;
         //alert(JSON.stringify(e.detail.response.returnval));
       },
+
      gettrip:function(routename)
       {
         routetrip=routename;
@@ -2539,7 +2567,59 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         var attendancearr=e.detail.response.returnval;
         document.querySelector('attendance-card').attendancearr=attendancearr;
 
+      }, 
+      getstudentsforattendance:function(route,trip,pickupordrop){
+      if(pickupordrop=="Pickup"){
+        this.getstudentsforattendancepickupurl=sessionStorage.getItem("addrinfo")+"/getstudentsforattendancepickup";
+        var obj={"routeid":"","tripid":"","schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.routeid=route;
+        obj.tripid=trip;
+        this.getstudentsforattendancepickupparam=obj;
+        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
+        //alert('hi');
+        this.$.getstudentsforattendancepickupajax.generateRequest();
+      } else {
+        this.getstudentsforattendancedropurl=sessionStorage.getItem("addrinfo")+"/getstudentsforattendancedrop";
+        var obj={"routeid":"","tripid":"","schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.routeid=route;
+        obj.tripid=trip;
+        alert(JSON.stringify(obj));
+        this.getstudentsforattendancedropparam=obj;
+        this.$.getstudentsforattendancedropajax.generateRequest();
       }
+    },
+      getstudentsforattendancepickupResponse:function(e)
+      {
+        var result=e.detail.response.returnval;
+        //alert(JSON.stringify(result));
+        document.querySelector('addattendence-card').attendancearr=result;
+      },
+      getstudentsforattendancedropResponse:function(e)
+      {
+        var result=e.detail.response.returnval;
+        //alert(JSON.stringify(result));
+        document.querySelector('addattendence-card').attendancearr=result;
+      },
+      submitattendance:function(itemarr){
+        var len=itemarr.length;
+        for(var i=0;i<itemarr.length;i++){
+            var obj={"studentid":"","routeid":"","trip":"","pickupordrop":"","date":"","status":"","schol":""};
+            obj.studentid=itemarr[i].studentid;
+            obj.routeid=itemarr[i].routeid;
+            obj.trip=itemarr[i].trip;
+            obj.pickupordrop=itemarr[i].pickupordrop;
+            obj.date=itemarr[i].date;
+            obj.status=1;
+            obj.schol=sessionStorage.getItem("sch");;
+            this.submitattendanceurl=sessionStorage.getItem("addrinfo")+"/submiturl";
+            this.submitattendanceparam=obj;
+            alert(JSON.stringify(obj));
+            this.$.submitattendanceajax.generateRequest();
+        }
+    },
     });
  })();
 </script>

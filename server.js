@@ -1640,14 +1640,14 @@ app.post('/route-report-card',  urlencodedParser,function (req, res){
 app.post('/studentpickroute-report-card',  urlencodedParser,function (req, res){
 	var tripid={"school_type":req.query.tripid};
 	var schoolx={"school_id":req.query.schol};
-		//console.log(req.query.pickordrop);
-         var route_id={"pickup_route_id":req.query.routeid};
+    var route_id={"pickup_route_id":req.query.routeid};
+	console.log(req.query.routeid);
 
     connection.query('SELECT p.student_id,(select student_name from student_details where id=p.student_id and ?)as name,(select class from class_details where id=(select class_id from student_details where id=p.student_id and ?)) as std,(select m.mobile from parent m where student_id=p.student_id and ?) as mobile,(select parent_name from parent where student_id=p.student_id and ?) as pname,(select point_name from point where id=pickup_point)  as pick from student_point p where ? and ? and ?',[schoolx,schoolx,schoolx,schoolx,route_id,tripid,schoolx],
     function(err, rows){
 		if(!err){
 			if(rows.length>0){
-				//console.log(rows);
+				console.log(rows);
 				res.status(200).json({'returnval': rows});
 			} else {
 				console.log(err);
@@ -4002,8 +4002,50 @@ app.post('/dropdetail',  urlencodedParser,function (req, res){
 	});
 });
 
+app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res){
+	var tripid={"school_type":req.query.tripid};
+	var schoolx={"school_id":req.query.schol};
+    var route_id={"pickup_route_id":req.query.routeid};
+	//console.log(req.query.routeid);
+	var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id ='"+req.query.schol+"')as name from student_point p where school_id ='"+req.query.schol+"' and pickup_route_id = (select id from route where route_name = '"+req.query.routeid+"' and school_id ='"+req.query.schol+"') and school_type ='"+req.query.tripid+"'";
+    console.log(query);
+    connection.query(query,
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
-
+app.post('/getstudentsforattendancedrop',  urlencodedParser,function (req, res){
+	var tripid={"school_type":req.query.tripid};
+	var schoolx={"school_id":req.query.schol};
+    var route_id={"drop_route_id":req.query.routeid};
+	console.log(req.query.routeid);
+	var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id ='"+req.query.schol+"')as name from student_point p where school_id ='"+req.query.schol+"' and drop_route_id = (select id from route where route_name = '"+req.query.routeid+"' and school_id ='"+req.query.schol+"') and school_type ='"+req.query.tripid+"'";
+	connection.query(query,
+    function(err, rows){
+		if(!err){
+			if(rows.length>0){
+				//console.log(rows);
+				res.status(200).json({'returnval': rows});
+			} else {
+				console.log(err);
+				res.status(200).json({'returnval': 'invalid'});
+			}
+		} else {
+			console.log(err);
+		}
+	});
+});
 
 function setvalue(){
 	console.log("calling setvalue.....");

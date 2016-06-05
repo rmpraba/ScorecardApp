@@ -1,0 +1,165 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../addattendance-item-card/addattendance-item-card.html">
+
+<dom-module id="addattendence-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .heading-att, .contain-atten{
+        @apply(--layout-horizontal);
+      }
+      .contain-atten{
+        background-color: #fefefe;
+        padding: 1%;
+        font-size: 105%;
+      }
+      .heading-att{
+        background-color: #969696;
+        padding: 1%;
+      }
+      .heading-att p{
+        font-weight: bold;
+        font-size: 115%;
+      }
+      .sno, .attname, .attencheck, .heading-att p{
+        width: 50%;
+      }
+      .container{
+        text-align: center;
+        margin: 0 auto;
+      }
+    </style>
+    <div class="container">
+      <div class="field">
+        <paper-dropdown-menu label="Route">
+          <paper-menu   id="sets0" class="dropdown-content" on-iron-select="routeid" >
+            <template  is="dom-repeat" items="{{routes}}" as="view">
+              <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+      <div class="trip">
+        <paper-dropdown-menu label="Select the Trip">
+          <paper-menu id="trip" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
+              <paper-item value="1">1</paper-item>
+              <paper-item value="2">2</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+      <div class="drop-down" >
+        <paper-dropdown-menu label="Select PickUp or Drop">
+          <paper-menu id="pickdrop" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
+            <paper-item value="pickup">Pickup</paper-item>
+            <paper-item value="drop">Drop</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </div>
+      <div class="button">
+        <paper-button on-click="show">Submit</paper-button>
+      </div>
+      <div class="heading-att">
+        <p>Student Name</p>
+        <p>Status</p>
+      </div>
+      <template is="dom-repeat" items="{{attendancearr}}" as="view">
+        <addattendance-item-card student="{{view.name}}" studentid="{{view.student_id}}" ></addattendance-item-card>
+      </template>
+      <div class="button">
+        <paper-button raised id="submitatten" on-click="click">Submit</paper-button>
+      </div>
+    </div>
+    <transport-service id="service"></transport-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var trip;
+    var pickupordrop;
+    var routeid;
+    var itemarray=[];
+    Polymer({
+      is: 'addattendence-card',
+      ready:function(){
+
+      },
+      routeid:function(e){
+        routeid = (e.target.selectedItem.textContent).trim();
+      },
+      Fntrip:function(e){
+        trip = (e.target.selectedItem.textContent).trim();
+      },
+      Fnpickordrop:function(e){
+        pickupordrop =(e.target.selectedItem.textContent).trim();
+      },
+      show:function(e){
+        this.$.service.getstudentsforattendance(routeid,trip,pickupordrop);
+        //this.$.service.studentroutereport(routeid,trip,pickupordrop);
+      },
+      FnGetItemsz:function(studentid)
+           {
+            /*var trip;
+            if(schtype=="Primary")
+            {
+              trip="1";
+            }
+            else
+            {
+              trip="2";
+            }*/
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+              dd='0'+dd
+            }
+            if(mm<10) {
+              mm='0'+mm
+            }
+            today = dd+'/'+mm+'/'+yyyy;
+            var obj={"studentid":"","routeid":"","trip":"","pickupordrop":"","date":"" };
+            obj.studentid=studentid;
+            obj.routeid = routeid;
+            obj.trip=trip;
+            obj.date=today;
+            obj.pickupordrop = pickupordrop;
+            itemarray.push(obj);
+            //alert(JSON.stringify(obj));
+            //this.$.submitbutton.disabled=false;
+            //document.getElementById("submitbutton").style.background="black";
+          },
+          removestud:function(std){
+            for(var i=0;i<itemarray.length;i++){
+              if(std==itemarray[i].studentid){
+                itemarray.splice(i,1);
+              }
+            }
+          //this.$.submitbutton.disabled=true;
+          //document.getElementById("submitbutton").style.background="grey";
+           },
+          click:function(){
+            this.$.service.submitattendance(itemarray);
+            itemarray=[];
+            //document.querySelector('#gradeselect').selected=-1;
+            this.value="";
+            // this.$.submitbutton.hidden=true;
+          },
+    });
+  })();
+  </script>
+</dom-module>

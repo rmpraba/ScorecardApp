@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .heading-att{
         background-color: #969696;
         padding: 1%;
+        margin-top:2%; 
       }
       .heading-att p{
         font-weight: bold;
@@ -42,42 +43,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
         margin: 0 auto;
       }
+      .students-atten{
+        margin: 2% 0;
+        box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
+      }
+      .students-atten:nth-child(even) {background: #CCC};
+      .students-atten:nth-child(odd) {background: #FFF};
     </style>
     <div class="container">
-      <div class="field">
-        <paper-dropdown-menu label="Route">
-          <paper-menu   id="sets0" class="dropdown-content" on-iron-select="routeid" >
-            <template  is="dom-repeat" items="{{routes}}" as="view">
-              <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
+      <div id="drop">
+        <div class="field">
+          <paper-dropdown-menu label="Route">
+            <paper-menu   id="sets0" class="dropdown-content" on-iron-select="routeid" >
+              <template  is="dom-repeat" items="{{routes}}" as="view">
+                <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="trip">
+          <paper-dropdown-menu label="Select the Trip">
+            <paper-menu id="trip" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
+                <paper-item value="1">1</paper-item>
+                <paper-item value="2">2</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="drop-down" >
+          <paper-dropdown-menu label="Select PickUp or Drop">
+            <paper-menu id="pickdrop" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
+              <paper-item value="pickup">Pickup</paper-item>
+              <paper-item value="drop">Drop</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="button">
+          <paper-button on-click="show">Submit</paper-button>
+        </div>
       </div>
-      <div class="trip">
-        <paper-dropdown-menu label="Select the Trip">
-          <paper-menu id="trip" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
-              <paper-item value="1">1</paper-item>
-              <paper-item value="2">2</paper-item>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </div>
-      <div class="drop-down" >
-        <paper-dropdown-menu label="Select PickUp or Drop">
-          <paper-menu id="pickdrop" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
-            <paper-item value="pickup">Pickup</paper-item>
-            <paper-item value="drop">Drop</paper-item>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </div>
-      <div class="button">
-        <paper-button on-click="show">Submit</paper-button>
-      </div>
-      <div class="heading-att">
+      <div class="heading-att" id="headatt">
+        <p>Student Image  </p>
         <p>Student Name</p>
         <p>Status</p>
       </div>
       <template is="dom-repeat" items="{{attendancearr}}" as="view">
-        <addattendance-item-card student="{{view.name}}" studentid="{{view.student_id}}" ></addattendance-item-card>
+        <div class="students-atten">
+          <addattendance-item-card student="{{view.name}}" studentid="{{view.student_id}}" ></addattendance-item-card>
+        </div>
       </template>
       <div class="button">
         <paper-button raised id="submitatten" on-click="click">Submit</paper-button>
@@ -95,7 +107,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'addattendence-card',
       ready:function(){
-
+        this.$.headatt.hidden=true;
+        this.$.submitatten.hidden=true;
       },
       routeid:function(e){
         routeid = (e.target.selectedItem.textContent).trim();
@@ -108,22 +121,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       show:function(e){
         this.$.service.getstudentsforattendance(routeid,trip,pickupordrop);
+        this.$.headatt.hidden=false;
+        this.$.submitatten.hidden=false;
+        this.$.drop.hidden=true;
         //this.$.service.studentroutereport(routeid,trip,pickupordrop);
       },
-      FnGetItemsz:function(studentid)
+      FnGetItemsz:function(studentid, student_name)
            {
-            /*var trip;
-            if(schtype=="Primary")
-            {
-              trip="1";
-            }
-            else
-            {
-              trip="2";
-            }*/
             var today = new Date();
             var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
+            var mm = today.getMonth()+1;
             var yyyy = today.getFullYear();
             if(dd<10) {
               dd='0'+dd
@@ -132,14 +139,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               mm='0'+mm
             }
             today = dd+'/'+mm+'/'+yyyy;
-            var obj={"studentid":"","routeid":"","trip":"","pickupordrop":"","date":"" };
+            var obj={"studentid":"","student_name":"","routeid":"","trip":"","pickupordrop":"","date":"" };
             obj.studentid=studentid;
+            obj.student_name = student_name;
             obj.routeid = routeid;
             obj.trip=trip;
             obj.date=today;
             obj.pickupordrop = pickupordrop;
             itemarray.push(obj);
-            //alert(JSON.stringify(obj));
+            //alert(JSON.stringify(itemarray));
             //this.$.submitbutton.disabled=false;
             //document.getElementById("submitbutton").style.background="black";
           },
@@ -154,7 +162,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            },
           click:function(){
             this.$.service.submitattendance(itemarray);
-            itemarray=[];
+            //itemarray=[];
             //document.querySelector('#gradeselect').selected=-1;
             this.value="";
             // this.$.submitbutton.hidden=true;

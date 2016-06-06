@@ -20,9 +20,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
       }
       .contain-atten{
-        background-color: #fefefe;
         padding: 1%;
         font-size: 105%;
+        height: 5em;
+
       }
       .heading-att{
         background-color: #969696;
@@ -35,15 +36,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .sno, .attname, .attencheck, .heading-att p{
         width: 50%;
       }
+      .attname{
+        text-align: center;
+        position: relative
+      }
+      .attname p{
+        float: left;
+        padding: 4% 0 0 38%;
+      }
+      .attenphoto,.attname,.attencheck{
+        width: 33.33%;
+      }
       .container{
         text-align: center;
         margin: 0 auto;
       }
+      .attenphoto img{
+        max-height: 73px;
+      }
+      .attencheck{
+        padding: 2% 0;
+      }
     </style>
       <div class="contain-atten">
         <paper-input hidden value="{{studentid}}"></paper-input>
-        <div class="attname">{{student}}</div>
-        <div class="attencheck"><paper-checkbox  id="present" on-change="changeHandler"></paper-checkbox></div>
+        <div class="attenphoto">
+          <img src="../../images/{{studentid}}.jpg" onerror="this.src='../../images/student_avatar.png'" />
+        </div>
+        <div class="attname"><p>{{student}}</p></div>
+        <div class="attencheck"><paper-checkbox  id="{{studentid}}" on-change="changeHandler"></paper-checkbox></div>
       </div>
   </template>
   <script>
@@ -53,12 +74,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'addattendance-item-card',
 
-      changeHandler:function(e){
-        var box = document.querySelector("#present");
-        if(e.target.checked==true)
+      changeHandler:function(event){
+        // alert(document.querySelector("#"+this.studentid));
+        var studentid = document.querySelector("#"+this.studentid);
+        if(studentid.checked==true)
         {
         //alert('hi');
-        document.querySelector('addattendence-card').FnGetItemsz(this.studentid);
+        document.querySelector('addattendence-card').FnGetItemsz(this.studentid, this.student);
         //alert(this.studentid);
 
         }

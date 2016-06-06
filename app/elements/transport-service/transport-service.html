@@ -911,6 +911,17 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       debounce-duration="300"
       >
     </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="submitattendanceajax"
+      url="{{submitattendanceurl}}"
+      params="{{submitattendanceparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="submitattendanceResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
     </template>
   <script>
   (function() {
@@ -955,6 +966,8 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
     var bustoattender;
     var routeidzzz;
     var school=sessionStorage.getItem("sch");
+    var int=1;
+    var lenx;
     Polymer({
       is: "transport-service",
 
@@ -1357,7 +1370,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       studentpickroutereportResponse:function(e)
       {
         var routereportresult=e.detail.response.returnval;
-        alert(JSON.stringify(e.detail.response.returnval));
+        //alert(JSON.stringify(e.detail.response.returnval));
         var no_of_student = routereportresult.length;
         document.querySelector('routereport-card').reportarr=routereportresult;
         document.querySelector('addattendence-card').reportarr=routereportresult;
@@ -2598,7 +2611,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         if(JSON.stringify(result) == 'invalid'){
             alert('Error! Attendance marked for this trip or No students Mapped');
         } else {
-            alert(JSON.stringify(result));
+            //alert(JSON.stringify(result));
             document.querySelector('addattendence-card').attendancearr=result;
         }
       },
@@ -2614,6 +2627,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       },
       submitattendance:function(itemarr){
         var len=itemarr.length;
+        lenx=len;
         var obj={"studentid":"","student_name":"","routeid":"","trip":"","pickupordrop":"","date":"","status":"","schol":""};
         for(var i=0;i<itemarr.length;i++){
             obj.studentid=itemarr[i].studentid;
@@ -2624,12 +2638,32 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
             obj.date=itemarr[i].date;
             obj.status=1;
             obj.schol=sessionStorage.getItem("sch");;
-            this.submitattendanceurl=sessionStorage.getItem("addrinfo")+"/submiturl";
+            this.submitattendanceurl=sessionStorage.getItem("addrinfo")+"/attsubmiturl";
             this.submitattendanceparam=obj;
-            //this.$.submitattendanceajax.generateRequest();
-            alert(JSON.stringify(obj));
+            this.$.submitattendanceajax.generateRequest();
+            //alert(JSON.stringify(obj));
         }
     },
+    submitattendanceResponse:function(e){
+        var res=e.detail.response.returnval;
+        //alert(lenx+'    '+int);
+        if(res=='success')
+        {
+            int=int+1;
+        
+            if(lenx==int)
+            {
+            alert('Attendance of '+int+' student is marked successfully'); 
+            document.querySelector('transport-app').setPage("addattendence","Attendance");      
+            document.querySelector('addattendence-card').Fnclear();      
+            }
+            
+        }
+        else{
+         alert('Attendance is not marked');   
+        }
+        
+    }
     });
  })();
 </script>

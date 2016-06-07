@@ -40,7 +40,7 @@
         <div class="horizontalframe">
             <div class="drop-down">
               <paper-dropdown-menu label="Select Class">
-                <paper-menu id="selectclass" required error-message="needs a class!" class="dropdown-content" on-iron-select="classes" valueattr="value" >
+                <paper-menu id="selectclasses" required error-message="needs a class!" class="dropdown-content" on-iron-select="classes" valueattr="value" >
                   <paper-item value=0>< - - Select Class - - ></paper-item>
                                   <template  is="dom-repeat" items="{{select_class}}" as="view">
                     <paper-item value="{{view.id}}">{{view.class}} - {{view.section}}</paper-item>
@@ -50,7 +50,7 @@
             </div>
     <div class="hrspace">
             <paper-dropdown-menu label="class-Type">
-              <paper-menu id="schooltype" required error-message="needs a Class Type!" class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
+              <paper-menu id="schooltypes" required error-message="needs a Class Type!" class="dropdown-content" on-iron-select="schooltype" valueattr="value" >
                 <paper-listbox class="dropdown-content">
                 <paper-item value=0>< - - Select Grade - - ></paper-item>
                   <paper-item value="Pre-Primary">Pre-Primary</paper-item>
@@ -130,8 +130,8 @@
         this.city="";
         this.pincode="";
        // document.querySelector('#trans').selected=-5;
-        document.querySelector('#selectclass').selected=0;
-        document.querySelector('#schooltype').selected=0;
+        document.querySelector('#selectclasses').selected=0;
+        document.querySelector('#schooltypes').selected=0;
         stu_class="";
       stu_schooltype="";
       student_id="";

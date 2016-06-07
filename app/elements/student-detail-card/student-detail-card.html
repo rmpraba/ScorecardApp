@@ -105,8 +105,8 @@
   </template>
   <script>
   (function() {
-      var stu_class;
-      var stu_schooltype;
+      var stu_class="";
+      var stu_schooltype="";
       var stu_transport='yes';
       var student_id;
     'use strict';
@@ -134,7 +134,6 @@
         document.querySelector('#schooltype').selected=0;
         stu_class="";
       stu_schooltype="";
-      stu_transport="";
       student_id="";
 
       },
@@ -149,7 +148,7 @@
         //alert(stu_transport);
       },
       click:function(){
-        if(this.student_id==""||this.first_name==""||this.last_name==""||this.stu_class==""||this.stu_schooltype==""||this.stu_transport==""||this.parent_name==""||this
+        if(this.student_id==""||this.first_name==""||this.last_name==""||stu_class==""||stu_schooltype==""||this.stu_transport==""||this.parent_name==""||this
           .parent_email==""||this.parent_mobile==""||this.address_1==""||this.city==""||this.pincode=="")
         {
           this.$.stdid.validate();
@@ -164,7 +163,14 @@
          // document.querySelector('#scholtype').validate();
           //this.$.selectclass.validate();
 
-
+if(stu_class=="")
+{
+  alert("Please Select the Class");
+}
+if(stu_schooltype=="")
+{
+  alert("Please Select the School type");
+}
 
         }
         else

@@ -178,7 +178,7 @@ margin-left: 2%;
 <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
 
     <iron-ajax
-    auto
+    auto 
       method="post"
       id="getpasssecajax"
       url="{{getpasssecurl}}"
@@ -215,7 +215,7 @@ margin-left: 2%;
     >
     </iron-ajax>
     <iron-ajax
-        auto
+          auto      
         id="numberreadajax"
         url="../../configfile/coordinator.json"
         params="{{numberreadparam}}"
@@ -301,8 +301,13 @@ margin-left: 2%;
       },
        numberreadResponse:function(e){
         //alert(JSON.stringify(e.detail.response));
+        //alert(sessionStorage.getItem("sch"));
         var no=e.detail.response;
-        coor=no[0].conumber;
+        for(var i=0;i<no.length;i++)
+        {
+          if(no[i].school_id==sessionStorage.getItem("sch"))
+           coor=no[i].conumber;
+        }
       },
      getpasssecResponse:function(e){
       //alert(JSON.stringify(e.detail.response));

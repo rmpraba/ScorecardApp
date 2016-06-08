@@ -126,7 +126,7 @@ One-Way
   <paper-checkbox style="margin-left: 25%" id="oneway" class="checkbox" on-change="onewayHandler"></paper-checkbox></div>
 <div style="width: 100%;">
   Two-Way
-<paper-checkbox style="margin-left: 3%" id="twoway" class="checkbox" on-change="twowayHandler"></paper-checkbox></div>
+<paper-checkbox style="margin-left: 3%" id="twoway1" class="checkbox" on-change="twowayHandler1"></paper-checkbox></div>
 </div>
 </div>
 <div style="margin-top: 5%; margin-left: 20%;" class="horizontalframe hrspace" id="but">
@@ -266,6 +266,8 @@ var dat2=new Date();
         this.$.dad6.disabled=true;
         this.$.yearly.disabled=true;
          this.$.twoway.disabled=true;
+          this.$.twoway1.disabled=true;
+           this.$.oneway.disabled=true;
          this.$.but.disabled=true;
          this.hidepayoption=true;
          boxcount=2;
@@ -297,6 +299,8 @@ else
           document.querySelector('#zone').selected=-1;
           document.querySelector('#yearly').checked=false;
           document.querySelector('#twoway').checked=false;
+          document.querySelector('#twoway1').checked=false;
+          document.querySelector('#oneway').checked=false;
           document.querySelector('#lumsum').checked=false;
            payarrr=[];
            fromdate="";
@@ -385,9 +389,12 @@ this.hidetransport=true;
       this.$.dad.disabled=false;
       this.$.yearly.disabled=true;
          this.$.twoway.disabled=true;
+         this.$.twoway1.disabled=false;
+         this.$.oneway.disabled=false;
           this.$.but.disabled=false;
       document.querySelector("#yearly").checked=true;
       document.querySelector("#twoway").checked=true;
+       document.querySelector("#twoway1").checked=true;
     },
     setzonedate:function(zonefromdate,zonetodate)
     {
@@ -678,6 +685,7 @@ fullHandler:function(event){
 
        document.querySelector("#oneway").checked=false;
         document.querySelector("#twoway").checked=false;
+        document.querySelector("#twoway1").checked=false;
         var temp='';
         this.fee=temp;
         fromdat=temp;
@@ -706,6 +714,7 @@ fullHandler:function(event){
         todat=temp1;
         document.querySelector("#oneway").checked=false;
         document.querySelector("#twoway").checked=false;
+        document.querySelector("#twoway1").checked=false;
         }
 },
 
@@ -714,7 +723,7 @@ var oneway = document.querySelector("#oneway");
 mode='One-Way';
 if(oneway.checked==true){
 
-      document.querySelector("#twoway").checked=false;
+      document.querySelector("#twoway1").checked=false;
       this.$.root.oneway();
   }
 
@@ -729,7 +738,7 @@ if(oneway.checked==true){
         fromdat=temp;
         todat=temp;
         document.querySelector("#datebox").checked=false;
-        document.querySelector("#twoway").checked=false;
+        document.querySelector("#twoway1").checked=false;
   }
 
 },
@@ -758,7 +767,31 @@ twowayHandler:function(event){
         document.querySelector("#datebox").checked=false;
   }
 },
+twowayHandler1:function(event){
+  //alert('two way');
+  var twoway = document.querySelector("#twoway1");
+  mode='Two-Way';
+  if(twoway.checked==true){
 
+        document.querySelector("#oneway").checked=false;
+        this.$.root.twoway();
+
+  }
+
+   if((twoway.checked==true)&&(datebox.checked==true)){
+    this.$.root.twocus();
+  }
+
+  if(twoway.checked==false){
+
+    var temp='';
+        this.fee=temp;
+        fromdat=temp;
+        todat=temp;
+        document.querySelector("#oneway").checked=false;
+        document.querySelector("#datebox").checked=false;
+  }
+},
 click:function(e)
     {
 
@@ -785,6 +818,7 @@ click:function(e)
       //document.querySelector("#custom").checked=false;
       //document.querySelector("#datebox").checked=false;
       document.querySelector("#twoway").checked=false;
+       document.querySelector("#twoway1").checked=false;
       //document.querySelector("#oneway").checked=false;
 
     }

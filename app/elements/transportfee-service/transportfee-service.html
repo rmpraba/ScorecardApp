@@ -573,15 +573,30 @@ var installtype2date;
       },
       receiptseqResponse:function(e)
       {
+        var insdate;
         var receiptschoolid=e.detail.response.returnval[0].schoolid;
          receiptseq=e.detail.response.returnval[0].sequence;
          ackseq=e.detail.response.returnval[0].ackseq;
+         var  instaldate=localStorage.getItem("localsess_install_date");
+         //alert(instaldate);
+         var condate = new Date(instaldate);
+        if(condate.getDate()<10)
+        {
+            insdate="0"+condate.getDate();
+           }
+           else
+           {
+            insdate=condate.getDate();
+           }
+         
+       var insfromdate=condate.getFullYear()+"-"+(condate.getMonth()+1)+"-"+insdate;
+       //alert(insfromdate);
         for(var i=0;i<rpayfee.length;i++)
         {
         if(rpayfee[i].paytype=="Cash")
         {
          this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
-        var obj={"studid":"","schol":"","installfee":"","paytype":"","instype":"","receiptno":"","fine":""}
+        var obj={"studid":"","schol":"","installfee":"","paytype":"","instype":"","receiptno":"","fine":"","instdate":""}
         obj.studid=rpayfee[i].studid;
         obj.schol=sessionStorage.getItem("sch");
         obj.installfee=rpayfee[i].installamt;
@@ -589,6 +604,7 @@ var installtype2date;
         obj.instype=rpayfee[i].installtype;
         obj.receiptno="REC16-17-"+receiptseq;
         obj.fine=rpayfee[i].fineamount;
+        obj.instdate=insfromdate;
         this.payfeeparam=obj;
         receiptcreate.push(obj);
         this.$.payfeeajax.generateRequest();
@@ -597,7 +613,7 @@ var installtype2date;
       else
       {
          this.payfeeurl=sessionStorage.getItem("addrinfo")+"/payfee-card";
-        var obj={"studid":"","schol":"","installfee":"","paytype":"","instype":"","receiptno":"","fine":""}
+        var obj={"studid":"","schol":"","installfee":"","paytype":"","instype":"","receiptno":"","fine":"","instdate":""}
         obj.studid=rpayfee[i].studid;
         obj.schol=sessionStorage.getItem("sch");
         obj.installfee=rpayfee[i].installamt;
@@ -605,6 +621,7 @@ var installtype2date;
         obj.instype=rpayfee[i].installtype;
          obj.fine=rpayfee[i].fineamount;
         obj.receiptno="ACK16-17-"+ackseq;
+        obj.instdate=insfromdate;
         this.payfeeparam=obj;
         receiptcreate.push(obj);
         this.$.payfeeajax.generateRequest();

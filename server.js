@@ -4005,7 +4005,6 @@ app.post('/dropdetail',  urlencodedParser,function (req, res){
 
 
 
-
 function setvalue(){
   console.log("calling setvalue.....");
 }

@@ -54,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="drop">
         <div class="field">
           <paper-dropdown-menu label="Route">
-            <paper-menu   id="sets0" class="dropdown-content" on-iron-select="routeid" >
+            <paper-menu   id="sets0sa" class="dropdown-content" on-iron-select="routeid" >
               <template  is="dom-repeat" items="{{routes}}" as="view">
                 <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
               </template>
@@ -63,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="trip">
           <paper-dropdown-menu label="Select the Trip">
-            <paper-menu id="trip" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
+            <paper-menu id="tripsz" class="dropdown-content" on-iron-select="Fntrip" valueattr="value" >
                 <paper-item value="1">1</paper-item>
                 <paper-item value="2">2</paper-item>
             </paper-menu>
@@ -71,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="drop-down" >
           <paper-dropdown-menu label="Select PickUp or Drop">
-            <paper-menu id="pickdrop" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
+            <paper-menu id="pickdropzz" class="dropdown-content" on-iron-select="Fnpickordrop" valueattr="value" >
               <paper-item value="pickup">Pickup</paper-item>
               <paper-item value="drop">Drop</paper-item>
             </paper-menu>
@@ -104,6 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var pickupordrop;
     var routeid;
     var itemarray=[];
+    var attendancearr = [];
     Polymer({
       is: 'addattendence-card',
       ready:function(){
@@ -167,6 +168,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.value="";
             // this.$.submitbutton.hidden=true;
           },
+          FnClear:function(){
+            document.querySelector('#sets0sa').selected=-1;
+            document.querySelector('#tripsz').selected=-1;
+            document.querySelector('#pickdropzz').selected=-1;
+            attendancearr=[];
+          }
     });
   })();
   </script>

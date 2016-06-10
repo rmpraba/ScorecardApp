@@ -4004,7 +4004,68 @@ app.post('/dropdetail',  urlencodedParser,function (req, res){
 });
 
 
+app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res){
+  var tripid={"school_type":req.query.tripid};
+  var schoolx={"school_id":req.query.schol};
+    var route_id={"pickup_route_id":req.query.routeid};
+  //console.log(req.query.routeid);
+  var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id ='"+req.query.schol+"')as name from student_point p where school_id ='"+req.query.schol+"' and pickup_route_id = (select id from route where route_name = '"+req.query.routeid+"' and school_id ='"+req.query.schol+"') and school_type ='"+req.query.tripid+"'";
+    console.log(query);
+    connection.query(query,
+    function(err, rows){
+    if(!err){
+      if(rows.length>0){
+        //console.log(rows);
+        res.status(200).json({'returnval': rows});
+      } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    } else {
+      console.log(err);
+    }
+  });
+});
 
+app.post('/getstudentsforattendancedrop',  urlencodedParser,function (req, res){
+  var tripid={"school_type":req.query.tripid};
+  var schoolx={"school_id":req.query.schol};
+    var route_id={"drop_route_id":req.query.routeid};
+  console.log(req.query.routeid);
+  var query="SELECT p.student_id,(select student_name from student_details where id=p.student_id and school_id ='"+req.query.schol+"')as name from student_point p where school_id ='"+req.query.schol+"' and drop_route_id = (select id from route where route_name = '"+req.query.routeid+"' and school_id ='"+req.query.schol+"') and school_type ='"+req.query.tripid+"'";
+  connection.query(query,
+    function(err, rows){
+    if(!err){
+      if(rows.length>0){
+        //console.log(rows);
+        res.status(200).json({'returnval': rows});
+      } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.post('/attsubmiturl',  urlencodedParser,function (req, res){
+  var collection={"school_id":req.query.schol,"student_id":req.query.studentid,"student_name":req.query.student_name,"route_id":req.query.routeid,"mode_of_travel":req.query.pickupordrop,"trip":req.query.trip,"att_date":req.query.date,"status":req.query.status};
+  //console.log(collection);
+  connection.query('insert into attendance set ?',[collection],
+    function(err, rows){
+
+      if(!err)
+      {
+        res.status(200).json({'returnval': 'success'});
+      }
+      else
+      {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    });
+});
 
 function setvalue(){
   console.log("calling setvalue.....");

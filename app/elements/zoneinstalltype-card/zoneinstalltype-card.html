@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../transportfee-service/transportfee-service.html">
 <link rel="import" href="../zonedatepicker-card/zonedatepicker-card.html">
-
+<link rel="import" href="../installdatepicker-card/installdatepicker-card.html">
 <dom-module id="zoneinstalltype-card">
   <template>
     <style>
@@ -43,6 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-menu>
       </paper-dropdown-menu>
     </div>
+    <installdatepicker-card id="installdp"></installdatepicker-card></div>
     <paper-item id="installsdate" hidden$="{{hidden1}}">{{paymode}}</paper-item>
     <template is="dom-if" if="{{checkinstall(paidstatus)}}"></template>
 
@@ -80,6 +81,7 @@ var checkboxcount=2;
  ready:function()
  {
   checkboxcount=2;
+  this.$.installdp.hidden=true;
    //this.enable=true;
  },
  FnClear:function(){

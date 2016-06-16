@@ -343,13 +343,14 @@ this.hidetransport=true;
            document.querySelector("#install").checked=false;
          this.hidetransport1=true;
          this.hidetransport=false;
-         var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":""}
+         var obj={"installtype":"","amount":"","paydate":"","paidstatus":"","installdate":"","paymentmode":"","feestudid":"","feestudname":"","installstatus":"","fineamt":""}
          obj.installtype="installment1";
          obj.amount=this.fee;
          obj.feestudid=this.id;
          obj.paidstatus=false;
          obj.paydate=sessionStorage.getItem("installdate");
          obj.feestudname=this.value;
+         obj.fineamt=0;
          arr.push(obj);
          this.installmentarr=arr;
         }

@@ -38,7 +38,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <div><fchequedatepicker-card id="dp"></fchequedatepicker-card></div>
      <div><tchequedatepicker-card></tchequedatepicker-card></div>
      <paper-button style="height: 100px;margin-top: 3%;"  id="but" class="button" on-click="search">Search</paper-button>
+   <div class="hrspace">OR</div>
+          <div class="hrspace">
+              <paper-checkbox id="selectbox" on-change="changeHandler">Select by Name</paper-checkbox>
+          </div>
     </div>
+    <div id="search">
+            <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+            <paper-listbox id="itemlist" class="dropdown-content" on-iron-select="FnItemSelected">
+              <template is="dom-repeat" items="{{itemArray}}" as="item">
+                <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+              </template>
+            </paper-listbox>
+          </div>
     <div class="collapse1">
           <paper-tabs>
             <paper-tab >ID</paper-tab>
@@ -69,6 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'chequedetail-card',
 ready:function()
 {
+  this.$.search.hidden=true;
   this.$.button.hidden=true;
   //this.$.service.checkchequedetails();
 },
@@ -110,6 +123,96 @@ FnChangestatus:function(chqid,st)
     }
   }
 },
+changeHandler:function(e){
+       if(e.target.checked==true)
+        {
+          this.$.search.hidden=false;
+          //this.$.maps.selectname();
+          //this.studentarr=[];
+          //document.querySelector('#gradeselect').selected=-1;
+          //document.getElementById("submitbutton").style.background="grey";
+
+        }
+        else
+        {
+          this.$.search.hidden=true;
+        }
+
+        },
+ autocompletename(nameitem){
+          namearr=nameitem;
+        },
+        FnInputChanged:function(e){
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+          var arr=[];
+          arr.push({"itemdes":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflag="true";
+            this.itemval="";
+            //alert('yes');
+            var len=(this.value).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArray="";
+              this.itemval="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearr.length;i++)
+              {
+                var subval=((namearr[i].student_name).trim()).substring(0,backsubval.length);
+                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                {
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].student_name;
+                  obj.itemid=namearr[i].id;
+                  arr.push(obj);
+                }
+              }
+              this.itemArray=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflag=="true") {
+              this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflag="false";
+            }
+            else
+            this.itemval = this.value +String.fromCharCode((e.keyCode));
+            if(this.itemval.length>0)
+            {
+              for(var i=0;i<namearr.length;i++){
+                var subval=((namearr[i].student_name).trim()).substring(0,this.itemval.length);
+                if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].student_name;
+                  obj.itemid=namearr[i].id;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArray=arr;
+              else {
+                var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].student_name;
+                  obj.itemid=namearr[i].id;
+                  arr.push(obj);
+                this.itemArray=arr;
+              }
+            }
+          }
+        },
+        FnItemSelected:function(e){
+          this.studid= e.target.selectedItem.value;
+          var studname = (e.target.selectedItem.textContent).trim();
+          //alert(this.studid);
+          this.$.service.checkchequebyname(this.studid);
+          this.itemArray=[];
+          this.querySelector('paper-listbox').selected=-1;
+        },
  accept:function()
       {
         alert('Cheque Details are Updated Sucessfully');

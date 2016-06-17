@@ -170,6 +170,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="checkchequebynameajax"
+        url="{{checkchequebynameurl}}"
+        params="{{checkchequebynameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="checkchequebynameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <iron-ajax
         method="post"
         id="bouncechequedetailsajax"
@@ -1220,8 +1231,53 @@ document.querySelector('bouncecheque-card').bchequearr=bouncechequearr;
         this.$.checkchequedetailsajax.generateRequest();
         
      },
-
+checkchequebyname:function(stnamee)
+{
+ this.checkchequebynameurl=sessionStorage.getItem("addrinfo")+"/checkchequebyname";
+         var obj={"schol":"","stuname":""}
+            obj.schol=sessionStorage.getItem("sch");
+            obj.stuname=stnamee;
+           this.checkchequebynameparam =obj;
+        this.$.checkchequebynameajax.generateRequest();
+},
      checkchequedetailsResponse:function(e)
+     {
+    
+        var chequedetailarr=[];
+        var cstatus;
+        var chequedetail=e.detail.response.returnval;
+
+      // alert('s'+JSON.stringify(chequedetail));
+        var d=new Date();
+        for(var i=0;i<chequedetail.length;i++)
+        {
+            var d1=new Date(chequedetail[i].cheque_date);
+            var mondiff=(d.getMonth()+1)-(d1.getMonth()+1);
+            var daydiff=d.getDate()-d1.getDate();
+            if(mondiff==0 && daydiff<=5)
+            {
+                cstatus="red";
+            }
+            else
+            {
+                cstatus="no";
+            }
+            var obj={"studid":"","sname":"","chequeno":"","bankname":"","cdate":"","cstatus":"","installtype":""}
+            obj.studid=chequedetail[i].student_id;
+            obj.sname=chequedetail[i].name;
+            obj.chequeno=chequedetail[i].cheque_no;
+            obj.bankname=chequedetail[i].bank_name;
+            obj.cdate=chequedetail[i].cheque_date;
+            obj.cstatus=cstatus;
+            obj.installtype=chequedetail[i].installtype;
+            chequedetailarr.push(obj);
+        }
+
+        document.querySelector('chequedetail-card').chequearr=chequedetailarr;
+        document.querySelector('chequedetail-card').Fnchequedetail(chequedetail);
+
+     },
+      checkchequebynameResponse:function(e)
      {
     
         var chequedetailarr=[];

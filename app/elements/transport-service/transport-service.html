@@ -11,7 +11,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
             content-type="application/json"
             on-response="getrouteResponse"
             debounce-duration="300"
-            >
+            > 
         </iron-ajax>
         <iron-ajax
             method="post"
@@ -230,6 +230,17 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
             handle-as="json"
             content-type="application/json"
             on-response="generatereportbynameResponse"
+            debounce-duration="300"
+            >
+        </iron-ajax>
+         <iron-ajax
+            method="post"
+            id="generatenameforchequeajax"
+            url="{{generatenameforchequeurl}}"
+            params="{{generatenameforchequeparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="generatenameforchequeResponse"
             debounce-duration="300"
             >
         </iron-ajax>
@@ -1561,9 +1572,20 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
        this.generatereportbynameparam=obj;
        this.$.generatereportbynameajax.generateRequest();
       },
+       generatenameforcheque:function(){
+       this.generatenameforchequeurl=sessionStorage.getItem("addrinfo")+"/generatenameforcheque";
+       var obj={"schol":""}
+       obj.schol=sessionStorage.getItem("sch");
+       this.generatenameforchequeparam=obj;
+       this.$.generatenameforchequeajax.generateRequest();
+      },
       generatereportbynameResponse:function(e){
         var nameitem=e.detail.response.returnval;
         document.querySelector('genestureport-card').autocompletename(nameitem);
+      },
+       generatenameforquecheResponse:function(e){
+        var nameitem=e.detail.response.returnval;
+        document.querySelector('chequedetail-card').autocompletename(nameitem);
       },
       deletemappoint:function(pointarray,routenam,tripnum)
       {

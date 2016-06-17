@@ -1565,6 +1565,28 @@ app.post('/generatereportbyname',  urlencodedParser,function (req, res)
   }
 });
   });
+
+
+app.post('/generatenameforcheque',  urlencodedParser,function (req, res)
+{
+    var schoolx={"school_id":req.query.schol};
+       connection.query('SELECT student_name from student_details where ?',[schoolx],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+});
+  });
 app.post('/discountbyname',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};
@@ -2079,7 +2101,30 @@ console.log(todate);
   }
 });
   });
-
+app.post('/checkchequebyname',  urlencodedParser,function (req, res)
+{
+  console.log('come');
+  var schoolx={"school_id":req.query.schol};
+  var stuname={"student_id":req.query.stuname};
+console.log(stuname);
+       connection.query('SELECT * from cheque_details where cheque_status="processing" and ? and  ?',[schoolx,stuname],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+});
+  });
 app.post('/bouncechequedetails',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};

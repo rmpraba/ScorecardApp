@@ -983,6 +983,15 @@ recarr1.push(recobj1);
                  amt=install1fee;
 
                 }
+                else if(install1fee>0&&install1status=="bounce")
+                {
+                  paidstatus=false;
+                    paiddate=installdata[i].paydate;
+                    paymode="";
+                    installstatus="";
+                    fine=install1fine;
+                    amt=install1fee;
+                }
                 else
                 {
                     paidstatus=false;

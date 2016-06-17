@@ -59,15 +59,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <img id="imgRes" height="1px" width="1px" />
      <div id="canvas1" class="receipt" style="width: 21cm; height: 26cm;">
     <div id="canvas" style="background-image:url(fimage/1.jpg)">
-   <template is="dom-repeat" items="{{receiptarr}}" as="view">
-
-        <div class="header">
+    <div class="header">
         <div class="logo"><img style="width: 185%; height: 178%;" src="../../images/zeesouth.png"/></div>
         <div class="heading">
-          <div class="title">{{view.schoolname}}</div>
-          <div class="address">{{view.schooladdr}}</div>
+          <div class="title">{{schoolname}}</div>
+          <div class="address">{{schooladdr}}</div>
         </div>
         </div>
+   <template is="dom-repeat" items="{{receiptarr}}" as="view">
+
+        
 
         <div class="body1">
         <h1>FEE {{view.title}}</h1>
@@ -154,7 +155,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <hr id="ln5"></hr>
            <div id="fineop">
- Fine Amount:{{fine}}
+ Fine Amount:{{view.fine}}
           </div>
           <hr id="ln5"></hr>
 
@@ -164,14 +165,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
             <div class="word" style="margin-top: 3px;">
-              In Words : {{feeinword}}
+              In Words : {{view.feeinword}}
             </div> </div>
 
             <div class="r5">
               <paper-item style="width: 80px; margin-top: 6%;"> Total fees :</paper-item>
 
               <div class="cash">
-                <paper-input style="width: 60px; margin-top: 3px;" on-change="convertrs" value="{{totalfee}}"></paper-input>
+                <paper-input style="width: 60px; margin-top: 3px;" on-change="convertrs" value="{{view.totalfee}}"></paper-input>
             </div>
 </div>
           </div>
@@ -184,9 +185,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
            <div hidden$="{{chequeview}}" class="cheque">
 
-        <div class="hrspace">Cheque No:{{cheqno}}</div>
-        <div class="hrspace">Cheque Date:{{cqdate}}</div>
-        <div class="hrspace">Bank Name:{{bank}}</div>
+        <div class="hrspace">Cheque No:{{view.cheno}}</div>
+        <div class="hrspace">Cheque Date:{{view.cqdate}}</div>
+        <div class="hrspace">Bank Name:{{view.bknm}}</div>
           <!-- <hr id="ln3"></hr> -->
     </div>
            <hr id="ln3"></hr>
@@ -384,7 +385,7 @@ var install2;
       convertrs:function(value1,fineamt)
       {
       var value=parseInt(value1)+parseInt(fineamt);
-      this.totalfee=value;
+      //this.totalfee=value;
       this.fine=fineamt;
 
         var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];

@@ -2636,6 +2636,26 @@ app.post('/getfeedetail',  urlencodedParser,function (req, res)
     }
   });
 });
+app.post('/getfeeofzonechange',  urlencodedParser,function (req, res)
+{
+
+  var name={"student_name":req.query.stid};
+  var schoolx={"school_id":req.query.schol};
+      connection.query('Select * from student_zonechange where student_id=(select id from student_details where ? and ?)',[name,schoolx],
+        function(err, rows){
+    if(!err){
+      if(rows.length>0)
+      {
+        res.status(200).json({'returnval': rows});
+      } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    } else {
+      console.log(err);
+    }
+  });
+});
 app.post('/getfeeparent',  urlencodedParser,function (req, res)
 {
  var id=req.query.stid;

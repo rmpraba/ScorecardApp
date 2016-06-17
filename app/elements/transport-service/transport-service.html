@@ -534,6 +534,17 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
             debounce-duration="300"
             >
         </iron-ajax>
+         <iron-ajax
+            method="post"
+            id="getfeeofzonechangeajax"
+            url="{{getfeeofzonechangeurl}}"
+            params="{{getfeeofzonechangeparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="getfeeofzonechangeResponse"
+            debounce-duration="300"
+            >
+        </iron-ajax>
         <iron-ajax
             method="post"
             id="getfeeparentajax"
@@ -979,6 +990,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
     var school=sessionStorage.getItem("sch");
     var int=1;
     var lenx;
+    var zonefeechange;
     Polymer({
       is: "transport-service",
 
@@ -1820,12 +1832,15 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       },
        getfeedetail:function(studid){
         studentname=studid;
+        this.getfeeofzonechangeurl=sessionStorage.getItem("addrinfo")+"/getfeeofzonechange";
           this.getfeedetailurl=sessionStorage.getItem("addrinfo")+"/getfeedetail";
               var obj={"stid":"","schol":""}
               obj.stid=studid;
               obj.schol=sessionStorage.getItem("sch");
               this.getfeedetailparam=obj;
               this.$.getfeedetailajax.generateRequest();
+              this.getfeeofzonechangeparam=obj;
+              this.$.getfeeofzonechangeajax.generateRequest();
       },
 
       getzonedetail:function(studid){
@@ -1844,6 +1859,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       getfeedetailResponse:function(e)
       {
           feedet=e.detail.response.returnval;
+          //alert(JSON.stringify(feedet));
           //alert(feedet[0].student_id);
  this.getfeeparenturl=sessionStorage.getItem("addrinfo")+"/getfeeparent";
               var obj={"stid":""}
@@ -1852,6 +1868,14 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
               this.$.getfeeparentajax.generateRequest();
 
 },
+getfeeofzonechangeResponse:function(e)
+      {
+        //alert(JSON.stringify(e.detail.response.returnval));
+        zonefeechange=e.detail.response.returnval;
+        //alert(JSON.stringify(zonefeechange));
+        
+         //alert(JSON.stringify(feedet));
+        },
 getfeeparentResponse:function(e)
 {
 
@@ -1862,6 +1886,165 @@ this.getfeechequeurl=sessionStorage.getItem("addrinfo")+"/getfeecheque";
               this.getfeechequeparam=obj;
               this.$.getfeechequeajax.generateRequest();
             },
+            convertrs:function(value1,fineamt)
+      {
+      var value=parseInt(value1)+parseInt(fineamt);
+      //this.totalfee=value;
+      this.fine=fineamt;
+
+        var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
+    var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
+    var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
+    var junkVal;
+    var obStr;
+    var numReversed;
+    var totalWords="";
+    var inWords=new Array();
+    var finalWord="";
+    var i,j;
+    var actnumber;
+
+
+    junkVal=value;
+    junkVal=Math.floor(junkVal);
+    obStr=new String(junkVal);
+    numReversed=obStr.split("");
+    actnumber=numReversed.reverse();
+    var iWordsLength=numReversed.length;
+    if(Number(junkVal) >=0)
+    {
+        //do nothing
+
+    }
+    else{
+        alert('wrong Number cannot be converted');
+        return false;
+    }
+    if(Number(junkVal)==0){
+        this.feeinword=obStr+''+'Rupees Zero Only';
+        return false;
+    }
+    if(actnumber.length>9){
+        alert('Oops!!!! the Number is too big to covertes');
+        return false;
+    }
+
+
+    j=0;
+    for(i=0; i<iWordsLength; i++)
+    {
+        switch(i)
+        {
+        case 0:
+            if(actnumber[i]==0 || actnumber[i+1]==1 ) {
+                inWords[j]='';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]];
+            }
+            inWords[j]=inWords[j]+' Only';
+            break;
+        case 1:
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
+            break;
+        case 2:
+            if(actnumber[i]==0) {
+                inWords[j]='';
+            }
+            else if(actnumber[i-1]!=0 && actnumber[i-2]!=0) {
+                inWords[j]=iWords[actnumber[i]]+' Hundred and';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]]+' Hundred';
+            }
+            break;
+        case 3:
+            if(actnumber[i]==0 || actnumber[i+1]==1) {
+                inWords[j]='';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]];
+            }
+            if(actnumber[i+1] != 0 || actnumber[i] > 0){
+                inWords[j]=inWords[j]+" Thousand";
+            }
+            break;
+        case 4:
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
+            break;
+        case 5:
+            if(actnumber[i]==0 || actnumber[i+1]==1) {
+                inWords[j]='';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]];
+            }
+            if(actnumber[i+1] != 0 || actnumber[i] > 0){
+                inWords[j]=inWords[j]+" Lakh";
+            }
+            break;
+        case 6:
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
+            break;
+        case 7:
+            if(actnumber[i]==0 || actnumber[i+1]==1 ){
+                inWords[j]='';
+            }
+            else {
+                inWords[j]=iWords[actnumber[i]];
+            }
+            inWords[j]=inWords[j]+" Crore";
+            break;
+        case 8:
+                    if(actnumber[i]==0) {
+                        inWords[j]='';
+                    }
+                    else if(actnumber[i]==1) {
+                        inWords[j]=ePlace[actnumber[i-1]];
+                    }
+                    else {
+                        inWords[j]=tensPlace[actnumber[i]];
+                    }
+            break;
+        default:
+            break;
+        }
+        j++;
+    }
+
+    inWords.reverse();
+    for(i=0; i<inWords.length; i++)
+     {
+        finalWord+=inWords[i];
+    }
+    this.feeinword='Rs'+'  '+finalWord;
+    return finalWord;
+
+},
 
 
 getfeechequeResponse:function(e)
@@ -1879,15 +2062,9 @@ getfeechequeResponse:function(e)
 var feezxc=feedet[0].installment_1;
 var fineamt=feedet[0].install1_fine;
   document.querySelector('transport-app').setPage("receipt","Receipt");
-document.querySelector('receipt-card').convertrs(feezxc,fineamt);
+var word=document.querySelector('transport-service').convertrs(feezxc,fineamt);
 //alert(installment_1Date);
-var dt1=new Date(feedet[0].installment_1Date);
 
- var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
-      var curr_date = dt1.getDate();
-      var curr_month = dt1.getMonth();
-      var curr_year = dt1.getFullYear();
-      var todate = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
 
 if(feedet[0].modeofpayment1=="Cash")
 {
@@ -1899,6 +2076,13 @@ else
 }
 
 var recobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":"","fine":""}
+var dt1=new Date(feedet[0].installment_1Date);
+
+ var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+      var curr_date = dt1.getDate();
+      var curr_month = dt1.getMonth();
+      var curr_year = dt1.getFullYear();
+      var todate = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
 recobj.receiptno=feedet[0].receipt_no1;
 recobj.studname=studentname;
 recobj.classname=feeparent[0].class;
@@ -1908,16 +2092,101 @@ recobj.installfee=feedet[0].installment_1;
 recobj.paytype=feedet[0].modeofpayment1;
 recobj.today=todate;
 recobj.fine=feedet[0].install1_fine;
+recobj.totalfee=parseInt(feedet[0].installment_1)+parseInt(feedet[0].install1_fine);
 recobj.stid=feedet[0].student_id;
 recobj.session=yr;
+recobj.feeinword=word;
 document.querySelector('receipt-card').parent=feeparent[0].parentname;
 //recobj.parent=feeparent[0].parentname;
 recobj.email=feeparent[0].parentmail;
-recobj.schoolname=sessionStorage.getItem("schoolname");
-recobj.schooladdr=sessionStorage.getItem("schooladdr");
+document.querySelector('receipt-card').schoolname=sessionStorage.getItem("schoolname");
+document.querySelector('receipt-card').schooladdr=sessionStorage.getItem("schooladdr");
 recobj.title=title;
+ var pt=feedet[0].modeofpayment1;
+       if(pt=='Cheque')
+       {
+         for(var j=0;j<feecheque.length;j++)
+        {
+          if(feecheque[j].installtype=="installment1")
+          {
+
+            //var cqobj={"cheno":"","cqdate":"","bknm":""}
+            recobj.cheno=feecheque[j].cheque_no;
+            var chdt=new Date(feecheque[j].cheque_date);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = chdt.getDate();
+            var curr_month = chdt.getMonth();
+            var curr_year = chdt.getFullYear();
+            var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            recobj.cqdate=todatez;
+            recobj.bknm=feecheque[j].bank_name;
+            feecheque.splice(j,1);
+            //cheqarr.push(cqobj);
+            //document.querySelector('receipt-card').chequearray(cqobj);
+            //document.querySelector('receipt-card').downloadpdf(recstudid);
+          }
+          }
+       }
 recarr.push(recobj);
+if(zonefeechange!="invalid")
+{
+   // alert('true');
+var zrecobj={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":"","fine":""}
+ word=document.querySelector('transport-service').convertrs(zonefeechange[0].installment_1,zonefeechange[0].install1_fine);
+var zdt1=new Date(zonefeechange[0].installment_1Date);
+
+ var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+      var curr_date = zdt1.getDate();
+      var curr_month = zdt1.getMonth();
+      var curr_year = zdt1.getFullYear();
+      var ztodate = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+zrecobj.receiptno=zonefeechange[0].receipt_no1;
+zrecobj.studname=studentname;
+zrecobj.classname=feeparent[0].class;
+zrecobj.section=feeparent[0].section;
+zrecobj.installtype="installment1";
+zrecobj.installfee=zonefeechange[0].installment_1;
+zrecobj.paytype=zonefeechange[0].modeofpayment1;
+zrecobj.today=ztodate;
+zrecobj.fine=zonefeechange[0].install1_fine;
+zrecobj.stid=zonefeechange[0].student_id;
+zrecobj.totalfee=parseInt(zonefeechange[0].installment_1)+parseInt(zonefeechange[0].install1_fine);
+zrecobj.session=yr;
+zrecobj.feeinword=word;
+document.querySelector('receipt-card').parent=feeparent[0].parentname;
+//recobj.parent=feeparent[0].parentname;
+zrecobj.email=feeparent[0].parentmail;
+zrecobj.schoolname=sessionStorage.getItem("schoolname");
+zrecobj.schooladdr=sessionStorage.getItem("schooladdr");
+zrecobj.title=title;
 document.querySelector('receipt-card').parentemail=feeparent[0].parentmail;
+var zpt=zonefeechange[0].modeofpayment1;
+       if(zpt=='Cheque')
+       {
+         for(var j=0;j<feecheque.length;j++)
+        {
+          if(feecheque[j].installtype=="installment1")
+          {
+
+            //var cqobj={"cheno":"","cqdate":"","bknm":""}
+            recobj.cheno=feecheque[j].cheque_no;
+            var chdt=new Date(feecheque[j].cheque_date);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = chdt.getDate();
+            var curr_month = chdt.getMonth();
+            var curr_year = chdt.getFullYear();
+            var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            zrecobj.cqdate=todatez;
+            zrecobj.bknm=feecheque[j].bank_name;
+             feecheque.splice(j,1);
+            //cheqarr.push(cqobj);
+            //document.querySelector('receipt-card').chequearray(cqobj);
+            //document.querySelector('receipt-card').downloadpdf(recstudid);
+          }
+          }
+       }
+recarr.push(zrecobj);
+}
         document.querySelector('receipt-card').receiptarr=recarr;
         var pt=feedet[0].modeofpayment1;
        if(pt=='Cheque')
@@ -1938,7 +2207,7 @@ document.querySelector('receipt-card').parentemail=feeparent[0].parentmail;
             cqobj.cqdate=todatez;
             cqobj.bknm=feecheque[j].bank_name;
             //cheqarr.push(cqobj);
-            document.querySelector('receipt-card').chequearray(cqobj);
+            //document.querySelector('receipt-card').chequearray(cqobj);
             //document.querySelector('receipt-card').downloadpdf(recstudid);
           }
           }
@@ -1953,7 +2222,7 @@ document.querySelector('receipt-card').parentemail=feeparent[0].parentmail;
 var feezxc=feedet[0].installment_2;
 var fineamt=feedet[0].install2_fine;
   //document.querySelector('transport-app').setPage("receipt","Receipt");
-document.querySelector('cqreceipt-card').convertrss(feezxc,fineamt);
+ var chword=document.querySelector('transport-service').convertrs(feezxc,fineamt);
 //alert(installment_1Date);
 var dt3=new Date(feedet[0].installment_2Date);
 
@@ -1983,6 +2252,8 @@ recobj1.paytype=feedet[0].modeofpayment2;
 recobj1.today=todate1;
 recobj1.stid=feedet[0].student_id;
 recobj1.fine=feedet[0].install2_fine;
+recobj1.totalfee=parseInt(feedet[0].installment_2)+parseInt(feedet[0].install2_fine);
+recobj1.feeinword=chword;
 recobj1.session=yr2;
 //recobj1.parent=feeparent[0].parentname;
 document.querySelector('cqreceipt-card').parent=feeparent[0].parentname;
@@ -1990,8 +2261,102 @@ recobj1.email=feeparent[0].parentmail;
 recobj1.schoolname=sessionStorage.getItem("schoolname");
 recobj1.schooladdr=sessionStorage.getItem("schooladdr");
 recobj1.title=title1;
+
+var pt1=feedet[0].modeofpayment2;
+       if(pt1=='Cheque')
+       {
+  for(var j=0;j<feecheque.length;j++)
+        {
+          if(feecheque[j].installtype=="installment2")
+          {
+
+            var cqobj1={"cheno":"","cqdate":"","bknm":""}
+            recobj1.cheno=feecheque[j].cheque_no;
+            var chdt1=new Date(feecheque[j].cheque_date);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = chdt1.getDate();
+            var curr_month = chdt1.getMonth();
+            var curr_year = chdt1.getFullYear();
+            var todatezz = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            recobj1.cqdate=todatezz;
+            recobj1.bknm=feecheque[j].bank_name;
+             feecheque.splice(j,1);
+            //cheqarr.push(cqobj);
+            //document.querySelector('cqreceipt-card').chequearray(cqobj1);
+            //document.querySelector('receipt-card').downloadpdf(recstudid);
+          }
+          }
+       }
+
+
+
 recarr1.push(recobj1);
 document.querySelector('cqreceipt-card').parentemail=feeparent[0].parentmail;
+
+if(zonefeechange!="invalid")
+{
+    //alert('true');
+var zrecobj1={"email":"","receiptid":"","studname":"","classname":"","section":"","installtype":"","installfee":"","paytype":"","receiptno":"","fine":""}
+ chword=document.querySelector('transport-service').convertrs(zonefeechange[0].installment_2,zonefeechange[0].install2_fine);
+var zdt2=new Date(zonefeechange[0].installment_2Date);
+
+ var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+      var curr_date = zdt2.getDate();
+      var curr_month = zdt2.getMonth();
+      var curr_year = zdt2.getFullYear();
+      var ztodate1 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+zrecobj1.receiptno=zonefeechange[0].receipt_no2;
+zrecobj1.studname=studentname;
+zrecobj1.classname=feeparent[0].class;
+zrecobj1.section=feeparent[0].section;
+zrecobj1.installtype="installment2";
+zrecobj1.installfee=zonefeechange[0].installment_2;
+zrecobj1.paytype=zonefeechange[0].modeofpayment2;
+zrecobj1.today=ztodate1;
+zrecobj1.fine=zonefeechange[0].install2_fine;
+zrecobj1.stid=zonefeechange[0].student_id;
+zrecobj1.totalfee=parseInt(zonefeechange[0].installment_2)+parseInt(zonefeechange[0].install2_fine);
+zrecobj1.session=yr;
+zrecobj1.feeinword=chword;
+//document.querySelector('receipt-card').parent=feeparent[0].parentname;
+//recobj.parent=feeparent[0].parentname;
+zrecobj1.email=feeparent[0].parentmail;
+zrecobj1.schoolname=sessionStorage.getItem("schoolname");
+zrecobj1.schooladdr=sessionStorage.getItem("schooladdr");
+zrecobj1.title=title;
+
+
+var pt1=feedet[0].modeofpayment2;
+       if(pt1=='Cheque')
+       {
+  for(var j=0;j<feecheque.length;j++)
+        {
+          if(feecheque[j].installtype=="installment2")
+          {
+
+            var cqobj1={"cheno":"","cqdate":"","bknm":""}
+            zrecobj1.cheno=feecheque[j].cheque_no;
+            var chdt1=new Date(feecheque[j].cheque_date);
+            var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
+            var curr_date = chdt1.getDate();
+            var curr_month = chdt1.getMonth();
+            var curr_year = chdt1.getFullYear();
+            var todatezz = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
+            zrecobj1.cqdate=todatezz;
+            zrecobj1.bknm=feecheque[j].bank_name;
+             feecheque.splice(j,1);
+            //cheqarr.push(cqobj);
+            //document.querySelector('cqreceipt-card').chequearray(cqobj1);
+            //document.querySelector('receipt-card').downloadpdf(recstudid);
+          }
+          }
+       }
+//document.querySelector('receipt-card').parentemail=feeparent[0].parentmail;
+recarr1.push(zrecobj1);
+}
+
+
+//alert(JSON.stringify(recarr1));
 
 document.querySelector('cqreceipt-card').receiptarr=recarr1;
  var pt1=feedet[0].modeofpayment2;
@@ -2020,6 +2385,10 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
        }
 
 }
+
+
+
+
       },
 
       getpassnameResponse:function(e){

@@ -121,7 +121,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
            <hr id="ln5"></hr>
           <div id="fineop">
- Fine Amount:{{fine}}
+ Fine Amount:{{view.fine}}
           </div>
           <hr id="ln5"></hr>
 
@@ -131,14 +131,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             
            
             <div class="word" style="margin-top: 5px;">
-              In Words : {{feeinword}}
+              In Words : {{view.feeinword}}
             </div> </div>
 
             <div class="r5">
               <paper-item style="width: 80px; margin-top: 6%;"> Total fees :</paper-item>
               
               <div class="cash">
-                <paper-input style="width: 60px; margin-top: 5px;" on-change="convertrss" value="{{totalfee}}"></paper-input>
+                <paper-input style="width: 60px; margin-top: 5px;" on-change="convertrss" value="{{view.totalfee}}"></paper-input>
             </div>
 </div>
           </div>
@@ -151,9 +151,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
            <div hidden$="{{chequeview}}" class="cheque">
     
-        <div class="hrspace">Cheque No:{{cheqno}}</div>
-        <div class="hrspace">Cheque Date:{{cqdate}}</div>
-        <div class="hrspace">Bank Name:{{bank}}</div>
+        <div class="hrspace">Cheque No:{{view.cheno}}</div>
+        <div class="hrspace">Cheque Date:{{view.cqdate}}</div>
+        <div class="hrspace">Bank Name:{{view.bknm}}</div>
           <!-- <hr id="ln3"></hr> -->
     </div>
     <hr id="ln3"></hr>

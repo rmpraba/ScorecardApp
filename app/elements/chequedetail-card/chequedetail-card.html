@@ -38,10 +38,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <div><fchequedatepicker-card id="dp"></fchequedatepicker-card></div>
      <div><tchequedatepicker-card></tchequedatepicker-card></div>
      <paper-button style="height: 100px;margin-top: 3%;"  id="but" class="button" on-click="search">Search</paper-button>
-   <div class="hrspace">OR</div>
-          <div class="hrspace">
-              <paper-checkbox id="selectbox" on-change="changeHandler">Select by Name</paper-checkbox>
-          </div>
+   <div class="hrspace">
+      <p style="margin:30px 0 0 30px;">OR</p>
+   </div>
+    <div class="hrspace" style="margin:30px 0 0 30px;">
+      <paper-checkbox id="selectbox" on-change="changeHandler">Select by Name</paper-checkbox>
+    </div>
     </div>
     <div id="search">
             <paper-input label="Enter Student ID Or Class ID or Student Name" value="{{value}}" on-keydown="FnInputChanged"></paper-input>

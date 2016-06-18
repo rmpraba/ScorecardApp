@@ -155,7 +155,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <hr id="ln5"></hr>
            <div id="fineop">
- Fine Amount:{{view.fine}}
+ Bounce Charge:{{view.fine}}
           </div>
           <hr id="ln5"></hr>
 
@@ -311,7 +311,7 @@ var install2;
         this.flag=1;
         this.email=this.parentemail;
 
-        this.$.emaildialog.toggle();
+        this.$.emaildialog.close();
           var obj={"chequeno":"","chequedate":"","bank":"","receiptno":"","today":"","studname":"","classname":"","parentname":"","session":"","installtype":"","installfee":"","parentemail":"","paymode":"","word":"","title":""};
       obj.receiptno=this.receiptarr[0].receiptno;
       obj.today=this.receiptarr[0].today;
@@ -543,7 +543,7 @@ var install2;
 
  email:function(e){
   this.stud=this.receiptarr[0].studname;
-  this.$.emaildialog.toggle();
+  this.$.emaildialog.open();
 
 
 

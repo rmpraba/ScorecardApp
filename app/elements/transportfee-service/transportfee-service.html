@@ -1742,10 +1742,10 @@ document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+p
             obj.standard=feereports[i].standard;
             obj.section=feereports[i].section;
             obj.receiptno=feereports[i].receipt_no1;
-            obj.installment1=feereports[i].installment_1;
+            obj.installment1=parseInt(feereports[i].installment_1)+parseInt(feereports[i].install1_fine);
             feeinstall1arr.push(obj);
             cashcount++;
-            cashtotal1=parseInt(cashtotal1)+parseInt(feereports[i].installment_1);
+            cashtotal1=parseInt(cashtotal1)+parseInt(feereports[i].installment_1)+parseInt(feereports[i].install1_fine);
           }
 
           if(feereports[i].modeofpayment2=="Cash")
@@ -1756,10 +1756,10 @@ document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+p
             obj3.standard=feereports[i].standard;
             obj3.section=feereports[i].section;
             obj3.receiptno=feereports[i].receipt_no2;
-            obj3.installment2=feereports[i].installment_2;
+            obj3.installment2=parseInt(feereports[i].installment_2)+parseInt(feereports[i].install2_fine);
             feeinstall2arr.push(obj3);
             cashcount++;
-            cashtotal2=parseInt(cashtotal2)+parseInt(feereports[i].installment_2);
+            cashtotal2=parseInt(cashtotal2)+parseInt(feereports[i].installment_2)+parseInt(feereports[i].install2_fine);
           }
 
 
@@ -1778,7 +1778,7 @@ document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+p
             obj1.standard=feereports[i].standard;
             obj1.section=feereports[i].section;
             obj1.receiptno=feereports[i].receipt_no1;
-            obj1.installment1=feereports[i].installment_1;
+            obj1.installment1=parseInt(feereports[i].installment_1)+parseInt(feereports[i].install1_fine);
             obj1.chequeno=chequereportarr1[j].cheque_no;
             obj1.bankname=chequereportarr1[j].bank_name;
             obj1.chequedate=chequereportarr1[j].cheque_date;
@@ -1802,7 +1802,7 @@ document.querySelector('feereports-card').totalcollection=parseInt(cashtotal1)+p
             var chequedate1 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
             obj1.chequedate=chequedate1;
             chequeinstall1arr.push(obj1);
-            chequetotal1=parseInt(chequetotal1)+parseInt(feereports[i].installment_1);
+            chequetotal1=parseInt(chequetotal1)+parseInt(feereports[i].installment_1)+parseInt(feereports[i].install1_fine);
               }
             }
           }
@@ -1835,7 +1835,7 @@ else
             obj4.standard=feereports[i].standard;
             obj4.section=feereports[i].section;
             obj4.receiptno=feereports[i].receipt_no2;
-            obj4.installment2=feereports[i].installment_2;
+            obj4.installment2=parseInt(feereports[i].installment_2)+parseInt(feereports[i].install2_fine);;
             obj4.chequeno=chequereportarr1[j].cheque_no;
             obj4.bankname=chequereportarr1[j].bank_name;
 
@@ -1859,7 +1859,7 @@ else
             var chequedate2 = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
             obj4.chequedate=chequedate2;
             chequeinstall2arr.push(obj4);
-             chequetotal2=parseInt(chequetotal2)+parseInt(feereports[i].installment_2);
+             chequetotal2=parseInt(chequetotal2)+parseInt(feereports[i].installment_2)+parseInt(feereports[i].install2_fine);
               }
             }
           }

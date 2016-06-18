@@ -757,7 +757,8 @@ app.post('/report-card',  urlencodedParser,function (req, res)
   var stu_id={"id":req.query.studid};
   var class_id={"class_id":req.query.studid};
   var stu_name={"student_name":req.query.studid};
-       connection.query('SELECT s.id,s.student_name,s.school_type,(select class from class_details where id=s.class_id) as class_id,(select section from class_details where id=s.class_id) as section,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,z.fees-z.discount_fee as actualfee ,z.installment_1+z.installment_2 as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where ? or ? or ? )',[stu_id,class_id,stu_name],
+  var schoolx={"school_id":req.query.schol};
+       connection.query('SELECT s.id,s.student_name,s.school_type,(select class from class_details where id=s.class_id) as class_id,(select section from class_details where id=s.class_id) as section,s.photo,s.dob,s.transport_required,z.zone_id,z.fees,z.discount_fee,z.fees-z.discount_fee as actualfee ,z.installment_1+z.installment_2 as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where (? or ? or ?) and ? )',[stu_id,class_id,stu_name,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -782,8 +783,8 @@ app.post('/report-card',  urlencodedParser,function (req, res)
 
 app.post('/selectclass',  urlencodedParser,function (req, res)
 {
-
-       connection.query('SELECT distinct school_type from student_details',
+var schoolx={"school_id":req.query.schol};
+       connection.query('SELECT distinct school_type from student_details where ?',[schoolx],
         function(err, rows)
         {
     if(!err)
@@ -1449,8 +1450,9 @@ app.post('/name',  urlencodedParser,function (req, res){
 app.post('/getfeedata' ,  urlencodedParser,function (req, res)
 {
     var studid=req.query.studid;
+    var schoolx={"school_id":req.query.schol};
     //console.log(studid);
-      connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where student_id=(select id from student_details where student_name=?)',[studid],
+      connection.query('select student_id,zone_id,fees,from_date,to_date from student_fee where student_id=(select id from student_details where student_name=? and ?)',[studid,schoolx],
         function(err, rows)
         {
         if(!err)
@@ -1475,7 +1477,8 @@ app.post('/getfeedata' ,  urlencodedParser,function (req, res)
 app.post('/getfeezone' ,  urlencodedParser,function (req, res)
 {
     var zoneid={"id":req.query.zone};
-      connection.query('select zone_name from md_zone where ?',[zoneid],
+    var schoolx={"school_id":req.query.schol};
+      connection.query('select zone_name from md_zone where ?',[zoneid,schoolx],
         function(err, rows)
         {
         if(!err)
@@ -1500,7 +1503,8 @@ app.post('/getfeezone' ,  urlencodedParser,function (req, res)
 app.post('/getfeename' ,  urlencodedParser,function (req, res)
 {
     var stid={"id":req.query.sid};
-      connection.query('select student_name,school_type from student_details where ?',[stid],
+    var schoolx={"school_id":req.query.schol};
+      connection.query('select student_name,school_type from student_details where ? and ?',[stid,schoolx],
         function(err, rows)
         {
         if(!err)
@@ -1633,7 +1637,8 @@ app.post('/generateroutereport',  urlencodedParser,function (req, res)
 app.post('/route-report-card',  urlencodedParser,function (req, res){
 
   var route_id={"route_id":req.query.routeid};
-    connection.query('SELECT p.route_id, p.point_name, p.pickup_time, p.drop_time,p.trip, r.route_name from point p left join route r on p.route_id=r.id where ?',[route_id],
+  var schoolx={"school_id":req.query.schol};
+    connection.query('SELECT p.route_id, p.point_name, p.pickup_time, p.drop_time,p.trip, r.route_name from point p left join route r on p.route_id=r.id where ? and ?',[route_id,schoolx],
     function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -1842,8 +1847,9 @@ app.post('/cancelledfee',  urlencodedParser,function (req, res)
 {
 
     var val={"stud_id":req.query.stid};
+    var schoolx={"school_id":req.query.schol};
   var vari={"status":req.query.status,"flag":req.query.flag};
-      connection.query('update md_discount set ? where ? ',[vari,val],
+      connection.query('update md_discount set ? where ? and ?',[vari,val,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -2052,7 +2058,7 @@ app.post('/deletepoint',  urlencodedParser,function (req, res)
 
 app.post('/updatezone' ,  urlencodedParser,function (req, res)
 {
-  var queryy="update student_fee set zone_id='"+req.query.zone+"',fees='"+req.query.fee+"',from_date=STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),to_date=STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),mode='"+req.query.mode+"',updated_by='"+req.query.name+"',updated_on=STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),status='"+req.query.status+"'  WHERE student_id='"+req.query.studid+"'";
+  var queryy="update student_fee set zone_id='"+req.query.zone+"',fees='"+req.query.fee+"',from_date=STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),to_date=STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),mode='"+req.query.mode+"',updated_by='"+req.query.name+"',updated_on=STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),status='"+req.query.status+"'  WHERE student_id='"+req.query.studid+"' and school_id='"+req.query.schol+"'";
       //console.log(queryy);
       connection.query(queryy,
         function(err, rows)
@@ -2212,6 +2218,7 @@ app.post('/insertbouncecheque',  urlencodedParser,function (req, res)
 
 app.post('/updatestucheque',  urlencodedParser,function (req, res)
 {
+  var schoolx={"school_id":req.query.schol};
   var chequename;
   var chequestatus;
   var updatefine
@@ -2255,7 +2262,7 @@ app.post('/updatestucheque',  urlencodedParser,function (req, res)
   chequename={"student_id":req.query.chequename}
 
   //console.log(chequename);
-       connection.query('update student_fee set ?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ?', [chequestatus,fine1,fine2,chequename],
+       connection.query('update student_fee set ?,install1_fine=install1_fine+?,install2_fine=install2_fine+? where ? and ?', [chequestatus,fine1,fine2,chequename,schoolx],
 
         function(err, rows)
         {
@@ -2658,10 +2665,11 @@ app.post('/getfeeofzonechange',  urlencodedParser,function (req, res)
 });
 app.post('/getfeeparent',  urlencodedParser,function (req, res)
 {
+  var schoolx={"school_id":req.query.schol};
  var id=req.query.stid;
  //console.log(id);
   var name={"id":req.query.stid};
-      connection.query('Select class,section,(select parent_name from parent where student_id =?) as parentname,(select email from parent where student_id =?) as parentmail from class_details where id=(select class_id from student_details where id=?)',[id,id,id],
+      connection.query('Select class,section,(select parent_name from parent where student_id =?) as parentname,(select email from parent where student_id =?) as parentmail from class_details where id=(select class_id from student_details where id=? and ?)',[id,id,id,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -2681,8 +2689,8 @@ app.post('/getfeecheque',  urlencodedParser,function (req, res)
 {
  var id=req.query.stid;
  //console.log(id);
-
-      connection.query('Select * from cheque_details where student_id=?',[id],
+var schoolx={"school_id":req.query.schol};
+      connection.query('Select * from cheque_details where student_id=? and ?',[id,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -3108,9 +3116,10 @@ app.post('/getchequedetails' ,  urlencodedParser,function (req, res)
 app.post('/geteditcheque',  urlencodedParser,function (req, res)
 {
  var id=req.query.stid;
+ var schoolx={"school_id":req.query.schol};
  //console.log(id);
 
-      connection.query('Select * from cheque_details where student_id=?',[id],
+      connection.query('Select * from cheque_details where student_id=? and ?',[id,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)

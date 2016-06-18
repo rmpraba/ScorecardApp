@@ -840,8 +840,9 @@ recobj1.title=title;
      getfeedata:function(id)
      {
        this.getfeedataurl=sessionStorage.getItem("addrinfo")+"/getfeedata";
-        var obj={"studid":""}
+        var obj={"studid":"","schol":""}
         obj.studid=id;
+        obj.schol=sessionStorage.getItem("sch");
         this.getfeedataparam=obj;
         this.$.getfeedataajax.generateRequest();
      },
@@ -858,8 +859,9 @@ recobj1.title=title;
 
 
         this.getfeezoneurl=sessionStorage.getItem("addrinfo")+"/getfeezone";
-        var obj={"zone":""}
+        var obj={"zone":"","schol":""}
         obj.zone=zonid;
+        obj.schol=sessionStorage.getItem("sch");
         this.getfeezoneparam=obj;
         this.$.getfeezoneajax.generateRequest();
 
@@ -869,7 +871,8 @@ recobj1.title=title;
         zonenam=e.detail.response.returnval[0].zone_name;
 
         this.getfeenameurl=sessionStorage.getItem("addrinfo")+"/getfeename";
-        var obj={"sid":""}
+        var obj={"sid":"","schol":""}
+        obj.schol=sessionStorage.getItem("sch");
         obj.sid=stuid;
         this.getfeenameparam=obj;
         this.$.getfeenameajax.generateRequest();
@@ -1451,7 +1454,8 @@ for(var l=0;l<bouncechequearr.length;l++)
         }
 
         this.updatestuchequeurl=sessionStorage.getItem("addrinfo")+"/updatestucheque";
-        var obj={"chequename":"","installtype":"","paidstatus":""}
+        var obj={"chequename":"","installtype":"","paidstatus":"","schol":""}
+        obj.schol=sessionStorage.getItem("sch");
         obj.chequename=chqdetail[j].student_id;
         obj.installtype=chqdetail[j].installtype;
         obj.paidstatus=paidstatus;

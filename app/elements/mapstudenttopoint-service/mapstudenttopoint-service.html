@@ -10,11 +10,12 @@
     method="post"
     id="selectclassajax"
     url="{{selectclassurl}}"
+    params="{{selectclassparam}}"
     handle-as="json"
     content-type="application/json"
     on-response="selectclassResponse"
     debounce-duration="300"
-  >
+  > 
   </iron-ajax>
   <iron-ajax
     auto
@@ -177,8 +178,10 @@
       is: "mapstudenttopoint-service",
       selectclass:function(){
         this.selectclassurl = sessionStorage.getItem("addrinfo")+"/selectclass";
-        this.$.selectclassajax.generateRequest();
-        school=sessionStorage.getItem("sch");
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        this.selectclassparam=obj;
+          this.$.selectclassajax.generateRequest();
       },
       FnClear:function(){
         len=0;

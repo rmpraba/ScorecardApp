@@ -1288,8 +1288,9 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
 
       generatereport:function(studid){
         this.genereporturl=sessionStorage.getItem("addrinfo")+"/report-card";
-        var obj={"studid":""}
+        var obj={"studid":"","schol":""}
         obj.studid=studid;
+        obj.schol=schol=sessionStorage.getItem("sch");
         this.genereportparam=obj;
         this.$.genereportajax.generateRequest();
       },
@@ -1312,8 +1313,9 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       },
       routereport:function(routeid){
         this.routereporturl=sessionStorage.getItem("addrinfo")+"/route-report-card";
-        var obj={"routeid":""}
+        var obj={"routeid":"","schol":""}
         obj.routeid=routeid;
+        obj.schol=sessionStorage.getItem("sch");
         this.routereportparam=obj;
         //alert(JSON.stringify(obj));
         this.$.routereportajax.generateRequest();
@@ -1716,10 +1718,11 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       },
       cancelledfee:function(stid,status,flag){
         this.cancelledfeeurl=sessionStorage.getItem("addrinfo")+"/cancelledfee";
-        var obj={"stid":"","status":"","flag":""}
+        var obj={"stid":"","status":"","flag":"","schol":""}
         obj.stid=stid;
         obj.status=status;
         obj.flag=flag;
+        obj.schol=sessionStorage.getItem("sch");
         this.cancelledfeeparam=obj;
         this.$.cancelledfeeajax.generateRequest();
       },
@@ -1795,7 +1798,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         updatezone:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx)
       {
         this.updatezoneurl = sessionStorage.getItem("addrinfo")+"/updatezone";
-        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":""};
+        var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":"","schol":""};
         obj.studid=studid;
         obj.zone=zone;
         obj.fee=fee;
@@ -1805,6 +1808,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         obj.name=namex;
         obj.today=todayx;
         obj.status=statusx;
+        obj.schol=sessionStorage.getItem("sch");
         this.updatezoneparam=obj;
        // alert(JSON.stringify(obj));
         this.$.updatezoneajax.generateRequest();
@@ -1862,7 +1866,8 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
           //alert(JSON.stringify(feedet));
           //alert(feedet[0].student_id);
  this.getfeeparenturl=sessionStorage.getItem("addrinfo")+"/getfeeparent";
-              var obj={"stid":""}
+              var obj={"stid":"","schol":""}
+              obj.schol.sessionStorage.getItem("sch");
               obj.stid=feedet[0].student_id;
               this.getfeeparentparam=obj;
               this.$.getfeeparentajax.generateRequest();
@@ -1881,7 +1886,8 @@ getfeeparentResponse:function(e)
 
 feeparent=e.detail.response.returnval;
 this.getfeechequeurl=sessionStorage.getItem("addrinfo")+"/getfeecheque";
-              var obj={"stid":""}
+              var obj={"stid":"","schol":""}
+              obj.schol=sessionStorage.getItem("sch");
               obj.stid=feedet[0].student_id;
               this.getfeechequeparam=obj;
               this.$.getfeechequeajax.generateRequest();

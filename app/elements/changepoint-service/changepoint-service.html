@@ -10,6 +10,7 @@
     method="post"
     id="selectclassajax"
     url="{{selectclassurl}}"
+    params="{{selectclassparam}}"
     handle-as="json"
     content-type="application/json"
     on-response="selectclassResponse"
@@ -154,6 +155,9 @@
       is: "changepoint-service",
       selectclass:function(){
         this.selectclassurl = sessionStorage.getItem("addrinfo")+"/selectclass";
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        this.selectclassparam=obj;
         this.$.selectclassajax.generateRequest();
         school=sessionStorage.getItem("sch");
       },

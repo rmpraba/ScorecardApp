@@ -2659,7 +2659,7 @@ app.post('/getfeeofzonechange',  urlencodedParser,function (req, res)
         res.status(200).json({'returnval': 'invalid'});
       }
     } else {
-      console.log(err);
+      console.log('x'+err);
     }
   });
 });
@@ -2669,7 +2669,7 @@ app.post('/getfeeparent',  urlencodedParser,function (req, res)
  var id=req.query.stid;
  //console.log(id);
   var name={"id":req.query.stid};
-      connection.query('Select class,section,(select parent_name from parent where student_id =?) as parentname,(select email from parent where student_id =?) as parentmail from class_details where id=(select class_id from student_details where id=? and ?)',[id,id,id,schoolx],
+      connection.query('Select class,section,(select parent_name from parent where student_id =? and?) as parentname,(select email from parent where student_id =? and ?) as parentmail from class_details where id=(select class_id from student_details where id=? and ?)',[id,schoolx,id,schoolx,id,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -2701,7 +2701,7 @@ var schoolx={"school_id":req.query.schol};
         res.status(200).json({'returnval': 'invalid'});
       }
     } else {
-      console.log(err);
+      console.log('cc'+err);
     }
   });
 });
@@ -3034,7 +3034,7 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
   var stuid = req.query.studid;
   var schoolx=req.query.schol;
   //console.log('In Server');
-  connection.query('select * from parent where student_id=(select id from student_details where student_name=?) and school_id=?',[stuid,schoolx],
+  connection.query('select * from parent where student_id=(select id from student_details where student_name=? and school_id=?) and school_id=?',[stuid,schoolx,schoolx],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3045,7 +3045,7 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
           res.status(200).json({'returnval': 'invalid'});
         }
       } else {
-        console.log(err);
+        console.log('z'+err);
       }
     });
 });

@@ -37,6 +37,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
          @apply(--layout-horizontal);
       }
+      .row-buttons{
+        @apply(--layout-horizontal);
+        clear: both;
+      }
       .hrspace
       {
         padding-left: 2%;
@@ -59,179 +63,140 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <img id="imgRes" height="1px" width="1px" />
      <div id="canvas1" class="receipt" style="width: 21cm; height: 26cm;">
     <div id="canvas" style="background-image:url(fimage/1.jpg)">
-    <div class="header">
+      <div class="header">
         <div class="logo"><img style="width: 185%; height: 178%;" src="../../images/zeesouth.png"/></div>
         <div class="heading">
           <div class="title">{{schoolname}}</div>
           <div class="address">{{schooladdr}}</div>
         </div>
-        </div>
-   <template is="dom-repeat" items="{{receiptarr}}" as="view">
-
-        
-
-        <div class="body1">
+      </div>
+      <template is="dom-repeat" items="{{receiptarr}}" as="view">
+      <div class="body1">
         <h1>FEE {{view.title}}</h1>
           <hr></hr>
-          </div>
-        <div class="body11">
-          <div class="lb1">Receipt No:</div>
-          <div class="val1"> {{view.receiptno}}</div>
-          <div class="lb2">Receipt Date:</div>
-          <div class="val2"> {{view.today}}</div>
+      </div>
+      <div class="body11">
+        <div class="lb1">Receipt No:</div>
+        <div class="val1"> {{view.receiptno}}</div>
+        <div class="lb2">Receipt Date:</div>
+        <div class="val2"> {{view.today}}</div>
+      </div>
+      <div id="ln2">
+        <hr></hr>
+      </div>
+      <div class="body2">
+        <div class="lb3">
+          <table>
+            <tr>
+              <td style="padding-bottom: 10%">
+                Student Name
+              </td>
+              <td style="padding-bottom: 10%">
+                : {{view.studname}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Parent Name
+              </td>
+              <td>
+                : {{parent}}
+              </td>
+            </tr>
+          </table>
         </div>
-        <div id="ln2">
-          <hr></hr>
+        <div class="lb5">
+          <table>
+            <tr>
+              <td style="padding-bottom: 15%"> Class</td>
+              <td style="padding-bottom: 15%">: {{view.classname}}/{{view.section}}</td>
+            </tr>
+            <tr>
+              <td>Session</td>
+              <td>: {{view.session}}</td>
+            </tr>
+          </table>
         </div>
-
-          <div class="body2">
-
-
-            <div class="lb3">
-            <table >
-              <tr>
-                <td style="padding-bottom: 10%">
-                    Student Name
-                </td>
-                <td style="padding-bottom: 10%">
-                  : {{view.studname}}
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  Parent Name
-                </td>
-                <td>
-                  : {{parent}}
-                </td>
-              </tr>
-            </table>
-            </div>
-
-
-
-            <div class="lb5">
-            <table>
-              <tr>
-                <td style="padding-bottom: 15%"> Class</td>
-                <td style="padding-bottom: 15%">: {{view.classname}}/{{view.section}}</td>
-              </tr>
-              <tr>
-                <td>Session</td>
-                <td>: {{view.session}}</td>
-              </tr>
-            </table>
-           </div>
-
-          </div>
-          <hr id="ln3"></hr>
-
-          <div class="body3">
-            <div class="l3">
-              <h3>SL.No.</h3>
-            </div>
-            <div class="l13">
-              <h3>Particulars</h3>
-            </div>
-            <div class="r3">
-              <h3>Amount</h3>
-            </div>
-          </div>
-
-          <hr id="ln4"></hr>
-
-          <div class="body4">
-            <div class="l4">
-              <paper-item> 1.</paper-item>
-            </div>
-            <div class="l14">
-              <div style="margin: 17% 0 0 170%; width: 100%;">Transport fee</div><div style="margin-top: -20%; margin-left: 270%;">({{view.installtype}})</div>
-            </div>
-            <div class="r4" style="margin-left: 60.5%;">
-              <paper-item>{{view.installfee}}</paper-item>
-            </div>
-
-          </div>
-          <hr id="ln5"></hr>
-           <div id="fineop">
- Bounce Charge:{{view.fine}}
-          </div>
-          <hr id="ln5"></hr>
-
-          <div class="body5">
-
-            <div class="l15">
-
-
-            <div class="word" style="margin-top: 3px;">
+      </div>
+      <hr id="ln3"></hr>
+      <div class="body3">
+        <div class="l3">
+          <h3>SL.No.</h3>
+        </div>
+        <div class="l13">
+          <h3>Particulars</h3>
+        </div>
+        <div class="r3">
+          <h3>Amount</h3>
+        </div>
+      </div>
+      <hr id="ln4"></hr>
+      <div class="body4">
+        <div class="l4">
+          <paper-item> 1.</paper-item>
+        </div>
+        <div class="l14">
+          <div style="margin: 17% 0 0 170%; width: 100%;">Transport fee</div><div style="margin-top: -20%; margin-left: 270%;">({{view.installtype}})</div>
+        </div>
+        <div class="r4" style="margin-left: 60.5%;">
+          <paper-item>{{view.installfee}}</paper-item>
+        </div>
+      </div>
+      <hr id="ln5"></hr>
+      <div id="fineop">
+        Bounce Charge:{{view.fine}}
+      </div>
+      <hr id="ln5"></hr>
+      <div class="body5">
+        <div class="l15">
+          <div class="word" style="margin-top: 3px;">
               In Words : {{view.feeinword}}
-            </div> </div>
-
-            <div class="r5">
-              <paper-item style="width: 80px; margin-top: 6%;"> Total fees :</paper-item>
-
-              <div class="cash">
-                <paper-input style="width: 60px; margin-top: 3px;" on-change="convertrs" value="{{view.totalfee}}"></paper-input>
-            </div>
-</div>
           </div>
-
-          <hr id="ln6"></hr>
-
-          <div class="body6">
-            <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
-
+        </div>
+        <div class="r5">
+          <paper-item style="width: 80px; margin-top: 6%;"> Total fees :</paper-item>
+          <div class="cash">
+            <paper-input style="width: 60px; margin-top: 3px;" on-change="convertrs" value="{{view.totalfee}}"></paper-input>
           </div>
-           <div hidden$="{{chequeview}}" class="cheque">
-
+        </div>
+      </div>
+      <hr id="ln6"></hr>
+      <div class="body6">
+        <div>Mode Of Payment </div><div>: {{view.paytype}}</div>
+      </div>
+      <div hidden$="{{chequeview}}" class="cheque">
         <div class="hrspace">Cheque No:{{view.cheno}}</div>
         <div class="hrspace">Cheque Date:{{view.cqdate}}</div>
         <div class="hrspace">Bank Name:{{view.bknm}}</div>
           <!-- <hr id="ln3"></hr> -->
+      </div>
+      <hr id="ln3"></hr>
+    </template>
+    <cqreceipt-card id="cq"></cqreceipt-card>
+      <div class="body8">
+        <div style="font-size: larger;font-weight: 900;"><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></div>
+        <div style="margin-left: 2%; float: left;text-align: left; margin-top: 1.5%;">1.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be<br> paid by Cash / DD.</div>
+        <div style="margin-left: 2%; float: left;text-align: left; margin-top: 1%;">2.  Fees once paid will not be refunded at any given circumstances.</div>
+        <div style="margin-left: -52%; float: left;text-align: left; margin-top: 1.5%;"><br>3.  Cheque Subject to realization.</div>
+        <div style="margin-left: -52%; float: left;text-align: left; margin-top: 1.95%;"><br><br>4.  Please retain this receipt for future correspondence.</div>
+        <div style="margin-right: 7%; float: right; text-align: left;margin-top: 1.5%;">
+        <strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED.</strong></div>
+      </div>
+      <div hidden>{{parentemail}}</div>
     </div>
-           <hr id="ln3"></hr>
-           </template>
-          <cqreceipt-card id="cq"></cqreceipt-card>
-            <div class="body8">
-              <div style="font-size: larger;font-weight: 900;"><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></div>
-
-
-              <div style="margin-left: 2%; float: left;text-align: left; margin-top: 1.5%;">1.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be<br> paid by Cash / DD.</div>
-              <div style="margin-left: 2%; float: left;text-align: left; margin-top: 1%;">2.  Fees once paid will not be refunded at any given circumstances.</div>
-              <div style="margin-left: -52%; float: left;text-align: left; margin-top: 1.5%;"><br>3.  Cheque Subject to realization.</div>
-              <div style="margin-left: -52%; float: left;text-align: left; margin-top: 1.95%;"><br><br>4.  Please retain this receipt for future correspondence.</div>
-            <div style="margin-right: 7%; float: right; text-align: left;margin-top: 1.5%;">
-            <strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED.</strong></div>
-            </div>
-            <div hidden>{{parentemail}}</div>
-
- </div>
- </div>
-  <div class="action-buttons" style="margin-top: 0.25%;">
-    <table>
-      <tr >
-        <td>
-           <paper-button class="button" id="pdf" style="height: 34px !important;" on-click="downloadpdf">PDF</paper-button>
-        </td>
-        <td>
-          <paper-button  class="button" id="email" style="height: 34px  !important;" on-click="email">Email</paper-button>
-        </td>
-        <td>
-          <paper-button class="button"  id="print" style="height: 34px  !important;" on-click="print">Print</paper-button>
-        </td>
-      </tr>
-    </table>
-     </div>
-
-    <paper-dialog id="emaildialog">
+  </div>
+  <paper-dialog id="emaildialog">
     <paper-item>Verify/Change Email id here..</paper-item>
     <paper-input value={{stud}} label="Student name"></paper-input>
     <paper-input value={{parent}} label="Parent name"></paper-input>
     <paper-input value="{{parentemail}}" label="Parent email id"></paper-input>
     <paper-button id="send" on-click="changemail">send</paper-button>
     </paper-dialog>
-
+  <div class="row-buttons">
+    <paper-button id="pdf" style="height: 34px !important;" on-click="downloadpdf">PDF</paper-button>
+    <paper-button id="email" style="height: 34px  !important;" on-click="email">Email</paper-button>
+    <paper-button id="print" style="height: 34px  !important;" on-click="print">Print</paper-button>
+  </div>
       <iron-ajax
       id="mailsendajax"
       url="{{mailsendurl}}"

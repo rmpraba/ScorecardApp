@@ -1867,7 +1867,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
           //alert(feedet[0].student_id);
  this.getfeeparenturl=sessionStorage.getItem("addrinfo")+"/getfeeparent";
               var obj={"stid":"","schol":""}
-              obj.schol.sessionStorage.getItem("sch");
+              obj.schol=sessionStorage.getItem("sch");
               obj.stid=feedet[0].student_id;
               this.getfeeparentparam=obj;
               this.$.getfeeparentajax.generateRequest();

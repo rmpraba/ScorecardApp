@@ -179,7 +179,7 @@ app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
   var trip={"trip":req.query.tripnos};
   var schoolx={"school_id":req.query.schol};
   //console.log('hello trip...'+trip);
-  connection.query('select * from point where route_id=(select id from route where ? and ?) and ? and ?',[routename,schoolx,trip,schoolx],
+  connection.query('select * from point where route_id=(select id from route where ? and ?) and ?',[routename,schoolx,trip],
     function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -576,7 +576,7 @@ app.post('/getzonechangename' ,  urlencodedParser,function (req, res)
 {
     var schoolx={"school_id":req.query.schol};
     var trans_req={"transport_required":"yes"};
-      connection.query('select student_name from student_details where id IN(Select student_id from student_fee where status="mapped" and ?) and ? and ?',[schoolx,trans_req,schoolx],
+      connection.query('select student_name from student_details where id IN(Select student_id from student_fee where status="mapped") and ? and ?',[trans_req,schoolx],
         function(err, rows)
         {
         if(!err)
@@ -1217,7 +1217,7 @@ app.post('/reportfee-card',  urlencodedParser,function (req, res)
   var stu_id={"id":req.query.studid};
   var class_id={"class_id":req.query.studid};
   var stu_name={"student_name":req.query.studid};
-       connection.query("SELECT s.id,s.student_name,(select class from class_details where id=s.class_id and school_id='"+req.query.schol+"') as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id and school_id='"+req.query.schol+"')) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id and school_id='"+req.query.schol+"')) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where  class_id='"+req.query.studid+"' and  school_id='"+req.query.schol+"' ) and s.school_id='"+req.query.schol+"' and z.school_id='"+req.query.schol+"'",
+       connection.query('SELECT s.id,s.student_name,(select class from class_details where id=s.class_id) as class_id,s.photo,s.dob,s.transport_required,z.install1_status,z.install2_status,z.install1_fine,z.install2_fine,z.zone_id,z.fees,z.discount_fee,(z.fees-z.discount_fee)as actualfee,z.installment_1,z.installment_2,(z.installment_1+z.installment_2) as total, (z.fees-z.discount_fee)-(z.installment_1+z.installment_2) as due,(z.fees-z.discount_fee)/2 as install,z.installment_1Date,z.installment_2Date,z.modeofpayment1,z.modeofpayment2,(select point_name from point where id=(select pickup_point from student_point where student_id=s.id)) as pick,(select point_name from point where id=(select drop_point from student_point where student_id=s.id)) as drop1  from student_details s left join student_fee z on s.id=z.student_id where id in(select id from student_details where (? or ? or ?) and ? )',[stu_id,class_id,stu_name,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -1594,7 +1594,7 @@ app.post('/generatenameforcheque',  urlencodedParser,function (req, res)
 app.post('/discountbyname',  urlencodedParser,function (req, res)
 {
   var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT student_name from student_details where id in (select student_id from student_fee where ? and status="mapped") and ?',[schoolx,schoolx],
+       connection.query('SELECT student_name from student_details where id in (select student_id from student_fee where ? and status="mapped")',[schoolx],
         function(err, rows)
         {
     if(!err)
@@ -2319,7 +2319,7 @@ app.post('/chequereport',  urlencodedParser,function (req, res)
   var dat1={"installment_1Date":req.query.dates};
   var dat2={"installment_2Date":req.query.dates};
   //console.log('come');
-  connection.query('Select * from cheque_details where student_id in (select student_id from student_fee  where (? or ?) and ?) and ?',[dat1,dat2,schoolx,schoolx],
+  connection.query('Select * from cheque_details where student_id in (select student_id from student_fee  where (? or ?) and ?)',[dat1,dat2,schoolx],
         function(err, rows)
         {
     if(!err)
@@ -2628,7 +2628,7 @@ app.post('/getfeedetail',  urlencodedParser,function (req, res)
 
   var name={"student_name":req.query.stid};
   var schoolx={"school_id":req.query.schol};
-      connection.query('Select * from student_fee where student_id=(select id from student_details where ? and ?) and ?',[name,schoolx,schoolx],
+      connection.query('Select * from student_fee where student_id=(select id from student_details where ? and ?)',[name,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -2648,7 +2648,7 @@ app.post('/getfeeofzonechange',  urlencodedParser,function (req, res)
 
   var name={"student_name":req.query.stid};
   var schoolx={"school_id":req.query.schol};
-      connection.query('Select * from student_zonechange where student_id=(select id from student_details where ? and ?) and ?',[name,schoolx,schoolx],
+      connection.query('Select * from student_zonechange where student_id=(select id from student_details where ? and ?)',[name,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -2911,7 +2911,7 @@ app.post('/getstureceipt',  urlencodedParser,function (req, res)
 {
   var stuid=req.query.stid;
   var schoolx={"school_id":req.query.schol};
-      connection.query('select student_name ,(select class from class_details where id=class_id and ?) as classname, (select section from class_details where id=class_id and ?) as section from student_details where id= ? and ?',[schoolx,schoolx,stuid,schoolx],
+      connection.query('select student_name ,(select class from class_details where id=class_id) as classname, (select section from class_details where id=class_id) as section from student_details where id= ? and ?',[stuid,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)
@@ -3054,7 +3054,7 @@ app.post('/getzonechangeparentname',  urlencodedParser,function (req, res){
   var stuid = req.query.studid;
   var schoolx=req.query.schol;
   //console.log('In Server');
-  connection.query('select * from parent where student_id=(select id from student_details where student_name=? and school_id=?) and school_id=?',[stuid,schoolx,schoolx],
+  connection.query('select * from parent where student_id=(select id from student_details where student_name=?) and school_id=?',[stuid,schoolx],
     function(err, rows){
       if(!err){
         if(rows.length>0)
@@ -3098,7 +3098,7 @@ app.post('/getchequedetails' ,  urlencodedParser,function (req, res)
     var schoolx={"school_id":req.query.schol};
     var student_name={"student_name":req.query.student_name};
      var name={"student_name":req.query.stid};
-      connection.query('Select * from student_fee where student_id=(select id from student_details where ? and ?) and ?',[student_name,schoolx,schoolx],
+      connection.query('Select * from student_fee where student_id=(select id from student_details where ? and ?)',[student_name,schoolx],
         function(err, rows){
     if(!err){
       if(rows.length>0)

@@ -4225,22 +4225,21 @@ app.post('/staffdrop',  urlencodedParser,function (req, res)
 
 app.post('/staffroute',  urlencodedParser,function (req, res)
 {
-    var value={"":req.query.schol,"":req.query.stfid,"":req.query.pickrt,"":req.query.droprt,"":req.query.pickppt,"":req.query.droppt,"":req.query.val,"":req.query.val1};
+    var value={"school_id":req.query.schol,"staff_id":req.query.stfid,"pick_route":req.query.pickrt,"drop_route":req.query.droprt,"pick_point":req.query.pickppt,"drop_point":req.query.droppt,"pick_trip":req.query.val,"drop_trip":req.query.val1};
 
-        connection.query('SELECT id, point_name from point where route_id=? and school_id=? and trip=?',[route_id,schoolx,trip],
+        connection.query('insert into staff_route set?',[value],
         function(err, rows)
         {
     if(!err)
     {
-    if(rows.length>0)
-    {
-      res.status(200).json({'returnval': rows});
+    
+      res.status(200).json({'returnval': 'success'});
     }
     else
     {
       res.status(200).json({'returnval': 'invalid'});
     }
-  }
+  
 });
 });
 

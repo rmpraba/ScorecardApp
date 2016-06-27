@@ -71,6 +71,7 @@
       {
         document.querySelector('transport-app').setPage("changepoint","Change Student Point");
         this.$.chpoint.selectname();
+        this.$.chpoint.selectclass();
 
       },
       routeallocation:function()
@@ -120,7 +121,8 @@
       passtemp:function(){
         document.querySelector('transport-app').setPage("passtemp","STudent PAss");
       },
-      busroute:function(){
+      busroute:function()
+      {
         document.querySelector('transport-app').setPage("vehicleroute","Map Bus to Route");
         this.$.transportservice.getroute();
        // document.querySelector('vehicleroute-card').FnClear();
@@ -136,7 +138,8 @@
       this.$.transportservice.generateroutereport();
       document.querySelector('transport-app').setPage("gradewiseroute","Grade Wise Route Report");
       },
-      addattendence:function(){
+      addattendence:function()
+      {
       //this.$.transportservice.getstudentsforattendance();
       this.$.transportservice.getroute();
       document.querySelector('transport-app').setPage("addattendence","Attendance");

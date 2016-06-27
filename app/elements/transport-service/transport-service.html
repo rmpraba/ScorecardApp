@@ -2813,6 +2813,7 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
       bustorouteResponse:function(e){
         bustoroute = e.detail.response.returnval;
         document.querySelector('bus-route-card').routearray=bustoroute;
+        document.querySelector('bus-route-item-card').callajaxfn();
       },
       bustoroutesubmit:function(itemarr){
         len=itemarr.length;

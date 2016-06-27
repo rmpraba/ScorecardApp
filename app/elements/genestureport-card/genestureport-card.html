@@ -31,7 +31,7 @@
       is: "genestureport-card",
       ready: function() 
       {
-        this.$.service.generatereportbyname();
+        //this.$.service.generatereportbyname();
         this.querySelector('paper-listbox').style.visibility='hidden';
       },
       FnClear:function(){
@@ -43,7 +43,8 @@
       {
         namearr=nameitem;
       },
-   FnInputChanged:function(e){
+   FnInputChanged:function(e)
+   {
      //alert(e.keyCode);
       if(e.keyCode==13|| e.keyCode==40)
         this.querySelector('paper-listbox').focus();

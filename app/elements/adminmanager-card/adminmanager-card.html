@@ -60,13 +60,15 @@ top:35%;
     Polymer({
       is: 'adminmanager-card',
 
-        ready: function() {
+        ready: function() 
+        {
 
       },
       discount:function()
       {
         document.querySelector('transport-app').setPage("approvediscount","Discount Approval");
-        this.$.service.discountbyname();
+         this.$.transportservice.getstudapproval();
+        //this.$.service.discountbyname();
       },
       approval:function()
       {

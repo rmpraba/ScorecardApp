@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'feereceipt-card',
        ready:function()
        {
-       this.$.service.stufeegetname();
+       //this.$.service.stufeegetname();
       },
         autocompletearr:function(autocompletearr)
     {
@@ -42,7 +42,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     {
     this.value="";
     },
-    FnInputChanged:function(e){
+    FnInputChanged:function(e)
+    {
      if(e.keyCode==13|| e.keyCode==40)
         this.querySelector('paper-listbox').focus();
       var arr=[];

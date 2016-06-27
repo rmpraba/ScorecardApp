@@ -139,7 +139,12 @@
       is: 'bus-route-item-card',
       ready:function(){
 
-        this.routetobusurl = sessionStorage.getItem("addrinfo")+"/routetobus";
+       
+      },
+      callajaxfn:function()
+      {
+ 
+  this.routetobusurl = sessionStorage.getItem("addrinfo")+"/routetobus";
         var obj = {"schol":""};
         obj.schol=sessionStorage.getItem("sch");
         this.routetobusparam=obj;

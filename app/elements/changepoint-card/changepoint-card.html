@@ -67,12 +67,13 @@
       Polymer({
         is:"changepoint-card",
         ready:function(){
-           this.$.maps.selectname();
+           //this.$.maps.selectname();
           //this.$.search.hidden=true;
-          this.$.maps.selectclass();
+          //this.$.maps.selectclass();
           this.$.submitbutton.disabled=true;
         },
-        FnClear:function(){
+        FnClear:function()
+        {
           this.$.submitbutton.hidden=true;
           this.classarr="";
           this.value="";

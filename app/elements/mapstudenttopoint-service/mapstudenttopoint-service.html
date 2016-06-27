@@ -18,7 +18,6 @@
   > 
   </iron-ajax>
   <iron-ajax
-    auto
     method="post"
     id="selectnameajax"
     url="{{selectnameurl}}"
@@ -30,7 +29,6 @@
   >
   </iron-ajax>
   <iron-ajax
-    auto
     method="post"
     id="classpickajax"
     url="{{classpickurl}}"
@@ -222,7 +220,7 @@
         this.classpickurl = sessionStorage.getItem("addrinfo")+"/classpick";
         var obj={"classes":"","schol":""}
         obj.classes=cla;
-        obj.schol=sessionStorage.getItem("sch");;
+        obj.schol=sessionStorage.getItem("sch");
         this.classpickparam=obj;
         this.$.classpickajax.generateRequest();
       },

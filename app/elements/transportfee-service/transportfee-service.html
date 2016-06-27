@@ -2098,7 +2098,8 @@ document.querySelector('feereports2-card').totalcollection=parseInt(cashtotal1)+
       this.discountreportbynameparam=obj;
        this.$.discountreportbynameajax.generateRequest();
       },
-      discountreportbynameResponse:function(e){
+      discountreportbynameResponse:function(e)
+      {
         var nameitem=e.detail.response.returnval;
         document.querySelector('discountstudent-card').autocompletename(nameitem);
       }

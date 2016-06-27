@@ -1,0 +1,343 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="staffallocation-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .laybut{
+        @apply(--layout-horizontal);
+   @apply(--layout-center);
+   display: flex;
+   margin-left: 36%;
+      }
+    </style>
+    <div class="card2">
+        <ul>
+          <li class="ro2">
+            <fieldset>
+              <ul>
+              <paper-input  hidden value="{{staffid}}"></paper-input>
+                <li class="row">
+                  <div class="detail">
+                  <div class="field1">
+                     <paper-input id="text" class="field" label="Staff Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+      <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+        </template>
+      </paper-listbox>
+                  </div>
+                    <div class="field">
+                      <paper-dropdown-menu  label="PickUp Trip">
+                        <paper-menu id="sets01" class="dropdown-content" on-iron-select="tripzxc" >
+                          <paper-item value=1>Primary</paper-item>
+                          <paper-item value=2>Pre-Primary</paper-item>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+                    <div class="field">
+                      <paper-dropdown-menu  label="Drop Trip">
+                        <paper-menu id="sets02" class="dropdown-content" on-iron-select="tripz" >
+                          <paper-item value=1>Primary</paper-item>
+                          <paper-item value=2>Pre-Primary</paper-item>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+                    <div class="field">
+                  <paper-dropdown-menu id="set" label="Pick-up Route">
+                    <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >
+                      <template  is="dom-repeat" items="{{routearr}}" as="view">
+                        <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                </div>
+                <div class="field">
+                  <paper-dropdown-menu id="set1" label="Pick-up Point">
+                    <paper-menu class="dropdown-content" on-iron-select="pickpoints" attr-for-selected="value" >
+                      <template  is="dom-repeat" items="{{pointarr}}" as="view">
+                        <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                </div>
+              </div>
+            </li>
+            <li class="row">
+              <div class="detail">
+                <div class="field">
+                  <paper-dropdown-menu id="set2" label="Drop Route">
+                    <paper-menu class="dropdown-content" on-iron-select="droproute" selected="{{selectid}}" attr-for-selected="value" >
+                      <template  is="dom-repeat" items="{{routearr}}" as="view">
+                        <paper-item value="{{view.id}}">{{view.route_name}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                </div>
+                <div class="field">
+                  <paper-dropdown-menu id="set3" label="Drop Point">
+                    <paper-menu class="dropdown-content" on-iron-select="droppoints" selected="{{selectpoint}}" attr-for-selected="value" >
+                      <template  is="dom-repeat" items="{{droparr}}" as="view">
+                        <paper-item value="{{view.id}}">{{view.point_name}}</paper-item>
+                      </template>
+                    </paper-menu>
+                  </paper-dropdown-menu>
+                </div>
+                   
+                  </div>
+                 
+                    
+                  </div>
+                </li>
+              </ul>
+            </fieldset>
+          </li>
+        </ul>
+        <paper-button style="margin-left: 46%;margin-top: 2%" class="button" on-click="qwerty">Submit</paper-button>
+    </div>
+  
+
+     <mapstudenttopoint-services id="mapstud"></mapstudenttopoint-services>
+    <transport-service id="root"></transport-service>
+    <iron-ajax
+    method="post"
+    id="selectpointajax"
+    url="{{selectpointurl}}"
+    handle-as="json"
+    content-type="application/json"
+    params="{{routepickpointparam}}"
+    on-response="pickpointsResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+    method="post"
+    id="routedroppoint"
+    url="{{routedroppointurl}}"
+    handle-as="json"
+    content-type="application/json"
+    params="{{routedroppointparam}}"
+    on-response="droppointsResponse"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+        method="post"
+        id="routepoint"
+        url="{{routepointurl}}"
+        params="{{routepointparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="routepointResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+var routename;
+var namearr=[];
+var val,val1;
+var pickroute;
+      var pickpoint;
+      var droproute;
+      var droppoint;
+    var scholtype;
+      var school=sessionStorage.getItem("sch");
+    Polymer({
+      is: 'staffallocation-card',
+
+       ready:function(){
+        this.$.root.getroute();
+           this.$.root.staffgetname();
+        this.querySelector('paper-listbox').style.visibility='hidden';
+        this.routepointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        this.routepointparam=obj;
+        this.$.routepoint.generateRequest();
+       
+      },
+      FnClear:function(){
+        //alert('hi');
+        document.querySelector('#sets0').selected = -1;
+        document.querySelector('#sets01').selected = -1;
+        document.querySelector('#sets1').selected = -1;
+        
+      },
+     
+     
+     pickroute:function(e){
+        pickroute = (e.target.selectedItem.value);
+
+        droproute=pickroute;
+        this.selectid=pickroute;
+        this.selectpointurl = sessionStorage.getItem("addrinfo")+"/staffpick";
+        var obj={"routept":"","studid":"","schol":"","schooltype":""};
+        obj.schol=sessionStorage.getItem("sch");
+        obj.routept=pickroute;
+        obj.schooltype=val;
+        this.routepickpointparam=obj;
+        this.$.selectpointajax.generateRequest();
+      },
+      droproute:function(e){
+        droproute = (e.target.selectedItem.value);
+        this.routedroppointurl = sessionStorage.getItem("addrinfo")+"/staffdrop";
+        var obj={"routedroppt":"","studid":"","schol":"","schooltype":""};
+        obj.schol=sessionStorage.getItem("sch");
+        obj.routedroppt=droproute;
+        obj.schooltype=val1;
+        this.routedroppointparam=obj;
+        this.$.routedroppoint.generateRequest();
+      },
+      pickpointsResponse:function(e){
+        var points=e.detail.response.returnval;
+          //this.droparr=points;
+        this.pointarr=points;
+      },
+      droppointsResponse:function(e){
+
+        var points=e.detail.response.returnval;
+        this.droparr=[];
+        this.droparr=points;
+      },
+      pickpoints:function(e){
+        pickpoint = (e.target.selectedItem.value);
+        this.selectpoint=pickpoint;
+        droppoint=pickpoint;
+        //this.$.selectbox.disabled=false;
+      },
+      droppoints:function(e){
+        droppoint = (e.target.selectedItem.value);
+         //this.$.selectbox.disabled=false;
+      },
+       autocompletearr:function(autocompletearr)
+    {
+      
+         namearr=autocompletearr;
+    },
+    FnInputChanged:function(e){
+     if(e.keyCode==13|| e.keyCode==40)
+        this.querySelector('paper-listbox').focus();
+      var arr=[];
+      arr.push({"itemdes":"-----Select-----"});
+      this.querySelector('paper-listbox').style.visibility='visible';
+      if(e.keyCode==8){
+        this.itemflag="true";
+        this.itemval="";
+        //alert('yes');
+        var len=(this.value).length;
+        if(len<=1){
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.itemArray="";
+          this.itemval="";
+        }
+        if(len>1){
+          this.querySelector('paper-listbox').style.visibility='visible';
+          var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+          for(var i=0;i<namearr.length;i++)
+          {
+            var subval=((namearr[i].name).trim()).substring(0,backsubval.length);
+            if((subval).toUpperCase()==(backsubval).toUpperCase())
+            {
+              var obj={"itemdes":"","itemid":""};
+              obj.itemdes=namearr[i].name;
+              obj.itemid=namearr[i].id;
+              arr.push(obj);
+            }
+          }
+          this.itemArray=arr;
+        }
+      }
+      if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+        if(this.itemflag=="true") {
+          this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+          this.itemflag="false";
+        }
+        else
+        this.itemval = this.value +String.fromCharCode((e.keyCode));
+        if(this.itemval.length>0)
+        {
+          for(var i=0;i<namearr.length;i++){
+            var subval=((namearr[i].name).trim()).substring(0,this.itemval.length);
+            if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+              var obj={"itemdes":"","itemid":""};
+              obj.itemdes=namearr[i].name;
+              obj.itemid=namearr[i].id;
+              arr.push(obj);
+            }
+          }
+          if(arr.length>0)
+            this.itemArray=arr;
+          else {
+            var obj={"itemdes":"","itemid":""};
+              obj.itemdes=namearr[i].name;
+              obj.itemid=namearr[i].id;
+              arr.push(obj);
+            this.itemArray=arr;
+          }
+        }
+      }
+
+
+     
+    },
+     FnItemSelected:function(e)
+   {
+       this.querySelector('paper-listbox').style.visibility='hidden';
+    this.studid = e.target.selectedItem.textContent.trim();
+    this.itemArray=[];
+    document.querySelector('#fetchname').selected=-1;
+    this.studname=this.studid;
+   this.value=this.studid;
+  this.$.root.getstaffid(this.studid);
+  },
+      tripzxc:function(e)
+      {
+          var routename=(e.target.selectedItem.textContent).trim();
+          
+          if(routename=='Primary')
+          {
+            val=1;
+          }
+          else
+          {
+            val=2;
+          }
+          //alert(routename+'    '+val);
+      },
+       tripz:function(e)
+      {
+          var routename=(e.target.selectedItem.textContent).trim();
+          
+          if(routename=='Primary')
+          {
+            val1=1;
+          }
+          else
+          {
+            val1=2;
+          }
+          //alert(routename+'    '+val);
+      },
+      qwerty:function(){
+        alert(this.staffid+'   '+pickroute+'   '+droproute+'   '+pickpoint+'   '+droppoint+'   '+val+'   '+val1);
+        this.root.staffroute(this.staffid,pickroute,droproute,pickpoint,droppoint,val,val1);
+      }
+    });
+  })();
+  </script>
+</dom-module>

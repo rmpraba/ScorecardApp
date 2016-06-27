@@ -4113,6 +4113,24 @@ app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res
      }
    });
  });
+
+  app.post('/staffgetname',  urlencodedParser,function (req, res){
+   var schoolx={"school_id":req.query.schol};
+   connection.query('select name from staff_details where ?',[schoolx],
+     function(err, rows){
+     if(!err){
+       if(rows.length>0){
+         //console.log(rows);
+         res.status(200).json({'returnval': rows});
+       } else {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+     } else {
+       console.log(err);
+     }
+   });
+ });
   
  app.post('/attsubmiturl',  urlencodedParser,function (req, res){
    var collection={"school_id":req.query.schol,"student_id":req.query.studentid,"student_name":req.query.student_name,"route_id":req.query.routeid,"mode_of_travel":req.query.pickupordrop,"trip":req.query.trip,"att_date":req.query.date,"status":req.query.status};
@@ -4131,6 +4149,100 @@ app.post('/getstudentsforattendancepickup',  urlencodedParser,function (req, res
        }
      });
  });
+
+
+ app.post('/getstaffid',  urlencodedParser,function (req, res){
+   var schoolx={"school_id":req.query.schol};
+   var name={"name":req.query.staffname};
+   connection.query('select id from staff_details where ? and ?',[schoolx,name],
+     function(err, rows){
+     if(!err){
+       if(rows.length>0){
+         //console.log(rows);
+         res.status(200).json({'returnval': rows});
+       } else {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+     } else {
+       console.log(err);
+     }
+   });
+ });
+
+app.post('/staffpick',  urlencodedParser,function (req, res)
+{
+    var route_id=req.query.routept;
+    var schoolx=req.query.schol;
+  var trip=req.query.schooltype;
+    //console.log(req.query.schol);
+       connection.query('SELECT id, point_name from point where route_id=? and school_id=? and trip=?',[route_id,schoolx,trip],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+  else
+  {
+    console.log(err);
+  }
+});
+});
+app.post('/staffdrop',  urlencodedParser,function (req, res)
+{
+    var route_id=req.query.routedroppt;
+  var trip=req.query.schooltype;
+    var schoolx=req.query.schol;
+
+        connection.query('SELECT id, point_name from point where route_id=? and school_id=? and trip=?',[route_id,schoolx,trip],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+});
+});
+
+
+
+app.post('/staffroute',  urlencodedParser,function (req, res)
+{
+    var value={"":req.query.schol,"":req.query.stfid,"":req.query.pickrt,"":req.query.droprt,"":req.query.pickppt,"":req.query.droppt,"":req.query.val,"":req.query.val1};
+
+        connection.query('SELECT id, point_name from point where route_id=? and school_id=? and trip=?',[route_id,schoolx,trip],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+});
+});
 
 function setvalue(){
   console.log("calling setvalue.....");

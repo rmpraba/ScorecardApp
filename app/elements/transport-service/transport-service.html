@@ -944,6 +944,39 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       debounce-duration="300"
       >
     </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="staffgetnameajax"
+      url="{{staffgetnameurl}}"
+      params="{{staffgetnameparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="staffgetnameResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+     <iron-ajax
+      method="post"
+      id="getstaffidajax"
+      url="{{getstaffidurl}}"
+      params="{{getstaffidparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getstaffidResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="staffrouteajax"
+      url="{{staffrouteurl}}"
+      params="{{staffrouteparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="staffrouteResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
     </template>
   <script>
   (function() {
@@ -1034,6 +1067,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         a2=e1.detail.response.returnval;
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
+        document.querySelector('staffallocation-card').routearr=a2;
         document.querySelector('addattendence-card').routes=a2;
       },
        getroutedetail:function(tripno)
@@ -1445,6 +1479,7 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
         rouid=e.detail.response.returnval[0].id;
         sessionStorage.setItem("routid",rouid);
         document.querySelector('vehicleroute-card').routeid=rouid;
+        document.querySelector('staffallocation-card').routeid=rouid;
       },
       gettripResponse:function(e1)
           {
@@ -3062,6 +3097,54 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
          alert('Attendance is not marked');   
         }
         
+    },
+    staffgetname:function(){
+        this.staffgetnameurl=sessionStorage.getItem("addrinfo")+"/staffgetname";
+        var obj={"schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        this.staffgetnameparam=obj;
+        this.$.staffgetnameajax.generateRequest();
+    },
+    staffgetnameResponse:function(e){
+            var res=e.detail.response.returnval;
+            document.querySelector('staffallocation-card').autocompletearr(res);
+
+    },
+    getstaffid:function(name){
+        this.getstaffidurl=sessionStorage.getItem("addrinfo")+"/getstaffid";
+        var obj={"schol":"","staffname":""}
+        obj.staffname=name;
+        obj.schol=sessionStorage.getItem("sch");
+        this.getstaffidparam=obj;
+        this.$.getstaffidajax.generateRequest();
+
+    },
+    getstaffidResponse:function(e){
+            var id=e.detail.response.returnval[0].id;
+            document.querySelector('staffallocation-card').staffid=id;
+    },
+    staffroute:function(staffid,pickrout,droprout,pickppt,dropppt,picktrip,droptrip){
+        this.staffrouteurl=sessionStorage.getItem("addrinfo")+"/staffroute";
+        var boj={"schol":"","stfid":"","pickrt":"","droprt":"","pickppt":"","droppt":"","val":"","val1":""}
+        boj.schol=sessionStorage.getItem("sch");
+        boj.stfid=staffid;
+        boj.pickrt=pickrout;
+        boj.droprt=droprout;
+        boj.pickppt=pickppt;
+        boj.droppt=dropppt;
+        boj.val=picktrip;
+        boj.val1=droptrip;
+        this.staffrouteparam=boj;
+        this.$.staffrouteajax.generateRequest();
+    },
+    staffrouteResponse:function(e){
+        var res=e.detail.response.returnval;
+        if(res=='success'){
+            alert('Staff routing alloted successfully');
+        }
+        else{
+            alert('Staff routing not alloted');   
+        }
     }
     });
  })();

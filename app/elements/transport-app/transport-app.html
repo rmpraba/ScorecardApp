@@ -46,6 +46,7 @@
 <link rel="import" href="../changepoint-card/changepoint-card.html">
 <link rel="import" href="../consolidated-report/consolidated-report.html">
 <link rel="import" href="../attendance-card/attendance-card.html">
+<link rel="import" href="../staffallocation-card/staffallocation-card.html">
 <link rel="import" href="../routestudent-card/routestudent-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
@@ -217,6 +218,9 @@
           </section>
           <section data-category="addattendence">
             <addattendence-card></addattendence-card>
+          </section>
+          <section data-category="staffalloc">
+          <staffallocation-card></staffallocation-card>
           </section>
           </iron-pages>
        </div>
@@ -529,6 +533,11 @@
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
       document.querySelector('addattendence-card').FnClear();
+      document.querySelector('addattendence-card').ready();
+    }
+    if(currpage=="staffalloc"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
       document.querySelector('addattendence-card').ready();
     }
    }

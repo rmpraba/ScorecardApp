@@ -2113,7 +2113,7 @@ app.post('/checkchequebyname',  urlencodedParser,function (req, res)
 {
   console.log('come');
   var schoolx={"school_id":req.query.schol};
-  var stuname={"student_id":req.query.stuname};
+  var stuname={"name":req.query.stuname};
 console.log(stuname);
        connection.query('SELECT * from cheque_details where cheque_status="processing" and ? and  ?',[schoolx,stuname],
         function(err, rows)

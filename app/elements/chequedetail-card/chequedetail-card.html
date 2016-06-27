@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var chqdetail=[];
     var fromdate;
     var todate;
-
+var namearr;
     Polymer({
       is: 'chequedetail-card',
 ready:function()
@@ -128,6 +128,7 @@ FnChangestatus:function(chqid,st)
 changeHandler:function(e){
        if(e.target.checked==true)
         {
+          this.chequearr=[];
           this.$.search.hidden=false;
           //this.$.maps.selectname();
           //this.studentarr=[];
@@ -143,6 +144,7 @@ changeHandler:function(e){
         },
  autocompletename(nameitem){
           namearr=nameitem;
+          //alert(namearr);
         },
         FnInputChanged:function(e){
           if(e.keyCode==13|| e.keyCode==40)
@@ -207,11 +209,12 @@ changeHandler:function(e){
             }
           }
         },
-        FnItemSelected:function(e){
-          this.studid= e.target.selectedItem.value;
-          var studname = (e.target.selectedItem.textContent).trim();
+        FnItemSelected:function(e1)
+        {
+          this.studid= e1.target.selectedItem.value;
+          var studname = (e1.target.selectedItem.textContent).trim();
           //alert(this.studid);
-          this.$.service.checkchequebyname(this.studid);
+          this.$.service.checkchequebyname(studname);
           this.itemArray=[];
           this.querySelector('paper-listbox').selected=-1;
         },

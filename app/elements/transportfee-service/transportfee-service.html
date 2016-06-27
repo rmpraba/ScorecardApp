@@ -1257,6 +1257,7 @@ document.querySelector('bouncecheque-card').bchequearr=bouncechequearr;
      },
 checkchequebyname:function(stnamee)
 {
+ // alert(stnamee);
  this.checkchequebynameurl=sessionStorage.getItem("addrinfo")+"/checkchequebyname";
          var obj={"schol":"","stuname":""}
             obj.schol=sessionStorage.getItem("sch");
@@ -1308,7 +1309,7 @@ checkchequebyname:function(stnamee)
         var cstatus;
         var chequedetail=e.detail.response.returnval;
 
-      // alert('s'+JSON.stringify(chequedetail));
+     // alert('s'+JSON.stringify(chequedetail));
         var d=new Date();
         for(var i=0;i<chequedetail.length;i++)
         {

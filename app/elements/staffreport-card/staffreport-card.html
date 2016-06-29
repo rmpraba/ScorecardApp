@@ -24,11 +24,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
         margin: 5% 0% 5% 60%;
       }
-      .fields{
+      .field{
         @apply(--layout-horizontal);
+        padding:1.5%;
       }
       #by1 paper-item, #by2 paper-item{
         width: 100%;
+      }
+      .top{
+       @apply(--layout-horizontal); 
+           margin-left: 22%;
+
+      }.fieldzz{
+            margin-top: 4%;
+    margin-left: 1%;
       }
     </style>
     <div class="routestudent">
@@ -58,8 +67,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </paper-menu>
                   </paper-dropdown-menu>
                 </div>
-                <div class="field">
-                  <paper-button class="button" on-click="check">Search</paper-button>
+                <div class="fieldzz">
+                  <paper-button  on-click="check">Search</paper-button>
                 </div>
     </div>
     <div class="pickroute">

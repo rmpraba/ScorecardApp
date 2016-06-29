@@ -22,6 +22,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    display: flex;
    margin-left: 36%;
       }
+      .card2{
+        margin-left: 11%;
+      }
     </style>
     <div class="card2">
         <ul>
@@ -32,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <li class="row">
                   <div class="detail">
                   <div class="field1">
-                     <paper-input id="text" class="field" label="Staff Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+                     <paper-input id="text" class="field" label="Type a Staff Name" is="" value="{{value}}" on-keydown="FnInputChanged" style="width: 72%; text-align: center;"></paper-input>
       <paper-listbox class="dropdown-content" id="fetchname" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
@@ -55,6 +58,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
+                    </div>
+                    </li>
+                    <li class="row">
+                  <div class="detail">
                     <div class="field">
                   <paper-dropdown-menu id="set" label="Pick-up Route">
                     <paper-menu class="dropdown-content" on-iron-select="pickroute" attr-for-selected="value" >

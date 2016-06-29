@@ -133,17 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     debounce-duration="300"
   >
   </iron-ajax>
-    <iron-ajax
-        method="post"
-        id="routepoint"
-        url="{{routepointurl}}"
-        params="{{routepointparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="routepointResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+   
   </template>
   <script>
   (function() {
@@ -162,27 +152,17 @@ var pickroute;
 
        ready:function(){
         this.$.root.getroute();
-           this.$.root.staffgetname();
+        this.$.root.staffgetname();
         this.querySelector('paper-listbox').style.visibility='hidden';
-        this.routepointurl =sessionStorage.getItem("addrinfo")+"/routepoint";
-        var obj={"schol":""}
-        obj.schol=sessionStorage.getItem("sch");
-        this.routepointparam=obj;
-        this.$.routepoint.generateRequest();
-       
       },
       FnClear:function(){
         //alert('hi');
         document.querySelector('#sets0').selected = -1;
         document.querySelector('#sets01').selected = -1;
         document.querySelector('#sets1').selected = -1;
-        
-      },
-     
-     
+     },
      pickroute:function(e){
         pickroute = (e.target.selectedItem.value);
-
         droproute=pickroute;
         this.selectid=pickroute;
         this.selectpointurl = sessionStorage.getItem("addrinfo")+"/staffpick";
@@ -209,7 +189,6 @@ var pickroute;
         this.pointarr=points;
       },
       droppointsResponse:function(e){
-
         var points=e.detail.response.returnval;
         this.droparr=[];
         this.droparr=points;
@@ -224,9 +203,7 @@ var pickroute;
         droppoint = (e.target.selectedItem.value);
          //this.$.selectbox.disabled=false;
       },
-       autocompletearr:function(autocompletearr)
-    {
-      
+       autocompletearr:function(autocompletearr){
          namearr=autocompletearr;
     },
     FnInputChanged:function(e){
@@ -334,7 +311,7 @@ var pickroute;
           //alert(routename+'    '+val);
       },
       qwerty:function(){
-        alert(this.staffid+'   '+pickroute+'   '+droproute+'   '+pickpoint+'   '+droppoint+'   '+val+'   '+val1);
+       // alert(this.staffid+'   '+pickroute+'   '+droproute+'   '+pickpoint+'   '+droppoint+'   '+val+'   '+val1);
         this.$.root.staffroute(this.staffid,pickroute,droproute,pickpoint,droppoint,val,val1);
       }
     });

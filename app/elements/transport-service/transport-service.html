@@ -977,6 +977,28 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       debounce-duration="300"
       >
     </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getstaffrouteajax"
+      url="{{getstaffrouteurl}}"
+      params="{{getstaffrouteparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getstaffrouteResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getstaffdropajax"
+      url="{{getstaffdropurl}}"
+      params="{{getstaffdropparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getstaffdropResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
     </template>
   <script>
   (function() {
@@ -1064,10 +1086,11 @@ busreport<link rel="import" href="../../bower_components/polymer/polymer.html">
       },
       getrouteResponse:function(e1)
       {
-        a2=e1.detail.response.returnval;
+        var a2=e1.detail.response.returnval;
         document.querySelector('mappointtoroute-card').routearr=a2;
         document.querySelector('vehicleroute-card').routes=a2;
         document.querySelector('staffallocation-card').routearr=a2;
+        document.querySelector('staffreport-card').routearr=a2;
         document.querySelector('addattendence-card').routes=a2;
       },
        getroutedetail:function(tripno)
@@ -3145,6 +3168,36 @@ document.querySelector('cqreceipt-card').receiptarr=recarr1;
         else{
             alert('Staff routing not alloted');   
         }
+    },
+    getstaffroute:function(rout,trip){
+        alert('pick service');
+        this.getstaffrouteurl=sessionStorage.getItem("addrinfo")+"/getstaffroute";
+        var obj={"schol":"","route":"","trip":""}
+        obj.route=rout;
+        obj.trip=trip;
+        obj.schol=sessionStorage.getItem("sch");
+        this.getstaffrouteparam=obj;
+        this.$.getstaffrouteajax.generateRequest();
+    },
+    getstaffrouteResponse:function(e){
+            var res=e.detail.response.returnval;
+            //alert(JSON.stringify(res));
+            document.querySelector('staffreport-card').staffreport=res;
+    },
+    getstaffdrop:function(rout,trip){
+        alert('drop service');
+        this.getstaffdropurl=sessionStorage.getItem("addrinfo")+"/getstaffdrop";
+        var obj={"schol":"","route":"","trip":""}
+        obj.route=rout;
+        obj.trip=trip;
+        obj.schol=sessionStorage.getItem("sch");
+        this.getstaffdropparam=obj;
+        this.$.getstaffdropajax.generateRequest();
+    },
+    getstaffdropResponse:function(e){
+            var res=e.detail.response.returnval;
+            //alert(JSON.stringify(res));
+            document.querySelector('staffreport-card').staffreport=res;
     }
     });
  })();

@@ -880,7 +880,7 @@ app.post('/namepick',  urlencodedParser,function (req, res)
     if(rows.length>0)
     {
       res.status(200).json({'returnval': rows});
-      console.log(rows);
+      //console.log(rows);
     }
     else
     {

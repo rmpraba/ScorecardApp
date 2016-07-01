@@ -869,8 +869,10 @@ app.post('/namepick',  urlencodedParser,function (req, res)
   var id={"id":req.query.id};
   var req1={"transport_required":'yes'};
   var schoolx={"school_id":req.query.schol};
+
     //console.log(req.query.schol);
         connection.query('select id , student_name, school_type from student_details where  ? and ?',[id,schoolx],
+
           function(err, rows)
         {
     if(!err)
@@ -878,11 +880,12 @@ app.post('/namepick',  urlencodedParser,function (req, res)
     if(rows.length>0)
     {
       res.status(200).json({'returnval': rows});
-      //console.log(rows);
+      console.log(rows);
     }
     else
     {
       res.status(200).json({'returnval': ''});
+      console.log('Not returing anything');
     }
   }
 

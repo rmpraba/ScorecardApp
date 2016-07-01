@@ -201,7 +201,8 @@
         //alert(JSON.stringify(nameitem));
         document.querySelector('mapstudenttopoint-card').autocompletename(nameitem);
       },
-      namepick:function(cla){
+      namepick:function(cla)
+      {
         this.namepickurl = sessionStorage.getItem("addrinfo")+"/namepick";
         var obj={"id":"","schol":""}
         obj.schol=sessionStorage.getItem("sch");

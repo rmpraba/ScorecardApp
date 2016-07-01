@@ -846,7 +846,7 @@ app.post('/classpick',  urlencodedParser,function (req, res)
   var class_id={"school_type":req.query.classes};
   var req={"transport_required":'yes'};
     //console.log('in server...');
-        connection.query('select id , student_name, school_type from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[class_id,req,schoolx],
+        connection.query('select id , student_name, school_type from student_details  where id in(select student_id from student_fee where (installment_1>0 or fees-discount_fee=0) ) and id not in (Select student_id from student_point) and ? and ?',[class_id,schoolx],
           function(err, rows)
         {
     if(!err)
@@ -870,7 +870,7 @@ app.post('/namepick',  urlencodedParser,function (req, res)
   var req1={"transport_required":'yes'};
   var schoolx={"school_id":req.query.schol};
     //console.log(req.query.schol);
-        connection.query('select id , student_name, school_type from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[id,req1,schoolx],
+        connection.query('select id , student_name, school_type from student_details where  ? and ?',[id,schoolx],
           function(err, rows)
         {
     if(!err)

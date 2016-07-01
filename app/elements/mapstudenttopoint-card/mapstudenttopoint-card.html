@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
@@ -71,6 +72,9 @@
           </div>
         </div>
       </div>
+      <paper-dialog id="spin">
+        <paper-spinner id="spinner"></paper-spinner>
+      </paper-dialog>
     </body>
     <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
   </template>
@@ -99,20 +103,24 @@
           this.$.maps.selectclass();
         },
         changeHandler:function(e){
-       if(e.target.checked==true)
-        {
-          this.$.search.hidden=false;
-          this.$.maps.selectname();
-          this.studentarr=[];
-          document.querySelector('#gradeselect').selected=-1;
-          document.getElementById("submitbutton").style.background="grey";
-
-        }
-        else
-        {
-          this.$.search.hidden=true;
-        }
-
+          if(e.target.checked==true)
+          {
+            this.$.search.hidden=false;
+            this.$.maps.selectname();
+            this.studentarr=[];
+            document.querySelector('#gradeselect').selected=-1;
+            document.getElementById("submitbutton").style.background="grey";
+            document.querySelector('#spin').open();
+            this.$.spinner.active=true;
+          }
+          else
+          {
+            this.$.search.hidden=true;
+          }
+        },
+        spinner:function(){
+          this.$.spinner.active=false;
+          document.querySelector('#spin').close();
         },
         classes1:function(e){
           this.studentarr=[];
@@ -195,6 +203,7 @@
           //alert(e.target.selectedItem.value);
           this.value=studname;
           this.$.submitbutton.hidden=false;
+          alert(this.studid);
           this.$.maps.namepick(this.studid);
           this.itemArray=[];
           this.querySelector('paper-listbox').selected=-1;

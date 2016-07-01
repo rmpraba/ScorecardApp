@@ -869,7 +869,6 @@ app.post('/namepick',  urlencodedParser,function (req, res)
   var id={"id":req.query.id};
   var req1={"transport_required":'yes'};
   var schoolx={"school_id":req.query.schol};
-    //console.log(req.query.schol);
         connection.query('select id , student_name, school_type from student_details where id in(select student_id from student_fee where student_id not in (Select student_id from student_point) and (installment_1>0 or fees-discount_fee=0))and ? and ? and ?',[id,req1,schoolx],
           function(err, rows)
         {
@@ -878,11 +877,12 @@ app.post('/namepick',  urlencodedParser,function (req, res)
     if(rows.length>0)
     {
       res.status(200).json({'returnval': rows});
-      //console.log(rows);
+      console.log(rows);
     }
     else
     {
       res.status(200).json({'returnval': ''});
+      console.log('Not returing anything');
     }
   }
 

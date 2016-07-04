@@ -953,7 +953,8 @@ app.post('/pickpoints',  urlencodedParser,function (req, res)
     var schoolx=req.query.schol;
   var trip=req.query.schooltype;
     //console.log(req.query.schol);
-       connection.query('SELECT id, point_name from point where route_id=? and school_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=?))) and trip=?',[route_id,schoolx,studid,trip],
+       //connection.query('SELECT id, point_name from point where route_id=? and school_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=?))) and trip=?',[route_id,schoolx,studid,trip],
+        connection.query('SELECT id, point_name from point where route_id=? and school_id=? and distance_from_school<=(select maxdistance from md_distance where id=(select distance_id from md_zone where id=(select zone_id from student_fee where student_id=? and school_id=?) and school_id=?) ) and trip=? and school_id=?',[route_id,schoolx,studid,schoolx,schoolx,trip,schoolx],
         function(err, rows)
         {
     if(!err)

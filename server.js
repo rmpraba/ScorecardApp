@@ -4228,7 +4228,7 @@ app.post('/staffdrop',  urlencodedParser,function (req, res)
 
 app.post('/getstaffroute',  urlencodedParser,function (req, res)
 {
-  //console.log('pick');
+  console.log('pick');
   var route_id={"pick_route":req.query.route};
     var schoolx={"school_id":req.query.schol};
   var trip={"pick_trip":req.query.trip};

@@ -2169,10 +2169,13 @@ recobj.title=title;
  var pt=feedet[0].modeofpayment1;
        if(pt=='Cheque')
        {
+       // alert('1');
          for(var j=0;j<feecheque.length;j++)
         {
+            //alert(feecheque);
           if(feecheque[j].installtype=="installment1")
           {
+            //alert('c1');
 
             //var cqobj={"cheno":"","cqdate":"","bknm":""}
             recobj.cheno=feecheque[j].cheque_no;
@@ -2186,7 +2189,7 @@ recobj.title=title;
             recobj.bknm=feecheque[j].bank_name;
             feecheque.splice(j,1);
             //cheqarr.push(cqobj);
-            //document.querySelector('receipt-card').chequearray(cqobj);
+            document.querySelector('receipt-card').chequearrayview();
             //document.querySelector('receipt-card').downloadpdf(recstudid);
           }
           }
@@ -2227,13 +2230,14 @@ document.querySelector('receipt-card').parentemail=feeparent[0].parentmail;
 var zpt=zonefeechange[0].modeofpayment1;
        if(zpt=='Cheque')
        {
+       // alert('2');
          for(var j=0;j<feecheque.length;j++)
         {
           if(feecheque[j].installtype=="installment1")
           {
 
             //var cqobj={"cheno":"","cqdate":"","bknm":""}
-            recobj.cheno=feecheque[j].cheque_no;
+            zrecobj.cheno=feecheque[j].cheque_no;
             var chdt=new Date(feecheque[j].cheque_date);
             var m_names = new Array("Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec");
             var curr_date = chdt.getDate();
@@ -2244,6 +2248,7 @@ var zpt=zonefeechange[0].modeofpayment1;
             zrecobj.bknm=feecheque[j].bank_name;
              feecheque.splice(j,1);
             //cheqarr.push(cqobj);
+             document.querySelector('receipt-card').chequearrayview();
             //document.querySelector('receipt-card').chequearray(cqobj);
             //document.querySelector('receipt-card').downloadpdf(recstudid);
           }
@@ -2251,6 +2256,7 @@ var zpt=zonefeechange[0].modeofpayment1;
        }
 recarr.push(zrecobj);
 }
+//alert(JSON.stringify(recarr));
         document.querySelector('receipt-card').receiptarr=recarr;
         var pt=feedet[0].modeofpayment1;
        if(pt=='Cheque')
@@ -2270,6 +2276,7 @@ recarr.push(zrecobj);
             var todatez = curr_date + "-" + m_names[curr_month]+ "-" + curr_year;
             cqobj.cqdate=todatez;
             cqobj.bknm=feecheque[j].bank_name;
+             document.querySelector('receipt-card').chequearrayview();
             //cheqarr.push(cqobj);
             //document.querySelector('receipt-card').chequearray(cqobj);
             //document.querySelector('receipt-card').downloadpdf(recstudid);
@@ -2329,11 +2336,13 @@ recobj1.title=title1;
 var pt1=feedet[0].modeofpayment2;
        if(pt1=='Cheque')
        {
+        //alert('3');
   for(var j=0;j<feecheque.length;j++)
         {
+            //alert(feecheque);
           if(feecheque[j].installtype=="installment2")
           {
-
+               //alert('c3');
             var cqobj1={"cheno":"","cqdate":"","bknm":""}
             recobj1.cheno=feecheque[j].cheque_no;
             var chdt1=new Date(feecheque[j].cheque_date);
@@ -2346,6 +2355,7 @@ var pt1=feedet[0].modeofpayment2;
             recobj1.bknm=feecheque[j].bank_name;
              feecheque.splice(j,1);
             //cheqarr.push(cqobj);
+             document.querySelector('cqreceipt-card').chequearrayview();
             //document.querySelector('cqreceipt-card').chequearray(cqobj1);
             //document.querySelector('receipt-card').downloadpdf(recstudid);
           }
@@ -2394,6 +2404,7 @@ zrecobj1.title=title;
 var pt1=feedet[0].modeofpayment2;
        if(pt1=='Cheque')
        {
+        //alert('4');
   for(var j=0;j<feecheque.length;j++)
         {
           if(feecheque[j].installtype=="installment2")
@@ -2411,6 +2422,7 @@ var pt1=feedet[0].modeofpayment2;
             zrecobj1.bknm=feecheque[j].bank_name;
              feecheque.splice(j,1);
             //cheqarr.push(cqobj);
+             document.querySelector('cqreceipt-card').chequearrayview();
             //document.querySelector('cqreceipt-card').chequearray(cqobj1);
             //document.querySelector('receipt-card').downloadpdf(recstudid);
           }

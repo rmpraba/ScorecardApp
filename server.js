@@ -3738,6 +3738,9 @@ app.post('/valuesinsta1cheque',  urlencodedParser,function (req, res)
   });
 });
 
+
+
+
 app.post('/valuesinsta2cheque',  urlencodedParser,function (req, res)
 {
   var date={"installment_2Date":req.query.dates};
@@ -3852,6 +3855,57 @@ app.post('/valuesinsta1cash',  urlencodedParser,function (req, res)
   var schoolx=req.query.schol;
   //    connection.query('Select f.student_id,p.parent_name, d.student_name, f.receipt_no1, f.fees,f.installment_1,cd.class,cd.section from student_fee f left join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where ? between and ? and ? and d.school_id=?',[fromdate,date, mode,schoolx],
   var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no1, f.fees,f.installment_1,f.installment_1Date,cd.class,cd.section from student_fee f join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where installment_1Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment1='Cash' and d.school_id='"+schoolx+"' and p.school_id='"+schoolx+"' and f.school_id='"+schoolx+"' and cd.school_id='"+schoolx+"'";
+   console.log(qur);
+   var schol=req.query.schol;
+      // connection.query("Select student_id,receipt_no1,fees,installment_1,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where (? and ?) and school_id='"+req.query.schol+"'",[date, mode],
+      connection.query(qur,
+        function(err, rows){
+          var itemarr = new Array();
+          if(!err){
+            if(rows.length>0){
+              for(var i=0;i<rows.length;i++){
+
+                  /*var obj={"student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":"","grade":""};
+                  obj.student_id=rows[i].student_id;
+                  obj.student_name=rows[i].student_name;
+                  obj.receipt_no=rows[i].receipt_no2;
+                  obj.fees=rows[i].fees;
+                  obj.grade=rows[i].class+" / "+rows[i].section;
+                  obj.installment_1=rows[i].installment_2;*/
+
+                 var obj={"parent_name":"","installment_date":"","student_id":"","student_name":"","receipt_no":"","fees":"","installment_1":"","grade":""};
+                  obj.parent_name=rows[i].parent_name;
+                  obj.student_id=rows[i].student_id;
+                  obj.student_name=rows[i].student_name;
+                  obj.receipt_no=rows[i].receipt_no1;
+                  obj.fees=rows[i].fees;
+                  obj.grade=rows[i].class+" / "+rows[i].section;
+                  obj.installment_1=rows[i].installment_1;
+                  obj.installment_date=rows[i].installment_1Date;
+                  // obj.installment_date=(rows[i].installment_1Date).getDate()+"-"+((rows[i].installment_1Date).getMonth()+1)+"-"+(rows[i].installment_1Date).getFullYear();
+                  itemarr.push(obj);
+              }
+                //console.log(JSON.stringify(itemarr));
+          res.status(200).json({'returnval': itemarr});
+            } else {
+                res.status(200).json({'returnval': ''});
+            }
+          } else {
+            console.log(err);
+          }
+  });
+}); 
+
+app.post('/zonechangeinsta1cash',  urlencodedParser,function (req, res)
+{
+  var date={"installment_1Date":req.query.dates};
+  var fromdate={"installment_1Date":req.query.fromdate};
+  var mode= {"modeofpayment1":"Cash"};
+
+  // var type={"installtype":'installment2'};
+  var schoolx=req.query.schol;
+  //    connection.query('Select f.student_id,p.parent_name, d.student_name, f.receipt_no1, f.fees,f.installment_1,cd.class,cd.section from student_fee f left join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where ? between and ? and ? and d.school_id=?',[fromdate,date, mode,schoolx],
+  var qur="Select distinct f.student_id, p.parent_name,d.student_name, f.receipt_no1, f.fees,f.installment_1,f.installment_1Date,cd.class,cd.section from student_zonechange f join student_details d on (f.student_id=d.id) join class_details cd on (cd.id=d.class_id) join parent p on p.student_id=d.id where installment_1Date between '"+req.query.fromdate+"' and '"+req.query.dates+"' and modeofpayment1='Cash' and d.school_id='"+schoolx+"' and p.school_id='"+schoolx+"' and f.school_id='"+schoolx+"' and cd.school_id='"+schoolx+"'";
    console.log(qur);
    var schol=req.query.schol;
       // connection.query("Select student_id,receipt_no1,fees,installment_1,(select student_name from student_details where id=student_id and school_id='"+req.query.schol+"') as name,(select (select class from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as standard,(select (select section from class_details where id=class_id and school_id='"+req.query.schol+"') from student_details where id=student_id and school_id='"+req.query.schol+"')as section from student_fee  where (? and ?) and school_id='"+req.query.schol+"'",[date, mode],

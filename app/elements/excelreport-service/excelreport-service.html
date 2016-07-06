@@ -24,6 +24,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+
+   <iron-ajax
+        method="post"
+        id="zonechangeinsta1cashajax"
+        url="{{zonechangeinsta1cashurl}}"
+        params="{{zonechangeinsta1cashparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="zonechangeinsta1cashResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
     <iron-ajax
         method="post"
         id="valuesinsta2cashajax"
@@ -61,11 +74,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-    var todate,fromdat;
+    var todate,fromdat,instal,modeofpay;
+    var result1;
     Polymer({
       is: 'excelreport-service',
 
-      values:function(date,fromdate, installment, modeofpayment){
+      values:function(date,fromdate, installment, modeofpayment)
+      {
+        instal=installment;
+        modeofpay=modeofpayment;
+
         var condate = new Date(date);
          if(condate.getDate()<10){
           var dat="0"+condate.getDate();
@@ -127,15 +145,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
       valuesinsta1cashResponse:function(e){
-        var result = e.detail.response.returnval;
+         result1 = e.detail.response.returnval;
         // alert(JSON.stringify(result));
-        for(var i=0;i<result.length;i++){
-          var dat=new Date(result[i].installment_date);
-          result[i].installment_date=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        for(var i=0;i<result1.length;i++){
+          var dat=new Date(result1[i].installment_date);
+          result1[i].installment_date=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
 
         }
-        document.querySelector('excelreport-card').excelcasharr=result;
+
+         if(instal== "Installment 1")
+         {
+          if(modeofpay == "Cash")
+          {
+            this.zonechangeinsta1cashurl=sessionStorage.getItem("addrinfo")+"/zonechangeinsta1cash";
+            var obj={"fromdate":"","dates":"","schol":"","modeofpayment":""}
+            obj.dates=todate;
+            obj.fromdate=fromdat;
+            obj.schol=sessionStorage.getItem("sch");
+            obj.modeofpayment = "Cash";
+            this.zonechangeinsta1cashparam=obj;
+            this.$.zonechangeinsta1cashajax.generateRequest();
+          }
+        }
+        
       },
+      zonechangeinsta1cashResponse:function(e)
+      {
+        var result=e.detail.response.returnval;
+        for(var i=0;i<result.length;i++)
+        {
+          var dat=new Date(result[i].installment_date);
+          result[i].installment_date=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        result1.push(result[i]);
+      }
+       // alert(JSON.stringify(result1));
+        document.querySelector('excelreport-card').excelcasharr=result1;
+      },
+
       valuesinsta2cashResponse:function(e){
         var result = e.detail.response.returnval;
          for(var i=0;i<result.length;i++){

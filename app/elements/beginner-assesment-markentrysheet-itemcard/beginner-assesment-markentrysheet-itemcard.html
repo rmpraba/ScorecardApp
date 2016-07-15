@@ -42,6 +42,7 @@
         
       },
       FnScore:function(){        
+        this.mark=this.score;
         this.$.bassesmentservice.callFetchGradeService((parseInt(this.score)/10));
       },
       FnSetGrade:function(grade){
@@ -49,8 +50,8 @@
         this.callService();
       },
       callService:function(){
-        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Correct Words",this.correctword,this.score,this.grade);
-        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Comprehension",this.comprehension,this.score,this.grade);
+        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Correct Words",this.correctword,this.mark,this.grade);
+        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Comprehension",this.comprehension,this.mark,this.grade);
       }
     });
   })();

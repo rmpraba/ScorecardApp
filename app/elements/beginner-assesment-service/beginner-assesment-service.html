@@ -180,7 +180,8 @@
         obj.mark=mark;
         obj.score=score;
         obj.grade=grade;
-        this.insertbamarkparam= obj;        
+        this.insertbamarkparam= obj;  
+        alert(JSON.stringify(obj));      
         this.$.insertbamarkajax.generateRequest();
       },
       insertbamarkResponse:function(e){

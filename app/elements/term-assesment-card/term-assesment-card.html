@@ -48,6 +48,7 @@
               </template>
             </paper-menu>
           </paper-dropdown-menu>
+
           <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
@@ -59,7 +60,7 @@
            <paper-dropdown-menu id="assessment" label="Select Assesment" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required> 
               <template is="dom-repeat" items="{{assesmentarr}}">
-                <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>               
+                <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>      
               </template>
             </paper-menu>
           </paper-dropdown-menu>  
@@ -82,33 +83,31 @@
     var gradename,section,term,assesment,subject,academicyear;
     Polymer({
       is: 'term-assesment-card',
-      setPage:function(page){        
-        this.page=page;
-      },
-      input1:function(){
-
-      },
-      input2:function(){
-
-      },
-      input3:function(){
-
+      ready:function(){
+        this.flag=0;
       },
       FnSelectacademicyear:function(e){
         academicyear = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_academicyear",academicyear);
+        if(this.flag==1)
+          this.callService();       
       },
       FnSelectGrade:function(e){
         gradename = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.assesmentservice.callSectionService(gradename);
+        if(this.flag==1)
+          this.callService();
       },
       FnSelectSection:function(e){
         section = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",section);
         this.$.assesmentservice.callSubjectService(gradename,section);
+        if(this.flag==1)
+          this.callService();
       },      
       FnSelectSubject:function(e){
+        this.flag=1;
         subject = e.target.selectedItem.textContent.trim(); 
         localStorage.setItem("curr_sess_subject",subject);
         this.callService();       
@@ -116,6 +115,8 @@
       FnSelectAssesment:function(e){
         assesment = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_assesment",assesment);
+        if(this.flag==1)
+          this.callService();
       },
       callService:function(){
         if(subject=="Maths"){        

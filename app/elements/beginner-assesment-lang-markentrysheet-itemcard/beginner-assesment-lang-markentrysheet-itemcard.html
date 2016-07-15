@@ -40,15 +40,15 @@
         
       },
       FnActivity:function(){        
+        this.mark=this.score;
         this.$.bassesmentservice.callFetchGradeService(((parseInt(this.score)*4)/10));
       },
       FnSetGrade:function(grade){
         this.grade=grade;
         this.callService();
       },
-      callService:function(){
-        // alert(this.studid);
-        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Activity",this.correctword,this.score,this.grade);        
+      callService:function(){        
+        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Activity",this.correctword,this.mark,this.grade);        
       }
     });
   })();

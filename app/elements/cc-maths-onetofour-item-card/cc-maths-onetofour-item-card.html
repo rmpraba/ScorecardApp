@@ -49,7 +49,7 @@
         </tr>
       </table>
     </div>
-    <assesment-service id="assesmentservice"></assesment-service> 
+    <term-assesment-service id="assesmentservice"></term-assesment-service> 
   </template>
   <script>
   (function() {
@@ -60,7 +60,7 @@
       ready:function(){       
       },
       FnUnderstanding:function(e){               
-        understanding=parseFloat(this.understanding).toFixed(2);
+        understanding=parseFloat(this.understanding).toFixed(2);        
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding);       
       },
       FnGroupactivity:function(e){               

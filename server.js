@@ -329,7 +329,7 @@ app.post('/insertbamark-service',  urlencodedParser,function (req, res)
 app.post('/fetchgrade-service',  urlencodedParser,function (req, res)
 {  
   var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
-  console.log(qur);
+  // console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -364,9 +364,13 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
          sub_category:req.query.subcategory,
          mark:req.query.mark                 
   }
-
+  var subname={subject_name:req.query.subject};
+  connection.query("SELECT subject_category FROM md_subject where ?",[subname],
+  function(err, rows)
+  {
+  response.subject_category=rows[0].subject_category;  
   connection.query("INSERT INTO tr_term_assesment_marks set ?",[response],
-    function(err, rows)
+  function(err, rows)
     {
     if(!err)
     {    
@@ -376,8 +380,8 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
     {
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
-    }  
-
+    }
+  });
   });
 });
 

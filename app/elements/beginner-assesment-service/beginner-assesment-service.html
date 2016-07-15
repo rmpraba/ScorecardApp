@@ -74,6 +74,7 @@
         debounce-duration="300"
     > 
     <iron-ajax
+        auto
         method="post"
         id="fetchgradeajax"
         url="{{fetchgradeurl}}"
@@ -168,6 +169,7 @@
         document.querySelector('beginner-assesment-lang-markentrysheet').studarr=arr;
       },
       callbamarkinsertService:function(studentid,category,mark,score,grade){
+        alert(mark+" "+score);
         this.insertbamarkurl=sessionStorage.getItem("addrinfo")+"/insertbamark-service";
         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","subject":"","studentid":"","category":"","mark":"","score":"","grade":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");

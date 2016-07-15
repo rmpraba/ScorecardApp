@@ -326,15 +326,16 @@ app.post('/insertbamark-service',  urlencodedParser,function (req, res)
 
 
 //fetching grade
-app.post('/fetchgrade-service',  urlencodedParser,function (req, res)
+app.post('/fetchgrade-service',  urlencodedParser,function (req,res)
 {  
-  var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
-  // console.log(qur);
+  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+  var qur="SELECT * FROM md_grade_rating";
   connection.query(qur,
     function(err, rows)
     {
     if(!err)
-    {    
+    { 
+      // console.log(JSON.stringify(rows));   
       res.status(200).json({'returnval': rows});
     }
     else

@@ -2,6 +2,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../beginner-assesment-service/beginner-assesment-service.html">
 <dom-module id="beginner-assesment-markentrysheet-itemcard">
   <template>
@@ -29,19 +30,37 @@
         </tr></table>
     </div>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
+    <iron-ajax        
+        method="post"
+        id="fetchgradeajax"
+        url="{{fetchgradeurl}}"
+        params="{{fetchgradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
     'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
     Polymer({
       is: 'beginner-assesment-markentrysheet-itemcard',
+      ready:function(){
+
+      },
       FnCorrectWords:function(){
         
       },
       FnComprehension:function(){
         
       },
-      FnScore:function(){        
+      FnScore:function(){  
+        this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradeajax.generateRequest();       
         this.mark=this.score;
         this.$.bassesmentservice.callFetchGradeService((parseInt(this.score)/10));
       },
@@ -52,6 +71,17 @@
       callService:function(){
         this.$.bassesmentservice.callbamarkinsertService(this.studid,"Correct Words",this.correctword,this.mark,this.grade);
         this.$.bassesmentservice.callbamarkinsertService(this.studid,"Comprehension",this.comprehension,this.mark,this.grade);
+      },
+      fetchgradeResponse:function(e){
+        var returnval=e.detail.response.returnval;        
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        // alert(JSON.stringify(lower));
+        // alert(JSON.stringify(higher));
+        // alert(JSON.stringify(grade));
       }
     });
   })();

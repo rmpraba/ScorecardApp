@@ -1,0 +1,72 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/cc-dance-onetofour-item-card/cc-dance-onetofour-item-card.html">
+
+
+
+
+<dom-module id="cc-dance-onetofour-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+        table{
+          width: 100%;
+          border-collapse: collapse;
+          margin-left: 1%;
+      }
+      .studname{
+        width: 30%;
+          }
+    </style>
+    <div>
+   <table border="1">
+    
+      <tr>
+
+
+       <th>Sl.No</th>
+       <th>Student's Name</th>
+       <th colspan="3">Interest</th>
+       <th colspan="3">Rhythm</th>
+       <th colspan="3">Grace</th>
+       
+      <tr><th></th><th></th>
+
+ 
+      <th colspan="3">(10)</th>
+      <th colspan="3">(10)</th>
+      <th colspan="3">(10)</th>
+     
+     
+    </table>      
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'cc-dance-onetofour-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'cc-dance-onetofour-card',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

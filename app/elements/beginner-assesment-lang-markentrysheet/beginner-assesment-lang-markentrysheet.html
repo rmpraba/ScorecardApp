@@ -1,0 +1,65 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../component-service/component-service.html">
+<link rel="import" href="../beginner-assesment-lang-markentrysheet-itemcard/beginner-assesment-lang-markentrysheet-itemcard.html">
+
+<dom-module id="beginner-assesment-lang-markentrysheet">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        width: 60%;
+        border-collapse: collapse;
+        margin-left: 1%;
+      }
+      .studname{
+        width: 30%;
+      }
+    </style>
+    <div>
+    <template is="dom-repeat" items="{{label}}">
+      <center><h1>{{schoolname}}</h1>
+      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+      <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
+      <table border="1" >    
+      <tr>
+      <th style="width: 5%;">{{item.SNo}}</th>
+      <th style="width: 25%;">{{item.Name}}</th>
+      <th style="width: 5%;">{{item.Activity_Sheet}}</th>
+      <th style="width: 5%;">{{item.Grade}}</th>   
+      </tr>      
+      <template is="dom-repeat" items="{{studarr}}">
+      <tr><td colspan="6">
+      <beginner-assesment-lang-markentrysheet-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></beginner-assesment-lang-markentrysheet-itemcard>
+      </td></tr>
+      </template>
+      </table>
+      </center> 
+    </template>     
+    </div>
+    <component-service id="componentservice" label="{{label}}"></component-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'beginner-assesment-lang-markentrysheet',
+      ready:function(){
+        localStorage.setItem("curr_sess_showpage","beginner-assesment-lang-markentrysheet");
+        this.$.componentservice.callcomponentService();        
+      },
+      setDefaultHeaders:function(){
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.subject=localStorage.getItem("curr_sess_subject");
+      }
+    });
+  })();
+  </script>
+</dom-module>
+

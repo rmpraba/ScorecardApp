@@ -1,0 +1,45 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="component-service">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+     <!--Component to read Labels for the components from componentconfig.json file-->
+    <iron-ajax
+      id="componentconfigajax"
+      url="../../configfile/componentconfig.json"
+      handle-as="json"
+      content-type="application/json"
+      on-response="componentconfigResponse">
+    </iron-ajax>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'component-service',
+      callcomponentService:function(){      
+      this.$.componentconfigajax.generateRequest();
+      },
+      componentconfigResponse:function(e) {
+      this.current_page=localStorage.getItem("curr_sess_showpage");      
+      var arr = e.detail.response;      
+      var labelvalue=[];      
+      //Binding labels to login-card
+      for(var i=1;i<arr.length;i++) {        
+        if ((arr[i].Page[0].page[0]) == this.current_page) {
+          labelvalue = arr[i].Page[1].Label;          
+          if(this.current_page!='login-card')
+          // document.querySelector('app-homepage').setPageTitle(arr[i].Page[2].title);
+          /*Binding Labels and error message to the respective card*/         
+          document.querySelector(arr[i].Page[0].page[1]).label = labelvalue;
+        }
+      }
+    }
+    });
+  })();
+  </script>
+</dom-module>

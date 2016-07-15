@@ -1,0 +1,24 @@
+
+  [ 
+    {"Page":[
+    {"page":["login-card","login-card"]},
+    {"Label":[{"user_name":"Username","pass_word":"Password","user_name_error":"Username required","pass_word_error":"Password required"}]}
+    ,{"title":["Login Card"]}
+    ]},
+    {"Page":[
+      {"page":["beginner-assesment-markentrysheet","beginner-assesment-markentrysheet"]},
+      {"Label":[{"SNo":"S.No","Name":"NAME","Correct_words":"CORRECT WORDS","Comprehension":"COMPREHENSION (QUESTIONS ANSWERED)","Score":"SCORE","Grade":"GRADE"}]},
+      {"title":["Beginner Level Assesment"]}
+    ]},
+    {"Page":[
+      {"page":["beginner-assesment-lang-markentrysheet","beginner-assesment-lang-markentrysheet"]},
+      {"Label":[{"SNo":"S.No","Name":"NAME","Activity_Sheet":"Activity Sheets (25)","Grade":"GRADE"}]},
+      {"title":["Beginner Level Assesment"]}
+    ]},
+    {"Page":[
+      {"page":["cc-maths-onetofour-card","cc-maths-onetofour-card"]},
+      {"Label":[{"SNo":"S.No","Name":"NAME","Activity_Sheet":"Activity Sheets (25)","Grade":"GRADE"}]},
+      {"title":["Beginner Level Assesment"]}
+    ]}
+  ]
+

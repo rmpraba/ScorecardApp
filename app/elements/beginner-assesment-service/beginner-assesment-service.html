@@ -1,0 +1,206 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="beginner-assesment-service">
+  <template>
+  <iron-ajax        
+        id="academicajax"
+        url="../../configfile/academicconfig.json"
+        params="{{academicparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="academicResponse"
+        debounce-duration="300"
+    >
+  <iron-ajax
+        method="post"
+        id="assesmentajax"
+        url="{{assesmenturl}}"
+        params="{{assesmentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="assesmentResponse"
+        debounce-duration="300"
+    >
+  <iron-ajax
+        method="post"
+        id="gradeajax"
+        url="{{gradeurl}}"
+        params="{{gradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="gradeResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="sectionajax"
+        url="{{sectionurl}}"
+        params="{{sectionparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="sectionResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="subjectajax"
+        url="{{subjecturl}}"
+        params="{{subjectparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="subjectResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="fetchstudentajax"
+        url="{{fetchstudenturl}}"
+        params="{{fetchstudentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="insertbamarkajax"
+        url="{{insertbamarkurl}}"
+        params="{{insertbamarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertbamarkResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="fetchgradeajax"
+        url="{{fetchgradeurl}}"
+        params="{{fetchgradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeResponse"
+        debounce-duration="300"
+    >   
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'beginner-assesment-service',
+      ready:function(){
+      },
+      callAcademicService:function(){
+        this.$.academicajax.generateRequest();
+      },
+      academicResponse:function(e){              
+        document.querySelector('beginner-assesment-card').academicarr=e.detail.response;
+      },
+      callAssesmentService:function(assesmentname){
+         this.assesmenturl=sessionStorage.getItem("addrinfo")+"/assesmenttype-service";
+         var obj={"schoolid":"","assesmentname":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.assesmentname=assesmentname;
+         this.assesmentparam= obj;
+         this.$.assesmentajax.generateRequest();
+      },
+      assesmentResponse:function(e){         
+         var assesmentarr=e.detail.response.returnval;
+         sessionStorage.setItem("curr_sess_assesmentid",assesmentarr[0].assesment_id);
+         sessionStorage.setItem("curr_sess_assesmentname",assesmentarr[0].assesment_name);
+         this.callGradeService();
+      },
+      callGradeService:function(){
+         this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
+         var obj={"schoolid":"","loggedid":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         this.gradeparam= obj;
+         this.$.gradeajax.generateRequest();
+      },
+      gradeResponse:function(e){
+          document.querySelector('beginner-assesment-card').gradearr=e.detail.response.returnval;
+      },
+      callSectionService:function(gradename){        
+         this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
+         var obj={"schoolid":"","loggedid":"","gradename":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.gradename=gradename;
+         this.sectionparam= obj;
+         this.$.sectionajax.generateRequest();
+      },
+      sectionResponse:function(e){        
+         document.querySelector('beginner-assesment-card').sectionarr=e.detail.response.returnval; 
+      },
+      callSubjectService:function(gradename,section){
+         this.subjecturl=sessionStorage.getItem("addrinfo")+"/subject-service";
+         var obj={"schoolid":"","loggedid":"","gradename":"","section":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.gradename=gradename;
+         obj.section=section;
+         this.subjectparam= obj;
+         this.$.subjectajax.generateRequest();
+      },
+      subjectResponse:function(e){
+          // alert(JSON.stringify(e.detail.response.returnval));
+          document.querySelector('beginner-assesment-card').subjectarr=e.detail.response.returnval;
+      },
+      callFetchStudentInfo:function(grade,section){
+         this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
+         var obj={"schoolid":"","gradename":"","section":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.gradename=grade;
+         obj.section=section;
+         this.fetchstudentparam= obj;
+         this.$.fetchstudentajax.generateRequest();
+      },
+      fetchstudentResponse:function(e){   
+         // alert(JSON.stringify(e.detail.response.returnval));      
+         var arr=e.detail.response.returnval;
+         for(var i=0;i<arr.length;i++){
+          arr[i].serialno=i+1;
+         } 
+        sessionStorage.setItem("curr_sess_classid",arr[0].class_id);        
+        document.querySelector('beginner-assesment-markentrysheet').studarr=arr;
+        document.querySelector('beginner-assesment-lang-markentrysheet').studarr=arr;
+      },
+      callbamarkinsertService:function(studentid,category,mark,score,grade){
+        this.insertbamarkurl=sessionStorage.getItem("addrinfo")+"/insertbamark-service";
+        var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","subject":"","studentid":"","category":"","mark":"","score":"","grade":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.assesmentid=sessionStorage.getItem("curr_sess_assesmentid");
+        obj.classid=sessionStorage.getItem("curr_sess_classid");
+        obj.subject=localStorage.getItem("curr_sess_subject");
+        obj.studentid=studentid;
+        obj.category=category;
+        obj.mark=mark;
+        obj.score=score;
+        obj.grade=grade;
+        this.insertbamarkparam= obj;        
+        this.$.insertbamarkajax.generateRequest();
+      },
+      insertbamarkResponse:function(e){
+        alert(e.detail.response.returnval);
+      },
+      callFetchGradeService:function(score){
+        this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        var obj={"score":""};
+        obj.score=score;
+        this.fetchgradeparam= obj;
+        this.$.fetchgradeajax.generateRequest();
+      },
+      fetchgradeResponse:function(e){
+        var returnval=e.detail.response.returnval[0].grade;
+        if(localStorage.getItem("curr_sess_subject")=="English")
+        document.querySelector('beginner-assesment-markentrysheet-itemcard').FnSetGrade(returnval);
+        else
+        document.querySelector('beginner-assesment-lang-markentrysheet-itemcard').FnSetGrade(returnval);
+      }
+    });
+  })();
+  </script>
+</dom-module>

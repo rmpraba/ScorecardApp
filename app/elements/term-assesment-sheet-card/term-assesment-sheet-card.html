@@ -1,0 +1,36 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
+<link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
+
+<dom-module id="term-assesment-sheet-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="content">
+      <iron-pages selected="{{page}}" attr-for-selected="data-category">  
+        <section data-category="cc-maths-onetofour-card">        
+          <cc-maths-onetofour-card></cc-maths-onetofour-card>
+        </section> 
+        <section data-category="cc-evs-onetofour-card">        
+          <cc-evs-onetofour-card></cc-evs-onetofour-card>
+        </section>   
+      </iron-pages>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'term-assesment-sheet-card',
+      setPage:function(page){        
+        this.page=page;
+      }
+    });
+  })();
+  </script>
+</dom-module>

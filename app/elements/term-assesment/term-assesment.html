@@ -1,0 +1,26 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="../term-assesment-card/term-assesment-card.html">
+<link rel="../term-assesment-sheet-card/term-assesment-sheet-card.html">
+
+<dom-module id="term-assesment">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <term-assesment-card></term-assesment-card>
+      <term-assesment-sheet-card></term-assesment-sheet-card>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'term-assesment',     
+    });
+  })();
+  </script>
+</dom-module>

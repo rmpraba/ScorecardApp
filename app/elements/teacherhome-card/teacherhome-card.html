@@ -1,0 +1,99 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\..\bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="..\..\bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+<link rel="import" href="../beginner-assesment-service/beginner-assesment-service.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+
+
+<dom-module id="teacherhome-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-button{
+        margin-left: 25%;
+        margin-top: 10%;
+      }
+      .container{
+        width: 100%;
+        @apply(--layout-horizontal);
+      }
+      .card{
+        width: 33.33%;
+      }
+      .container-full{
+        /*background-color: #fefefe;*/
+      }
+    </style>
+    <div class="container-full">
+    <div class="container">
+      <div class="card">    
+       <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/pre-entry.png" height="180px" width="180px"></paper-button>
+      </div>
+      <div class="card">
+       <paper-button on-click="FnSelectEntryType" no ink><img src="../../images/entry.png" height="180px" width="180px"></paper-button>
+      </div>
+      <div class="card">
+       <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
+      </div>
+    </div>
+    <div class="dialog">      
+      <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+          <paper-dropdown-menu id="term" label="Select Term" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content" on-iron-select="FnSelectTerm" attr-for-selected="value" selected="{{selectterm}}">
+              <template is="dom-repeat" items="{{termarr}}">
+                <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+      </paper-dialog>
+    </div>
+    </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'teacherhome-card',
+      FnSelectPreEntryType:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','PreEntry');
+        this.$.bassesmentservice.callAcademicService(); 
+        this.$.bassesmentservice.callAssesmentService("Beginner Level"); 
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('beginnerassesment','');
+      },
+      FnSelectEntryType:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','Entry Level');
+        this.$.assesmentservice.callTermService("Entry"); 
+      },
+      FnSelectTermType:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','Term');
+        this.$.assesmentservice.callAcademicService(); 
+        this.$.assesmentservice.callTermService("Term");        
+      },
+      FnToggle:function(){
+        this.$.dialog.toggle();
+      },
+      FnSelectTerm:function(e){
+        var termname = e.target.selectedItem.textContent.trim();  
+        localStorage.setItem('curr_sess_termname',termname);  
+        this.$.assesmentservice.callAssesmentService("Term",termname,"");               
+        this.$.assesmentservice.callGradeService();   
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('termassesment','');
+      }
+    });
+  })();
+  </script>
+</dom-module>

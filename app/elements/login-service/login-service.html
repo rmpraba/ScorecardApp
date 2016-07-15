@@ -1,0 +1,107 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="login-service">
+  <template>
+   <iron-ajax
+        auto
+        id="addressajax"
+        url="../../configfile/address.json"
+        handle-as="json"
+        content-type="application/json"
+        on-response="addressResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+   <iron-ajax
+        method="post"
+        id="checkschoolajax"
+        url="{{checkschoolurl}}"
+        params="{{checkschoolparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="checkschoolResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!--pass the user name and password for signin-->
+  <iron-ajax
+        method="post"
+        id="loginajax"
+        url="{{loginurl}}"
+        params="{{loginparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="loginResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+ 
+  </template>
+
+  <script>
+  (function() {
+   
+    Polymer({
+      is: "login-service",
+
+     addressResponse:function(e)
+      {
+        var addr=e.detail.response.address;
+        sessionStorage.setItem("addrinfo",addr);       
+      },
+      checkschool:function(uname)
+      {
+        username=uname;
+        this.checkschoolurl=sessionStorage.getItem("addrinfo")+"/checkschool-card";
+        var obj={"username":""}
+        obj.username=uname;
+        this.checkschoolparam=obj;
+        this.$.checkschoolajax.generateRequest();
+      },
+      checkschoolResponse:function(e)
+      {
+        var schol=e.detail.response.returnval[0].name;
+        document.querySelector('login-card').schname=schol;
+      },
+     //fetch the username and password from logincard and pass to the loginajax
+      logincheck:function(uname,pass)
+      {
+        username=uname;
+        this.loginurl=sessionStorage.getItem("addrinfo")+"/login-card";
+        var obj={"username":"","password":""};
+        obj.username=uname;
+        obj.password=pass;
+        this.loginparam=obj;
+        this.$.loginajax.generateRequest();
+      },
+     //loginResponse from the loginajax
+      loginResponse:function(e)
+      {
+        var arr=e.detail.response.returnval;
+        // alert(JSON.stringify(arr));
+        if(arr!="invalid"){
+        var role=e.detail.response.returnval[0].role_name;
+        var school=e.detail.response.returnval[0].school;
+        var name=e.detail.response.returnval[0].name;
+        var address=e.detail.response.returnval[0].addr;
+        sessionStorage.setItem("curr_sess_loggedid",username);
+        sessionStorage.setItem("curr_sess_loggedrole",role);
+        sessionStorage.setItem("curr_sess_loggedschoolid",school);
+        sessionStorage.setItem("curr_sess_loggedschoolname",name);
+        sessionStorage.setItem("curr_sess_loggedschooladdress",address);        
+        document.querySelector('app-card').setPage('homepage','Assesment Screen'); 
+        document.querySelector('home-page').setPage('teacherhomecard',''); 
+        }           
+        else 
+        {
+        alert('Invalid UserName or Password');
+        }
+        }
+      });     
+      
+      })();
+  </script>
+
+</dom-module>
+

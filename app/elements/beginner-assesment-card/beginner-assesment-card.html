@@ -1,0 +1,135 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../beginner-assesment-service/beginner-assesment-service.html">
+<link rel="import" href="../beginner-assesment-markentrysheet/beginner-assesment-markentrysheet.html">
+<link rel="import" href="../component-service/component-service.html">
+<link rel="import" href="../assesment-sheet-card/assesment-sheet-card.html">
+<dom-module id="beginner-assesment-card">
+  <template>
+    <style>
+      :host{
+        display: block;
+      }    
+      .card{
+        @apply(--layout-vertical);
+      }
+
+      .drop{        
+        @apply(--layout-horizontal);
+        margin-top:2%;
+        margin-left: 25%;
+      }
+      paper-dropdown-menu{
+        width: 15%;
+        margin-left: 3%;
+      }
+    </style>
+    <div class='card'>     
+    <div class='drop'>      
+          <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
+              <template is="dom-repeat" items="{{academicarr}}">
+                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                             
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+          <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required> 
+              <template is="dom-repeat" items="{{gradearr}}">
+                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{sectionarr}}">
+                <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+          <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required> 
+              <template is="dom-repeat" items="{{subjectarr}}">
+                <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>        
+     </div>
+     <div>
+          <!-- <assesment-sheet-card></assesment-sheet-card>        -->
+     </div>
+
+    </div>
+    <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
+    <component-service id="componentservice"></component-service>
+  </template>
+  <script>
+  (function() {
+    var flag=0;
+    'use strict';
+    var gradename,section,term,assesment,subject,academicyear;
+    Polymer({
+      is: 'beginner-assesment-card',
+      ready:function(){
+        this.flag=0;
+        this.hidesheet=true;
+        localStorage.setItem("curr_sess_showpage","beginner-assesment-card");        
+      },
+      FnSelectacademicyear:function(e){
+        academicyear = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_academicyear",academicyear);
+        if(this.flag==1){
+        this.FnServiceCall(); 
+        }
+      },
+      FnSelectGrade:function(e){
+        gradename = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_grade",gradename);
+        this.$.bassesmentservice.callSectionService(gradename);
+        if(this.flag==1){
+        this.FnServiceCall();  
+        }        
+      },
+      FnSelectSection:function(e){        
+        section = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section",section); 
+        this.$.bassesmentservice.callSubjectService(gradename,section);    
+        if(this.flag==1){
+        this.FnServiceCall();  
+        }     
+      },
+      FnSelectSubject:function(e){
+        this.flag=1;
+        subject = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_subject",subject);
+        document.querySelector('beginner-assesment-service').callFetchStudentInfo(gradename,section);
+        if(subject=="English"){
+        document.querySelector('assesment-sheet-card').setPage('beginnerassesmentmarkentry');
+        document.querySelector('beginner-assesment-markentrysheet').setDefaultHeaders(); 
+        }
+        else
+        {
+        document.querySelector('assesment-sheet-card').setPage('beginnerassesmentlangmarkentry');
+        document.querySelector('beginner-assesment-lang-markentrysheet').setDefaultHeaders();
+        } 
+      },
+      FnServiceCall:function(){
+        document.querySelector('beginner-assesment-service').callFetchStudentInfo(gradename,section);
+        if(subject=="English"){
+        document.querySelector('assesment-sheet-card').setPage('beginnerassesmentmarkentry');
+        document.querySelector('beginner-assesment-markentrysheet').setDefaultHeaders();  
+        }
+        else
+        {
+        document.querySelector('assesment-sheet-card').setPage('beginnerassesmentlangmarkentry');
+        document.querySelector('beginner-assesment-lang-markentrysheet').setDefaultHeaders(); 
+        }
+      }        
+    });      
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,97 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\term-assesment-service/term-assesment-service.html">
+
+<dom-module id="cc-maths-onetofour-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+       table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      #p1{
+        width: 48px;
+      }
+      #p2{
+        width: 49px;
+      }
+      #p3{
+        width: 50.5px;
+      }
+      .pi1{
+        width: 57px;
+      }
+      .pi2{
+        width: 72px;
+      }
+      .pi3{
+        width: 11px;
+      }
+      paper-input{
+        text-aligncenter;
+      }
+    </style>
+    <div>
+       <table border="1">
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
+        <td><paper-input value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
+        <td><paper-input value="{{groupactivity}}" id="p1" on-change="FnGroupactivity"></paper-input></td>
+        <td><paper-input value="{{individualactivity}}" id="p1" on-change="FnIndividualactivity"></paper-input></td>
+        <td><paper-input value="{{maaccuracy}}" id="p1" on-change="FnMAAccuracy"></paper-input></td>
+        <td><paper-input value="{{maknowledge}}" id="p1" on-change="FnMAKnowledge"></paper-input></td>
+        <td><paper-input value="{{taaccuracy}}" id="p1" on-change="FnTAAccuracy"></paper-input></td>
+        <td><paper-input value="{{taneatness}}" id="p1" on-change="FnTANeatness"></paper-input></td>
+        <td><paper-input value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
+        </tr>
+      </table>
+    </div>
+    <assesment-service id="assesmentservice"></assesment-service> 
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var understanding,groupactivity,individualactivity,maaccuracy,maknowledge,taaccuracy,taneatness,activity;
+    Polymer({
+      is: 'cc-maths-onetofour-item-card',
+      ready:function(){       
+      },
+      FnUnderstanding:function(e){               
+        understanding=parseFloat(this.understanding).toFixed(2);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding);       
+      },
+      FnGroupactivity:function(e){               
+        groupactivity=parseFloat(this.groupactivity).toFixed(2);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity);     
+      },
+      FnIndividualactivity:function(e){               
+        individualactivity=parseFloat(this.individualactivity).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity); 
+      },
+      FnMAAccuracy:function(){
+        maaccuracy=parseFloat(this.maaccuracy).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy); 
+      },
+      FnMAKnowledge:function(){
+        maknowledge=parseFloat(this.maknowledge).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge); 
+      },
+      FnTAAccuracy:function(){
+        taaccuracy=parseFloat(this.taaccuracy).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy); 
+      },
+      FnTANeatness:function(){
+        taneatness=parseFloat(this.taneatness).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness); 
+      },
+      FnActivity:function(){
+        activity=parseFloat(this.activity).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity); 
+      }   
+    }); 
+  })();
+  </script>
+</dom-module>

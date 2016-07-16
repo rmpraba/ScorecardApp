@@ -289,7 +289,7 @@ app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
 "from md_grade where grade_name='"+req.query.gradename+"' and school_id='"+req.query.schoolid+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
 "school_id='"+req.query.schoolid+"')";
-  console.log(qur);
+  // console.log(qur);
   connection.query(qur,
     function(err, rows)
     {

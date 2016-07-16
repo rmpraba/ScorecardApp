@@ -21,16 +21,15 @@
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td style="width: 2.2%;"><paper-item>{{serialno}}</paper-item></td>
-        <td style="width: 20%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 6.3%;"><paper-input on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
-        <td style="width: 6.3%;"><paper-input on-change="FnActivity2" value="{{score2}}"></paper-input></td>  
-        <td style="width: 6.3%;"><paper-input on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
-        <td style="width: 6.3%;"><paper-input on-change="FnActivity4" value="{{score4}}"></paper-input></td>  
-        <td style="width: 6.3%;"><paper-input on-change="FnActivity5" value="{{score5}}"></paper-input></td>
-        <td style="width: 6.3%;"><paper-input on-change="FnActivity5" value="{{score5}}"></paper-input></td>  
+        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
+        <td style="width: 25%;"><paper-item>{{studname}}</paper-item></td>
+        <td style="width: 8%;"><paper-input on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
+        <td style="width: 8%;"><paper-input on-change="FnActivity2" value="{{score2}}"></paper-input></td>  
+        <td style="width: 8%;"><paper-input on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
+        <td style="width: 8%;"><paper-input on-change="FnActivity4" value="{{score4}}"></paper-input></td>  
+        <td style="width: 8%;"><paper-input on-change="FnActivity5" value="{{score5}}"></paper-input></td> 
         <td style="width: 6.3%;"><paper-item>{{total}}</paper-item></td>
-        <td style="width: 6.3%;"><paper-item>{{reduction}}</paper-item></td>
+        <td style="width: 10%;"><paper-item>{{reduction}}</paper-item></td>
         <td style="width: 6.3%;"><paper-item>{{grade}}</paper-item></td>
         </tr>
         </table>
@@ -38,12 +37,12 @@
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <iron-ajax        
         method="post"
-        id="fetchgradeajax"
-        url="{{fetchgradeurl}}"
-        params="{{fetchgradeparam}}"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
         handle-as="json"
         content-type="application/json"
-        on-response="fetchgradeResponse"
+        on-response="fetchgradesResponse"
         debounce-duration="300"
     >
   </template>
@@ -76,23 +75,30 @@
       },
       FnActivity5:function(e){
         // this.callFetchGrade();        
-        this.mark5=this.score5;         
+        this.mark5=this.score5;  
+        this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4)+parseInt(this.score5);
+        this.reduction=this.total/10;  
+        this.callFetchGrade();  
       },
       callService:function(){           
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity",this.score);      
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity1",this.score1); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity2",this.score2);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity3",this.score3);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity4",this.score4);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity5",this.score5);     
       },
       callFetchGrade:function(){
-        this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
-        this.$.fetchgradeajax.generateRequest(); 
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
       },
-      fetchgradeResponse:function(e){
+      fetchgradesResponse:function(e){
         var returnval=e.detail.response.returnval;       
         for(var i=0;i<returnval.length;i++){
           lower.push(returnval[i].lower_limit);
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
         }
-        this.FnFindGrade((parseInt(this.score)*4)/10);   
+        this.FnFindGrade((parseInt(this.reduction)));   
       },
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          

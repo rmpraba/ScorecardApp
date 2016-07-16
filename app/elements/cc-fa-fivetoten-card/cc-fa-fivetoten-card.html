@@ -36,9 +36,10 @@
       <th style="width: 5%;">{{item.Total}}</th>
       <th style="width: 5%;">{{item.Reduction}}</th>
       <th style="width: 5%;">{{item.Grade}}</th>   
-      </tr>      
+      </tr>  
+
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="6">
+      <tr><td colspan="10">
       <cc-fa-fivetoten-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cc-fa-fivetoten-itemcard>
       </td></tr>
       </template>

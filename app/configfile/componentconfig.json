@@ -19,6 +19,17 @@
       {"page":["cc-maths-onetofour-card","cc-maths-onetofour-card"]},
       {"Label":[{"SNo":"S.No","Name":"NAME","Activity_Sheet":"Activity Sheets (25)","Grade":"GRADE"}]},
       {"title":["Beginner Level Assesment"]}
+    ]},
+    {"Page":[
+      {"page":["cc-fa-fivetoten-card","cc-fa-fivetoten-card"]},
+      {"Label":[{"SNo":"S.No","Name":"NAME","Activity1":"Activity1","Activity2":"Activity2","Activity3":"Activity3",
+      "Activity4":"Activity4","Activity5":"Activity5","Total":"Total 100","Reduction":"Reduction To 10","Grade":"GRADE"}]},
+      {"title":["CCE Assesment"]}
+    ]},
+    {"Page":[
+      {"page":["cc-sa-fivetoten-card","cc-sa-fivetoten-card"]},
+      {"Label":[{"SNo":"S.No","Name":"NAME","Max":"Max 60","Convert":"Converted to 100","Reduce":"Reduced to 30","Grade":"GRADE"}]},
+      {"title":["CCE Assesment"]}
     ]}
   ]
 

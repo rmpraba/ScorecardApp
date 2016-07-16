@@ -211,10 +211,12 @@
          this.$.fetchstudentajax.generateRequest();
       },
       fetchstudentResponse:function(e){         
-        var arr=e.detail.response.returnval;         
+        var arr=e.detail.response.returnval;  
+        alert(JSON.stringify(arr));       
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=i+1;
         }
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem("curr_sess_subject")=="Maths"){
         document.querySelector('cc-maths-onetofour-card').studarr=arr;        
         }
@@ -224,6 +226,16 @@
         if(localStorage.getItem("curr_sess_subject")=="G.K"){        
         document.querySelector('cc-gk-onetofour-card').studarr=arr;
         }
+        }
+        else{
+        if(localStorage.getItem("curr_sess_assesmenttype")=="FA"){
+        document.querySelector('cc-fa-fivetoten-card').studarr=arr;        
+        } 
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA"){
+        document.querySelector('cc-sa-fivetoten-card').studarr=arr;        
+        }
+        }
+
       },
       callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){
          this.insertassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertassesmentmark-service";

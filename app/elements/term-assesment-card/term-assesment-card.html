@@ -63,7 +63,16 @@
                 <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>      
               </template>
             </paper-menu>
-          </paper-dropdown-menu>  
+          </paper-dropdown-menu> 
+
+          <paper-dropdown-menu hidden$="{{hideassesmenttype}}" id="assesmenttype" label="Select type" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesmentType"  attr-for-selected="value" required>   
+              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
+                <paper-item value="FA">FA</paper-item>
+                <paper-item value="SA">SA</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
 
           <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>   
@@ -71,7 +80,7 @@
                 <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
               </template>
             </paper-menu>
-          </paper-dropdown-menu>          
+          </paper-dropdown-menu>                
      </div>
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
@@ -85,6 +94,7 @@
       is: 'term-assesment-card',
       ready:function(){
         this.flag=0;
+        this.hideassesmenttype=true;
       },
       FnSelectacademicyear:function(e){
         academicyear = e.target.selectedItem.textContent.trim();
@@ -94,6 +104,8 @@
       },
       FnSelectGrade:function(e){
         gradename = e.target.selectedItem.textContent.trim();
+        if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4")
+          this.hideassesmenttype=false;
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.assesmentservice.callSectionService(gradename);
         if(this.flag==1)
@@ -118,11 +130,28 @@
         if(this.flag==1)
           this.callService();
       },
+      FnSelectAssesmentType:function(e){
+        assesmenttype = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_assesmenttype",assesmenttype);
+        if(this.flag==1)
+          this.callService();
+      },
       callService:function(){
         if(subject=="Maths"){        
-          this.$.assesmentservice.callFetchStudentInfo(gradename,section);           
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);
+           if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){          
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
-           document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();         
+           document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();  
+           }       
+           else{
+           if(assesmenttype=="FA")
+           document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
+           document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders();  
+           if(assesmenttype=="SA")
+           document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
+           document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+           }
+
         }
         if(subject=="EVS"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          

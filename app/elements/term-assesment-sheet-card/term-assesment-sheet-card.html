@@ -5,6 +5,8 @@
 <link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
 <link rel="import" href="../cc-gk-onetofour-card/cc-gk-onetofour-card.html">
 <link rel="import" href="../cc-computer-onetofour-card/cc-computer-onetofour-card.html">
+<link rel="import" href="../cc-fa-fivetoten-card/cc-fa-fivetoten-card.html">
+<link rel="import" href="../cc-sa-fivetoten-card/cc-sa-fivetoten-card.html">
 
 <dom-module id="term-assesment-sheet-card">
   <template>
@@ -26,6 +28,12 @@
         </section> 
         <section data-category="cc-computer-onetofour-card">        
           <cc-computer-onetofour-card></cc-computer-onetofour-card>
+        </section>
+        <section data-category="cc-fa-fivetoten-card">        
+          <cc-fa-fivetoten-card></cc-fa-fivetoten-card>
+        </section>
+        <section data-category="cc-sa-fivetoten-card">        
+          <cc-sa-fivetoten-card></cc-sa-fivetoten-card>
         </section>    
       </iron-pages>
     </div>
@@ -35,7 +43,9 @@
     'use strict';
     Polymer({
       is: 'term-assesment-sheet-card',
-      setPage:function(page){        
+      setPage:function(page){ 
+        localStorage.setItem("curr_sess_showpage",page);
+        document.querySelector('component-service').callcomponentService();        
         this.page=page;
       }
     });

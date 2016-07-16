@@ -212,7 +212,7 @@
       },
       fetchstudentResponse:function(e){         
         var arr=e.detail.response.returnval;  
-        alert(JSON.stringify(arr));       
+        // alert(JSON.stringify(arr));       
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=i+1;
         }
@@ -226,6 +226,19 @@
         if(localStorage.getItem("curr_sess_subject")=="G.K"){        
         document.querySelector('cc-gk-onetofour-card').studarr=arr;
         }
+        if(localStorage.getItem("curr_sess_subject")=="Computer"){   
+         
+        document.querySelector('cc-computer-onetofour-card').studarr=arr;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="ART/CRAFT"){        
+        document.querySelector('cc-art-craft-onetofour-card').studarr=arr;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="dance"){        
+        document.querySelector('cc-dance-onetofour-card').studarr=arr;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="music"){        
+        document.querySelector('cc-music-onetofour-card').studarr=arr;
+        }
         }
         else{
         if(localStorage.getItem("curr_sess_assesmenttype")=="FA"){
@@ -235,6 +248,9 @@
         document.querySelector('cc-sa-fivetoten-card').studarr=arr;        
         }
         }
+
+
+        
 
       },
       callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){

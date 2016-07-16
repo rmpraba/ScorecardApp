@@ -221,6 +221,9 @@
         if(localStorage.getItem("curr_sess_subject")=="EVS"){        
         document.querySelector('cc-evs-onetofour-card').studarr=arr;
         }
+        if(localStorage.getItem("curr_sess_subject")=="G.K"){        
+        document.querySelector('cc-gk-onetofour-card').studarr=arr;
+        }
       },
       callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){
          this.insertassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertassesmentmark-service";

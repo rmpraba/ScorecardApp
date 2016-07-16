@@ -51,7 +51,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <th colspan="3">(10)</th>
       <th colspan="3">(10)</th>
      
-     
+      <template is="dom-repeat" items="{{studarr}}">
+      <tr>
+        <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
+        <td colspan="66"><cc-dance-onetofour-item-card studid="{{item.id}}" studname="{{item.student_name}}"></cc-dance-onetofour-item-card></td>
+      </tr>
+      </template>
     </table>      
     </div>
   </template>

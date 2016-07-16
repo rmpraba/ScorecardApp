@@ -58,30 +58,34 @@
       FnComprehension:function(){
         
       },
-      FnScore:function(){  
-        this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
-        this.$.fetchgradeajax.generateRequest();       
-        this.mark=this.score;
-        this.$.bassesmentservice.callFetchGradeService((parseInt(this.score)/10));
-      },
-      FnSetGrade:function(grade){
-        this.grade=grade;
-        this.callService();
+      FnScore:function(){ 
+        this.callFetchGrade();               
+        this.mark=this.score;        
       },
       callService:function(){
         this.$.bassesmentservice.callbamarkinsertService(this.studid,"Correct Words",this.correctword,this.mark,this.grade);
         this.$.bassesmentservice.callbamarkinsertService(this.studid,"Comprehension",this.comprehension,this.mark,this.grade);
       },
+      callFetchGrade:function(){
+        this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradeajax.generateRequest(); 
+      },
       fetchgradeResponse:function(e){
-        var returnval=e.detail.response.returnval;        
+        var returnval=e.detail.response.returnval;       
         for(var i=0;i<returnval.length;i++){
           lower.push(returnval[i].lower_limit);
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
         }
-        // alert(JSON.stringify(lower));
-        // alert(JSON.stringify(higher));
-        // alert(JSON.stringify(grade));
+        this.FnFindGrade((parseInt(this.score)*4)/10);   
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        this.callService();
       }
     });
   })();

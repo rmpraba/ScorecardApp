@@ -59,10 +59,6 @@
             </paper-menu>
           </paper-dropdown-menu>        
      </div>
-     <div>
-          <!-- <assesment-sheet-card></assesment-sheet-card>        -->
-     </div>
-
     </div>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <component-service id="componentservice"></component-service>
@@ -106,26 +102,31 @@
         this.flag=1;
         subject = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_subject",subject);
-        document.querySelector('beginner-assesment-service').callFetchStudentInfo(gradename,section);
+        this.FnServiceCall(); 
+        /*document.querySelector('beginner-assesment-service').callFetchStudentInfo(gradename,section);
         if(subject=="English"){
+        // alert("eng");
         document.querySelector('assesment-sheet-card').setPage('beginnerassesmentmarkentry');
         document.querySelector('beginner-assesment-markentrysheet').setDefaultHeaders(); 
         }
         else
         {
+          // alert("no eng");
         document.querySelector('assesment-sheet-card').setPage('beginnerassesmentlangmarkentry');
         document.querySelector('beginner-assesment-lang-markentrysheet').setDefaultHeaders();
-        } 
+        } */
       },
       FnServiceCall:function(){
         document.querySelector('beginner-assesment-service').callFetchStudentInfo(gradename,section);
         if(subject=="English"){
-        document.querySelector('assesment-sheet-card').setPage('beginnerassesmentmarkentry');
+          alert("English");
+        document.querySelector('assesment-sheet-card').setPage('beginner-assesment-markentrysheet');
         document.querySelector('beginner-assesment-markentrysheet').setDefaultHeaders();  
         }
         else
         {
-        document.querySelector('assesment-sheet-card').setPage('beginnerassesmentlangmarkentry');
+          alert("others");
+        document.querySelector('assesment-sheet-card').setPage('beginner-assesment-lang-markentrysheet');
         document.querySelector('beginner-assesment-lang-markentrysheet').setDefaultHeaders(); 
         }
       }        

@@ -164,12 +164,14 @@
          for(var i=0;i<arr.length;i++){
           arr[i].serialno=i+1;
          } 
-        sessionStorage.setItem("curr_sess_classid",arr[0].class_id);        
+        sessionStorage.setItem("curr_sess_classid",arr[0].class_id);    
+        if(localStorage.getItem("curr_sess_subject")=="English")    
         document.querySelector('beginner-assesment-markentrysheet').studarr=arr;
+        else
         document.querySelector('beginner-assesment-lang-markentrysheet').studarr=arr;
       },
       callbamarkinsertService:function(studentid,category,mark,score,grade){
-        alert(mark+" "+score);
+        // alert(mark+" "+score);
         this.insertbamarkurl=sessionStorage.getItem("addrinfo")+"/insertbamark-service";
         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","subject":"","studentid":"","category":"","mark":"","score":"","grade":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -183,7 +185,7 @@
         obj.score=score;
         obj.grade=grade;
         this.insertbamarkparam= obj;  
-        alert(JSON.stringify(obj));      
+        // alert(JSON.stringify(obj));      
         this.$.insertbamarkajax.generateRequest();
       },
       insertbamarkResponse:function(e){

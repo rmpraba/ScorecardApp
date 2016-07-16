@@ -31,9 +31,12 @@ app.post('/checkschool-card',  urlencodedParser,function (req, res)
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  }
+    }
+    else
+      console.log(err);
 });
 });
 
@@ -53,10 +56,14 @@ app.post('/login-card',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': rows});
     }
     else
-    {
+    { 
+      console.log(err);     
       res.status(200).json({'returnval': 'invalid'});
     }
     }
+    else
+      console.log(err);
+    
   });
 });
 
@@ -80,6 +87,8 @@ app.post('/assesmenttype-service',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'invalid'});
     }
     }
+    else
+      console.log(err);
   });
 });
 
@@ -100,6 +109,7 @@ app.post('/term-service',  urlencodedParser,function (req, res)
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
     }
@@ -125,6 +135,7 @@ app.post('/grade-service',  urlencodedParser,function (req, res)
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
     }
@@ -148,6 +159,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
     }
@@ -177,6 +189,7 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
     }
@@ -206,6 +219,7 @@ var qur="select subject_category_name from md_subject_category where subject_cat
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
     }
@@ -233,6 +247,7 @@ var qur="select subject_sub_category_name from md_subject_sub_category where sub
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
     }
@@ -257,6 +272,7 @@ app.post('/assesment-service',  urlencodedParser,function (req, res)
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
     }
@@ -285,6 +301,7 @@ app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
     }
     else
     {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
     }

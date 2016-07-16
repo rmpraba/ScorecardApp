@@ -13,10 +13,10 @@
     </style>
     <div class="content">
       <iron-pages selected="{{page}}" attr-for-selected="data-category">  
-        <section data-category="beginnerassesmentmarkentry">        
+        <section data-category="beginner-assesment-markentrysheet">        
           <beginner-assesment-markentrysheet></beginner-assesment-markentrysheet>
-        </section> 
-        <section data-category="beginnerassesmentlangmarkentry">        
+        </section>  
+        <section data-category="beginner-assesment-lang-markentrysheet">        
           <beginner-assesment-lang-markentrysheet></beginner-assesment-lang-markentrysheet>
         </section>   
       </iron-pages>
@@ -27,7 +27,10 @@
     'use strict';
     Polymer({
       is: 'assesment-sheet-card',
-      setPage:function(page){        
+      setPage:function(page){ 
+        // alert(page);
+        localStorage.setItem("curr_sess_showpage",page);
+        document.querySelector('component-service').callcomponentService();       
         this.page=page;
       }
     });

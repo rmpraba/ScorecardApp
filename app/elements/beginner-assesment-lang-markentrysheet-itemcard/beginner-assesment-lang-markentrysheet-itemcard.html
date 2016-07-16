@@ -61,10 +61,6 @@
         this.callFetchGrade();        
         this.mark=this.score;         
       },
-      FnSetGrade:function(grade){
-        this.grade=grade;
-        this.callService();
-      },
       callService:function(){           
         this.$.bassesmentservice.callbamarkinsertService(this.studid,"Activity",'',this.mark,this.grade);        
       },

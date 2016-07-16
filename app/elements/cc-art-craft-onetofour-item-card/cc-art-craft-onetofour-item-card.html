@@ -67,15 +67,15 @@ var creativity,skill,interest;
       },
       FnCreativity:function(){
         creativity=parseFloat(this.creativity).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,this.creativity); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Creativity","",this.creativity); 
       },
       FnSkill:function(){
         skill=parseFloat(this.skill).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,this.skill); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Skill","",this.skill); 
       } ,
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,this.interest); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Interest","",this.interest); 
       } ,
       
       

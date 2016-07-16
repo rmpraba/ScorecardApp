@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
-
+<link rel="import" href="..\term-assesment-service/term-assesment-service.html">
 
 <dom-module id="cc-gk-onetofour-item-card">
   <template>
@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        FnActivity:function()
        {
         activity=parseFloat(this.activity).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,this.activity); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity","",this.activity); 
       } 
      
     });

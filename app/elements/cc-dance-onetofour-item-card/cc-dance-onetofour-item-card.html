@@ -68,15 +68,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,this.interest); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Interest","",this.interest); 
       } ,
       FnRhythm:function(){
         rhythm=parseFloat(this.rhythm).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,this.rhythm); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Rhythm","",this.rhythm); 
       },
       FnGrace:function(){
         grace=parseFloat(this.grace).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,this.grace); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Grace","",this.grace); 
       }    
     });
   })();

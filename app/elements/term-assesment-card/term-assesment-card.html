@@ -129,6 +129,11 @@
           document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');
           document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
         }
+        if(subject=="G.K"){        
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+          document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');
+          document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();
+        }
       }
     });
   })();

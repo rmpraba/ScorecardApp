@@ -1,0 +1,154 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="cs-attitudes-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .card{
+        height: 2%;
+      }
+    </style>
+    <div class="card">
+        <table border="1"><tr>
+        <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
+        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
+        <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
+        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitudes towards Teachers" value="{{score1}}"></paper-input></td>   
+        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
+        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
+        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Value Systems" value="{{score4}}"></paper-input></td>  
+        <td style="width: 5%;"><paper-input  name="total" value="{{total}}"></paper-input></td> 
+         <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        </tr>
+        </table>
+    </div>
+     <paper-dialog id="attitude" modal>
+     <table>
+  <template is="dom-repeat" items="{{coarr}}">
+      <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
+      </template>
+      <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
+            </paper-dialog>
+    <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
+    
+<term-assesment-service id="assesmentservice"></term-assesment-service>
+     <iron-ajax        
+        method="post"
+        id="fetchgradeforattitudeajax"
+        url="{{fetchgradeforattitudeurl}}"
+        params="{{fetchgradeforattitudeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeforattitudeResponse"
+        debounce-duration="300"
+    >
+  </template>
+
+  </table>
+  <script>
+  (function() {
+    'use strict';
+ var lower=[];
+    var higher=[];
+    var grade=[];
+    var name;
+var arr=[];
+    Polymer({
+      is: 'cs-attitudes-item-card',
+ FnActivity:function(e)
+      {
+        alert(e.target.name);
+        name=e.target.name;
+        this.$.coscholasticservice.fetchlifeskilldata(name);
+         var id = 'attitude';
+         sessionStorage.setItem("category",id);
+        var dialog = document.getElementById(id);
+        dialog.open();
+
+      },
+      fnfindsum(val)
+      {
+     arr.push(val);
+//alert(arr);
+      },
+      click:function()
+      {
+        var sum=0;
+        for(var i=0;i<arr.length;i++)
+        {
+          sum=sum+parseInt(arr[i]);
+        }
+        alert(sum);
+         var id = 'attitude';
+        var dialog = document.getElementById(id);
+        dialog.opened=false;
+        if(name=="Attitudes towards Teachers")
+        {
+           
+          this.score1=sum;
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score1);
+        }
+        else  if(name=="Attitude towards School-mates")
+        {
+
+          this.score2=sum;
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score2);
+        }
+        else  if(name=="Attitude towards School Programmes and Environment")
+        {
+          this.score3=sum;
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score3);
+        }
+        else  if(name=="Value Systems")
+        {
+          this.score4=sum;
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score4);
+       
+          this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
+           this.callFetchGrade();
+        }
+        arr=[];
+      },
+       callFetchGrade:function()
+       {
+        this.fetchgradeforattitudeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradeforattitudeajax.generateRequest(); 
+      },
+      fetchgradeforattitudeResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.FnFindGrade((parseInt(this.total)));   
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        //this.callService();
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

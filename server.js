@@ -403,6 +403,32 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   });
 });
 
+
+//fetch the Life SKill SUb category
+app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
+{  
+  var type=req.query.termtype;
+  console.log(type);
+  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+ 
+  connection.query( "SELECT * FROM md_coscholastic_metrics where sub_category=?",[type],
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

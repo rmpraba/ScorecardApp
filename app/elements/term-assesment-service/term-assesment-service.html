@@ -212,7 +212,7 @@
       },
       fetchstudentResponse:function(e){         
         var arr=e.detail.response.returnval;  
-        // alert(JSON.stringify(arr));       
+        //alert(JSON.stringify(arr));       
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=i+1;
         }
@@ -242,7 +242,9 @@
         }
         else{
         if(localStorage.getItem("curr_sess_assesmenttype")=="FA"){
-        document.querySelector('cc-fa-fivetoten-card').studarr=arr;        
+        document.querySelector('cc-fa-fivetoten-card').studarr=arr; 
+//document.querySelector('cs-life-skill-card').studarr=arr; 
+//document.querySelector('cs-education-card').studarr=arr;
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA"){
         document.querySelector('cc-sa-fivetoten-card').studarr=arr;        

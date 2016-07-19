@@ -145,11 +145,19 @@
            }       
            else{
            if(assesmenttype=="FA")
+           {
            document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
-           document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders();  
+           document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders();
+           //document.querySelector('term-assesment-sheet-card').setPage('cs-life-skill-card');
+           //document.querySelector('cs-life-skill-card').setDefaultHeaders();
+           //document.querySelector('term-assesment-sheet-card').setPage('cs-education-card');
+           //document.querySelector('cs-education-card').setDefaultHeaders(); 
+           } 
            if(assesmenttype=="SA")
+           {
            document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
            document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+           }
            }
 
         }

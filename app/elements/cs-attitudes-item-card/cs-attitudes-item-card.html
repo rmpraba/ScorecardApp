@@ -102,23 +102,23 @@ var arr=[];
         {
            
           this.score1=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score1);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score1);
         }
         else  if(name=="Attitude towards School-mates")
         {
 
           this.score2=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score2);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score2);
         }
         else  if(name=="Attitude towards School Programmes and Environment")
         {
           this.score3=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score3);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score3);
         }
         else  if(name=="Value Systems")
         {
           this.score4=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score4);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score4);
        
           this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
            this.callFetchGrade();

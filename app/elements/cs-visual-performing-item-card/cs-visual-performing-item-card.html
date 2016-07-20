@@ -100,12 +100,12 @@ var arr=[];
          if(name=="VISUAL ARTS")
           {
           this.score1=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score1);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score1);
         }
         else if(name=="PERFORMING ARTS")
         {
            this.score2=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score2);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score2);
             this.total=parseInt(this.score1)+parseInt(this.score2);
            this.callFetchGrade();
           }

@@ -103,23 +103,23 @@ var arr=[];
         {
            
           this.score1=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score1);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score1);
         }
         else  if(name=="Scientific Skills")
         {
 
           this.score2=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score2);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score2);
         }
         else  if(name=="Information and Communication Technology (ICT) echnology (ICT)")
         {
           this.score3=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score3);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score3);
         }
         else  if(name=="organisational and leadership skills")
         {
           this.score4=sum;
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score4);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score4);
        
           this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
            this.callFetchGrade();

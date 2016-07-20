@@ -22,6 +22,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="fetchlifeskillResponse"
         debounce-duration="300"
     >
+
+    <iron-ajax
+        method="post"
+        id="insertcoassesmentmarkajax"
+        url="{{insertcoassesmentmarkurl}}"
+        params="{{insertcoassesmentmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertcoassesmentmarkResponse"
+        debounce-duration="300"
+    >
     
   </template>
   <script>
@@ -57,7 +68,26 @@ else  if(cat=="healthandphysical")
   document.querySelector('cs-attitudes-item-card').coarr=coarr;
 //alert(JSON.stringify(e.detail.response.returnval));
 
-}
+},
+callinsertcoscholasticassesmentmarkService:function(studid,studname,category,subcategory,mark){
+         this.insertcoassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertcoassesmentmark-service";
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=studid;
+         obj.studentname=studname;        
+         obj.grade=localStorage.getItem("curr_sess_grade");;
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.category=category;
+         obj.subcategory=subcategory;
+         obj.mark=mark;         
+         this.insertcoassesmentmarkparam= obj;        
+         this.$.insertcoassesmentmarkajax.generateRequest();
+      },
      
     });
   })();

@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
         <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" id="s" name="Self Awareness" value="{{score1}}"></paper-input></td>   
+        <td style="width: 5%;"><paper-input on-focus="FnActivity" id="{{studid}}" name="Self Awareness" value="{{score1}}"></paper-input></td>   
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Problem Solving" value="{{score2}}"></paper-input></td>  
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Decision Making" value="{{score3}}"></paper-input></td>  
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Critical Thinking" value="{{score4}}"></paper-input></td>  
@@ -159,6 +159,7 @@ var arr=[];
           this.score10=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score10);
           this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4)+parseInt(this.score5)+parseInt(this.score6)+parseInt(this.score7)+parseInt(this.score8)+parseInt(this.score9)+parseInt(this.score10);
+          this.convert=(parseInt(this.total)/10)*100;
            this.callFetchGrade();
         }
         arr=[];
@@ -175,12 +176,14 @@ var arr=[];
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
         }
-        this.FnFindGrade((parseInt(this.total)));   
+         this.reduce=this.convert/10;
+        this.FnFindGrade((parseInt(this.reduce)));   
       },
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          
           if(mark>=lower[i]&&mark<=higher[i]){            
             this.grade=grade[i];
+            this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"Life Skill",this.convert,this.reduce,this.grade);
           }
         }
         //this.callService();

@@ -125,6 +125,16 @@
         on-response="insertassesmentmarkResponse"
         debounce-duration="300"
     >
+    <iron-ajax
+        method="post"
+        id="overalltermmarkinsertajax"
+        url="{{overalltermmarkinserturl}}"
+        params="{{overalltermmarkinsertparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="overalltermmarkinsertResponse"
+        debounce-duration="300"
+    >
     
   </template>
   <script>
@@ -208,6 +218,7 @@
          obj.gradename=grade;
          obj.section=section;
          this.fetchstudentparam= obj;
+         // alert(JSON.stringify(obj));
          this.$.fetchstudentajax.generateRequest();
       },
       fetchstudentResponse:function(e){         
@@ -247,10 +258,7 @@
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA"){
         document.querySelector('cc-sa-fivetoten-card').studarr=arr;        
         }
-        }
-
-
-        
+        }       
 
       },
       callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){
@@ -274,7 +282,47 @@
       },
       insertassesmentmarkResponse:function(e){
         alert(JSON.stringify(e.detail.response.returnval));
-      }      
+      },
+      callOveralltermmarkinsertService:function(studid,studname,category,total,reduction,grade){
+         this.overalltermmarkinserturl=sessionStorage.getItem("addrinfo")+"/overalltermmarkinsert-service";
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","studentid":"","studentname":"","subject":"","type":"","category":"","total":"","rtotal":"","grade":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=studid;
+         obj.studentname=studname;        
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.type=category;
+         if(obj.assesmentid=="Assesment1"&&obj.termname=="term1"&&category=="FA"){
+         obj.category="FA1";
+         }
+         if(obj.assesmentid=="Assesment1"&&obj.termname=="term2"&&category=="FA"){
+         obj.category="FA2";
+         }
+         if(obj.assesmentid=="Assesment2"&&obj.termname=="term1"&&category=="FA"){
+         obj.category="FA3";
+         }
+         if(obj.assesmentid=="Assesment2"&&obj.termname=="term2"&&category=="FA"){
+         obj.category="FA4";
+         }
+         if(obj.assesmentid=="Assesment1"&&obj.termname=="term1"&&category=="SA"){
+         obj.category="SA1";
+         }
+         if(obj.assesmentid=="Assesment1"&&obj.termname=="term2"&&category=="SA"){
+         obj.category="SA2";
+         }         
+         obj.total=total; 
+         obj.rtotal=reduction;
+         // obj.reduction=reduction;  
+         obj.grade=grade;         
+         this.overalltermmarkinsertparam= obj;
+         this.$.overalltermmarkinsertajax.generateRequest();
+      },
+      overalltermmarkinsertResponse:function(e){
+        alert(JSON.stringify(e.detail.response.returnval));
+      }
     });
   })();
   </script>

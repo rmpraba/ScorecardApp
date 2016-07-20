@@ -138,20 +138,21 @@
       },
       callService:function(){
         if(subject=="Maths"){        
-          this.$.assesmentservice.callFetchStudentInfo(gradename,section);
+           this.$.assesmentservice.callFetchStudentInfo(gradename,section);
            if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){          
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
            document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();  
            }       
            else{
-           if(assesmenttype=="FA")
+           if(assesmenttype=="FA"){
            document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
            document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders();  
-           if(assesmenttype=="SA")
+           }
+           if(assesmenttype=="SA"){
            document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
            document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
            }
-
+           }
         }
         if(subject=="EVS"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
@@ -183,6 +184,17 @@
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-music-onetofour-card');
           document.querySelector('cc-music-onetofour-card').setDefaultHeaders();
+        }
+        if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4"){  
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);           
+          if(assesmenttype=="FA"){
+          document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
+          document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders();  
+          }
+          if(assesmenttype=="SA"){
+          document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
+          document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+          }
         }
       }
     });

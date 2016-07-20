@@ -403,6 +403,144 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   });
 });
 
+//Storing overall marks for the assesment
+app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
+{ 
+  var response={
+         school_id:req.query.schoolid,
+         academic_year:req.query.academicyear,   
+         assesment_id:req.query.assesmentid,
+         term_name:req.query.termname,         
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         subject_id:req.query.subject,
+         type:req.query.type,
+         category:req.query.category,         
+         total:req.query.total,
+         rtotal:req.query.rtotal,
+         grade:req.query.grade                
+  }
+  var subname={subject_name:req.query.subject};
+  connection.query("SELECT subject_category FROM md_subject where ?",[subname],
+  function(err, rows)
+  {
+  response.subject_category=rows[0].subject_category;  
+  connection.query("INSERT INTO tr_term_assesment_overall_marks set ?",[response],
+  function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+  });
+  });
+});
+
+
+//fetching student names
+app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var qur="SELECT * FROM md_student where ?";
+  connection.query("SELECT * FROM md_student where ?",[schoolid],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+//fetching student info
+app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var studname={student_name:req.query.studname};
+  var qur="select (select grade_name from md_grade where grade_id="+
+"(select grade_id from mp_grade_section where class_id=s.class_id)) grade,"+
+"(select section_name from md_section where section_id="+
+"(select section_id from mp_grade_section where class_id=s.class_id)) section,"+
+"s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.email,p.mobile,p.address1 "+
+"from md_student s join parent p on(s.id=p.student_id) and s.student_name='"+req.query.studname+"' and s.school_id='"+req.query.schoolid+"'";
+
+// console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+//fetching subject info
+app.post('/fetchsubjectname-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var studname={student_name:req.query.studname};
+  var qur="select subject_id,subject_name from md_subject where subject_id in"+
+  "(select subject_id from mp_grade_subject where grade_id="+
+  "(select grade_id from mp_grade_section where class_id="+
+  "(select class_id from md_student where student_name='"+req.query.studname+"' "+
+  "and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"')) order by subject_name";
+
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+//fetching mark
+app.post('/fetchmark-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var studname={student_name:req.query.studname};  
+
+  connection.query("SELECT * FROM tr_term_assesment_overall_marks WHERE ? AND ? order by subject_id",[studname,schoolid],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

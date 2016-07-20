@@ -1,0 +1,209 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="scorecard-service">
+  <template>
+    <iron-ajax
+        method="post"
+        id="fetchstudnameajax"
+        url="{{fetchstudnameurl}}"
+        params="{{fetchstudnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudnameResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="fetchstudinfoajax"
+        url="{{fetchstudinfourl}}"
+        params="{{fetchstudinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudinfoResponse"
+        debounce-duration="300"
+    >  
+    <iron-ajax
+        method="post"
+        id="fetchsubjectnameajax"
+        url="{{fetchsubjectnameurl}}"
+        params="{{fetchsubjectnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchsubjectnameResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="fetchmarkajax"
+        url="{{fetchmarkurl}}"
+        params="{{fetchmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchmarkResponse"
+        debounce-duration="300"
+    > 
+     <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+    >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var subjectarr;
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    Polymer({
+      is: 'scorecard-service',
+      ready:function(){
+        this.callFetchGrade();
+      },
+      callFetchstudentnameService:function(){
+        this.fetchstudnameurl=sessionStorage.getItem("addrinfo")+"/fetchstudname-service";
+        var obj={"scoolid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        this.fetchstudnameparam=obj;
+        this.$.fetchstudnameajax.generateRequest();
+      },
+      fetchstudnameResponse:function(e){
+        var arr=e.detail.response.returnval;
+        document.querySelector('cce-generate-score-card').autocompletearr(arr);
+      },
+      callFetchstudentinfoService:function(studname){
+        this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
+        var obj={"scoolid":"","studname":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.studname=studname;
+        this.fetchstudinfoparam=obj;
+        this.$.fetchstudinfoajax.generateRequest();
+      },
+      fetchstudinfoResponse:function(e){        
+        var arr=e.detail.response.returnval;
+        document.querySelector('cce-fivetoten-score-card').grade=arr[0].grade;
+        document.querySelector('cce-fivetoten-score-card').studentid=arr[0].student_id;
+        document.querySelector('cce-fivetoten-score-card').studentname=arr[0].student_name;
+        document.querySelector('cce-fivetoten-score-card').dob=arr[0].dob;
+        document.querySelector('cce-fivetoten-score-card').fathername=arr[0].parent_name;
+        document.querySelector('cce-fivetoten-score-card').address=arr[0].address1;
+        document.querySelector('cce-fivetoten-score-card').mobileno=arr[0].mobile;        
+      },
+      callFetchsubjectinfoService:function(studname){
+        this.fetchsubjectnameurl=sessionStorage.getItem("addrinfo")+"/fetchsubjectname-service";
+        var obj={"scoolid":"","studname":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.studname=studname;
+        this.fetchsubjectnameparam=obj;
+        this.$.fetchsubjectnameajax.generateRequest();
+      },
+      fetchsubjectnameResponse:function(e){        
+        subjectarr=e.detail.response.returnval;
+        // document.querySelector('cce-fivetoten-score-card').subjectArray=subjectarr;         
+      },
+      callFetchmarkService:function(studname){
+        this.fetchmarkurl=sessionStorage.getItem("addrinfo")+"/fetchmark-service";
+        var obj={"scoolid":"","studname":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.studname=studname;
+        this.fetchmarkparam=obj;
+        this.$.fetchmarkajax.generateRequest();                
+      },
+      fetchmarkResponse:function(e){         
+        this.finalarr=[];       
+        var arr=e.detail.response.returnval;        
+        for(var i=0;i<subjectarr.length;i++){
+          var obj={"subject_name":"","FA1":"","FA2":"","SA1":"","tot1":"","FA3":"","FA4":"","SA2":"","tot2":"","FA":"","SA":"","Grade":"","Point":""};
+          this.no=0;
+          for(var j=0;j<arr.length;j++){
+            this.no=parseInt(this.no)+1;
+            if(subjectarr[i].subject_name==arr[j].subject_id){
+              obj.subject_name=arr[j].subject_id;
+              if(arr[j].category=='FA1'){                
+                obj.FA1=arr[j].grade;
+                this.m1=arr[j].rtotal;
+              }
+              else if(arr[j].category=='FA2'){                
+                obj.FA2=arr[j].grade;
+                this.m2=arr[j].rtotal;
+              }
+              else if(arr[j].category=='FA3'){                
+                obj.FA3=arr[j].grade;
+                this.m3=arr[j].rtotal;
+              }
+              else if(arr[j].category=='FA4'){                
+                obj.FA4=arr[j].grade;
+                this.m4=arr[j].rtotal;
+              }
+              else if(arr[j].category=='SA1'){                
+                obj.SA1=arr[j].grade;
+                this.sm1=arr[j].rtotal;
+              }
+              else if(arr[j].category=='SA2'){                
+                obj.SA2=arr[j].grade;
+                this.sm2=arr[j].rtotal;
+              }
+            }                          
+            if(this.no==arr.length)
+            {
+              var tot11=(parseInt(this.m1)+parseInt(this.m2))/2;              
+              for(var n=0;n<lower.length;n++){          
+              if(tot11>=lower[n]&&tot11<=higher[n]){
+              obj.tot1=grade[n];              
+              }
+              }
+              var tot12=(parseInt(this.m3)+parseInt(this.m4))/2;
+              for(var n=0;n<lower.length;n++){          
+              if(tot12>=lower[n]&&tot12<=higher[n]){            
+              obj.tot2=grade[n];
+              }
+              }
+              var FA=(parseInt(this.m1)+parseInt(this.m2)+parseInt(this.m3)+parseInt(this.m4))/4;
+              for(var n=0;n<lower.length;n++){          
+              if(FA>=lower[n]&&FA<=higher[n]){            
+              obj.FA=grade[n];
+              }
+              }
+              var SA=(parseInt(this.sm1)+parseInt(this.sm2))/2;
+              for(var n=0;n<lower.length;n++){          
+              if(SA>=lower[n]&&SA<=higher[n]){            
+              obj.SA=grade[n];
+              }
+              }
+              var Grade=(((parseInt(this.m1)+parseInt(this.m2)+parseInt(this.m3)+parseInt(this.m4))/4)+(parseInt((parseInt(this.sm1)+parseInt(this.sm2))/2)))/2;
+              for(var n=0;n<lower.length;n++){          
+              if(Grade>=lower[n]&&Grade<=higher[n]){            
+              obj.Grade=grade[n];
+              }
+              }
+              obj.Point=(parseInt((parseInt(this.m1)+parseInt(this.m2)+parseInt(this.m3)+parseInt(this.m4))/4)+parseInt((parseInt(this.sm1)+parseInt(this.sm2))/2))/2;
+            }
+             
+          }
+          this.finalarr.push(obj);                    
+        }
+        document.querySelector('cce-fivetoten-score-card').subjectArray=this.finalarr; 
+      },
+      callFetchGrade:function(){
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
+      },
+      fetchgradesResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }          
+      }
+    });
+  })();
+  </script>
+</dom-module>

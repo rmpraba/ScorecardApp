@@ -11,6 +11,7 @@
 <link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
 <link rel="import" href="../beginner-assesment-service/beginner-assesment-service.html">
 <link rel="import" href="../term-assesment-service/term-assesment-service.html">
+<link rel="import" href="../scorecard-service/scorecard-service.html">
 
 
 <dom-module id="teacherhome-card">
@@ -40,10 +41,10 @@
        <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/pre-entry.png" height="180px" width="180px"></paper-button>
       </div>
       <div class="card">
-       <paper-button on-click="FnSelectEntryType" no ink><img src="../../images/entry.png" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
       </div>
       <div class="card">
-       <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
       </div>
     </div>
     <div class="dialog">      
@@ -60,6 +61,7 @@
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
+    <scorecard-service id="scorecardservice"></scorecard-service>
   </template>
   <script>
   (function() {
@@ -73,9 +75,10 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('beginnerassesment','');
       },
-      FnSelectEntryType:function(){
-        localStorage.setItem('curr_sess_loggedassesmenttype','Entry Level');
-        this.$.assesmentservice.callTermService("Entry"); 
+      FnGenerateScorecard:function(){
+        this.$.scorecardservice.callFetchstudentnameService();
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('scorecard','');
       },
       FnSelectTermType:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Term');

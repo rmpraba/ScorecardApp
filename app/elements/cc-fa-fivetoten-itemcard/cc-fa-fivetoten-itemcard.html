@@ -85,7 +85,8 @@
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity2",this.score2);
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity3",this.score3);
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity4",this.score4);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity5",this.score5);     
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"FA","Activity5",this.score5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"FA",this.total,this.reduction,this.grade);     
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

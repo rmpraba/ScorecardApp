@@ -5,6 +5,8 @@
 <link rel="import" href="../teacherhome-card/teacherhome-card.html">
 <link rel="import" href="../beginner-assesment/beginner-assesment.html">
 <link rel="import" href="../term-assesment/term-assesment.html">
+<link rel="import" href="../cce-generate-score-card/cce-generate-score-card.html">
+<link rel="import" href="../cce-fivetoten-score-card/cce-fivetoten-score-card.html">
   <dom-module id="home-page">
   <template>
   <style>
@@ -43,6 +45,12 @@
         </section>
         <section data-category="termassesment">
           <term-assesment></term-assesment>
+        </section>
+        <section data-category="scorecard">
+          <cce-generate-score-card></cce-generate-score-card>
+        </section>
+        <section data-category="ccefivetotenscorecard">
+          <cce-fivetoten-score-card></cce-fivetoten-score-card>
         </section>
       </iron-pages>
     </div>

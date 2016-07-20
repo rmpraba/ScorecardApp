@@ -22,8 +22,8 @@
     ]},
     {"Page":[
       {"page":["cc-fa-fivetoten-card","cc-fa-fivetoten-card"]},
-      {"Label":[{"SNo":"S.No","Name":"NAME","Activity1":"Activity1","Activity2":"Activity2","Activity3":"Activity3",
-      "Activity4":"Activity4","Activity5":"Activity5","Total":"Total 100","Reduction":"Reduction To 10","Grade":"GRADE"}]},
+      {"Label":[{"SNo":"S.No","Name":"NAME","Activity1":"Activity1 (20)","Activity2":"Activity2 (20)","Activity3":"Activity3 (20)",
+      "Activity4":"Activity4 (20)","Activity5":"Activity5 (20)","Total":"Total (100)","Reduction":"Reduction To 10","Grade":"GRADE"}]},
       {"title":["CCE Assesment"]}
     ]},
     {"Page":[

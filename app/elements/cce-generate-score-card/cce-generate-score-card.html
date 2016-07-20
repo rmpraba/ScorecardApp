@@ -1,0 +1,115 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="../scorecard-service/scorecard-service.html">
+
+<dom-module id="cce-generate-score-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+      <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnItemSelected">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <paper-item>{{item.itemdes}}</paper-item>
+        </template>
+      </paper-listbox>
+    </div>
+    <scorecard-service id="scorecardservice"></scorecard-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var item=[];
+    Polymer({
+      is: 'cce-generate-score-card',
+      ready:function(){
+        this.querySelector('paper-listbox').style.visibility='hidden';
+      },
+      autocompletearr:function(autocompletearr)
+      {
+         item=autocompletearr;
+      },
+      FnInputChanged:function(e){     
+      if(e.keyCode==13|| e.keyCode==40)
+      this.querySelector('paper-listbox').focus();
+      var arr=[];
+      arr.push({"itemdes":"-----Select-----"});
+      this.querySelector('paper-listbox').style.visibility='visible';
+      if(e.keyCode==8){
+        this.itemflag="true";
+        this.itemval="";        
+        var len=(this.value).length;
+        if(len<=1){
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.itemArray="";
+          this.itemval="";
+        }
+        if(len>1){
+          this.querySelector('paper-listbox').style.visibility='visible';
+          var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+          for(var i=0;i<item.length;i++)
+          {
+            var subval=((item[i].student_name).trim()).substring(0,backsubval.length);
+            if((subval).toUpperCase()==(backsubval).toUpperCase())
+            {
+              var obj={"itemdes":""};
+              obj.itemdes=item[i].student_name;
+              arr.push(obj);
+            }
+          }
+          this.itemArray=arr;
+        }
+      }
+      if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+        if(this.itemflag=="true") {
+          this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+          this.itemflag="false";
+        }
+        else
+        this.itemval = this.value +String.fromCharCode((e.keyCode));
+        if(this.itemval.length>0)
+        {
+          for(var i=0;i<item.length;i++){
+            var subval=((item[i].student_name).trim()).substring(0,this.itemval.length);
+            if((subval).toUpperCase()==(this.itemval).toUpperCase())
+            {
+              var obj={"itemdes":""};
+              obj.itemdes=item[i].student_name;
+              arr.push(obj);
+            }
+          }
+          if(arr.length>0)
+            this.itemArray=arr;
+          else
+          {
+            var obj={"itemdes":""};
+            obj.itemdes="No items found";
+            arr.push(obj);
+            this.itemArray=arr;
+          }
+        }
+      }
+   },
+   FnItemSelected:function(e)
+   {
+    this.querySelector('paper-listbox').style.visibility='hidden';
+    this.studname = e.target.selectedItem.textContent.trim();    
+    this.itemArray=[];
+    document.querySelector('#input1').selected=-1;
+    this.value=this.studname; 
+    this.$.scorecardservice.callFetchstudentinfoService(this.studname);
+    this.$.scorecardservice.callFetchsubjectinfoService(this.studname);
+    this.$.scorecardservice.callFetchmarkService(this.studname);
+    document.querySelector('app-card').setPage('homepage','');
+    document.querySelector('home-page').setPage('ccefivetotenscorecard','');
+   }
+    
+  });
+  })();
+  </script>
+</dom-module>

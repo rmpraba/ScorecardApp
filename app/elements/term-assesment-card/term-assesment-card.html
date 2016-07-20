@@ -137,8 +137,9 @@
           this.callService();
       },
       callService:function(){
-        if(subject=="Maths"){        
-           this.$.assesmentservice.callFetchStudentInfo(gradename,section);
+       
+        if(subject=="Mathematics"){       
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);
            if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){          
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
            document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();  
@@ -151,6 +152,7 @@
            if(assesmenttype=="SA"){
            document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
            document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+           
            }
            }
         }
@@ -159,10 +161,12 @@
           document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');
           document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
         }
+        
         if(subject=="G.K"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');
           document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();
+          
         }
         if(subject=="ART/CRAFT"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          

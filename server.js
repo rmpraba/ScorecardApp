@@ -403,12 +403,13 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   });
 });
 
+
 //Storing overall marks for the assesment
-app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
-{ 
-  var response={
+app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res){
+   var response={
          school_id:req.query.schoolid,
          academic_year:req.query.academicyear,   
+
          assesment_id:req.query.assesmentid,
          term_name:req.query.termname,         
          student_id:req.query.studentid,
@@ -420,12 +421,45 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
          rtotal:req.query.rtotal,
          grade:req.query.grade                
   }
+  connection.query("INSERT INTO tr_term_assesment_overall_marks set ?",[response],
+  function(err, rows){
+     if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+  }
+  });
+});
+//storing mark for coscholastic assessment
+app.post('/insertcoassesmentmark-service',  urlencodedParser,function (req, res){
+
+var response={ 
+ 
+
+         assessment_id:req.query.assesmentid,
+         term_name:req.query.termname,
+         class_id:req.query.classid,
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         grade:req.query.grade,
+         section:req.query.section,
+         subject_id:req.query.category,
+         //category:req.query.category,
+         sub_category:req.query.subcategory,
+         mark:req.query.mark                 
+  }
+
   var subname={subject_name:req.query.subject};
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
   {
   response.subject_category=rows[0].subject_category;  
-  connection.query("INSERT INTO tr_term_assesment_overall_marks set ?",[response],
+  connection.query("INSERT INTO tr_coscholastic_assesment_marks set ?",[response],
   function(err, rows)
     {
     if(!err)
@@ -441,7 +475,6 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
   });
 });
 
-
 //fetching student names
 app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
 {   
@@ -451,7 +484,32 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
     function(err, rows)
     {
     if(!err)
-    {       
+    {  
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});     
+
+//fetch the Life SKill SUb category
+app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
+{  
+  var type=req.query.termtype;
+  console.log(type);
+  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+ 
+  connection.query( "SELECT * FROM md_coscholastic_metrics where sub_category=?",[type],
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+
       res.status(200).json({'returnval': rows});
     }
     else
@@ -462,6 +520,7 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
 
   });
 });
+
 
 //fetching student info
 app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
@@ -540,6 +599,8 @@ app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 
   });
 });
+
+
 
 var server = app.listen(5000, function () {
 var host = server.address().address

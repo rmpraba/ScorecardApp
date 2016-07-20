@@ -1,0 +1,95 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="co-scholastic-service">
+  <template>
+   <iron-ajax        
+        method="post"
+        id="fetchlifeskillajax"
+        url="{{fetchlifeskillurl}}"
+        params="{{fetchlifeskillparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchlifeskillResponse"
+        debounce-duration="300"
+    >
+
+    <iron-ajax
+        method="post"
+        id="insertcoassesmentmarkajax"
+        url="{{insertcoassesmentmarkurl}}"
+        params="{{insertcoassesmentmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertcoassesmentmarkResponse"
+        debounce-duration="300"
+    >
+    
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'co-scholastic-service',
+fetchlifeskilldata:function(name)
+{
+   this.fetchlifeskillurl=sessionStorage.getItem("addrinfo")+"/fetchlifeskill";
+         var obj={"schoolid":"","termtype":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termtype=name;        
+         this.fetchlifeskillparam= obj;
+         this.$.fetchlifeskillajax.generateRequest();
+},
+fetchlifeskillResponse:function(e)
+{
+  var coarr=e.detail.response.returnval;
+  var cat=sessionStorage.getItem("category");
+      if(cat=="lifeskill")
+  document.querySelector('cs-life-skill-item-card').coarr=coarr; 
+else  if(cat=="education")
+  document.querySelector('cs-education-item-card').coarr=coarr;
+else  if(cat=="visual")
+  document.querySelector('cs-visual-performing-item-card').coarr=coarr;
+else  if(cat=="cocurricular")
+  document.querySelector('cs-co-curricular-item-card').coarr=coarr;
+else  if(cat=="healthandphysical")
+  document.querySelector('cs-health-physical-education-item-card').coarr=coarr;
+  else  if(cat=="attitude")
+  document.querySelector('cs-attitudes-item-card').coarr=coarr;
+//alert(JSON.stringify(e.detail.response.returnval));
+
+},
+callinsertcoscholasticassesmentmarkService:function(studid,studname,category,subcategory,mark){
+         this.insertcoassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertcoassesmentmark-service";
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=studid;
+         obj.studentname=studname;        
+         obj.grade=localStorage.getItem("curr_sess_grade");;
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.category=category;
+         obj.subcategory=subcategory;
+         obj.mark=mark;         
+         this.insertcoassesmentmarkparam= obj;        
+         this.$.insertcoassesmentmarkajax.generateRequest();
+      },
+     
+    });
+  })();
+  </script>
+</dom-module>

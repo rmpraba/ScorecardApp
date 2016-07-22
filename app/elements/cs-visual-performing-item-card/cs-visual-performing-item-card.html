@@ -107,6 +107,7 @@ var arr=[];
            this.score2=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score2);
             this.total=parseInt(this.score1)+parseInt(this.score2);
+            this.convert=(parseInt(this.total)/20)*100;
            this.callFetchGrade();
           }
         arr=[];
@@ -123,7 +124,8 @@ var arr=[];
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
         }
-        this.FnFindGrade((parseInt(this.total)));   
+       this.reduce=this.convert/10;
+        this.FnFindGrade((parseInt(this.reduce)));   
       },
       FnFindGrade:function(mark)
       {        
@@ -132,6 +134,7 @@ var arr=[];
           if(mark>=lower[i]&&mark<=higher[i])
           {            
             this.grade=grade[i];
+            this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",this.convert,this.reduce,this.grade);
           }
         }
         //this.callService();

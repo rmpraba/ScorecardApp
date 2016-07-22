@@ -434,10 +434,14 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
     }
   });
 });
+
 //storing mark for coscholastic assessment
 app.post('/insertcoassesmentmark-service',  urlencodedParser,function (req, res){
 
 var response={ 
+ 
+         school_id:req.query.schoolid,
+         academic_year:req.query.academicyear,
          assessment_id:req.query.assesmentid,
          term_name:req.query.termname,
          class_id:req.query.classid,
@@ -471,6 +475,39 @@ var response={
   });
   });
 });
+//storing overall coscholastic mark
+app.post('/overallcotermmarkinsert-service',  urlencodedParser,function (req, res){
+   var response={
+         school_id:req.query.schoolid,
+         academic_year:req.query.academicyear,   
+
+         assesment_id:req.query.assesmentid,
+         term_name:req.query.termname,         
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         subject_id:req.query.subject,
+         //type:req.query.type,
+         //category:req.query.category,         
+         total:req.query.total,
+         rtotal:req.query.rtotal,
+         grade:req.query.grade                
+  }
+  console.log(response);
+  connection.query("INSERT INTO tr_term_co_assesment_overall_marks set ?",[response],
+  function(err, rows){
+     if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+  
+  });
+});
+
 
 //fetching student names
 app.post('/fetchstudname-service',  urlencodedParser,function (req,res)

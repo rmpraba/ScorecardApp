@@ -45,7 +45,7 @@
       </div>
       <div class="card">
        <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
-      </div>
+      </div>      
     </div>
     <div class="dialog">      
       <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
@@ -94,7 +94,7 @@
         this.$.assesmentservice.callAssesmentService("Term",termname,"");               
         this.$.assesmentservice.callGradeService();   
         document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('termassesment','');
+        document.querySelector('home-page').setPage('termscholasticcategory','');
       }
     });
   })();

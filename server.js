@@ -432,7 +432,6 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
     }
-  
   });
 });
 
@@ -442,7 +441,7 @@ app.post('/insertcoassesmentmark-service',  urlencodedParser,function (req, res)
 var response={ 
  
          school_id:req.query.schoolid,
-          academic_year:req.query.academicyear,
+         academic_year:req.query.academicyear,
          assessment_id:req.query.assesmentid,
          term_name:req.query.termname,
          class_id:req.query.classid,
@@ -635,7 +634,35 @@ app.post('/fetchmark-service',  urlencodedParser,function (req,res)
   });
 });
 
+//term attendance
+app.post('/termattendance-service',  urlencodedParser,function (req,res)
+{   
+  var response={
+         school_id: req.query.schoolid, 
+         academic_year: req.query.academicyear,         
+         term_name:req.query.termname,
+         class_id:req.query.classid,
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         attendance:req.query.attendance,
+         working_days:req.query.workingdays                 
+  }  
 
+  connection.query("INSERT INTO md_term_attendance SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
 
 var server = app.listen(5000, function () {
 var host = server.address().address

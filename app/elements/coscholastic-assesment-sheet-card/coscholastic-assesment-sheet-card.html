@@ -1,0 +1,38 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../cce-fivetoten-attendance-card/cce-fivetoten-attendance-card.html">
+<link rel="import" href="../cce-fivetoten-health-card/cce-fivetoten-health-card.html">
+
+<dom-module id="coscholastic-assesment-sheet-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <iron-pages selected="{{page}}" attr-for-selected="data-category">
+        <section data-category="cce-fivetoten-attendance-card">
+          <cce-fivetoten-attendance-card></cce-fivetoten-attendance-card>
+        </section>
+        <section data-category="cce-fivetoten-health-card">
+          <cce-fivetoten-health-card></cce-fivetoten-health-card>
+        </section>
+    </iron-pages>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'coscholastic-assesment-sheet-card',
+
+      setPage:function(page){
+        localStorage.setItem("curr_sess_showpage",page);
+        document.querySelector('component-service').callcomponentService(); 
+        this.page=page;
+      }
+    });
+  })();
+  </script>
+</dom-module>

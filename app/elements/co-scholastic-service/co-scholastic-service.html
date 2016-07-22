@@ -1,17 +1,77 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="co-scholastic-service">
   <template>
+  <iron-ajax        
+        id="academicajax"
+        url="../../configfile/academicconfig.json"
+        params="{{academicparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="academicResponse"
+        debounce-duration="300"
+    >
+  <iron-ajax
+        method="post"
+        id="assesmentajax"
+        url="{{assesmenturl}}"
+        params="{{assesmentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="assesmentResponse"
+        debounce-duration="300"
+    >
+  <iron-ajax
+        method="post"
+        id="termajax"
+        url="{{termurl}}"
+        params="{{termparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="termResponse"
+        debounce-duration="300"
+    >
+  <iron-ajax
+        method="post"
+        id="termcycleajax"
+        url="{{termcycleurl}}"
+        params="{{termcycleparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="termcycleResponse"
+        debounce-duration="300"
+    >
+  <iron-ajax
+        method="post"
+        id="gradeajax"
+        url="{{gradeurl}}"
+        params="{{gradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="gradeResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="sectionajax"
+        url="{{sectionurl}}"
+        params="{{sectionparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="sectionResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="fetchstudentajax"
+        url="{{fetchstudenturl}}"
+        params="{{fetchstudentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentResponse"
+        debounce-duration="300"
+    >
    <iron-ajax        
         method="post"
         id="fetchlifeskillajax"
@@ -41,6 +101,75 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'co-scholastic-service',
+      callAcademicService:function(){
+        this.$.academicajax.generateRequest();
+      },
+      academicResponse:function(e){              
+        document.querySelector('coscholastic-assesment-card').academicarr=e.detail.response;
+      },
+      callTermService:function(termtype){
+         this.termurl=sessionStorage.getItem("addrinfo")+"/term-service";
+         var obj={"schoolid":"","termtype":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termtype=termtype;
+         this.termparam= obj;
+         this.$.termajax.generateRequest();
+      },
+      termResponse:function(e){         
+         document.querySelector('teacherhome-card').termarr=e.detail.response.returnval;
+         document.querySelector('teacherhome-card').FnToggle();
+      },
+      callGradeService:function(){
+         this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
+         var obj={"schoolid":"","loggedid":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         this.gradeparam= obj;
+         this.$.gradeajax.generateRequest();
+      },
+      gradeResponse:function(e){
+          document.querySelector('coscholastic-assesment-card').gradearr=e.detail.response.returnval;
+      },
+      callSectionService:function(gradename){        
+         this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
+         var obj={"schoolid":"","loggedid":"","gradename":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.gradename=gradename;
+         this.sectionparam= obj;
+         this.$.sectionajax.generateRequest();
+      },
+      sectionResponse:function(e){        
+         document.querySelector('coscholastic-assesment-card').sectionarr=e.detail.response.returnval; 
+      },
+      callFetchStudentInfo:function(grade,section){
+         this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
+         var obj={"schoolid":"","gradename":"","section":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.gradename=grade;
+         obj.section=section;
+         this.fetchstudentparam= obj;
+         // alert(JSON.stringify(obj));
+         this.$.fetchstudentajax.generateRequest();
+      },
+      fetchstudentResponse:function(e){         
+        var arr=e.detail.response.returnval;  
+        // alert(JSON.stringify(arr));       
+        for(var i=0;i<arr.length;i++){
+          arr[i].serialno=i+1;
+        }
+        alert(localStorage.getItem("curr_sess_coscholastic_category"));
+         if(localStorage.getItem("curr_sess_coscholastic_category")=="Health"){
+          document.querySelector('cce-fivetoten-health-card').studarr=arr;
+           
+          } 
+          if(localStorage.getItem("curr_sess_coscholastic_category")=="Attendance"){
+            alert('attendance'+document.querySelector('cce-fivetoten-attendance-card'));
+          document.querySelector('cce-fivetoten-attendance-card').studarr=arr; 
+          alert('attendance'+JSON.stringify(document.querySelector('cce-fivetoten-attendance-card').studarr));         
+          }         
+      },
+
 fetchlifeskilldata:function(name)
 {
    this.fetchlifeskillurl=sessionStorage.getItem("addrinfo")+"/fetchlifeskill";
@@ -87,7 +216,7 @@ callinsertcoscholasticassesmentmarkService:function(studid,studname,category,sub
          obj.mark=mark;         
          this.insertcoassesmentmarkparam= obj;        
          this.$.insertcoassesmentmarkajax.generateRequest();
-      },
+      }
      
     });
   })();

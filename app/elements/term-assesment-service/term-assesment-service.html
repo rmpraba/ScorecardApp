@@ -135,6 +135,16 @@
         on-response="overalltermmarkinsertResponse"
         debounce-duration="300"
     >
+    <iron-ajax
+        method="post"
+        id="termattendanceajax"
+        url="{{termattendanceurl}}"
+        params="{{termattendanceparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="termattendanceResponse"
+        debounce-duration="300"
+    >
     
   </template>
   <script>
@@ -254,8 +264,8 @@
         else{
         if(localStorage.getItem("curr_sess_assesmenttype")=="FA"){
         //document.querySelector('cc-fa-fivetoten-card').studarr=arr; 
-document.querySelector('cs-life-skill-card').studarr=arr; 
-//document.querySelector('cs-education-card').studarr=arr;
+        document.querySelector('cs-life-skill-card').studarr=arr; 
+        //document.querySelector('cs-education-card').studarr=arr;
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA"){
         document.querySelector('cc-sa-fivetoten-card').studarr=arr;        
@@ -324,6 +334,24 @@ document.querySelector('cs-life-skill-card').studarr=arr;
       },
       overalltermmarkinsertResponse:function(e){
         alert(JSON.stringify(e.detail.response.returnval));
+      },
+      callinsertattendanceinfo:function(studid,studname,attendance,workingdays){
+         this.termattendanceurl=sessionStorage.getItem("addrinfo")+"/termattendance-service";
+         var obj={"schoolid":"","academicyear":"","termname":"","studentid":"","studentname":"","classid":"",
+            "attendance":"","workingdays":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");         
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=studid;
+         obj.studentname=studname; 
+         obj.attendance=attendance; 
+         obj.workingdays=workingdays; 
+         this.termattendanceparam= obj;
+         this.$.termattendanceajax.generateRequest();
+      },
+      termattendanceResponse:function(e){
+         alert(JSON.stringify(e.detail.response.returnval))
       }
     });
   })();

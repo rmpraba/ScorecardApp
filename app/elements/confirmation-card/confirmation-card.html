@@ -1,0 +1,67 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bus-route-item-card/bus-route-item-card.html">
+
+<dom-module id="confirmation-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="confirmation">
+      <paper-dialog id="seat" modal>
+      <h2>More No of students Mapped</h2>
+      <paper-dialog-scrollable>
+        <paper-item>Total No of Seats Available :{{noseat}}</paper-item><br>
+        <paper-item>Total No of Students Mapped :{{nostudent}}</paper-item>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-dismiss on-click="accept">Accept</paper-button>
+      </div>
+      </paper-dialog>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var noofstudent;
+    var noofseat;
+
+    Polymer({
+      is: 'confirmation-card',
+      ready:function(){
+
+      },
+      confirmz:function(noofstudents, noofseats){
+        this.noofstudent = noofstudents;
+        this.noofseat = noofseats;
+        if (this.noofstudent > this.noofseat) {
+          document.querySelector('#seat').open();
+          document.querySelector('bus-route-item-card').disablecheckboxz();
+        }
+      },
+      accept:function(){
+        document.querySelector('bus-route-item-card').checkboxz();
+      }
+    });
+  })();
+  </script>
+</dom-module>

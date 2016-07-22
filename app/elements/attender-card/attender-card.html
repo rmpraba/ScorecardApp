@@ -10,7 +10,7 @@
 <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
-
+<link rel="import" href="../since-when-employed-card/since-when-employed-card.html">
 <dom-module id="attender-card">
   <template>
     <style>
@@ -61,6 +61,11 @@
         </div>
       </div>
       <div class="horizontal">
+        <div class="date" style="margin-left: -2%;">
+          <since-when-employed-card id="when_employed"></since-when-employed-card>
+        </div>
+      </div>
+      <div class="horizontal">
         <div class="address">
           <paper-textarea value="{{address_1}}" id="address_1"  error-message="needs Address" label="Address Line 1" required ></paper-textarea>
         </div>
@@ -97,9 +102,7 @@
 
       },
       click:function(){
-        if(this.first_name==""||this.last_name==""||this.mobile_no==""||this.address_1==""||this.address_2==""||this
-                        .address_3==""||this.city==""||this.pincode=="")
-        {
+        if(this.first_name==""||this.last_name==""||this.mobile_no==""||this.address_1==""||this.address_2==""||this.address_3==""||this.city==""||this.pincode==""){
           this.$.first_name.validate();
           this.$.last_name.validate();
           this.$.mobile_no.validate();
@@ -108,12 +111,22 @@
           this.$.address_3.validate();
           this.$.city.validate();
           this.$.pincode.validate();
+        } else {
+          this.when_employed = localStorage.getItem("localsess_since_when_employed");
+          this.$.service.attender(this.first_name,this.last_name,this.mobile_no, this.address_1,this.address_2,this.address_3,this.city,this.pincode, this.when_employed);
         }
-        else
-        {
-          this.$.service.attender(this.first_name,this.last_name,this.mobile_no, this.address_1,this.address_2,this.address_3,this.city,this.pincode);
-        }
-      }
+      },
+      FnClear:function(){
+        this.first_name="";
+        this.last_name="";
+        this.mobile_no="";
+        this.address_1="";
+        this.address_2="";
+        this.address_3="";
+        this.city="";
+        this.pincode="";
+        this.$.when_employed.FnClear();
+      },
     });
   })();
   </script>

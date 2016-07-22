@@ -1,0 +1,61 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
+<dom-module id="bus-report-card">
+  <template>
+    <style is="custom-style">
+      .flex-vertical {
+        @apply(--layout-vertical);
+        height: 1px;
+        padding: 2% !important;
+        width: 90%;
+      }
+      .flexchild-vertical {
+        @apply(--layout-horizontal);
+      }
+      .flexchild-vertical paper-item{
+        width: 100%;
+      }
+      .flexchild-vertical .field{
+        padding: 0;
+      }
+    </style>
+    <div class="container flex-vertical">
+      <div class="flexchild-vertical busreport">
+          <div class="field" style="width: 28%;margin: 2% 0 2% 0!important;"><paper-item>{{routeid}}</paper-item></div>
+          <div class="field" style="width: 35%;margin: 2% 0 2% 0!important;"><paper-item>{{routename}}</paper-item></div>
+          <div class="field" style="width: 35%;margin: 2% 0 2% 0!important;"><paper-item>{{trip}}</paper-item></div>
+          <div class="field" style="width: 35%;margin: 2% 0 2% 0!important;"><paper-item>{{busid}} {{busmodel}}</paper-item></div>
+          <div class="field" style="width: 35%;margin: 2% 0 2% 0!important;"><paper-item>{{driverfirstname}} {{driverlastname}}</paper-item></div>
+          <div class="field" style="width: 35%;margin: 2% 0 2% 0!important;"><paper-item>{{drivermobile}}</paper-item></div>
+          <div class="field" style="width: 35%;margin: 2% 0 2% 0!important;"><paper-item>{{attenderfirstname}} {{attenderlastname}}</paper-item></div>
+          <div class="field" style="width: 35%;margin: 2% 0 2% 0!important;"><paper-item>{{attendermobile}}</paper-item></div>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'bus-report-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'bus-report-card',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

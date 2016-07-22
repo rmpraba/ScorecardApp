@@ -21,7 +21,7 @@
     </style>
     <!--component which invokes the predefined date picker control-->
     <div class="card">
-      <paper-input label="Insurance Expiry Date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+      <paper-input label="Insurance Next Renewal Date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
       <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
@@ -50,14 +50,13 @@
   },
   FnDismissDialog:function(e)
   {
-    if (e.detail.confirmed)
-     {
+    if (e.detail.confirmed){
       var pickdate=moment(this.$.picker.date).format('L');
       var dd1=new Date();
       var dd2=new Date(pickdate);
       var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
-          this.showdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("localsess_insurance_exp_date",this.showdate);
+      this.showdate = moment(this.$.picker.date).format('L');
+      localStorage.setItem("localsess_insurance_exp_date",this.showdate);
       //this.$.service.datepickinsta1(this.date);
       //this.$.service.datepickinsta2(this.date);
       //this.$.service.datepickinsta1cheque(this.date);
@@ -66,7 +65,7 @@
       }
     },
     FnClear:function(){
-      this.showdate = moment(this.$.picker.date).format('L');
+      this.showdate = moment(new Date()).format('L');
     }
 });
   </script>

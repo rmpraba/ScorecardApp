@@ -50,10 +50,8 @@
     this.date=new Date();
     this.$.dialog.toggle();
   },
-  FnDismissDialog:function(e)
-  {
-    if (e.detail.confirmed)
-     {
+  FnDismissDialog:function(e){
+    if (e.detail.confirmed){
       var pickdate=moment(this.$.picker.date).format('L');
       var dd1=new Date();
       var dd2=new Date(pickdate);
@@ -66,11 +64,11 @@
       //this.$.service.datepickinsta2cheque(this.date);
       this.$.service.feereport(this.showdate);
       document.querySelector('feereports-card').showpapertab();
-      }
-    },
-    FnClear:function(){
-      this.showdate = moment(this.$.picker.date).format('L');
     }
+  },
+  FnClear:function(){
+    this.showdate = moment(this.$.picker.date).format('L');
+  }
 });
   </script>
 </dom-module>

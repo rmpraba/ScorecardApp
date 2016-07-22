@@ -40,7 +40,12 @@
 <link rel="import" href="../bus-route-card/bus-route-card.html">
 <link rel="import" href="../passtemplate-card/passtemplate-card.html">
 <link rel="import" href="../routecreate-card/routecreate-card.html">
+<<<<<<< HEAD
 <link rel="import" href="../zonechange-card/zonechange-card.html">
+=======
+<link rel="import" href="../bus-report/bus-report.html">
+<link rel="import" href="../consolidated-report/consolidated-report.html">
+>>>>>>> origin/master
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -179,8 +184,16 @@
           <section data-category="bustoroute">
             <bus-route-card></bus-route-card>
           </section>
+<<<<<<< HEAD
            <section data-category="zonechange">
             <zonechange-card></zonechange-card>
+=======
+          <section data-category="busreport">
+            <bus-report></bus-report>
+          </section>
+          <section data-category="consolidatedreport">
+            <consolidated-report></consolidated-report>
+>>>>>>> origin/master
           </section>
           </iron-pages>
        </div>
@@ -292,11 +305,11 @@
     if(name=="Accounts Admin")  {
       document.querySelector('transportfee-service').ready();
       document.querySelector('transportfee-service').FnClear();
-       /*document.querySelector('receipt-card').FnClear();
+      /*document.querySelector('receipt-card').FnClear();
       document.querySelector('receipt-card').ready();
       document.querySelector('cqreceipt-card').FnClear();
       document.querySelector('cqreceipt-card').ready();
-       document.querySelector('zoneinstalltype-card').FnClear();
+      document.querySelector('zoneinstalltype-card').FnClear();
       document.querySelector('zoneinstalltype-card').ready();*/
     if(currpage=="zonetostudent"){
       document.querySelector('app-card').setPage("transportapp");
@@ -418,6 +431,7 @@
        document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
        //document.querySelector('studentpass-card').FnClear();
        document.querySelector('bus-route-card').FnClear();
+       //document.querySelector('bus-route-item-card').FnClear();
        //document.querySelector('studentpass-card').ready();
        
      }
@@ -434,6 +448,14 @@
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
       //document.querySelector('studentpass-card').FnClear();
       document.querySelector('attender-card').FnClear();
+      //document.querySelector('studentpass-card').ready();
+      
+    }
+    if(currpage=="busreport"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      //document.querySelector('studentpass-card').FnClear();
+      document.querySelector('bus-report').FnClear();
       //document.querySelector('studentpass-card').ready();
       
     }
@@ -464,6 +486,14 @@
       document.querySelector('password-card').FnClear();
       document.querySelector('password-card').ready();
       
+    }
+    if(currpage=="consolidatedreport"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+
+      //document.querySelector('password-card').FnClear();
+      document.querySelector('consolidated-report').ready();
+
     }
 
   }

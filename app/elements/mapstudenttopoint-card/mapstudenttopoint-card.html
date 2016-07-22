@@ -94,13 +94,11 @@
           document.querySelector('#gradeselect').selected=-1;
           document.querySelector('#selectbox').checked=false;
         },
-        refreshmappoint:function()
-        {
+        refreshmappoint:function(){
           this.studentarr=[];
-        this.$.maps.selectclass();
+          this.$.maps.selectclass();
         },
-        changeHandler:function(e)
-        {
+        changeHandler:function(e){
        if(e.target.checked==true)
         {
           this.$.search.hidden=false;

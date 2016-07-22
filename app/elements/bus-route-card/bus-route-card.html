@@ -10,6 +10,13 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../transport-service/transport-service.html">
 <link rel="import" href="../bus-route-item-card/bus-route-item-card.html">
+<link rel="import" href="../confirmation-card/confirmation-card.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 
 <dom-module id="bus-route-card">
   <template>
@@ -20,7 +27,7 @@
     </style>
     <div class="card">
       <div class="field" style="margin-left: 40%;margin-top: 3%;">
-        <paper-dropdown-menu id="set" label="Trip">
+        <paper-dropdown-menu id="tripzz" label="Trip">
           <paper-menu class="dropdown-content" on-iron-select="trip" attr-for-selected="value" >
             <paper-item value="1">1</paper-item>
             <paper-item value="2">2</paper-item>
@@ -43,6 +50,7 @@
     'use strict';
     var tripz;
     var itemarray=[];
+    var routearray =[];
     Polymer({
       is: 'bus-route-card',
       ready:function(){
@@ -84,7 +92,13 @@
         }
         this.$.submitbutton.disabled=true;
         document.getElementById("submitbutton").style.background="grey";
-      }
+      },
+      FnClear:function(){
+        itemarray = "";
+        document.querySelector('#tripzz').selected = -1;
+        routearray = "";
+        //document.querySelector('bus-route-item-card').Fnclear();
+      },
     });
   })();
   </script>

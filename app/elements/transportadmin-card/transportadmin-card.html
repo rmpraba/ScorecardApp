@@ -31,9 +31,10 @@
       <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/bus.png" on-click="bus"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/attender.png" on-click="attender"></paper-icon-button>
-      <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button> -->
+      <paper-icon-button class="iconbutton" src="../../images/driver.png" on-click="driver"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/addroute.png" on-click="addroute"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/bus_route.png" on-click="bustoroute"></paper-icon-button>
+      <paper-icon-button class="iconbutton" src="../../images/bus_report.png" on-click="busreport"></paper-icon-button>
     </div>
   </body>
   <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
@@ -98,6 +99,11 @@
     bustoroute:function()
     {
       document.querySelector('transport-app').setPage("bustoroute","Bus to Route");
+    },
+    busreport:function()
+    {
+      document.querySelector('transport-app').setPage("busreport","Bus Report");
+      this.$.transportservice.busreport();
     },
       passtemp:function(){
         document.querySelector('transport-app').setPage("passtemp","STudent PAss");

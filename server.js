@@ -421,6 +421,27 @@ app.post('/setzone' ,  urlencodedParser,function (req, res)
 
 });
 	});
+app.post('/previouszonedetails' ,  urlencodedParser,function (req, res)
+{
+	var queryy="insert into student_zonechange values('"+req.query.school_id+"','"+req.query.student_id+"','"+req.query.zone_id+"','"+req.query.receipt_no1+"','"+req.query.receipt_no2+"','"+req.query.installment_1+"','"+req.query.installment_2+"','"+req.query.fees+"','"+req.query.discount_fee+"','"+req.query.installment_1Date+"','"+req.query.installment_2Date+"','"+req.query.modeofpayment1+"','"+req.query.modeofpayment2+"','"+req.query.from_date+"','"+req.query.to_date+"','"+req.query.mode+"','"+req.query.updated_by+"','"+req.query.updated_on+"','"+req.query.status+"','"+req.query.install1_status+"','"+req.query.install2_status+"','"+req.query.install1_fine+"','"+req.query.install2_fine+"')";
+	   // console.log(queryy);
+	    connection.query(queryy,
+       	function(err, rows)
+       	{
+
+
+			if(!err)
+			{
+			res.status(200).json({'returnval': 'success'});
+			}
+			else
+			{
+				console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+			}
+
+});
+	});
 app.post('/setzonechange' ,  urlencodedParser,function (req, res)
 {
 	 var z=req.query.zone;

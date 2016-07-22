@@ -130,6 +130,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             debounce-duration="300"
             >
         </iron-ajax>
+         <iron-ajax
+            method="post"
+            id="previouszonedetailajax"
+            url="{{previouszonedetailurl}}"
+            params="{{previouszonedetailparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="previouszonedetailResponse"
+            debounce-duration="300"
+            >
+        </iron-ajax>
   </template>
 
   <script>
@@ -150,6 +161,7 @@ var currentdate;
 var feemon;
 var remainfee;
 var mon;
+var previouszone;
     Polymer({
       is:'zonechange-service',
         getzonechangename:function()
@@ -187,7 +199,8 @@ var mon;
       },
       fetchstuzonedetailResponse:function(e)
       {
-        //alert(JSON.stringify(e.detail.response.returnval[0].installment_1));
+        //alert(JSON.stringify(e.detail.response.returnval[0]));
+        previouszone=e.detail.response.returnval[0];
 zinstall1=e.detail.response.returnval[0].installment_1;
 zinstall2=e.detail.response.returnval[0].installment_2;
 zfee=e.detail.response.returnval[0].fees;
@@ -368,7 +381,18 @@ zfee=e.detail.response.returnval[0].fees;
         this.setzonechangeparam=obj;
        // alert(JSON.stringify(obj));
         this.$.setzonechangeajax.generateRequest();
+
+ this.previouszonedetailurl = sessionStorage.getItem("addrinfo")+"/previouszonedetails";
+ this.previouszonedetailparam=previouszone;
+        this.$.previouszonedetailajax.generateRequest();
+
+
       },
+      setzonechangeResponse:function()
+      {
+        alert('Zone Change Successfully');
+       document.querySelector('zonechange-card').FnClear();
+      }
 
     });
   })();

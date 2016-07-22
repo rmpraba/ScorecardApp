@@ -1,14 +1,8 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../component-service/component-service.html">
+<link rel="import" href="../cce-fivetoten-health-itemcard/cce-fivetoten-health-itemcard.html">
 
 <dom-module id="cce-fivetoten-health-card">
   <template>
@@ -16,24 +10,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      table{
+        width: 60%;
+        border-collapse: collapse;
+        margin-left: 1%;
+      }
+      .studname{
+        width: 30%;
+      }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div>
+    <!-- <template is="dom-repeat" items="{{label}}"> -->
+      <center><h1>{{schoolname}}</h1>
+      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+      <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
+      <table border="1" >    
+      <tr>
+      <th style="width: 5%;">SNo</th>
+      <th style="width: 25%;">Name</th>
+      <th style="width: 5%;">Total Attendance</th>
+      <th style="width: 5%;">Total Working Days</th>
+      </tr>  
+      <template is="dom-repeat" items="{{studarr}}">
+      <tr><td>
+      <cce-fivetoten-health-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cce-fivetoten-health-itemcard>
+      </td></tr>
+      </template>
+      </table>
+      </center> 
+    <!-- </template>      -->
+    </div>
+    <!-- <component-service id="componentservice" label="{{label}}"></component-service> -->
   </template>
   <script>
   (function() {
     'use strict';
-
     Polymer({
       is: 'cce-fivetoten-health-card',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'cce-fivetoten-health-card',
-          notify: true
-        }
+      ready:function(){      
+      },
+      setDefaultHeaders:function(){
+        // alert('headers');
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        // alert(this.schoolname);
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        // this.subject=localStorage.getItem("curr_sess_subject");
       }
     });
   })();
   </script>
 </dom-module>
+

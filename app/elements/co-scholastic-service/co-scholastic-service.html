@@ -158,15 +158,16 @@
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=i+1;
         }
-        alert(localStorage.getItem("curr_sess_coscholastic_category"));
+        // document.querySelector('cce-fivetoten-attendance-card').studarr=arr; 
+        // alert(localStorage.getItem("curr_sess_coscholastic_category"));
          if(localStorage.getItem("curr_sess_coscholastic_category")=="Health"){
           document.querySelector('cce-fivetoten-health-card').studarr=arr;
            
           } 
           if(localStorage.getItem("curr_sess_coscholastic_category")=="Attendance"){
-            alert('attendance'+document.querySelector('cce-fivetoten-attendance-card'));
+            // alert('attendance'+document.querySelector('cce-fivetoten-attendance-card'));
           document.querySelector('cce-fivetoten-attendance-card').studarr=arr; 
-          alert('attendance'+JSON.stringify(document.querySelector('cce-fivetoten-attendance-card').studarr));         
+          // alert('attendance'+JSON.stringify(document.querySelector('cce-fivetoten-attendance-card').studarr));         
           }         
       },
 

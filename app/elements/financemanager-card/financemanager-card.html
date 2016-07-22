@@ -40,6 +40,7 @@
        <paper-icon-button class="iconbutton" src="../../images/pendingreport.jpg" on-click="pend"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/route_reports.png" on-click="routereport"></paper-icon-button>
        <paper-icon-button class="iconbutton" src="../../images/edit-cheque.png" on-click="editcheque"></paper-icon-button>
+        <paper-icon-button class="iconbutton" src="../../images/bouncecheque.png" on-click="bouncecheque"></paper-icon-button>
     </div>
      <div class="frontpage">
          
@@ -87,6 +88,13 @@
       {
         this.$.trservice.checkchequedetails();
          document.querySelector('transport-app').setPage("chequedetail","Cheque Detail");
+
+      },
+       bouncecheque:function()
+      {
+      //  alert('1');
+        this.$.trservice.bouncechequedetails();
+         document.querySelector('transport-app').setPage("bouncechequedetail","Bounce Cheque Detail");
 
       },
       feereports:function()

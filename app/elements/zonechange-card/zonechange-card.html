@@ -20,7 +20,8 @@
     <link rel="import" href="../zoneinstalltype-card/zoneinstalltype-card.html">
     <link rel="import" href="../zoneinstalltype1-card/zoneinstalltype1-card.html">
         <link rel="import" href="../transportfee-service/transportfee-service.html">
-<dom-module id="zonetostudent-card">
+        <link rel="import" href="../zonechange-service/zonechange-service.html">
+<dom-module id="zonechange-card">
 
 <template>
 <style type="text/css">
@@ -106,13 +107,26 @@
 <div  class="horizontalframe hrrspace">
 <div class="verticalframe">
           <p style="font-weight: 500; font-size: large; margin-left: -1.5%;">Travel Requirements:</p>
-<div  style="width: 170%;" class="horizontalframe" >
-    <div style="width: 150%;">
+<div   class="horizontalframe" >
+    <div>
             Complete Year
-            <paper-checkbox style="margin-left: 3%" id="yearly" readonly class="checkbox" on-change="fullHandler"></paper-checkbox></div>
-            <div style="width: 100%;">
+            <paper-checkbox style="margin-left: 3%" id="yearly1" readonly class="checkbox" on-change="fullHandler"></paper-checkbox></div>
+           <div> Custom
+            <paper-checkbox id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox></div>
+             <paper-input id="zdate2"  value="{{ztodate}}"></paper-input> 
+            <div><fromdatepicker-card id="date1"></fromdatepicker-card></div>
+
+<div>
+            <todatepicker-card id="date2"></todatepicker-card></div>
+<paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
+</div>
+<div  class="horizontalframe hrrspace">
+<div>
+  One-Way
+<paper-checkbox style="margin-left: 3%" id="oneway1" readonly class="checkbox" on-change="onewayHandler"></paper-checkbox> </div>
+            <div>
   Two-Way
-<paper-checkbox style="margin-left: 3%" id="twoway" readonly class="checkbox" on-change="twowayHandler"></paper-checkbox> </div>
+<paper-checkbox style="margin-left: 3%" id="twoway1" readonly class="checkbox" on-change="twowayHandler"></paper-checkbox> </div>
 
   </div>
   </div>
@@ -214,6 +228,7 @@
    </paper-dialog>
 </div>
     <transport-service id="root"></transport-service>
+     <zonechange-service id="zservice"></zonechange-service>
     <transportfee-service id="service"></transportfee-service>
 </template>
 
@@ -238,24 +253,33 @@ var dat2=new Date();
       var status='mapped';
   Polymer({
 
-    is: "zonetostudent-card",
+    is: "zonechange-card",
 
       ready: function() {
 
-        this.$.root.getzone();
-        this.$.root.getname();
+        this.$.zservice.getchangezone();
+        this.$.zservice.getzonechangename();
         this.querySelector('paper-listbox').style.visibility='hidden';
         this.$.status.hidden=true;
+
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
+        this.$.zdate2.hidden=true;
         this.$.dad.disabled=true;
+        this.$.date1.hidden=true;
+        this.$.date2.hidden=true;
+        this.$.datebox.hidden=true;
+        //this.$.dad3.disabled=true;
         this.$.dad1.disabled=true;
         this.$.dad2.disabled=true;
         this.$.dad4.disabled=true;
         this.$.dad5.disabled=true;
         this.$.dad6.disabled=true;
-        this.$.yearly.disabled=true;
-         this.$.twoway.disabled=true;
+        this.$.custom.disabled=true;
+
+        this.$.yearly1.disabled=true;
+        this.$.twoway1.disabled=true;
+         this.$.oneway1.disabled=true;
          this.$.but.disabled=true;
          this.hidepayoption=true;
          boxcount=2;
@@ -271,8 +295,8 @@ var dat2=new Date();
           this.zfromdate="";
           this.ztodate="";
           document.querySelector('#zone').selected=-1;
-          document.querySelector('#yearly').checked=false;
-          document.querySelector('#twoway').checked=false;
+          document.querySelector('#yearly1').checked=false;
+          document.querySelector('#twoway1').checked=false;
           document.querySelector('#lumsum').checked=false;
            payarrr=[];
            fromdate="";
@@ -355,22 +379,25 @@ this.hidetransport=true;
     zoned:function(e){
       this.zone_id=e.target.selectedItem.value;
       this.zone = (e.target.selectedItem.textContent).trim();
-      this.$.root.getfee(this.zone);
-      this.$.root.gettermdate(this.grade);
-      this.$.root.studzone(this.id);
+      this.$.zservice.getzonechangefee(this.zone);
+      this.$.zservice.getzonechangetermdate(this.grade);
+      //this.$.root.studzone(this.id);
       this.$.dad.disabled=false;
-      this.$.yearly.disabled=true;
-         this.$.twoway.disabled=true;
-          this.$.but.disabled=false;
-      document.querySelector("#yearly").checked=true;
-      document.querySelector("#twoway").checked=true;
+      this.$.yearly1.disabled=false;
+         this.$.twoway1.disabled=false;
+          this.$.oneway1.disabled=false;
+         this.$.but.disabled=false;
+         this.$.custom.disabled=false;
+
+      document.querySelector("#yearly1").checked=true;
+      document.querySelector("#twoway1").checked=true;
     },
     setzonedate:function(zonefromdate,zonetodate)
     {
       var temp='foryear';
           fromdat=new Date(zonefromdate);
           todat =new Date(zonetodate);
-           this.$.root.calc(temp);
+           this.$.zservice.calc(temp);
     },
     ckcount:function(checkcount)
     {
@@ -500,6 +527,7 @@ this.hidetransport=true;
     },
     autocompletearr:function(autocompletearr)
     {
+      alert(autocompletearr);
          item=autocompletearr;
     },
 
@@ -574,8 +602,7 @@ this.hidetransport=true;
     document.querySelector('#input1').selected=-1;
     this.value=this.studid;
    // alert(this.studid);
-     this.$.root.getstudetail(this.studid);
-
+     this.$.zservice.getzonechangestudetail(this.studid);
      this.$.dad1.disabled=false;
      this.$.dad2.disabled=false;
      //this.$.dad3.disabled=false;
@@ -594,16 +621,15 @@ this.hidetransport=true;
 
      // alert(JSON.stringify(inputlocal.source));
     },
-     changeHandler:function(event){
-
+     changeHandler:function(event)
+     {
 
         var custom = document.querySelector("#custom");
         datebox = document.querySelector("#datebox");
-
-
-       if(custom.checked==true){
-        document.querySelector("#oneway").checked=false;
-        document.querySelector("#twoway").checked=false;
+       if(event.target.checked==true)
+       {
+        document.querySelector("#oneway1").checked=false;
+        document.querySelector("#twoway1").checked=false;
         var temp='';
         this.fee=temp;
         fromdat=temp;
@@ -611,12 +637,12 @@ this.hidetransport=true;
          this.$.date1.hidden=false;
         this.$.date2.hidden=false;
         this.$.datebox.hidden=false;
-
-          document.querySelector("#yearly").checked=false;
+        document.querySelector("#yearly1").checked=false;
         }
 
 
-        if(custom.checked==false){
+        if(event.target.checked==false)
+        {
 
           this.$.date1.hidden=true;
         this.$.date2.hidden=true;
@@ -627,8 +653,8 @@ this.hidetransport=true;
         this.fee=temp;
         fromdat=temp;
         todat=temp;
-        document.querySelector("#oneway").checked=false;
-        document.querySelector("#twoway").checked=false;
+        document.querySelector("#oneway1").checked=false;
+        document.querySelector("#twoway1").checked=false;
         }
 
 
@@ -640,20 +666,19 @@ this.hidetransport=true;
           var tod = localStorage.getItem("localsess_to_date");
           fromdat=new Date(fromd);
           todat =new Date(tod);
-          this.$.root.monthdiff(fromdat,todat);
+          this.$.zservice.monthdiff(fromdat,todat);
           //alert(fromdat+'   '+todat);
         }
 
 
 },
 fullHandler:function(event){
-  var yearly = document.querySelector("#yearly");
+  var yearly = document.querySelector("#yearly1");
 
-    if(yearly.checked==true)
-    {
+    if(yearly.checked==true){
 
-       document.querySelector("#oneway").checked=false;
-        document.querySelector("#twoway").checked=false;
+       document.querySelector("#oneway1").checked=false;
+        document.querySelector("#twoway1").checked=false;
         var temp='';
         this.fee=temp;
         fromdat=temp;
@@ -669,33 +694,34 @@ fullHandler:function(event){
 
         fromdat=new Date(this.zfromdate);
         todat=new Date(this.ztodate);
-        this.$.root.calc(temp);
+        this.$.zservice.calc(temp);
 
 
         }
 
-        if(yearly.checked==false){
+        if(yearly.checked==false)
+        {
 
-          var temp1='';
-          this.fee=temp1;
+        var temp1='';
+        this.fee=temp1;
         fromdat=temp1;
         todat=temp1;
-        document.querySelector("#oneway").checked=false;
-        document.querySelector("#twoway").checked=false;
+        document.querySelector("#oneway1").checked=false;
+        document.querySelector("#twoway1").checked=false;
         }
 },
 
 onewayHandler:function(event){
-var oneway = document.querySelector("#oneway");
+var oneway = document.querySelector("#oneway1");
 mode='One-Way';
 if(oneway.checked==true){
 
-      document.querySelector("#twoway").checked=false;
-      this.$.root.oneway();
+      document.querySelector("#twoway1").checked=false;
+      this.$.zservice.oneway();
   }
 
  if((oneway.checked==true)&&(datebox.checked==true)){
-    this.$.root.onecus();
+    this.$.zservice.onecus();
   }
 
   if(oneway.checked==false){
@@ -705,23 +731,23 @@ if(oneway.checked==true){
         fromdat=temp;
         todat=temp;
         document.querySelector("#datebox").checked=false;
-        document.querySelector("#twoway").checked=false;
+        document.querySelector("#twoway1").checked=false;
   }
 
 },
 twowayHandler:function(event){
   //alert('two way');
-  var twoway = document.querySelector("#twoway");
+  var twoway = document.querySelector("#twoway1");
   mode='Two-Way';
   if(twoway.checked==true){
 
-        document.querySelector("#oneway").checked=false;
-        this.$.root.twoway();
+        document.querySelector("#oneway1").checked=false;
+        this.$.zservice.twoway();
 
   }
 
    if((twoway.checked==true)&&(datebox.checked==true)){
-    this.$.root.twocus();
+    this.$.zservice.twocus();
   }
 
   if(twoway.checked==false){
@@ -730,7 +756,7 @@ twowayHandler:function(event){
         this.fee=temp;
         fromdat=temp;
         todat=temp;
-        document.querySelector("#oneway").checked=false;
+        document.querySelector("#oneway1").checked=false;
         document.querySelector("#datebox").checked=false;
   }
 },
@@ -757,20 +783,20 @@ click:function(e)
     {
       alert('You Cannot Mapped Again');
       FnClear();
-      document.querySelector("#yearly").checked=false;
+      document.querySelector("#yearly1").checked=false;
       //document.querySelector("#custom").checked=false;
       //document.querySelector("#datebox").checked=false;
-      document.querySelector("#twoway").checked=false;
+      document.querySelector("#twoway1").checked=false;
       //document.querySelector("#oneway").checked=false;
 
     }
     else{
-      this.$.root.setzone(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value);
-      this.hidepayoption=false;
-      document.querySelector("#install").checked=true;
-      this.hidetransport=false;
-          this.hidetransport1=true;
-          this.installmentarr=payarrr;
+      this.$.zservice.setzonechange(this.id,this.zone_id,this.fee,fromdate,todate,mode,name,today,status,this.value);
+      //this.hidepayoption=false;
+      //document.querySelector("#install").checked=true;
+      //this.hidetransport=false;
+          //this.hidetransport1=true;
+          //this.installmentarr=payarrr;
 
     }
 

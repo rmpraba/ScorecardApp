@@ -276,9 +276,56 @@ app.post('/getzone' ,  urlencodedParser,function (req, res)
 });
 	});
 
-
+app.post('/getchangezone' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+	    connection.query('select * from md_zone where ?',[schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
 
 app.post('/getfee' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+	var zone={"zone_name":req.query.zone};
+	    connection.query('select fees from md_distance where id=(select distance_id from md_zone where ? and ?)',[zone,schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+
+app.post('/getzonechangefee' ,  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};
 	var zone={"zone_name":req.query.zone};
@@ -328,12 +375,62 @@ app.post('/gettermdate' ,  urlencodedParser,function (req, res)
 		}
 });
 	});
-
+app.post('/getzonechangetermdate' ,  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+	var idz={"school_type":req.query.grade};
+	    connection.query('select start_date,end_date from transport_details where ? and ?',[idz,schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+				//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
 app.post('/setzone' ,  urlencodedParser,function (req, res)
 {
 	var queryy="insert into student_fee values('"+req.query.schol+"','"+req.query.studid+"','"+req.query.zone+"','','',0,0,'"+req.query.fee+"',0,'','','','',STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),'"+req.query.mode+"','"+req.query.name+"',STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),'"+req.query.status+"','','',0,0)";
 	   // console.log(queryy);
 	    connection.query(queryy,
+       	function(err, rows)
+       	{
+
+
+			if(!err)
+			{
+			res.status(200).json({'returnval': 'success'});
+			}
+			else
+			{
+				console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+			}
+
+});
+	});
+app.post('/setzonechange' ,  urlencodedParser,function (req, res)
+{
+	 var z=req.query.zone;
+	 var fee=req.query.fee;
+	 var studid=req.query.studid;
+	 var schol=req.query.schol;
+	 var mode=req.query.mode;
+	 var fromdate=req.query.fromdate;
+	 var enddate=req.query.todate;
+	 connection.query('update student_fee set zone_id=?,fees=?,from_date=?,to_date=?,mode=?,installment_1=0,installment_2=0,installment_1Date=null,installment_2Date=null,receipt_no1="",receipt_no2="",modeofpayment1="",modeofpayment2="",install1_status="",install2_status=""  where student_id= ? and school_id =?',[z,fee,fromdate,enddate,mode,studid,schol],
        	function(err, rows)
        	{
 
@@ -427,7 +524,31 @@ app.post('/getname' ,  urlencodedParser,function (req, res)
 		}
 });
 	});
-
+app.post('/getzonechangename' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+		var trans_req={"transport_required":"yes"};
+	    connection.query('select student_name from student_details where id IN(Select student_id from student_fee where status="mapped") and ? and ?',[trans_req,schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+			//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
 
 app.post('/stupassgetname' ,  urlencodedParser,function (req, res)
 {
@@ -507,7 +628,58 @@ app.post('/getstudetail' ,  urlencodedParser,function (req, res)
 	});
 
 
+app.post('/getzonechangestudetail' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+		var id={"student_name":req.query.studid};
+	    connection.query('select * from student_details where ? and ?',[id,schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
 
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
+
+
+app.post('/fetchstuzonedetail' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+		var id={"student_name":req.query.studid};
+	    connection.query('select * from student_fee where ? and student_id=( select id from student_details where ? and ?) ',[schoolx,id,schoolx],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
 app.post('/getroute' ,  urlencodedParser,function (req, res)
 {
 	    connection.query('select route_name from md_route',
@@ -1568,7 +1740,32 @@ app.post('/getclass',  urlencodedParser,function (req, res)
 });
 	});
 
+app.post('/getzonechangeclass',  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+			var id={"id":req.query.class};
+	    connection.query('SELECT * from class_details where ? and ?',[id,schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
 
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json('invalid');
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+
+});
+	});
 app.post('/statuschange',  urlencodedParser,function (req, res)
 {
 	var student_id = {"student_id":req.query.student_id};
@@ -1697,7 +1894,26 @@ app.post('/checkchequedetails',  urlencodedParser,function (req, res)
 });
 	});
 
-
+app.post('/bouncechequedetails',  urlencodedParser,function (req, res)
+{
+	var schoolx={"school_id":req.query.schol};
+       connection.query('SELECT * from bounce_chequedetails where ?',[schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			console.log(err);
+			res.status(200).json({'returnval': ''});
+		}
+	}
+});
+	});
 app.post('/updatechequedetail',  urlencodedParser,function (req, res)
 {
 	var cstatus={"cheque_status":req.query.chequestatus};
@@ -2574,7 +2790,26 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
       }
     });
 });
+app.post('/getzonechangeparentname',  urlencodedParser,function (req, res){
 
+  var stuid = req.query.studid;
+  var schoolx=req.query.schol;
+  //console.log('In Server');
+  connection.query('select * from parent where student_id=(select id from student_details where student_name=?) and school_id=?',[stuid,schoolx],
+    function(err, rows){
+      if(!err){
+        if(rows.length>0)
+        { //console.log(rows);
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
 app.post('/getchequedetailsbyname' ,  urlencodedParser,function (req, res)
 {
 		var schoolx={"school_id":req.query.schol};

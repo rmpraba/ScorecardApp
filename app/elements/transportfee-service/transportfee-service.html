@@ -161,6 +161,17 @@
   </iron-ajax>
   <iron-ajax
         method="post"
+        id="bouncechequedetailsajax"
+        url="{{bouncechequedetailsurl}}"
+        params="{{bouncechequedetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="bouncechequedetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
         id="updatechequedetailajax"
         url="{{updatechequedetailurl}}"
          params="{{updatechequedetailparam}}"
@@ -1098,6 +1109,21 @@ document.querySelector('transportfee-card').installmentarr=installarr;
 document.querySelector('zonetostudent-card').installmentarr=installarr;
 document.querySelector('zonetostudent-card').payoption(installarr);
      },
+     bouncechequedetails:function()
+     {
+      //alert('2');
+         this.bouncechequedetailsurl=sessionStorage.getItem("addrinfo")+"/bouncechequedetails";
+         var obj={"schol":""}
+            obj.schol=sessionStorage.getItem("sch");
+           this.bouncechequedetailsparam =obj;
+        this.$.bouncechequedetailsajax.generateRequest();
+     },
+    bouncechequedetailsResponse:function(e)
+     {
+var bouncechequearr=e.detail.response.returnval;
+//alert(JSON.stringify(bouncechequearr));
+document.querySelector('bouncecheque-card').bchequearr=bouncechequearr;
+     },
 
      checkchequedetails:function()
      {
@@ -1107,6 +1133,7 @@ document.querySelector('zonetostudent-card').payoption(installarr);
            this.checkchequedetailsparam =obj;
         this.$.checkchequedetailsajax.generateRequest();
      },
+
      checkchequedetailsResponse:function(e)
      {
         var chequedetailarr=[];

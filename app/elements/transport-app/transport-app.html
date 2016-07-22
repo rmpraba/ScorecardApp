@@ -27,6 +27,7 @@
 <link rel="import" href="../feereports-card/feereports-card.html">
 <link rel="import" href="../pending-card/pending-card.html">
 <link rel="import" href="../chequedetail-card/chequedetail-card.html">
+<link rel="import" href="../bouncecheque-card/bouncecheque-card.html">
 <link rel="import" href="../nodata-card/nodata-card.html">
 <link rel="import" href="../studentpass-card/studentpass-card.html">
 <link rel="import" href="../student-detail-card/student-detail-card.html">
@@ -39,6 +40,7 @@
 <link rel="import" href="../bus-route-card/bus-route-card.html">
 <link rel="import" href="../passtemplate-card/passtemplate-card.html">
 <link rel="import" href="../routecreate-card/routecreate-card.html">
+<link rel="import" href="../zonechange-card/zonechange-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -132,6 +134,9 @@
              <section data-category="chequedetail">
               <chequedetail-card></chequedetail-card>
            </section>
+            <section data-category="bouncechequedetail">
+              <bouncecheque-card></bouncecheque-card>
+           </section>
             <section data-category="nodata">
               <nodata-card></nodata-card>
             </section>
@@ -173,6 +178,9 @@
           </section>
           <section data-category="bustoroute">
             <bus-route-card></bus-route-card>
+          </section>
+           <section data-category="zonechange">
+            <zonechange-card></zonechange-card>
           </section>
           </iron-pages>
        </div>

@@ -32,7 +32,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'cs-dialog-item-card',
-
+    fnfindsum(val)
+      {
+     arr.push(val);
+//alert(arr);
+      },
+      opendialog:function()
+      {
+        var id = 'lifeskill';
+       var dialog = document.getElementById(id);
+        dialog.open();
+      },
       click:function()
       {
         var sum=0;
@@ -44,10 +54,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          var id = 'lifeskill';
         var dialog = document.getElementById(id);
         dialog.opened=false;
+        this.score1=sum;
+        document.querySelector('cs-life-skill-item-card').setvalue(sum);
         if(name=="Self Awareness")
         {
-           
-          this.score1=sum;
+           document.querySelector('cs-life-skill-item-card').setvalue(sum);
+          //this.score1=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score1);
         }
         else  if(name=="Problem Solving")

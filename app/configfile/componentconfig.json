@@ -30,6 +30,11 @@
       {"page":["cc-sa-fivetoten-card","cc-sa-fivetoten-card"]},
       {"Label":[{"SNo":"S.No","Name":"NAME","Max":"Max 60","Convert":"Converted to 100","Reduce":"Reduced to 30","Grade":"GRADE"}]},
       {"title":["CCE Assesment"]}
+    ]},
+     {"Page":[
+      {"page":["cce-fivetoten-attendance-card","cce-fivetoten-attendance-card"]},
+      {"Label":[{"SNo":"S.No","Name":"NAME","Total_Attendance":"Total Attendance","Total_Working_Days":"Total Working Days"}]},
+      {"title":["CCE Assesment"]}
     ]}
   ]
 

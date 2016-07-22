@@ -1,0 +1,38 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<dom-module id="term-scholastic-category">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <div class="card">    
+       <paper-button on-click="FnScholastic" no ink><img src="../../images/scholastic.png" height="180px" width="180px"></paper-button>
+      </div>
+      <div class="card">
+       <paper-button on-click="FnCoScholastic" no ink><img src="../../images/coscholastic.png" height="180px" width="180px"></paper-button>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'term-scholastic-category',
+      FnScholastic:function(){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('termassesment','');
+      },
+      FnCoScholastic:function(){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('termcoscholasticcategory','');
+      }
+      
+    });
+  })();
+  </script>
+</dom-module>

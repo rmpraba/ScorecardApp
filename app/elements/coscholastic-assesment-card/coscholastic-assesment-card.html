@@ -1,0 +1,125 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../co-scholastic-service/co-scholastic-service.html">
+
+<dom-module id="coscholastic-assesment-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    
+    .card{
+        @apply(--layout-vertical);
+    }
+
+    .drop{        
+        @apply(--layout-horizontal);
+        margin-top: 5%;
+        margin-left: 10%;
+    }
+    paper-dropdown-menu{
+      width: 15%;
+      margin-left: 3%;
+    }
+    </style>
+    <div class='card'>
+     
+     <div class='drop'>
+      
+          <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
+              <template is="dom-repeat" items="{{academicarr}}">
+                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{gradearr}}">
+                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{sectionarr}}">
+                <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+           <!-- <paper-dropdown-menu id="assessment" label="Select Assesment" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required> 
+              <template is="dom-repeat" items="{{assesmentarr}}">
+                <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>      
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>  -->                
+           <!-- <coscholastic-assesment-sheet-card></coscholastic-assesment-sheet-card> -->
+     </div>
+    </div>
+    <co-scholastic-service id="assesmentservice"></co-scholastic-service>
+  </template>
+  <script>
+  (function() {
+    var flag=0;
+    'use strict';
+    var gradename,section,term,assesment,subject,academicyear;
+    Polymer({
+      is: 'coscholastic-assesment-card',
+      ready:function(){
+        this.flag=0;
+        this.hideassesmenttype=true;
+        this.$.assesmentservice.callAcademicService(); 
+        this.$.assesmentservice.callGradeService(); 
+      },
+      FnSelectacademicyear:function(e){
+        academicyear = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_academicyear",academicyear);
+        if(this.flag==1)
+          this.callService();       
+      },
+      FnSelectGrade:function(e){
+        gradename = e.target.selectedItem.textContent.trim();
+        if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4")
+          this.hideassesmenttype=false;
+        localStorage.setItem("curr_sess_grade",gradename);
+        this.$.assesmentservice.callSectionService(gradename);
+        if(this.flag==1)
+          this.callService();
+      },
+      FnSelectSection:function(e){
+        section = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section",section);
+        // this.$.assesmentservice.callSubjectService(gradename,section);
+        // if(this.flag==1)
+          this.callService();
+      },      
+      callService:function(){
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);           
+          if(localStorage.getItem("curr_sess_coscholastic_category")=="Health"){ 
+             // alert('he');
+          document.querySelector('home-page').setPage('coscholasticassesment','');   
+          document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card');
+          document.querySelector('cce-fivetoten-health-card').setDefaultHeaders();  
+          } 
+          if(localStorage.getItem("curr_sess_coscholastic_category")=="Attendance"){
+            // alert('att');
+          document.querySelector('home-page').setPage('coscholasticassesment',''); 
+          document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-attendance-card');
+          document.querySelector('cce-fivetoten-attendance-card').setDefaultHeaders();  
+          }         
+        }
+      
+    });
+  })();
+  </script>
+</dom-module>

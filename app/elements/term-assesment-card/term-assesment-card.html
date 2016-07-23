@@ -149,7 +149,8 @@
            this.$.assesmentservice.callFetchStudentInfo(gradename,section);                   
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
            document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();  
-        }           
+        } 
+
         
         if(subject=="EVS"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
@@ -163,7 +164,7 @@
           document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();
           
         }
-        if(subject=="ART/CRAFT"){        
+        if(subject=="Art&Craft"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-art-craft-onetofour-card');
           document.querySelector('cc-art-craft-onetofour-card').setDefaultHeaders();

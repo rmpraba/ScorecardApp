@@ -664,6 +664,51 @@ app.post('/termattendance-service',  urlencodedParser,function (req,res)
   });
 });
 
+//fetch the name for performance report
+
+app.post('/nameforonetofourreport-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  
+
+  connection.query("SELECT id,student_name FROM md_student WHERE ?",[schoolid],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var id={student_id:req.query.student_id}
+  
+
+  connection.query("SELECT subject_id,term_name, count(mark) as cnt, category, sum(mark) as val  FROM tr_term_assesment_marks WHERE ? and ? group by category,term_name,subject_id",[schoolid,id],
+    function(err, rows)
+    {
+    if(!err)
+    {      
+    console.log(rows); 
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

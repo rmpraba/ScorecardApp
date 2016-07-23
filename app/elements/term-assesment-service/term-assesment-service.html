@@ -145,11 +145,46 @@
         on-response="termattendanceResponse"
         debounce-duration="300"
     >
-    
+      <iron-ajax
+        method="post"
+        id="nameforperformancereportajax"
+        url="{{nameforperformancereporturl}}"
+        params="{{nameforperformancereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="nameforperformancereportResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="onetofourreportajax"
+        url="{{onetofourreporturl}}"
+        params="{{onetofourreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="onetofourreportResponse"
+        debounce-duration="300"
+    >
+
+     <iron-ajax        
+        method="post"
+        id="fetchgradeforscoreajax"
+        url="{{fetchgradeforscoreurl}}"
+        params="{{fetchgradeforscoreparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeforscoreResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
     'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    var name;
+var arr=[];
 
     Polymer({
       is: 'term-assesment-service',
@@ -251,7 +286,7 @@
          
         document.querySelector('cc-computer-onetofour-card').studarr=arr;
         }
-        if(localStorage.getItem("curr_sess_subject")=="ART/CRAFT"){        
+        if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
         document.querySelector('cc-art-craft-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="dance"){        
@@ -352,7 +387,116 @@
       },
       termattendanceResponse:function(e){
          alert(JSON.stringify(e.detail.response.returnval))
-      }
+      },
+      selectnameforperformance:function()
+      {
+         this.nameforperformancereporturl=sessionStorage.getItem("addrinfo")+"/nameforonetofourreport-service";
+         var obj={"schoolid":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+          this.nameforperformancereportparam= obj;
+          this.$.nameforperformancereportajax.generateRequest();
+
+      },
+      nameforperformancereportResponse:function(e)
+      {
+      var nameitem=e.detail.response.returnval;
+      document.querySelector('cce-performance-name-card').autocompletename(nameitem);
+      this.callFetchGrade();
+    },
+    onetofourscore:function(stdid)
+    {
+        this.onetofourreporturl=sessionStorage.getItem("addrinfo")+"/onetofourreport-service";
+         var obj={"schoolid":"","student_id":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.student_id=stdid;
+          this.onetofourreportparam= obj;
+          this.$.onetofourreportajax.generateRequest();
+          
+    },
+     callFetchGrade:function()
+       {
+        this.fetchgradeforscoreurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradeforscoreajax.generateRequest(); 
+      },
+       fetchgradeforscoreResponse:function(e)
+       {
+        var returnval=e.detail.response.returnval; 
+        alert(returnval);      
+        for(var i=0;i<returnval.length;i++)
+        {
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        } 
+      },
+    onetofourreportResponse:function(e)
+    {
+     
+       var tot; 
+       var score;
+        alert(e.detail.response.returnval);
+        var gradeval=e.detail.response.returnval;
+        for(var i=0;i<gradeval.length;i++)
+        {
+
+
+             tot=parseInt(gradeval[i].val)/parseInt(gradeval[i].cnt);
+             //alert(tot);
+                 for(var j=0;j<lower.length;j++)
+             {          
+                  if(tot>=lower[j]&&tot<=higher[j])
+                  {            
+                  score=grade[j];
+                  //alert(score);
+                  }
+            }
+            if(gradeval[i].category=="Concept" && gradeval[i].term_name=="term1")
+            {
+                
+                document.querySelector('cce-onetofour-score-card').concept=score;
+               
+        }
+            if(gradeval[i].category=="Activity/Project" && gradeval[i].term_name=="term1" )
+            {
+                 if(gradeval[i].subject_id=="Mathematics")
+                 document.querySelector('cce-onetofour-score-card').Activity=score;
+                else if(gradeval[i].subject_id=="EVS")
+                document.querySelector('cce-onetofour-score-card').EVSActivity=score;
+            }
+            if(gradeval[i].category=="Mental Ability" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').Mental=score;
+            }
+             if(gradeval[i].category=="Table Activity" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').Table=score;
+            }
+            if(gradeval[i].category=="Written Work" && gradeval[i].term_name=="term1")
+            {
+                if(gradeval[i].subject_id=="Mathematics")
+                document.querySelector('cce-onetofour-score-card').Written=score;
+                else if(gradeval[i].subject_id=="EVS")
+                    document.querySelector('cce-onetofour-score-card').EVSWritten=score;
+            }
+             if(gradeval[i].category=="Environmental sensitivity" && gradeval[i].term_name=="term1")
+            {
+
+                document.querySelector('cce-onetofour-score-card').Environmental=score;
+            }
+            if(gradeval[i].category=="Group Discussion" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').GrpDiscussion=score;
+            }
+            if(gradeval[i].category=="Art&Craft" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').artcraft=score;
+            }
+            if(gradeval[i].category=="Music" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').music=score;
+            }
+        }
+    }
     });
   })();
   </script>

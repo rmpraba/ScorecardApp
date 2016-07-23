@@ -1,0 +1,246 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<dom-module id="vehicleroute-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .laybut{
+        @apply(--layout-horizontal);
+   @apply(--layout-center);
+   display: flex;
+   margin-left: 36%;
+      }
+    </style>
+    <div class="card2">
+        <ul>
+          <li class="ro2">
+            <fieldset>
+              <ul>
+                <paper-input hidden value="{{routeid}}"></paper-input>
+                <li class="row">
+                  <div class="detail">
+                    <div class="field">
+                      <paper-dropdown-menu id="sets0" label="Route">
+                        <paper-menu class="dropdown-content" on-iron-select="routezxc" >
+                          <template  is="dom-repeat" items="{{routes}}" as="view">
+                            <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
+                          </template>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div><div class="field">
+                      <paper-dropdown-menu id="sets01" label="Trip">
+                        <paper-menu class="dropdown-content" on-iron-select="tripzxc" >
+                          <paper-item value=1>Primary</paper-item>
+                          <paper-item value=2>Pre-Primary</paper-item>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+                    <div class="field">
+                      <paper-dropdown-menu id="sets1" label="Bus">
+                        <paper-menu class="dropdown-content" on-iron-select="bus" attr-for-selected="value">
+                          <template  is="dom-repeat" items="{{routetobus}}" as="view">
+                            <paper-item value="{{view.id}}">{{view.made_model}}</paper-item>
+                          </template>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+                  </div>
+                  <div class="detail">
+                    <div class="field">
+                      <paper-dropdown-menu id="sets2" label="Driver">
+                        <paper-menu class="dropdown-content" on-iron-select="driver" attr-for-selected="value" >
+                          <template  is="dom-repeat" items="{{bustodriver}}" as="view">
+                            <paper-item value="{{view.id}}">{{view.first_name}}{{view.last_name}}</paper-item>
+                          </template>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+                    <div class="field">
+                      <paper-dropdown-menu id="sets3" label="Attender">
+                        <paper-menu class="dropdown-content" on-iron-select="attender" attr-for-selected="value" >
+                          <template  is="dom-repeat" items="{{bustoattender}}" as="view">
+                            <paper-item value="{{view.id}}">{{view.first_name}}{{view.last_name}}</paper-item>
+                          </template>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </fieldset>
+          </li>
+        </ul>
+        <paper-button style="margin-left: 46%;margin-top: 2%" class="button" on-click="payfee">Submit</paper-button>
+    </div>
+    <div class="confirm-fee">
+  <paper-dialog id="confirmbox1ret" modal>
+  <h4>Do You Want Proceed ?</h4>
+             <paper-tabs>
+              <paper-tab>Total No of Seats : {{noofseats}}</paper-tab>
+              <paper-tab>Total No of Students : {{noofstudents}}</paper-tab>
+            </paper-tabs>
+<div class="laybut">
+<div> <paper-button style="height: 110px;" on-click="Confirm">CONFIRM</paper-button></div>
+  <div><paper-button style="height: 110px;" on-click="cancel">CANCEL</paper-button></div>
+  </div>
+      
+   </paper-dialog>
+</div>
+
+
+    
+    <iron-ajax
+      method="post"
+      id="noofstudentsinrouteajax"
+      url="{{noofstudentsinrouteurl}}"
+      params="{{noofstudentsinrouteparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="noofstudentsinrouteResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="noofseatsajax"
+      url="{{noofseatsurl}}"
+      params="{{noofseatsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="noofseatsResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <confirmation-card id="confirm"></confirmation-card>
+    <transport-service id="root"></transport-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+var val;
+var bus;
+var noofseats;
+var driver;
+var attender;
+
+    Polymer({
+      is: 'vehicleroute-card',
+
+      ready:function(){
+        this.$.root.getroute();
+
+       
+      },
+      Fnclear:function(){
+        //alert('hi');
+        this.routeid='';
+        document.querySelector('#sets0').selected = -1;
+        document.querySelector('#sets01').selected = -1;
+        document.querySelector('#sets1').selected = -1;
+        document.querySelector('#sets2').selected = -1;
+        document.querySelector('#sets3').selected = -1;
+        this.noofseats='';
+        this.noofstudents='';
+      },
+     
+      bus:function(e){
+        bus = (e.target.selectedItem.value);
+
+        this.noofseatsurl=sessionStorage.getItem("addrinfo")+"/noofseats";
+        var obj={"schol":"", "bus":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.bus = bus;
+        this.noofseatsparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.noofseatsajax.generateRequest();
+
+        this.noofstudentsinrouteurl=sessionStorage.getItem("addrinfo")+"/noofstudentsinroute";
+        var obj={"routeid":"","schol":""}
+        obj.schol=sessionStorage.getItem("sch");
+        obj.routeid=this.routeid;
+        this.noofstudentsinrouteparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.noofstudentsinrouteajax.generateRequest();
+
+      },
+      noofseatsResponse:function(e){
+        noofseats = e.detail.response.returnval[0].no_of_seats;
+        //alert(noofseats);
+      },
+      driver:function(e){
+        driver = (e.target.selectedItem.value);
+      },
+      attender:function(e){
+        attender = (e.target.selectedItem.value);
+      },
+     
+      noofstudentsinrouteResponse:function(e)
+      {
+        var routereportresult=e.detail.response.returnval;
+        var no_of_students = routereportresult.length;
+        this.noofstudents = no_of_students;
+        this.noofseats = noofseats;
+      },
+      routezxc:function(e){
+          var routename=(e.target.selectedItem.textContent).trim();
+          
+          this.$.root.getrouteid(routename);
+          this.$.root.busdetails();
+      },
+      tripzxc:function(e){
+          var routename=(e.target.selectedItem.textContent).trim();
+          
+          if(routename=='Primary'){
+            val=1;
+          }
+          else{
+            val=2;
+          }
+          //alert(routename+'    '+val);
+      },
+       payfee:function()
+    {
+      
+      var id = 'confirmbox1ret';
+        var dialog = document.getElementById(id);
+        dialog.open();
+    },
+    Confirm:function()
+    {
+      var id = 'confirmbox1ret';
+        var dialog = document.getElementById(id);
+        dialog.opened=false;
+         this.$.root.mapbustoroute(this.route,bus,driver,attender,val);
+     
+   },
+   
+   cancel:function(){
+          var id = 'confirmbox1ret';
+        var dialog = document.getElementById(id);
+        dialog.opened=false;
+   }
+    });
+  })();
+  </script>
+</dom-module>

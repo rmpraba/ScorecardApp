@@ -41,6 +41,7 @@
 <link rel="import" href="../passtemplate-card/passtemplate-card.html">
 <link rel="import" href="../routecreate-card/routecreate-card.html">
 <link rel="import" href="../zonechange-card/zonechange-card.html">
+<link rel="import" href="../vehicleroute-card/vehicleroute-card.html">
 <link rel="import" href="../bus-report/bus-report.html">
 <link rel="import" href="../consolidated-report/consolidated-report.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
@@ -189,6 +190,12 @@
           </section>
           <section data-category="consolidatedreport">
             <consolidated-report></consolidated-report>
+          </section>
+          <section data-category="excelreport">
+            <excelreport-card></excelreport-card>
+          </section>
+          <section data-category="vehicleroute">
+          <vehicleroute-card></vehicleroute-card>
           </section>
           </iron-pages>
        </div>
@@ -461,6 +468,14 @@
       //document.querySelector('studentpass-card').ready();
       
     }
+    if(currpage=="vehicleroute"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      //document.querySelector('studentpass-card').FnClear();
+      document.querySelector('vehicleroute-card').FnClear();
+      //document.querySelector('studentpass-card').ready();
+      
+    }
    }
     if(name=="Admin Manager")  {
     if(currpage=="approvediscount"){
@@ -567,7 +582,12 @@
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
       document.querySelector('routereport-card').FnClear();
       document.querySelector('routereport-card').ready();
-      
+    }
+    if(currpage=="excelreport"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("adminmanager","Admin Manager");
+      //document.querySelector('password-card').FnClear();
+      document.querySelector('excelreport-card').ready();
     }
 
   }

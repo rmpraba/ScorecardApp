@@ -1125,17 +1125,63 @@ var bouncechequearr=e.detail.response.returnval;
 document.querySelector('bouncecheque-card').bchequearr=bouncechequearr;
      },
 
-     checkchequedetails:function()
+     checkchequedetails:function(chequefromdate,chequetodate)
      {
+      var d;
+      var m;
+      var d1;
+      var m1;
+
+      //alert('2'+chequefromdate+''+chequetodate);
+       var condate = new Date(chequefromdate);
+        if(condate.getDate()<10)
+        {
+             d="0"+condate.getDate();
+           }
+           else
+           {
+            d=condate.getDate();
+           }
+          if((condate.getMonth()+1)<10)
+          {
+             m="0"+(condate.getMonth()+1);
+          }
+          else
+          {
+          m=condate.getMonth()+1;
+          }
+       var cfromdate=m+"/"+d+"/"+condate.getFullYear();
+        var condate2 = new Date(chequetodate);
+         if(condate2.getDate()<10)
+        {
+             d1="0"+condate2.getDate();
+           }
+           else
+           {
+            d1=condate2.getDate();
+           }
+          if((condate2.getMonth()+1)<10)
+          {
+             m1="0"+(condate2.getMonth()+1);
+          }
+          else
+          {
+          m1=condate2.getMonth()+1;
+          }
+       var ctodate=m1+"/"+d1+"/"+condate2.getFullYear();
          this.checkchequedetailsurl=sessionStorage.getItem("addrinfo")+"/checkchequedetails";
-         var obj={"schol":""}
+         var obj={"schol":"","fromdate":"","todate":""}
             obj.schol=sessionStorage.getItem("sch");
+            obj.fromdate=cfromdate;
+            obj.todate=ctodate;
            this.checkchequedetailsparam =obj;
         this.$.checkchequedetailsajax.generateRequest();
+        
      },
 
      checkchequedetailsResponse:function(e)
      {
+    
         var chequedetailarr=[];
         var cstatus;
         var chequedetail=e.detail.response.returnval;

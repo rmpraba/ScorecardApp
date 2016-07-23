@@ -1896,14 +1896,20 @@ app.post('/updatezone' ,  urlencodedParser,function (req, res)
 
 app.post('/checkchequedetails',  urlencodedParser,function (req, res)
 {
+	console.log('come');
 	var schoolx={"school_id":req.query.schol};
-       connection.query('SELECT * from cheque_details where cheque_status="processing" and ?',[schoolx],
+	var startdate=req.query.fromdate;
+	var todate=req.query.todate;
+console.log(startdate);
+console.log(todate);
+       connection.query('SELECT * from cheque_details where cheque_status="processing" and ? and cheque_date between ? and ?',[schoolx,startdate,todate],
        	function(err, rows)
        	{
 		if(!err)
 		{
 		if(rows.length>0)
 		{
+			console.log(rows);
 			res.status(200).json({'returnval': rows});
 		}
 		else

@@ -635,12 +635,12 @@ app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 });
 
 //term attendance
-app.post('/termattendance-service',  urlencodedParser,function (req,res)
+app.post('/insertattendance-service',  urlencodedParser,function (req,res)
 {   
   var response={
          school_id: req.query.schoolid, 
          academic_year: req.query.academicyear,         
-         term_name:req.query.termname,
+         term_id:req.query.termname,
          class_id:req.query.classid,
          student_id:req.query.studentid,
          student_name:req.query.studentname,         
@@ -648,7 +648,66 @@ app.post('/termattendance-service',  urlencodedParser,function (req,res)
          working_days:req.query.workingdays                 
   }  
 
-  connection.query("INSERT INTO md_term_attendance SET ?",[response],
+  connection.query("INSERT INTO tr_term_attendance SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+//term health
+app.post('/inserthealth-service',  urlencodedParser,function (req,res)
+{   
+  var response={
+         school_id: req.query.schoolid, 
+         academic_year: req.query.academicyear,         
+         term_id:req.query.termname,
+         class_id:req.query.classid,
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         height:req.query.height,
+         weight:req.query.weight,
+         blood_group:req.query.bloodgroup,
+         vision_left:req.query.visionleft,                          
+         vision_right:req.query.visionright,
+         dental:req.query.dental
+  }  
+
+  connection.query("INSERT INTO tr_term_health SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+//fetchhealthattendanceinfo
+app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var studname={student_name:req.query.studname};  
+  var qur="select * from scorecarddb.tr_term_health th join scorecarddb.tr_term_attendance ta "+
+  "on (th.student_id=ta.student_id) where th.student_name='"+req.query.studname+"' "+
+  "and th.school_id='"+req.query.schoolid+"'";
+  connection.query(qur,
     function(err, rows)
     {
     if(!err)
@@ -663,6 +722,7 @@ app.post('/termattendance-service',  urlencodedParser,function (req,res)
 
   });
 });
+
 
 var server = app.listen(5000, function () {
 var host = server.address().address

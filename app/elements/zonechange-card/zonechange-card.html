@@ -14,7 +14,7 @@
        <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
         <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
     <link rel="import" href="../transport-service/transport-service.html">
-    <link rel="import" href="../fromdatepicker-card/fromdatepicker-card.html">
+    <link rel="import" href="../zonechangedatepicker-card/zonechangedatepicker-card.html">
     <link rel="import" href="../todatepicker-card/todatepicker-card.html">
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <link rel="import" href="../zoneinstalltype-card/zoneinstalltype-card.html">
@@ -85,6 +85,23 @@
 
 </div>
 <div class="horizontalframe">
+   <div class="hrspace">
+     <paper-input  label="Previous Zone" is="" readonly id="dad4" value="{{prevzone}}"></paper-input></div>
+    <div class="hrspace">
+  <paper-input  label="Previous Zone Fee" is="" id="dad2" readonly value="{{prevzonefee}}"></paper-input></div>
+<div><zonechangedatepicker-card></zonechangedatepicker-card></div>
+
+</div>
+<div class="horizontalframe">
+   <div class="hrspace">
+     <paper-input  label="Used Month" is="" readonly id="dad4" value="{{prevmonth}}"></paper-input></div>
+    <div class="hrspace">
+  <paper-input  label="Used Fee" is="" id="dad2" readonly value="{{prevusedfee}}"></paper-input></div>
+ <div class="hrspace">
+  <paper-input  label="Remaining Fee" is="" id="dad2" readonly value="{{prevremainfee}}"></paper-input></div>
+
+</div>
+<div class="horizontalframe">
   <div class="hrspace">
     <div class="drop-down" >
       <paper-dropdown-menu label="Select the Zone" >
@@ -111,27 +128,13 @@
     <div>
             Complete Year
             <paper-checkbox style="margin-left: 3%" id="yearly1" readonly class="checkbox" on-change="fullHandler"></paper-checkbox></div>
-           <div> Custom
-            <paper-checkbox id="custom" class="checkbox" on-change="changeHandler"></paper-checkbox></div>
-             <paper-input id="zdate2"  value="{{ztodate}}"></paper-input> 
-            <div><fromdatepicker-card id="date1"></fromdatepicker-card></div>
-
-<div>
-            <todatepicker-card id="date2"></todatepicker-card></div>
-<paper-checkbox id="datebox" class="checkbox" on-change="changeHandler"></paper-checkbox>
-</div>
-<div  class="horizontalframe hrrspace">
-<div>
-  One-Way
-<paper-checkbox style="margin-left: 3%" id="oneway1" readonly class="checkbox" on-change="onewayHandler"></paper-checkbox> </div>
-            <div>
+           <div>
   Two-Way
 <paper-checkbox style="margin-left: 3%" id="twoway1" readonly class="checkbox" on-change="twowayHandler"></paper-checkbox> </div>
 
-  </div>
-  </div>
-  </div>
-
+            
+          
+</div>
 
 <div style="margin-top: 5%; margin-left: 20%;" class="horizontalframe hrspace" id="but">
 
@@ -264,22 +267,22 @@ var dat2=new Date();
 
         this.$.zdate.hidden=true;
         this.$.zdate1.hidden=true;
-        this.$.zdate2.hidden=true;
+        //this.$.zdate2.hidden=true;
         this.$.dad.disabled=true;
-        this.$.date1.hidden=true;
-        this.$.date2.hidden=true;
-        this.$.datebox.hidden=true;
+        //this.$.date1.hidden=true;
+        //this.$.date2.hidden=true;
+        //this.$.datebox.hidden=true;
         //this.$.dad3.disabled=true;
         this.$.dad1.disabled=true;
         this.$.dad2.disabled=true;
         this.$.dad4.disabled=true;
         this.$.dad5.disabled=true;
         this.$.dad6.disabled=true;
-        this.$.custom.disabled=true;
+        //this.$.custom.disabled=true;
 
         this.$.yearly1.disabled=true;
         this.$.twoway1.disabled=true;
-         this.$.oneway1.disabled=true;
+         //this.$.oneway1.disabled=true;
          this.$.but.disabled=true;
          this.hidepayoption=true;
          boxcount=2;
@@ -294,6 +297,12 @@ var dat2=new Date();
           this.fee="";
           this.zfromdate="";
           this.ztodate="";
+          this.prevzonefee="";
+          this.prevremainfee="";
+          this.prevusedfee="";
+          this.prevmonth="";
+          this.prevzone="";
+          this.parent="";
           document.querySelector('#zone').selected=-1;
           document.querySelector('#yearly1').checked=false;
           document.querySelector('#twoway1').checked=false;
@@ -385,10 +394,9 @@ this.hidetransport=true;
       this.$.dad.disabled=false;
       this.$.yearly1.disabled=false;
          this.$.twoway1.disabled=false;
-          this.$.oneway1.disabled=false;
+         // this.$.oneway1.disabled=false;
          this.$.but.disabled=false;
-         this.$.custom.disabled=false;
-
+         //this.$.custom.disabled=false;
       document.querySelector("#yearly1").checked=true;
       document.querySelector("#twoway1").checked=true;
     },

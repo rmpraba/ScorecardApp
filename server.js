@@ -1868,7 +1868,32 @@ app.post('/getstudzone',  urlencodedParser,function (req, res)
 });
 	});
 
+app.post('/getzonenamedetail',  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+	var stuid={"id":req.query.zoneid};
+	    connection.query('SELECT zone_name from md_zone where ? and ?',[stuid,schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json('invalid');
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
 
+});
+	});
 app.post('/updatezone' ,  urlencodedParser,function (req, res)
 {
 	var queryy="update student_fee set zone_id='"+req.query.zone+"',fees='"+req.query.fee+"',from_date=STR_TO_DATE('"+req.query.fromdate+"','%Y/%m/%d'),to_date=STR_TO_DATE('"+req.query.todate+"','%Y/%m/%d'),mode='"+req.query.mode+"',updated_by='"+req.query.name+"',updated_on=STR_TO_DATE('"+req.query.today+"','%Y/%m/%d'),status='"+req.query.status+"'  WHERE student_id='"+req.query.studid+"'";

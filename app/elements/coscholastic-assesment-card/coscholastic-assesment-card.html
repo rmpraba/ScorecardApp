@@ -6,7 +6,8 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../co-scholastic-service/co-scholastic-service.html">
-
+<link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
+<link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
 <dom-module id="coscholastic-assesment-card">
   <template>
     <style>
@@ -56,14 +57,19 @@
             </paper-menu>
           </paper-dropdown-menu>
 
-           <!-- <paper-dropdown-menu id="assessment" label="Select Assesment" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required> 
-              <template is="dom-repeat" items="{{assesmentarr}}">
-                <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>      
-              </template>
+          <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required> 
+                <paper-item value="Health">Health</paper-item>      
+                <paper-item value="Attendance">Attendance</paper-item> 
+                <paper-item value="Lifeskill">Life Skills</paper-item> 
+                <paper-item value="Workeducation">Work Education</paper-item> 
+                <paper-item value="Visualarts">Visual & Performing Arts</paper-item> 
+                <paper-item value="Attitude">Attitudes & Values</paper-item> 
+                <paper-item value="Cocurricular">Co-Curricular Activities</paper-item> 
+                <paper-item value="Physichealth">Health & Physical Activities</paper-item>               
             </paper-menu>
-          </paper-dropdown-menu>  -->                
-           <!-- <coscholastic-assesment-sheet-card></coscholastic-assesment-sheet-card> -->
+          </paper-dropdown-menu> 
+            
      </div>
     </div>
     <co-scholastic-service id="assesmentservice"></co-scholastic-service>
@@ -76,49 +82,64 @@
     Polymer({
       is: 'coscholastic-assesment-card',
       ready:function(){
-        this.flag=0;
-        this.hideassesmenttype=true;
+        this.flag=0; 
         this.$.assesmentservice.callAcademicService(); 
-        this.$.assesmentservice.callGradeService(); 
+        this.$.assesmentservice.callGradeService();        
       },
       FnSelectacademicyear:function(e){
         academicyear = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_academicyear",academicyear);
-        if(this.flag==1)
-          this.callService();       
       },
       FnSelectGrade:function(e){
         gradename = e.target.selectedItem.textContent.trim();
-        if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4")
-          this.hideassesmenttype=false;
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.assesmentservice.callSectionService(gradename);
-        if(this.flag==1)
-          this.callService();
       },
       FnSelectSection:function(e){
         section = e.target.selectedItem.textContent.trim();
-        localStorage.setItem("curr_sess_section",section);
-        // this.$.assesmentservice.callSubjectService(gradename,section);
-        // if(this.flag==1)
-          this.callService();
-      },      
+        localStorage.setItem("curr_sess_section",section);       
+      },
+      FnSelectSubject:function(e){
+        subject = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_coscholastic_category",subject);
+        this.callService();
+      },
       callService:function(){
-          this.$.assesmentservice.callFetchStudentInfo(gradename,section);           
-          if(localStorage.getItem("curr_sess_coscholastic_category")=="Health"){ 
-             // alert('he');
-          document.querySelector('home-page').setPage('coscholasticassesment','');   
-          document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card');
-          document.querySelector('cce-fivetoten-health-card').setDefaultHeaders();  
-          } 
-          if(localStorage.getItem("curr_sess_coscholastic_category")=="Attendance"){
-            // alert('att');
-          document.querySelector('home-page').setPage('coscholasticassesment',''); 
-          document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-attendance-card');
-          document.querySelector('cce-fivetoten-attendance-card').setDefaultHeaders();  
-          }         
+        this.$.assesmentservice.callFetchStudentInfo(gradename,section);
+        // alert(subject);  
+        if(subject=="Health"){
+        document.querySelector('cce-fivetoten-health-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card'); 
         }
-      
+        else if(subject=="Attendance"){
+        document.querySelector('attendance-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
+        }
+        else if(subject=="Life Skills"){
+        document.querySelector('cs-life-skill-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card'); 
+        }
+        else if(subject=="Work Education"){
+        document.querySelector('cs-education-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-education-card'); 
+        }
+        else if(subject=="Visual & Performing Arts"){
+        document.querySelector('cs-visualerforming-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-visualerforming-card'); 
+        }
+        else if(subject=="Attitudes & Values"){
+        document.querySelector('cs-attitudes-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-attitudes-card'); 
+        }
+        else if(subject=="Co-Curricular Activities"){
+        document.querySelector('cs-co-curricular-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-co-curricular-card'); 
+        }
+        else if(subject=="Health & Physical Activities"){
+        document.querySelector('cs-health-physical-education-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-health-physical-education-card'); 
+        }
+      }
     });
   })();
   </script>

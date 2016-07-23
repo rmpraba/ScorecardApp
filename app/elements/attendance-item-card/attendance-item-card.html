@@ -4,7 +4,7 @@
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../co-scholastic-service/co-scholastic-service.html">
-<dom-module id="cce-fivetoten-health-itemcard">
+<dom-module id="attendance-item-card">
   <template>
     <style>
       :host {
@@ -23,12 +23,8 @@
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
         <td style="width: 25%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 8%;"><paper-input on-change="FnHeight" value="{{height}}"></paper-input></td>  
-        <td style="width: 8%;"><paper-input on-change="FnWeight" value="{{weight}}"></paper-input></td> 
-        <td style="width: 8%;"><paper-input on-change="FnBloodgroup" value="{{bloodgroup}}"></paper-input></td> 
-        <td style="width: 8%;"><paper-input on-change="FnVisionleft" value="{{visionleft}}"></paper-input></td> 
-        <td style="width: 8%;"><paper-input on-change="FnVisionright" value="{{visionright}}"></paper-input></td>  
-        <td style="width: 8%;"><paper-input on-change="FnDental" value="{{dental}}"></paper-input></td>  
+        <td style="width: 8%;"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>   
+        <td style="width: 8%;"><paper-input on-change="FnWorkingDays" value="{{workingdays}}"></paper-input></td>  
         </tr>
         </table>
     </div>
@@ -41,25 +37,17 @@
     var higher=[];
     var grade=[];
     Polymer({
-      is: 'cce-fivetoten-health-itemcard',
+      is: 'attendance-item-card',
       ready:function(){
 
       },     
-      FnHeight:function(e){        
+      FnAttendance:function(e){        
       },
-      FnWeight:function(e){        
-      },
-      FnBloodgroup:function(e){        
-      },
-      FnVisionleft:function(e){        
-      },
-      FnVisionright:function(e){        
-      },
-      FnDental:function(e){        
+      FnWorkingDays:function(e){        
         this.callService();  
       },
       callService:function(){           
-        this.$.assesmentservice.callinserthealthService(this.studid,this.studname,this.height,this.weight,this.bloodgroup,this.visionleft,this.visionright,this.dental); 
+        this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays); 
       }
     });
   })();

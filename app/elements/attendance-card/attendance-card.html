@@ -2,9 +2,9 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../component-service/component-service.html">
-<link rel="import" href="../cce-fivetoten-attendance-itemcard/cce-fivetoten-attendance-itemcard.html">
+<link rel="import" href="../attendance-item-card/attendance-item-card.html">
 
-<dom-module id="cce-fivetoten-attendance-card">
+<dom-module id="attendance-card">
   <template>
     <style>
       :host {
@@ -32,8 +32,8 @@
       <th style="width: 5%;">Total Working Days</th>
       </tr>  
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td>
-      <cce-fivetoten-attendance-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cce-fivetoten-attendance-itemcard>
+      <tr><td colspan="4">
+      <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></attendance-item-card>
       </td></tr>
       </template>
       </table>
@@ -46,7 +46,7 @@
   (function() {
     'use strict';
     Polymer({
-      is: 'cce-fivetoten-attendance-card',
+      is: 'attendance-card',
       ready:function(){      
       },
       setDefaultHeaders:function(){

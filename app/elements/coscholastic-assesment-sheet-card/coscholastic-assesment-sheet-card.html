@@ -1,8 +1,14 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../cce-fivetoten-attendance-card/cce-fivetoten-attendance-card.html">
+<link rel="import" href="../attendance-card/attendance-card.html">
 <link rel="import" href="../cce-fivetoten-health-card/cce-fivetoten-health-card.html">
+<link rel="import" href="../cs-life-skill-card/cs-life-skill-card.html">
+<link rel="import" href="../cs-education-card/cs-education-card.html">
+<link rel="import" href="../cs-attitudes-card/cs-attitudes-card.html">
+<link rel="import" href="../cs-co-curricular-card/cs-co-curricular-card.html">
+<link rel="import" href="../cs-health-physical-education-card/cs-health-physical-education-card.html">
+<link rel="import" href="../cs-visual-performing-card/cs-visual-performing-card.html">
 
 <dom-module id="coscholastic-assesment-sheet-card">
   <template>
@@ -12,11 +18,29 @@
       }
     </style>
     <iron-pages selected="{{page}}" attr-for-selected="data-category">
-        <section data-category="cce-fivetoten-attendance-card">
-          <cce-fivetoten-attendance-card></cce-fivetoten-attendance-card>
+        <section data-category="attendance-card">
+          <attendance-card></attendance-card>
         </section>
         <section data-category="cce-fivetoten-health-card">
           <cce-fivetoten-health-card></cce-fivetoten-health-card>
+        </section>
+        <section data-category="cs-life-skill-card">        
+          <cs-life-skill-card></cs-life-skill-card>
+        </section>
+        <section data-category="cs-education-card">        
+          <cs-education-card></cs-education-card>
+        </section>
+        <section data-category="cs-visual-performing-card">        
+          <cs-visual-performing-card></cs-visual-performing-card>
+        </section> 
+        <section data-category="cs-health-physical-education-card">        
+          <cs-health-physical-education-card></cs-health-physical-education-card>
+        </section>
+        <section data-category="cs-co-curricular-card">        
+          <cs-co-curricular-card></cs-co-curricular-card>
+        </section>
+        <section data-category="cs-attitudes-card">        
+          <cs-attitudes-card></cs-attitudes-card>
         </section>
     </iron-pages>
   </template>
@@ -28,8 +52,6 @@
       is: 'coscholastic-assesment-sheet-card',
 
       setPage:function(page){
-        localStorage.setItem("curr_sess_showpage",page);
-        document.querySelector('component-service').callcomponentService(); 
         this.page=page;
       }
     });

@@ -43,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Managing Emotions" value="{{score9}}"></paper-input></td> 
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Dealing with Stress" value="{{score10}}"></paper-input></td> 
         <td style="width: 5%;"><paper-input  name="total" value="{{total}}"></paper-input></td> 
-         <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
         </tr>
         </table>
     </div>
@@ -52,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
       </template>
-      <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
+      <paper-button style="height:33px !important;" style="top:900px;"class="button" on-click="click">Submit</paper-button>
             </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     

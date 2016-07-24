@@ -147,7 +147,31 @@ app.post('/getroute' ,  urlencodedParser,function (req, res)
 	});
 
 
-
+app.post('/getzonenamedetail' ,  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+		var zid={"id":req.query.zoneid};
+	    connection.query('select zone_name from md_zone where ? and ?',[schoolx,zid],
+       	function(err, rows)
+       	{
+      	if(!err)
+		{
+			if(rows.length>0)
+			{
+				//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json({'returnval': 'invalid'});
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+});
+	});
 app.post('/getroutedetail' ,  urlencodedParser,function (req, res)
 {
 	var routename={"route_name":req.query.routename};

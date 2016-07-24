@@ -185,6 +185,7 @@ var remainfee;
 var mon;
 var previouszone;
 var prevzonefee;
+var zid;
     Polymer({
       is:'zonechange-service',
         getzonechangename:function()
@@ -263,6 +264,7 @@ document.querySelector('zonechange-card').prevzone=e.detail.response.returnval[0
       },
       zonechangeparentnameResponse:function(e)
       {
+
         var parentname= e.detail.response.returnval[0].parent_name;
         document.querySelector('zonechange-card').parent=parentname;
       },

@@ -110,19 +110,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       valuesinsta1cashResponse:function(e){
         var result = e.detail.response.returnval;
-        alert(JSON.stringify(result));
+        //alert(JSON.stringify(result));
+        document.querySelector('excelreport-card').excelcasharr=result;
       },
       valuesinsta2cashResponse:function(e){
         var result = e.detail.response.returnval;
-        alert(JSON.stringify(result));
+        //alert(JSON.stringify(result));
+        document.querySelector('excelreport-card').excelcasharr=result;
       },
       valuesinsta1chequeResponse:function(e){
         var result = e.detail.response.returnval;
-        alert(JSON.stringify(result));
+
+        document.querySelector('excelreport-card').excelchequearr=result;
       },
       valuesinsta2chequeResponse:function(e){
         var result = e.detail.response.returnval;
-        alert(JSON.stringify(result));
+        //alert(JSON.stringify(result));
+        document.querySelector('excelreport-card').excelchequearr=result;
       }
     });
   })();

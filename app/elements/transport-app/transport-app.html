@@ -43,6 +43,7 @@
 <link rel="import" href="../zonechange-card/zonechange-card.html">
 <link rel="import" href="../vehicleroute-card/vehicleroute-card.html">
 <link rel="import" href="../bus-report/bus-report.html">
+<link rel="import" href="../changepoint-card/changepoint-card.html">
 <link rel="import" href="../consolidated-report/consolidated-report.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
@@ -196,6 +197,9 @@
           </section>
           <section data-category="vehicleroute">
           <vehicleroute-card></vehicleroute-card>
+          </section>
+           <section data-category="changepoint">
+          <changepoint-card></changepoint-card>
           </section>
           </iron-pages>
        </div>
@@ -390,6 +394,13 @@
       document.querySelector('mapstudenttopoint-card').ready();
       
     }
+     if(currpage=="changepoint"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
+      document.querySelector('changepoint-card').FnClear();
+      document.querySelector('changepoint-card').ready();
+      
+    }
      if(currpage=="mappointtoroute"){
       document.querySelector('app-card').setPage("transportapp");
       document.querySelector('transport-app').setPage("transportadmin","Transport Admin");
@@ -527,6 +538,13 @@
       document.querySelector('transport-app').setPage("financemanager","Finance Manager");
       //document.querySelector('genestureport-card').FnClear();
       document.querySelector('chequedetail-card').ready();
+      
+    }
+    if(currpage=="bouncechequedetail"){
+      document.querySelector('app-card').setPage("transportapp");
+      document.querySelector('transport-app').setPage("financemanager","Finance Manager");
+      //document.querySelector('genestureport-card').FnClear();
+      document.querySelector('bouncecheque-card').ready();
       
     }
     if(currpage=="discount"){

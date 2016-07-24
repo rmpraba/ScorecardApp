@@ -152,6 +152,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             debounce-duration="300"
             >
         </iron-ajax>
+         <iron-ajax
+            method="post"
+            id="deletepointajax"
+            url="{{deletepointurl}}"
+            params="{{deletepointparam}}"
+            handle-as="json"
+            content-type="application/json"
+            on-response="deletepointResponse"
+            debounce-duration="300"
+            >
+        </iron-ajax>
   </template>
 
   <script>
@@ -420,7 +431,7 @@ document.querySelector('zonechange-card').prevzone=e.detail.response.returnval[0
  setzonechange:function(studid,zone,fee,fromdatez,todatez,modez,namex,todayx,statusx,stuname)
       {
         //zstuname=stuname;
-        this.setzonechangeurl = sessionStorage.getItem("addrinfo")+"/setzonechange";
+       
         var obj={"studid":"","zone":"","fee":"","fromdate":"","todate":"","mode":"","name":"","today":"","status":"","schol":""};
         obj.schol=sessionStorage.getItem("sch");
         obj.studid=studid;
@@ -430,7 +441,7 @@ document.querySelector('zonechange-card').prevzone=e.detail.response.returnval[0
         obj.todate=todatez;
         obj.mode=modez;
         obj.name=namex;
-        obj.today=todayx;
+        obj.today=todayx; this.setzonechangeurl = sessionStorage.getItem("addrinfo")+"/setzonechange";
         obj.status=statusx;
         this.setzonechangeparam=obj;
        // alert(JSON.stringify(obj));
@@ -446,6 +457,13 @@ document.querySelector('zonechange-card').prevzone=e.detail.response.returnval[0
       {
         alert('Zone Change Successfully');
        document.querySelector('zonechange-card').FnClear();
+        this.deletepointurl = sessionStorage.getItem("addrinfo")+"/deletepoint";
+        var obj={"studid":"","schol":""}
+        obj.studid=studid;
+        obj.schol=sessionStorage.getItem("sch");
+         this.deletepointparam=obj;
+        this.$.deletepointajax.generateRequest();
+
       }
 
     });

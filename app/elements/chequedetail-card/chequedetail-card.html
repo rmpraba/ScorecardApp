@@ -112,6 +112,7 @@ FnChangestatus:function(chqid,st)
 },
  accept:function()
       {
+        alert('Cheque Details are Updated Sucessfully');
         this.$.service.updatechequedetail(chqdetail);
         this.$.service.bouncechequedetail(chqdetail);
         this.$.service.updatestudentcheque(chqdetail);
@@ -120,7 +121,8 @@ FnChangestatus:function(chqid,st)
 
           //this.$.service.updatechequedetail(chqdetail[i].cheque_status,chqdetail[i].cheque_no,chqdetail[i].installtype,chqdetail[i].student_id);
         }
-       
+
+       this.chequearr=[];
       }
     });
   })();

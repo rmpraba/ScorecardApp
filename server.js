@@ -792,6 +792,26 @@ app.post('/selectnameforpoint',  urlencodedParser,function (req, res)
 	}
 });
 	});
+
+app.post('/selectnameforchpoint',  urlencodedParser,function (req, res)
+{ var schoolx={"school_id":req.query.schol};
+
+       connection.query('SELECT id, student_name from student_details where id in(select student_id from student_fee where ?) and id  in (Select student_id from student_point)',[schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+		}
+		else
+		{
+			res.status(200).json({'returnval': 'invalid'});
+		}
+	}
+});
+	});
 app.post('/classpick',  urlencodedParser,function (req, res)
 {
 	var schoolx={"school_id":req.query.schol};
@@ -836,6 +856,34 @@ app.post('/namepick',  urlencodedParser,function (req, res)
 		{
 			res.status(200).json({'returnval': ''});
 		}
+	}
+
+});
+	});
+app.post('/chnamepick',  urlencodedParser,function (req, res)
+{
+	var id={"id":req.query.id};
+	var req1={"transport_required":'yes'};
+	var schoolx={"school_id":req.query.schol};
+	console.log(req.query.schol);
+      	connection.query('select id , student_name, school_type from student_details where  ? and ? and ?',[id,req1,schoolx],
+       		function(err, rows)
+       	{
+		if(!err)
+		{
+		if(rows.length>0)
+		{
+			res.status(200).json({'returnval': rows});
+			console.log(rows);
+		}
+		else
+		{
+			res.status(200).json({'returnval': ''});
+		}
+	}
+	else
+	{
+		console.log(err);
 	}
 
 });
@@ -919,6 +967,31 @@ app.post('/submiturl',  urlencodedParser,function (req, res)
 		var mappointtostudent={"student_id":req.query.studentid,"school_type":req.query.class_id,"pickup_route_id":req.query.pickroute,"pickup_point":req.query.pickpoint,"drop_route_id":req.query.droproute, "drop_point":req.query.droppoint,"flag":req.query.flag,"school_id":req.query.schol};
 		//console.log(mappointtostudent);
 	    connection.query('insert into student_point set ?',[mappointtostudent],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			res.status(200).json({'returnval': 'success'});
+		}
+		else
+		{
+			//console.log(err);
+			res.status(200).json({'returnval': 'invalid'});
+		}
+
+});
+	});
+
+app.post('/submitupdateurl',  urlencodedParser,function (req, res)
+{
+		var studentid={"student_id":req.query.studentid};
+		var pickroute={"pickup_route_id":req.query.pickroute};
+		var pickpoint={"pickup_point":req.query.pickpoint};
+		var droproute={"drop_route_id":req.query.droproute};
+		var droppoint= {"drop_point":req.query.droppoint};
+		var schol={"school_id":req.query.schol};
+		//console.log(mappointtostudent);
+	    connection.query('update student_point set ?,?,?,? where ? and ?',[pickroute,pickpoint,droproute,droppoint,studentid,schol],
        	function(err, rows)
        	{
 		if(!err)
@@ -1873,6 +1946,32 @@ app.post('/getzonenamedetail',  urlencodedParser,function (req, res)
 		var schoolx={"school_id":req.query.schol};
 	var stuid={"id":req.query.zoneid};
 	    connection.query('SELECT zone_name from md_zone where ? and ?',[stuid,schoolx],
+       	function(err, rows)
+       	{
+		if(!err)
+		{
+			if(rows.length>0)
+			{
+				//console.log(rows);
+			res.status(200).json({'returnval': rows});
+			}
+			else
+			{
+			res.status(200).json('invalid');
+			}
+		}
+		else
+		{
+			console.log('No data Fetched'+err);
+		}
+
+});
+	});
+app.post('/deletepoint',  urlencodedParser,function (req, res)
+{
+		var schoolx={"school_id":req.query.schol};
+	var stuid={"student_id":req.query.studid};
+	    connection.query('delete from student_point where ? and ?',[stuid,schoolx],
        	function(err, rows)
        	{
 		if(!err)

@@ -5,6 +5,7 @@
  <link rel="import" href="../refund-service/refund-service.html">
  <link rel="import" href="../transport-service/transport-service.html">
  <link rel="import" href="../mapstudenttopoint-service/mapstudenttopoint-service.html">
+  <link rel="import" href="../changepoint-service/changepoint-service.html">
  <dom-module id="transportadmin-card">
  <template>
  <style >
@@ -27,6 +28,7 @@
     <div class="frontpage">
       <paper-icon-button class="iconbutton" src="../../images/points.png" on-click="pointallocation"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/allocation.png" on-click="routeallocation"></paper-icon-button>
+       <paper-icon-button class="iconbutton" src="../../images/changepoints.png" on-click="changepointallocation"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/cancel-icon.png" on-click="cancel"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/pass.png" on-click="stpass"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/bus.png" on-click="bus"></paper-icon-button>
@@ -41,6 +43,7 @@
   <mapstudenttopoint-service id="maps"></mapstudenttopoint-service>
    <refund-service id="service"></refund-service>
    <transport-service id="transportservice"></transport-service>
+   <changepoint-service id="chpoint"></changepoint-service>
 </template>
 <script>
   Polymer({
@@ -55,6 +58,12 @@
       {
         document.querySelector('transport-app').setPage("mapstudenttopoint","Map Student to point");
         this.$.maps.selectclass();
+
+      },
+       changepointallocation:function()
+      {
+        document.querySelector('transport-app').setPage("changepoint","Change Student Point");
+        this.$.chpoint.selectname();
 
       },
       routeallocation:function()

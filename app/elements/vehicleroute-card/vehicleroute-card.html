@@ -41,24 +41,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <li class="row">
                   <div class="detail">
                     <div class="field">
-                      <paper-dropdown-menu id="sets0" label="Route">
-                        <paper-menu class="dropdown-content" on-iron-select="routezxc" >
+                      <paper-dropdown-menu label="Route">
+                        <paper-menu   id="sets0" class="dropdown-content" on-iron-select="routezxc" >
                           <template  is="dom-repeat" items="{{routes}}" as="view">
                             <paper-item value="{{view.route_id}}">{{view.route_name}}</paper-item>
                           </template>
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div><div class="field">
-                      <paper-dropdown-menu id="sets01" label="Trip">
-                        <paper-menu class="dropdown-content" on-iron-select="tripzxc" >
+                      <paper-dropdown-menu  label="Trip">
+                        <paper-menu id="sets01" class="dropdown-content" on-iron-select="tripzxc" >
                           <paper-item value=1>Primary</paper-item>
                           <paper-item value=2>Pre-Primary</paper-item>
                         </paper-menu>
                       </paper-dropdown-menu>
                     </div>
                     <div class="field">
-                      <paper-dropdown-menu id="sets1" label="Bus">
-                        <paper-menu class="dropdown-content" on-iron-select="bus" attr-for-selected="value">
+                      <paper-dropdown-menu  label="Bus">
+                        <paper-menu id="sets1" class="dropdown-content" on-iron-select="bus" attr-for-selected="value">
                           <template  is="dom-repeat" items="{{routetobus}}" as="view">
                             <paper-item value="{{view.id}}">{{view.made_model}}</paper-item>
                           </template>
@@ -68,8 +68,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </div>
                   <div class="detail">
                     <div class="field">
-                      <paper-dropdown-menu id="sets2" label="Driver">
-                        <paper-menu class="dropdown-content" on-iron-select="driver" attr-for-selected="value" >
+                      <paper-dropdown-menu  label="Driver">
+                        <paper-menu id="sets2" class="dropdown-content" on-iron-select="driver" attr-for-selected="value" >
                           <template  is="dom-repeat" items="{{bustodriver}}" as="view">
                             <paper-item value="{{view.id}}">{{view.first_name}}{{view.last_name}}</paper-item>
                           </template>
@@ -77,8 +77,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       </paper-dropdown-menu>
                     </div>
                     <div class="field">
-                      <paper-dropdown-menu id="sets3" label="Attender">
-                        <paper-menu class="dropdown-content" on-iron-select="attender" attr-for-selected="value" >
+                      <paper-dropdown-menu  label="Attender">
+                        <paper-menu id="sets3" class="dropdown-content" on-iron-select="attender" attr-for-selected="value" >
                           <template  is="dom-repeat" items="{{bustoattender}}" as="view">
                             <paper-item value="{{view.id}}">{{view.first_name}}{{view.last_name}}</paper-item>
                           </template>
@@ -152,7 +152,7 @@ var attender;
 
        
       },
-      Fnclear:function(){
+      FnClear:function(){
         //alert('hi');
         this.routeid='';
         document.querySelector('#sets0').selected = -1;

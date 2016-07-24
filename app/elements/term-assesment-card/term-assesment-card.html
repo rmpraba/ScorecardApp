@@ -1,0 +1,203 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+<link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
+<link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
+<dom-module id="term-assesment-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    
+    .card{
+        @apply(--layout-vertical);
+    }
+
+    .drop{        
+        @apply(--layout-horizontal);
+        margin-top: 5%;
+        margin-left: 10%;
+    }
+    paper-dropdown-menu{
+      width: 15%;
+      margin-left: 3%;
+    }
+    </style>
+    <div class='card'>
+     
+     <div class='drop'>
+      
+          <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
+              <template is="dom-repeat" items="{{academicarr}}">
+                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{gradearr}}">
+                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{sectionarr}}">
+                <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+           <paper-dropdown-menu id="assessment" label="Select Assesment" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required> 
+              <template is="dom-repeat" items="{{assesmentarr}}">
+                <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>      
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu> 
+
+          <paper-dropdown-menu hidden$="{{hideassesmenttype}}" id="assesmenttype" label="Select type" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesmentType"  attr-for-selected="value" required>   
+              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
+                <paper-item value="FA">FA</paper-item>
+                <paper-item value="SA">SA</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>   
+              <template is="dom-repeat" items="{{subjectarr}}">
+                <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>                
+     </div>
+    </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+  </template>
+  <script>
+  (function() {
+    var flag=0;
+    'use strict';
+    var gradename,section,term,assesment,subject,academicyear;
+    Polymer({
+      is: 'term-assesment-card',
+      ready:function(){
+        this.flag=0;
+        this.hideassesmenttype=true;
+      },
+      FnSelectacademicyear:function(e){
+        academicyear = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_academicyear",academicyear);
+        if(this.flag==1)
+          this.callService();       
+      },
+      FnSelectGrade:function(e){
+        gradename = e.target.selectedItem.textContent.trim();
+        alert(gradename);
+        if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){
+          alert('yes');
+          this.hideassesmenttype=true;
+        }
+        else{
+          alert('no');
+          this.hideassesmenttype=false;
+        }
+        localStorage.setItem("curr_sess_grade",gradename);
+        this.$.assesmentservice.callSectionService(gradename);
+        if(this.flag==1)
+          this.callService();
+      },
+      FnSelectSection:function(e){
+        section = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section",section);
+        this.$.assesmentservice.callSubjectService(gradename,section);
+        if(this.flag==1)
+          this.callService();
+      },      
+      FnSelectSubject:function(e){
+        this.flag=1;
+        subject = e.target.selectedItem.textContent.trim(); 
+        localStorage.setItem("curr_sess_subject",subject);
+        this.callService();       
+      },
+      FnSelectAssesment:function(e){
+        assesment = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_assesment",assesment);
+        if(this.flag==1)
+          this.callService();
+      },
+      FnSelectAssesmentType:function(e){
+        assesmenttype = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_assesmenttype",assesmenttype);
+        if(this.flag==1)
+          this.callService();
+      },
+      callService:function(){
+        if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){         
+        if(subject=="Mathematics"){       
+           this.$.assesmentservice.callFetchStudentInfo(gradename,section);                   
+           document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
+           document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();  
+        }           
+        
+        if(subject=="EVS"){        
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+          document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');
+          document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
+        }
+        
+        if(subject=="G.K"){        
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+          document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');
+          document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();
+          
+        }
+        if(subject=="ART/CRAFT"){        
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+          document.querySelector('term-assesment-sheet-card').setPage('cc-art-craft-onetofour-card');
+          document.querySelector('cc-art-craft-onetofour-card').setDefaultHeaders();
+        }
+        if(subject=="Computer")
+        {        
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+          document.querySelector('term-assesment-sheet-card').setPage('cc-computer-onetofour-card');
+          document.querySelector('cc-computer-onetofour-card').setDefaultHeaders();
+        }
+        if(subject=="dance"){        
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+          document.querySelector('term-assesment-sheet-card').setPage('cc-dance-onetofour-card');
+          document.querySelector('cc-dance-onetofour-card').setDefaultHeaders();
+        }
+        if(subject=="music"){        
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+          document.querySelector('term-assesment-sheet-card').setPage('cc-music-onetofour-card');
+          document.querySelector('cc-music-onetofour-card').setDefaultHeaders();
+        }
+        }
+        else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4"){  
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);           
+          if(assesmenttype=="FA"){
+          document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
+          document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders();  
+          }
+          if(assesmenttype=="SA"){
+          document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
+          document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+          }
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

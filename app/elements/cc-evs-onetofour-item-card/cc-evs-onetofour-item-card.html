@@ -1,0 +1,99 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\term-assesment-service/term-assesment-service.html">
+
+<dom-module id="cc-evs-onetofour-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      #p1{
+        width: 48px;
+      }
+      #p2{
+        width: 49px;
+      }
+      #p3{
+        width: 50.5px;
+      }
+      .pi1{
+        width: 57px;
+      }
+      .pi2{
+        width: 72px;
+      }
+      .pi3{
+        width: 11px;
+      }
+      paper-input{
+        text-align: center;
+      }
+    </style>
+    <div>
+       <table border="1">
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
+        <td><paper-input value="{{assignment}}" id="p1" on-change="FnAssignment"></td>
+        <td><paper-input value="{{drawing}}" id="p1" on-change="FnDrawing"></paper-input></td>
+        <td><paper-input value="{{labeling}}" id="p1" on-change="FnLabeling"></paper-input></td>
+        <td><paper-input value="{{neatness}}" id="p1" on-change="FnNeatness"></paper-input></td>
+        <td><paper-input value="{{knowledge}}" id="p1" on-change="FnKnowledge"></paper-input></td>
+        <td><paper-input value="{{presentation}}" id="p1" on-change="FnPresentation"></paper-input></td>
+        <td><paper-input value="{{involvement}}" id="p1" on-change="FnInvolvement"></paper-input></td>
+        <td><paper-input value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
+        </tr>
+      </table>
+    </div>
+
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var assignment,drawing,labeling,neatness,knowledge,presentation,involvement,activity;
+    Polymer({
+      is: 'cc-evs-onetofour-item-card',
+      ready:function(){       
+      },
+      FnAssignment:function(e){               
+        assignment=parseFloat(this.assignment).toFixed(2);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Environmental sensitivity","Assignment",this.assignment);       
+      },
+      FnDrawing:function(e){               
+        drawing=parseFloat(this.drawing).toFixed(2);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Drawing",this.drawing);     
+      },
+      FnLabeling:function(e){               
+        labeling=parseFloat(this.labeling).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Labeling",this.labeling); 
+      },
+      FnNeatness:function(){
+        neatness=parseFloat(this.neatness).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Neatness",this.neatness); 
+      },
+      FnKnowledge:function(){
+        knowledge=parseFloat(this.knowledge).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Knowledge",this.knowledge); 
+      },
+      FnPresentation:function(){
+        presentation=parseFloat(this.presentation).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Presentation",this.presentation); 
+      },
+      FnInvolvement:function(){
+        involvement=parseFloat(this.involvement).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Involvement",this.involvement); 
+      },
+      FnActivity:function(){
+        activity=parseFloat(this.activity).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity); 
+      }   
+    }); 
+  })();
+  </script>
+</dom-module>

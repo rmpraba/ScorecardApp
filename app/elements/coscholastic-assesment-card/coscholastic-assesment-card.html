@@ -1,0 +1,146 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../co-scholastic-service/co-scholastic-service.html">
+<link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
+<link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
+<dom-module id="coscholastic-assesment-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    
+    .card{
+        @apply(--layout-vertical);
+    }
+
+    .drop{        
+        @apply(--layout-horizontal);
+        margin-top: 5%;
+        margin-left: 10%;
+    }
+    paper-dropdown-menu{
+      width: 15%;
+      margin-left: 3%;
+    }
+    </style>
+    <div class='card'>
+     
+     <div class='drop'>
+      
+          <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
+              <template is="dom-repeat" items="{{academicarr}}">
+                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{gradearr}}">
+                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{sectionarr}}">
+                <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required> 
+                <paper-item value="Health">Health</paper-item>      
+                <paper-item value="Attendance">Attendance</paper-item> 
+                <paper-item value="Lifeskill">Life Skills</paper-item> 
+                <paper-item value="Workeducation">Work Education</paper-item> 
+                <paper-item value="Visualarts">Visual & Performing Arts</paper-item> 
+                <paper-item value="Attitude">Attitudes & Values</paper-item> 
+                <paper-item value="Cocurricular">Co-Curricular Activities</paper-item> 
+                <paper-item value="Physichealth">Health & Physical Activities</paper-item>               
+            </paper-menu>
+          </paper-dropdown-menu> 
+            
+     </div>
+    </div>
+    <co-scholastic-service id="assesmentservice"></co-scholastic-service>
+  </template>
+  <script>
+  (function() {
+    var flag=0;
+    'use strict';
+    var gradename,section,term,assesment,subject,academicyear;
+    Polymer({
+      is: 'coscholastic-assesment-card',
+      ready:function(){
+        this.flag=0; 
+        this.$.assesmentservice.callAcademicService(); 
+        this.$.assesmentservice.callGradeService();        
+      },
+      FnSelectacademicyear:function(e){
+        academicyear = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_academicyear",academicyear);
+      },
+      FnSelectGrade:function(e){
+        gradename = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_grade",gradename);
+        this.$.assesmentservice.callSectionService(gradename);
+      },
+      FnSelectSection:function(e){
+        section = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section",section);       
+      },
+      FnSelectSubject:function(e){
+        subject = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_coscholastic_category",subject);
+        this.callService();
+      },
+      callService:function(){
+        this.$.assesmentservice.callFetchStudentInfo(gradename,section);
+        // alert(subject);  
+        if(subject=="Health"){
+        document.querySelector('cce-fivetoten-health-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card'); 
+        }
+        else if(subject=="Attendance"){
+        document.querySelector('attendance-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
+        }
+        else if(subject=="Life Skills"){
+        document.querySelector('cs-life-skill-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card'); 
+        }
+        else if(subject=="Work Education"){
+        document.querySelector('cs-education-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-education-card'); 
+        }
+        else if(subject=="Visual & Performing Arts"){
+        document.querySelector('cs-visual-performing-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-visual-performing-card'); 
+        }
+        else if(subject=="Attitudes & Values"){
+        document.querySelector('cs-attitudes-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-attitudes-card'); 
+        }
+        else if(subject=="Co-Curricular Activities"){
+        document.querySelector('cs-co-curricular-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-co-curricular-card'); 
+        }
+        else if(subject=="Health & Physical Activities"){
+        document.querySelector('cs-health-physical-education-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-health-physical-education-card'); 
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

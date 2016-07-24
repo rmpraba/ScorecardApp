@@ -1,57 +1,51 @@
-
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../transport-app/transport-app.html">
-<link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../login-card/login-card.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
+<link rel="import" href="../home-page/home-page.html">
+<!-- <link rel="stylesheet" type="text/css" href="../../styles/styles.css"> -->
+  <dom-module id="app-card">
+  <template>
+  <style>
+  .in
+  {
+  float:right;
+  font-size:12px;
+  }
+  .backbutton
+  {
+    float:left;
+    width: 4%;
+  }
+  </style>
 
-<dom-module id="app-card">
-<template>
-  <span id="browser-sync-binding"></span>
-        <iron-pages selected="{{page}}" attr-for-selected="data-category">
-        <section data-category="loginpage">
+    <div class="content">
+      <iron-pages selected="{{page}}" attr-for-selected="data-category">
+        <section data-category="logincard">
           <login-card></login-card>
         </section>
-        <section data-category="transportapp">
-          <transport-app></transport-app>
-        </section>
-           </iron-pages>
-            <iron-ajax
-        auto
-        id="addressajax"
-        url="../../configfile/address.json"
-        handle-as="json"
-        content-type="application/json"
-        on-response="addressResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-           </template>
-  <!-- build:js scripts/app.js -->
-  
-<script>
+        <section data-category="homepage">
+          <home-page></home-page>
+        </section>       
+      </iron-pages>
+    </div>
+
+  </template>  
+  <script>
   Polymer({
-    is: "app-card",
-    ready: function() 
-    {
-    this.$.addressajax.generateRequest();
-    
-      this.page="loginpage";
-    
+  is: "app-card",
+  ready: function() {
+   this.page='logincard';   
   },
-  addressResponse:function(e)
-      {
-        var addr=e.detail.response.address;
-        sessionStorage.setItem("addrinfo",addr);
-        //alert(JSON.stringify(e.detail.response.address));
-      },
-  setPage:function(page)
-    {
-     this.page=page;
-    }
+  setPage:function(page,title){    
+    this.page=page;
+    this.title=title;
+  },
+  signout:function()
+  {
+    window.location.href="../index.html";   
+  } 
   });
   </script>
 </dom-module>

@@ -1,0 +1,39 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../beginner-assesment-markentrysheet/beginner-assesment-markentrysheet.html">
+<link rel="import" href="../beginner-assesment-lang-markentrysheet/beginner-assesment-lang-markentrysheet.html">
+
+<dom-module id="assesment-sheet-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="content">
+      <iron-pages selected="{{page}}" attr-for-selected="data-category">  
+        <section data-category="beginner-assesment-markentrysheet">        
+          <beginner-assesment-markentrysheet></beginner-assesment-markentrysheet>
+        </section>  
+        <section data-category="beginner-assesment-lang-markentrysheet">        
+          <beginner-assesment-lang-markentrysheet></beginner-assesment-lang-markentrysheet>
+        </section>   
+      </iron-pages>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'assesment-sheet-card',
+      setPage:function(page){ 
+        // alert(page);
+        localStorage.setItem("curr_sess_showpage",page);
+        document.querySelector('component-service').callcomponentService();       
+        this.page=page;
+      }
+    });
+  })();
+  </script>
+</dom-module>

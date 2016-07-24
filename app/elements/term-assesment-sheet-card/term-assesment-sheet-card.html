@@ -1,0 +1,69 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
+<link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
+<link rel="import" href="../cc-gk-onetofour-card/cc-gk-onetofour-card.html">
+<link rel="import" href="../cc-computer-onetofour-card/cc-computer-onetofour-card.html">
+<link rel="import" href="../cc-fa-fivetoten-card/cc-fa-fivetoten-card.html">
+<link rel="import" href="../cc-sa-fivetoten-card/cc-sa-fivetoten-card.html">
+<link rel="import" href="../cc-art-craft-onetofour-card/cc-art-craft-onetofour-card.html">
+<link rel="import" href="../cc-dance-onetofour-card/cc-dance-onetofour-card.html">
+<link rel="import" href="../cc-music-onetofour-card/cc-music-onetofour-card.html">
+<link rel="import" href="../cce-fivetoten-attendance-card/cce-fivetoten-attendance-card.html">
+<dom-module id="term-assesment-sheet-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="content">
+      <iron-pages selected="{{page}}" attr-for-selected="data-category">  
+        <section data-category="cc-maths-onetofour-card">        
+          <cc-maths-onetofour-card></cc-maths-onetofour-card>
+        </section> 
+        <section data-category="cc-evs-onetofour-card">        
+          <cc-evs-onetofour-card></cc-evs-onetofour-card>
+        </section>
+        <section data-category="cc-gk-onetofour-card">        
+          <cc-gk-onetofour-card></cc-gk-onetofour-card>
+        </section> 
+        <section data-category="cc-computer-onetofour-card">        
+          <cc-computer-onetofour-card></cc-computer-onetofour-card>
+        </section>       
+        <section data-category="cc-art-craft-onetofour-card">        
+          <cc-art-craft-onetofour-card></cc-art-craft-onetofour-card>
+        </section> 
+        <section data-category="cc-dance-onetofour-card">        
+          <cc-dance-onetofour-card></cc-dance-onetofour-card>
+        </section> 
+        <section data-category="cc-music-onetofour-card">        
+          <cc-music-onetofour-card></cc-music-onetofour-card>
+        </section> 
+         <section data-category="cc-fa-fivetoten-card">        
+          <cc-fa-fivetoten-card></cc-fa-fivetoten-card>
+        </section>
+        <section data-category="cc-sa-fivetoten-card">        
+          <cc-sa-fivetoten-card></cc-sa-fivetoten-card>
+        </section>        
+        <section data-category="cce-fivetoten-attendance-card">        
+          <cce-fivetoten-attendance-card></cce-fivetoten-attendance-card>
+        </section>
+      </iron-pages>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'term-assesment-sheet-card',
+      setPage:function(page){ 
+        localStorage.setItem("curr_sess_showpage",page);
+        document.querySelector('component-service').callcomponentService();        
+        this.page=page;
+      }
+    });
+  })();
+  </script>
+</dom-module>

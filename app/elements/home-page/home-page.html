@@ -1,0 +1,91 @@
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../teacherhome-card/teacherhome-card.html">
+<link rel="import" href="../beginner-assesment/beginner-assesment.html">
+<link rel="import" href="../term-assesment/term-assesment.html">
+<link rel="import" href="../cce-generate-score-card/cce-generate-score-card.html">
+<link rel="import" href="../cce-fivetoten-score-card/cce-fivetoten-score-card.html">
+<link rel="import" href="../coscholastic-assesment/coscholastic-assesment.html">
+<link rel="import" href="../term-scholastic-category/term-scholastic-category.html">
+<link rel="import" href="../term-coscholastic-category/term-coscholastic-category.html">
+  <dom-module id="home-page">
+  <template>
+  <style>
+  .in
+  {
+  float:right;
+  font-size:12px;
+  }
+  .backbutton
+  {
+    float:left;
+    width: 4%;
+  }
+  .head{
+     height: 10%;
+     background-color: black;
+     color: white;
+  }
+  .card{
+    @apply(--layout-vertical);
+  }
+  </style>
+  <div class="card">
+    <div class="head">
+      <label>{{title}}</label>
+      <paper-button class="in" on-click="signout">Sign Out</paper-button>
+    </div>
+
+    <div class="content">
+      <iron-pages selected="{{page}}" attr-for-selected="data-category">
+        <section data-category="teacherhomecard">
+          <teacherhome-card></teacherhome-card>
+        </section>
+        <section data-category="termscholasticcategory">
+          <term-scholastic-category></term-scholastic-category>
+        </section>
+        <section data-category="termcoscholasticcategory">
+          <term-coscholastic-category></term-coscholastic-category>
+        </section>
+        <section data-category="beginnerassesment">
+          <beginner-assesment></beginner-assesment>
+        </section>
+        <section data-category="termassesment">
+          <term-assesment></term-assesment>
+        </section>
+        <section data-category="coscholasticassesment">
+          <coscholastic-assesment></coscholastic-assesment>
+        </section>
+        <section data-category="scorecard">
+          <cce-generate-score-card></cce-generate-score-card>
+        </section>
+        <section data-category="ccefivetotenscorecard">
+          <cce-fivetoten-score-card></cce-fivetoten-score-card>
+        </section>
+      </iron-pages>
+    </div>
+
+    <div class="footer"></div>
+  </div>
+
+  </template>
+  
+  <script>
+  Polymer({
+  is: "home-page",
+  ready: function() {
+   this.page='logincard';   
+  },
+  setPage:function(page,title){    
+    this.page=page;
+    this.title=title;
+  },
+  signout:function()
+  {
+    window.location.href="../index.html";   
+  } 
+  });
+  </script>
+</dom-module>

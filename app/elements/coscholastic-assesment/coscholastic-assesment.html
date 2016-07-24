@@ -1,0 +1,26 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../coscholastic-assesment-card/coscholastic-assesment-card.html">
+<link rel="import" href="../coscholastic-assesment-sheet-card/coscholastic-assesment-sheet-card.html">
+
+<dom-module id="coscholastic-assesment">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <coscholastic-assesment-card></coscholastic-assesment-card>
+      <coscholastic-assesment-sheet-card></coscholastic-assesment-sheet-card>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'coscholastic-assesment',     
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,86 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/cc-dance-onetofour-item-card/cc-dance-onetofour-item-card.html">
+
+
+
+
+<dom-module id="cc-dance-onetofour-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+        table{
+          width: 100%;
+          border-collapse: collapse;
+          margin-left: 1%;
+      }
+      .studname{
+        width: 30%;
+          }
+    </style>
+    <div>
+     <center><h1>{{schoolname}}</h1>
+      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+      <h4>Evaluation  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4>
+   <table border="1">
+    
+      <tr>
+
+
+       <th>Sl.No</th>
+       <th>Student's Name</th>
+       <th colspan="3">Interest</th>
+       <th colspan="3">Rhythm</th>
+       <th colspan="3">Grace</th>
+       
+      <tr><th></th><th></th>
+
+ 
+      <th colspan="3">(10)</th>
+      <th colspan="3">(10)</th>
+      <th colspan="3">(10)</th>
+     
+      <template is="dom-repeat" items="{{studarr}}">
+      <tr>
+        <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
+        <td colspan="66"><cc-dance-onetofour-item-card studid="{{item.id}}" studname="{{item.student_name}}"></cc-dance-onetofour-item-card></td>
+      </tr>
+      </template>
+    </table>      
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'cc-dance-onetofour-card',
+
+        setDefaultHeaders:function(){
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.subject=localStorage.getItem("curr_sess_subject");
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment1")
+        this.assesment="A1";
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment2")
+        this.assesment="A2";
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
+        this.assesment="A3";
+      }
+    });
+  })();
+  </script>
+</dom-module>

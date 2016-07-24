@@ -90,9 +90,11 @@ paper-button{
     margin: 0 0 0 20%;
 }
 .confirm-fee paper-dialog{
+    position:absolute;
     width:800px;
-    margin-left: -400px;
-    margin-top: 0px;
+    left: 50%;
+    margin-left: -400px; // 1/2 width
+    margin-top: 0px; // 1/2 height
 }
 .logindialog .button{
     width: 40%;
@@ -245,13 +247,6 @@ paper-button{
 .card .button{
 	margin-top: 2%;
 	margin-left: 46%;
-}
-.card{
-   @apply(--layout-horizontal);
-   @apply(--layout-center);
-   position: relative;
-   width: auto;
-   margin-left: 3%;
 }
 fieldset{
    margin: 0% 0% 0% 18%;
@@ -834,24 +829,5 @@ margin-top: 6%;
     @apply(--layout-horizontal-wrap);
     @apply(--layout-vertical-wrap);
 }
-#spin{
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    background-color: #000;
-    bottom: 0; 
-    left: 0; 
-    opacity: 0.7; 
-    right: 0; 
-    top: 0; 
-    z-index: 10000;
-    margin: 0 auto;
-    text-align: center;
-}
-#spinner{
-    margin: 20% auto;
-    text-align: center;
-   width: 100px;
-   height: 100px;
-}
+
 </style>

@@ -1,0 +1,55 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+<dom-module id="cce-fivetoten-attendance-itemcard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .card{
+        height: 2%;
+      }
+    </style>
+    <div class="card">
+        <table border="1"><tr>
+        <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
+        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
+        <td style="width: 25%;"><paper-item>{{studname}}</paper-item></td>
+        <td style="width: 8%;"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>   
+        <td style="width: 8%;"><paper-input on-change="FnWorkingDays" value="{{workingdays}}"></paper-input></td>  
+        </tr>
+        </table>
+    </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    Polymer({
+      is: 'cce-fivetoten-attendance-itemcard',
+      ready:function(){
+
+      },     
+      FnAttendance:function(e){        
+      },
+      FnWorkingDays:function(e){        
+        this.callService();  
+      },
+      callService:function(){           
+        this.$.assesmentservice.callinsertattendanceinfo(this.studid,this.studname,this.attendance,this.workingdays); 
+      }
+    });
+  })();
+  </script>
+</dom-module>

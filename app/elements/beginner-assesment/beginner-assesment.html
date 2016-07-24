@@ -1,0 +1,35 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="../beginner-assesment-card/beginner-assesment-card.html">
+<link rel="../assesment-sheet-card/assesment-sheet-card.html">
+
+<dom-module id="beginner-assesment">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <beginner-assesment-card></beginner-assesment-card>
+      <assesment-sheet-card></assesment-sheet-card>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'beginner-assesment',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'beginner-assesment',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

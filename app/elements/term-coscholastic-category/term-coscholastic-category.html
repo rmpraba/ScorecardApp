@@ -1,0 +1,42 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<dom-module id="term-coscholastic-category">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <div class="card">    
+       <paper-button on-click="FnHealth" no ink><img src="../../images/health.jpg" height="180px" width="180px"></paper-button>
+      </div>
+      <div class="card">
+       <paper-button on-click="FnAttendance" no ink><img src="../../images/attendance.jpg" height="180px" width="180px"></paper-button>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'term-coscholastic-category',
+      FnHealth:function(){
+        localStorage.setItem("curr_sess_coscholastic_category","Health");
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('coscholasticassesment','');
+        // document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card');
+      },
+      FnAttendance:function(){
+        localStorage.setItem("curr_sess_coscholastic_category","Attendance");        
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('coscholasticassesment','');
+        // document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-attendance-card');
+      }
+      
+    });
+  })();
+  </script>
+</dom-module>

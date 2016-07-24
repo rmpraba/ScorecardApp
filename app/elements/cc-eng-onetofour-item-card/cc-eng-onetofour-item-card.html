@@ -9,30 +9,128 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
 <dom-module id="cc-eng-onetofour-item-card">
-  <template>
+ <template>
     <style>
       :host {
         display: block;
       }
+       table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      #p1{
+        width: 48px;
+      }
+      #p2{
+        width: 49px;
+      }
+      #p3{
+        width: 50.5px;
+      }
+      .pi1{
+        width: 57px;
+      }
+      .pi2{
+        width: 72px;
+      }
+      .pi3{
+        width: 11px;
+      }
+      paper-input{
+        text-align:center;
+      }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div>
+       <table border="1">
+        <tr>
+           <td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
+        <td><paper-input value="{{Pronunciation}}" id="p1" on-change="FnPronunciation"></td>
+        <td><paper-input value="{{Fluency}}" id="p1" on-change="FnFluency"></paper-input></td>
+        <td><paper-input value="{{Comprehension}}" id="p1" on-change="FnComprehension"></paper-input></td>
+        <td><paper-input value="{{CreativeWriting}}" id="p1" on-change="FnCreative"></paper-input></td>
+        <td><paper-input value="{{Handwriting}}" id="p1" on-change="FnHandwriting"></paper-input></td>
+        <td><paper-input value="{{Grammer}}" id="p1" on-change="FnGrammer"></paper-input></td>
+        <td><paper-input value="{{Spelling}}" id="p1" on-change="FnSpelling"></paper-input></td>
+        <td><paper-input value="{{Vocabulary}}" id="p1" on-change="FnVocabulary"></paper-input></td>
+        <td><paper-input value="{{Conversation}}" id="p1" on-change="FnConversation"></paper-input></td>
+        <td><paper-input value="{{Recitation}}" id="p1" on-change="FnRecitation"></paper-input></td>
+        <td><paper-input value="{{LComprehension}}" id="p1" on-change="FnLComprehension"></paper-input></td>
+        <td><paper-input value="{{Activity}}" id="p1" on-change="FnActivity"></paper-input></td>
+        </tr>
+      </table>
+    </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service> 
   </template>
   <script>
   (function() {
     'use strict';
+    var pronunciation,fluency,comprehension,handwriting,creativeWriting,grammer,spelling,recitation,grammer,lcomprehension,vocabulary,conversation,activity;
 
     Polymer({
       is: 'cc-eng-onetofour-item-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'cc-eng-onetofour-item-card',
-          notify: true
-        }
-      }
+     FnPronunciation:function(e)
+     {
+       pronunciation=parseFloat(this.Pronunciation).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Pronunciation",this.Pronunciation); 
+     },
+     FnFluency:function(e)
+     {
+      fluency=parseFloat(this.Fluency).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Fluency",this.Fluency);
+     },
+     FnComprehension:function(e)
+     {
+      comprehension=parseFloat(this.Comprehension).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Comprehension",this.Comprehension);
+     },
+     FnCreative:function(e)
+     {
+creativeWriting=parseFloat(this.CreativeWriting).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","CreativeWriting",this.CreativeWriting);
+     },
+     FnHandwriting:function(e)
+     {
+      handwriting=parseFloat(this.Handwriting).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Handwriting",this.Handwriting);
+     },
+     FnGrammer:function(e)
+     {
+      grammer=parseFloat(this.Grammer).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Grammer",this.Grammer);
+     },
+     FnSpelling:function(e)
+     {
+      spelling=parseFloat(this.Spelling).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Spelling",this.Spelling);
+     },
+     FnVocabulary:function(e)
+     {
+      vocabulary=parseFloat(this.Vocabulary).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Vocabulary",this.Vocabulary);
+     },
+     FnConversation:function(e)
+     {
+      conversation=parseFloat(this.Conversation).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Conversation",this.Conversation);
+     },
+     FnRecitation:function(e)
+     {
+      recitation=parseFloat(this.Recitation).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Recitation",this.Recitation);
+     },
+     FnLComprehension:function(e)
+     {
+      lcomprehension=parseFloat(this.LComprehension).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Listening Skills","LComprehension",this.LComprehension);
+     },
+     FnActivity:function(e)
+     {
+      activity=parseFloat(this.Activity).toFixed(2);        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity);
+     }
+
     });
   })();
   </script>

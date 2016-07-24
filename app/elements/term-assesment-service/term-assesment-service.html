@@ -276,8 +276,12 @@ var arr=[];
         if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
         document.querySelector('cc-maths-onetofour-card').studarr=arr;        
         }
-        if(localStorage.getItem("curr_sess_subject")=="EVS"){        
+        if(localStorage.getItem("curr_sess_subject")=="EVS")
+        {        
         document.querySelector('cc-evs-onetofour-card').studarr=arr;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="English"){        
+        document.querySelector('cc-eng-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="G.K"){        
         document.querySelector('cc-gk-onetofour-card').studarr=arr;
@@ -288,9 +292,6 @@ var arr=[];
         }
 
         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
-
-        /*if(localStorage.getItem("curr_sess_subject")=="ART/CRAFT"){        
->>>>>>> origin/master
         document.querySelector('cc-art-craft-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="dance"){        
@@ -298,9 +299,11 @@ var arr=[];
         }
         if(localStorage.getItem("curr_sess_subject")=="music"){        
         document.querySelector('cc-music-onetofour-card').studarr=arr;
-        }*/
         }
-        else{
+        
+    }
+        else
+        {
         if(localStorage.getItem("curr_sess_assesmenttype")=="FA"){
         document.querySelector('cc-fa-fivetoten-card').studarr=arr; 
         // document.querySelector('cs-life-skill-card').studarr=arr; 
@@ -481,6 +484,8 @@ var arr=[];
                 document.querySelector('cce-onetofour-score-card').Written=score;
                 else if(gradeval[i].subject_id=="EVS")
                     document.querySelector('cce-onetofour-score-card').EVSWritten=score;
+                else if(gradeval[i].subject_id=="English")
+                    document.querySelector('cce-onetofour-score-card').EWritten=score;
             }
              if(gradeval[i].category=="Environmental sensitivity" && gradeval[i].term_name=="term1")
             {
@@ -498,6 +503,22 @@ var arr=[];
             if(gradeval[i].category=="Music" && gradeval[i].term_name=="term1")
             {
                 document.querySelector('cce-onetofour-score-card').music=score;
+            }
+            if(gradeval[i].category=="Reading Skills" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').reading=score;
+            }
+             if(gradeval[i].category=="Writing Skills" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').writing=score;
+            }
+             if(gradeval[i].category=="Listening Skills" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').listening=score;
+            }
+             if(gradeval[i].category=="Speaking Skills" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').speaking=score;
             }
         }
     }

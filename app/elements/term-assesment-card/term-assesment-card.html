@@ -157,7 +157,12 @@
           document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');
           document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
         }
-        
+         if(subject=="English"){  
+          alert('cc');       
+          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+          document.querySelector('term-assesment-sheet-card').setPage('cc-eng-onetofour-card');
+          document.querySelector('cc-eng-onetofour-card').setDefaultHeaders();
+        }
         if(subject=="G.K"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');

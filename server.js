@@ -457,6 +457,7 @@ var response={
 
   var subname={subject_name:req.query.category};
   // console.log(req.query.subject);
+  var subname={subject_name:req.query.subject};
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
   {
@@ -731,6 +732,15 @@ app.post('/fetchcoscholasticinfometrics-service',  urlencodedParser,function (re
   var studname={student_name:req.query.studname};  
   var qur="SELECT * FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"'";
   connection.query(qur,
+
+//fetch the name for performance report
+
+app.post('/nameforonetofourreport-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  
+
+  connection.query("SELECT id,student_name FROM md_student WHERE ?",[schoolid],
     function(err, rows)
     {
     if(!err)
@@ -756,7 +766,19 @@ app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
     function(err, rows)
     {
     if(!err)
-    {       
+    {   
+app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var id={student_id:req.query.student_id}
+  
+
+  connection.query("SELECT subject_id,term_name, count(mark) as cnt, category, sum(mark) as val  FROM tr_term_assesment_marks WHERE ? and ? group by category,term_name,subject_id",[schoolid,id],
+    function(err, rows)
+    {
+    if(!err)
+    {      
+    console.log(rows); 
       res.status(200).json({'returnval': rows});
     }
     else

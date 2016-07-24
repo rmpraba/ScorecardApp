@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
         <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards Teachers" value="{{score1}}"></paper-input></td>   
+        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitudes towards Teachers" value="{{score1}}"></paper-input></td>   
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Value Systems" value="{{score4}}"></paper-input></td>  
@@ -48,7 +49,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     
     <term-assesment-service id="assesmentservice"></term-assesment-service>
-    <iron-ajax        
+      <paper-button style="height:43px !important;" class="button" on-click="click">Submit</paper-button>
+            </paper-dialog>
+    <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
+    
+<term-assesment-service id="assesmentservice"></term-assesment-service>
+     <iron-ajax        
         method="post"
         id="fetchgradeforattitudeajax"
         url="{{fetchgradeforattitudeurl}}"
@@ -72,6 +78,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'cs-attitudes-item-card',
       FnActivity:function(e)
+ var lower=[];
+    var higher=[];
+    var grade=[];
+    var name;
+var arr=[];
+    Polymer({
+      is: 'cs-attitudes-item-card',
+ FnActivity:function(e)
       {
         alert(e.target.name);
         name=e.target.name;
@@ -103,23 +117,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            
           this.score1=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score1);
+        if(name=="Attitudes towards Teachers")
+        {
+           
+          this.score1=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score1);
         }
         else  if(name=="Attitude towards School-mates")
         {
 
           this.score2=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score2);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score2);
         }
         else  if(name=="Attitude towards School Programmes and Environment")
         {
           this.score3=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score3);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score3);
         }
         else  if(name=="Value Systems")
         {
           this.score4=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score4);
-       
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score4);
           this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
           this.convert=(parseInt(this.total)/40)*100;
            this.callFetchGrade();

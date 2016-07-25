@@ -77,14 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var arr=[];
     Polymer({
       is: 'cs-attitudes-item-card',
-      FnActivity:function(e)
- var lower=[];
-    var higher=[];
-    var grade=[];
-    var name;
-var arr=[];
-    Polymer({
-      is: 'cs-attitudes-item-card',
+  
  FnActivity:function(e)
       {
         alert(e.target.name);
@@ -112,11 +105,7 @@ var arr=[];
          var id = 'attitude';
         var dialog = document.getElementById(id);
         dialog.opened=false;
-        if(name=="Attitude towards Teachers")
-        {
-           
-          this.score1=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score1);
+       
         if(name=="Attitudes towards Teachers")
         {
            

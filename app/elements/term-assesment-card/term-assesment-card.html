@@ -144,15 +144,17 @@
           this.callService();
       },
       callService:function(){
-        if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){         
-        if(subject=="Mathematics"){       
+        if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4")
+        {
+
+        if(subject=="Mathematics")
+        {       
            this.$.assesmentservice.callFetchStudentInfo(gradename,section);                   
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
            document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();
         }  
-        } 
+    
 
-        
         if(subject=="EVS"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');

@@ -105,7 +105,9 @@
     this.$.scorecardservice.callFetchstudentinfoService(this.studname);
     this.$.scorecardservice.callFetchsubjectinfoService(this.studname);
     this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studname);
-    this.$.scorecardservice.callFetchmarkService(this.studname);    
+    this.$.scorecardservice.callFetchmarkService(this.studname); 
+    this.$.scorecardservice.callfetchcoscholasticinfoService(this.studname);   
+    this.$.scorecardservice.callFetchmarkService(this.studname);   
     document.querySelector('app-card').setPage('homepage','');
     document.querySelector('home-page').setPage('ccefivetotenscorecard','');
    }

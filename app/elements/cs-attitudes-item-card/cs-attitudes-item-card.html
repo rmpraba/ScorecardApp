@@ -29,6 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
         <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
+        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards Teachers" value="{{score1}}"></paper-input></td>   
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitudes towards Teachers" value="{{score1}}"></paper-input></td>   
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
@@ -44,6 +45,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
       </template>
       <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
+            </paper-dialog>
+    <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
+    
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+      <paper-button style="height:43px !important;" class="button" on-click="click">Submit</paper-button>
             </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     
@@ -64,6 +70,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    var name;
+    var arr=[];
+    Polymer({
+      is: 'cs-attitudes-item-card',
+      FnActivity:function(e)
  var lower=[];
     var higher=[];
     var grade=[];
@@ -85,7 +99,7 @@ var arr=[];
       fnfindsum(val)
       {
      arr.push(val);
-//alert(arr);
+      //alert(arr);
       },
       click:function()
       {
@@ -98,6 +112,11 @@ var arr=[];
          var id = 'attitude';
         var dialog = document.getElementById(id);
         dialog.opened=false;
+        if(name=="Attitude towards Teachers")
+        {
+           
+          this.score1=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score1);
         if(name=="Attitudes towards Teachers")
         {
            
@@ -108,18 +127,20 @@ var arr=[];
         {
 
           this.score2=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score2);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score2);
         }
         else  if(name=="Attitude towards School Programmes and Environment")
         {
           this.score3=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score3);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score3);
         }
         else  if(name=="Value Systems")
         {
           this.score4=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score4);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score4);
-       
           this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
           this.convert=(parseInt(this.total)/40)*100;
            this.callFetchGrade();

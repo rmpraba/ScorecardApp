@@ -42,8 +42,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Empathy" value="{{score8}}"></paper-input></td> 
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Managing Emotions" value="{{score9}}"></paper-input></td> 
         <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Dealing with Stress" value="{{score10}}"></paper-input></td> 
-        <td style="width: 5%;"><paper-input  name="total" value="{{total}}"></paper-input></td> 
+        <td style="width: 5%;"><paper-input  name="total" value="{{total}}"></paper-input></td>
          <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
         </tr>
         </table>
     </div>
@@ -53,6 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
       </template>
       <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
+      <paper-button style="height:33px !important;" style="top:900px;"class="button" on-click="click">Submit</paper-button>
             </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     
@@ -82,6 +84,7 @@ var arr=[];
       is: 'cs-life-skill-item-card',
       FnActivity:function(e)
       {
+        // alert(e.target.name);
         alert(e.target.name);
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
@@ -103,11 +106,20 @@ var arr=[];
         {
           sum=sum+parseInt(arr[i]);
         }
+        // alert(sum);
         alert(sum);
          var id = 'lifeskill';
         var dialog = document.getElementById(id);
         dialog.opened=false;
         if(name=="Self Awareness")
+        {           
+          this.score1=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score1);
+        }
+        else  if(name=="Problem Solving")
+        {
+          this.score2=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score2);
         {
            
           this.score1=sum;
@@ -122,41 +134,52 @@ var arr=[];
         else  if(name=="Decision Making")
         {
           this.score3=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score3);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score3);
         }
         else  if(name=="Critical Thinking")
         {
           this.score4=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score4);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score4);
         }
         else  if(name=="Creative Thinking")
         {
           this.score5=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score5);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score5);
         }
         else  if(name=="Interpersonal Relationship")
         {
           this.score6=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score6);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score6);
         }
         else  if(name=="Effective Communication")
         {
           this.score7=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score7);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score7);
         }
         else  if(name=="Empathy")
         {
           this.score8=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score8);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score8);
         }
         else  if(name=="Managing Emotions")
         {
           this.score9=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score9);
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score9);
         }
         else  if(name=="Dealing with Stress")
         {
           this.score10=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score10);
+          this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4)+parseInt(this.score5)+parseInt(this.score6)+parseInt(this.score7)+parseInt(this.score8)+parseInt(this.score9)+parseInt(this.score10);
+          this.convert=(parseInt(this.total)/10)*100;
+          this.callFetchGrade();
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score10);
           this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4)+parseInt(this.score5)+parseInt(this.score6)+parseInt(this.score7)+parseInt(this.score8)+parseInt(this.score9)+parseInt(this.score10);
           this.convert=(parseInt(this.total)/10)*100;

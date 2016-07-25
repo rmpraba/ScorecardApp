@@ -1,0 +1,560 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 501 and 30 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# Changes to be committed:
+#	modified:   .gitignore
+#	deleted:    .idea/.name
+#	deleted:    .idea/encodings.xml
+#	deleted:    .idea/libraries/MLZSTransport_node_modules.xml
+#	deleted:    .idea/misc.xml
+#	deleted:    .idea/modules.xml
+#	deleted:    .idea/vcs.xml
+#	deleted:    .idea/workspace.xml
+#	new file:   app/configfile/academicconfig.json
+#	modified:   app/configfile/address.json
+#	new file:   app/configfile/componentconfig.json
+#	deleted:    app/configfile/coordinator.json
+#	deleted:    app/configfile/installmenttype.json
+#	deleted:    app/configfile/modeofway.json
+#	deleted:    app/elements/accountsadmin-card/accountsadmin-card.html
+#	deleted:    app/elements/addattendance-item-card/addattendance-item-card.html
+#	deleted:    app/elements/addattendence-card/addattendence-card.html
+#	deleted:    app/elements/adminmanager-card/adminmanager-card.html
+#	modified:   app/elements/app-card/app-card.html
+#	deleted:    app/elements/approve-item-card/approve-item-card.html
+#	deleted:    app/elements/approvediscount-card/approvediscount-card.html
+#	new file:   app/elements/assesment-sheet-card/assesment-sheet-card.html
+#	modified:   app/elements/attendance-card/attendance-card.html
+#	modified:   app/elements/attendance-item-card/attendance-item-card.html
+#	deleted:    app/elements/attendancedatepicker-card/attendancedatepicker-card.html
+#	deleted:    app/elements/attender-card/attender-card.html
+#	new file:   app/elements/beginner-assesment-card/beginner-assesment-card.html
+#	new file:   app/elements/beginner-assesment-lang-markentrysheet-itemcard/beginner-assesment-lang-markentrysheet-itemcard.html
+#	new file:   app/elements/beginner-assesment-lang-markentrysheet/beginner-assesment-lang-markentrysheet.html
+#	new file:   app/elements/beginner-assesment-markentrysheet-itemcard/beginner-assesment-markentrysheet-itemcard.html
+#	new file:   app/elements/beginner-assesment-markentrysheet/beginner-assesment-markentrysheet.html
+#	new file:   app/elements/beginner-assesment-service/beginner-assesment-service.html
+#	new file:   app/elements/beginner-assesment/beginner-assesment.html
+#	deleted:    app/elements/bouncecheque-card/bouncecheque-card.html
+#	deleted:    app/elements/bouncecheque-list/bouncecheque-list.html
+#	deleted:    app/elements/bus-card/bus-card.html
+#	deleted:    app/elements/bus-report-card/bus-report-card.html
+#	deleted:    app/elements/bus-report/bus-report.html
+#	deleted:    app/elements/bus-route-card/bus-route-card.html
+#	deleted:    app/elements/bus-route-item-card/bus-route-item-card.html
+#	deleted:    app/elements/cancellation-card/cancellation-card.html
+#	deleted:    app/elements/cancellation-item-card/cancellation-item-card.html
+#	new file:   app/elements/cc-art-craft-onetofour-card/cc-art-craft-onetofour-card.html
+#	new file:   app/elements/cc-art-craft-onetofour-item-card/cc-art-craft-onetofour-item-card.html
+#	new file:   app/elements/cc-computer-onetofour-card/cc-computer-onetofour-card.html
+#	new file:   app/elements/cc-computer-onetofour-item-card/cc-computer-onetofour-item-card.html
+#	new file:   app/elements/cc-dance-onetofour-card/cc-dance-onetofour-card.html
+#	new file:   app/elements/cc-dance-onetofour-item-card/cc-dance-onetofour-item-card.html
+#	new file:   app/elements/cc-evs-onetofour-card/cc-evs-onetofour-card.html
+#	new file:   app/elements/cc-evs-onetofour-item-card/cc-evs-onetofour-item-card.html
+#	new file:   app/elements/cc-fa-fivetoten-card/cc-fa-fivetoten-card.html
+#	new file:   app/elements/cc-fa-fivetoten-itemcard/cc-fa-fivetoten-itemcard.html
+#	new file:   app/elements/cc-gk-onetofour-card/cc-gk-onetofour-card.html
+#	new file:   app/elements/cc-gk-onetofour-item-card/cc-gk-onetofour-item-card.html
+#	new file:   app/elements/cc-maths-onetofour-card/cc-maths-onetofour-card.html
+#	new file:   app/elements/cc-maths-onetofour-item-card/cc-maths-onetofour-item-card.html
+#	new file:   app/elements/cc-music-onetofour-card/cc-music-onetofour-card.html
+#	new file:   app/elements/cc-music-onetofour-item-card/cc-music-onetofour-item-card.html
+#	new file:   app/elements/cc-sa-fivetoten-card/cc-sa-fivetoten-card.html
+#	new file:   app/elements/cc-sa-fivetoten-itemcard/cc-sa-fivetoten-itemcard.html
+#	new file:   app/elements/cce-fivetoten-attendance-card/cce-fivetoten-attendance-card.html
+#	new file:   app/elements/cce-fivetoten-attendance-itemcard/cce-fivetoten-attendance-itemcard.html
+#	new file:   app/elements/cce-fivetoten-health-card/cce-fivetoten-health-card.html
+#	new file:   app/elements/cce-fivetoten-health-itemcard/cce-fivetoten-health-itemcard.html
+#	new file:   app/elements/cce-fivetoten-score-card/cce-fivetoten-score-card.html
+#	new file:   app/elements/cce-generate-score-card/cce-generate-score-card.html
+#	renamed:    app/elements/nodata-card/nodata-card.html -> app/elements/cce-onetofour-score-card/cce-onetofour-score-card.html
+#	new file:   app/elements/cce-performance-card/cce-performance-card.html
+#	deleted:    app/elements/changepoint-card/changepoint-card.html
+#	deleted:    app/elements/changepoint-list/changepoint-list.html
+#	deleted:    app/elements/changepoint-service/changepoint-service.html
+#	deleted:    app/elements/chequedetail-card/chequedetail-card.html
+#	deleted:    app/elements/chequedetail-list/chequedetail-list.html
+#	new file:   app/elements/co-scholastic-service/co-scholastic-service.html
+#	new file:   app/elements/component-service/component-service.html
+#	deleted:    app/elements/confirmation-card/confirmation-card.html
+#	deleted:    app/elements/consolidated-report/consolidated-report.html
+#	new file:   app/elements/coscholastic-assesment-card/coscholastic-assesment-card.html
+#	new file:   app/elements/coscholastic-assesment-sheet-card/coscholastic-assesment-sheet-card.html
+#	new file:   app/elements/coscholastic-assesment/coscholastic-assesment.html
+#	deleted:    app/elements/cqreceipt-card/cqreceipt-card.html
+#	new file:   app/elements/cs-attitudes-card/cs-attitudes-card.html
+#	new file:   app/elements/cs-attitudes-item-card/cs-attitudes-item-card.html
+#	new file:   app/elements/cs-co-curricular-card/cs-co-curricular-card.html
+#	new file:   app/elements/cs-co-curricular-item-card/cs-co-curricular-item-card.html
+#	new file:   app/elements/cs-dialog-item-card/cs-dialog-item-card.html
+#	new file:   app/elements/cs-education-card/cs-education-card.html
+#	new file:   app/elements/cs-education-item-card/cs-education-item-card.html
+#	new file:   app/elements/cs-health-physical-education-card/cs-health-physical-education-card.html
+#	new file:   app/elements/cs-health-physical-education-item-card/cs-health-physical-education-item-card.html
+#	new file:   app/elements/cs-life-skill-card/cs-life-skill-card.html
+#	new file:   app/elements/cs-life-skill-item-card/cs-life-skill-item-card.html
+#	new file:   app/elements/cs-sub-metrics-item-card/cs-sub-metrics-item-card.html
+#	new file:   app/elements/cs-visual-performing-card/cs-visual-performing-card.html
+#	new file:   app/elements/cs-visual-performing-item-card/cs-visual-performing-item-card.html
+#	deleted:    app/elements/datepicker-card/datepicker-card.html
+#	deleted:    app/elements/datepicker1-card/datepicker1-card.html
+#	deleted:    app/elements/datepicker1f-card/datepicker1f-card.html
+#	deleted:    app/elements/datepicker2-card/datepicker2-card.html
+#	deleted:    app/elements/datepicker2f-card/datepicker2f-card.html
+#	deleted:    app/elements/ddreceipt-card/ddreceipt-card.html
+#	deleted:    app/elements/discountstudent-card/discountstudent-card.html
+#	deleted:    app/elements/discountverify-card/discountverify-card.html
+#	deleted:    app/elements/discountverify-item-card/discountverify-item-card.html
+#	deleted:    app/elements/driver-card/driver-card.html
+#	deleted:    app/elements/edit-cheque-item-card/edit-cheque-item-card.html
+#	deleted:    app/elements/edit-cheque2-item-card/edit-cheque2-item-card.html
+#	deleted:    app/elements/editcheque-card/editcheque-card.html
+#	modified:   app/elements/elements.html
+#	deleted:    app/elements/exceldatepicker-card/exceldatepicker-card.html
+#	deleted:    app/elements/exceldatepickerfrom-card/exceldatepickerfrom-card.html
+#	deleted:    app/elements/excelreport-card/excelreport-card.html
+#	deleted:    app/elements/excelreport-cheque-card/excelreport-cheque-card.html
+#	deleted:    app/elements/excelreport-service/excelreport-service.html
+#	deleted:    app/elements/excelreportcash-card/excelreportcash-card.html
+#	deleted:    app/elements/excelreportcheque-card/excelreportcheque-card.html
+#	deleted:    app/elements/fchequedatepicker-card/fchequedatepicker-card.html
+#	deleted:    app/elements/feereceipt-card/feereceipt-card.html
+#	deleted:    app/elements/feereports-card/feereports-card.html
+#	deleted:    app/elements/feereports-item-card/feereports-item-card.html
+#	deleted:    app/elements/feereports2-card/feereports2-card.html
+#	deleted:    app/elements/feereportscheque-item-card/feereportscheque-item-card.html
+#	deleted:    app/elements/fetch-card/fetch-card.html
+#	deleted:    app/elements/financemanager-card/financemanager-card.html
+#	deleted:    app/elements/fromdatepicker-card/fromdatepicker-card.html
+#	deleted:    app/elements/generatereport-card/generatereport-card.html
+#	deleted:    app/elements/genestureport-card/genestureport-card.html
+#	deleted:    app/elements/gradewiseroute-report-card/gradewiseroute-report-card.html
+#	deleted:    app/elements/gradewiseroute-report/gradewiseroute-report.html
+#	new file:   app/elements/home-page/home-page.html
+#	deleted:    app/elements/home.html
+#	deleted:    app/elements/import-excel/import-excel.html
+#	deleted:    app/elements/installdatepicker-card/installdatepicker-card.html
+#	deleted:    app/elements/installtype-card/installtype-card.html
+#	deleted:    app/elements/insurance_datepicker-card/insurance_datepicker-card.html
+#	deleted:    app/elements/item-card/item-card.html
+#	deleted:    app/elements/last_service_datepicker-card/last_service_datepicker-card.html
+#	deleted:    app/elements/licence_expiry_datepicker-card/licence_expiry_datepicker-card.html
+#	modified:   app/elements/login-card/login-card.html
+#	modified:   app/elements/login-service/login-service.html
+#	deleted:    app/elements/mappointtoroute-card/mappointtoroute-card.html
+#	deleted:    app/elements/mapstudenttopoint-card/mapstudenttopoint-card.html
+#	deleted:    app/elements/mapstudenttopoint-service/mapstudenttopoint-service.html
+#	deleted:    app/elements/next_service_datepicker-card/next_service_datepicker-card.html
+#	deleted:    app/elements/passtemplate-card/passtemplate-card.html
+#	deleted:    app/elements/password-card/password-card.html
+#	deleted:    app/elements/pending-card/pending-card.html
+#	deleted:    app/elements/pending-item-card/pending-item-card.html
+#	deleted:    app/elements/receipt-card/receipt-card.html
+#	deleted:    app/elements/receipt.html
+#	deleted:    app/elements/refund-card/refund-card.html
+#	deleted:    app/elements/refund-list/refund-list.html
+#	deleted:    app/elements/refund-service/refund-service.html
+#	deleted:    app/elements/refundverify-card/refundverify-card.html
+#	deleted:    app/elements/refundverify-list/refundverify-list.html
+#	deleted:    app/elements/routecreate-card/routecreate-card.html
+#	deleted:    app/elements/routereport-card/routereport-card.html
+#	deleted:    app/elements/routereport-item-card/routereport-item-card.html
+#	deleted:    app/elements/routestudent-card/routestudent-card.html
+#	deleted:    app/elements/routestudent-item-card/routestudent-item-card.html
+#	modified:   app/elements/routing.html
+#	new file:   app/elements/scorecard-service/scorecard-service.html
+#	deleted:    app/elements/since-when-employed-card/since-when-employed-card.html
+#	deleted:    app/elements/staffallocation-card/staffallocation-card.html
+#	deleted:    app/elements/staffreport-card/staffreport-card.html
+#	deleted:    app/elements/staffreport-itemcard/staffreport-itemcard.html
+#	deleted:    app/elements/student-detail-card/student-detail-card.html
+#	deleted:    app/elements/studentdatepicker-card/studentdatepicker-card.html
+#	deleted:    app/elements/studentpass-card/studentpass-card.html
+#	deleted:    app/elements/studenttopoint-item-card/studenttopoint-item-card.html
+#	deleted:    app/elements/summary-item-card/summary-item-card.html
+#	deleted:    app/elements/summary-report/summary-report.html
+#	deleted:    app/elements/summarydrop-item-card/summarydrop-item-card.html
+#	deleted:    app/elements/tchequedatepicker-card/tchequedatepicker-card.html
+#	new file:   app/elements/teacherhome-card/teacherhome-card.html
+#	new file:   app/elements/term-assesment-card/term-assesment-card.html
+#	new file:   app/elements/term-assesment-service/term-assesment-service.html
+#	new file:   app/elements/term-assesment-sheet-card/term-assesment-sheet-card.html
+#	new file:   app/elements/term-assesment/term-assesment.html
+#	new file:   app/elements/term-coscholastic-category/term-coscholastic-category.html
+#	new file:   app/elements/term-scholastic-category/term-scholastic-category.html
+#	deleted:    app/elements/timepicker-card/timepicker-card.html
+#	deleted:    app/elements/timepicker1-card/timepicker1-card.html
+#	deleted:    app/elements/todatepicker-card/todatepicker-card.html
+#	deleted:    app/elements/transport-app/transport-app.html
+#	deleted:    app/elements/transport-service/transport-service.html
+#	deleted:    app/elements/transportadmin-card/transportadmin-card.html
+#	deleted:    app/elements/transportfee-card/transportfee-card.html
+#	deleted:    app/elements/transportfee-list/transportfee-list.html
+#	deleted:    app/elements/transportfee-service/transportfee-service.html
+#	deleted:    app/elements/vehicleroute-card/vehicleroute-card.html
+#	deleted:    app/elements/zonechange-card/zonechange-card.html
+#	deleted:    app/elements/zonechange-service/zonechange-service.html
+#	deleted:    app/elements/zonechangedatepicker-card/zonechangedatepicker-card.html
+#	deleted:    app/elements/zonedatepicker-card/zonedatepicker-card.html
+#	deleted:    app/elements/zoneinstalltype-card/zoneinstalltype-card.html
+#	deleted:    app/elements/zonetostudent-card/zonetostudent-card.html
+#	deleted:    app/images/1.png
+#	deleted:    app/images/3.png
+#	deleted:    app/images/ENR10166.jpg
+#	deleted:    app/images/ENR10246.jpg
+#	deleted:    app/images/ENR10269.jpg
+#	deleted:    app/images/ENR10279.jpg
+#	deleted:    app/images/ENR10297.jpg
+#	deleted:    app/images/ENR10307.jpg
+#	deleted:    app/images/ENR10310.jpg
+#	deleted:    app/images/ENR10346.jpg
+#	deleted:    app/images/ENR10369.jpg
+#	deleted:    app/images/ENR10383.jpg
+#	deleted:    app/images/ENR10467.jpg
+#	deleted:    app/images/ENR10504.jpg
+#	deleted:    app/images/ENR10523.jpg
+#	deleted:    app/images/ENR10545.jpg
+#	deleted:    app/images/ENR10615.jpg
+#	deleted:    app/images/ENR10657.jpg
+#	deleted:    app/images/ENR10667.jpg
+#	deleted:    app/images/ENR10856.jpg
+#	deleted:    app/images/ENR10857.jpg
+#	deleted:    app/images/ENR10947.jpg
+#	deleted:    app/images/ENR10964.jpg
+#	deleted:    app/images/ENR10974.jpg
+#	deleted:    app/images/ENR10984.jpg
+#	deleted:    app/images/ENR11221.jpg
+#	deleted:    app/images/ENR11247.jpg
+#	deleted:    app/images/ENR11262.jpg
+#	deleted:    app/images/ENR11266.jpg
+#	deleted:    app/images/ENR11346.jpg
+#	deleted:    app/images/ENR11376.jpg
+#	deleted:    app/images/ENR11391.jpg
+#	deleted:    app/images/ENR11414.jpg
+#	deleted:    app/images/ENR11442.jpg
+#	deleted:    app/images/ENR11457.jpg
+#	deleted:    app/images/ENR11514.jpg
+#	deleted:    app/images/add_attendance.png
+#	deleted:    app/images/add_user.png
+#	deleted:    app/images/addicon.png
+#	deleted:    app/images/addroute.png
+#	deleted:    app/images/allocation.png
+#	deleted:    app/images/approval.jpg
+#	new file:   app/images/attendance.jpg
+#	deleted:    app/images/attendance.png
+#	deleted:    app/images/attender.png
+#	deleted:    app/images/bouncecheque.png
+#	deleted:    app/images/bus.png
+#	deleted:    app/images/bus_report.png
+#	deleted:    app/images/bus_route.png
+#	deleted:    app/images/busroute.png
+#	deleted:    app/images/cancel-icon.png
+#	deleted:    app/images/change-password.png
+#	deleted:    app/images/changepoints.png
+#	deleted:    app/images/cheque.png
+#	deleted:    app/images/consolidated_report.png
+#	new file:   app/images/coscholastic.png
+#	deleted:    app/images/deductions.png
+#	deleted:    app/images/discount.png
+#	deleted:    app/images/discount2.png
+#	deleted:    app/images/driver.png
+#	deleted:    app/images/edit-cheque.png
+#	new file:   app/images/entry.png
+#	deleted:    app/images/excel-report.png
+#	deleted:    app/images/fee_reports.png
+#	deleted:    app/images/gradewise-route-report.png
+#	new file:   app/images/health.jpg
+#	deleted:    app/images/home.png
+#	deleted:    app/images/importexcel.jpg
+#	deleted:    app/images/no_data.png
+#	deleted:    app/images/noofstud.png
+#	deleted:    app/images/pass.png
+#	deleted:    app/images/pass2.png
+#	deleted:    app/images/pendingreport.jpg
+#	deleted:    app/images/points.png
+#	new file:   app/images/pre-entry.png
+#	deleted:    app/images/receipt.png
+#	deleted:    app/images/reports.png
+#	deleted:    app/images/route_reports.png
+#	deleted:    app/images/routescreate.png
+#	deleted:    app/images/save_time.png
+#	new file:   app/images/scholastic.png
+#	new file:   app/images/scorelogo.jpg
+#	deleted:    app/images/staff_route.png
+#	deleted:    app/images/staffreport.png
+#	deleted:    app/images/student_avatar.png
+#	deleted:    app/images/student_login.png
+#	deleted:    app/images/summary_icon.png
+#	new file:   app/images/term.png
+#	deleted:    app/images/transportation.png
+#	deleted:    app/images/vechicle.png
+#	deleted:    app/images/verify.jpg
+#	deleted:    app/images/z.png
+#	deleted:    app/images/zone.png
+#	deleted:    app/images/zonechange.png
+#	modified:   app/index.html
+#	deleted:    app/scripts/html2canvas.js
+#	deleted:    app/scripts/jquery-1.6.2.js
+#	deleted:    app/scripts/jquery-ui.js
+#	deleted:    app/scripts/jsPDF-master/.gitignore
+#	deleted:    app/scripts/jsPDF-master/CNAME
+#	deleted:    app/scripts/jsPDF-master/bower.json
+#	deleted:    app/scripts/jsPDF-master/build.js
+#	deleted:    app/scripts/jsPDF-master/build.sh
+#	deleted:    app/scripts/jsPDF-master/doc/files.html
+#	deleted:    app/scripts/jsPDF-master/doc/index.html
+#	deleted:    app/scripts/jsPDF-master/doc/plugins/from_html.md
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/FontObject.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/PubSub.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/_global_.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/jsPDF-PubSub.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/jsPDF-jsPDF.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/jsPDF.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/jsPDFClass.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/src/c__work_jsPDF_jspdf.js.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/src/c__work_jsPDF_tools_jspdf.js.html
+#	deleted:    app/scripts/jsPDF-master/doc/symbols/src/jspdf.js.html
+#	deleted:    app/scripts/jsPDF-master/docs/getting_started.md
+#	deleted:    app/scripts/jsPDF-master/examples/annotation/test_annotation-magFactor.pdf
+#	deleted:    app/scripts/jsPDF-master/examples/annotation/test_annotation.html
+#	deleted:    app/scripts/jsPDF-master/examples/annotation/test_annotation.pdf
+#	deleted:    app/scripts/jsPDF-master/examples/annotation/test_annotation_2.html
+#	deleted:    app/scripts/jsPDF-master/examples/basic.html
+#	deleted:    app/scripts/jsPDF-master/examples/bootstrap/css/bootstrap-responsive.css
+#	deleted:    app/scripts/jsPDF-master/examples/bootstrap/css/bootstrap-responsive.min.css
+#
+# Changes not staged for commit:
+#	modified:   CONTRIBUTING.md
+#	modified:   LICENSE.md
+#	modified:   README.md
+#	deleted:    app/scripts/jsPDF-master/ISSUE_TEMPLATE.md
+#	deleted:    app/scripts/jsPDF-master/MIT-LICENSE.txt
+#	deleted:    app/scripts/jsPDF-master/README.md
+#	deleted:    app/scripts/jsPDF-master/SUMMARY.md
+#	deleted:    app/scripts/jsPDF-master/examples/bootstrap/css/bootstrap.css
+#	deleted:    app/scripts/jsPDF-master/examples/bootstrap/css/bootstrap.min.css
+#	deleted:    app/scripts/jsPDF-master/examples/bootstrap/img/glyphicons-halflings-white.png
+#	deleted:    app/scripts/jsPDF-master/examples/bootstrap/img/glyphicons-halflings.png
+#	deleted:    app/scripts/jsPDF-master/examples/bootstrap/js/bootstrap.js
+#	deleted:    app/scripts/jsPDF-master/examples/bootstrap/js/bootstrap.min.js
+#	deleted:    app/scripts/jsPDF-master/examples/context2d/test_context2d.html
+#	deleted:    app/scripts/jsPDF-master/examples/context2d/test_context2d_paths.html
+#	deleted:    app/scripts/jsPDF-master/examples/css/editor.css
+#	deleted:    app/scripts/jsPDF-master/examples/css/main.css
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-bg_flat_75_ffffff_40x100.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-bg_glass_65_ffffff_1x400.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-bg_glass_75_dadada_1x400.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-bg_glass_95_fef1ec_1x400.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-icons_222222_256x240.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-icons_2e83ff_256x240.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-icons_454545_256x240.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-icons_888888_256x240.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/images/ui-icons_cd0a0a_256x240.png
+#	deleted:    app/scripts/jsPDF-master/examples/css/smoothness/jquery-ui-1.8.17.custom.css
+#	deleted:    app/scripts/jsPDF-master/examples/downloadify.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/auto_break.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/examples.css
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/images/favicon.png
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/lists.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/page_break.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/pdf.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/pdf2.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/showcase.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/showcase_supported_html.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/simple.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/tables.html
+#	deleted:    app/scripts/jsPDF-master/examples/html2pdf/total_mess.html
+#	deleted:    app/scripts/jsPDF-master/examples/images.html
+#	deleted:    app/scripts/jsPDF-master/examples/images/24_bit.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/32_bit.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/RGBA_16bpc.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/RGB_16bpc.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/grayscale_16bpc.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/grayscale_8bpc.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/grayscale_alpha_16_bpc.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/grayscale_alpha_8bpc.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/grid.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/jpg.jpg
+#	deleted:    app/scripts/jsPDF-master/examples/images/png8_flat.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/png8_trans.png
+#	deleted:    app/scripts/jsPDF-master/examples/images/tiny_png_indexed.png
+#	deleted:    app/scripts/jsPDF-master/examples/jaxer.html
+#	deleted:    app/scripts/jsPDF-master/examples/js/AcroForm.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/basic.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/circles.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/editor.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/font-faces.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/font-size.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/from-html.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/html2canvas.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/images.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/jquery/jquery-1.7.1.min.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/jquery/jquery-ui-1.8.17.custom.min.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/kitchen-sink.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/landscape.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/lines.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/rectangles.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/string-splitting.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/test_harness.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/text-colors.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/theme-ambiance.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/triangles.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/two-page.js
+#	deleted:    app/scripts/jsPDF-master/examples/js/user-input.js
+#	deleted:    app/scripts/jsPDF-master/examples/jspdf.PLUGINTEMPLATE.js
+#	deleted:    app/scripts/jsPDF-master/examples/null-logo-trans.png
+#	deleted:    app/scripts/jsPDF-master/examples/octocat.jpg
+#	deleted:    app/scripts/jsPDF-master/examples/octocat.png
+#	deleted:    app/scripts/jsPDF-master/examples/outline/test_outline.html
+#	deleted:    app/scripts/jsPDF-master/examples/outline/test_outline.pdf
+#	deleted:    app/scripts/jsPDF-master/examples/runner.html
+#	deleted:    app/scripts/jsPDF-master/examples/test_from_html.html
+#	deleted:    app/scripts/jsPDF-master/examples/test_from_html_css_page_breaks.html
+#	deleted:    app/scripts/jsPDF-master/examples/test_insert_page.html
+#	deleted:    app/scripts/jsPDF-master/examples/thinking-monkey.jpg
+#	deleted:    app/scripts/jsPDF-master/index.html
+#	deleted:    app/scripts/jsPDF-master/jspdf.js
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/LICENSE.txt
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/README.textile
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/images/download.png
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/js/downloadify.min.js
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/js/swfobject.js
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/media/downloadify.swf
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/src/Downloadify.as
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/src/com/dynamicflash/util/Base64.as
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/src/com/dynamicflash/util/tests/Base64Test.as
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/src/downloadify.js
+#	deleted:    app/scripts/jsPDF-master/libs/Downloadify/test.html
+#	deleted:    app/scripts/jsPDF-master/libs/README
+#	deleted:    app/scripts/jsPDF-master/libs/css_colors.js
+#	deleted:    app/scripts/jsPDF-master/libs/deflate.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/LICENSE
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/readme.md
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/core.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/dummyimagecontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/fallback.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/font.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/fontmetrics.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/framecontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/gradientcontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/imagecontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/imageloader.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/lineargradientcontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/log.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/nodecontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/nodeparser.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/promise.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/proxy.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/proxyimagecontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/pseudoelementcontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/renderer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/renderers/canvas.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/stackingcontext.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/support.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/svgcontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/svgnodecontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/textcontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/webkitgradientcontainer.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2canvas/src/xhr.js
+#	deleted:    app/scripts/jsPDF-master/libs/html2pdf.js
+#	deleted:    app/scripts/jsPDF-master/libs/png_support/png.js
+#	deleted:    app/scripts/jsPDF-master/libs/png_support/zlib.js
+#	deleted:    app/scripts/jsPDF-master/libs/polyfill.js
+#	deleted:    app/scripts/jsPDF-master/libs/require/config.js
+#	deleted:    app/scripts/jsPDF-master/libs/require/require.js
+#	deleted:    app/scripts/jsPDF-master/main.js
+#	deleted:    app/scripts/jsPDF-master/package.json
+#	deleted:    app/scripts/jsPDF-master/plugins/acroform.js
+#	deleted:    app/scripts/jsPDF-master/plugins/addhtml.js
+#	deleted:    app/scripts/jsPDF-master/plugins/addimage.js
+#	deleted:    app/scripts/jsPDF-master/plugins/annotations.js
+#	deleted:    app/scripts/jsPDF-master/plugins/autoprint.js
+#	deleted:    app/scripts/jsPDF-master/plugins/canvas.js
+#	deleted:    app/scripts/jsPDF-master/plugins/cell.js
+#	deleted:    app/scripts/jsPDF-master/plugins/context2d.js
+#	deleted:    app/scripts/jsPDF-master/plugins/from_html.js
+#	deleted:    app/scripts/jsPDF-master/plugins/javascript.js
+#	deleted:    app/scripts/jsPDF-master/plugins/outline.js
+#	deleted:    app/scripts/jsPDF-master/plugins/png_support.js
+#	deleted:    app/scripts/jsPDF-master/plugins/prevent_scale_to_fit.js
+#	deleted:    app/scripts/jsPDF-master/plugins/split_text_to_size.js
+#	deleted:    app/scripts/jsPDF-master/plugins/standard_fonts_metrics.js
+#	deleted:    app/scripts/jsPDF-master/plugins/svg.js
+#	deleted:    app/scripts/jsPDF-master/plugins/total_pages.js
+#	deleted:    app/scripts/jsPDF-master/test/001_blankpdf.pdf
+#	deleted:    app/scripts/jsPDF-master/test/002_twopagedoc.pdf
+#	deleted:    app/scripts/jsPDF-master/test/002_twopagedoc_oldapi.pdf
+#	deleted:    app/scripts/jsPDF-master/test/003_demolandscape.pdf
+#	deleted:    app/scripts/jsPDF-master/test/004_fontsizes.pdf
+#	deleted:    app/scripts/jsPDF-master/test/005_demofonttypes.pdf
+#	deleted:    app/scripts/jsPDF-master/test/006_demotestcolors.pdf
+#	deleted:    app/scripts/jsPDF-master/test/007_demometadata.pdf
+#	deleted:    app/scripts/jsPDF-master/test/008_demorectangles.pdf
+#	deleted:    app/scripts/jsPDF-master/test/009_demoliness.pdf
+#	deleted:    app/scripts/jsPDF-master/test/010_democircles.pdf
+#	deleted:    app/scripts/jsPDF-master/test/011_multilinetext.pdf
+#	deleted:    app/scripts/jsPDF-master/test/012_multiplelines.pdf
+#	deleted:    app/scripts/jsPDF-master/test/013_sillysvgrenderer.pdf
+#	deleted:    app/scripts/jsPDF-master/test/013_sillysvgrenderer.svg
+#	deleted:    app/scripts/jsPDF-master/test/014_addImage.jpeg
+#	deleted:    app/scripts/jsPDF-master/test/014_addImage.jpeg.base64.txt
+#	deleted:    app/scripts/jsPDF-master/test/014_addImage.pdf.base64.txt
+#	deleted:    app/scripts/jsPDF-master/test/014_addImage.txt
+#	deleted:    app/scripts/jsPDF-master/test/015_splittext.js
+#	deleted:    app/scripts/jsPDF-master/test/015_splittext.pdf
+#	deleted:    app/scripts/jsPDF-master/test/components_tests.js
+#	deleted:    app/scripts/jsPDF-master/test/index.htm
+#	deleted:    app/scripts/jsPDF-master/test/libs/curl-0.5.4.min.js
+#	deleted:    app/scripts/jsPDF-master/test/libs/custom_fill.js
+#	deleted:    app/scripts/jsPDF-master/test/libs/qunit.css
+#	deleted:    app/scripts/jsPDF-master/test/libs/qunit.js
+#	deleted:    app/scripts/jsPDF-master/test/pdf_generate_tests.js
+#	deleted:    app/scripts/jsPDF-master/test/test.html
+#	deleted:    app/scripts/jsPDF-master/test/test_from_html_css_page_breaks.html
+#	deleted:    app/scripts/jsPDF-master/test/test_harness.js
+#	deleted:    app/scripts/jsPDF-master/test/test_min.html
+#	deleted:    app/scripts/jsPDF-master/todo.txt
+#	deleted:    app/scripts/jspdf.debug.js
+#	deleted:    app/scripts/jspdf.min.js
+#	modified:   app/styles/app-theme.html
+#	modified:   app/styles/main.css
+#	modified:   app/styles/shared-styles.html
+#	modified:   app/styles/styles.css
+#	modified:   app/sw-import.js
+#	deleted:    app/test/adminmanager-card-basic.html
+#	modified:   app/test/index.html
+#	modified:   app/test/my-greeting-basic.html
+#	modified:   app/test/my-list-basic.html
+#	deleted:    app/test/pending-card-basic.html
+#	deleted:    app/test/receipt-card.html-basic.html
+#	deleted:    app/test/refundverify-card-basic.html
+#	deleted:    app/test/studentpass-card-basic.html
+#	modified:   bower.json
+#	modified:   docs/README.md
+#	modified:   docs/add-es2015-support-babel.md
+#	modified:   docs/chrome-dev-editor.md
+#	modified:   docs/deploy-to-firebase-pretty-urls.md
+#	modified:   docs/deploy-to-github-pages.md
+#	modified:   docs/deploy-to-google-app-engine.md
+#	modified:   docs/firebase.json
+#	modified:   docs/mobile-chrome-apps.md
+#	modified:   docs/polymer-perf.md
+#	modified:   gulpfile.js
+#	modified:   package.json
+#	modified:   server.js
+#	modified:   tasks/ensure-files.js
+#	modified:   travis-runner.sh
+#	modified:   wct.conf.js
+#	deleted:    yo
+#
+

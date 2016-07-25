@@ -64,6 +64,26 @@
         on-response="fetchhealthattendanceinfoResponse"
         debounce-duration="300"
     >
+    <iron-ajax        
+        method="post"
+        id="fetchcoscholasticmetricsajax"
+        url="{{fetchcoscholasticmetricsurl}}"
+        params="{{fetchcoscholasticmetricsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchcoscholasticmetricsResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax        
+        method="post"
+        id="fetchcoscholasticinfoajax"
+        url="{{fetchcoscholasticinfourl}}"
+        params="{{fetchcoscholasticinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchcoscholasticinfoResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -72,6 +92,8 @@
     var lower=[];
     var higher=[];
     var grade=[];
+    var metrics=[];
+    var marks=[];
     Polymer({
       is: 'scorecard-service',
       ready:function(){
@@ -236,7 +258,35 @@
           lower.push(returnval[i].lower_limit);
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
-        }          
+        }    
+      },
+      callfetchcoscholasticmetricsService:function(studname){
+        this.fetchcoscholasticmetricsurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticmetrics-service";
+        var obj={"scoolid":"","studname":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.studname=studname;
+        this.fetchcoscholasticmetricsparam=obj;
+        this.$.fetchcoscholasticmetricsajax.generateRequest(); 
+      },
+      fetchcoscholasticmetricsResponse:function(e){
+        alert(JSON.stringify(e.detail.response));
+        metrics=e.detail.response.returnval;
+      },
+      callfetchcoscholasticinfoService:function(studname){
+        this.fetchcoscholasticinfourl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticinfo-service";
+        var obj={"scoolid":"","studname":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.studname=studname;
+        this.fetchcoscholasticinfoparam=obj;
+        this.$.fetchcoscholasticinfoajax.generateRequest(); 
+      },
+      fetchcoscholasticinfoResponse:function(e){
+        alert(JSON.stringify(e.detail.response));
+        marks=e.detail.response.returnval;
+        for(var i=0;i<marks.length;i++){
+          
+        }
+
       }
     });
   })();

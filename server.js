@@ -732,11 +732,10 @@ app.post('/fetchcoscholasticmetrics-service',  urlencodedParser,function (req,re
   var studname={student_name:req.query.studname};  
   var qur="SELECT * FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"'";
   connection.query(qur,
-    function(err, rows)
+     function(err, rows)
     {
     if(!err)
-    { 
-      console.log(rows); 
+    {       
       res.status(200).json({'returnval': rows});
     }
     else
@@ -744,16 +743,14 @@ app.post('/fetchcoscholasticmetrics-service',  urlencodedParser,function (req,re
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
     }  
-
-  });
 });
-
+});
 
 //fetch the name for performance report
 
 app.post('/nameforonetofourreport-service',  urlencodedParser,function (req,res)
 {   
-  var schoolid={school_id:req.query.schoolid}; 
+  var schoolid={school_id:req.query.schoolid};
 
   connection.query("SELECT id,student_name FROM md_student WHERE ?",[schoolid],
     function(err, rows)
@@ -782,8 +779,8 @@ app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
     function(err, rows)
     {
     if(!err)
-    { 
-    console.log(rows); 
+    {       
+
       res.status(200).json({'returnval': rows});
     }
     else
@@ -792,9 +789,9 @@ app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
       res.status(200).json({'returnval': 'fail'});
     }  
 
-  });
 });
-  
+});
+
 app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};

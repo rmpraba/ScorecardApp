@@ -726,19 +726,34 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
 });
 
 //fetchcoscholasticinfo
-app.post('/fetchcoscholasticinfometrics-service',  urlencodedParser,function (req,res)
+app.post('/fetchcoscholasticmetrics-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studname={student_name:req.query.studname};  
   var qur="SELECT * FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"'";
   connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      console.log(rows); 
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
 
 //fetch the name for performance report
 
 app.post('/nameforonetofourreport-service',  urlencodedParser,function (req,res)
 {   
-  var schoolid={school_id:req.query.schoolid};
-  
+  var schoolid={school_id:req.query.schoolid}; 
 
   connection.query("SELECT id,student_name FROM md_student WHERE ?",[schoolid],
     function(err, rows)
@@ -761,12 +776,25 @@ app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studname={student_name:req.query.studname};  
-  var qur="SELECT subject_id,(sum(mark)/count(subject_id))/10 FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
+  // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
+  var qur="SELECT subject_id,sub_category,round(mark/10) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id,sub_category";
   connection.query(qur,
     function(err, rows)
     {
     if(!err)
-    {   
+    { 
+    console.log(rows); 
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+  
 app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};

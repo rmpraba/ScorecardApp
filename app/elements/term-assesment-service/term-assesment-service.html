@@ -304,12 +304,12 @@ var arr=[];
         }*/
         }
         else{
-        if(localStorage.getItem("curr_sess_assesmenttype")=="FA"){
+        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
         document.querySelector('cc-fa-fivetoten-card').studarr=arr; 
         // document.querySelector('cs-life-skill-card').studarr=arr; 
         //document.querySelector('cs-education-card').studarr=arr;
         } 
-        if(localStorage.getItem("curr_sess_assesmenttype")=="SA"){
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
         document.querySelector('cc-sa-fivetoten-card').studarr=arr;        
         }
         }       
@@ -349,7 +349,8 @@ var arr=[];
          obj.studentname=studname;        
          obj.subject=localStorage.getItem("curr_sess_subject");
          obj.type=category;
-         if(obj.assesmentid=="Assesment1"&&obj.termname=="term1"&&category=="FA"){
+         obj.category=category;
+         /*if(obj.assesmentid=="Assesment1"&&obj.termname=="term1"&&category=="FA"){
          obj.category="FA1";
          }
          if(obj.assesmentid=="Assesment1"&&obj.termname=="term2"&&category=="FA"){
@@ -366,7 +367,7 @@ var arr=[];
          }
          if(obj.assesmentid=="Assesment1"&&obj.termname=="term2"&&category=="SA"){
          obj.category="SA2";
-         }         
+         } */        
          obj.total=total; 
          obj.rtotal=reduction;
          // obj.reduction=reduction;  

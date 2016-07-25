@@ -94,6 +94,8 @@
     var grade=[];
     var metrics=[];
     var marks=[];
+    var metricsarr=[];
+    var returnval;
     Polymer({
       is: 'scorecard-service',
       ready:function(){
@@ -253,7 +255,7 @@
         this.$.fetchgradesajax.generateRequest(); 
       },
       fetchgradesResponse:function(e){
-        var returnval=e.detail.response.returnval;       
+        returnval=e.detail.response.returnval;       
         for(var i=0;i<returnval.length;i++){
           lower.push(returnval[i].lower_limit);
           higher.push(returnval[i].higher_limit);
@@ -269,7 +271,7 @@
         this.$.fetchcoscholasticmetricsajax.generateRequest(); 
       },
       fetchcoscholasticmetricsResponse:function(e){
-        alert(JSON.stringify(e.detail.response));
+        // alert(JSON.stringify(e.detail.response));
         metrics=e.detail.response.returnval;
       },
       callfetchcoscholasticinfoService:function(studname){
@@ -281,12 +283,58 @@
         this.$.fetchcoscholasticinfoajax.generateRequest(); 
       },
       fetchcoscholasticinfoResponse:function(e){
-        alert(JSON.stringify(e.detail.response));
+        // alert(JSON.stringify(e.detail.response));
+        // alert(JSON.stringify(lower));
+        var lsarr=[];
+        var wkarr=[];
+        var vparr=[];
+        var avarr=[];
+        var ccarr=[];
+        var hparr=[];
         marks=e.detail.response.returnval;
         for(var i=0;i<marks.length;i++){
-          
-        }
+          var subcategoryarr=[];          
+          // for(var j=0;j<metrics.length;j++){
+            var obj={"metric":"","mark":"","grade":""};
+            // if(marks[i].subject_id==metrics[j].subject_id){
+              obj.metric=marks[i].sub_category;
+              obj.mark=marks[i].mark;
+              for(var n=0;n<lower.length;n++){          
+              if(obj.mark>=lower[n]&&obj.mark<=higher[n]){            
+                obj.grade=grade[n];
+              }
+              }
 
+              // this.FnFindGrade(marks[i].mark);
+              subcategoryarr.push(obj);
+              if(marks[i].subject_id=="Life Skills"){
+                lsarr.push(obj);
+              }
+              else if(marks[i].subject_id=="Work Education"){
+                wkarr.push(obj);
+              }
+              else if(marks[i].subject_id=="Visual & Performing Arts"){              
+                vparr.push(obj);
+              }
+              else if(marks[i].subject_id=="Attitudes And values"){
+                avarr.push(obj);
+              }
+              else if(marks[i].subject_id=="CO-CURRICULAR ACTIVITIES"){
+                ccarr.push(obj);
+              }
+              else if(marks[i].subject_id=="Health and Physical Education"){
+                hparr.push(obj);
+              } 
+            // }
+          // }          
+          metricsarr.push(subcategoryarr);
+        }
+        document.querySelector('cce-fivetoten-score-card').lsArray=lsarr;
+        document.querySelector('cce-fivetoten-score-card').wkArray=wkarr;
+        document.querySelector('cce-fivetoten-score-card').vpArray=vparr;
+        document.querySelector('cce-fivetoten-score-card').avArray=avarr;
+        document.querySelector('cce-fivetoten-score-card').ccArray=ccarr;
+        document.querySelector('cce-fivetoten-score-card').hpArray=hparr;        
       }
     });
   })();

@@ -75,19 +75,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var grade=[];
     var name;
     var arr=[];
+    // Polymer({
+      // is: 'cs-attitudes-item-card',
+      // FnActivity:function(e)
+ // var lower=[];
+    // var higher=[];
+    // var grade=[];
+    // var name;
+// var arr=[];
     Polymer({
       is: 'cs-attitudes-item-card',
       FnActivity:function(e)
- var lower=[];
-    var higher=[];
-    var grade=[];
-    var name;
-var arr=[];
-    Polymer({
-      is: 'cs-attitudes-item-card',
- FnActivity:function(e)
       {
-        alert(e.target.name);
+        // alert(e.target.name);
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
          var id = 'attitude';
@@ -108,7 +108,7 @@ var arr=[];
         {
           sum=sum+parseInt(arr[i]);
         }
-        alert(sum);
+        // alert(sum);
          var id = 'attitude';
         var dialog = document.getElementById(id);
         dialog.opened=false;
@@ -117,30 +117,30 @@ var arr=[];
            
           this.score1=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score1);
-        if(name=="Attitudes towards Teachers")
+        /*if(name=="Attitudes towards Teachers")
         {
            
           this.score1=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score1);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score1);*/
         }
         else  if(name=="Attitude towards School-mates")
         {
 
           this.score2=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score2);
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score2);
+          // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score2);
         }
         else  if(name=="Attitude towards School Programmes and Environment")
         {
           this.score3=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score3);
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score3);
+          // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score3);
         }
         else  if(name=="Value Systems")
         {
           this.score4=sum;
           this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score4);
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score4);
+          // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score4);
           this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
           this.convert=(parseInt(this.total)/40)*100;
            this.callFetchGrade();
@@ -167,7 +167,7 @@ var arr=[];
           if(mark>=lower[i]&&mark<=higher[i]){ 
 
             this.grade=grade[i];
-       this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"ATTITUDES AND VALUES",this.convert,this.reduce,this.grade);
+       this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"Attitudes and values",this.convert,this.reduce,this.grade);
           }
         }
         //this.callService();

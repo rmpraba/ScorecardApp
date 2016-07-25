@@ -1,0 +1,61 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../cc-ntlife-skill-itemcard/cs-ntlife-skill-itemcard.html">
+<dom-module id="cc-ntlife-skill-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        width: 95%;
+        border-collapse: collapse;
+        margin-left: 1%;
+      }
+      .studname{
+      }
+    </style>
+    <div>
+    <!--<template is="dom-repeat" items="{{label}}">-->
+      <center><h1>{{schoolname}}</h1>
+      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+      <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
+      <table border="1" >    
+      <tr>
+      <th style="width: 1%;">SNo</th>
+      <th style="width: 20%;">Name</th>
+      <th style="width: 5%;">Thinking Skills</th>
+      <th style="width: 5%;">Social Skills</th>
+      <th style="width: 5%;">Emotional Skills</th>
+      <th style="width: 5%;">Total</th>
+      <th style="width: 5%;">Grade</th>
+      </tr>  
+
+     <template is="dom-repeat" items="{{studarr}}">
+      <tr><td colspan="14">
+      <cc-ntlife-skill-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cc-ntlife-skill-itemcard>
+      </td></tr>
+      </template>
+      </table>
+      </center> 
+   <!-- </template>     
+    </div>
+    <component-service id="componentservice" label="{{label}}"></component-service>-->
+    </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'cc-ntlife-skill-card',
+      setDefaultHeaders:function(){
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.subject=localStorage.getItem("curr_sess_subject");
+      }
+    });
+  })();
+  </script>
+</dom-module>

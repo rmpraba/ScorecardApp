@@ -57,7 +57,7 @@
             </paper-menu>
           </paper-dropdown-menu>
 
-           <paper-dropdown-menu id="assessment" label="Select Assesment" disabled="{{read}}" required>
+           <paper-dropdown-menu hidden$="{{hideassesment}}" id="assessment" label="Select Assesment" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required> 
               <template is="dom-repeat" items="{{assesmentarr}}">
                 <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>      
@@ -68,8 +68,9 @@
           <paper-dropdown-menu hidden$="{{hideassesmenttype}}" id="assesmenttype" label="Select type" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesmentType"  attr-for-selected="value" required>   
               <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="FA">FA</paper-item>
-                <paper-item value="SA">SA</paper-item>
+                <paper-item value="{{FA1}}">{{FA1}}</paper-item>
+                <paper-item value="{{FA2}}">{{FA2}}</paper-item>
+                <paper-item value="{{SA1}}">{{SA1}}</paper-item>
               <!-- </template> -->
             </paper-menu>
           </paper-dropdown-menu>
@@ -95,6 +96,17 @@
       ready:function(){
         this.flag=0;
         this.hideassesmenttype=true;
+        this.hideassesment=true;
+        if(localStorage.getItem('curr_sess_termname')=='term1'){
+          this.FA1='FA1';
+          this.FA2='FA2';
+          this.SA1='SA1';
+        }
+        if(localStorage.getItem('curr_sess_termname')=='term2'){
+          this.FA1='FA3';
+          this.FA2='FA4';
+          this.SA1='SA2';
+        }
       },
       FnSelectacademicyear:function(e){
         academicyear = e.target.selectedItem.textContent.trim();
@@ -104,14 +116,16 @@
       },
       FnSelectGrade:function(e){
         gradename = e.target.selectedItem.textContent.trim();
-        alert(gradename);
+        // alert(gradename);
         if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){
-          alert('yes');
+          // alert('yes');
           this.hideassesmenttype=true;
+          this.hideassesment=false;
         }
         else{
-          alert('no');
+          // alert('no');
           this.hideassesmenttype=false;
+          this.hideassesment=true;
         }
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.assesmentservice.callSectionService(gradename);
@@ -149,10 +163,7 @@
            this.$.assesmentservice.callFetchStudentInfo(gradename,section);                   
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
            document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();
-        }  
-        } 
-
-        
+        }        
         if(subject=="EVS"){        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');
@@ -189,11 +200,11 @@
         }
         else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4"){  
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);           
-          if(assesmenttype=="FA"){
+          if(assesmenttype=="FA1"||assesmenttype=="FA2"||assesmenttype=="FA3"||assesmenttype=="FA4"){
           document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
           document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders();  
           }
-          if(assesmenttype=="SA"){
+          if(assesmenttype=="SA1"||assesmenttype=="SA2"){
           document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
           document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
           }

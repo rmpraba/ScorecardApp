@@ -184,14 +184,17 @@
         document.querySelector('attendance-card').studarr=arr;                 
         }        
         else if(localStorage.getItem("curr_sess_coscholastic_category")=="Life Skills"){
-        document.querySelector('cs-life-skill-card').studarr=arr;        
+        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
+        document.querySelector('cc-ntlife-skill-card').studarr=arr;
+        else
+        document.querySelector('cs-life-skill-card').studarr=arr;    
         }
         else if(localStorage.getItem("curr_sess_coscholastic_category")=="Work Education"){
         document.querySelector('cs-education-card').studarr=arr;        
         }
         else if(localStorage.getItem("curr_sess_coscholastic_category")=="Visual & Performing Arts"){
         document.querySelector('cs-visual-performing-card').studarr=arr;       
-        document.querySelector('cs-visualerforming-card').studarr=arr;   
+        // document.querySelector('cs-visualerforming-card').studarr=arr;   
         }
         else if(localStorage.getItem("curr_sess_coscholastic_category")=="Attitudes & Values"){
         document.querySelector('cs-attitudes-card').studarr=arr;        
@@ -215,9 +218,16 @@
       fetchlifeskillResponse:function(e)
       {
         var coarr=e.detail.response.returnval;
+        // alert(JSON.stringify(coarr));
         var cat=sessionStorage.getItem("category");
-        if(cat=="lifeskill")
-        document.querySelector('cs-life-skill-item-card').coarr=coarr; 
+        // alert(cat);
+        if(cat=="lifeskill"){
+        // alert(localStorage.getItem("curr_sess_grade"));
+        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
+        document.querySelector('cc-ntlife-skill-itemcard').coarr=coarr;
+        else
+        document.querySelector('cs-life-skill-item-card').coarr=coarr;
+        } 
         else  if(cat=="education")
         document.querySelector('cs-education-item-card').coarr=coarr;
         else  if(cat=="visual")
@@ -239,7 +249,7 @@
          obj.classid=sessionStorage.getItem("curr_sess_classid");
          obj.studentid=studid;
          obj.studentname=studname;        
-         obj.grade=localStorage.getItem("curr_sess_grade");;
+         obj.grade=localStorage.getItem("curr_sess_grade");
          obj.section=localStorage.getItem("curr_sess_section");
          obj.subject=localStorage.getItem("curr_sess_subject");
          obj.category=category;

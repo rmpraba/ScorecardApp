@@ -60,8 +60,8 @@
         this.reduce=parseInt(this.convert)/10;                 
       },
       callService:function(){           
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"SA","Activity",this.score);  
-        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"SA",this.convert,this.reduce,this.grade);     
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Activity",this.score);  
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),this.convert,this.reduce,this.grade);     
       },
       callFetchGrade:function(){
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

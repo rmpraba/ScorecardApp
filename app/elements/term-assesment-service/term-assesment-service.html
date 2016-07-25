@@ -283,7 +283,7 @@ var arr=[];
         if(localStorage.getItem("curr_sess_subject")=="English"){        
         document.querySelector('cc-eng-onetofour-card').studarr=arr;
         }
-        if(localStorage.getItem("curr_sess_subject")=="G.K"){        
+        if(localStorage.getItem("curr_sess_subject")=="GK"){        
         document.querySelector('cc-gk-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="Computer"){   
@@ -521,6 +521,14 @@ var arr=[];
              if(gradeval[i].category=="Speaking Skills" && gradeval[i].term_name=="term1")
             {
                 document.querySelector('cce-onetofour-score-card').speaking=score;
+            }
+             if(gradeval[i].category=="Computer" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').computer=score;
+            }
+             if(gradeval[i].category=="GK" && gradeval[i].term_name=="term1")
+            {
+                document.querySelector('cce-onetofour-score-card').gk=score;
             }
         }
     }

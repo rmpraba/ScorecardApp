@@ -382,11 +382,23 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
          sub_category:req.query.subcategory,
          mark:req.query.mark                 
   }
+  var cond1={school_id:req.query.schoolid};
+  var cond2={academic_year:req.query.academicyear};
+  var cond3={assesment_id:req.query.assesmentid};
+  var cond4={term_name:req.query.termname};
+  var cond5={class_id:req.query.classid};
+  var cond6={student_id:req.query.studentid};
+  var cond7={subject_id:req.query.subject};
+  var cond8={category:req.query.category};
+  var cond9={sub_category:req.query.subcategory};
   var subname={subject_name:req.query.subject};
+
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
   {
-  response.subject_category=rows[0].subject_category;  
+  response.subject_category=rows[0].subject_category;
+  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
+  if(rows.length==0){
   connection.query("INSERT INTO tr_term_assesment_marks set ?",[response],
   function(err, rows)
     {
@@ -400,6 +412,10 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'fail'});
     }
   });
+  }
+  else
+    res.status(200).json({'returnval': 'Duplicate entry!'});
+  });
   });
 });
 
@@ -409,7 +425,6 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
    var response={
          school_id:req.query.schoolid,
          academic_year:req.query.academicyear,   
-
          assesment_id:req.query.assesmentid,
          term_name:req.query.termname,         
          student_id:req.query.studentid,
@@ -421,6 +436,17 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
          rtotal:req.query.rtotal,
          grade:req.query.grade                
   }
+  var cond1={school_id:req.query.schoolid};
+  var cond2={academic_year:req.query.academicyear};
+  var cond3={assesment_id:req.query.assesmentid};
+  var cond4={term_name:req.query.termname};
+  // var cond5={class_id:req.query.classid};
+  var cond5={student_id:req.query.studentid};
+  var cond6={subject_id:req.query.subject};
+  var cond7={category:req.query.category};
+  // var cond9={sub_category:req.query.subcategory};
+   connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? ",[cond1,cond2,cond3,cond4,cond5,cond6,cond7],function(err, rows) {
+  if(rows.length==0){
   connection.query("INSERT INTO tr_term_assesment_overall_marks set ?",[response],
   function(err, rows){
      if(!err)
@@ -433,6 +459,10 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'fail'});
     }
   });
+  }
+  else
+    res.status(200).json({'returnval': 'Duplicate entry!'});
+});
 });
 
 //storing mark for coscholastic assessment

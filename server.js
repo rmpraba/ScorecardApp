@@ -548,8 +548,11 @@ app.post('/overallcotermmarkinsert-service',  urlencodedParser,function (req, re
 app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var qur="SELECT * FROM md_student where ?";
-  connection.query(qur,[schoolid],
+  var gradeid={grade_id:req.query.grade};
+  var sectionid={section_id:req.query.section};
+
+  var qur="SELECT * FROM md_student where class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"') and section_id=(select section_id from md_section where section_name='"+req.query.section+"'))";
+  connection.query(qur,
     function(err, rows)
     {
     if(!err)
@@ -595,13 +598,13 @@ app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
 app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var studname={student_name:req.query.studname};
+  var studid={id:req.query.studid};
   var qur="select (select grade_name from md_grade where grade_id="+
 "(select grade_id from mp_grade_section where class_id=s.class_id)) grade,"+
 "(select section_name from md_section where section_id="+
 "(select section_id from mp_grade_section where class_id=s.class_id)) section,"+
 "s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.email,p.mobile,p.address1 "+
-"from md_student s join parent p on(s.id=p.student_id) and s.student_name='"+req.query.studname+"' and s.school_id='"+req.query.schoolid+"'";
+"from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
 
 // console.log(qur);
   connection.query(qur,
@@ -624,11 +627,11 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
 app.post('/fetchsubjectname-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var studname={student_name:req.query.studname};
+  var studid={student_id:req.query.studid};
   var qur="select subject_id,subject_name from md_subject where subject_id in"+
   "(select subject_id from mp_grade_subject where grade_id="+
   "(select grade_id from mp_grade_section where class_id="+
-  "(select class_id from md_student where student_name='"+req.query.studname+"' "+
+  "(select class_id from md_student where id='"+req.query.studid+"' "+
   "and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"')) order by subject_name";
 
   connection.query(qur,
@@ -651,9 +654,9 @@ app.post('/fetchsubjectname-service',  urlencodedParser,function (req,res)
 app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var studname={student_name:req.query.studname};  
+  var studid={student_id:req.query.studid};  
 
-  connection.query("SELECT * FROM tr_term_assesment_overall_marks WHERE ? AND ? order by subject_id",[studname,schoolid],
+  connection.query("SELECT * FROM tr_term_assesment_overall_marks WHERE ? AND ? order by subject_id",[studid,schoolid],
     function(err, rows)
     {
     if(!err)
@@ -738,9 +741,9 @@ app.post('/inserthealth-service',  urlencodedParser,function (req,res)
 app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var studname={student_name:req.query.studname};  
+  var studid={student_id:req.query.studid};  
   var qur="select * from scorecarddb.tr_term_health th join scorecarddb.tr_term_attendance ta "+
-  "on (th.student_id=ta.student_id) where th.student_name='"+req.query.studname+"' "+
+  "on (th.student_id=ta.student_id) where th.student_id='"+req.query.studid+"' "+
   "and th.school_id='"+req.query.schoolid+"'";
   connection.query(qur,
     function(err, rows)

@@ -1,0 +1,51 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="../scorecard-service/scorecard-service.html">
+
+<dom-module id="student-list-itemcard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+      }
+    </style>
+    <div>
+      <table border="1">
+        <tr><td>{{studentid}}</td><td>{{studentname}}</td><td><paper-button on-click="FnView">View</paper-button></td></tr>
+      </table>      
+    </div>
+    <scorecard-service id="scorecardservice"></scorecard-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'student-list-itemcard',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'student-list-itemcard',
+          notify: true
+        }
+      },      
+      FnView:function(){
+        this.$.scorecardservice.callFetchstudentinfoService(this.studentid);
+        this.$.scorecardservice.callFetchsubjectinfoService(this.studentid);
+        this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studentid);
+        this.$.scorecardservice.callFetchmarkService(this.studentid); 
+        this.$.scorecardservice.callfetchcoscholasticmetricsService(this.studentid);  
+        this.$.scorecardservice.callfetchcoscholasticinfoService(this.studtenid);
+        this.$.scorecardservice.callFetchmarkService(this.studentid);
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('ccefivetotenscorecard',''); 
+      }
+    });
+  })();
+  </script>
+</dom-module>

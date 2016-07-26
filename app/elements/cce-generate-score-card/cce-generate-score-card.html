@@ -3,6 +3,7 @@
 <link rel="import" href="..\..\bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="../scorecard-service/scorecard-service.html">
+<link rel="import" href="../student-list-card/student-list-card.html">
 
 <dom-module id="cce-generate-score-card">
   <template>
@@ -10,25 +11,80 @@
       :host {
         display: block;
       }
+      .card{
+      width: 70%;        
+      @apply(--layout-vertical);
+      }
+      .inner{
+      @apply(--layout-horizontal);
+      margin-left: 30%;
+      }
+      .list{
+      margin-left: 30%;
+      margin-top: 5%;
+      }
+      paper-dropdown-menu{
+        margin-left: 5%;
+      }
     </style>
-    <div>
-      <paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
+    <div class="card">
+          <div class="inner">
+          <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{gradearr}}">
+                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{sectionarr}}">
+                <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+          </div>
+
+      <!--<paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
       <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnItemSelected">
         <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item>{{item.itemdes}}</paper-item>
         </template>
-      </paper-listbox>
+      </paper-listbox>-->
+      <div class="list">
+      <student-list-card></student-list-card>
+      </div>
     </div>
     <scorecard-service id="scorecardservice"></scorecard-service>
   </template>
   <script>
   (function() {
     'use strict';
+    var gradename;
+    var section;
     var item=[];
     Polymer({
       is: 'cce-generate-score-card',
       ready:function(){
-        this.querySelector('paper-listbox').style.visibility='hidden';
+         // this.querySelector('paper-listbox').style.visibility='hidden';
+      },
+      FnSelectGrade:function(e){
+        gradename = e.target.selectedItem.textContent.trim();       
+        localStorage.setItem("curr_sess_grade",gradename);
+        this.$.scorecardservice.callSectionService(gradename);
+        if(this.flag==1)
+          this.callService();
+      },
+      FnSelectSection:function(e){
+        section = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section",section);        
+        // if(this.flag==1)
+          this.callService();
+      },
+      callService:function(){
+        this.flag="1";
+        this.$.scorecardservice.callFetchstudentnameService();
       },
       autocompletearr:function(autocompletearr)
       {

@@ -193,8 +193,10 @@ var arr=[];
       callAcademicService:function(){
         this.$.academicajax.generateRequest();
       },
-      academicResponse:function(e){              
-        document.querySelector('term-assesment-card').academicarr=e.detail.response;
+      academicResponse:function(e){
+        document.querySelector('teacherhome-card').academicarr=e.detail.response; 
+        document.querySelector('teacherhome-card').FnYearToggle();             
+        // document.querySelector('term-assesment-card').academicarr=e.detail.response;
       },
       callTermService:function(termtype){
          this.termurl=sessionStorage.getItem("addrinfo")+"/term-service";

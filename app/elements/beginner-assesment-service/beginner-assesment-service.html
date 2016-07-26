@@ -96,7 +96,8 @@
         this.$.academicajax.generateRequest();
       },
       academicResponse:function(e){              
-        document.querySelector('beginner-assesment-card').academicarr=e.detail.response;
+        document.querySelector('teacherhome-card').academicarr=e.detail.response;
+        // document.querySelector('beginner-assesment-card').academicarr=e.detail.response;
       },
       callAssesmentService:function(assesmentname){
          this.assesmenturl=sessionStorage.getItem("addrinfo")+"/assesmenttype-service";

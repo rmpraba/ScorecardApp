@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../beginner-assesment-service/beginner-assesment-service.html">
 <dom-module id="login-service">
   <template>
    <iron-ajax
@@ -35,8 +36,9 @@
         on-response="loginResponse"
         debounce-duration="300"
         >
+
   </iron-ajax>
- 
+  <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
   </template>
 
   <script>
@@ -85,11 +87,14 @@
         var school=e.detail.response.returnval[0].school;
         var name=e.detail.response.returnval[0].name;
         var address=e.detail.response.returnval[0].addr;
+        var roleid=e.detail.response.returnval[0].id;
         sessionStorage.setItem("curr_sess_loggedid",username);
         sessionStorage.setItem("curr_sess_loggedrole",role);
+        sessionStorage.setItem("curr_sess_loggedroleid",roleid);
         sessionStorage.setItem("curr_sess_loggedschoolid",school);
         sessionStorage.setItem("curr_sess_loggedschoolname",name);
-        sessionStorage.setItem("curr_sess_loggedschooladdress",address);        
+        sessionStorage.setItem("curr_sess_loggedschooladdress",address);
+        this.$.bassesmentservice.callAcademicService();         
         document.querySelector('app-card').setPage('homepage','Assesment Screen'); 
         document.querySelector('home-page').setPage('teacherhomecard',''); 
         //document.querySelector('home-page').setPage('cce-performance-name-card','');

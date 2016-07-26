@@ -46,7 +46,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
   var id={"id":req.query.username};
   var username={"id":req.query.username};
   var password={"password":req.query.password};
-  connection.query('SELECT role_name,(select school_id from md_employee where ?) as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr from md_role where id=(select role_id from md_employee where ? and ?) ',[id,username,password],
+  connection.query('SELECT id,role_name,(select school_id from md_employee where ?) as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr from md_role where id=(select role_id from md_employee where ? and ?) ',[id,username,password],
     function(err, rows)
     {
     if(!err)
@@ -546,7 +546,7 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var qur="SELECT * FROM md_student where ?";
-  connection.query("SELECT * FROM md_student where ?",[schoolid],
+  connection.query(qur,[schoolid],
     function(err, rows)
     {
     if(!err)

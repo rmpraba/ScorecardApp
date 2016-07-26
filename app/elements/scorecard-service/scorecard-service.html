@@ -103,7 +103,8 @@
       },
       callFetchstudentnameService:function(){
         this.fetchstudnameurl=sessionStorage.getItem("addrinfo")+"/fetchstudname-service";
-        var obj={"scoolid":""};
+        var obj={"scoolid":"","roleid":""};
+        obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         this.fetchstudnameparam=obj;
         this.$.fetchstudnameajax.generateRequest();

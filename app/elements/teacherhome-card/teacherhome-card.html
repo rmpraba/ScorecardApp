@@ -37,15 +37,26 @@
     </style>
     <div class="container-full">
     <div class="container">
-      <div class="card">    
+      <div class="card" hidden$="{{BA}}">    
        <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/pre-entry.png" height="180px" width="180px"></paper-button>
       </div>
-      <div class="card">
+      <div class="card" hidden$="{{TA}}">
        <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
       </div>
-      <div class="card">
+      <div class="card" hidden$="{{Report}}">
        <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
       </div>      
+    </div>
+    <div class="cdialog">      
+      <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+         <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
+              <template is="dom-repeat" items="{{academicarr}}">
+                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+      </paper-dialog>
     </div>
     <div class="dialog">      
       <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
@@ -66,8 +77,17 @@
   <script>
   (function() {
     'use strict';
+    var academicyear;
     Polymer({
       is: 'teacherhome-card',
+      ready:function(){       
+
+      },
+      FnSelectacademicyear:function(e){
+        academicyear = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_academicyear",academicyear); 
+        this.$.assesmentservice.callTermService("Term");             
+      },
       FnSelectPreEntryType:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','PreEntry');
         this.$.bassesmentservice.callAcademicService(); 
@@ -82,8 +102,7 @@
       },
       FnSelectTermType:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Term');
-        this.$.assesmentservice.callAcademicService(); 
-        this.$.assesmentservice.callTermService("Term");        
+        this.$.assesmentservice.callAcademicService();
       },
       FnToggle:function(){
         this.$.dialog.toggle();
@@ -95,6 +114,9 @@
         this.$.assesmentservice.callGradeService();   
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('termscholasticcategory','');
+      },
+      FnYearToggle:function(){
+        this.$.cdialog.toggle();
       }
     });
   })();

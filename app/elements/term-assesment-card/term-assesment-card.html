@@ -33,13 +33,13 @@
      
      <div class='drop'>
       
-          <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
+          <!--<paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
                 <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
               </template>
             </paper-menu>
-          </paper-dropdown-menu>
+          </paper-dropdown-menu>-->
 
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
@@ -108,12 +108,12 @@
           this.SA1='SA2';
         }
       },
-      FnSelectacademicyear:function(e){
+      /*FnSelectacademicyear:function(e){
         academicyear = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_academicyear",academicyear);
         if(this.flag==1)
           this.callService();       
-      },
+      },*/
       FnSelectGrade:function(e){
         gradename = e.target.selectedItem.textContent.trim();
         // alert(gradename);

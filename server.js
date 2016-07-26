@@ -291,7 +291,7 @@ app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
-"school_id='"+req.query.schoolid+"') and id in (select student_id from tr_student_to_subject where subject='"+req.query.subject+"')";
+"school_id='"+req.query.schoolid+"')";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)

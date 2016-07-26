@@ -284,11 +284,14 @@ app.post('/assesment-service',  urlencodedParser,function (req, res)
 //fetching student info
 app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
 {
-  var qur="select school_id,id,student_name,class_id from md_student where class_id="+
+  console.log(req.query.gradename);
+  console.log(req.query.section);
+  console.log(req.query.subject);
+  var qur="select school_id,id,student_name,class_id from md_student where  class_id="+
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
-"from md_grade where grade_name='"+req.query.gradename+"' and school_id='"+req.query.schoolid+"') and section_id=(select "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
-"school_id='"+req.query.schoolid+"')";
+"school_id='"+req.query.schoolid+"') and id in (select student_id from tr_student_to_subject where subject='"+req.query.subject+"')";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)

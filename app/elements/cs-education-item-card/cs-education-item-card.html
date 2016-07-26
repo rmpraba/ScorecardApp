@@ -23,15 +23,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .card{
         height: 2%;
       }
+       #tb1{
+        width:25%
+      }
+      #tb2{
+        width: 5%
+      }
     </style>
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
-        <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 5%;"><paper-input on-focus="FnActivity"  name="Work Education" value="{{score1}}"></paper-input></td>   
-        <td style="width: 5%;"><paper-input  name="total" value="{{total}}"></paper-input></td> 
-         <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td id="tb2"><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb1"><paper-item>{{studname}}</paper-item></td>
+        <td id="tb1"><paper-input on-focus="FnActivity"  name="Work Education" value="{{score1}}"></paper-input></td>   
+        <td id="tb1"><paper-input  name="total" value="{{total}}"></paper-input></td> 
+         <td id="tb1"><paper-input name="grade" value="{{grade}}"></paper-input></td>
         </tr>
         </table>
     </div>

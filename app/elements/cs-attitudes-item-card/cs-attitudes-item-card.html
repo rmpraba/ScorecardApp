@@ -23,19 +23,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .card{
         height: 2%;
       }
+        #tb1{
+        width:12.5% 
+      }
     </style>
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
-        <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards Teachers" value="{{score1}}"></paper-input></td>   
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitudes towards Teachers" value="{{score1}}"></paper-input></td>   
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Value Systems" value="{{score4}}"></paper-input></td>  
-        <td style="width: 5%;"><paper-input  name="total" value="{{total}}"></paper-input></td> 
-         <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb1"><paper-item>{{studname}}</paper-item></td>
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Attitude towards Teachers" value="{{score1}}"></paper-input></td>   
+        
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Value Systems" value="{{score4}}"></paper-input></td>  
+        <td id="tb1"><paper-input  name="total" value="{{total}}"></paper-input></td> 
+         <td id="tb1"><paper-input name="grade" value="{{grade}}"></paper-input></td>
         </tr>
         </table>
     </div>

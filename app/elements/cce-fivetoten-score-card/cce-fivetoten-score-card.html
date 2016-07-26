@@ -7,16 +7,22 @@
       :host {
         display: block;
       }
-       .bgc{
-    background-color: #e6ffb3;
-}
+       
+table{
+   background-color: #e6ffb3;
+   }
+   div{
+       background-color: #e6ffb3;
+
+   }
   .relative {
     position: relative;
     width: 450px;
     height: 150px;
     border: 3px solid black;
-    top:50px;
+    top:60px;
     left: 250px
+}
 }
 
 .tbl {
@@ -71,11 +77,21 @@
 }
 .bbox{
     position: relative;
-    width: 830px;
+    width: 900px;
     height: 800px;
-    border: 3px solid black;
+    border: 20px solid green;
     top:90px;
     left: 300px
+}
+.bbbox{
+
+    position: relative;
+    width: 900px;
+    height: 1690px;
+    border: 20px solid green;
+    top:90px;
+    left: 300px
+}
 }
 </style>
   <div class="bbox">  
@@ -105,17 +121,17 @@
       <img src="../../images/zeesouth.png" height="100px" width="90px"></img>
     </div>
    <div class="pr">
-     <center><h2>PERFOMENCE PROFILE</h2>
+     <center><h2>PERFOMANCE PROFILE</h2>
      class: {{grade}} (Session: 20--20)
-     <h3>CONTINUOUS ANA COMPREHENSIVE EVALUATION </h3>
-     <h4>(issued by School as per directives of central Board ofSecondry Edicational Delhi)</h4>
+     <h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>
+     <h4>(issued by School as per directives of central Board of Secondary Educational Delhi)</h4>
      </center>
      <h3>StudentProfile</h3>
    </div>
    <div>
 <table class="tbl1">
 <tr>
-  <th>Admission NO:</th><th>(allottedby the school)</th>
+  <th>Admission NO:</th><th>(allotted by the school)</th>
 </tr>
 <tr>
   <th>RollNO: </th><th>{{studentid}}</th>
@@ -152,8 +168,8 @@
     <p>(Attested by the Schoolprincipal along with school seal) </p>
 </div>
 
-<div>
-  <table border="1" class="tbl3">  
+<div class="bbbox">
+  <table border="1">  
   <tr>
     <th colspan="3" >Attendence:</th><th colspan="10">Term1</th><th colspan="3">Term2</th>
   </tr>
@@ -311,9 +327,10 @@
      <tr>
            <th colspan="16"><h4>ResposibilityDischarge/ExceptionalAchievements</h4></th>
      </tr>
+ 
+
  </table>
-</div>
-   
+   </div>
 
     
   </template>

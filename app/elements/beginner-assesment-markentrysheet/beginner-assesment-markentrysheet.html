@@ -18,6 +18,9 @@
       .studname{
         width: 30%;
       }
+       #tb1{
+        width:16%
+      }
     </style>
     <div>
     <template is="dom-repeat" items="{{label}}">
@@ -26,9 +29,12 @@
       <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} </h4> 
       <table border="1" >    
       <tr>
-      <th style="width: 5%;">{{item.SNo}}</th><th style="width: 25%;">{{item.Name}}</th><th style="width: 5%;">{{item.Correct_words}}</th>
-      <th style="width: 5%;">{{item.Comprehension}}</th>
-      <th style="width: 5%;">{{item.Score}}</th><th style="width: 5%;">{{item.Grade}}</th>   
+      <th id="tb1">{{item.SNo}}</th>
+      <th id="tb1">{{item.Name}}</th>
+      <th id="tb1">{{item.Correct_words}}</th>
+      <th id="tb1">{{item.Comprehension}}</th>
+      <th id="tb1">{{item.Score}}</th>
+      <th id="tb1">{{item.Grade}}</th>   
       </tr>      
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="6">

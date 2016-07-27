@@ -18,6 +18,15 @@
       .studname{
         width: 30%;
       }
+      #tb1{
+        width:6%
+      }
+      #tb2{
+        width:20%
+      }
+      #tb3{
+        width:2%
+      }
     </style>
     <div>
     <!-- <template is="dom-repeat" items="{{label}}"> -->
@@ -26,14 +35,14 @@
       <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <table border="1" >    
       <tr>
-      <th style="width: 5%;">SNo</th>
-      <th style="width: 25%;">Name</th>
-      <th style="width: 5%;">Height</th>
-      <th style="width: 5%;">Weight</th>
-      <th style="width: 5%;">Blood Group</th>
-      <th style="width: 5%;">Vision Left</th>
-      <th style="width: 5%;">Vision Right</th>
-      <th style="width: 5%;">Dental Hygiene</th>
+      <th id="tb3">SNo</th>
+      <th id="tb2">Name</th>
+      <th id="tb1">Height</th>
+      <th id="tb1">Weight</th>
+      <th id="tb1">Blood Group</th>
+      <th id="tb1">Vision Left</th>
+      <th id="tb1">Vision Right</th>
+      <th id="tb1">Dental Hygiene</th>
       </tr>  
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="8">

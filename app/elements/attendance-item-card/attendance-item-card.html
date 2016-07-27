@@ -17,14 +17,17 @@
       .card{
         height: 2%;
       }
+         #tb1{
+        width:25%
+      }
     </style>
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
-        <td style="width: 25%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 8%;"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>   
-        <td style="width: 8%;"><paper-input on-change="FnWorkingDays" value="{{workingdays}}"></paper-input></td>  
+        <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb1"><paper-item>{{studname}}</paper-item></td>
+        <td id="tb1"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>   
+        <td id="tb1"><paper-input on-change="FnWorkingDays" value="{{workingdays}}"></paper-input></td>  
         </tr>
         </table>
     </div>

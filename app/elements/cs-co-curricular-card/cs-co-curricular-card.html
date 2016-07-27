@@ -11,18 +11,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="cs-co-curricular-card">
-   <template>
+   <template>           
     <style>
       :host {
         display: block;
       }
       table{
-        width: 95%;
+        width: 100%;
         border-collapse: collapse;
         margin-left: 1%;
       }
       .studname{
       }
+   #tb1{
+    width:12.5%
+   }
     </style>
     <div>
     <!--<template is="dom-repeat" items="{{label}}">-->
@@ -31,14 +34,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <table border="1" >    
       <tr>
-      <th style="width: 1%;">SNo</th>
-      <th style="width: 20%;">Name</th>
-      <th style="width: 5%;">Literary and Creative Skills</th>
-      <th style="width: 5%;">Scientific Skills</th>
-      <th style="width: 5%;">Information and Communication Technology (ICT) echnology (ICT)</th>
-      <th style="width: 5%;">organisational and leadership skills</th>
-      <th style="width: 5%;">Total</th>
-      <th style="width: 5%;">Grade</th>
+      <th id="tb1">SNo</th>
+      <th id="tb1">Name</th>
+      <th id="tb1">Literary and Creative Skills</th>
+      <th id="tb1">Scientific Skills</th>
+      <th id="tb1">Information and Communication Technology (ICT) echnology (ICT)</th>
+      <th id="tb1">organisational and leadership skills</th>
+      <th id="tb1">Total</th>
+      <th id="tb1">Grade</th>
       </tr>  
 
      <template is="dom-repeat" items="{{studarr}}">

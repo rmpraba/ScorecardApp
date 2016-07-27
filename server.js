@@ -286,7 +286,6 @@ var qur2="select school_id,id,student_name,class_id from md_student where  class
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
 "school_id='"+req.query.schoolid+"')";
 
-
 var qur1="select distinct student_id as id,student_name,school_id,class_id from tr_student_to_subject where "+
 "grade=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
 "section=(select section_id from md_section where section_name='"+req.query.section+"' "+
@@ -296,7 +295,7 @@ var qur="select * from mp_teacher_grade tg join tr_student_to_subject ss "+
         "on(tg.subject_id=ss.subject_id) and ss.subject_id=(select subject_id from md_subject where "+
         "subject_name='"+req.query.subject+"') and ss.grade=tg.grade_id "+
         "and ss.section=tg.section_id";
-  // console.log(qur);
+
   connection.query(qur,
     function(err, rows)
     {

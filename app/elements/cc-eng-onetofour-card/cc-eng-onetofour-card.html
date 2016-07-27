@@ -22,9 +22,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           border-collapse: collapse;
           margin-left: 1%;
       }
-      .studname{
+     /* .studname{
         width: 30%;
-          }
+          }*/
+     #tb1{
+          width:7.5%;
+                 }
+     #tb2{
+      width:15%;
+        }
+     #tb3{
+      width:22.5%;
+        }
+    #tb4{
+      width:37.5%;
+        }
     </style>
    <div class="card">
    <center><h1>{{schoolname}}</h1>
@@ -32,27 +44,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h4>Evaluation  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <table border="1">
       <tr><th>Sl.No</th><th>Student's Name</th>
-      <th colspan="3">Reading Skills</th>
-      <th colspan="5">Speaking Skills</th>
-      <th colspan="2">Writing Skills</th>
-      <th colspan="1">Listening Skills</th>
-      <th colspan="1">Written Work</th>
+      <th colspan="3" id="tb3">Reading Skills</th>
+      <th colspan="5" id="tb4">Speaking Skills</th>
+      <th colspan="2" id="tb2">Writing Skills</th>
+      <th colspan="1" id="tb1">Listening Skills</th>
+      <th colspan="1" id="tb1">Written Work</th>
       </tr>
       <tr><th></th><th></th>
-      <th>Pronunciation</th>      
-          <th>Fluency</th>
-      <th>Comprehension</th>
-      <th>Creative Writing</th>
-      <th>Handwriting</th>
+      <th id="tb1">Pronunciation</th>      
+      <th id="tb1">Fluency</th>
+      <th id="tb1">Comprehension</th>
+      <th id="tb1">Creative Writing</th>
+      <th id="tb1">Handwriting</th>
       
-      <th>Grammer</th>
-      <th>Spelling</th>
-      <th>Vocabulary</th>
+      <th id="tb1">Grammer</th>
+      <th id="tb1">Spelling</th>
+      <th id="tb1">Vocabulary</th>
 
-      <th>Conversation</th>
-      <th>Recitation</th>
-      <th>Comprehension</th>
-      <th>Activity</th>
+      <th id="tb1">Conversation</th>
+      <th id="tb1">Recitation</th>
+      <th id="tb1">Comprehension</th>
+      <th id="tb1">Activity</th>
       </tr>
       <tr><th></th><th></th>
       <th>{{assesment}}(10)</th>

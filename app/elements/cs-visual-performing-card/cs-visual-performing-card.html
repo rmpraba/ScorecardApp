@@ -17,26 +17,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
       table{
-        width: 95%;
+        width: 100%;
         border-collapse: collapse;
         margin-left: 1%;
       }
       .studname{
       }
+      .card {
+        height:5%;
+      }
+      #tb1{
+        width:16.67%
+      }
     </style>
-    <div>
+    <div >
     <!--<template is="dom-repeat" items="{{label}}">-->
       <center><h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
-      <table border="1" >    
+      <table border="1" class="card">    
       <tr>
-      <th style="width: 1%;">SNo</th>
-      <th style="width: 20%;">Name</th>
-      <th style="width: 5%;">VISUAL ARTS</th>
-       <th style="width: 5%;">PERFORMING ARTS</th>
-      <th style="width: 5%;">Total</th>
-      <th style="width: 5%;">Grade</th>
+      <th id="tb1">SNo</th>
+      <th id="tb1">Name</th>
+      <th id="tb1">VISUAL ARTS</th>
+       <th id="tb1">PERFORMING ARTS</th>
+      <th id="tb1">Total</th>
+      <th id="tb1">Grade</th>
       </tr>  
 
      <template is="dom-repeat" items="{{studarr}}">

@@ -283,7 +283,7 @@ var arr=[];
         {        
         document.querySelector('cc-evs-onetofour-card').studarr=arr;
         }
-        if(localStorage.getItem("curr_sess_subject")=="English"){        
+        if(localStorage.getItem("curr_sess_subject")=="English"||localStorage.getItem("curr_sess_subject")=="Hindi"||localStorage.getItem("curr_sess_subject")=="Kannada"){        
         document.querySelector('cc-eng-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="GK"){        
@@ -444,16 +444,13 @@ var arr=[];
         } 
       },
     onetofourreportResponse:function(e)
-    {
-     
+    {     
        var tot; 
        var score;
-        alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
         var gradeval=e.detail.response.returnval;
         for(var i=0;i<gradeval.length;i++)
         {
-
-
              tot=parseInt(gradeval[i].val)/parseInt(gradeval[i].cnt);
              //alert(tot);
                  for(var j=0;j<lower.length;j++)

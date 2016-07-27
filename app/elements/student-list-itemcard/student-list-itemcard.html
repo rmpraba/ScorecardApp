@@ -2,6 +2,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="import" href="../scorecard-service/scorecard-service.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
 
 <dom-module id="student-list-itemcard">
   <template>
@@ -31,6 +32,7 @@
         </tr>
       </table>      
     </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
   </template>
   <script>
@@ -48,15 +50,24 @@
         }
       },      
       FnView:function(){
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+        this.$.assesmentservice.callFetchGrade();
+        this.$.assesmentservice.onetofourscore(this.studentid);
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 
+        }
+        else
+        {
         this.$.scorecardservice.callFetchstudentinfoService(this.studentid);
         this.$.scorecardservice.callFetchsubjectinfoService(this.studentid);
         this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studentid);
         this.$.scorecardservice.callFetchmarkService(this.studentid); 
         this.$.scorecardservice.callfetchcoscholasticmetricsService(this.studentid);  
-        this.$.scorecardservice.callfetchcoscholasticinfoService(this.studtenid);
+        this.$.scorecardservice.callfetchcoscholasticinfoService(this.studentid);
         this.$.scorecardservice.callFetchmarkService(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('ccefivetotenscorecard',''); 
+        }
       }
     });
   })();

@@ -172,7 +172,7 @@
           document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');
           document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
         }
-         if(subject=="English"){      
+         if(subject=="English"||subject=="Hindi"||subject=="Kannada"){      
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-eng-onetofour-card');
           document.querySelector('cc-eng-onetofour-card').setDefaultHeaders();

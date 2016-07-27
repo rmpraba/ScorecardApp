@@ -84,6 +84,7 @@
         on-response="categoryResponse"
         debounce-duration="300"
     >
+
     <iron-ajax
         method="post"
         id="subcategoryajax"
@@ -176,6 +177,17 @@
         on-response="fetchgradeforscoreResponse"
         debounce-duration="300"
     >
+
+    <iron-ajax
+        method="post"
+        id="fetchstudentreportajax"
+        url="{{fetchstudentreporturl}}"
+        params="{{fetchstudentreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentreportResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -259,7 +271,28 @@ var arr=[];
          document.querySelector('term-assesment-card').assesmentarr=e.detail.response.returnval;
       },
       callFetchStudentInfo:function(grade,section){
-         this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
+        
+
+
+ if(localStorage.getItem('curr_sess_report')=="1")
+        {
+
+          this.fetchstudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchstudentreport-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","assesment":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.gradename=grade;
+         obj.section=section;
+         obj.subject= localStorage.getItem("curr_sess_subject");
+         obj.assesment= localStorage.getItem("curr_sess_assesment");
+         this.fetchstudentreportparam= obj;
+         // alert(JSON.stringify(obj));
+         this.$.fetchstudentreportajax.generateRequest();
+        
+
+        }
+        else
+        {
+            this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.gradename=grade;
@@ -267,7 +300,78 @@ var arr=[];
          obj.subject= localStorage.getItem("curr_sess_subject");
          this.fetchstudentparam= obj;
          // alert(JSON.stringify(obj));
-         this.$.fetchstudentajax.generateRequest();
+         this.$.fetchstudentajax.generateRequest(); 
+        }
+      },
+      fetchstudentreportResponse:function(e)
+      {
+
+       var overall=[];
+       var arr1=e.detail.response.returnval;  
+      // alert(JSON.stringify(arr1));
+       for(var i=0;i<arr1.length;i++)
+       {
+        var markarr=[];
+        markarr.push(arr1[i].student_name);
+        markarr.push(arr1[i].mark);
+        for(var j=i+1;j<arr1.length;j++)
+        {
+           if(arr1[i].student_id==arr1[j].student_id)
+           {
+            markarr.push(arr1[j].mark);
+            arr1.splice(j,1);
+            j--;
+           }
+
+        }
+       overall.push(markarr);
+       }
+       //alert(JSON.stringify(overall));
+       if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+        if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
+        document.querySelector('cc-maths-onetofour-card').markarr=overall;        
+        }
+        if(localStorage.getItem("curr_sess_subject")=="EVS")
+        {        
+        document.querySelector('cc-evs-onetofour-card').markarr=overall;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="English"){        
+        document.querySelector('cc-eng-onetofour-card').markarr=overall;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="GK"){        
+        document.querySelector('cc-gk-onetofour-card').markarr=overall;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Computer"){   
+         
+        document.querySelector('cc-computer-onetofour-card').markarr=overall;
+        }
+        
+
+        if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
+       
+        document.querySelector('cc-art-craft-onetofour-card').markarr=overall;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="dance"){        
+        document.querySelector('cc-dance-onetofour-card').markarr=overall;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="music"){        
+        document.querySelector('cc-music-onetofour-card').markarr=overall;
+        }
+     
+    }
+        else
+        {
+         if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
+
+        document.querySelector('cc-fa-fivetoten-card').markarr=overall; 
+        // document.querySelector('cs-life-skill-card').studarr=arr; 
+        //document.querySelector('cs-education-card').studarr=arr;
+        } 
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
+        document.querySelector('cc-sa-fivetoten-card').markarr=overall;        
+        }
+        }       
+
       },
       fetchstudentResponse:function(e){         
         var arr=e.detail.response.returnval;  
@@ -277,32 +381,38 @@ var arr=[];
         }
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
-        document.querySelector('cc-maths-onetofour-card').studarr=arr;        
+        document.querySelector('cc-maths-onetofour-card').studarr=arr;  
+              document.querySelector('cc-maths-onetofour-card').hiddenbutton();
         }
         if(localStorage.getItem("curr_sess_subject")=="EVS")
         {        
         document.querySelector('cc-evs-onetofour-card').studarr=arr;
+        document.querySelector('cc-evs-onetofour-card').hiddenbutton();
         }
         if(localStorage.getItem("curr_sess_subject")=="English"){        
         document.querySelector('cc-eng-onetofour-card').studarr=arr;
+        document.querySelector('cc-eng-onetofour-card').hiddenbutton();
         }
-        if(localStorage.getItem("curr_sess_subject")=="GK"){        
+        if(localStorage.getItem("curr_sess_subject")=="GK"){   
+        document.querySelector('cc-gk-onetofour-card').hiddenbutton();     
         document.querySelector('cc-gk-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="Computer"){   
-         
+         document.querySelector('cc-computer-onetofour-card').hiddenbutton();
         document.querySelector('cc-computer-onetofour-card').studarr=arr;
         }
         
 
         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
-       
+       document.querySelector('cc-art-craft-onetofour-card').hiddenbutton();
         document.querySelector('cc-art-craft-onetofour-card').studarr=arr;
         }
-        if(localStorage.getItem("curr_sess_subject")=="dance"){        
+        if(localStorage.getItem("curr_sess_subject")=="dance"){  
+        document.querySelector('cc-dance-onetofour-card').hiddenbutton();      
         document.querySelector('cc-dance-onetofour-card').studarr=arr;
         }
-        if(localStorage.getItem("curr_sess_subject")=="music"){        
+        if(localStorage.getItem("curr_sess_subject")=="music"){ 
+        document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cc-music-onetofour-card').studarr=arr;
         }
      

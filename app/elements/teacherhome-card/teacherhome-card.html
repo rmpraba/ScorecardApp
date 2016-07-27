@@ -45,7 +45,10 @@
       </div>
       <div class="card" hidden$="{{Report}}">
        <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
-      </div>      
+      </div>  
+         <div class="card" hidden$="{{Report}}">
+       <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+      </div>  
     </div>
     <div class="cdialog">      
       <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
@@ -104,16 +107,33 @@
         localStorage.setItem('curr_sess_loggedassesmenttype','Term');
         this.$.assesmentservice.callAcademicService();
       },
+       FnGenerateReportcard:function()
+       {
+        localStorage.setItem('curr_sess_report','1');
+        localStorage.setItem('curr_sess_loggedassesmenttype','Term');
+        this.$.assesmentservice.callAcademicService();
+      },
       FnToggle:function(){
         this.$.dialog.toggle();
       },
-      FnSelectTerm:function(e){
+      FnSelectTerm:function(e)
+      {
         var termname = e.target.selectedItem.textContent.trim();  
         localStorage.setItem('curr_sess_termname',termname);  
         this.$.assesmentservice.callAssesmentService("Term",termname,"");               
         this.$.assesmentservice.callGradeService();   
-        document.querySelector('app-card').setPage('homepage','');
+        
+        if(localStorage.getItem('curr_sess_report')=="1")
+        {
+          document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('termassesment','');
+        }
+        else
+        {
+          document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('termscholasticcategory','');
+
+        }
       },
       FnYearToggle:function(){
         this.$.cdialog.toggle();

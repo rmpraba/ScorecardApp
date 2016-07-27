@@ -38,18 +38,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb2" ><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input on-focus="FnActivity" id="{{studid}}" name="Self Awareness" value="{{score1}}"></paper-input></td>   
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Problem Solving" value="{{score2}}"></paper-input></td>  
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Decision Making" value="{{score3}}"></paper-input></td>  
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Critical Thinking" value="{{score4}}"></paper-input></td>  
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Creative Thinking" value="{{score5}}"></paper-input></td> 
-        <td  id="tb1"><paper-input on-focus="FnActivity" name="Interpersonal Relationship" value="{{score6}}"></paper-input></td> 
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Effective Communication" value="{{score7}}"></paper-input></td> 
-        <td id="tb1" ><paper-input on-focus="FnActivity" name="Empathy" value="{{score8}}"></paper-input></td> 
-        <td  id="tb1"><paper-input on-focus="FnActivity" name="Managing Emotions" value="{{score9}}"></paper-input></td> 
-        <td  id="tb1"><paper-input on-focus="FnActivity" name="Dealing with Stress" value="{{score10}}"></paper-input></td> 
-        <td id="tb1"><paper-input  name="total" value="{{total}}"></paper-input></td>
-        <td id="tb1"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td id="tb1"><paper-input on-focus="FnActivity" id="s1{{studid}}" name="Self Awareness" value="{{score1}}"></paper-input></td>   
+        <td id="tb1"><paper-input on-focus="FnActivity" id="s2{{studid}}" name="Problem Solving" value="{{score2}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" id="s3{{studid}}" name="Decision Making" value="{{score3}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" id="s4{{studid}}" name="Critical Thinking" value="{{score4}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" id="s5{{studid}}" name="Creative Thinking" value="{{score5}}"></paper-input></td> 
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="s6{{studid}}" name="Interpersonal Relationship" value="{{score6}}"></paper-input></td> 
+        <td id="tb1"><paper-input on-focus="FnActivity" id="s7{{studid}}"  name="Effective Communication" value="{{score7}}"></paper-input></td> 
+        <td id="tb1" ><paper-input on-focus="FnActivity" id="s8{{studid}}" name="Empathy" value="{{score8}}"></paper-input></td> 
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="s9{{studid}}" name="Managing Emotions" value="{{score9}}"></paper-input></td> 
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="s10{{studid}}" name="Dealing with Stress" value="{{score10}}"></paper-input></td> 
+        <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td>
+        <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>
       
         </tr>
         </table>
@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
       </template>
       <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
-      <paper-button style="height:33px !important;" style="top:900px;"class="button" on-click="click">Submit</paper-button>
+      <paper-button style="height:33px !important;" style="top:900px;"class="button" id="{{studid}}" on-click="click">Submit</paper-button>
             </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     
@@ -86,12 +86,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var grade=[];
     var name;
 var arr=[];
+var idd,sname,sum1,sum2,sum3,sum4,sum5,sum6,sum7,sum8,sum9,sum10,tot;
     Polymer({
       is: 'cs-life-skill-item-card',
       FnActivity:function(e)
       {
-        // alert(e.target.name);
-        alert(e.target.name);
+       idd=this.studid;
+       sname=studname;
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
          var id = 'lifeskill';
@@ -105,7 +106,7 @@ var arr=[];
      arr.push(val);
 //alert(arr);
       },
-      click:function()
+      click:function(e)
       {
         var sum=0;
         for(var i=0;i<arr.length;i++)
@@ -119,63 +120,75 @@ var arr=[];
         dialog.opened=false;
         if(name=="Self Awareness")
         {           
-          this.score1=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score1);
+          //alert(e.target.id);
+          sum1=sum;
+          document.getElementById('s1'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
         }
         else  if(name=="Problem Solving")
         {
-          this.score2=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score2);
+          sum2=sum;
+          document.getElementById('s2'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
 
         }
         else  if(name=="Decision Making")
         {
-          this.score3=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score3);
+          sum3=sum;
+          document.getElementById('s3'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score3);
         }
         else  if(name=="Critical Thinking")
         {
-          this.score4=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score4);
+          sum4=sum;
+          document.getElementById('s4'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,this.score4);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score4);
         }
         else  if(name=="Creative Thinking")
         {
-          this.score5=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score5);
+          sum5=sum;
+          document.getElementById('s5'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,this.score5);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score5);
         }
         else  if(name=="Interpersonal Relationship")
         {
-          this.score6=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score6);
+          sum6=sum;
+          document.getElementById('s6'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,this.score6);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score6);
         }
         else  if(name=="Effective Communication")
         {
-          this.score7=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score7);
+          sum7=sum;
+          document.getElementById('s7'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score7);
         }
         else  if(name=="Empathy")
         {
-          this.score8=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score8);
+          sum8=sum;
+          document.getElementById('s8'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score8);
         }
         else  if(name=="Managing Emotions")
         {
-          this.score9=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score9);
+          sum9=sum;
+          document.getElementById('s9'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score9);
         }
         else  if(name=="Dealing with Stress")
         {
-          this.score10=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score10);
-          this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4)+parseInt(this.score5)+parseInt(this.score6)+parseInt(this.score7)+parseInt(this.score8)+parseInt(this.score9)+parseInt(this.score10);
-          this.convert=(parseInt(this.total)/10)*100;
+          sum10=sum;
+          document.getElementById('s10'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
+          tot=parseInt(sum1)+parseInt(sum2)+parseInt(sum3)+parseInt(sum4)+parseInt(sum5)+parseInt(sum6)+parseInt(sum7)+parseInt(sum8)+parseInt(sum9)+parseInt(sum10);
+          document.getElementById('t'+idd).value=tot;
+          this.convert=(parseInt(tot)/10)*100;
           this.callFetchGrade();
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score10);
           // this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4)+parseInt(this.score5)+parseInt(this.score6)+parseInt(this.score7)+parseInt(this.score8)+parseInt(this.score9)+parseInt(this.score10);
@@ -203,7 +216,8 @@ var arr=[];
         for(var i=0;i<lower.length;i++){          
           if(mark>=lower[i]&&mark<=higher[i]){            
             this.grade=grade[i];
-            this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"Life Skills",this.convert,this.reduce,this.grade);
+            document.getElementById('g'+idd).value=grade[i];
+            this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"Life Skills",this.convert,this.reduce,grade[i]);
           }
         }
         //this.callService();

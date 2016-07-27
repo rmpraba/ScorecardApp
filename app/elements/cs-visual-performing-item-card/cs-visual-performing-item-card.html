@@ -32,10 +32,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input on-focus="FnActivity"  name="VISUAL ARTS" value="{{score1}}"></paper-input></td>
-        <td id="tb1"><paper-input on-focus="FnActivity"  name="PERFORMING ARTS" value="{{score2}}"></paper-input></td>
-        <td id="tb1"><paper-input  name="total" value="{{total}}"></paper-input></td> 
-         <td id="tb1"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td id="tb1"><paper-input on-focus="FnActivity" id="s1{{studid}}"  name="VISUAL ARTS" value="{{score1}}"></paper-input></td>
+        <td id="tb1"><paper-input on-focus="FnActivity" id="s2{{studid}}"  name="PERFORMING ARTS" value="{{score2}}"></paper-input></td>
+        <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
+         <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>
         </tr>
         </table>
     </div>
@@ -69,13 +69,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var grade=[];
     var name;
 var arr=[];
+var idd,sname,sum1,sum2,tot;
 
     Polymer({
       is: 'cs-visual-performing-item-card',
 
      FnActivity:function(e)
       {
-        alert(e.target.name);
+        idd=this.studid;
+        sname=this.studname;
+        //alert(e.target.name);
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
          var id = 'visual';
@@ -103,17 +106,20 @@ var arr=[];
         dialog.opened=false;
          if(name=="VISUAL ARTS")
           {
-          this.score1=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Visual & Performing Arts",name,this.score1);
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score1);
+          sum1=sum;
+          document.getElementById('s1'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Visual & Performing Arts",name,sum);
+          //this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score1);
         }
         else if(name=="PERFORMING ARTS")
         {
-           this.score2=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Visual & Performing Arts",name,this.score2);
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score2);
-            this.total=parseInt(this.score1)+parseInt(this.score2);
-            this.convert=(parseInt(this.total)/20)*100;
+           sum2=sum;
+           document.getElementById('s2'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Visual & Performing Arts",name,sum);
+          //this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",name,this.score2);
+            tot=parseInt(sum1)+parseInt(sum2);
+            document.getElementById('t'+idd).value=tot;
+            this.convert=(parseInt(tot)/20)*100;
            this.callFetchGrade();
           }
         arr=[];
@@ -138,9 +144,9 @@ var arr=[];
         for(var i=0;i<lower.length;i++)
         {          
           if(mark>=lower[i]&&mark<=higher[i])
-          {            
-            this.grade=grade[i];
-            this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"VISUAL AND PERFORMING ARTS",this.convert,this.reduce,this.grade);
+          {  
+          document.getElementById('g'+idd).value=grade[i];          
+            this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"VISUAL AND PERFORMING ARTS",this.convert,this.reduce,grade[i]);
           }
         }
         //this.callService();

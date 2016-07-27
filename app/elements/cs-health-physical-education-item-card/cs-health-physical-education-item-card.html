@@ -29,9 +29,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
         <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 5%;"><paper-input on-focus="FnActivity"  name="Health and Physical Education" value="{{score1}}"></paper-input></td>   
-        <td style="width: 5%;"><paper-input  name="total" value="{{total}}"></paper-input></td> 
-         <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td style="width: 5%;"><paper-input on-focus="FnActivity" id="s1{{studid}}"   name="Health and Physical Education" value="{{score1}}"></paper-input></td>   
+        <td style="width: 5%;"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
+         <td style="width: 5%;"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>
         </tr>
         </table>
     </div>
@@ -65,13 +65,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var grade=[];
     var name;
 var arr=[];
+var idd,sname;
 
     Polymer({
       is: 'cs-health-physical-education-item-card',
 
      FnActivity:function(e)
       {
-        alert(e.target.name);
+        idd=this.studid;
+        sname=this.studname;
+        //alert(e.target.name);
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
          var id = 'healthandphysical';
@@ -100,10 +103,11 @@ var arr=[];
          if(name=="Health and Physical Education")
           {
            
-          this.score1=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Health and Physical Education",name,this.score1);
-          this.total=sum;
-           this.convert=(parseInt(this.total)/10)*100;
+          sum1=sum;
+          document.getElementById('s1'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Health and Physical Education",name,sum);
+          document.getElementById('t'+idd).value=sum;
+           this.convert=(parseInt(sum)/10)*100;
          this.callFetchGrade();
           }
         arr=[];
@@ -129,8 +133,8 @@ var arr=[];
         {          
           if(mark>=lower[i]&&mark<=higher[i])
           {            
-            this.grade=grade[i];
-            this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"Health and Physical Education",this.convert,this.reduce,this.grade);
+            document.getElementById('g'+idd).value=grade[i];
+            this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"Health and Physical Education",this.convert,this.reduce,grade[i]);
           }
         }
         //this.callService();

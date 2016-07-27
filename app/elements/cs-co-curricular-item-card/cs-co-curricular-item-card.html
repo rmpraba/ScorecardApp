@@ -32,12 +32,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td  id="tb1""><paper-item>{{serialno}}</paper-item></td>
         <td  id="tb1""><paper-item>{{studname}}</paper-item></td>
-        <td  id="tb1"><paper-input on-focus="FnActivity" name="Literary and Creative Skills" value="{{score1}}"></paper-input></td>   
-        <td  id="tb1"><paper-input on-focus="FnActivity" name="Scientific Skills" value="{{score2}}"></paper-input></td>  
-        <td  id="tb1"><paper-input on-focus="FnActivity" name="Information and Communication Technology (ICT) echnology (ICT)" value="{{score3}}"></paper-input></td>  
-        <td  id="tb1"><paper-input on-focus="FnActivity" name="organisational and leadership skills" value="{{score4}}"></paper-input></td>  
-        <td  id="tb1"><paper-input  name="total" value="{{total}}"></paper-input></td> 
-         <td  id="tb1"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="s1{{studid}}" name="Literary and Creative Skills" value="{{score1}}"></paper-input></td>   
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="s2{{studid}}" name="Scientific Skills" value="{{score2}}"></paper-input></td>  
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="s3{{studid}}" name="Information and Communication Technology (ICT) echnology (ICT)" value="{{score3}}"></paper-input></td>  
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="s4{{studid}}" name="organisational and leadership skills" value="{{score4}}"></paper-input></td>  
+        <td  id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
+         <td  id="tb1"><paper-input name="grade" id="g{{studid}}"  value="{{grade}}"></paper-input></td>
         </tr>
         </table>
     </div>
@@ -71,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var grade=[];
     var name;
 var arr=[];
-
+var idd,sname,sum1,sum2,sum3,sum4,tot;
     Polymer({
       is: 'cs-co-curricular-item-card',
 
@@ -98,34 +98,39 @@ var arr=[];
         {
           sum=sum+parseInt(arr[i]);
         }
-        alert(sum);
+        //alert(sum);
          var id = 'cocurricular';
         var dialog = document.getElementById(id);
         dialog.opened=false;
         if(name=="Literary and Creative Skills")
         {
            
-          this.score1=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score1);
+          sum1=sum;
+           document.getElementById('s1'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"CO-CURRICULAR ACTIVITIES",name,sum);
         }
         else  if(name=="Scientific Skills")
         {
 
-          this.score2=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score2);
+          sum2=sum;
+           document.getElementById('s2'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"CO-CURRICULAR ACTIVITIES",name,sum);
         }
         else  if(name=="Information and Communication Technology (ICT) echnology (ICT)")
         {
-          this.score3=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score3);
+          sum3=sum;
+           document.getElementById('s3'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"CO-CURRICULAR ACTIVITIES",name,sum);
         }
         else  if(name=="organisational and leadership skills")
         {
-          this.score4=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",name,this.score4);
+          sum4=sum;
+           document.getElementById('s4'+idd).value=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"CO-CURRICULAR ACTIVITIES",name,sum);
        
-          this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
-          this.convert=(parseInt(this.total)/40)*100;
+          tot=parseInt(sum1)+parseInt(sum2)+parseInt(sum3)+parseInt(sum4);
+           document.getElementById('t'+idd).value=tot;
+          this.convert=(parseInt(tot)/40)*100;
            this.callFetchGrade();
         }
         arr=[];
@@ -148,8 +153,8 @@ var arr=[];
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          
           if(mark>=lower[i]&&mark<=higher[i]){            
-            this.grade=grade[i];
-            this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"CO-CURRICULAR ACTIVITIES",this.convert,this.reduce,this.grade);
+             document.getElementById('g'+idd).value=grade[i];
+            this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"CO-CURRICULAR ACTIVITIES",this.convert,this.reduce,grade[i]);
           }
         }
         //this.callService();

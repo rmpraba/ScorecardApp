@@ -158,6 +158,7 @@
     this.itemArray=[];
     document.querySelector('#input1').selected=-1;
     this.value=this.studname; 
+    
     this.$.scorecardservice.callFetchstudentinfoService(this.studname);
     this.$.scorecardservice.callFetchsubjectinfoService(this.studname);
     this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studname);

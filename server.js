@@ -232,11 +232,8 @@ var qur="select subject_category_name from md_subject_category where subject_cat
 //fetching subcategory info
 app.post('/subcategory-service',  urlencodedParser,function (req, res)
 {
-  // var qur="select subject_name from md_subject where subject_id in(select subject_id from mp_grade_subject where term_id=(select assesment_id from md_assesment_type where assesment_name='"+req.query.termtype+"') and grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"'))";
-  // console.log(qur);
 var qur="select subject_sub_category_name from md_subject_sub_category where subject_sub_category_id in(select distinct subject_sub_category_id from md_grade_subject_category_mapping where term_id=(select assesment_id from md_assesment_type where assesment_name='"+req.query.termtype+"') and grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and subject_id=(select subject_id from md_subject where subject_name='"+req.query.subject+"') and subject_category_id=(select subject_category_id from md_subject_category where subject_category_name='"+req.query.category+"'))";
-  // console.log(qur);
-  connection.query(qur,
+    connection.query(qur,
     function(err, rows)
     {
     if(!err)
@@ -260,7 +257,6 @@ var qur="select subject_sub_category_name from md_subject_sub_category where sub
 app.post('/assesment-service',  urlencodedParser,function (req, res)
 {
   var qur="select assesment_cyclename from md_assesment_cycle where assesment_cycleid in(select assesment_cycleid from mp_assesment_term_cycle where assesment_id=(select assesment_id from md_assesment_type where assesment_name='"+req.query.termtype+"') and term_id=(select term_id from md_term where term_name='"+req.query.termname+"'))";
-  // console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -284,14 +280,22 @@ app.post('/assesment-service',  urlencodedParser,function (req, res)
 //fetching student info
 app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
 {
-  console.log(req.query.gradename);
-  console.log(req.query.section);
-  console.log(req.query.subject);
-  var qur="select school_id,id,student_name,class_id from md_student where  class_id="+
+var qur2="select school_id,id,student_name,class_id from md_student where  class_id="+
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
-"school_id='"+req.query.schoolid+"') and id in (select student_id from tr_student_to_subject where subject='"+req.query.subject+"')";
+"school_id='"+req.query.schoolid+"')";
+
+
+var qur1="select distinct student_id as id,student_name,school_id,class_id from tr_student_to_subject where "+
+"grade=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
+"section=(select section_id from md_section where section_name='"+req.query.section+"' "+
+"and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"'";
+
+var qur="select * from mp_teacher_grade tg join tr_student_to_subject ss "+
+        "on(tg.subject_id=ss.subject_id) and ss.subject_id=(select subject_id from md_subject where "+
+        "subject_name='"+req.query.subject+"') and ss.grade=tg.grade_id "+
+        "and ss.section=tg.section_id";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -300,12 +304,24 @@ app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
     {
     if(rows.length>0)
     {
-      res.status(200).json({'returnval': rows});
+      connection.query(qur1,function(err, rows){
+       if(rows.length>0) 
+        res.status(200).json({'returnval': rows});
+       else
+        res.status(200).json({'returnval': 'invalid'});
+      });
+      //res.status(200).json({'returnval': rows});
     }
     else
     {
-      console.log(err);
-      res.status(200).json({'returnval': 'invalid'});
+      connection.query(qur2,function(err, rows){
+       if(rows.length>0) 
+        res.status(200).json({'returnval': rows});
+       else
+        res.status(200).json({'returnval': 'invalid'});
+      });
+      //console.log(err);
+      //res.status(200).json({'returnval': 'invalid'});
     }
     }
     else
@@ -527,7 +543,7 @@ app.post('/overallcotermmarkinsert-service',  urlencodedParser,function (req, re
          rtotal:req.query.rtotal,
          grade:req.query.grade                
   }
-  console.log(response);
+  // console.log(response);
   connection.query("INSERT INTO tr_term_co_assesment_overall_marks set ?",[response],
   function(err, rows){
      if(!err)
@@ -572,7 +588,7 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
 app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
 {  
   var type=req.query.termtype;
-  console.log(type);
+  // console.log(type);
   // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
  
   connection.query( "SELECT * FROM md_coscholastic_metrics where sub_category=?",[type],
@@ -765,8 +781,9 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
 app.post('/fetchcoscholasticmetrics-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var studname={student_name:req.query.studname};  
-  var qur="SELECT * FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"'";
+  var studid={student_id:req.query.studid};  
+  var qur="SELECT * FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'";
+  // console.log(qur);
   connection.query(qur,
      function(err, rows)
     {
@@ -808,9 +825,10 @@ app.post('/nameforonetofourreport-service',  urlencodedParser,function (req,res)
 app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var studname={student_name:req.query.studname};  
+  var studid={student_id:req.query.studid};  
   // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
-  var qur="SELECT subject_id,sub_category,round(mark/10) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id,sub_category";
+  var qur="SELECT subject_id,sub_category,round(mark/10) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' group by subject_id,sub_category";
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {

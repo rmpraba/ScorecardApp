@@ -311,11 +311,11 @@
           grade.push(returnval[i].grade);
         }    
       },
-      callfetchcoscholasticmetricsService:function(studname){
+      callfetchcoscholasticmetricsService:function(studid){
         this.fetchcoscholasticmetricsurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticmetrics-service";
-        var obj={"scoolid":"","studname":""};
+        var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studname=studname;
+        obj.studid=studid;
         this.fetchcoscholasticmetricsparam=obj;
         this.$.fetchcoscholasticmetricsajax.generateRequest(); 
       },
@@ -323,16 +323,16 @@
         // alert(JSON.stringify(e.detail.response));
         metrics=e.detail.response.returnval;
       },
-      callfetchcoscholasticinfoService:function(studname){
+      callfetchcoscholasticinfoService:function(studid){
         this.fetchcoscholasticinfourl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticinfo-service";
-        var obj={"scoolid":"","studname":""};
+        var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studname=studname;
+        obj.studid=studid;
         this.fetchcoscholasticinfoparam=obj;
         this.$.fetchcoscholasticinfoajax.generateRequest(); 
       },
       fetchcoscholasticinfoResponse:function(e){
-        // alert(JSON.stringify(e.detail.response));
+        alert(JSON.stringify(e.detail.response));
         // alert(JSON.stringify(lower));
         var lsarr=[];
         var wkarr=[];

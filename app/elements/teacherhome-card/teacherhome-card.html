@@ -89,7 +89,13 @@
       FnSelectacademicyear:function(e){
         academicyear = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_academicyear",academicyear); 
-        this.$.assesmentservice.callTermService("Term");             
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Term")
+        this.$.assesmentservice.callTermService("Term");
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard") 
+         {
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('scorecard','');
+         }           
       },
       FnSelectPreEntryType:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','PreEntry');
@@ -99,9 +105,10 @@
         document.querySelector('home-page').setPage('beginnerassesment','');
       },
       FnGenerateScorecard:function(){
-        this.$.scorecardservice.callFetchstudentnameService();
-        document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('scorecard','');
+        localStorage.setItem('curr_sess_loggedassesmenttype','Scorecard');
+        // this.$.scorecardservice.callFetchstudentnameService();
+        this.$.scorecardservice.callGradeService();
+        this.$.cdialog.toggle();    
       },
       FnSelectTermType:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Term');

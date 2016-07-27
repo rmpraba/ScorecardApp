@@ -18,6 +18,12 @@
       .studname{
         width: 30%;
       }
+      #tb1{
+          width:9%
+           }
+      #tb2{
+         width:20%
+          }
     </style>
     <div>
     <template is="dom-repeat" items="{{label}}">
@@ -26,16 +32,16 @@
       <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <table border="1" id="MarkTable6" >    
       <tr>
-      <th style="width: 5%;">{{item.SNo}}</th>
-      <th style="width: 25%;">{{item.Name}}</th>
-      <th style="width: 5%;">{{item.Activity1}}</th>
-      <th style="width: 5%;">{{item.Activity2}}</th>
-      <th style="width: 5%;">{{item.Activity3}}</th>
-      <th style="width: 5%;">{{item.Activity4}}</th>
-      <th style="width: 5%;">{{item.Activity5}}</th>
-      <th style="width: 5%;">{{item.Total}}</th>
-      <th style="width: 5%;">{{item.Reduction}}</th>
-      <th style="width: 5%;">{{item.Grade}}</th>   
+      <th id="tb1">{{item.SNo}}</th>
+      <th id="tb2">{{item.Name}}</th>
+      <th id="tb1">{{item.Activity1}}</th>
+      <th  id="tb1">{{item.Activity2}}</th>
+      <th id="tb1">{{item.Activity3}}</th>
+      <th id="tb1">{{item.Activity4}}</th>
+      <th id="tb1">{{item.Activity5}}</th>
+      <th id="tb1">{{item.Total}}</th>
+      <th id="tb1">{{item.Reduction}}</th>
+      <th id="tb1">{{item.Grade}}</th>   
       </tr>  
 <template is="dom-repeat" items="{{markarr}}" as="m">
 <tr><td></td>

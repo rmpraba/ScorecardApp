@@ -26,25 +26,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .card{
         height: 2%;
       }
+      #tb1{
+        width:6.87%
+      }
+        #tb2{
+        width:13.4%
+      }
     </style>
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
-        <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" id="{{studid}}" name="Self Awareness" value="{{score1}}"></paper-input></td>   
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Problem Solving" value="{{score2}}"></paper-input></td>  
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Decision Making" value="{{score3}}"></paper-input></td>  
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Critical Thinking" value="{{score4}}"></paper-input></td>  
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Creative Thinking" value="{{score5}}"></paper-input></td> 
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Interpersonal Relationship" value="{{score6}}"></paper-input></td> 
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Effective Communication" value="{{score7}}"></paper-input></td> 
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Empathy" value="{{score8}}"></paper-input></td> 
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Managing Emotions" value="{{score9}}"></paper-input></td> 
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" name="Dealing with Stress" value="{{score10}}"></paper-input></td> 
-        <td style="width: 5%;"><paper-input  name="total" value="{{total}}"></paper-input></td>
-         <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
-        <td style="width: 5%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb2" ><paper-item>{{studname}}</paper-item></td>
+        <td id="tb1"><paper-input on-focus="FnActivity" id="{{studid}}" name="Self Awareness" value="{{score1}}"></paper-input></td>   
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Problem Solving" value="{{score2}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Decision Making" value="{{score3}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Critical Thinking" value="{{score4}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Creative Thinking" value="{{score5}}"></paper-input></td> 
+        <td  id="tb1"><paper-input on-focus="FnActivity" name="Interpersonal Relationship" value="{{score6}}"></paper-input></td> 
+        <td id="tb1"><paper-input on-focus="FnActivity" name="Effective Communication" value="{{score7}}"></paper-input></td> 
+        <td id="tb1" ><paper-input on-focus="FnActivity" name="Empathy" value="{{score8}}"></paper-input></td> 
+        <td  id="tb1"><paper-input on-focus="FnActivity" name="Managing Emotions" value="{{score9}}"></paper-input></td> 
+        <td  id="tb1"><paper-input on-focus="FnActivity" name="Dealing with Stress" value="{{score10}}"></paper-input></td> 
+        <td id="tb1"><paper-input  name="total" value="{{total}}"></paper-input></td>
+        <td id="tb1"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+      
         </tr>
         </table>
     </div>

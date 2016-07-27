@@ -4,6 +4,28 @@
 
 <dom-module id="scorecard-service">
   <template>
+
+    <iron-ajax
+        method="post"
+        id="gradeajax"
+        url="{{gradeurl}}"
+        params="{{gradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="gradeResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="sectionajax"
+        url="{{sectionurl}}"
+        params="{{sectionparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="sectionResponse"
+        debounce-duration="300"
+    >
+
     <iron-ajax
         method="post"
         id="fetchstudnameajax"
@@ -101,23 +123,49 @@
       ready:function(){
         this.callFetchGrade();
       },
+      callGradeService:function(){
+         this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
+         var obj={"schoolid":"","loggedid":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         this.gradeparam= obj;
+         this.$.gradeajax.generateRequest();
+      },
+      gradeResponse:function(e){
+          document.querySelector('cce-generate-score-card').gradearr=e.detail.response.returnval;
+      },
+      callSectionService:function(gradename){        
+         this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
+         var obj={"schoolid":"","loggedid":"","gradename":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.gradename=gradename;
+         this.sectionparam= obj;
+         this.$.sectionajax.generateRequest();
+      },
+      sectionResponse:function(e){        
+         document.querySelector('cce-generate-score-card').sectionarr=e.detail.response.returnval; 
+      },
       callFetchstudentnameService:function(){
         this.fetchstudnameurl=sessionStorage.getItem("addrinfo")+"/fetchstudname-service";
-        var obj={"scoolid":"","roleid":""};
+        var obj={"scoolid":"","roleid":"","grade":"","section":""};
         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
         this.fetchstudnameparam=obj;
         this.$.fetchstudnameajax.generateRequest();
       },
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
-        document.querySelector('cce-generate-score-card').autocompletearr(arr);
+        document.querySelector('student-list-card').studentarr=arr;
+        // document.querySelector('cce-generate-score-card').autocompletearr(arr);
       },
-      callFetchstudentinfoService:function(studname){
+      callFetchstudentinfoService:function(studid){
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
-        var obj={"scoolid":"","studname":""};
+        var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studname=studname;
+        obj.studid=studid;
         this.fetchstudinfoparam=obj;
         this.$.fetchstudinfoajax.generateRequest();
       },
@@ -131,11 +179,11 @@
         document.querySelector('cce-fivetoten-score-card').address=arr[0].address1;
         document.querySelector('cce-fivetoten-score-card').mobileno=arr[0].mobile;        
       },
-      callfetchhealthattendanceinfoService:function(studname){
+      callfetchhealthattendanceinfoService:function(studid){
         this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";
-        var obj={"scoolid":"","studname":""};
+        var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studname=studname;
+        obj.studid=studid;
         this.fetchhealthattendanceinfoparam=obj;
         this.$.fetchhealthattendanceinfoajax.generateRequest();
       },
@@ -157,11 +205,11 @@
         // alert(JSON.stringify(document.querySelector('cce-fivetoten-score-card').right_vision));
         document.querySelector('cce-fivetoten-score-card').dental=arr[0].dental;
       },
-      callFetchsubjectinfoService:function(studname){
+      callFetchsubjectinfoService:function(studid){
         this.fetchsubjectnameurl=sessionStorage.getItem("addrinfo")+"/fetchsubjectname-service";
-        var obj={"scoolid":"","studname":""};
+        var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studname=studname;
+        obj.studid=studid;
         this.fetchsubjectnameparam=obj;
         this.$.fetchsubjectnameajax.generateRequest();
       },
@@ -169,11 +217,11 @@
         subjectarr=e.detail.response.returnval;
         // document.querySelector('cce-fivetoten-score-card').subjectArray=subjectarr;         
       },
-      callFetchmarkService:function(studname){
+      callFetchmarkService:function(studid){
         this.fetchmarkurl=sessionStorage.getItem("addrinfo")+"/fetchmark-service";
-        var obj={"scoolid":"","studname":""};
+        var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studname=studname;
+        obj.studid=studid;
         this.fetchmarkparam=obj;
         this.$.fetchmarkajax.generateRequest();                
       },
@@ -263,11 +311,11 @@
           grade.push(returnval[i].grade);
         }    
       },
-      callfetchcoscholasticmetricsService:function(studname){
+      callfetchcoscholasticmetricsService:function(studid){
         this.fetchcoscholasticmetricsurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticmetrics-service";
-        var obj={"scoolid":"","studname":""};
+        var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studname=studname;
+        obj.studid=studid;
         this.fetchcoscholasticmetricsparam=obj;
         this.$.fetchcoscholasticmetricsajax.generateRequest(); 
       },
@@ -275,16 +323,16 @@
         // alert(JSON.stringify(e.detail.response));
         metrics=e.detail.response.returnval;
       },
-      callfetchcoscholasticinfoService:function(studname){
+      callfetchcoscholasticinfoService:function(studid){
         this.fetchcoscholasticinfourl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticinfo-service";
-        var obj={"scoolid":"","studname":""};
+        var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.studname=studname;
+        obj.studid=studid;
         this.fetchcoscholasticinfoparam=obj;
         this.$.fetchcoscholasticinfoajax.generateRequest(); 
       },
       fetchcoscholasticinfoResponse:function(e){
-        // alert(JSON.stringify(e.detail.response));
+        alert(JSON.stringify(e.detail.response));
         // alert(JSON.stringify(lower));
         var lsarr=[];
         var wkarr=[];

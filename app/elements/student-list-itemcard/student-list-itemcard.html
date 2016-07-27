@@ -1,0 +1,75 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="../scorecard-service/scorecard-service.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+
+<dom-module id="student-list-itemcard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+        width:100%
+      }
+        #tb1{
+         width:40%
+        }
+        #tb2{
+         width:40%
+        }
+        #tb3{
+         width:20%
+        }
+    </style>
+    <div>
+      <table border="1">
+        <tr id="tb1"><td>{{studentid}}</td>
+        <td id="tb2">{{studentname}}</td><td>
+        <paper-button id="tb3" on-click="FnView">View</paper-button></td>
+        </tr>
+      </table>      
+    </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <scorecard-service id="scorecardservice"></scorecard-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'student-list-itemcard',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'student-list-itemcard',
+          notify: true
+        }
+      },      
+      FnView:function(){
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+        this.$.assesmentservice.callFetchGrade();
+        this.$.assesmentservice.onetofourscore(this.studentid);
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 
+        }
+        else
+        {
+        this.$.scorecardservice.callFetchstudentinfoService(this.studentid);
+        this.$.scorecardservice.callFetchsubjectinfoService(this.studentid);
+        this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studentid);
+        this.$.scorecardservice.callFetchmarkService(this.studentid); 
+        this.$.scorecardservice.callfetchcoscholasticmetricsService(this.studentid);  
+        this.$.scorecardservice.callfetchcoscholasticinfoService(this.studentid);
+        this.$.scorecardservice.callFetchmarkService(this.studentid);
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('ccefivetotenscorecard',''); 
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

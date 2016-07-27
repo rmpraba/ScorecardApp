@@ -1,0 +1,58 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\student-list-itemcard/student-list-itemcard.html">
+
+<dom-module id="student-list-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+        width:60%
+      }
+       #tb1{
+         width:15%
+        }
+        #tb2{
+         width:35%
+        }
+        #tb3{
+         width:10%
+        }
+</style>
+    <div>
+      <table border="1">
+           <tr>
+           <th id="tb1">Student Id</th>
+           <th id="tb1">Student Name</th>
+           <th id="tb1"></th>
+           </tr>
+      <template is="dom-repeat" items="{{studentarr}}">
+      <tr>
+        <td colspan="3"><student-list-itemcard studentid="{{item.id}}" studentname="{{item.student_name}}"></student-list-itemcard></td>
+      </tr>
+      <!-- <tr><th>{{item.id}}</th><th>{{item.student_name}}</th><th><paper-button on-click="FnView">View</paper-button></th></tr> -->
+      </template>
+      </table>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'student-list-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'student-list-card',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

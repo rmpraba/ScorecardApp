@@ -18,6 +18,10 @@
       .studname{
         width: 30%;
       }
+      #tb1{
+        width:15%
+      }
+
     </style>
     <div>
     <!-- <template is="dom-repeat" items="{{label}}"> -->
@@ -26,10 +30,10 @@
       <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <table border="1" >    
       <tr>
-      <th style="width: 5%;">SNo</th>
-      <th style="width: 25%;">Name</th>
-      <th style="width: 5%;">Total Attendance</th>
-      <th style="width: 5%;">Total Working Days</th>
+      <th id="tb1">SNo</th>
+      <th id="tb1">Name</th>
+      <th id="tb1">Total Attendance</th>
+      <th id="tb1">Total Working Days</th>
       </tr>  
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="4">

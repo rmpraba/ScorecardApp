@@ -164,10 +164,11 @@
       },
       callFetchStudentInfo:function(grade,section){
          this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
-         var obj={"schoolid":"","gradename":"","section":""};
+         var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.gradename=grade;
          obj.section=section;
+         obj.subject=localStorage.getItem("curr_sess_coscholastic_category");
          this.fetchstudentparam= obj;
          // alert(JSON.stringify(obj));
          this.$.fetchstudentajax.generateRequest();
@@ -304,8 +305,7 @@
       },
       inserthealthResponse:function(e){
         alert(e.detail.response.returnval);
-      }
-     
+      }     
     });
   })();
   </script>

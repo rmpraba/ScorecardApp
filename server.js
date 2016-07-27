@@ -415,8 +415,8 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   function(err, rows)
   {
   response.subject_category=rows[0].subject_category;
-  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
-  if(rows.length==0){
+  // connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
+  // if(rows.length==0){
   connection.query("INSERT INTO tr_term_assesment_marks set ?",[response],
   function(err, rows)
     {
@@ -430,10 +430,10 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'fail'});
     }
   });
-  }
-  else
-    res.status(200).json({'returnval': 'Duplicate entry!'});
-  });
+  // }
+  // else
+    // res.status(200).json({'returnval': 'Duplicate entry!'});
+  // });
   });
 });
 
@@ -463,8 +463,8 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
   var cond6={subject_id:req.query.subject};
   var cond7={category:req.query.category};
   // var cond9={sub_category:req.query.subcategory};
-   connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? ",[cond1,cond2,cond3,cond4,cond5,cond6,cond7],function(err, rows) {
-  if(rows.length==0){
+   // connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? ",[cond1,cond2,cond3,cond4,cond5,cond6,cond7],function(err, rows) {
+  // if(rows.length==0){
   connection.query("INSERT INTO tr_term_assesment_overall_marks set ?",[response],
   function(err, rows){
      if(!err)
@@ -477,11 +477,11 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'fail'});
     }
   });
-  }
-  else
-    res.status(200).json({'returnval': 'Duplicate entry!'});
+  // }
+  // else
+    // res.status(200).json({'returnval': 'Duplicate entry!'});
 });
-});
+// });
 
 //storing mark for coscholastic assessment
 app.post('/insertcoassesmentmark-service',  urlencodedParser,function (req, res){

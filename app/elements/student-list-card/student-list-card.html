@@ -9,12 +9,13 @@
         display: block;
       }
       table{
+        width: 60%;
         border-collapse: collapse;
       }
     </style>
     <div>
       <table border="1">
-      <tr><th>Student Id</th><th>Student Name</th><th></th></tr>
+      <tr><th>Student Id</th><th colspan="2">Student Name</th></tr>
       <template is="dom-repeat" items="{{studentarr}}">
       <tr>
         <td colspan="3"><student-list-itemcard studentid="{{item.id}}" studentname="{{item.student_name}}"></student-list-itemcard></td>

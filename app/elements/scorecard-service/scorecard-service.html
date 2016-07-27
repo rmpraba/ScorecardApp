@@ -158,6 +158,7 @@
       },
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
+        document.querySelector('cce-generate-score-card').FnHide();
         document.querySelector('student-list-card').studentarr=arr;
         // document.querySelector('cce-generate-score-card').autocompletearr(arr);
       },

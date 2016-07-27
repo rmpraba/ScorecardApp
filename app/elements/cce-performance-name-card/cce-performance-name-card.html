@@ -115,7 +115,7 @@ this.$.assesmentservice.selectnameforperformance();
           this.value=studname;
           this.itemArray=[];
           this.querySelector('paper-listbox').selected=-1;
-          this.$.assesmentservice.onetofourscore(stdid);
+          this.$.assesmentservice.onetofourscore(stdid,studname);
           document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 
         }
     });

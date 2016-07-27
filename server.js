@@ -285,7 +285,6 @@ var qur2="select school_id,id,student_name,class_id from md_student where  class
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
 "school_id='"+req.query.schoolid+"')";
-
 var qur1="select distinct student_id as id,student_name,school_id,class_id from tr_student_to_subject where "+
 "grade=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
 "section=(select section_id from md_section where section_name='"+req.query.section+"' "+
@@ -865,6 +864,35 @@ app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
       res.status(200).json({'returnval': 'fail'});
     }  
 
+  });
+});
+
+
+
+app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
+{
+  console.log(req.query.gradename);
+  console.log(req.query.section);
+  console.log(req.query.subject);
+  var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"'";
+  // console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
   });
 });
 

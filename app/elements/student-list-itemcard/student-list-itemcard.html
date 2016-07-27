@@ -16,11 +16,24 @@
       }
       td{
         width: 41%;
+        width:100%
       }
+        #tb1{
+         width:40%
+        }
+        #tb2{
+         width:40%
+        }
+        #tb3{
+         width:20%
+        }
     </style>
     <div>
       <table border="1">
-        <tr><td>{{studentid}}</td><td>{{studentname}}</td><td><paper-button on-click="FnView">View</paper-button></td></tr>
+        <tr id="tb1"><td>{{studentid}}</td>
+        <td id="tb2">{{studentname}}</td><td>
+        <paper-button id="tb3" on-click="FnView">View</paper-button></td>
+        </tr>
       </table>      
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>

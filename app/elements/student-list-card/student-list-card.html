@@ -11,11 +11,23 @@
       table{
         width: 60%;
         border-collapse: collapse;
+        width:60%
       }
-    </style>
+       #tb1{
+         width:15%
+        }
+        #tb2{
+         width:35%
+        }
+        #tb3{
+         width:10%
+        }
+</style>
     <div>
       <table border="1">
+
       <tr><th>Student Id</th><th colspan="2">Student Name</th></tr>
+
       <template is="dom-repeat" items="{{studentarr}}">
       <tr>
         <td colspan="3"><student-list-itemcard studentid="{{item.id}}" studentname="{{item.student_name}}"></student-list-itemcard></td>

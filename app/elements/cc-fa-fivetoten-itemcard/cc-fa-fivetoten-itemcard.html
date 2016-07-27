@@ -17,20 +17,26 @@
       .card{
         height: 2%;
       }
+      #tb1{
+        width:9%
+      }
+        #tb2{
+         width:20%
+          }
     </style>
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
-        <td style="width: 25%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 8%;"><paper-input id="score1" required on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
-        <td style="width: 8%;"><paper-input id="score2" required on-change="FnActivity2" value="{{score2}}"></paper-input></td>  
-        <td style="width: 8%;"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
-        <td style="width: 8%;"><paper-input id="score4" required on-change="FnActivity4" value="{{score4}}"></paper-input></td>  
-        <td style="width: 8%;"><paper-input id="score5" required on-change="FnActivity5" value="{{score5}}"></paper-input></td> 
-        <td style="width: 6.3%;"><paper-item>{{total}}</paper-item></td>
-        <td style="width: 10%;"><paper-item>{{reduction}}</paper-item></td>
-        <td style="width: 6.3%;"><paper-item>{{grade}}</paper-item></td>
+        <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb2"><paper-item>{{studname}}</paper-item></td>
+        <td id="tb1"><paper-input id="score1" required on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
+        <td id="tb1"><paper-input id="score2" required on-change="FnActivity2" value="{{score2}}"></paper-input></td>  
+        <td id="tb1"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
+        <td id="tb1"><paper-input id="score4" required on-change="FnActivity4" value="{{score4}}"></paper-input></td>  
+        <td id="tb1"><paper-input id="score5" required on-change="FnActivity5" value="{{score5}}"></paper-input></td> 
+        <td id="tb1"><paper-item>{{total}}</paper-item></td>
+        <td id="tb1"><paper-item>{{reduction}}</paper-item></td>
+        <td id="tb1"><paper-item>{{grade}}</paper-item></td>
         </tr>
         </table>
     </div>

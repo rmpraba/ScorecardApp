@@ -197,6 +197,7 @@
     var grade=[];
     var name;
 var arr=[];
+var n1=0,n2=0;
 
     Polymer({
       is: 'term-assesment-service',
@@ -432,6 +433,7 @@ var arr=[];
 
       },
       callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){
+        
          this.insertassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertassesmentmark-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -451,7 +453,8 @@ var arr=[];
          this.$.insertassesmentmarkajax.generateRequest();
       },
       insertassesmentmarkResponse:function(e){
-        alert(e.detail.response.returnval);
+
+        // alert(e.detail.response.returnval);
       },
       callOveralltermmarkinsertService:function(studid,studname,category,total,reduction,grade){
          this.overalltermmarkinserturl=sessionStorage.getItem("addrinfo")+"/overalltermmarkinsert-service";
@@ -492,7 +495,8 @@ var arr=[];
          this.$.overalltermmarkinsertajax.generateRequest();
       },
       overalltermmarkinsertResponse:function(e){
-        alert(JSON.stringify(e.detail.response.returnval));
+        // alert(JSON.stringify(e.detail.response.returnval));
+        alert("Inserted!");
       },
       callinsertattendanceinfo:function(studid,studname,attendance,workingdays){
          this.termattendanceurl=sessionStorage.getItem("addrinfo")+"/termattendance-service";
@@ -510,7 +514,8 @@ var arr=[];
          this.$.termattendanceajax.generateRequest();
       },
       termattendanceResponse:function(e){
-         alert(JSON.stringify(e.detail.response.returnval))
+        alert("Inserted!");
+         // alert(JSON.stringify(e.detail.response.returnval))
       },
       selectnameforperformance:function()
       {

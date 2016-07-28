@@ -12,7 +12,7 @@
         display: block;
       }
       .card{
-      width: 70%;        
+      width: 100%;        
       @apply(--layout-vertical);
       }
       .inner{
@@ -20,7 +20,7 @@
       margin-left: 30%;
       }
       .list{
-      margin-left: 30%;
+      margin-left: 10%;
       margin-top: 5%;
       }
       paper-dropdown-menu{
@@ -52,7 +52,7 @@
           <paper-item>{{item.itemdes}}</paper-item>
         </template>
       </paper-listbox>-->
-      <div class="list">
+      <div class="list" hidden$="{{hidecard}}">
       <student-list-card></student-list-card>
       </div>
     </div>
@@ -67,9 +67,13 @@
     Polymer({
       is: 'cce-generate-score-card',
       ready:function(){
+        this.hidecard=true;
          // this.querySelector('paper-listbox').style.visibility='hidden';
       },
-      FnSelectGrade:function(e){
+      FnHide:function(){
+        this.hidecard=false;
+      },
+      FnSelectGrade:function(e){        
         gradename = e.target.selectedItem.textContent.trim();       
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.scorecardservice.callSectionService(gradename);
@@ -84,6 +88,7 @@
       },
       callService:function(){
         this.flag="1";
+        this.$.scorecardservice.callWorkingdaysService();
         this.$.scorecardservice.callFetchstudentnameService();
       },
       autocompletearr:function(autocompletearr)

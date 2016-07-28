@@ -106,6 +106,15 @@
         on-response="fetchcoscholasticinfoResponse"
         debounce-duration="300"
     >
+    <iron-ajax        
+        
+        id="fetchworkingdaysajax"
+        url="../../configfile/workingdays.json"        
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchworkingdaysResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -122,6 +131,30 @@
       is: 'scorecard-service',
       ready:function(){
         this.callFetchGrade();
+      },
+      callWorkingdaysService:function(){
+        this.$.fetchworkingdaysajax.generateRequest();
+      },
+      fetchworkingdaysResponse:function(e){
+        // alert(JSON.stringify(e.detail.response));
+        // alert(localStorage.getItem("curr_sess_termname"));
+        var warr=e.detail.response.Workingdays;
+        var wdays=e.detail.response.Workingdays[0].term;
+        // alert(JSON.stringify(e.detail.response.Workingdays));
+        // alert(JSON.stringify(e.detail.response.Workingdays[0].term));
+
+        for(var i=0;i<warr.length;i++){
+          if(sessionStorage.getItem("curr_sess_loggedschoolid")==warr[i].schoolid){
+            if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+              localStorage.setItem("curr_sess_loggedschoolWDAY",warr[i].term[i].PrePrimary);
+            }
+            else{
+              localStorage.setItem("curr_sess_loggedschoolWDAY",warr[i].term[i].Primary);
+            }
+            // localStorage.setItem("curr_sess_loggedschoolPPWDAY",warr[i].PrePrimary);
+          }
+        }
+
       },
       callGradeService:function(){
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
@@ -158,6 +191,7 @@
       },
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
+        document.querySelector('cce-generate-score-card').FnHide();
         document.querySelector('student-list-card').studentarr=arr;
         // document.querySelector('cce-generate-score-card').autocompletearr(arr);
       },
@@ -171,13 +205,22 @@
       },
       fetchstudinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
+        // alert(localStorage.getItem("curr_sess_grade"));
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+          // alert(arr[0].student_name);
+        document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
+        document.querySelector('cce-onetofour-score-card').studname=arr[0].student_name;        
+        document.querySelector('cce-onetofour-score-card').pname=arr[0].parent_name;
+        }
+        else{
         document.querySelector('cce-fivetoten-score-card').grade=arr[0].grade;
         document.querySelector('cce-fivetoten-score-card').studentid=arr[0].student_id;
         document.querySelector('cce-fivetoten-score-card').studentname=arr[0].student_name;
         document.querySelector('cce-fivetoten-score-card').dob=arr[0].dob;
         document.querySelector('cce-fivetoten-score-card').fathername=arr[0].parent_name;
         document.querySelector('cce-fivetoten-score-card').address=arr[0].address1;
-        document.querySelector('cce-fivetoten-score-card').mobileno=arr[0].mobile;        
+        document.querySelector('cce-fivetoten-score-card').mobileno=arr[0].mobile; 
+        }       
       },
       callfetchhealthattendanceinfoService:function(studid){
         this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";

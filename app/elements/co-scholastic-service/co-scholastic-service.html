@@ -176,7 +176,7 @@
       fetchstudentResponse:function(e){         
         var arr=e.detail.response.returnval;        
         for(var i=0;i<arr.length;i++){
-          arr[i].serialno=i+1;
+          arr[i].serialno=parseInt(i)+1;
         }
         if(localStorage.getItem("curr_sess_coscholastic_category")=="Health"){
         document.querySelector('cce-fivetoten-health-card').studarr=arr;           

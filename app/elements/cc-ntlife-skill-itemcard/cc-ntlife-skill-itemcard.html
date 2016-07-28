@@ -23,12 +23,12 @@
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td style="width: 5%;"><paper-item>{{serialno}}</paper-item></td>
         <td style="width: 45%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 10%;"><paper-input on-focus="FnActivity" id="{{studid}}" name="Thinking Skills" value="{{score1}}"></paper-input></td>   
-        <td style="width: 10%;"><paper-input on-focus="FnActivity" name="Social Skills" value="{{score2}}"></paper-input></td>  
-        <td style="width: 10%;"><paper-input on-focus="FnActivity" name="Emotional Skills" value="{{score3}}"></paper-input></td>  
+        <td style="width: 10%;"><paper-input on-focus="FnActivity" id="s{{studid}}" name="Thinking Skills" value="{{score1}}"></paper-input></td>   
+        <td style="width: 10%;"><paper-input on-focus="FnActivity" id="s2{{studid}}" name="Social Skills" value="{{score2}}"></paper-input></td>  
+        <td style="width: 10%;"><paper-input on-focus="FnActivity"  id="s3{{studid}}" name="Emotional Skills" value="{{score3}}"></paper-input></td>  
        
-        <td style="width: 10%;"><paper-input  name="total" value="{{total}}"></paper-input></td>
-         <td style="width: 10%;"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td style="width: 10%;"><paper-input id="t{{studid}}" name="total" value="{{total}}"></paper-input></td>
+         <td style="width: 10%;"><paper-input id="g{{studid}}" name="grade" value="{{grade}}"></paper-input></td>
         
         </tr>
         </table>
@@ -38,7 +38,7 @@
       <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
       </template>
-      <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
+      <paper-button style="height:33px !important;" class="button" id="{{studid}}" on-click="click">Submit</paper-button>
       <!-- <paper-button style="height:33px !important;" style="top:900px;"class="button" on-click="click">Submit</paper-button> -->
       </paper-dialog>
       <co-scholastic-service id="coscholasticservice"></co-scholastic-service>    
@@ -64,10 +64,15 @@
     var grade=[];
     var name;
     var arr=[];
+    var idd;
+    var sname;
+    var sum1,sum2,sum3,tot;
     Polymer({
       is: 'cc-ntlife-skill-itemcard',
       FnActivity:function(e)
       {
+        idd=this.studid;
+        sname=this.studname;
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
         var id = 'ntlifeskill';
@@ -79,7 +84,7 @@
       {
         arr.push(val);
       },
-      click:function()
+      click:function(e)
       {
         var sum=0;
         for(var i=0;i<arr.length;i++)
@@ -90,21 +95,25 @@
         var dialog = document.getElementById(id);
         dialog.opened=false;
         if(name=="Thinking Skills")
-        {           
-          this.score1=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score1);
+        {    
+        sum1=sum; 
+          document.getElementById('s'+idd).value=sum;     
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
         }
         else  if(name=="Social Skills")
         {
-          this.score2=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score2);
+           document.getElementById('s2'+idd).value=sum; 
+           sum2=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
         }
         else  if(name=="Emotional Skills")
         {
-          this.score3=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skills",name,this.score3);
-          this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3);
-          this.convert=(parseInt(this.total)/10)*100;
+          document.getElementById('s3'+idd).value=sum; 
+           sum3=sum;
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
+          tot=parseInt(sum1)+parseInt(sum2)+parseInt(sum3);
+           document.getElementById('t'+idd).value=tot;
+          this.convert=(parseInt(tot)/10)*100;
           this.callFetchGrade();
         }      
         arr=[];
@@ -126,9 +135,9 @@
       },
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          
-          if(mark>=lower[i]&&mark<=higher[i]){            
-            this.grade=grade[i];
-            this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"Life Skills",this.convert,this.reduce,this.grade);
+          if(mark>=lower[i]&&mark<=higher[i]){ 
+           document.getElementById('g'+idd).value=grade[i];           
+            this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"Life Skills",this.convert,this.reduce,grade[i]);
           }
         }       
       }  

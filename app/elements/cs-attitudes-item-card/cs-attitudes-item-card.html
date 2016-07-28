@@ -32,13 +32,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Attitude towards Teachers" value="{{score1}}"></paper-input></td>   
+        <td id="tb1"><paper-input on-focus="FnActivity" id=s1{{studid}} name="Attitude towards Teachers" value="{{score1}}"></paper-input></td>   
         
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
-        <td id="tb1"><paper-input on-focus="FnActivity" name="Value Systems" value="{{score4}}"></paper-input></td>  
-        <td id="tb1"><paper-input  name="total" value="{{total}}"></paper-input></td> 
-         <td id="tb1"><paper-input name="grade" value="{{grade}}"></paper-input></td>
+        <td id="tb1"><paper-input on-focus="FnActivity" id=s2{{studid}} name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" id=s3{{studid}} name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-focus="FnActivity" id=s4{{studid}} name="Value Systems" value="{{score4}}"></paper-input></td>  
+        <td id="tb1"><paper-input  name="total" id=t{{studid}} value="{{total}}"></paper-input></td> 
+         <td id="tb1"><paper-input name="grade" id=g{{studid}} value="{{grade}}"></paper-input></td>
         </tr>
         </table>
     </div>
@@ -78,6 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var grade=[];
     var name;
     var arr=[];
+    var idd,sname,sum1,sum2,sum3,sum4,tot;
     // Polymer({
       // is: 'cs-attitudes-item-card',
       // FnActivity:function(e)
@@ -92,6 +93,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
  FnActivity:function(e)
       {
+        idd=this.studid;
+         sname=this.studname;
         // alert(e.target.name);
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
@@ -120,29 +123,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if(name=="Attitude towards Teachers")
         {           
-          this.score1=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score1);
+          sum1=sum;
+          document.getElementById('s1'+idd).value=sum; 
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Attitudes And values",name,sum);
         }
         else  if(name=="Attitude towards School-mates")
         {
 
-          this.score2=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score2);
+          sum2=sum;
+          document.getElementById('s2'+idd).value=sum; 
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Attitudes And values",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score2);
         }
         else  if(name=="Attitude towards School Programmes and Environment")
         {
-          this.score3=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score3);
+          sum3=sum;
+          document.getElementById('s3'+idd).value=sum; 
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Attitudes And values",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score3);
         }
         else  if(name=="Value Systems")
         {
-          this.score4=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Attitudes And values",name,this.score4);
+          sum4=sum;
+          document.getElementById('s4'+idd).value=sum; 
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Attitudes And values",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"ATTITUDES AND VALUES",name,this.score4);
-          this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
-          this.convert=(parseInt(this.total)/40)*100;
+          tot=parseInt(sum1)+parseInt(sum2)+parseInt(sum3)+parseInt(sum4);
+          document.getElementById('t'+idd).value=tot; 
+          this.convert=(parseInt(tot)/40)*100;
            this.callFetchGrade();
         }
         arr=[];
@@ -165,9 +173,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          
           if(mark>=lower[i]&&mark<=higher[i]){ 
-
-            this.grade=grade[i];
-       this.$.coscholasticservice.callOverallcotermmarkinsertService(this.studid,this.studname,"Attitudes and values",this.convert,this.reduce,this.grade);
+           document.getElementById('g'+idd).value=grade[i]; 
+       this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"Attitudes and values",this.convert,this.reduce,grade[i]);
           }
         }
         //this.callService();

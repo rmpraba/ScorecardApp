@@ -94,7 +94,8 @@
         sessionStorage.setItem("curr_sess_loggedschoolid",school);
         sessionStorage.setItem("curr_sess_loggedschoolname",name);
         sessionStorage.setItem("curr_sess_loggedschooladdress",address);
-        this.$.bassesmentservice.callAcademicService();         
+        this.$.bassesmentservice.callAcademicService(); 
+         localStorage.setItem('curr_sess_report','0');        
         document.querySelector('app-card').setPage('homepage','Assesment Screen'); 
         document.querySelector('home-page').setPage('teacherhomecard',''); 
         //document.querySelector('home-page').setPage('cce-performance-name-card','');

@@ -108,13 +108,13 @@ var idd,sname,sum1,sum2,sum3,sum4,sum5,sum6,sum7,sum8,sum9,sum10,tot;
       },
       click:function(e)
       {
+        var t=0;
         var sum=0;
         for(var i=0;i<arr.length;i++)
         {
-          sum=sum+parseInt(arr[i]);
+          t=t+parseInt(arr[i]);
         }
-        // alert(sum);
-        // alert(sum);
+        sum=parseInt(t)/parseInt(arr.length);
         var id = 'lifeskill';
         var dialog = document.getElementById(id);
         dialog.opened=false;
@@ -143,21 +143,21 @@ var idd,sname,sum1,sum2,sum3,sum4,sum5,sum6,sum7,sum8,sum9,sum10,tot;
         {
           sum4=sum;
           document.getElementById('s4'+idd).value=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,this.score4);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score4);
         }
         else  if(name=="Creative Thinking")
         {
           sum5=sum;
           document.getElementById('s5'+idd).value=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,this.score5);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score5);
         }
         else  if(name=="Interpersonal Relationship")
         {
           sum6=sum;
           document.getElementById('s6'+idd).value=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,this.score6);
+          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
           // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score6);
         }
         else  if(name=="Effective Communication")
@@ -190,10 +190,7 @@ var idd,sname,sum1,sum2,sum3,sum4,sum5,sum6,sum7,sum8,sum9,sum10,tot;
           document.getElementById('t'+idd).value=tot;
           this.convert=(parseInt(tot)/10)*100;
           this.callFetchGrade();
-          // this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Life Skill",name,this.score10);
-          // this.total=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4)+parseInt(this.score5)+parseInt(this.score6)+parseInt(this.score7)+parseInt(this.score8)+parseInt(this.score9)+parseInt(this.score10);
-          // this.convert=(parseInt(this.total)/10)*100;
-           // this.callFetchGrade();
+          
         }
         arr=[];
       },
@@ -215,7 +212,6 @@ var idd,sname,sum1,sum2,sum3,sum4,sum5,sum6,sum7,sum8,sum9,sum10,tot;
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          
           if(mark>=lower[i]&&mark<=higher[i]){            
-            this.grade=grade[i];
             document.getElementById('g'+idd).value=grade[i];
             this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"Life Skills",this.convert,this.reduce,grade[i]);
           }

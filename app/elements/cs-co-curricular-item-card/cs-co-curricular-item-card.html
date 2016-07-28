@@ -77,7 +77,8 @@ var idd,sname,sum1,sum2,sum3,sum4,tot;
 
       FnActivity:function(e)
       {
-        alert(e.target.name);
+        idd=this.studid;
+        sname=this.studname;
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
          var id = 'cocurricular';
@@ -93,12 +94,14 @@ var idd,sname,sum1,sum2,sum3,sum4,tot;
       },
       click:function()
       {
+        var t=0;
         var sum=0;
         for(var i=0;i<arr.length;i++)
         {
-          sum=sum+parseInt(arr[i]);
+          t=t+parseInt(arr[i]);
         }
         //alert(sum);
+        sum=parseInt(t)/parseInt(arr.length);
          var id = 'cocurricular';
         var dialog = document.getElementById(id);
         dialog.opened=false;

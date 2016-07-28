@@ -95,12 +95,13 @@ var idd,sname,sum1,sum2,tot;
       },
       click:function()
       {
+        var t=0;
         var sum=0;
         for(var i=0;i<arr.length;i++)
         {
-          sum=sum+parseInt(arr[i]);
+          t=t+parseInt(arr[i]);
         }
-        alert(sum);
+        
          var id = 'visual';
         var dialog = document.getElementById(id);
         dialog.opened=false;

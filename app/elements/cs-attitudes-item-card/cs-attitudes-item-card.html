@@ -111,12 +111,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       click:function()
       {
+        var t=0;
         var sum=0;
         for(var i=0;i<arr.length;i++)
         {
-          sum=sum+parseInt(arr[i]);
+          t=t+parseInt(arr[i]);
         }
-        // alert(sum);
+        sum=parseInt(t)/parseInt(arr.length);
          var id = 'attitude';
         var dialog = document.getElementById(id);
         dialog.opened=false;

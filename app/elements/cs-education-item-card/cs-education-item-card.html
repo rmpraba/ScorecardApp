@@ -80,7 +80,6 @@ var arr=[];
       {
         idd=this.studid;
         sname=this.studname;
-        //alert(e.target.name);
         name=e.target.name;
         this.$.coscholasticservice.fetchlifeskilldata(name);
          var id = 'education';
@@ -97,12 +96,13 @@ var arr=[];
       },
       click:function()
       {
+        var t=0;
         var sum=0;
         for(var i=0;i<arr.length;i++)
         {
           sum=sum+parseInt(arr[i]);
         }
-        alert(sum);
+        sum=parseInt(t)/parseInt(arr.length);
          var id = 'education';
         var dialog = document.getElementById(id);
         dialog.opened=false;

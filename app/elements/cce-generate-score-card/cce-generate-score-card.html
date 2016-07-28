@@ -73,7 +73,7 @@
       FnHide:function(){
         this.hidecard=false;
       },
-      FnSelectGrade:function(e){
+      FnSelectGrade:function(e){        
         gradename = e.target.selectedItem.textContent.trim();       
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.scorecardservice.callSectionService(gradename);
@@ -88,6 +88,7 @@
       },
       callService:function(){
         this.flag="1";
+        this.$.scorecardservice.callWorkingdaysService();
         this.$.scorecardservice.callFetchstudentnameService();
       },
       autocompletearr:function(autocompletearr)

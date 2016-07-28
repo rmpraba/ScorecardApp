@@ -88,38 +88,38 @@
         <th colspan="3">ATTENDANCE:</th><th colspan="4">Term1</th><th colspan="4">Term2</th><th colspan="4">Term3</th>
       </tr>
       <tr>
-        <th colspan="3">TotalAttendanceday</th>
-        <th colspan="3">68</th>
+        <th colspan="3">Total Attendance days</th>
+        <th colspan="3"></th>
         <th colspan="2"> <paper-fab   icon="star" title="reply">
                          </paper-fab>
                         
 
         </th>
-        <th colspan="3">50</th>
+        <th colspan="3"></th>
         <th colspan="2">
            <paper-fab   icon="star" title="reply">
              </paper-fab>
         </th>
-        <th colspan="2">80</th>
+        <th colspan="2"></th>
         <th colspan="2">
            <paper-fab icon="star" title="reply">
                          </paper-fab>
         </th>
       </tr>
       <tr>
-        <th colspan="3">TotalWorkingday</th><th colspan="3">68</th><th colspan="2">
+        <th colspan="3">Total Working days</th><th colspan="3">{{term1}}</th><th colspan="2">
            <paper-fab icon="star" title="reply">
             </paper-fab>
-        </th><th colspan="3">55</th><th colspan="2">
+        </th><th colspan="3">{{term2}}</th><th colspan="2">
            <paper-fab icon="star" title="reply">
                          </paper-fab>
-        </th><th colspan="2">80</th><th colspan="2">
+        </th><th colspan="2">{{term3}}</th><th colspan="2">
            <paper-fab icon="star" title="reply">
                          </paper-fab>
         </th>
       </tr>
       <tr>
-        <th colspan="3">GentralFeedback:</th><th colspan="5"><h5>To be given</h5></th>
+        <th colspan="3">General Feedback:</th><th colspan="5"><h5>To be given</h5></th>
       </tr>
 <!--       <tr>
         <th colspan="16"><h5>To be given</h5></th>
@@ -933,6 +933,11 @@
           value: 'cce-onetofour-score-card',
           notify: true
         }
+      },
+      setTerm:function(){
+        this.term1=localStorage.getItem("curr_sess_loggedschoolWDAY");
+        this.term2=localStorage.getItem("curr_sess_loggedschoolWDAY");
+        this.term3=localStorage.getItem("curr_sess_loggedschoolWDAY");
       }
     });
   })();

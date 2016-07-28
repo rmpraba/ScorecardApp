@@ -106,6 +106,15 @@
         on-response="fetchcoscholasticinfoResponse"
         debounce-duration="300"
     >
+    <iron-ajax        
+        
+        id="fetchworkingdaysajax"
+        url="../../configfile/workingdays.json"        
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchworkingdaysResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -122,6 +131,30 @@
       is: 'scorecard-service',
       ready:function(){
         this.callFetchGrade();
+      },
+      callWorkingdaysService:function(){
+        this.$.fetchworkingdaysajax.generateRequest();
+      },
+      fetchworkingdaysResponse:function(e){
+        // alert(JSON.stringify(e.detail.response));
+        // alert(localStorage.getItem("curr_sess_termname"));
+        var warr=e.detail.response.Workingdays;
+        var wdays=e.detail.response.Workingdays[0].term;
+        // alert(JSON.stringify(e.detail.response.Workingdays));
+        // alert(JSON.stringify(e.detail.response.Workingdays[0].term));
+
+        for(var i=0;i<warr.length;i++){
+          if(sessionStorage.getItem("curr_sess_loggedschoolid")==warr[i].schoolid){
+            if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+              localStorage.setItem("curr_sess_loggedschoolWDAY",warr[i].term[i].PrePrimary);
+            }
+            else{
+              localStorage.setItem("curr_sess_loggedschoolWDAY",warr[i].term[i].Primary);
+            }
+            // localStorage.setItem("curr_sess_loggedschoolPPWDAY",warr[i].PrePrimary);
+          }
+        }
+
       },
       callGradeService:function(){
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";

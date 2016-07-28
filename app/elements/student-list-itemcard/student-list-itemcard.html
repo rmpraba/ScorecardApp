@@ -47,6 +47,7 @@
       FnView:function(){
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         this.$.assesmentservice.callFetchGrade();
+        this.$.scorecardservice.callFetchstudentinfoService(this.studentid);
         this.$.assesmentservice.onetofourscore(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 

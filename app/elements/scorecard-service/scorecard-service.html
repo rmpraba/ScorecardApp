@@ -205,13 +205,22 @@
       },
       fetchstudinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
+        // alert(localStorage.getItem("curr_sess_grade"));
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+          // alert(arr[0].student_name);
+        document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
+        document.querySelector('cce-onetofour-score-card').studname=arr[0].student_name;        
+        document.querySelector('cce-onetofour-score-card').pname=arr[0].parent_name;
+        }
+        else{
         document.querySelector('cce-fivetoten-score-card').grade=arr[0].grade;
         document.querySelector('cce-fivetoten-score-card').studentid=arr[0].student_id;
         document.querySelector('cce-fivetoten-score-card').studentname=arr[0].student_name;
         document.querySelector('cce-fivetoten-score-card').dob=arr[0].dob;
         document.querySelector('cce-fivetoten-score-card').fathername=arr[0].parent_name;
         document.querySelector('cce-fivetoten-score-card').address=arr[0].address1;
-        document.querySelector('cce-fivetoten-score-card').mobileno=arr[0].mobile;        
+        document.querySelector('cce-fivetoten-score-card').mobileno=arr[0].mobile; 
+        }       
       },
       callfetchhealthattendanceinfoService:function(studid){
         this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";

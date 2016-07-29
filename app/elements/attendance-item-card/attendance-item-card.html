@@ -44,10 +44,8 @@
       ready:function(){
 
       },     
-      FnAttendance:function(e){        
-      },
-      FnWorkingDays:function(e){        
-        this.callService();  
+      FnAttendance:function(e){  
+        this.callService();        
       },
       callService:function(){           
         this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays); 

@@ -31,10 +31,12 @@
       FnScholastic:function(){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('termassesment','');
+        document.querySelector('term-assesment-card').FnHideView();
       },
       FnCoScholastic:function(){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('coscholasticassesment','');
+        document.querySelector('coscholastic-assesment-card').callDefaultService();
       }
       
     });

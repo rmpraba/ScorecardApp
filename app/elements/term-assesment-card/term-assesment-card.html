@@ -94,7 +94,10 @@
     Polymer({
       is: 'term-assesment-card',
       ready:function(){
-        this.flag=0;
+       
+      },
+      FnHideView:function(){
+         this.flag=0;
         this.hideassesmenttype=true;
         this.hideassesment=true;
         if(localStorage.getItem('curr_sess_termname')=='term1'){

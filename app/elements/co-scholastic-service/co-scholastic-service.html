@@ -113,6 +113,16 @@
         on-response="inserthealthResponse"
         debounce-duration="300"
     >
+    <iron-ajax
+        method="post"
+        id="fetchworkingdaysajax"
+        url="{{fetchworkingdaysurl}}"
+        params="{{fetchworkingdaysparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchworkingdaysResponse"
+        debounce-duration="300"
+    >
     
   </template>
   <script>
@@ -121,6 +131,27 @@
 
     Polymer({
       is: 'co-scholastic-service',
+      callWorkingdaysService:function(){
+        this.fetchworkingdaysurl=sessionStorage.getItem("addrinfo")+"/fetchworkingdays-service";
+        var obj={"academicyear":"","schoolid":"","termname":"","type":""};
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+         obj.type='Pre-Primary';
+         }
+         else{
+         obj.type='Primary';
+         }
+        // alert(JSON.stringify(obj));
+        this.fetchworkingdaysparam=obj;
+        this.$.fetchworkingdaysajax.generateRequest();
+      },
+      fetchworkingdaysResponse:function(e){
+        var warr=e.detail.response.returnval;  
+        // alert(JSON.stringify(warr));      
+        document.querySelector('attendance-card').setWorkingDays(warr[0].no_of_days);
+      },
       callAcademicService:function(){
         this.$.academicajax.generateRequest();
       },
@@ -279,7 +310,9 @@
          this.$.insertattendanceajax.generateRequest();
       },
       insertattendanceResponse:function(e){
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=="succ")
+          alert("Inserted!");
       },
       callinserthealthService:function(studid,studname,height,weight,bloodgroup,visionleft,visionright,dental){
          this.inserthealthurl=sessionStorage.getItem("addrinfo")+"/inserthealth-service";

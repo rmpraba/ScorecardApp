@@ -23,8 +23,7 @@
       }
 
     </style>
-    <div>
-    <!-- <template is="dom-repeat" items="{{label}}"> -->
+    <div>    
       <center><h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
@@ -37,14 +36,12 @@
       </tr>  
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="4">
-      <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></attendance-item-card>
+      <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}"></attendance-item-card>
       </td></tr>
       </template>
       </table>
-      </center> 
-    <!-- </template>      -->
-    </div>
-    <!-- <component-service id="componentservice" label="{{label}}"></component-service> -->
+      </center>     
+    </div>    
   </template>
   <script>
   (function() {
@@ -53,10 +50,11 @@
       is: 'attendance-card',
       ready:function(){      
       },
-      setDefaultHeaders:function(){
-        // alert('headers');
-        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
-        // alert(this.schoolname);
+      setWorkingDays:function(days){
+        this.workingdays=days;
+      },
+      setDefaultHeaders:function(){        
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");        
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");

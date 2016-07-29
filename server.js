@@ -826,7 +826,7 @@ app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
   var studid={student_id:req.query.studid};  
   // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
   var qur="SELECT subject_id,sub_category,round(mark/10) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' group by subject_id,sub_category";
-  console.log(qur);
+  // console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -871,12 +871,39 @@ app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
 
 app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 {
-  console.log(req.query.gradename);
-  console.log(req.query.section);
-  console.log(req.query.subject);
+
   var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"'";
   // console.log(qur);
   connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
+
+app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
+{
+  var qur="select * from md_workingdays where ? and ? and ? and ?";
+  // console.log(qur);
+  var academicyear={academic_year:req.query.academicyear};
+  var schoolid={school_id:req.query.schoolid};
+  var termname={term_name:req.query.termname};
+  var type={type:req.query.type};
+  console.log(req.query.academicyear+" "+req.query.schoolid+" "+req.query.termname+" "+req.query.type);
+  connection.query(qur,[academicyear,schoolid,termname,type],
     function(err, rows)
     {
     if(!err)

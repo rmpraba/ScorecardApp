@@ -82,14 +82,13 @@
     Polymer({
       is: 'coscholastic-assesment-card',
       ready:function(){
+       
+      },
+      callDefaultService:function(){
         this.flag=0; 
         this.$.assesmentservice.callAcademicService(); 
-        this.$.assesmentservice.callGradeService();        
+        this.$.assesmentservice.callGradeService(); 
       },
-      /*FnSelectacademicyear:function(e){
-        academicyear = e.target.selectedItem.textContent.trim();
-        localStorage.setItem("curr_sess_academicyear",academicyear);
-      },*/
       FnSelectGrade:function(e){
         gradename = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_grade",gradename);
@@ -105,13 +104,13 @@
         this.callService();
       },
       callService:function(){
-        this.$.assesmentservice.callFetchStudentInfo(gradename,section);
-        // alert(subject);  
+        this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
         if(subject=="Health"){
         document.querySelector('cce-fivetoten-health-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card'); 
         }
         else if(subject=="Attendance"){
+        this.$.assesmentservice.callWorkingdaysService();
         document.querySelector('attendance-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
         }        
@@ -132,8 +131,6 @@
         else if(subject=="Visual & Performing Arts"){
         document.querySelector('cs-visual-performing-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-visual-performing-card'); 
-        // document.querySelector('cs-visualerforming-card').setDefaultHeaders();  
-        // document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-visualerforming-card'); 
         }
         else if(subject=="Attitudes & Values"){
         document.querySelector('cs-attitudes-card').setDefaultHeaders();  

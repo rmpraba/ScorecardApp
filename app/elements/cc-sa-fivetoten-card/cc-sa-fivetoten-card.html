@@ -55,6 +55,7 @@
       </td></tr>
       </template>
       </table>
+      <input type="button" id="btn2" onclick="tableToExcel('MarkTable11', 'Mark Report')" value="Export to Excel">
       </center> 
     </template>     
     </div>
@@ -87,6 +88,10 @@ var tableToExcel = (function() {
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+      },
+       hiddenbutton:function()
+      {
+        this.$.btn2.hidden=true;
       }
     });
   })();

@@ -43,9 +43,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
      <paper-dialog id="education" modal>
      <table>
-  <template is="dom-repeat" items="{{coarr}}">
+          <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{coarr}}">
+                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+           <paper-dropdown-menu id="m{{studid}}" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
+              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
+                <paper-item value="A">A</paper-item>
+                <paper-item value="B">B</paper-item>
+                <paper-item value="C">C</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+
+ <!-- <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
-      </template>
+      </template>-->
       <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
             </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
@@ -89,10 +107,35 @@ var arr=[];
         dialog.open();
 
       },
+      FnSelectCategory:function(e)
+      {
+        alert('h');
+
+       var cat = e.target.selectedItem.textContent.trim();
+        document.querySelector('#m'+idd).selected=-1;
+       
+      },
+      FnSelectGrade:function(e)
+      {
+        var mark;
+       var grad = e.target.selectedItem.textContent.trim();
+       if(grad=="A")
+       {
+        mark=9;
+       }
+       else if(grad=="B")
+       {
+        mark=8;
+       }
+       else if(grad=="C")
+       {
+        mark=7;
+       }
+       this.fnfindsum(mark);
+      },
       fnfindsum(val)
       {
       arr.push(val);
-//alert(arr);
       },
       click:function()
       {
@@ -100,12 +143,13 @@ var arr=[];
         var sum=0;
         for(var i=0;i<arr.length;i++)
         {
-          sum=sum+parseInt(arr[i]);
+          t=t+parseInt(arr[i]);
         }
         sum=parseInt(t)/parseInt(arr.length);
          var id = 'education';
         var dialog = document.getElementById(id);
         dialog.opened=false;
+        //document.querySelector('cs-sub-metrics-item-card').clearinputdata();
          if(name=="Work Education")
           {
            document.getElementById('s'+idd).value=sum;  

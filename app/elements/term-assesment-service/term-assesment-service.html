@@ -187,6 +187,16 @@
         content-type="application/json"
         on-response="fetchstudentreportResponse"
         debounce-duration="300"
+    >    
+    <iron-ajax
+        method="post"
+        id="overalltermassesmentinsertajax"
+        url="{{overalltermassesmentinserturl}}"
+        params="{{overalltermassesmentinsertparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="overalltermassesmentinsertResponse"
+        debounce-duration="300"
     >
   </template>
   <script>
@@ -196,8 +206,9 @@
     var higher=[];
     var grade=[];
     var name;
-var arr=[];
-var n1=0,n2=0;
+    var arr=[];
+    var n1=0,n2=0;
+
 
     Polymer({
       is: 'term-assesment-service',
@@ -272,13 +283,9 @@ var n1=0,n2=0;
          document.querySelector('term-assesment-card').assesmentarr=e.detail.response.returnval;
       },
       callFetchStudentInfo:function(grade,section){
-        
-
-
- if(localStorage.getItem('curr_sess_report')=="1")
+        if(localStorage.getItem('curr_sess_report')=="1")
         {
-
-          this.fetchstudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchstudentreport-service";
+         this.fetchstudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchstudentreport-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":"","assesment":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.gradename=grade;
@@ -288,12 +295,10 @@ var n1=0,n2=0;
          this.fetchstudentreportparam= obj;
          // alert(JSON.stringify(obj));
          this.$.fetchstudentreportajax.generateRequest();
-        
-
         }
         else
         {
-            this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
+         this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.gradename=grade;
@@ -306,7 +311,6 @@ var n1=0,n2=0;
       },
       fetchstudentreportResponse:function(e)
       {
-
        var overall=[];
        var arr1=e.detail.response.returnval;  
       // alert(JSON.stringify(arr1));
@@ -345,8 +349,7 @@ var n1=0,n2=0;
         if(localStorage.getItem("curr_sess_subject")=="Computer"){   
          
         document.querySelector('cc-computer-onetofour-card').markarr=overall;
-        }
-        
+        }      
 
         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
        
@@ -421,10 +424,7 @@ var n1=0,n2=0;
         else
         {
          if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
-
-        document.querySelector('cc-fa-fivetoten-card').studarr=arr; 
-        // document.querySelector('cs-life-skill-card').studarr=arr; 
-        //document.querySelector('cs-education-card').studarr=arr;
+        document.querySelector('cc-fa-fivetoten-card').studarr=arr;         
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
         document.querySelector('cc-sa-fivetoten-card').studarr=arr;        
@@ -432,8 +432,7 @@ var n1=0,n2=0;
         }       
 
       },
-      callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){
-        
+      callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){        
          this.insertassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertassesmentmark-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -453,10 +452,9 @@ var n1=0,n2=0;
          this.$.insertassesmentmarkajax.generateRequest();
       },
       insertassesmentmarkResponse:function(e){
-
-        // alert(e.detail.response.returnval);
+        
       },
-      callOveralltermmarkinsertService:function(studid,studname,category,total,reduction,grade){
+      callOveralltermmarkinsertService:function(studid,studname,category,total,reduction,grade,count){        
          this.overalltermmarkinserturl=sessionStorage.getItem("addrinfo")+"/overalltermmarkinsert-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","studentid":"","studentname":"","subject":"","type":"","category":"","total":"","rtotal":"","grade":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -468,35 +466,44 @@ var n1=0,n2=0;
          obj.studentname=studname;        
          obj.subject=localStorage.getItem("curr_sess_subject");
          obj.type=category;
-         obj.category=category;
-         /*if(obj.assesmentid=="Assesment1"&&obj.termname=="term1"&&category=="FA"){
-         obj.category="FA1";
-         }
-         if(obj.assesmentid=="Assesment1"&&obj.termname=="term2"&&category=="FA"){
-         obj.category="FA2";
-         }
-         if(obj.assesmentid=="Assesment2"&&obj.termname=="term1"&&category=="FA"){
-         obj.category="FA3";
-         }
-         if(obj.assesmentid=="Assesment2"&&obj.termname=="term2"&&category=="FA"){
-         obj.category="FA4";
-         }
-         if(obj.assesmentid=="Assesment1"&&obj.termname=="term1"&&category=="SA"){
-         obj.category="SA1";
-         }
-         if(obj.assesmentid=="Assesment1"&&obj.termname=="term2"&&category=="SA"){
-         obj.category="SA2";
-         } */        
+         obj.category=category;    
          obj.total=total; 
-         obj.rtotal=reduction;
-         // obj.reduction=reduction;  
-         obj.grade=grade;         
+         obj.rtotal=reduction;         
+         obj.grade=grade;
+
+         this.studid=studid;
+         this.studname=studname;
+         this.category=category;
+         this.count=count;
+         
          this.overalltermmarkinsertparam= obj;
          this.$.overalltermmarkinsertajax.generateRequest();
       },
-      overalltermmarkinsertResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+      overalltermmarkinsertResponse:function(e){        
         alert("Inserted!");
+        n1++;
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment3"&&(n1==this.count)){
+        this.calloveralltermassesmentinsertService();
+        }
+      },
+      calloveralltermassesmentinsertService:function(){        
+         this.overalltermassesmentinserturl=sessionStorage.getItem("addrinfo")+"/overalltermassesmentinsert-service";
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","studentid":"","studentname":"","subject":"","type":"","category":"","total":"","rtotal":"","grade":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=this.studid;
+         obj.studentname=this.studname;        
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.type=this.category;
+         obj.category=this.category;                  
+         this.overalltermassesmentinsertparam= obj;
+         this.$.overalltermassesmentinsertajax.generateRequest();
+      },
+      overalltermassesmentinsertResponse:function(e){    
+        alert(e.detail.response.returnval);
       },
       callinsertattendanceinfo:function(studid,studname,attendance,workingdays){
          this.termattendanceurl=sessionStorage.getItem("addrinfo")+"/termattendance-service";
@@ -558,6 +565,14 @@ var n1=0,n2=0;
           grade.push(returnval[i].grade);
         } 
       },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+     },
     onetofourreportResponse:function(e)
     {     
        var tot; 

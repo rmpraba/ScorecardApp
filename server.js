@@ -482,6 +482,54 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
 });
 // });
 
+//storing overall scholastic mark
+app.post('/overalltermassesmentinsert-service',  urlencodedParser,function (req, res){
+   var response={
+         school_id:req.query.schoolid,
+         academic_year:req.query.academicyear,
+         assesment_id:req.query.assesmentid,
+         term_name:req.query.termname,         
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         subject_id:req.query.subject,
+         type:'',
+         category:'',         
+         total:'',
+         rtotal:'',
+         grade:''                
+  }
+  connection.query("SELECT sum(rtotal)as total,round(avg(rtotal),2) as reduction,subject_id,category, "+
+  "(SELECT grade from md_grade_rating where lower_limit<=round(avg(rtotal),2) "+
+  "&& higher_limit>=round(avg(rtotal),2)) as grade from scorecarddb.tr_term_assesment_overall_marks "+
+  "where term_name='"+req.query.termname+"' and subject_id='"+req.query.subject+"' and academic_year='"+req.query.academicyear+"' "+
+  " and student_id='"+req.query.studentid+"' group by subject_id,category",
+  function(err, rows){
+  if(rows.length>0){ 
+    for(var i=0;i<rows.length;i++) {
+    response.type=rows[i].category;
+    response.category=rows[i].category;
+    response.total=rows[i].total;
+    response.rtotal=rows[i].reduction;
+    response.grade=rows[i].grade;
+  connection.query("INSERT INTO tr_term_assesment_overall_assesmentmarks set ?",[response],
+  function(err, rows){
+     if(!err)
+    {    
+      //res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      //console.log(err);
+      //res.status(200).json({'returnval': 'fail'});
+    }
+  
+  });  
+  }
+  res.status(200).json({'returnval': 'succ'});
+  }
+  });
+});
+
 //storing mark for coscholastic assessment
 app.post('/insertcoassesmentmark-service',  urlencodedParser,function (req, res){
 

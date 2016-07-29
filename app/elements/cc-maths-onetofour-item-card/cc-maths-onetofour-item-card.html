@@ -12,6 +12,7 @@
        table{
         border-collapse: collapse;
         width: 100%;
+        text-align: center;
       }
       #p1{
         width: 48px;
@@ -32,7 +33,7 @@
         width: 11px;
       }
       paper-input{
-        text-aligncenter;
+        text-align:center;
       }
     </style>
     <div>
@@ -50,10 +51,23 @@
       </table>
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service> 
+    <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
     'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
     var understanding,groupactivity,individualactivity,maaccuracy,maknowledge,taaccuracy,taneatness,activity;
     Polymer({
       is: 'cc-maths-onetofour-item-card',
@@ -61,36 +75,82 @@
       },
       FnUnderstanding:function(e){               
         understanding=parseFloat(this.understanding).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding);       
+               
       },
       FnGroupactivity:function(e){               
         groupactivity=parseFloat(this.groupactivity).toFixed(2);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity);     
+            
       },
       FnIndividualactivity:function(e){               
         individualactivity=parseFloat(this.individualactivity).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity); 
+        
       },
       FnMAAccuracy:function(){
         maaccuracy=parseFloat(this.maaccuracy).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy); 
+        
       },
       FnMAKnowledge:function(){
         maknowledge=parseFloat(this.maknowledge).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge); 
+         
       },
       FnTAAccuracy:function(){
         taaccuracy=parseFloat(this.taaccuracy).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy); 
+        
       },
       FnTANeatness:function(){
         taneatness=parseFloat(this.taneatness).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness); 
+        
       },
-      FnActivity:function(){
-        activity=parseFloat(this.activity).toFixed(2); 
+      FnActivity:function(){        
+        activity=parseFloat(this.activity).toFixed(2);         
+        this.concept=this.understanding;
+        this.activityproject=(parseInt(this.groupactivity)+parseInt(this.individualactivity))/2;
+        this.mentalability=parseFloat((parseInt(this.maaccuracy)+parseInt(this.maknowledge))/2).toFixed(2);
+        this.tableactivity=parseFloat((parseInt(this.taaccuracy)+parseInt(this.taneatness))/2).toFixed(2);
+        this.writtenwork=this.activity;
+        this.callFetchGrade();         
+      },
+      callFetchGrade:function(){
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
+      },
+      fetchgradesResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.conceptgrade=this.FnFindGrade((parseInt(this.concept)));  
+        this.activityprojectgrade=this.FnFindGrade(this.activityproject);  
+        this.mentalabilitygrade=this.FnFindGrade(this.mentalability);  
+        this.tableactivitygrade=this.FnFindGrade(this.tableactivity);  
+        this.writtenworkgrade=this.FnFindGrade(this.writtenwork);
+        this.callService();  
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+      },
+      callService:function(){
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness);  
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity); 
-      }   
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Concept",this.concept,this.concept,this.conceptgrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Activity/Project",this.activityproject,this.activityproject,this.activityprojectgrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Mental Ability",this.mentalability,this.mentalability,this.mentalabilitygrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Table Activity",this.tableactivity,this.tableactivity,this.tableactivitygrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Written Work",this.writtenwork,this.writtenwork,this.writtenworkgrade,5);
+      }  
     }); 
   })();
   </script>

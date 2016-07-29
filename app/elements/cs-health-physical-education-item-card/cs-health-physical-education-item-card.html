@@ -23,6 +23,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .card{
         height: 2%;
       }
+        .submitbutton paper-button{
+    background-color: #363636 !important;
+    color: #ffffff !important;
+    height: 33px !important;
+  }
     </style>
     <div class="card">
         <table border="1"><tr>
@@ -46,8 +51,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-menu>
           </paper-dropdown-menu>
 
-           <paper-dropdown-menu id="m{{studid}}" label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
+           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
               <!-- <template is="dom-repeat" items="{{typearr}}"> -->
                 <paper-item value="A">A</paper-item>
                 <paper-item value="B">B</paper-item>
@@ -55,11 +60,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <!-- </template> -->
             </paper-menu>
           </paper-dropdown-menu>
-
+</table>
  <!-- <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
       </template>-->
-      <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
+     <center> 
+     <div class="submitbutton">
+       <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
+       </div>
+       </center>
             </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     
@@ -105,10 +114,10 @@ var idd,sname,sum1;
       },
        FnSelectCategory:function(e)
       {
-        alert('h');
+        
 
        var cat = e.target.selectedItem.textContent.trim();
-        document.querySelector('#m'+idd).selected=-1;
+        document.querySelector('#gradetype').selected=-1;
        
       },
       FnSelectGrade:function(e)

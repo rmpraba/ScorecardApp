@@ -17,6 +17,11 @@
       .card{
         height: 2%;
       }
+        .submitbutton paper-button{
+    background-color: #363636 !important;
+    color: #ffffff !important;
+    height: 33px !important;
+  }
     </style>
     <div class="card">
         <table border="1"><tr>
@@ -53,10 +58,12 @@
             </paper-menu>
           </paper-dropdown-menu>
 
+</table>
  <!-- <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
       </template>-->
-      <paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button>
+     <center> 
+     <div class="submitbutton"><paper-button style="height:33px !important;" class="button" on-click="click">Submit</paper-button></div></center>
             </paper-dialog>
       <co-scholastic-service id="coscholasticservice"></co-scholastic-service>    
       <term-assesment-service id="assesmentservice"></term-assesment-service>
@@ -99,7 +106,6 @@
       },
        FnSelectCategory:function(e)
       {
-        alert('h');
 
        var cat = e.target.selectedItem.textContent.trim();
         document.querySelector('#gradetype').selected=-1;

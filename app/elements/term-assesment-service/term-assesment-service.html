@@ -198,6 +198,26 @@
         on-response="overalltermassesmentinsertResponse"
         debounce-duration="300"
     >
+     <iron-ajax
+        method="post"
+        id="importmarkajax"
+        url="{{importmarkurl}}"
+        params="{{importmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="importmarkResponse"
+        debounce-duration="300"
+    >    
+      <iron-ajax
+        method="post"
+        id="updateimportmarkajax"
+        url="{{updateimportmarkurl}}"
+        params="{{updateimportmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updateimportmarkResponse"
+        debounce-duration="300"
+    >    
   </template>
   <script>
   (function() {
@@ -663,6 +683,25 @@
                 document.querySelector('cce-onetofour-score-card').gk=score;
             }
         }
+    },
+    Fnimportmark:function()
+    {
+
+ 
+        
+ var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.gradename= localStorage.getItem("curr_sess_grade"); 
+         obj.sectionname=localStorage.getItem("curr_sess_section");    
+         obj.subject=localStorage.getItem("curr_sess_subject");
+
+        this.updateimportmarkurl=sessionStorage.getItem("addrinfo")+"/updateimportmark-service";
+        this.updateimportmarkparam=obj;
+        this.$.updateimportmarkajax.generateRequest();
+      
     }
     });
   })();

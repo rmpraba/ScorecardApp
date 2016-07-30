@@ -101,7 +101,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
 
      </table>      
-
+ <paper-button class="button" on-click="importmark">Import Marks</paper-button>
+   
+    <term-assesment-service id="assesmentservice"></term-assesment-service> 
       <input type="button" id="btn2" onclick="tableToExcel('MarkTable4', 'Mark Report')" value="Export to Excel"> 
      </center>
     </div>
@@ -144,6 +146,12 @@ var tableToExcel = (function() {
       hiddenbutton:function()
       {
         this.$.btn2.hidden=true;
+      },
+      importmark:function()
+      {
+        alert('import');
+        this.$.assesmentservice.Fnimportmark();
+
       }
     });
   })();

@@ -972,6 +972,44 @@ app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
 });
 
 
+
+
+
+app.post('/updateimportmark-service' ,  urlencodedParser,function (req, res)
+{
+    var data={
+      school_id:req.query.schoolid,
+      grade:req.query.gradename,
+      section:req.query.sectionname,
+      academic_year: req.query.academicyear,
+      term_name:req.query.termname,
+      assesment_id:req.query.assesmentid,
+      subject:req.query.subject,
+      flag:0
+    };
+ 
+      connection.query('insert into tr_term_assesment_import_marks set ?',[data],
+        function(err, rows)
+        {
+        if(!err)
+    {
+      if(rows.length>0)
+      {
+
+      res.status(200).json({'returnval': rows});
+      }
+      else
+      {
+      res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+      console.log('No data Fetched'+err);
+    }
+});
+  });
+
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

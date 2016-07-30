@@ -9,53 +9,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="..\..\bower_components/cc-music-onetofour-item-card/cc-music-onetofour-item-card.html">
+<link rel="import" href="..\..\bower_components/cc-art-craft-onetofour-item-card/cc-art-craft-onetofour-item-card.html">
 
-<dom-module id="cc-music-onetofour-card">
+
+
+<dom-module id="cc-art-craft-onetofour-card">
   <template>
     <style>
       :host {
         display: block;
       }
         table{
-          width: 100%;
+          width:80%;
           border-collapse: collapse;
           margin-left: 1%;
       }
       .studname{
         width: 30%;
           }
+          #tb1{
+             width:10%
+          }
     </style>
     <div>
      <center><h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Evaluation  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4>
-    <table border="1" id="MarkTable9">    
-    <tr>
-      <th colspan="3">Sl.No</th>
-      <th colspan="3">Student's Name</th>
-      <th colspan="3">Interest</th>
-      <th colspan="3">Rhythm</th>
-      <th colspan="3">Melody</th>
-    </tr>  
-    <template is="dom-repeat" items="{{studarr}}">
+    <table border="1" id="MarkTable1">
+     
+      <tr>
+
+       <th>Sl.No</th>
+       <th>Student's Names</th>
+       <th id="tb1">Creativity</th>
+       <th id="tb1">Skill</th>
+       <th id="tb1">Interest</th>
+       </tr>
+      <tr><th></th><th></th>
+
+      <th id="tb1">(10)</th>
+      <th id="tb1">(10)</th>
+      <th id="tb1">(10)</th>
+     
+      </tr>
+<template is="dom-repeat" items="{{markarr}}" as="m">
+<tr><td></td>
+<template is="dom-repeat" items="{{m}}" as="mark">
+<td  colspan="3">{{mark}}</td>
+</template>
+</tr>
+</template>
+ <template is="dom-repeat" items="{{studarr}}">
       <tr>
         <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
-        <td colspan="66"><cc-music-onetofour-item-card studid="{{item.id}}" studname="{{item.student_name}}"></cc-music-onetofour-item-card></td>
+        <td colspan="66"><cc-art-craft-onetofour-item-card studid="{{item.id}}" studname="{{item.student_name}}"></cc-art-craft-onetofour-item-card></td>
       </tr>
-    </template>
+      </template>
     </table>      
-
-    <paper-button class="button" on-click="importmark">Import Marks</paper-button>
-   
-    <term-assesment-service id="assesmentservice"></term-assesment-service>  
-
-      <input type="button" id="btn2" onclick="tableToExcel('MarkTable9', 'Mark Report')" value="Export to Excel">
+<paper-button class="button" on-click="importmark">Import Marks</paper-button>
+<input type="button" id="btn2" onclick="tableToExcel('MarkTable1', 'Mark Report')" value="Export to Excel">
     </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
    <script type="text/javascript">
-    var tableToExcel = (function() {
-    var uri = 'data:application/vnd.ms-excel;base64,'
+var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
     , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
     , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
@@ -71,8 +89,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'cc-music-onetofour-card',
-      setDefaultHeaders:function(){
+      is: 'cc-art-craft-onetofour-card',
+
+       setDefaultHeaders:function(){
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");

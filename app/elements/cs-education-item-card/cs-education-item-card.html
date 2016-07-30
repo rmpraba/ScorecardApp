@@ -29,6 +29,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #tb2{
         width: 5%
       }
+      #sub
+{
+  width: 70%;
+}
+#td1
+{
+  padding: 5px;
+}
+
+
+
        .submitbutton paper-button{
     background-color: #363636 !important;
     color: #ffffff !important;
@@ -46,15 +57,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
         </table>
     </div>
-     <paper-dialog id="education" modal>
-     <table>
+     <paper-dialog id="education" modal width="600px">
+    <center> <table  id="sub">
+     <tr>
+     <td id="td1">
           <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{coarr}}">
                 <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
               </template>
             </paper-menu>
-          </paper-dropdown-menu>
+          </paper-dropdown-menu></td>
+<td>
 
            <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
@@ -65,7 +79,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <!-- </template> -->
             </paper-menu>
           </paper-dropdown-menu>
+</td>
+</tr>
+<tr>
+<td id="td1">
+            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{coarr}}">
+                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+</td>
+<td>
+           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
+              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
+                <paper-item value="A">A</paper-item>
+                <paper-item value="B">B</paper-item>
+                <paper-item value="C">C</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+          </td>
+          </tr>
+          <tr>
+          <td id="td1">
+            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{coarr}}">
+                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+</td>
+<td>
+           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
+              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
+                <paper-item value="A">A</paper-item>
+                <paper-item value="B">B</paper-item>
+                <paper-item value="C">C</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+          </td>
+          </tr>
           </table>
+          </center>
 
  <!-- <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
@@ -122,7 +183,7 @@ var arr=[];
         
 
        var cat = e.target.selectedItem.textContent.trim();
-        document.querySelector('#gradetype').selected=-1;
+        //document.querySelector('#gradetype').selected=-1;
        
       },
       FnSelectGrade:function(e)

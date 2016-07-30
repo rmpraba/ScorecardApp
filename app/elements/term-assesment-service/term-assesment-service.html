@@ -217,7 +217,17 @@
         content-type="application/json"
         on-response="updateimportmarkResponse"
         debounce-duration="300"
-    >    
+    >   
+
+      <iron-ajax
+        method="post"
+        id="approvemarkajax"
+        url="{{approvemarkurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="approvemarkResponse"
+        debounce-duration="300"
+    >     
   </template>
   <script>
   (function() {
@@ -689,10 +699,7 @@
         }
     },
     Fnimportmark:function()
-    {
-
- 
-        
+    {     
  var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -706,7 +713,20 @@
         this.updateimportmarkparam=obj;
         this.$.updateimportmarkajax.generateRequest();
       
+    },
+    callApproveService:function()
+    {
+       this.approvemarkurl=sessionStorage.getItem("addrinfo")+"/approvemark-service";
+        //this.approvemarkparam=obj;
+        this.$.approvemarkajax.generateRequest();  
+    },
+    approvemarkResponse:function(e)
+    {
+      alert(JSON.stringify(e.detail.response.returnval));
+      var approvearr=e.detail.response.returnval;
+      document.querySelector('approve-one-to-four-card').approvearr=approvearr;
     }
+
     });
   })();
   </script>

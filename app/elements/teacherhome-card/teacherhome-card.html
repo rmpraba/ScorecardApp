@@ -46,8 +46,12 @@
       <div class="card" hidden$="{{Report}}">
        <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
       </div>  
-         <div class="card" hidden$="{{Report}}">
+         <div class="card" >
        <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+      </div>  
+
+      <div class="card" >
+       <paper-button on-click="FnApprovecard" no ink><img src="../../images/approve.png" height="180px" width="180px"></paper-button>
       </div>  
     </div>
     <div class="cdialog">      
@@ -143,6 +147,12 @@
       },
       FnYearToggle:function(){
         this.$.cdialog.toggle();
+      },
+      FnApprovecard:function()
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('approveassesment','');  
+        this.$.assesmentservice.callApproveService();   
       }
     });
   })();

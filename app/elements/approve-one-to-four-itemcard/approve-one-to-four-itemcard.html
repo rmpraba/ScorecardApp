@@ -10,46 +10,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="approve-one-to-four-card">
+<dom-module id="approve-one-to-four-itemcard">
   <template>
     <style>
       :host {
         display: block;
       }
-       .viewdata{
+      .viewdata{
         margin-top: 5%;
         /*font-size: 12px;*/
         cursor: pointer;
         color:blue;
       }
     </style>
-    <table border="1" id="Mark">
-     
-      <tr>
+    <tr>
+   <td>{{academic}}</td>
+   <td>{{term}}</td>
+   <td>{{assesment}}</td>
+   <td>{{grade}}</td>
+   <td>{{section}}</td>
+   <td>{{subject}}</td>
+   <td>  <ahref class="viewdata" on-click="Fnview"><u>View</u></ahref></td>
+</tr>
 
-       
-       <th id="tb1">Academic Year</th>
-       <th id="tb1">Term</th>
-       <th id="tb1">Assesment</th>
-       <th id="tb1">Grade</th>
-       <th id="tb1">Section</th>
-       <th id="tb1">Subject</th>
-       <th id="tb1">View</th>
-       </tr>
-     
-<template is="dom-repeat" items="{{approvearr}}" as="m">
-<approve-one-to-four-itemcard academic="{{m.academic_year}}" assesment="{{m.assesment_id}}" term="{{m.term_name}}" grade="{{m.grade}}" section="{{m.section}}" subject="{{m.subject}}"></approve-one-to-four-itemcard>
-</template>
- </table>
- </template>
+  </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'approve-one-to-four-card',
+      is: 'approve-one-to-four-itemcard',
 
-   
+       Fnview:function()
+     {
+      alert('come');
+     }
     });
   })();
   </script>

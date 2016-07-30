@@ -1010,6 +1010,31 @@ app.post('/updateimportmark-service' ,  urlencodedParser,function (req, res)
 });
   });
 
+
+
+app.post('/approvemark-service',  urlencodedParser,function (req, res)
+{
+  var qur="select * from tr_term_assesment_import_marks where flag=0";
+  
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

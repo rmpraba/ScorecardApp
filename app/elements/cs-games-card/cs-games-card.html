@@ -1,66 +1,49 @@
 
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="../component-service/component-service.html">
-<link rel="import" href="../cce-fivetoten-health-itemcard/cce-fivetoten-health-itemcard.html">
+<link rel="import" href="..\..\bower_components/cs-games-itemcard/cs-games-itemcard.html">
 
-<dom-module id="cce-fivetoten-health-card">
+<dom-module id="cs-games-card">
   <template>
     <style>
       :host {
         display: block;
       }
-      table{
-        width: 60%;
-        border-collapse: collapse;
-        margin-left: 1%;
+        table{
+          width:80%;
+          border-collapse: collapse;
+          margin-left: 1%;
       }
       .studname{
         width: 30%;
-      }
-      #tb1{
-        width:6%
-      }
-      #tb2{
-        width:20%
-      }
-      #tb3{
-        width:2%
-      }
+          }
+          #tb1{
+             width:10%
+          }
     </style>
     <div>
-    <!-- <template is="dom-repeat" items="{{label}}"> -->
-      <center><h1>{{schoolname}}</h1>
+     <center><h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
-      <h4>BOY  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
-      <table border="1" id="MarkTable">    
-      <tr>
-      <th id="tb3">SNo</th>
-      <th id="tb2">Name</th>
-      <th id="tb1">Height</th>
-      <th id="tb1">Weight</th>
-      <th id="tb1">Blood Group</th>
-      <th id="tb1">Vision Left</th>
-      <th id="tb1">Vision Right</th>
-      <th id="tb1">Dental Hygiene</th>
-      </tr>  
-      <template is="dom-repeat" items="{{markarr}}" as="m">
-<tr><td></td>
-<template is="dom-repeat" items="{{m}}" as="mark">
-<td>{{mark}}</td>
-</template>
-</tr>
-</template>
+      <h4>Evaluation  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4>
+      <table border="1" id="MarkTable1">     
+       <tr>
+       <th>Sl.No</th>
+       <th>Student's Names</th>
+       <th id="tb1">Enthusiasm(10)</th>
+       <th id="tb1">Discipline(10)</th>
+       <th id="tb1">Team Spirit(10)</th>
+       <th id="tb1">Talent(10)</th>
+       </tr>
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="8">
-      <cce-fivetoten-health-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cce-fivetoten-health-itemcard>
-      </td></tr>
+      <tr>
+        <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
+        <td colspan="66"><cs-games-itemcard studid="{{item.id}}" studname="{{item.student_name}}"></cs-games-itemcard></td>
+      </tr>
       </template>
-      </table>
-      </center> 
-    <!-- </template>      -->
+      </table>      
+    <paper-button class="button" on-click="importmark">Import Marks</paper-button>
+    <input type="button" id="btn2" onclick="tableToExcel('MarkTable1', 'Mark Report')" value="Export to Excel">
     </div>
-    <!-- <component-service id="componentservice" label="{{label}}"></component-service> -->
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
    <script type="text/javascript">
 var tableToExcel = (function() {
@@ -78,21 +61,25 @@ var tableToExcel = (function() {
   <script>
   (function() {
     'use strict';
+
     Polymer({
-      is: 'cce-fivetoten-health-card',
-      ready:function(){      
-      },
-      setDefaultHeaders:function(){
-        // alert('headers');
+      is: 'cs-games-card',
+       setDefaultHeaders:function(){
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
-        // alert(this.schoolname);
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+      },
+      hiddenbutton:function()
+      {
+        this.$.btn2.hidden=true;
+      },
+      importmark:function()
+      {        
+        this.$.assesmentservice.Fnimportmark();
       }
     });
   })();
   </script>
 </dom-module>
-

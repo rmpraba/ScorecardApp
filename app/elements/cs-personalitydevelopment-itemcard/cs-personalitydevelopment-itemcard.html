@@ -1,0 +1,119 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="../co-scholastic-service/co-scholastic-service.html">
+
+<dom-module id="cs-personalitydevelopment-itemcard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+       table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      #p1{
+        width: 48px;
+      }
+      #p2{
+        width: 49px;
+      }
+      #p3{
+        width: 50.5px;
+      }
+      .pi1{
+        width: 57px;
+      }
+      .pi2{
+        width: 72px;
+      }
+      .pi3{
+        width: 11px;
+      }
+      paper-input{
+        text-align: center;
+      }
+    </style>
+    <div> 
+     <table border="1">
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-input value="{{Courteousness}}" id="p1" on-change="FnCourteousness"></td>
+        <td><paper-input value="{{Confidence}}" id="p1" on-change="FnConfidence"></paper-input></td>
+        <td><paper-input value="{{Careofbelongings}}" id="p1" on-change="FnCareofbelongings"></paper-input></td>
+        <td><paper-input value="{{Neatness}}" id="p1" on-change="FnNeatness"></paper-input></td>
+        <td><paper-input value="{{RegularityandPunctuality}}" id="p1" on-change="FnRegularityandPunctuality"></paper-input></td>
+        <td><paper-input value="{{Initiative}}" id="p1" on-change="FnInitiative"></paper-input></td>
+        <td><paper-input value="{{SharingandCaring}}" id="p1" on-change="FnSharingandCaring"></paper-input></td>
+        <td><paper-input value="{{Respect}}" id="p1" on-change="FnRespect"></paper-input></td>
+        <td><paper-input value="{{Selfcontrol}}" id="p1" on-change="FnSelfcontrol"></paper-input></td>
+        </tr>
+      </table> 
+    </div>
+     <co-scholastic-service id="assesmentservice"></co-scholastic-service>
+      <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+      >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    var Courteousness,Confidence,Careofbelongings,Neatness,RegularityandPunctuality,Initiative,SharingandCaring,Respect,Selfcontrol;
+    Polymer({
+      is: 'cs-personalitydevelopment-itemcard',
+      ready:function(){       
+      },
+      FnCourteousness:function(){
+        Courteousness=parseFloat(this.Courteousness).toFixed(2);         
+      },
+      FnConfidence:function(){
+        Confidence=parseFloat(this.Confidence).toFixed(2);        
+      },
+      FnCareofbelongings:function(){
+        Careofbelongings=parseFloat(this.Careofbelongings).toFixed(2);        
+      },
+      FnNeatness:function(){
+        Neatness=parseFloat(this.Neatness).toFixed(2);        
+      },
+      FnRegularityandPunctuality:function(){
+        RegularityandPunctuality=parseFloat(this.RegularityandPunctuality).toFixed(2);         
+      },
+      FnInitiative:function(){
+        Initiative=parseFloat(this.Initiative).toFixed(2);        
+      },
+      FnSharingandCaring:function(){
+        SharingandCaring=parseFloat(this.SharingandCaring).toFixed(2);        
+      },
+      FnRespect:function(){
+        Respect=parseFloat(this.Respect).toFixed(2);        
+      },
+      FnSelfcontrol:function(){
+        Selfcontrol=parseFloat(this.Selfcontrol).toFixed(2); 
+        this.callService();         
+      },      
+      callService:function(){
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",this.Courteousness,this.Courteousness); 
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",this.Confidence,this.Confidence); 
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",this.Careofbelongings,this.Careofbelongings); 
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",this.Neatness,this.Neatness); 
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",this.RegularityandPunctuality,this.RegularityandPunctuality); 
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",this.Initiative,this.Initiative); 
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",this.SharingandCaring,this.SharingandCaring);
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Respect","Respect",this.Respect,this.Respect);
+        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",this.Selfcontrol,this.Selfcontrol); 
+      }
+    });
+  })();
+  </script>
+</dom-module>

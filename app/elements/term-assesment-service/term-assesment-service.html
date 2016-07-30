@@ -288,10 +288,11 @@
          this.subjectparam= obj;
          this.$.subjectajax.generateRequest();
       },
-      subjectResponse:function(e){  
+      subjectResponse:function(e){ 
+      // alert(JSON.stringify(e.detail.response)); 
           if(localStorage.getItem("curr_sess_subjectcategory")=="category1")        
           document.querySelector('term-assesment-card').subjectarr=e.detail.response.returnval;
-          else
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category2"||localStorage.getItem("curr_sess_subjectcategory")=="category3"||localStorage.getItem("curr_sess_subjectcategory")=="category4")  
           document.querySelector('coscholastic-assesment-card').subjectarr=e.detail.response.returnval;  
       },
       callAssesmentService:function(termtype,termname,gradename){

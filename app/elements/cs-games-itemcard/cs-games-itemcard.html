@@ -1,0 +1,77 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+
+<dom-module id="cs-games-itemcard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+       table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      #p1{
+        width: 48px;
+      }
+      #p2{
+        width: 49px;
+      }
+      #p3{
+        width: 50.5px;
+      }
+      .pi1{
+        width: 57px;
+      }
+      .pi2{
+        width: 72px;
+      }
+      .pi3{
+        width: 11px;
+      }
+      paper-input{
+        text-align: center;
+      }
+    </style>
+    <div> 
+     <table border="1">
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-input value="{{enthusiasm}}" id="p1" on-change="FnEnthusiasm"></td>
+        <td><paper-input value="{{discipline}}" id="p1" on-change="FnDiscipline"></paper-input></td>
+        <td><paper-input value="{{teamspirit}}" id="p1" on-change="FnTeamSpirit"></paper-input></td>
+        <td><paper-input value="{{talent}}" id="p1" on-change="FnTalent"></paper-input></td>
+        </tr>
+      </table> 
+    </div>
+     <term-assesment-service id="assesmentservice"></term-assesment-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var enthusiasm,discipline,teamspirit,talent;
+    Polymer({
+      is: 'cs-games-itemcard',
+      ready:function(){       
+      },
+      FnEnthusiasm:function(){
+        enthusiasm=parseFloat(this.enthusiasm).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Enthusiasm","Enthusiasm",this.enthusiasm); 
+      },
+      FnDiscipline:function(){
+        discipline=parseFloat(this.discipline).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Discipline","Discipline",this.discipline); 
+      },
+      FnTeamSpirit:function(){
+        teamspirit=parseFloat(this.teamspirit).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Team Spirit","Team Spirit",this.teamspirit); 
+      },
+      FnTalent:function(){
+        talent=parseFloat(this.talent).toFixed(2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Talent","Talent",this.talent); 
+      }     
+    });
+  })();
+  </script>
+</dom-module>

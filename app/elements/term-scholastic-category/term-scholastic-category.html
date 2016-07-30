@@ -8,7 +8,7 @@
         display: block;
       }
       .outcard{
-        margin-left: 30%;
+        margin-left: 15%;
         margin-top: 10%;
         @apply(--layout-horizontal);
       }
@@ -18,14 +18,14 @@
        <paper-button on-click="FnScholastic" no ink><img src="../../images/scholastic.png" height="180px" width="180px"></paper-button>
       </div>
       <div class="card">
-       <paper-button on-click="FnCoScholastic" no ink><img src="../../images/coscholastic.jpg" height="180px" width="180px"></paper-button>
-      </div>
-    <!--   <div class="card">
-       <paper-button on-click="FnExtraSubject" no ink><img src="../../images/extrasubject.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnCoScholastic" no ink><img src="../../images/coscholastic.png" height="180px" width="180px"></paper-button>
+      </div>      
+      <div class="card">
+       <paper-button on-click="FnCoActivity" no ink><img src="../../images/coactivity.png" height="180px" width="180px"></paper-button>
       </div>
       <div class="card">
-       <paper-button on-click="FnCoActivity" no ink><img src="../../images/coactivity.jpg" height="180px" width="180px"></paper-button>
-      </div> -->
+       <paper-button on-click="FnGeneral" no ink><img src="../../images/general.png" height="180px" width="180px"></paper-button>
+      </div>
     </div>
   </template>
   <script>
@@ -45,18 +45,19 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('coscholasticassesment','');
         document.querySelector('coscholastic-assesment-card').callDefaultService();
+      },
+      FnCoActivity:function(){
+        localStorage.setItem("curr_sess_subjectcategory","category3");
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('coscholasticassesment','');
+        document.querySelector('coscholastic-assesment-card').callDefaultService();
+      },
+      FnGeneral:function(){
+        localStorage.setItem("curr_sess_subjectcategory","category4");
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('coscholasticassesment','');
+        document.querySelector('coscholastic-assesment-card').callDefaultService();
       }
-      //,
-      // FnScholastic:function(){
-      //   document.querySelector('app-card').setPage('homepage','');
-      //   document.querySelector('home-page').setPage('termassesment','');
-      //   document.querySelector('term-assesment-card').FnHideView();
-      // },
-      // FnScholastic:function(){
-      //   document.querySelector('app-card').setPage('homepage','');
-      //   document.querySelector('home-page').setPage('termassesment','');
-      //   document.querySelector('term-assesment-card').FnHideView();
-      // }
       
     });
   })();

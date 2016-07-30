@@ -33,14 +33,6 @@
     <div class='card'>
      
      <div class='drop'>
-      
-          <!--<paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
-              <template is="dom-repeat" items="{{academicarr}}">
-                <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>-->
 
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
@@ -65,20 +57,7 @@
               </template>
             </paper-menu>
           </paper-dropdown-menu>   
-
-          <!-- <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required> 
-                <paper-item value="Health">Health</paper-item>      
-                <paper-item value="Attendance">Attendance</paper-item> 
-                <paper-item value="Lifeskill">Life Skills</paper-item> 
-                <paper-item value="Workeducation">Work Education</paper-item> 
-                <paper-item value="Visualarts">Visual & Performing Arts</paper-item> 
-                <paper-item value="Attitude">Attitudes & Values</paper-item> 
-                <paper-item value="Cocurricular">Co-Curricular Activities</paper-item> 
-                <paper-item value="Physichealth">Health & Physical Activities</paper-item>               
-            </paper-menu>
-          </paper-dropdown-menu>  -->
-            
+           
      </div>
     </div>
     <co-scholastic-service id="assesmentservice"></co-scholastic-service>
@@ -111,7 +90,7 @@
       },
       FnSelectSubject:function(e){
         subject = e.target.selectedItem.textContent.trim();
-        localStorage.setItem("curr_sess_coscholastic_category",subject);              
+        localStorage.setItem("curr_sess_subject",subject);              
         this.callService();
       },
       callService:function(){
@@ -136,7 +115,15 @@
         else if(subject=="music"){                   
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-music-onetofour-card');
         document.querySelector('cc-music-onetofour-card').setDefaultHeaders();
-        }       
+        }  
+        else if(subject=="Games"){                   
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-games-card');
+        document.querySelector('cs-games-card').setDefaultHeaders();
+        } 
+        else if(subject=="Personality Development"){
+        document.querySelector('cs-personalitydevelopment-card').setDefaultHeaders();                   
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card');        
+        }      
         else if(subject=="Life Skills"){
         if(gradename=="Grade-9"||gradename=="Grade-10"){
         document.querySelector('cc-ntlife-skill-card').setDefaultHeaders();  

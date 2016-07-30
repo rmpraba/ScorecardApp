@@ -137,19 +137,18 @@
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.termname=localStorage.getItem("curr_sess_termname");
+        // alert(localStorage.getItem("curr_sess_grade"));
          if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
          obj.type='Pre-Primary';
          }
          else{
          obj.type='Primary';
-         }
-        // alert(JSON.stringify(obj));
+         }        
         this.fetchworkingdaysparam=obj;
         this.$.fetchworkingdaysajax.generateRequest();
       },
       fetchworkingdaysResponse:function(e){
-        var warr=e.detail.response.returnval;  
-        // alert(JSON.stringify(warr));      
+        var warr=e.detail.response.returnval;        
         document.querySelector('attendance-card').setWorkingDays(warr[0].no_of_days);
       },
       callAcademicService:function(){
@@ -199,7 +198,7 @@
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.gradename=grade;
          obj.section=section;
-         obj.subject=localStorage.getItem("curr_sess_coscholastic_category");
+         obj.subject=localStorage.getItem("curr_sess_subject");
          this.fetchstudentparam= obj;
          // alert(JSON.stringify(obj));
          this.$.fetchstudentajax.generateRequest();
@@ -209,41 +208,47 @@
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=parseInt(i)+1;
         }
-        if(localStorage.getItem("curr_sess_coscholastic_category")=="Health"){
+        if(localStorage.getItem("curr_sess_subject")=="Health"){
         document.querySelector('cce-fivetoten-health-card').studarr=arr;           
         } 
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Attendance"){            
+        else if(localStorage.getItem("curr_sess_subject")=="Attendance"){            
         document.querySelector('attendance-card').studarr=arr;                 
         }  
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Art&Craft"){                    
+        else if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){                    
         document.querySelector('cc-art-craft-onetofour-card').studarr=arr;        
         }
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="dance"){                   
+        else if(localStorage.getItem("curr_sess_subject")=="dance"){                   
         document.querySelector('cc-dance-onetofour-card').studarr=arr;         
         }
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="music"){                   
+        else if(localStorage.getItem("curr_sess_subject")=="music"){                   
         document.querySelector('cc-music-onetofour-card').studarr=arr;        
-        }      
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Life Skills"){
+        } 
+        else if(localStorage.getItem("curr_sess_subject")=="Games"){                   
+        document.querySelector('cs-games-card').studarr=arr;        
+        }
+        else if(localStorage.getItem("curr_sess_subject")=="Personality Development"){                   
+        document.querySelector('cs-personalitydevelopment-card').studarr=arr;        
+        }     
+        else if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
         document.querySelector('cc-ntlife-skill-card').studarr=arr;
         else
         document.querySelector('cs-life-skill-card').studarr=arr;    
         }
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Work Education"){
+        else if(localStorage.getItem("curr_sess_subject")=="Work Education"){
         document.querySelector('cs-education-card').studarr=arr;        
         }
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Visual & Performing Arts"){
+        else if(localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"){
         document.querySelector('cs-visual-performing-card').studarr=arr;       
         // document.querySelector('cs-visualerforming-card').studarr=arr;   
         }
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Attitudes & Values"){
+        else if(localStorage.getItem("curr_sess_subject")=="Attitudes & Values"){
         document.querySelector('cs-attitudes-card').studarr=arr;        
         }
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Co-Curricular Activities"){
+        else if(localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"){
         document.querySelector('cs-co-curricular-card').studarr=arr;        
         }
-        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Health & Physical Activities"){
+        else if(localStorage.getItem("curr_sess_subject")=="Health & Physical Activities"){
         document.querySelector('cs-health-physical-education-card').studarr=arr;         
         }         
       },
@@ -280,9 +285,9 @@
         else  if(cat=="attitude")
         document.querySelector('cs-attitudes-item-card').coarr=coarr;        
       },
-      callinsertcoscholasticassesmentmarkService:function(studid,studname,category,subcategory,mark){
+      callinsertcoscholasticassesmentmarkService:function(studid,studname,category,subcategory,mark,grade){
          this.insertcoassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertcoassesmentmark-service";
-         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":"","categorygrade":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.assesmentid=localStorage.getItem("curr_sess_assesment");
@@ -295,7 +300,9 @@
          obj.subject=localStorage.getItem("curr_sess_subject");
          obj.category=category;
          obj.subcategory=subcategory;
-         obj.mark=mark;         
+         obj.mark=mark; 
+         // obj.total=total; 
+         obj.categorygrade=grade;       
          this.insertcoassesmentmarkparam= obj;        
          this.$.insertcoassesmentmarkajax.generateRequest();
       },
@@ -327,15 +334,13 @@
          this.inserthealthurl=sessionStorage.getItem("addrinfo")+"/inserthealth-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","height":"","weight":"","bloodgroup":"","visionleft":"","visionright":"","dental":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-         // obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");         
          obj.termname=localStorage.getItem("curr_sess_termname");
          obj.classid=sessionStorage.getItem("curr_sess_classid");
          obj.studentid=studid;
          obj.studentname=studname;        
          obj.grade=localStorage.getItem("curr_sess_grade");;
-         obj.section=localStorage.getItem("curr_sess_section");
-         // obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.section=localStorage.getItem("curr_sess_section");                  
          obj.height=height;
          obj.weight=weight;
          obj.bloodgroup=bloodgroup;         
@@ -345,8 +350,9 @@
          this.inserthealthparam= obj;        
          this.$.inserthealthajax.generateRequest();
       },
-      inserthealthResponse:function(e){
-        alert(e.detail.response.returnval);
+      inserthealthResponse:function(e){        
+        if(e.detail.response.returnval=="succ")
+          alert('Inserted!');
       }     
     });
   })();

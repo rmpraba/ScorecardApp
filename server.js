@@ -176,7 +176,7 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
   var qur="select * from md_subject where subject_id in "+
   "(select subject_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and "+
   "grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
-  "section_id=(select section_id from md_section where section_name='"+req.query.section+"'))";
+  "section_id=(select section_id from md_section where section_name='"+req.query.section+"')) and subject_category='"+req.query.subjectcategory+"'";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -544,14 +544,14 @@ var response={
          student_name:req.query.studentname,         
          grade:req.query.grade,
          section:req.query.section,
-         subject_id:req.query.category,
-         //category:req.query.category,
+         subject_id:req.query.subject,
+         grade:req.query.grade,
+         section:req.query.section,         
          sub_category:req.query.subcategory,
-         mark:req.query.mark                 
-  }
-
-  var subname={subject_name:req.query.category};
-  // console.log(req.query.subject);
+         mark:req.query.mark,         
+         category_grade:req.query.categorygrade
+  }  
+  
   var subname={subject_name:req.query.subject};
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
@@ -949,8 +949,8 @@ app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
   var academicyear={academic_year:req.query.academicyear};
   var schoolid={school_id:req.query.schoolid};
   var termname={term_name:req.query.termname};
-  // var type={type:req.query.type};
-  console.log(req.query.academicyear+" "+req.query.schoolid+" "+req.query.termname+" "+req.query.type);
+  var type={type:req.query.type};
+  // console.log(req.query.academicyear+" "+req.query.schoolid+" "+req.query.termname+" "+req.query.type);
   connection.query(qur,[academicyear,schoolid,termname,type],
     function(err, rows)
     {

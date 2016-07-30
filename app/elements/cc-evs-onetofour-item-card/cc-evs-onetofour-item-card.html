@@ -51,47 +51,102 @@
     </div>
 
     <term-assesment-service id="assesmentservice"></term-assesment-service>
-    
+    <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
     'use strict';
     var assignment,drawing,labeling,neatness,knowledge,presentation,involvement,activity;
+    var lower=[];
+    var higher=[];
+    var grade=[];
     Polymer({
       is: 'cc-evs-onetofour-item-card',
       ready:function(){       
       },
       FnAssignment:function(e){               
         assignment=parseFloat(this.assignment).toFixed(2);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Environmental sensitivity","Assignment",this.assignment);       
+               
       },
       FnDrawing:function(e){               
         drawing=parseFloat(this.drawing).toFixed(2);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Drawing",this.drawing);     
+           
       },
       FnLabeling:function(e){               
         labeling=parseFloat(this.labeling).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Labeling",this.labeling); 
+         
       },
       FnNeatness:function(){
         neatness=parseFloat(this.neatness).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Neatness",this.neatness); 
+        
       },
       FnKnowledge:function(){
         knowledge=parseFloat(this.knowledge).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Knowledge",this.knowledge); 
+         
       },
       FnPresentation:function(){
         presentation=parseFloat(this.presentation).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Presentation",this.presentation); 
+         
       },
       FnInvolvement:function(){
         involvement=parseFloat(this.involvement).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Involvement",this.involvement); 
+         
       },
       FnActivity:function(){
         activity=parseFloat(this.activity).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity); 
+        this.es=this.assignment;
+        this.ap=(parseInt(this.drawing)+parseInt(this.labeling)+parseInt(this.neatness))/3;
+        this.gd=(parseInt(this.knowledge)+parseInt(this.presentation)+parseInt(this.involvement))/3;
+        this.ww=this.activity;
+        this.callFetchGrade();  
+      },
+      callFetchGrade:function(){
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
+      },
+      fetchgradesResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.esgrade=this.FnFindGrade((parseInt(this.es)));  
+        this.apgrade=this.FnFindGrade(this.ap);  
+        this.gdgrade=this.FnFindGrade(this.gd);  
+        this.wwgrade=this.FnFindGrade(this.ww);  
+        this.callService();  
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+      },
+      callService:function(){
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Environmental sensitivity","Assignment",this.assignment);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Drawing",this.drawing);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Labeling",this.labeling);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Neatness",this.neatness); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Knowledge",this.knowledge);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Presentation",this.presentation);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Involvement",this.involvement);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Environmental sensitivity",this.es,this.es,this.conceptgrade,4);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Activity/Project",this.ap,this.ap,this.apgrade,4);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Group Discussion",this.gd,this.gd,this.gdgrade,4);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Written Work",this.ww,this.ww,this.wwgrade,4);
       }   
     }); 
   })();

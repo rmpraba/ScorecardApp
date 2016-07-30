@@ -214,7 +214,16 @@
         } 
         else if(localStorage.getItem("curr_sess_coscholastic_category")=="Attendance"){            
         document.querySelector('attendance-card').studarr=arr;                 
-        }        
+        }  
+        else if(localStorage.getItem("curr_sess_coscholastic_category")=="Art&Craft"){                    
+        document.querySelector('cc-art-craft-onetofour-card').studarr=arr;        
+        }
+        else if(localStorage.getItem("curr_sess_coscholastic_category")=="dance"){                   
+        document.querySelector('cc-dance-onetofour-card').studarr=arr;         
+        }
+        else if(localStorage.getItem("curr_sess_coscholastic_category")=="music"){                   
+        document.querySelector('cc-music-onetofour-card').studarr=arr;        
+        }      
         else if(localStorage.getItem("curr_sess_coscholastic_category")=="Life Skills"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
         document.querySelector('cc-ntlife-skill-card').studarr=arr;

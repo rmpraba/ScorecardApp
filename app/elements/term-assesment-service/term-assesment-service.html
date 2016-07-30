@@ -259,16 +259,20 @@
       },
       callSubjectService:function(gradename,section){
          this.subjecturl=sessionStorage.getItem("addrinfo")+"/subject-service";
-         var obj={"schoolid":"","loggedid":"","gradename":"","section":""};
+         var obj={"schoolid":"","loggedid":"","gradename":"","section":"","subjectcategory":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
          obj.gradename=gradename;
          obj.section=section;
+         obj.subjectcategory=localStorage.getItem("curr_sess_subjectcategory");
          this.subjectparam= obj;
          this.$.subjectajax.generateRequest();
       },
-      subjectResponse:function(e){          
+      subjectResponse:function(e){  
+          if(localStorage.getItem("curr_sess_subjectcategory")=="category1")        
           document.querySelector('term-assesment-card').subjectarr=e.detail.response.returnval;
+          else
+          document.querySelector('coscholastic-assesment-card').subjectarr=e.detail.response.returnval;  
       },
       callAssesmentService:function(termtype,termname,gradename){
          this.assesmenturl=sessionStorage.getItem("addrinfo")+"/assesment-service";
@@ -391,36 +395,36 @@
         if(localStorage.getItem("curr_sess_subject")=="EVS")
         {        
         document.querySelector('cc-evs-onetofour-card').studarr=arr;
-        document.querySelector('cc-evs-onetofour-card').hiddenbutton();
+        // document.querySelector('cc-evs-onetofour-card').hiddenbutton();
         }
         if(localStorage.getItem("curr_sess_subject")=="English"||localStorage.getItem("curr_sess_subject")=="Hindi"||localStorage.getItem("curr_sess_subject")=="Kannada"){        
         document.querySelector('cc-eng-onetofour-card').studarr=arr;
-        document.querySelector('cc-eng-onetofour-card').hiddenbutton();
+        // document.querySelector('cc-eng-onetofour-card').hiddenbutton();
         }
         if(localStorage.getItem("curr_sess_subject")=="GK"){   
-        document.querySelector('cc-gk-onetofour-card').hiddenbutton();     
+        // document.querySelector('cc-gk-onetofour-card').hiddenbutton();     
         document.querySelector('cc-gk-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="Computer"){   
-         document.querySelector('cc-computer-onetofour-card').hiddenbutton();
+        // document.querySelector('cc-computer-onetofour-card').hiddenbutton();
         document.querySelector('cc-computer-onetofour-card').studarr=arr;
         }
         
 
         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
-       document.querySelector('cc-art-craft-onetofour-card').hiddenbutton();
+        // document.querySelector('cc-art-craft-onetofour-card').hiddenbutton();
         document.querySelector('cc-art-craft-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="dance"){  
-        document.querySelector('cc-dance-onetofour-card').hiddenbutton();      
+        // document.querySelector('cc-dance-onetofour-card').hiddenbutton();      
         document.querySelector('cc-dance-onetofour-card').studarr=arr;
         }
         if(localStorage.getItem("curr_sess_subject")=="music"){ 
-        document.querySelector('cc-music-onetofour-card').hiddenbutton();       
+        // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cc-music-onetofour-card').studarr=arr;
         }
      
-    }
+        }
         else
         {
          if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){

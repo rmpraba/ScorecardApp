@@ -176,7 +176,8 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
   var qur="select * from md_subject where subject_id in "+
   "(select subject_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and "+
   "grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
-  "section_id=(select section_id from md_section where section_name='"+req.query.section+"'))";
+  "section_id=(select section_id from md_section where section_name='"+req.query.section+"')) and "+
+  "subject_category='"+req.query.subjectcategory+"'";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -944,13 +945,11 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 
 app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
 {
-  var qur="select * from md_workingdays where ? and ? and ? and ?";
-  // console.log(qur);
+  var qur="select * from md_workingdays where ? and ? and ? and ?";  
   var academicyear={academic_year:req.query.academicyear};
   var schoolid={school_id:req.query.schoolid};
   var termname={term_name:req.query.termname};
-  // var type={type:req.query.type};
-  console.log(req.query.academicyear+" "+req.query.schoolid+" "+req.query.termname+" "+req.query.type);
+  var type={type:req.query.type};  
   connection.query(qur,[academicyear,schoolid,termname,type],
     function(err, rows)
     {
@@ -961,8 +960,7 @@ app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': rows});
     }
     else
-    {
-      console.log(err);
+    {      
       res.status(200).json({'returnval': 'invalid'});
     }
     }

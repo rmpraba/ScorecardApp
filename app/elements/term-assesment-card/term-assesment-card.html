@@ -185,28 +185,13 @@
           document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');
           document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();
           
-        } 
-        if(subject=="Art&Craft"){        
-          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
-          document.querySelector('term-assesment-sheet-card').setPage('cc-art-craft-onetofour-card');
-          document.querySelector('cc-art-craft-onetofour-card').setDefaultHeaders();
-        }
+        }       
         if(subject=="Computer")
         {        
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-computer-onetofour-card');
           document.querySelector('cc-computer-onetofour-card').setDefaultHeaders();
-        }
-        if(subject=="dance"){        
-          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
-          document.querySelector('term-assesment-sheet-card').setPage('cc-dance-onetofour-card');
-          document.querySelector('cc-dance-onetofour-card').setDefaultHeaders();
-        }
-        if(subject=="music"){        
-          this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
-          document.querySelector('term-assesment-sheet-card').setPage('cc-music-onetofour-card');
-          document.querySelector('cc-music-onetofour-card').setDefaultHeaders();
-        }
+        }        
         }
         else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4"){  
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);           

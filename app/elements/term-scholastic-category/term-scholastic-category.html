@@ -20,6 +20,12 @@
       <div class="card">
        <paper-button on-click="FnCoScholastic" no ink><img src="../../images/coscholastic.jpg" height="180px" width="180px"></paper-button>
       </div>
+    <!--   <div class="card">
+       <paper-button on-click="FnExtraSubject" no ink><img src="../../images/extrasubject.jpg" height="180px" width="180px"></paper-button>
+      </div>
+      <div class="card">
+       <paper-button on-click="FnCoActivity" no ink><img src="../../images/coactivity.jpg" height="180px" width="180px"></paper-button>
+      </div> -->
     </div>
   </template>
   <script>
@@ -29,15 +35,28 @@
     Polymer({
       is: 'term-scholastic-category',
       FnScholastic:function(){
+        localStorage.setItem("curr_sess_subjectcategory","category1");
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('termassesment','');
         document.querySelector('term-assesment-card').FnHideView();
       },
       FnCoScholastic:function(){
+        localStorage.setItem("curr_sess_subjectcategory","category2");
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('coscholasticassesment','');
         document.querySelector('coscholastic-assesment-card').callDefaultService();
       }
+      //,
+      // FnScholastic:function(){
+      //   document.querySelector('app-card').setPage('homepage','');
+      //   document.querySelector('home-page').setPage('termassesment','');
+      //   document.querySelector('term-assesment-card').FnHideView();
+      // },
+      // FnScholastic:function(){
+      //   document.querySelector('app-card').setPage('homepage','');
+      //   document.querySelector('home-page').setPage('termassesment','');
+      //   document.querySelector('term-assesment-card').FnHideView();
+      // }
       
     });
   })();

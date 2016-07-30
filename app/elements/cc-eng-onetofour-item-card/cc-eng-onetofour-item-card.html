@@ -56,10 +56,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </table>
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service> 
+    <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
     'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
     var pronunciation,fluency,comprehension,handwriting,creativeWriting,grammer,spelling,recitation,grammer,lcomprehension,vocabulary,conversation,activity;
 
     Polymer({
@@ -68,63 +81,114 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      FnPronunciation:function(e)
      {
        pronunciation=parseFloat(this.Pronunciation).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Pronunciation",this.Pronunciation); 
+        
      },
      FnFluency:function(e)
      {
       fluency=parseFloat(this.Fluency).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Fluency",this.Fluency);
+        
      },
      FnComprehension:function(e)
      {
       comprehension=parseFloat(this.Comprehension).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Comprehension",this.Comprehension);
+        
      },
      FnCreative:function(e)
      {
         creativeWriting=parseFloat(this.CreativeWriting).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","CreativeWriting",this.CreativeWriting);
+        
      },
      FnHandwriting:function(e)
      {
       handwriting=parseFloat(this.Handwriting).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Handwriting",this.Handwriting);
+        
      },
      FnGrammer:function(e)
      {
       grammer=parseFloat(this.Grammer).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Grammer",this.Grammer);
+        
      },
      FnSpelling:function(e)
      {
       spelling=parseFloat(this.Spelling).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Spelling",this.Spelling);
+        
      },
      FnVocabulary:function(e)
      {
       vocabulary=parseFloat(this.Vocabulary).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Vocabulary",this.Vocabulary);
+        
      },
      FnConversation:function(e)
      {
       conversation=parseFloat(this.Conversation).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Conversation",this.Conversation);
+        
      },
      FnRecitation:function(e)
      {
       recitation=parseFloat(this.Recitation).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Recitation",this.Recitation);
+        
      },
      FnLComprehension:function(e)
      {
       lcomprehension=parseFloat(this.LComprehension).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Listening Skills","LComprehension",this.LComprehension);
+        
      },
      FnActivity:function(e)
      {
       activity=parseFloat(this.Activity).toFixed(2);        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity);
-     }
+        this.readingskills=(parseInt(this.Pronunciation)+parseInt(this.Fluency)+parseInt(this.Comprehension))/3;
+        this.writingskills=(parseInt(this.CreativeWriting)+parseInt(this.Handwriting)+parseInt(this.Grammer)+parseInt(this.Spelling)+parseInt(this.Vocabulary))/5;
+        this.speakingskills=parseFloat((parseInt(this.Conversation)+parseInt(this.Recitation))/2).toFixed(2);
+        this.listeningskills=this.LComprehension;
+        this.writtenwork=this.Activity;
+        this.callFetchGrade();  
+     },
+     callFetchGrade:function(){
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
+     },
+     fetchgradesResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.readinggrade=this.FnFindGrade(this.readingskills);  
+        this.writinggrade=this.FnFindGrade(this.writingskills);  
+        this.speakinggrade=this.FnFindGrade(this.speakingskills);  
+        this.listeninggrade=this.FnFindGrade(this.listeningskills);  
+        this.writtengrade=this.FnFindGrade(this.writtenwork);
+        this.callService();  
+     },
+     FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+     },
+     callService:function(){
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Pronunciation",this.Pronunciation); 
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Fluency",this.Fluency);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Comprehension",this.Comprehension);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","CreativeWriting",this.CreativeWriting);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Handwriting",this.Handwriting);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Grammer",this.Grammer);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Spelling",this.Spelling);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Vocabulary",this.Vocabulary);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Conversation",this.Conversation);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Recitation",this.Recitation);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Listening Skills","LComprehension",this.LComprehension);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity);
+
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Reading Skills",this.readingskills,this.readingskills,this.readinggrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Writing Skills",this.writingskills,this.writingskills,this.writinggrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Speaking Skills",this.speakingskills,this.speakingskills,this.speakinggrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Listening Skills",this.listeningskills,this.listeningskills,this.listeninggrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Written Work",this.writtenwork,this.writtenwork,this.writtengrade,5);
+      }  
 
     });
   })();

@@ -2,6 +2,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="../cocurricular-service/cocurricular-service.html">
 
 <dom-module id="cs-games-itemcard">
   <template>
@@ -45,32 +46,73 @@
         </tr>
       </table> 
     </div>
-     <term-assesment-service id="assesmentservice"></term-assesment-service>
+     <cocurricular-service id="assesmentservice"></cocurricular-service>
+     <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+     >
   </template>
   <script>
   (function() {
     'use strict';
     var enthusiasm,discipline,teamspirit,talent;
+    var lower=[];
+    var higher=[];
+    var grade=[];
     Polymer({
       is: 'cs-games-itemcard',
       ready:function(){       
       },
       FnEnthusiasm:function(){
-        enthusiasm=parseFloat(this.enthusiasm).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Enthusiasm","Enthusiasm",this.enthusiasm); 
+        enthusiasm=parseFloat(this.enthusiasm).toFixed(2);        
       },
       FnDiscipline:function(){
-        discipline=parseFloat(this.discipline).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Discipline","Discipline",this.discipline); 
+        discipline=parseFloat(this.discipline).toFixed(2);          
       },
       FnTeamSpirit:function(){
-        teamspirit=parseFloat(this.teamspirit).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Team Spirit","Team Spirit",this.teamspirit); 
+        teamspirit=parseFloat(this.teamspirit).toFixed(2);          
       },
       FnTalent:function(){
         talent=parseFloat(this.talent).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Talent","Talent",this.talent); 
-      }     
+        this.total=parseInt(this.enthusiasm)+parseInt(this.discipline)+parseInt(this.teamspirit)+parseInt(this.talent);
+        this.reduction=parseFloat(this.total)/4;
+        this.callFetchGrade();      
+      },
+      callFetchGrade:function(){
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
+      },
+      fetchgradesResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.grade=this.FnFindGrade((parseInt(this.reduction)));  
+        this.callService();  
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+      },
+      callService:function(){
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Enthusiasm",this.enthusiasm);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Discipline",this.discipline);  
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Team Spirit",this.teamspirit);  
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Talent",this.talent);  
+        this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Games",this.total,this.reduction,this.grade);
+      }          
     });
   })();
   </script>

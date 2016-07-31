@@ -573,23 +573,26 @@ var response={
   });
 });
 //storing overall coscholastic mark
-app.post('/overallcotermmarkinsert-service',  urlencodedParser,function (req, res){
+app.post('/overallinsertcoassesment-service',  urlencodedParser,function (req, res){
    var response={
          school_id:req.query.schoolid,
-         academic_year:req.query.academicyear,   
-
+         academic_year:req.query.academicyear,
          assesment_id:req.query.assesmentid,
          term_name:req.query.termname,         
          student_id:req.query.studentid,
          student_name:req.query.studentname,         
          subject_id:req.query.subject,
-         //type:req.query.type,
-         //category:req.query.category,         
+         type:req.query.type,
+         category:req.query.category,         
          total:req.query.total,
          rtotal:req.query.rtotal,
          grade:req.query.grade                
   }
-  // console.log(response);
+  var subname={subject_name:req.query.subject};
+  connection.query("SELECT subject_category FROM md_subject where ?",[subname],
+  function(err, rows)
+  {
+  response.subject_category=rows[0].subject_category; 
   connection.query("INSERT INTO tr_term_co_assesment_overall_marks set ?",[response],
   function(err, rows){
      if(!err)
@@ -603,7 +606,92 @@ app.post('/overallcotermmarkinsert-service',  urlencodedParser,function (req, re
     }
   
   });
+  });
 });
+
+//storing mark for coscholastic assessment
+app.post('/insertcocurricularmark-service',  urlencodedParser,function (req, res){
+// console.log('In..');
+var response={ 
+ 
+         school_id:req.query.schoolid,
+         academic_year:req.query.academicyear,
+         assessment_id:req.query.assesmentid,
+         term_name:req.query.termname,
+         class_id:req.query.classid,
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         grade:req.query.grade,
+         section:req.query.section,
+         subject_id:req.query.subject,
+         grade:req.query.grade,
+         section:req.query.section,         
+         sub_category:req.query.subcategory,
+         mark:req.query.mark,         
+         category_grade:req.query.categorygrade
+  }  
+  
+  var subname={subject_name:req.query.subject};
+  // console.log(JSON.stringify(subname));
+  connection.query("SELECT subject_category FROM md_subject where ?",[subname],
+  function(err, rows)
+  {
+  // console.log(rows.length);
+  response.subject_category=rows[0].subject_category; 
+  // console.log(response.subject_category); 
+  connection.query("INSERT INTO tr_cocurricular_term_marks set ?",[response],
+  function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+  });
+  });
+});
+
+//storing overall coscholastic mark
+app.post('/overallinsertcocurricularmark-service',  urlencodedParser,function (req, res){
+   var response={
+         school_id:req.query.schoolid,
+         academic_year:req.query.academicyear,
+         assesment_id:req.query.assesmentid,
+         term_name:req.query.termname,         
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         subject_id:req.query.subject,
+         type:req.query.type,
+         category:req.query.category,         
+         total:req.query.total,
+         rtotal:req.query.rtotal,
+         grade:req.query.grade                
+  }
+  var subname={subject_name:req.query.subject};  
+  connection.query("SELECT subject_category FROM md_subject where ?",[subname],
+  function(err, rows)
+  {
+  response.subject_category=rows[0].subject_category; 
+  connection.query("INSERT INTO tr_cocurricular_overallterm_marks set ?",[response],
+  function(err, rows){
+     if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+  
+  });
+  });
+});
+
 
 
 //fetching student names

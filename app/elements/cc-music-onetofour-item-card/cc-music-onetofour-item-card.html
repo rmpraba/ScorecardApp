@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
-
+<link rel="import" href="../cocurricular-service/cocurricular-service.html">
 
 <dom-module id="cc-music-onetofour-item-card">
   <template>
@@ -54,39 +54,69 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
       </table> 
     </div>
-     <term-assesment-service id="assesmentservice"></term-assesment-service>
+     <cocurricular-service id="assesmentservice"></cocurricular-service>
+     <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+     >
   </template>
   <script>
-  (function() {
-    var interest,rhythm,melody;
+  (function() {    
     'use strict';
-
+    var interest,rhythm,melody;
+    var lower=[];
+    var higher=[];
+    var grade=[];
     Polymer({
       is: 'cc-music-onetofour-item-card',
-      ready:function(){
-       
+      ready:function(){       
       },
       FnInterest:function(){
-        interest=parseFloat(this.interest).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Interest","",this.interest); 
+        interest=parseFloat(this.interest).toFixed(2);        
       } ,
       FnRhythm:function(){
-        rhythm=parseFloat(this.rhythm).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Rhythm","",this.rhythm); 
+        rhythm=parseFloat(this.rhythm).toFixed(2);        
       },
       FnMelody:function(){
         melody=parseFloat(this.melody).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Melody","",this.melody); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest); 
-      } ,
-      FnRhythm:function(){
-        rhythm=parseFloat(this.rhythm).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm); 
+        this.total=parseInt(this.interest)+parseInt(this.rhythm)+parseInt(this.melody);
+        this.reduction=parseFloat(this.total)/3;
+        this.callFetchGrade();      
       },
-      FnMelody:function(){
-        melody=parseFloat(this.melody).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody); 
-      }    
+      callFetchGrade:function(){
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
+      },
+      fetchgradesResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.grade=this.FnFindGrade((parseInt(this.reduction)));  
+        this.callService();  
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+      },
+      callService:function(){
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Rhythm",this.rhythm);  
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Melody",this.melody);  
+        this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Music",this.total,this.reduction,this.grade);
+      }         
      
     });
   })();

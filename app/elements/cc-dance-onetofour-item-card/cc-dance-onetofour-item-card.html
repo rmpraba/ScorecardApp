@@ -1,17 +1,7 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
-
+<link rel="import" href="../cocurricular-service/cocurricular-service.html">
 
 <dom-module id="cc-dance-onetofour-item-card">
   <template>
@@ -54,39 +44,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
       </table> 
     </div>
-     <term-assesment-service id="assesmentservice"></term-assesment-service>
+     <cocurricular-service id="assesmentservice"></cocurricular-service>
+     <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+     >
   </template>
   <script>
   (function() {
-    var interest,rhythm,grace;
+    
     'use strict';
+    var interest,rhythm,grace;
+    var lower=[];
+    var higher=[];
+    var grade=[];
 
     Polymer({
       is: 'cc-dance-onetofour-item-card',
-      ready:function(){
-       
+      ready:function(){       
       },
       FnInterest:function(){
-        interest=parseFloat(this.interest).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Interest","",this.interest); 
+        interest=parseFloat(this.interest).toFixed(2);        
       } ,
       FnRhythm:function(){
-        rhythm=parseFloat(this.rhythm).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Rhythm","",this.rhythm); 
+        rhythm=parseFloat(this.rhythm).toFixed(2);        
       },
       FnGrace:function(){
-        grace=parseFloat(this.grace).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Grace","",this.grace); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Dance","Interest",this.interest); 
-      } ,
-      FnRhythm:function(){
-        rhythm=parseFloat(this.rhythm).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Dance","Rhythm",this.rhythm); 
+        grace=parseFloat(this.grace).toFixed(2);         
+        this.total=parseInt(this.interest)+parseInt(this.rhythm)+parseInt(this.grace);
+        this.reduction=parseFloat(this.total)/3;
+        this.callFetchGrade();      
       },
-      FnGrace:function(){
-        grace=parseFloat(this.grace).toFixed(2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Dance","Grace",this.grace); 
-      }    
+      callFetchGrade:function(){
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
+      },
+      fetchgradesResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.grade=this.FnFindGrade((parseInt(this.reduction)));  
+        this.callService();  
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+      },
+      callService:function(){
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Rhythm",this.rhythm);  
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Grace",this.grace);  
+        this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Dance",this.total,this.reduction,this.grade);
+      }     
     });
   })();
   </script>

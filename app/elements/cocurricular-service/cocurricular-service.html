@@ -1,0 +1,90 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="cocurricular-service">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <iron-ajax
+        method="post"
+        id="insertcocurricularmarkajax"
+        url="{{insertcocurricularmarkurl}}"
+        params="{{insertcocurricularmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertcocurricularmarkResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="overallinsertcocurricularmarkajax"
+        url="{{overallinsertcocurricularmarkurl}}"
+        params="{{overallinsertcocurricularmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="overallinsertcocurricularmarkResponse"
+        debounce-duration="300"
+    >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'cocurricular-service',
+      callinsertcocurricularmarkService:function(studid,studname,category,mark,grade){
+        // alert('hi');
+         this.insertcocurricularmarkurl=sessionStorage.getItem("addrinfo")+"/insertcocurricularmark-service";
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":"","categorygrade":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=studid;
+         obj.studentname=studname;        
+         obj.grade=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.category=category;
+         // obj.subcategory=subcategory;
+         obj.mark=mark; 
+         // obj.total=total; 
+         obj.categorygrade=grade;       
+         this.insertcocurricularmarkparam= obj;
+         // alert(JSON.stringify(this.insertcocurricularmarkparam));        
+         this.$.insertcocurricularmarkajax.generateRequest();
+      },
+      insertcocurricularmarkResponse:function(e){
+        alert(e.detail.response.returnval);
+      },
+      calloverallinsertcocurricularmarkService:function(studid,studname,category,total,reduction,grade){        
+         this.overallinsertcocurricularmarkurl=sessionStorage.getItem("addrinfo")+"/overallinsertcocurricularmark-service";
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","studentid":"","studentname":"","subject":"","type":"","category":"","total":"","rtotal":"","grade":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=studid;
+         obj.studentname=studname;        
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.type=category;
+         obj.category=category;    
+         obj.total=total; 
+         obj.rtotal=reduction;         
+         obj.grade=grade;
+         this.overallinsertcocurricularmarkparam= obj;
+         this.$.overallinsertcocurricularmarkajax.generateRequest();
+      },
+      overallinsertcocurricularmarkResponse:function(e){
+        alert(e.detail.response.returnval);
+      }
+    });
+  })();
+  </script>
+</dom-module>

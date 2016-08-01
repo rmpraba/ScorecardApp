@@ -1,0 +1,324 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="onetofour-scorecard-service">
+  <template>
+   
+    <iron-ajax
+        method="post"
+        id="fetchsubjectnameajax"
+        url="{{fetchsubjectnameurl}}"
+        params="{{fetchsubjectnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchsubjectnameResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="fetchstudinfoajax"
+        url="{{fetchstudinfourl}}"
+        params="{{fetchstudinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudinfoResponse"
+        debounce-duration="300"
+    > 
+        
+    <iron-ajax        
+        method="post"
+        id="fetchhealthattendanceinfoajax"
+        url="{{fetchhealthattendanceinfourl}}"
+        params="{{fetchhealthattendanceinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchhealthattendanceinfoResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax        
+        method="post"
+        id="fetchscholasticmarkajax"
+        url="{{fetchscholasticmarkurl}}"
+        params="{{fetchscholasticmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchscholasticmarkResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax        
+        method="post"
+        id="fetchcoscholasticmarkajax"
+        url="{{fetchcoscholasticmarkurl}}"
+        params="{{fetchcoscholasticmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchcoscholasticmarkResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="fetchcocurricularmarkajax"
+        url="{{fetchcocurricularmarkurl}}"
+        params="{{fetchcocurricularmarkparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchcocurricularmarkResponse"
+        debounce-duration="300"
+    > 
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var subjectarr;
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    var scholasticarr;
+    var coscholasticarr;
+    var cocurriculararr;
+  
+    Polymer({
+      is: 'onetofour-scorecard-service',
+      ready:function(){        
+      },      
+      callFetchstudentinfoService:function(studid){
+        this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
+        var obj={"scoolid":"","studid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.studid=studid;
+        this.fetchstudinfoparam=obj;
+        this.$.fetchstudinfoajax.generateRequest();
+      },
+      fetchstudinfoResponse:function(e){        
+        var arr=e.detail.response.returnval;        
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){          
+        document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
+        document.querySelector('cce-onetofour-score-card').studentname=arr[0].student_name;        
+        document.querySelector('cce-onetofour-score-card').parentname=arr[0].parent_name;
+        }
+      },
+      callfetchhealthattendanceinfoService:function(studid){
+        this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";
+        var obj={"scoolid":"","studid":"","academicyear":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.studid=studid;
+        this.fetchhealthattendanceinfoparam=obj;
+        this.$.fetchhealthattendanceinfoajax.generateRequest();
+      },
+      fetchhealthattendanceinfoResponse:function(e){        
+        var arr=e.detail.response.returnval;
+        if(arr.length==1||arr.length==2||arr.length==3){
+        document.querySelector('cce-onetofour-score-card').adterm1=arr[0].attendance;
+        document.querySelector('cce-onetofour-score-card').wdterm1=arr[0].working_days;
+        document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        }
+        if(arr.length==2){
+        document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;
+        document.querySelector('cce-onetofour-score-card').wdterm2=arr[1].working_days;
+        document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
+        }
+        if(arr.length==3){
+        document.querySelector('cce-onetofour-score-card').adterm3=arr[2].attendance; 
+        document.querySelector('cce-onetofour-score-card').wdterm3=arr[2].working_days;
+        document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[2].attendance/arr[2].working_days)*100).toFixed(2)+"%";
+        }
+        /*document.querySelector('cce-onetofour-score-card').height=arr[0].height;
+        document.querySelector('cce-onetofour-score-card').width=arr[0].width;
+        document.querySelector('cce-onetofour-score-card').bloodgroup=arr[0].blood_group;
+        document.querySelector('cce-onetofour-score-card').leftvision=arr[0].left_vision;
+        document.querySelector('cce-onetofour-score-card').rightvision=arr[0].right_vision;
+        document.querySelector('cce-onetofour-score-card').dental=arr[0].dental;*/
+      },
+      callFetchsubjectinfoService:function(studid){
+        this.fetchsubjectnameurl=sessionStorage.getItem("addrinfo")+"/fetchsubjectname-service";
+        var obj={"scoolid":"","studid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.studid=studid;
+        this.fetchsubjectnameparam=obj;
+        this.$.fetchsubjectnameajax.generateRequest();
+      },
+      fetchsubjectnameResponse:function(e){        
+        subjectarr=e.detail.response.returnval;       
+      },
+      callfetchscholasticmarkService:function(studid){
+        this.fetchscholasticmarkurl=sessionStorage.getItem("addrinfo")+"/fetchscholasticmark-service";
+        var obj={"scoolid":"","studid":"","academicyear":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.studid=studid;
+        this.fetchscholasticmarkparam=obj;
+        this.$.fetchscholasticmarkajax.generateRequest(); 
+      },
+      fetchscholasticmarkResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
+        var engarr=[];
+        var matharr=[];
+        var evsarr=[];
+        var hinarr=[];
+        var comarr=[];
+        var gkarr=[];
+        scholasticarr=e.detail.response.returnval;
+        for(var i=0;i<scholasticarr.length;i++){
+          var obj={"category":"","t1grade":"","t2grade":"","t3grade":""};          
+          if(scholasticarr[i].subject_id=="English"){
+            obj.category=scholasticarr[i].category;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].grade;    
+            engarr.push(obj);
+          }
+          if(scholasticarr[i].subject_id=="Mathematics"){
+            obj.category=scholasticarr[i].category;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].grade;
+            matharr.push(obj);
+          }
+          if(scholasticarr[i].subject_id=="EVS"){
+            obj.category=scholasticarr[i].category;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].grade;
+            evsarr.push(obj);
+          }
+          if(scholasticarr[i].subject_id=="Hindi"){
+            obj.category=scholasticarr[i].category;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].grade;
+            hinarr.push(obj);
+          }
+          if(scholasticarr[i].subject_id=="Computer"){
+            obj.category=scholasticarr[i].category;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].grade;
+            comarr.push(obj);
+          }          
+          if(scholasticarr[i].subject_id=="GK"){
+            obj.category=scholasticarr[i].category;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].grade;
+            gkarr.push(obj);
+          }          
+        }
+        document.querySelector('cce-onetofour-score-card').engArray=engarr;
+        document.querySelector('cce-onetofour-score-card').mathArray=matharr;
+        document.querySelector('cce-onetofour-score-card').evsArray=evsarr;
+        document.querySelector('cce-onetofour-score-card').secArray=hinarr;
+        document.querySelector('cce-onetofour-score-card').csArray=comarr;
+        document.querySelector('cce-onetofour-score-card').gkArray=gkarr;
+      },
+      callfetchcoscholasticmarkService:function(studid){
+        this.fetchcoscholasticmarkurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticmark-service";
+        var obj={"scoolid":"","studid":"","academicyear":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.studid=studid;
+        this.fetchcoscholasticmarkparam=obj;
+        this.$.fetchcoscholasticmarkajax.generateRequest();
+      },
+      fetchcoscholasticmarkResponse:function(e){        
+        coscholasticarr=e.detail.response.returnval;
+        // alert(JSON.stringify(coscholasticarr));
+        var parr=[];
+        for(var i=0;i<coscholasticarr.length;i++){
+          var obj={"category":"","t1grade":"","t2grade":"","t3grade":""};
+          obj.category=coscholasticarr[i].category;            
+          if(coscholasticarr[i].term_name=="term1"){
+            // alert('term1');
+          obj.t1grade=coscholasticarr[i].grade;
+          }
+          if(coscholasticarr[i].term_name=="term2"){
+            // alert('term2');
+          obj.t2grade=coscholasticarr[i].grade;
+          }
+          if(coscholasticarr[i].term_name=="term3"){
+            // alert('term3');
+          obj.t3grade=coscholasticarr[i].grade;
+          }
+          parr.push(obj);
+          // alert(JSON.stringify(obj));          
+        }
+        // alert(JSON.stringify(parr));
+        document.querySelector('cce-onetofour-score-card').personalityArray=parr;
+      },
+      callfetchcocurricularmarkService:function(studid){
+        this.fetchcocurricularmarkurl=sessionStorage.getItem("addrinfo")+"/fetchcocurricularmark-service";
+        var obj={"scoolid":"","studid":"","academicyear":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.studid=studid;
+        this.fetchcocurricularmarkparam=obj;
+        this.$.fetchcocurricularmarkajax.generateRequest();
+      },
+      fetchcocurricularmarkResponse:function(e){
+        alert(JSON.stringify(e.detail.response.returnval));
+        cocurriculararr=e.detail.response.returnval;
+        var acarr=[];
+        var mdarr=[];
+        var gamearr=[];
+              
+        for(var i=0;i<cocurriculararr.length;i++){
+          var obj={"category":"","t1grade":"","t2grade":"","t3grade":""};          
+          if(cocurriculararr[i].subject_id=="Art&Craft"){            
+            obj.category=cocurriculararr[i].category;
+            if(cocurriculararr[i].term_name=="term1")
+            obj.t1grade=cocurriculararr[i].grade;
+            if(cocurriculararr[i].term_name=="term2")
+            obj.t2grade=cocurriculararr[i].grade;..
+            if(cocurriculararr[i].term_name=="term3")
+            obj.t3grade=cocurriculararr[i].grade;     
+            acarr.push(obj);
+          }
+          if(cocurriculararr[i].subject_id=="Music"){
+            obj.category=cocurriculararr[i].category;
+            if(cocurriculararr[i].term_name=="term1")
+            obj.t1grade=cocurriculararr[i].grade;
+            if(cocurriculararr[i].term_name=="term2")
+            obj.t2grade=cocurriculararr[i].grade;
+            if(cocurriculararr[i].term_name=="term3")
+            obj.t3grade=cocurriculararr[i].grade;
+            mdarr.push(obj);
+          }
+          if(cocurriculararr[i].subject_id=="Games"){
+            obj.category=cocurriculararr[i].category;
+            if(cocurriculararr[i].term_name=="term1")
+            obj.t1grade=cocurriculararr[i].grade;
+            if(cocurriculararr[i].term_name=="term2")
+            obj.t2grade=cocurriculararr[i].grade;
+            if(cocurriculararr[i].term_name=="term3")
+            obj.t3grade=cocurriculararr[i].grade;
+            gamearr.push(obj);
+          }
+        }
+        document.querySelector('cce-onetofour-score-card').acArray=acarr;
+        document.querySelector('cce-onetofour-score-card').mdArray=mdarr;
+        document.querySelector('cce-onetofour-score-card').gamesArray=gamearr;
+      }
+      });
+  })();
+  </script>
+</dom-module>

@@ -778,11 +778,11 @@ app.post('/fetchsubjectname-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};
-  var qur="select subject_id,subject_name from md_subject where subject_id in"+
+  var qur="select subject_id,subject_name,subject_category from md_subject where subject_id in"+
   "(select subject_id from mp_grade_subject where grade_id="+
   "(select grade_id from mp_grade_section where class_id="+
   "(select class_id from md_student where id='"+req.query.studid+"' "+
-  "and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"')) order by subject_name";
+  "and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"')) order by subject_category";
 
   connection.query(qur,
     function(err, rows)
@@ -807,6 +807,76 @@ app.post('/fetchmark-service',  urlencodedParser,function (req,res)
   var studid={student_id:req.query.studid};  
 
   connection.query("SELECT * FROM tr_term_assesment_overall_marks WHERE ? AND ? order by subject_id",[studid,schoolid],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+//fetchscholasticmark-service
+app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var studid={student_id:req.query.studid}; 
+  var academicyear={academic_year:req.query.academicyear};  
+
+  connection.query("SELECT * FROM tr_term_assesment_overall_assesmentmarks WHERE ? AND ? AND ? order by subject_id",[studid,schoolid,academicyear],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+//fetchcoscholasticmark-service
+app.post('/fetchcoscholasticmark-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var studid={student_id:req.query.studid}; 
+  var academicyear={academic_year:req.query.academicyear};  
+
+  connection.query("SELECT * FROM tr_term_co_assesment_overall_marks WHERE ? AND ? AND ? order by subject_id",[studid,schoolid,academicyear],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+//fetchcocurricularmark-service
+app.post('/fetchcocurricularmark-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var studid={student_id:req.query.studid}; 
+  var academicyear={academic_year:req.query.academicyear};  
+
+  connection.query("SELECT * FROM tr_cocurricular_overallterm_marks WHERE ? AND ? AND ? order by subject_id",[studid,schoolid,academicyear],
     function(err, rows)
     {
     if(!err)
@@ -864,6 +934,8 @@ app.post('/inserthealth-service',  urlencodedParser,function (req,res)
          student_name:req.query.studentname,         
          height:req.query.height,
          weight:req.query.weight,
+         grade:req.query.grade,
+         section:req.query.section,
          blood_group:req.query.bloodgroup,
          vision_left:req.query.visionleft,                          
          vision_right:req.query.visionright,
@@ -892,9 +964,11 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
+  var academicyear={academic_year:req.query.academicyear}; 
   var qur="select * from scorecarddb.tr_term_health th join scorecarddb.tr_term_attendance ta "+
   "on (th.student_id=ta.student_id) where th.student_id='"+req.query.studid+"' "+
-  "and th.school_id='"+req.query.schoolid+"'";
+  "and th.school_id='"+req.query.schoolid+"' and th.academic_year='"+req.query.academicyear+"'";
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {

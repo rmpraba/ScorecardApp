@@ -27,7 +27,7 @@
         margin-left: 5%;
       }
     </style>
-    <div class="card">
+      <div class="card">
           <div class="inner">
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
@@ -45,16 +45,9 @@
             </paper-menu>
           </paper-dropdown-menu>
           </div>
-
-      <!--<paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnInputChanged"></paper-input>
-      <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnItemSelected">
-        <template is="dom-repeat" items="{{itemArray}}" as="item">
-          <paper-item>{{item.itemdes}}</paper-item>
-        </template>
-      </paper-listbox>-->
-      <div class="list" hidden$="{{hidecard}}">
-      <student-list-card></student-list-card>
-      </div>
+    <div class="list" hidden$="{{hidecard}}">
+    <student-list-card></student-list-card>
+    </div>
     </div>
     <scorecard-service id="scorecardservice"></scorecard-service>
   </template>
@@ -67,8 +60,7 @@
     Polymer({
       is: 'cce-generate-score-card',
       ready:function(){
-        this.hidecard=true;
-         // this.querySelector('paper-listbox').style.visibility='hidden';
+        this.hidecard=true;         
       },
       FnHide:function(){
         this.hidecard=false;
@@ -82,9 +74,8 @@
       },
       FnSelectSection:function(e){
         section = e.target.selectedItem.textContent.trim();
-        localStorage.setItem("curr_sess_section",section);        
-        // if(this.flag==1)
-          this.callService();
+        localStorage.setItem("curr_sess_section",section);                
+        this.callService();
       },
       callService:function(){
         this.flag="1";        
@@ -92,7 +83,7 @@
       },
       autocompletearr:function(autocompletearr)
       {
-         item=autocompletearr;
+        item=autocompletearr;
       },
       FnInputChanged:function(e){     
       if(e.keyCode==13|| e.keyCode==40)
@@ -161,8 +152,7 @@
     this.studname = e.target.selectedItem.textContent.trim();    
     this.itemArray=[];
     document.querySelector('#input1').selected=-1;
-    this.value=this.studname; 
-    
+    this.value=this.studname;    
     this.$.scorecardservice.callFetchstudentinfoService(this.studname);
     this.$.scorecardservice.callFetchsubjectinfoService(this.studname);
     this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studname);

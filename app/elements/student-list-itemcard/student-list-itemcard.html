@@ -2,7 +2,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="import" href="../scorecard-service/scorecard-service.html">
-<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+<link rel="import" href="../onetofour-scorecard-service/onetofour-scorecard-service.html">
 
 <dom-module id="student-list-itemcard">
   <template>
@@ -16,8 +16,7 @@
       }
       td{
         width: 41%;        
-      }
-     
+      }     
     </style>
     <div>
       <table border="1">
@@ -27,31 +26,25 @@
         </tr>
       </table>      
     </div>
-    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
   </template>
   <script>
   (function() {
     'use strict';
-
     Polymer({
-      is: 'student-list-itemcard',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'student-list-itemcard',
-          notify: true
-        }
-      },      
+      is: 'student-list-itemcard',            
       FnView:function(){
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
-        this.$.assesmentservice.callFetchGrade();
-        this.$.scorecardservice.callFetchstudentinfoService(this.studentid);
-        this.$.assesmentservice.onetofourscore(this.studentid);
+        this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
+        this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
+        this.$.otfscorecardservice.callFetchsubjectinfoService(this.studentid);
+        this.$.otfscorecardservice.callfetchscholasticmarkService(this.studentid);
+        this.$.otfscorecardservice.callfetchcoscholasticmarkService(this.studentid);
+        this.$.otfscorecardservice.callfetchcocurricularmarkService(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('cce-onetofour-score-card',''); 
-        document.querySelector('cce-onetofour-score-card').setTerm();
+        document.querySelector('home-page').setPage('cce-onetofour-score-card','');        
+        document.querySelector('cce-onetofour-score-card').setDefaultHeaders();
         }
         else
         {

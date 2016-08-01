@@ -137,19 +137,19 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity); 
-        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Concept",this.concept,this.concept,this.conceptgrade,5);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity,8); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy,8); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy,8); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness,8);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8); 
+        /*this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Concept",this.concept,this.concept,this.conceptgrade,5);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Activity/Project",this.activityproject,this.activityproject,this.activityprojectgrade,5);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Mental Ability",this.mentalability,this.mentalability,this.mentalabilitygrade,5);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Table Activity",this.tableactivity,this.tableactivity,this.tableactivitygrade,5);
-        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Written Work",this.writtenwork,this.writtenwork,this.writtenworkgrade,5);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Written Work",this.writtenwork,this.writtenwork,this.writtenworkgrade,5);*/
       }  
     }); 
   })();

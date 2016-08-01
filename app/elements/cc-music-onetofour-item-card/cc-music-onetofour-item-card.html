@@ -112,10 +112,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest);
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Rhythm",this.rhythm);  
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Melody",this.melody);  
-        this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Music",this.total,this.reduction,this.grade);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest,3);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Rhythm",this.rhythm,3);  
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Melody",this.melody,3);  
+        // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Music",this.total,this.reduction,this.grade);
       }         
      
     });

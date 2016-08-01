@@ -105,10 +105,10 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest);
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Rhythm",this.rhythm);  
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Grace",this.grace);  
-        this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Dance",this.total,this.reduction,this.grade);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest,3);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Rhythm",this.rhythm,3);  
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Grace",this.grace,3);  
+        // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Dance",this.total,this.reduction,this.grade);
       }     
     });
   })();

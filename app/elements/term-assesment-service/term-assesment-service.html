@@ -238,7 +238,7 @@
     var name;
     var arr=[];
     var n1=0,n2=0;
-
+    var tempcnt1=0,tempcnt2=0;
 
     Polymer({
       is: 'term-assesment-service',
@@ -460,7 +460,8 @@
         }       
 
       },
-      callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){        
+      callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark,count){ 
+         tempcnt1=count;       
          this.insertassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertassesmentmark-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -480,7 +481,10 @@
          this.$.insertassesmentmarkajax.generateRequest();
       },
       insertassesmentmarkResponse:function(e){
-        
+        tempcnt2++;
+        if(tempcnt1==tempcnt2){
+        alert("Inserted!");  
+        }
       },
       callOveralltermmarkinsertService:function(studid,studname,category,total,reduction,grade,count){        
          this.overalltermmarkinserturl=sessionStorage.getItem("addrinfo")+"/overalltermmarkinsert-service";

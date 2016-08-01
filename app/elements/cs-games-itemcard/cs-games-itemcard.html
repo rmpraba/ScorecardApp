@@ -107,11 +107,11 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Enthusiasm",this.enthusiasm);
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Discipline",this.discipline);  
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Team Spirit",this.teamspirit);  
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Talent",this.talent);  
-        this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Games",this.total,this.reduction,this.grade);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Enthusiasm",this.enthusiasm,4);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Discipline",this.discipline,4);  
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Team Spirit",this.teamspirit,4);  
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Talent",this.talent,4);  
+        // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Games",this.total,this.reduction,this.grade);
       }          
     });
   })();

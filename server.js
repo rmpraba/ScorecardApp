@@ -20,7 +20,7 @@ app.get('/', function (req, res) {
 app.post('/checkschool-card',  urlencodedParser,function (req, res)
 {
     var id={"id":req.query.username};
-    connection.query('SELECT name from md_school where id=(select school_id from md_employee where ?) ',[id],
+    connection.query('SELECT name from md_school where id in (select school_id from md_employee where ?) ',[id],
     function(err, rows)
     {
     if(!err)
@@ -40,13 +40,41 @@ app.post('/checkschool-card',  urlencodedParser,function (req, res)
 });
 });
 
+//check the role of user
+app.post('/rolecheck-service',  urlencodedParser,function (req, res)
+{
+  var id={"id":req.query.username};
+  var username={"id":req.query.username};
+  var password={"password":req.query.password};
+  connection.query('select id,role_name from md_role where id in (select role_id from md_employee where ? and ? )',[id,password],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    { 
+      console.log(err);     
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+    
+  });
+});
+
+
 //select the username and password from login table
 app.post('/login-card',  urlencodedParser,function (req, res)
 {
   var id={"id":req.query.username};
   var username={"id":req.query.username};
   var password={"password":req.query.password};
-  connection.query('SELECT id,role_name,(select school_id from md_employee where ?) as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr from md_role where id=(select role_id from md_employee where ? and ?) ',[id,username,password],
+  connection.query('SELECT  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr  from md_employee where ? and ? ',[id,username,password],
     function(err, rows)
     {
     if(!err)
@@ -1100,9 +1128,35 @@ app.post('/updateimportmark-service' ,  urlencodedParser,function (req, res)
 
 
 
+app.post('/updateflag-service' ,  urlencodedParser,function (req, res)
+{
+    
+ var qur="update tr_term_assesment_import_marks set flag='"+req.query.flag+"' where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmentid+"'  and subject='"+req.query.subject+"'";
+      connection.query(qur,
+        function(err, rows)
+        {
+        if(!err)
+    {
+      if(rows.length>0)
+      {
+
+      res.status(200).json({'returnval': rows});
+      }
+      else
+      {
+      res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+      console.log('No data Fetched'+err);
+    }
+});
+  });
 app.post('/approvemark-service',  urlencodedParser,function (req, res)
 {
-  var qur="select * from tr_term_assesment_import_marks where flag=0";
+
+  var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
   
   connection.query(qur,
     function(err, rows)
@@ -1123,6 +1177,53 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
       console.log(err);
   });
 });
+
+
+
+
+app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
+{
+
+  var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"'";
+  // console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
+
+
+app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
+{
+  console.log('come');
+    var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and sub_category='"+req.query.sub_category+"'and student_id='"+req.query.studid+"'";
+      connection.query(qur,
+        function(err, rows)
+        {
+        if(!err)
+    {
+      console.log('s');
+    }
+    else
+    {
+      console.log('No data Fetched'+err);
+    }
+});
+  });
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

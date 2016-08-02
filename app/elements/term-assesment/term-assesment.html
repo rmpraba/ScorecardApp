@@ -11,7 +11,7 @@
       }
     </style>
     <div>
-      <term-assesment-card></term-assesment-card>
+      <term-assesment-card id="ass"></term-assesment-card>
       <term-assesment-sheet-card></term-assesment-sheet-card>
     </div>
   </template>
@@ -19,7 +19,11 @@
   (function() {
     'use strict';
     Polymer({
-      is: 'term-assesment',     
+      is: 'term-assesment',  
+      hiddenpage:function()
+      {
+    this.$.ass.hidden=true;
+      }   
     });
   })();
   </script>

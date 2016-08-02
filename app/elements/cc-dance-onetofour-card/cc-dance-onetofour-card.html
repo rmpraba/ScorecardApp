@@ -41,6 +41,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        <th colspan="3">Rhythm (10)</th>
        <th colspan="3">Grace (10)</th>
       </tr>
+
+
+<template is="dom-repeat" items="{{markarr}}" as="m">
+<tr><td></td>
+<template is="dom-repeat" items="{{m}}" as="mark">
+<td  colspan="3">{{mark}}</td>
+</template>
+</tr>
+</template>
+
+
+<template is="dom-repeat" items="{{importarr}}" as="m">
+<tr><td></td>
+<template is="dom-repeat" items="{{m}}" as="mark1">
+<td><paper-input value="{{mark1.name}}" id="p2"></paper-input></td>
+<template is="dom-repeat" items="{{mark1.marks}}" as="mm">
+<td> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
+</paper-input></td>
+</template>
+</template>
+</tr>
+</template>
+      
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
         <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
@@ -91,11 +114,20 @@ var tableToExcel = (function() {
       {
         this.$.btn2.hidden=true;
       },
-      importmark:function()
+       importmark:function()
       {
         alert('import');
         this.$.assesmentservice.Fnimportmark();
 
+      },
+      fetchmark:function(e)
+      {
+        var scategory=e.target.name;
+        var svalue=e.target.value;
+        var sname=e.target.results;
+        this.$.assesmentservice.Fnupdatemark(sname,scategory,svalue);
+
+        
       }
     });
   })();

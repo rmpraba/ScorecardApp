@@ -17,7 +17,7 @@
   }
   .content{
     width: 25%;
-    height: 360px !important;
+    height: 400px !important;
     text-align: center;
     margin: 10% auto;
     background-color: #ffffff;
@@ -57,9 +57,19 @@
             </div>
            
             <div class="field">
-                <paper-input label="Password" id="password" type="password" value="{{pass}}" required auto-validate error-message="needs password!"></paper-input>
+                <paper-input label="Password" id="password" type="password" value="{{pass}}" required auto-validate error-message="needs password!" on-change="Fnfindrole"></paper-input>
             </div>
+            <div class="field">
+             <paper-dropdown-menu id="grade" label="Select Role" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectRole"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{rolearr}}">
+                <paper-item value="{{item.id}}">{{item.role_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+          </div>
             <div class="button">
+
                 <paper-button raised  class="in" on-click="Fnlogin">Sign in</paper-button>
             </div>
         </div>
@@ -87,6 +97,25 @@
         {
           this.$.loginservice.logincheck(this.uname,this.pass);
         }
+      },
+      Fnfindrole:function()
+      {
+       if(this.uname==""&&this.pass=="")
+        {
+          this.$.username.validate();
+          this.$.password.validate();
+        }
+        else
+        {
+          this.$.loginservice.rolecheck(this.uname,this.pass);
+        }
+      },
+      FnSelectRole:function(e)
+      {
+        var rolename = e.target.selectedItem.textContent.trim();
+        var roleid=e.target.selectedItem.value;
+        this.$.loginservice.roletype(rolename,roleid);
+        
       },
       Fncheckschool:function()
       {

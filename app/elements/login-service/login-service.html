@@ -38,6 +38,19 @@
         >
 
   </iron-ajax>
+
+  <iron-ajax
+        method="post"
+        id="rolecheckajax"
+        url="{{rolecheckurl}}"
+        params="{{rolecheckparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="rolecheckResponse"
+        debounce-duration="300"
+        >
+
+  </iron-ajax>
   <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
   </template>
 
@@ -77,20 +90,44 @@
         this.loginparam=obj;
         this.$.loginajax.generateRequest();
       },
+      rolecheck:function(uname,pass)
+      {
+
+      this.rolecheckurl=sessionStorage.getItem("addrinfo")+"/rolecheck-service";
+        var obj={"username":"","password":""};
+        obj.username=uname;
+        obj.password=pass;
+        this.rolecheckparam=obj;
+        this.$.rolecheckajax.generateRequest();
+      },
+
+rolecheckResponse:function(e)
+{
+//alert(JSON.stringify(e.detail.response.returnval));
+var rolearr=e.detail.response.returnval;
+document.querySelector('login-card').rolearr=rolearr;
+
+},
+roletype:function(rolename,roleid)
+{
+sessionStorage.setItem("curr_sess_loggedrole",rolename);
+sessionStorage.setItem("curr_sess_loggedroleid",roleid);
+},
+
+
      //loginResponse from the loginajax
       loginResponse:function(e)
       {
         var arr=e.detail.response.returnval;
         // alert(JSON.stringify(arr));
         if(arr!="invalid"){
-        var role=e.detail.response.returnval[0].role_name;
+        //var role=e.detail.response.returnval[0].role_name;
         var school=e.detail.response.returnval[0].school;
         var name=e.detail.response.returnval[0].name;
         var address=e.detail.response.returnval[0].addr;
-        var roleid=e.detail.response.returnval[0].id;
+        //var roleid=e.detail.response.returnval[0].id;
         sessionStorage.setItem("curr_sess_loggedid",username);
-        sessionStorage.setItem("curr_sess_loggedrole",role);
-        sessionStorage.setItem("curr_sess_loggedroleid",roleid);
+        
         sessionStorage.setItem("curr_sess_loggedschoolid",school);
         sessionStorage.setItem("curr_sess_loggedschoolname",name);
         sessionStorage.setItem("curr_sess_loggedschooladdress",address);

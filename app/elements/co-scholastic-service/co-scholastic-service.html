@@ -296,8 +296,7 @@
         document.querySelector('cs-attitudes-item-card').coarr=coarr;        
       },
       callinsertcoscholasticassesmentmarkService:function(studid,studname,category,subcategory,mark,count){
-         tempcnt1=count;
-         
+         tempcnt1=count;         
          this.insertcoassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertcoassesmentmark-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":"","categorygrade":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -312,9 +311,8 @@
          obj.subject=localStorage.getItem("curr_sess_subject");
          obj.category=category;
          obj.subcategory=subcategory;
-         obj.mark=mark; 
-         // obj.total=total; 
-         obj.categorygrade=grade;       
+         obj.mark=mark;         
+         obj.categorygrade=mark;       
          this.insertcoassesmentmarkparam= obj;        
          this.$.insertcoassesmentmarkajax.generateRequest();
       },

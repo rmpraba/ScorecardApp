@@ -474,11 +474,6 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
   "and grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"' "+
   "group by school_id,academic_year,assesment_id,term_name,subject_id,grade,section,category,student_id";
 
-  // console.log(qur);
-
-  // var cond9={sub_category:req.query.subcategory};
-   // connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? ",[cond1,cond2,cond3,cond4,cond5,cond6,cond7],function(err, rows) {
-  // if(rows.length==0){
   connection.query(qur,
   function(err, rows){
      if(!err)
@@ -491,11 +486,8 @@ app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'fail'});
     }
   });
-  // }
-  // else
-    // res.status(200).json({'returnval': 'Duplicate entry!'});
 });
-// });
+
 
 //storing overall scholastic mark
 app.post('/overalltermassesmentinsert-service',  urlencodedParser,function (req, res){
@@ -508,9 +500,7 @@ var qur=" INSERT INTO tr_term_assesment_overall_assesmentmarks SELECT school_id,
 "and school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' "+
 "and grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"' "+
 "group by school_id,academic_year,term_name,subject_id,category,student_id";
-
-console.log(qur);
-   
+ 
   connection.query(qur,
   function(err, rows){
     if(!err)
@@ -567,6 +557,7 @@ var response={
   });
   });
 });
+
 //storing overall coscholastic mark
 app.post('/overallinsertcoassesment-service',  urlencodedParser,function (req, res){
    var response={
@@ -606,7 +597,7 @@ app.post('/overallinsertcoassesment-service',  urlencodedParser,function (req, r
 
 //storing mark for coscholastic assessment
 app.post('/insertcocurricularmark-service',  urlencodedParser,function (req, res){
-// console.log('In..');
+
 var response={ 
  
          school_id:req.query.schoolid,
@@ -627,13 +618,11 @@ var response={
   }  
   
   var subname={subject_name:req.query.subject};
-  // console.log(JSON.stringify(subname));
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
-  {
-  // console.log(rows.length);
-  response.subject_category=rows[0].subject_category; 
-  // console.log(response.subject_category); 
+  {  
+  response.subject_category=rows[0].subject_category;
+  
   connection.query("INSERT INTO tr_cocurricular_term_marks set ?",[response],
   function(err, rows)
     {

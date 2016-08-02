@@ -50,13 +50,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </tr>
 </template>
 
-
 <template is="dom-repeat" items="{{importarr}}" as="m">
 <tr><td></td>
 <template is="dom-repeat" items="{{m}}" as="mark1">
 <td><paper-input value="{{mark1.name}}" id="p2"></paper-input></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<td> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
+<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+</paper-input></td>
+<td hidden$="{{hidepaperinput}}"> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
 </paper-input></td>
 </template>
 </template>
@@ -110,6 +111,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.assesment="A2";
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
         this.assesment="A3";
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
+        // alert('yes');
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false; 
+      }
       },
       hiddenbutton:function()
       {

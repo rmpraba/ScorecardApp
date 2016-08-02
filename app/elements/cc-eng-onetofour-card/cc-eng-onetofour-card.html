@@ -1,12 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../cc-eng-onetofour-item-card/cc-eng-onetofour-item-card.html">
@@ -99,7 +90,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <template is="dom-repeat" items="{{m}}" as="mark1">
 <td><paper-input value="{{mark1.name}}" id="p2"></paper-input></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<td> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
+<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+</paper-input></td>
+<td hidden$="{{hidepaperinput}}"> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
 </paper-input></td>
 </template>
 </template>
@@ -158,6 +151,15 @@ var tableToExcel = (function() {
         this.assesment="A2";
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
         this.assesment="A3";
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
+        // alert('yes');
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false; 
+      }
       },
       hiddenbutton:function()
       {
@@ -175,8 +177,7 @@ var tableToExcel = (function() {
         var svalue=e.target.value;
         var sname=e.target.results;
         this.$.assesmentservice.Fnupdatemark(sname,scategory,svalue);
-
-        
+       
       }
     });
   })();

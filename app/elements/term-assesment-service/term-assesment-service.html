@@ -599,7 +599,7 @@
       if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
       {
 
-       obj1.flag=1;
+        obj1.flag=1;
         this.updateflagurl=sessionStorage.getItem("addrinfo")+"/updateflag-service";
         this.updateflagparam=obj1;
         this.$.updateflagajax.generateRequest();
@@ -607,7 +607,7 @@
        else if(sessionStorage.getItem("curr_sess_loggedrole")=="HeadMistress")
       {
         obj1.flag=2;
-         this.updateflagurl=sessionStorage.getItem("addrinfo")+"/updateflag-service";
+        this.updateflagurl=sessionStorage.getItem("addrinfo")+"/updateflag-service";
         this.updateflagparam=obj1;
         this.$.updateflagajax.generateRequest();
          
@@ -621,7 +621,7 @@
         this.callOveralltermmarkinsertService();        
       }
 
-      else if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher")
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
       {
         var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -726,7 +726,8 @@
     {
        var overall=[];
        var a=[];
-       var arr1=e.detail.response.returnval;       
+       var arr1=e.detail.response.returnval;
+       // alert(JSON.stringify(arr1));       
        for(var i=0;i<arr1.length;i++)
        {
         var markarr=[];

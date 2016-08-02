@@ -76,9 +76,11 @@
 <template is="dom-repeat" items="{{importarr}}" as="m">
 <tr><td></td>
 <template is="dom-repeat" items="{{m}}" as="mark1">
-<td><paper-input value="{{mark1.name}}" id="p2"></paper-input></td>
+<td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<td> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
+<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+</paper-input></td>
+<td hidden$="{{hidepaperinput}}"> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
 </paper-input></td>
 </template>
 </template>
@@ -131,6 +133,16 @@ var tableToExcel = (function() {
         this.assesment="A2";
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
         this.assesment="A3";
+      alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
+        alert('yes');
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false; 
+      }
       },
       hiddenbutton:function()
       {
@@ -138,7 +150,7 @@ var tableToExcel = (function() {
       },
        importmark:function()
       {
-        alert('import');
+        
         this.$.assesmentservice.Fnimportmark();
 
       },
@@ -147,9 +159,7 @@ var tableToExcel = (function() {
         var scategory=e.target.name;
         var svalue=e.target.value;
         var sname=e.target.results;
-        this.$.assesmentservice.Fnupdatemark(sname,scategory,svalue);
-
-        
+        this.$.assesmentservice.Fnupdatemark(sname,scategory,svalue);        
       }
     });
   })();

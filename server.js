@@ -205,7 +205,7 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
   "(select subject_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and "+
   "grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
   "section_id=(select section_id from md_section where section_name='"+req.query.section+"')) and subject_category='"+req.query.subjectcategory+"'";
-  // console.log(qur);
+   // console.log(qur);
   connection.query(qur,
     function(err, rows)
     {

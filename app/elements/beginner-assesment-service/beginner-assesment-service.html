@@ -138,11 +138,12 @@
       },
       callSubjectService:function(gradename,section){
          this.subjecturl=sessionStorage.getItem("addrinfo")+"/subject-service";
-         var obj={"schoolid":"","loggedid":"","gradename":"","section":""};
+         var obj={"schoolid":"","loggedid":"","gradename":"","section":"","subjectcategory":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
          obj.gradename=gradename;
          obj.section=section;
+         obj.subjectcategory="category1";
          this.subjectparam= obj;
          this.$.subjectajax.generateRequest();
       },

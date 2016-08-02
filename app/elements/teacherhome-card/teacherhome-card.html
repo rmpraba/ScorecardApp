@@ -76,6 +76,7 @@
           </paper-dropdown-menu>
       </paper-dialog>
     </div>
+   
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
@@ -102,14 +103,18 @@
          {
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('scorecard','');
-         }           
+         }  
+         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="PreEntry") 
+         {
+          this.$.bassesmentservice.callAssesmentService("Beginner Level"); 
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('beginnerassesment','');
+         }
       },
       FnSelectPreEntryType:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','PreEntry');
         this.$.bassesmentservice.callAcademicService(); 
-        this.$.bassesmentservice.callAssesmentService("Beginner Level"); 
-        document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('beginnerassesment','');
+        this.$.cdialog.toggle();
       },
       FnGenerateScorecard:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Scorecard');

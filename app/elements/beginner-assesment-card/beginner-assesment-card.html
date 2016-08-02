@@ -30,13 +30,13 @@
     </style>
     <div class='card'>     
     <div class='drop'>      
-          <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
+         <!--  <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
                 <paper-item value="{{item.year}}">{{item.year}}</paper-item>                             
               </template>
             </paper-menu>
-          </paper-dropdown-menu>
+          </paper-dropdown-menu> -->
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required> 
               <template is="dom-repeat" items="{{gradearr}}">
@@ -103,31 +103,21 @@
         subject = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_subject",subject);
         this.FnServiceCall(); 
-        /*document.querySelector('beginner-assesment-service').callFetchStudentInfo(gradename,section);
-        if(subject=="English"){
-        // alert("eng");
-        document.querySelector('assesment-sheet-card').setPage('beginnerassesmentmarkentry');
-        document.querySelector('beginner-assesment-markentrysheet').setDefaultHeaders(); 
-        }
-        else
-        {
-          // alert("no eng");
-        document.querySelector('assesment-sheet-card').setPage('beginnerassesmentlangmarkentry');
-        document.querySelector('beginner-assesment-lang-markentrysheet').setDefaultHeaders();
-        } */
+      
       },
       FnServiceCall:function(){
         document.querySelector('beginner-assesment-service').callFetchStudentInfo(gradename,section);
         if(subject=="English"){
-          alert("English");
+          // alert("English");
+        document.querySelector('beginner-assesment-markentrysheet').setDefaultHeaders();
         document.querySelector('assesment-sheet-card').setPage('beginner-assesment-markentrysheet');
-        document.querySelector('beginner-assesment-markentrysheet').setDefaultHeaders();  
+          
         }
         else
         {
-          alert("others");
-        document.querySelector('assesment-sheet-card').setPage('beginner-assesment-lang-markentrysheet');
+          // alert("others");
         document.querySelector('beginner-assesment-lang-markentrysheet').setDefaultHeaders(); 
+        document.querySelector('assesment-sheet-card').setPage('beginner-assesment-lang-markentrysheet');        
         }
       }        
     });      

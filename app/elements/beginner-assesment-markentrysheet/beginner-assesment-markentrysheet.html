@@ -53,8 +53,8 @@
     Polymer({
       is: 'beginner-assesment-markentrysheet',
       ready:function(){
-        // localStorage.setItem("curr_sess_showpage","beginner-assesment-markentrysheet");
-        // this.$.componentservice.callcomponentService();        
+        localStorage.setItem("curr_sess_showpage","beginner-assesment-markentrysheet");
+        this.$.componentservice.callcomponentService();        
       },
       setDefaultHeaders:function(){
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");

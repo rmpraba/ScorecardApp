@@ -154,18 +154,22 @@
         this.$.fetchscholasticmarkajax.generateRequest(); 
       },
       fetchscholasticmarkResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+        alert(JSON.stringify(e.detail.response.returnval));
         var engarr=[];
         var matharr=[];
         var evsarr=[];
         var hinarr=[];
         var comarr=[];
         var gkarr=[];
+         var acarr=[];
+        var mdarr=[];
+        var gamearr=[];
         scholasticarr=e.detail.response.returnval;
         for(var i=0;i<scholasticarr.length;i++){
-          var obj={"category":"","t1grade":"","t2grade":"","t3grade":""};          
-          if(scholasticarr[i].subject_id=="English"){
+          var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
+          if(scholasticarr[i].subject_name=="English"){
             obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
             obj.t1grade=scholasticarr[i].term_cat_grade;
             if(scholasticarr[i].term_name=="term2")
@@ -174,8 +178,9 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;    
             engarr.push(obj);
           }
-          if(scholasticarr[i].subject_id=="Mathematics"){
+          if(scholasticarr[i].subject_name=="Mathematics"){
             obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
             obj.t1grade=scholasticarr[i].term_cat_grade;
             if(scholasticarr[i].term_name=="term2")
@@ -184,8 +189,9 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             matharr.push(obj);
           }
-          if(scholasticarr[i].subject_id=="EVS"){
+          if(scholasticarr[i].subject_name=="EVS"){
             obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
             obj.t1grade=scholasticarr[i].term_cat_grade;
             if(scholasticarr[i].term_name=="term2")
@@ -194,8 +200,9 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             evsarr.push(obj);
           }
-          if(scholasticarr[i].subject_id=="Hindi"){
+          if(scholasticarr[i].subject_name=="Hindi"){
             obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
             obj.t1grade=scholasticarr[i].term_cat_grade;
             if(scholasticarr[i].term_name=="term2")
@@ -204,8 +211,9 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             hinarr.push(obj);
           }
-          if(scholasticarr[i].subject_id=="Computer"){
+          if(scholasticarr[i].subject_name=="Computer"){
             obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
             obj.t1grade=scholasticarr[i].term_cat_grade;
             if(scholasticarr[i].term_name=="term2")
@@ -214,8 +222,9 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             comarr.push(obj);
           }          
-          if(scholasticarr[i].subject_id=="GK"){
+          if(scholasticarr[i].subject_name=="GK"){
             obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
             obj.t1grade=scholasticarr[i].term_cat_grade;
             if(scholasticarr[i].term_name=="term2")
@@ -224,7 +233,49 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             gkarr.push(obj);
           }          
+        
+        // for(var i=0;i<scholasticarr.length;i++){
+          // var obj={"category":"","t1grade":"","t2grade":"","t3grade":""};          
+          if(scholasticarr[i].subject_name=="Art&Craft"){            
+            obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].term_cat_grade;     
+            acarr.push(obj);
+          }
+          if(scholasticarr[i].subject_name=="music"){
+            obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].term_cat_grade;
+            mdarr.push(obj);
+          }
+          if(scholasticarr[i].subject_name=="Games"){
+            obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].term_cat_grade;
+            gamearr.push(obj);
+          }
         }
+        // alert(JSON.stringify(acarr));
+        // alert(document.querySelector('cce-onetofour-score-card'));
+        document.querySelector('cce-onetofour-score-card').acArray=acarr;
+        document.querySelector('cce-onetofour-score-card').mdArray=mdarr;
+        document.querySelector('cce-onetofour-score-card').gamesArray=gamearr;
+
         document.querySelector('cce-onetofour-score-card').engArray=engarr;
         document.querySelector('cce-onetofour-score-card').mathArray=matharr;
         document.querySelector('cce-onetofour-score-card').evsArray=evsarr;

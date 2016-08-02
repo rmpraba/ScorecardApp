@@ -814,7 +814,9 @@ app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
   var studid={student_id:req.query.studid}; 
   var academicyear={academic_year:req.query.academicyear};  
 
-  connection.query("SELECT * FROM tr_term_assesment_overall_assesmentmarks WHERE ? AND ? AND ? order by subject_id",[studid,schoolid,academicyear],
+  connection.query("SELECT * FROM tr_term_assesment_overall_assesmentmarks am join "+
+  "md_grade_descriptor gd on(am.category=gd.category) WHERE ? AND ? AND ? and am.term_cat_grade=gd.grade and "+
+  "am.subject_id=gd.subject_name",[studid,schoolid,academicyear],
     function(err, rows)
     {
     if(!err)

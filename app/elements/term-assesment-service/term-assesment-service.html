@@ -426,6 +426,9 @@
         if(localStorage.getItem("curr_sess_subject")=="music"){        
         document.querySelector('cc-music-onetofour-card').markarr=overall;
         }
+        if(localStorage.getItem("curr_sess_subject")=="Games"){        
+        document.querySelector('cs-games-card').markarr=overall;
+        }
      
         }
         else
@@ -477,6 +480,10 @@
         if(localStorage.getItem("curr_sess_subject")=="music"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cc-music-onetofour-card').studarr=arr;
+        } 
+        if(localStorage.getItem("curr_sess_subject")=="Games"){ 
+        // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
+        document.querySelector('cs-games-card').studarr=arr;
         }     
         }
         else
@@ -621,7 +628,7 @@
         this.callOveralltermmarkinsertService();        
       }
 
-      if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher")
       {
         var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -657,7 +664,7 @@
       },
       overalltermmarkinsertResponse:function(e){        
         alert("Inserted!");
-        if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment3"||localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="Games")
           this.calloveralltermassesmentinsertService();
         // n1++;
         // if(localStorage.getItem("curr_sess_assesment")=="Assesment3"&&(n1==this.count)){
@@ -757,8 +764,15 @@
         overall.push(markarr);
        }
        
+        if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"){
+        document.querySelector('home-page').setPage('coscholasticassesment','');  
+        document.querySelector('coscholastic-assesment').hiddenpage(); 
+        }
+        else
+        {
         document.querySelector('home-page').setPage('termassesment','');  
         document.querySelector('term-assesment').hiddenpage();   
+        }
         if(localStorage.getItem("curr_sess_importsubject")=="Mathematics"){
           
         document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
@@ -793,23 +807,28 @@
 
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"){   
                
-        document.querySelector('term-assesment-sheet-card').setPage('cc-art-craft-onetofour-card');
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-art-craft-onetofour-card');
         document.querySelector('cc-art-craft-onetofour-card').setDefaultHeaders();
         document.querySelector('cc-art-craft-onetofour-card').importarr=overall;
         }
         if(localStorage.getItem("curr_sess_importsubject")=="dance"){    
         
-        document.querySelector('term-assesment-sheet-card').setPage('cc-dance-onetofour-card'); 
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-dance-onetofour-card'); 
         document.querySelector('cc-dance-onetofour-card').setDefaultHeaders();  
         document.querySelector('cc-dance-onetofour-card').importarr=overall;
         }
         if(localStorage.getItem("curr_sess_importsubject")=="music"){   
             
-        document.querySelector('term-assesment-sheet-card').setPage('cc-music-onetofour-card'); 
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-music-onetofour-card'); 
         document.querySelector('cc-music-onetofour-card').setDefaultHeaders();    
         document.querySelector('cc-music-onetofour-card').importarr=overall;
         }     
-    
+        if(localStorage.getItem("curr_sess_importsubject")=="Games"){   
+            
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-games-card'); 
+        document.querySelector('cs-games-card').setDefaultHeaders();    
+        document.querySelector('cs-games-card').importarr=overall;
+        } 
     },
     Fnupdatemark:function(sname,scategory,svalue)
     {

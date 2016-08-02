@@ -1,7 +1,9 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
-<link rel="import" href="../cocurricular-service/cocurricular-service.html">
+<!-- <link rel="import" href="../cocurricular-service/cocurricular-service.html"> -->
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+
 
 <dom-module id="cc-dance-onetofour-item-card">
   <template>
@@ -45,7 +47,8 @@
         </tr>
       </table> 
     </div>
-     <cocurricular-service id="assesmentservice"></cocurricular-service>
+     <!-- <cocurricular-service id="assesmentservice"></cocurricular-service> -->
+    <term-assesment-service id="assesmentservice"></term-assesment-service>     
      <iron-ajax        
         method="post"
         id="fetchgradesajax"
@@ -105,9 +108,9 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest,3);
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Rhythm",this.rhythm,3);  
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Grace",this.grace,3);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Dance","Interest",this.interest,3);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Dance","Rhythm",this.rhythm,3);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Dance","Grace",this.grace,3);  
         // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Dance",this.total,this.reduction,this.grade);
       }     
     });

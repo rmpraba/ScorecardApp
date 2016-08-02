@@ -2,7 +2,8 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
-<link rel="import" href="../cocurricular-service/cocurricular-service.html">
+<!-- <link rel="import" href="../cocurricular-service/cocurricular-service.html"> -->
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
 
 <dom-module id="cs-games-itemcard">
   <template>
@@ -46,7 +47,8 @@
         </tr>
       </table> 
     </div>
-     <cocurricular-service id="assesmentservice"></cocurricular-service>
+     <!-- <cocurricular-service id="assesmentservice"></cocurricular-service> -->
+     <term-assesment-service id="assesmentservice"></term-assesment-service> 
      <iron-ajax        
         method="post"
         id="fetchgradesajax"
@@ -107,10 +109,10 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Enthusiasm",this.enthusiasm,4);
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Discipline",this.discipline,4);  
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Team Spirit",this.teamspirit,4);  
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Talent",this.talent,4);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Enthusiasm",this.enthusiasm,4);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Discipline",this.discipline,4);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Team Spirit",this.teamspirit,4);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Talent",this.talent,4);  
         // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Games",this.total,this.reduction,this.grade);
       }          
     });

@@ -11,7 +11,7 @@
       }
     </style>
     <div>
-      <coscholastic-assesment-card></coscholastic-assesment-card>
+      <coscholastic-assesment-card id="ass"></coscholastic-assesment-card>
       <coscholastic-assesment-sheet-card></coscholastic-assesment-sheet-card>
     </div>
   </template>
@@ -19,7 +19,11 @@
   (function() {
     'use strict';
     Polymer({
-      is: 'coscholastic-assesment',     
+      is: 'coscholastic-assesment',  
+        hiddenpage:function()
+      {
+      this.$.ass.hidden=true;
+      }   
     });
   })();
   </script>

@@ -11,7 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
-<link rel="import" href="../cocurricular-service/cocurricular-service.html">
+<!-- <link rel="import" href="../cocurricular-service/cocurricular-service.html"> -->
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
 
 <dom-module id="cc-music-onetofour-item-card">
   <template>
@@ -54,7 +55,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
       </table> 
     </div>
-     <cocurricular-service id="assesmentservice"></cocurricular-service>
+     <!-- <cocurricular-service id="assesmentservice"></cocurricular-service> -->
+     <term-assesment-service id="assesmentservice"></term-assesment-service>  
      <iron-ajax        
         method="post"
         id="fetchgradesajax"
@@ -112,9 +114,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest,3);
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Rhythm",this.rhythm,3);  
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Melody",this.melody,3);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest,3);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm,3);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody,3);  
         // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Music",this.total,this.reduction,this.grade);
       }         
      

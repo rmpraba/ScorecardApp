@@ -18,12 +18,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
         table{
-          width: 100%;
+          width: 60%;
           border-collapse: collapse;
           margin-left: 1%;
       }
+      #tb1{
+        width:10%;
+      }
       .studname{
-        width: 30%;
+        width: 20%;
           }
     </style>
     <div>
@@ -32,11 +35,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h4>Evaluation  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4>
     <table border="1" id="MarkTable9">    
     <tr>
-      <th colspan="3">Sl.No</th>
-      <th colspan="3">Student's Name</th>
-      <th colspan="3">Interest</th>
-      <th colspan="3">Rhythm</th>
-      <th colspan="3">Melody</th>
+      <th id="tb1">Sl.No</th>
+      <th id="tb1">Student's Name</th>
+      <th id="tb1">Interest</th>
+      <th id="tb1">Rhythm</th>
+      <th id="tb1">Melody</th>
     </tr>  
 
 <template is="dom-repeat" items="{{markarr}}" as="m">

@@ -14,7 +14,7 @@
         width: 100%;
       }
       #p1{
-        width: 48px;
+        width: -5px;
       }
     
       paper-input{
@@ -82,7 +82,7 @@
       },
       callService:function(){
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Computer Science","Activity",this.activity);
-        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Computer Science",this.cs,this.cs,this.csgrade,1);  
+        // this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Computer Science",this.cs,this.cs,this.csgrade,1);  
       }  
     });
   })();

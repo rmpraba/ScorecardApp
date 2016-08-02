@@ -160,8 +160,7 @@
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
         document.querySelector('cce-generate-score-card').FnHide();
-        document.querySelector('student-list-card').studentarr=arr;
-        // document.querySelector('cce-generate-score-card').autocompletearr(arr);
+        document.querySelector('student-list-card').studentarr=arr;        
       },
       callFetchstudentinfoService:function(studid){
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
@@ -172,10 +171,8 @@
         this.$.fetchstudinfoajax.generateRequest();
       },
       fetchstudinfoResponse:function(e){        
-        var arr=e.detail.response.returnval;
-        // alert(localStorage.getItem("curr_sess_grade"));
-        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
-          // alert(arr[0].student_name);
+        var arr=e.detail.response.returnval;        
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){          
         document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
         document.querySelector('cce-onetofour-score-card').studname=arr[0].student_name;        
         document.querySelector('cce-onetofour-score-card').pname=arr[0].parent_name;
@@ -198,8 +195,7 @@
         this.fetchhealthattendanceinfoparam=obj;
         this.$.fetchhealthattendanceinfoajax.generateRequest();
       },
-      fetchhealthattendanceinfoResponse:function(e){
-        // alert(JSON.stringify(e.detail.response));
+      fetchhealthattendanceinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
         document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
         document.querySelector('cce-fivetoten-score-card').term2attendance=arr[1].attendance;
@@ -207,13 +203,9 @@
         document.querySelector('cce-fivetoten-score-card').term2wday=arr[1].working_days;
         document.querySelector('cce-fivetoten-score-card').height=arr[0].height;
         document.querySelector('cce-fivetoten-score-card').width=arr[0].width;
-        // alert(JSON.stringify(document.querySelector('cce-fivetoten-score-card').height));
-        // alert(JSON.stringify(document.querySelector('cce-fivetoten-score-card').widthh));
         document.querySelector('cce-fivetoten-score-card').bloodgroup=arr[0].blood_group;
         document.querySelector('cce-fivetoten-score-card').leftvision=arr[0].left_vision;
         document.querySelector('cce-fivetoten-score-card').rightvision=arr[0].right_vision;
-        // alert(JSON.stringify(document.querySelector('cce-fivetoten-score-card').left_vision));
-        // alert(JSON.stringify(document.querySelector('cce-fivetoten-score-card').right_vision));
         document.querySelector('cce-fivetoten-score-card').dental=arr[0].dental;
       },
       callFetchsubjectinfoService:function(studid){
@@ -225,8 +217,7 @@
         this.$.fetchsubjectnameajax.generateRequest();
       },
       fetchsubjectnameResponse:function(e){        
-        subjectarr=e.detail.response.returnval;
-        // document.querySelector('cce-fivetoten-score-card').subjectArray=subjectarr;         
+        subjectarr=e.detail.response.returnval;                
       },
       callFetchmarkService:function(studid){
         this.fetchmarkurl=sessionStorage.getItem("addrinfo")+"/fetchmark-service";
@@ -343,7 +334,7 @@
         this.$.fetchcoscholasticinfoajax.generateRequest(); 
       },
       fetchcoscholasticinfoResponse:function(e){
-        alert(JSON.stringify(e.detail.response));
+        // alert(JSON.stringify(e.detail.response));
         // alert(JSON.stringify(lower));
         var lsarr=[];
         var wkarr=[];

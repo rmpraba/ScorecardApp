@@ -14,7 +14,7 @@
         width: 100%;
       }
       #p1{
-        width: 48px;
+        width:-5px;
       }
       #p2{
         width: 49px;
@@ -135,18 +135,18 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Environmental sensitivity","Assignment",this.assignment);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Drawing",this.drawing);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Labeling",this.labeling);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Neatness",this.neatness); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Knowledge",this.knowledge);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Presentation",this.presentation);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Involvement",this.involvement);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity);
-        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Environmental sensitivity",this.es,this.es,this.conceptgrade,4);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Environmental sensitivity","Assignment",this.assignment,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Drawing",this.drawing,8);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Labeling",this.labeling,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Neatness",this.neatness,8); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Knowledge",this.knowledge,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Presentation",this.presentation,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Involvement",this.involvement,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8);
+        /*this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Environmental sensitivity",this.es,this.es,this.conceptgrade,4);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Activity/Project",this.ap,this.ap,this.apgrade,4);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Group Discussion",this.gd,this.gd,this.gdgrade,4);
-        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Written Work",this.ww,this.ww,this.wwgrade,4);
+        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Written Work",this.ww,this.ww,this.wwgrade,4);*/
       }   
     }); 
   })();

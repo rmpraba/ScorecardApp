@@ -272,7 +272,7 @@
     var name;
     var arr=[];
     var n1=0,n2=0;
-
+    var tempcnt1=0,tempcnt2=0;
 
     Polymer({
       is: 'term-assesment-service',
@@ -431,14 +431,11 @@
         document.querySelector('cc-music-onetofour-card').markarr=overall;
         }
      
-    }
+        }
         else
         {
          if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
-
         document.querySelector('cc-fa-fivetoten-card').markarr=overall; 
-        // document.querySelector('cs-life-skill-card').studarr=arr; 
-        //document.querySelector('cs-education-card').studarr=arr;
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
         document.querySelector('cc-sa-fivetoten-card').markarr=overall;        
@@ -447,8 +444,7 @@
 
       },
       fetchstudentResponse:function(e){         
-        var arr=e.detail.response.returnval;  
-        //alert(JSON.stringify(arr));       
+        var arr=e.detail.response.returnval;               
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=i+1;
         }
@@ -474,8 +470,6 @@
         // document.querySelector('cc-computer-onetofour-card').hiddenbutton();
         document.querySelector('cc-computer-onetofour-card').studarr=arr;
         }
-        
-
         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
         // document.querySelector('cc-art-craft-onetofour-card').hiddenbutton();
         document.querySelector('cc-art-craft-onetofour-card').studarr=arr;
@@ -487,8 +481,7 @@
         if(localStorage.getItem("curr_sess_subject")=="music"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cc-music-onetofour-card').studarr=arr;
-        }
-     
+        }     
         }
         else
         {
@@ -501,7 +494,8 @@
         }       
 
       },
-      callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark){        
+      callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark,count){ 
+         tempcnt1=count;       
          this.insertassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertassesmentmark-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -521,7 +515,10 @@
          this.$.insertassesmentmarkajax.generateRequest();
       },
       insertassesmentmarkResponse:function(e){
-        
+        tempcnt2++;
+        if(tempcnt1==tempcnt2){
+        alert("Inserted!");  
+        }
       },
       callOveralltermmarkinsertService:function(studid,studname,category,total,reduction,grade,count){        
          this.overalltermmarkinserturl=sessionStorage.getItem("addrinfo")+"/overalltermmarkinsert-service";
@@ -642,101 +639,11 @@
         }
         return this.grade;        
      },
-    onetofourreportResponse:function(e)
-    {     
-       var tot; 
-       var score;
-        // alert(e.detail.response.returnval);
-        var gradeval=e.detail.response.returnval;
-        for(var i=0;i<gradeval.length;i++)
-        {
-             tot=parseInt(gradeval[i].val)/parseInt(gradeval[i].cnt);
-             //alert(tot);
-                 for(var j=0;j<lower.length;j++)
-             {          
-                  if(tot>=lower[j]&&tot<=higher[j])
-                  {            
-                  score=grade[j];
-                  //alert(score);
-                  }
-            }
-            if(gradeval[i].category=="Concept" && gradeval[i].term_name=="term1")
-            {
-                
-                document.querySelector('cce-onetofour-score-card').concept=score;
-               
-        }
-            if(gradeval[i].category=="Activity/Project" && gradeval[i].term_name=="term1" )
-            {
-                 if(gradeval[i].subject_id=="Mathematics")
-                 document.querySelector('cce-onetofour-score-card').Activity=score;
-                else if(gradeval[i].subject_id=="EVS")
-                document.querySelector('cce-onetofour-score-card').EVSActivity=score;
-            }
-            if(gradeval[i].category=="Mental Ability" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').Mental=score;
-            }
-             if(gradeval[i].category=="Table Activity" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').Table=score;
-            }
-            if(gradeval[i].category=="Written Work" && gradeval[i].term_name=="term1")
-            {
-                if(gradeval[i].subject_id=="Mathematics")
-                document.querySelector('cce-onetofour-score-card').Written=score;
-                else if(gradeval[i].subject_id=="EVS")
-                    document.querySelector('cce-onetofour-score-card').EVSWritten=score;
-                else if(gradeval[i].subject_id=="English")
-                    document.querySelector('cce-onetofour-score-card').EWritten=score;
-            }
-             if(gradeval[i].category=="Environmental sensitivity" && gradeval[i].term_name=="term1")
-            {
-
-                document.querySelector('cce-onetofour-score-card').Environmental=score;
-            }
-            if(gradeval[i].category=="Group Discussion" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').GrpDiscussion=score;
-            }
-            if(gradeval[i].category=="Art&Craft" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').artcraft=score;
-            }
-            if(gradeval[i].category=="Music" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').music=score;
-            }
-            if(gradeval[i].category=="Reading Skills" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').reading=score;
-            }
-             if(gradeval[i].category=="Writing Skills" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').writing=score;
-            }
-             if(gradeval[i].category=="Listening Skills" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').listening=score;
-            }
-             if(gradeval[i].category=="Speaking Skills" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').speaking=score;
-            }
-             if(gradeval[i].category=="Computer" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').computer=score;
-            }
-             if(gradeval[i].category=="GK" && gradeval[i].term_name=="term1")
-            {
-                document.querySelector('cce-onetofour-score-card').gk=score;
-            }
-        }
-    },
     Fnimportmark:function()
-    {   var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
+    {   
+      var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
 
- obj1.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj1.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj1.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj1.termname=localStorage.getItem("curr_sess_termname");
          obj1.assesmentid=localStorage.getItem("curr_sess_assesment");
@@ -771,7 +678,6 @@
          obj.gradename= localStorage.getItem("curr_sess_grade"); 
          obj.sectionname=localStorage.getItem("curr_sess_section");    
          obj.subject=localStorage.getItem("curr_sess_subject");
-
         this.updateimportmarkurl=sessionStorage.getItem("addrinfo")+"/updateimportmark-service";
         this.updateimportmarkparam=obj;
         this.$.updateimportmarkajax.generateRequest();
@@ -794,6 +700,7 @@
        this.approvemarkurl=sessionStorage.getItem("addrinfo")+"/approvemark-service";
         this.approvemarkparam=obj1;
         this.$.approvemarkajax.generateRequest();  
+
     },
     approvemarkResponse:function(e)
     {

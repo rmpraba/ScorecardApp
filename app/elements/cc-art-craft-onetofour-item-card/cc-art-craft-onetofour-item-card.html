@@ -16,7 +16,7 @@
         width: 100%;
       }
       #p1{
-        width: 48px;
+        width:-5px;
       }
       #p2{
         width: 49px;
@@ -104,10 +104,10 @@
         return this.grade;        
       },
       callService:function(){ 
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Creativity",this.creativity); 
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Skill",this.skill);
-        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest); 
-        this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Art&Craft",this.total,this.reduction,this.grade);   
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Creativity",this.creativity,3); 
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Skill",this.skill,3);
+        this.$.assesmentservice.callinsertcocurricularmarkService(this.studid,this.studname,"Interest",this.interest,3); 
+        // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Art&Craft",this.total,this.reduction,this.grade);   
       }
     });
   })();

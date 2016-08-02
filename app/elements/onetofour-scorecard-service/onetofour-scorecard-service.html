@@ -164,6 +164,7 @@
          var acarr=[];
         var mdarr=[];
         var gamearr=[];
+        var parr=[];
         scholasticarr=e.detail.response.returnval;
         for(var i=0;i<scholasticarr.length;i++){
           var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
@@ -269,7 +270,28 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             gamearr.push(obj);
           }
+
+        if(scholasticarr[i].subject_name=="Personality Development"){ 
+          obj.category=scholasticarr[i].category; 
+          obj.comment=scholasticarr[i].description;      
+          if(scholasticarr[i].term_name=="term1"){
+            // alert('term1');
+          obj.t1grade=scholasticarr[i].term_cat_grade;
+          }
+          if(scholasticarr[i].term_name=="term2"){
+            // alert('term2');
+          obj.t2grade=scholasticarr[i].term_cat_grade;
+          }
+          if(scholasticarr[i].term_name=="term3"){
+            // alert('term3');
+          obj.t3grade=scholasticarr[i].term_cat_grade;
+          }
+          parr.push(obj);
+          // alert(JSON.stringify(obj));          
         }
+       }
+        // alert(JSON.stringify(parr));
+        document.querySelector('cce-onetofour-score-card').personalityArray=parr;
         // alert(JSON.stringify(acarr));
         // alert(document.querySelector('cce-onetofour-score-card'));
         document.querySelector('cce-onetofour-score-card').acArray=acarr;

@@ -2,7 +2,8 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
-<link rel="import" href="../co-scholastic-service/co-scholastic-service.html">
+<!-- <link rel="import" href="../co-scholastic-service/co-scholastic-service.html"> -->
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
 
 <dom-module id="cs-personalitydevelopment-itemcard">
   <template>
@@ -51,7 +52,8 @@
         </tr>
       </table> 
     </div>
-     <co-scholastic-service id="assesmentservice"></co-scholastic-service>
+     <!-- <co-scholastic-service id="assesmentservice"></co-scholastic-service> -->
+     <term-assesment-service id="assesmentservice"></term-assesment-service> 
       <iron-ajax        
         method="post"
         id="fetchgradesajax"
@@ -75,43 +77,43 @@
       ready:function(){       
       },
       FnCourteousness:function(){
-        Courteousness=parseFloat(this.Courteousness).toFixed(2);         
+        Courteousness=this.FnFindGrade(this.Courteousness);         
       },
       FnConfidence:function(){
-        Confidence=parseFloat(this.Confidence).toFixed(2);        
+        Confidence=this.FnFindGrade(this.Confidence);       
       },
       FnCareofbelongings:function(){
-        Careofbelongings=parseFloat(this.Careofbelongings).toFixed(2);        
+        Careofbelongings=this.FnFindGrade(this.Careofbelongings);       
       },
       FnNeatness:function(){
-        Neatness=parseFloat(this.Neatness).toFixed(2);        
+        Neatness=this.FnFindGrade(this.Neatness);       
       },
       FnRegularityandPunctuality:function(){
-        RegularityandPunctuality=parseFloat(this.RegularityandPunctuality).toFixed(2);         
+        RegularityandPunctuality=this.FnFindGrade(this.RegularityandPunctuality);         
       },
       FnInitiative:function(){
-        Initiative=parseFloat(this.Initiative).toFixed(2);        
+        Initiative=this.FnFindGrade(this.Initiative);        
       },
       FnSharingandCaring:function(){
-        SharingandCaring=parseFloat(this.SharingandCaring).toFixed(2);        
+        SharingandCaring=this.FnFindGrade(this.SharingandCaring);        
       },
       FnRespect:function(){
-        Respect=parseFloat(this.Respect).toFixed(2);        
+        Respect=this.FnFindGrade(this.Respect);       
       },
       FnSelfcontrol:function(){
-        Selfcontrol=parseFloat(this.Selfcontrol).toFixed(2); 
+        Selfcontrol=this.FnFindGrade(this.Selfcontrol); 
         this.callService();         
       },      
-      callService:function(){
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",this.Courteousness,this.Courteousness,9); 
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",this.Confidence,this.Confidence,9); 
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",this.Careofbelongings,this.Careofbelongings,9); 
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",this.Neatness,this.Neatness,9); 
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",this.RegularityandPunctuality,this.RegularityandPunctuality,9); 
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",this.Initiative,this.Initiative,9); 
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",this.SharingandCaring,this.SharingandCaring,9);
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Respect","Respect",this.Respect,this.Respect,9);
-        this.$.assesmentservice.callinsertcoscholasticassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",this.Selfcontrol,this.Selfcontrol,9); 
+      callService:function(){        
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",Courteousness,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",Confidence,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",Careofbelongings,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",Neatness,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",RegularityandPunctuality,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",Initiative,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",SharingandCaring,9);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Respect","Respect",Respect,9);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",Selfcontrol,9); 
         /*this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Courteousness",this.Courteousness,this.Courteousness,this.Courteousness);
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Confidence",this.Confidence,this.Confidence,this.Confidence);
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Careofbelongings",this.Careofbelongings,this.Careofbelongings,this.Careofbelongings);
@@ -121,6 +123,20 @@
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"SharingandCaring",this.SharingandCaring,this.SharingandCaring,this.SharingandCaring);
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Respect",this.Respect,this.Respect,this.Respect);
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Selfcontrol",this.Selfcontrol,this.Selfcontrol,this.Selfcontrol);*/
+      },
+      FnFindGrade:function(grade){
+        var mark="";
+        if(grade=="A+"||grade=="A*"||grade=="a+"||grade=="a*")
+          mark=10;
+        if(grade=="A"||grade=="a")
+          mark=9;
+        if(grade=="B"||grade=="b")
+          mark=8;
+        if(grade=="C"||grade=="c")
+          mark=7;
+        if(grade=="D"||grade=="d")
+          mark=6;
+        return mark;
       }
     });
   })();

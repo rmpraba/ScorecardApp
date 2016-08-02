@@ -429,7 +429,10 @@
         if(localStorage.getItem("curr_sess_subject")=="Games"){        
         document.querySelector('cs-games-card').markarr=overall;
         }
-     
+        if(localStorage.getItem("curr_sess_subject")=="Personality Development"){        
+        document.querySelector('cs-personalitydevelopment-card').markarr=overall;
+        }
+        
         }
         else
         {
@@ -484,7 +487,11 @@
         if(localStorage.getItem("curr_sess_subject")=="Games"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cs-games-card').studarr=arr;
-        }     
+        }  
+        if(localStorage.getItem("curr_sess_subject")=="Personality Development"){ 
+        // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
+        document.querySelector('cs-personalitydevelopment-card').studarr=arr;
+        }   
         }
         else
         {
@@ -664,7 +671,7 @@
       },
       overalltermmarkinsertResponse:function(e){        
         alert("Inserted!");
-        if(localStorage.getItem("curr_sess_assesment")=="Assesment3"||localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="Games")
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment3"||localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development")
           this.calloveralltermassesmentinsertService();
         // n1++;
         // if(localStorage.getItem("curr_sess_assesment")=="Assesment3"&&(n1==this.count)){
@@ -764,7 +771,7 @@
         overall.push(markarr);
        }
        
-        if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"){
+        if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"||localStorage.getItem("curr_sess_importsubject")=="Personality Development"){
         document.querySelector('home-page').setPage('coscholasticassesment','');  
         document.querySelector('coscholastic-assesment').hiddenpage(); 
         }
@@ -828,6 +835,12 @@
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-games-card'); 
         document.querySelector('cs-games-card').setDefaultHeaders();    
         document.querySelector('cs-games-card').importarr=overall;
+        } 
+        if(localStorage.getItem("curr_sess_importsubject")=="Personality Development"){   
+            
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card'); 
+        document.querySelector('cs-personalitydevelopment-card').setDefaultHeaders();    
+        document.querySelector('cs-personalitydevelopment-card').importarr=overall;
         } 
     },
     Fnupdatemark:function(sname,scategory,svalue)

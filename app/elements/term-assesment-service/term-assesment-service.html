@@ -333,7 +333,6 @@
          this.$.subjectajax.generateRequest();
       },
       subjectResponse:function(e){ 
-      // alert(JSON.stringify(e.detail.response)); 
           if(localStorage.getItem("curr_sess_subjectcategory")=="category1")        
           document.querySelector('term-assesment-card').subjectarr=e.detail.response.returnval;
           if(localStorage.getItem("curr_sess_subjectcategory")=="category2"||localStorage.getItem("curr_sess_subjectcategory")=="category3"||localStorage.getItem("curr_sess_subjectcategory")=="category4")  
@@ -361,8 +360,7 @@
          obj.section=section;
          obj.subject= localStorage.getItem("curr_sess_subject");
          obj.assesment= localStorage.getItem("curr_sess_assesment");
-         this.fetchstudentreportparam= obj;
-         // alert(JSON.stringify(obj));
+         this.fetchstudentreportparam= obj;         
          this.$.fetchstudentreportajax.generateRequest();
         }
         else
@@ -373,16 +371,14 @@
          obj.gradename=grade;
          obj.section=section;
          obj.subject= localStorage.getItem("curr_sess_subject");
-         this.fetchstudentparam= obj;
-         // alert(JSON.stringify(obj));
+         this.fetchstudentparam= obj;         
          this.$.fetchstudentajax.generateRequest(); 
         }
       },
       fetchstudentreportResponse:function(e)
       {
        var overall=[];
-       var arr1=e.detail.response.returnval;  
-      // alert(JSON.stringify(arr1));
+       var arr1=e.detail.response.returnval;      
        for(var i=0;i<arr1.length;i++)
        {
         var markarr=[];

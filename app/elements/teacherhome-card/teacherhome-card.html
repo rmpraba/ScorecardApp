@@ -46,11 +46,11 @@
       <div class="card" hidden$="{{Report}}">
        <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
       </div>  
-         <div class="card" >
+         <div class="card" hidden$="{{GenerateReport}}">
        <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
       </div>  
 
-      <div class="card" >
+      <div class="card" hidden$="{{Approve}}">
        <paper-button on-click="FnApprovecard" no ink><img src="../../images/approve.png" height="180px" width="180px"></paper-button>
       </div>  
     </div>
@@ -87,8 +87,11 @@
     var academicyear;
     Polymer({
       is: 'teacherhome-card',
-      ready:function(){       
-
+      ready:function(){
+        this.Report=true;
+        this.GenerateReport=true;
+        this.Approve=true;       
+        // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
         academicyear = e.target.selectedItem.textContent.trim();
@@ -118,7 +121,7 @@
         localStorage.setItem('curr_sess_loggedassesmenttype','Term');
         this.$.assesmentservice.callAcademicService();
       },
-       FnGenerateReportcard:function()
+      FnGenerateReportcard:function()
        {
         localStorage.setItem('curr_sess_report','1');
         localStorage.setItem('curr_sess_loggedassesmenttype','Term');
@@ -153,6 +156,13 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('approveassesment','');  
         this.$.assesmentservice.callApproveService();   
+      },
+      FnHideView:function(){        
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
+          this.Report=false;
+          this.GenerateReport=false;
+          this.Approve=false;
+        }
       }
     });
   })();

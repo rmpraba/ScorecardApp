@@ -28,7 +28,7 @@
         <section data-category="homepage">
           <home-page></home-page>
         </section>
-                 
+                
       </iron-pages>
     </div>
 
@@ -42,6 +42,7 @@
   setPage:function(page,title){    
     this.page=page;
     this.title=title;
+    localStorage.setItem("curr_sess_page",page);
   },
   signout:function()
   {

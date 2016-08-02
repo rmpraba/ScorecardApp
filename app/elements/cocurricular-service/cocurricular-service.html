@@ -33,11 +33,13 @@
   <script>
   (function() {
     'use strict';
-
+    var tempcnt1=0,tempcnt2=0;
     Polymer({
       is: 'cocurricular-service',
-      callinsertcocurricularmarkService:function(studid,studname,category,mark,grade){
-        // alert('hi');
+      callinsertcocurricularmarkService:function(studid,studname,category,mark,count){
+         tempcnt1=count;
+         
+         // alert(tempcnt1+" "+tempcnt2);
          this.insertcocurricularmarkurl=sessionStorage.getItem("addrinfo")+"/insertcocurricularmark-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":"","categorygrade":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -60,7 +62,10 @@
          this.$.insertcocurricularmarkajax.generateRequest();
       },
       insertcocurricularmarkResponse:function(e){
-        alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
+        tempcnt2++;
+        if(tempcnt1==tempcnt2)
+          alert('Inserted!');
       },
       calloverallinsertcocurricularmarkService:function(studid,studname,category,total,reduction,grade){        
          this.overallinsertcocurricularmarkurl=sessionStorage.getItem("addrinfo")+"/overallinsertcocurricularmark-service";

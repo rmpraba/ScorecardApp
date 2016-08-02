@@ -41,6 +41,7 @@
   setPage:function(page,title){    
     this.page=page;
     this.title=title;
+    localStorage.setItem("curr_sess_page",page);
   },
   signout:function()
   {

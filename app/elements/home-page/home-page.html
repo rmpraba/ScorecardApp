@@ -37,6 +37,7 @@
   </style>
   <div class="card">
     <div class="head">
+      <paper-icon-button icon="home" on-click="FnHome"></paper-icon-button>
       <label>{{title}}</label>
       <paper-button class="in" on-click="signout">Sign Out</paper-button>
     </div>
@@ -90,17 +91,31 @@
   <script>
   Polymer({
   is: "home-page",
-  ready: function() {
-   this.page='logincard'; 
-   this.page='cce-performance-name-card';   
+  ready: function(){      
   },
   setPage:function(page,title){    
-    this.page=page;
-    this.title=title;
+   this.page=page;
+   this.title=title;
+   localStorage.setItem("curr_sess_page",page);
   },
   signout:function()
   {
-    window.location.href="../index.html";   
+   window.location.href="../index.html";   
+  },
+  FnHome:function(){    
+    alert(localStorage.getItem("curr_sess_page"));
+    if(localStorage.getItem("curr_sess_page")=="termscholasticcategory")
+    {
+      this.page="teacherhomecard";
+    }
+    if(localStorage.getItem("curr_sess_page")=="termassesment")
+    {
+      this.page="termscholasticcategory";
+    }
+    if(localStorage.getItem("curr_sess_page")=="coscholasticassesment")
+    {
+      this.page="termscholasticcategory";
+    }
   } 
   });
   </script>

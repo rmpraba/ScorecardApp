@@ -635,7 +635,7 @@
         this.callOveralltermmarkinsertService();        
       }
 
-      if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher")
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher")
       {
         var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");

@@ -27,6 +27,7 @@
       .container{
         width: 100%;
         @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
       }
       .card{
         width: 33.33%;
@@ -37,22 +38,23 @@
     </style>
     <div class="container-full">
     <div class="container">
-      <div class="card" hidden$="{{BA}}">    
+    <!-- <center> -->
+      <div id="entry" class="card" hidden$="{{BA}}">    
        <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/pre-entry.png" height="180px" width="180px"></paper-button>
       </div>
-      <div class="card" hidden$="{{TA}}">
+      <div  class="card" hidden$="{{TA}}">
        <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
       </div>
       <div class="card" hidden$="{{Report}}">
        <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
       </div>  
-         <div class="card" hidden$="{{GenerateReport}}">
+      <div class="card" hidden$="{{GenerateReport}}">
        <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
-      </div>  
-
+      </div>
       <div class="card" hidden$="{{Approve}}">
        <paper-button on-click="FnApprovecard" no ink><img src="../../images/approve.png" height="180px" width="180px"></paper-button>
-      </div>  
+      </div>
+    <!-- </center>   -->
     </div>
     <div class="cdialog">      
       <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">

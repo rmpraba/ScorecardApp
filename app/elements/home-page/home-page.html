@@ -103,7 +103,7 @@
    window.location.href="../index.html";   
   },
   FnHome:function(){    
-    // alert(localStorage.getItem("curr_sess_page"));
+     alert(localStorage.getItem("curr_sess_page"));
     if(localStorage.getItem("curr_sess_page")=="termscholasticcategory")
     {
       this.page="teacherhomecard";
@@ -117,6 +117,7 @@
     if(localStorage.getItem("curr_sess_page")=="coscholasticassesment")
     {
       this.page="termscholasticcategory";
+      document.querySelector('coscholastic-assesment-card').FnRefresh();
     }
     if(localStorage.getItem("curr_sess_page")=="beginnerassesment")
     {

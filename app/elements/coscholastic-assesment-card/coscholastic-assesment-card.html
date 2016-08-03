@@ -35,7 +35,7 @@
      <div class='drop'>
 
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+            <paper-menu  id="gradenam2"class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
                 <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
               </template>
@@ -43,7 +43,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+            <paper-menu id="sectionnam2" class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
                 <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
               </template>
@@ -51,7 +51,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>   
+            <paper-menu id="subjectnam2" class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>   
               <template is="dom-repeat" items="{{subjectarr}}">
                 <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
               </template>
@@ -154,6 +154,78 @@
         document.querySelector('cs-health-physical-education-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-health-physical-education-card'); 
         }
+      },
+      FnRefresh:function()
+      {
+        document.querySelector('#gradenam2').selected=-1;
+        document.querySelector('#sectionnam2').selected=-1;
+        document.querySelector('#subjectnam2').selected=-1;
+
+         var subj=localStorage.getItem("curr_sess_subject");
+         var grad=localStorage.getItem("curr_sess_grade");
+
+ if(subj=="Health"){         
+        document.querySelector('cce-fivetoten-health-card').setDefaultHeaders(); 
+        }
+        else if(subj=="Attendance"){
+        this.$.assesmentservice.callWorkingdaysService();         
+        
+        document.querySelector('attendance-card').FnRefresh();  
+        } 
+        else if(subj=="Art&Craft"){                    
+        
+        document.querySelector('cc-art-craft-onetofour-card').FnRefresh();
+        }
+        else if(subj=="dance"){                   
+        
+        document.querySelector('cc-dance-onetofour-card').FnRefresh();
+        }
+        else if(subj=="music"){                   
+        
+        document.querySelector('cc-music-onetofour-card').FnRefresh();
+        }  
+        else if(subj=="Games"){                   
+        
+        document.querySelector('cs-games-card').FnRefresh();
+        } 
+        else if(subj=="Personality Development"){
+        document.querySelector('cs-personalitydevelopment-card').FnRefresh();                   
+               
+        }      
+        else if(subj=="Life Skills"){
+        if(grad=="Grade-9"||grad=="Grade-10"){
+        document.querySelector('cc-ntlife-skill-card').FnRefresh();  
+        
+        }
+        else{
+        document.querySelector('cs-life-skill-card').FnRefresh();  
+        
+        }
+        }
+        else if(subj=="Work Education"){
+        document.querySelector('cs-education-card').FnRefresh();  
+        
+
+        }
+        else if(subj=="Visual & Performing Arts"){
+        document.querySelector('cs-visual-performing-card').FnRefresh();  
+        
+
+        }
+        else if(subj=="Attitudes & Values"){
+        document.querySelector('cs-attitudes-card').FnRefresh();  
+        
+
+        }
+        else if(subj=="Co-Curricular Activities"){
+        document.querySelector('cs-co-curricular-card').FnRefresh();  
+        
+        }
+        else if(subj="Health & Physical Activities"){
+        document.querySelector('cs-health-physical-education-card').FnRefresh();  
+        
+        }
+
       }
     });
   })();

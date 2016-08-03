@@ -164,8 +164,8 @@
          var subj=localStorage.getItem("curr_sess_subject");
          var grad=localStorage.getItem("curr_sess_grade");
 
- if(subj=="Health"){         
-        document.querySelector('cce-fivetoten-health-card').setDefaultHeaders(); 
+      if(subj=="Health"){         
+        document.querySelector('cce-fivetoten-health-card').FnRefresh(); 
         }
         else if(subj=="Attendance"){
         this.$.assesmentservice.callWorkingdaysService();         

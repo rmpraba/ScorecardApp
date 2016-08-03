@@ -165,41 +165,58 @@
         {
 
         if(subject=="Mathematics")
-        {       
+        {  
+           document.querySelector('cc-maths-onetofour-card').studarr=[];     
            this.$.assesmentservice.callFetchStudentInfo(gradename,section);                   
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
            document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();
+            
         }  
-        if(subject=="EVS"){        
+        if(subject=="EVS")
+        { 
+          document.querySelector('cc-evs-onetofour-card').studarr=[];       
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');
           document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
+          
         }
-         if(subject=="English"||subject=="Hindi"||subject=="Kannada"){      
+         if(subject=="English"||subject=="Hindi"||subject=="Kannada")
+         { 
+          document.querySelector('cc-eng-onetofour-card').studarr=[];     
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-eng-onetofour-card');
           document.querySelector('cc-eng-onetofour-card').setDefaultHeaders();
+          
         }
-        if(subject=="GK"){        
+        if(subject=="GK")
+        {   
+          document.querySelector('cc-gk-onetofour-card').studarr=[];     
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');
           document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();
           
+          
         }       
         if(subject=="Computer")
-        {        
+        {  
+          document.querySelector('cc-computer-onetofour-card').studarr=[];      
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-computer-onetofour-card');
           document.querySelector('cc-computer-onetofour-card').setDefaultHeaders();
+          
         }        
         }
-        else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4"){  
+        else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4")
+        {  
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);           
-          if(assesmenttype=="FA1"||assesmenttype=="FA2"||assesmenttype=="FA3"||assesmenttype=="FA4"){
+          if(assesmenttype=="FA1"||assesmenttype=="FA2"||assesmenttype=="FA3"||assesmenttype=="FA4")
+          {
           document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
-          document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders();  
+          document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
+
           }
-          if(assesmenttype=="SA1"||assesmenttype=="SA2"){
+          if(assesmenttype=="SA1"||assesmenttype=="SA2")
+          {
           document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
           document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
           }
@@ -239,7 +256,6 @@
           
           document.querySelector('cc-computer-onetofour-card').FnRefresh();
         }        
-        
                 
           if(assestype=="FA1"||assestype=="FA2"||assestype=="FA3"||assestype=="FA4"){
          

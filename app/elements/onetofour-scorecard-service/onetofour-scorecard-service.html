@@ -116,21 +116,22 @@
         document.querySelector('cce-onetofour-score-card').wdterm1=arr[0].working_days;
         document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
         document.querySelector('cce-onetofour-score-card').t1height=arr[0].height;
-        document.querySelector('cce-onetofour-score-card').t1weight=arr[0].width;
+        document.querySelector('cce-onetofour-score-card').t1weight=arr[0].weight;
+        // alert(JSON.stringify(document.querySelector('cce-onetofour-score-card').t1height))
         }
         if(arr.length==2){
         document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;
         document.querySelector('cce-onetofour-score-card').wdterm2=arr[1].working_days;
         document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
         document.querySelector('cce-onetofour-score-card').t2height=arr[1].height;
-        document.querySelector('cce-onetofour-score-card').t2weight=arr[1].width;
+        document.querySelector('cce-onetofour-score-card').t2weight=arr[1].weight;
         }
         if(arr.length==3){
         document.querySelector('cce-onetofour-score-card').adterm3=arr[2].attendance; 
         document.querySelector('cce-onetofour-score-card').wdterm3=arr[2].working_days;
         document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[2].attendance/arr[2].working_days)*100).toFixed(2)+"%";
         document.querySelector('cce-onetofour-score-card').t3height=arr[2].height;
-        document.querySelector('cce-onetofour-score-card').t3weight=arr[2].width;
+        document.querySelector('cce-onetofour-score-card').t3weight=arr[2].weight;
         }
         /*document.querySelector('cce-onetofour-score-card').height=arr[0].height;
         document.querySelector('cce-onetofour-score-card').width=arr[0].width;
@@ -160,14 +161,14 @@
         this.$.fetchscholasticmarkajax.generateRequest(); 
       },
       fetchscholasticmarkResponse:function(e){
-        alert(JSON.stringify(e.detail.response.returnval));
+        // alert(JSON.stringify(e.detail.response.returnval));
         var engarr=[];
         var matharr=[];
         var evsarr=[];
         var hinarr=[];
         var comarr=[];
         var gkarr=[];
-         var acarr=[];
+        var acarr=[];
         var mdarr=[];
         var gamearr=[];
         var parr=[];

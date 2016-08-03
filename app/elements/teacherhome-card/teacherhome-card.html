@@ -59,7 +59,7 @@
     <div class="cdialog">      
       <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
          <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
+            <paper-menu id="academicyr" class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
                 <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
               </template>
@@ -70,7 +70,7 @@
     <div class="dialog">      
       <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
           <paper-dropdown-menu id="term" label="Select Term" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" on-iron-select="FnSelectTerm" attr-for-selected="value" selected="{{selectterm}}">
+            <paper-menu id="termtype" class="dropdown-content" on-iron-select="FnSelectTerm" attr-for-selected="value" selected="{{selectterm}}">
               <template is="dom-repeat" items="{{termarr}}">
                 <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
               </template>
@@ -170,6 +170,11 @@
           this.GenerateReport=false;
           this.Approve=false;
         }
+      },
+      FnRefresh:function()
+      {
+         document.querySelector('#academicyr').selected=-1;
+          document.querySelector('#termtype').selected=-1;
       }
     });
   })();

@@ -111,6 +111,8 @@
     if(localStorage.getItem("curr_sess_page")=="termassesment")
     {
       this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('term-assesment-card').FnRefresh();
     }
     if(localStorage.getItem("curr_sess_page")=="coscholasticassesment")
     {
@@ -118,7 +120,10 @@
     }
     if(localStorage.getItem("curr_sess_page")=="beginnerassesment")
     {
-      this.page="teacherhomecard";
+      
+       this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
     }
     if(localStorage.getItem("curr_sess_page")=="scorecard")
     {
@@ -130,7 +135,10 @@
     }
     if(localStorage.getItem("curr_sess_page")=="beginner-assesment-lang-markentrysheet")
     {
+      
       this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
     }
   } 
   });

@@ -40,6 +40,7 @@
     </style>
     <div>
      <center><h1>{{schoolname}}</h1>
+     <div id="hidetop">
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Evaluation  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4>
       <table border="1" id="MarkTable1">     
@@ -51,7 +52,7 @@
        <th id="tb1">Team Spirit(10)</th>
        <th id="tb1">Talent(10)</th>
        </tr>
-
+</div>
 
        <template is="dom-repeat" items="{{markarr}}" as="m">
 <tr><td></td>
@@ -107,6 +108,8 @@ var tableToExcel = (function() {
     Polymer({
       is: 'cs-games-card',
        setDefaultHeaders:function(){
+         this.$.hidetop.hidden=false;
+
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
@@ -141,6 +144,19 @@ var tableToExcel = (function() {
         this.$.assesmentservice.Fnupdatemark(sname,scategory,svalue);
 
         
+      },
+        FnRefresh:function()
+      {
+ this.markarr=[];
+ this.importarr=[];
+ this.studarr=[];
+ this.schoolname="";
+        this.academicyear="";
+        this.grade="";
+        this.section="";
+        this.subject="";
+         this.$.hidetop.hidden=true;
+
       }
     });
   })();

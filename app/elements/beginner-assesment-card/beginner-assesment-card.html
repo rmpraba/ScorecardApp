@@ -38,21 +38,21 @@
             </paper-menu>
           </paper-dropdown-menu> -->
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required> 
+            <paper-menu  id="gradenam" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required> 
               <template is="dom-repeat" items="{{gradearr}}">
                 <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
           <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+            <paper-menu id="sectionnam" class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
                 <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
           <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required> 
+            <paper-menu id="subjectnam" class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required> 
               <template is="dom-repeat" items="{{subjectarr}}">
                 <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
               </template>
@@ -100,6 +100,8 @@
       },
       FnSelectSubject:function(e){
         this.flag=1;
+        document.querySelector('beginner-assesment-markentrysheet').FnRefresh();
+        document.querySelector('beginner-assesment-lang-markentrysheet').FnRefresh();
         subject = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_subject",subject);
         this.FnServiceCall(); 
@@ -119,7 +121,17 @@
         document.querySelector('beginner-assesment-lang-markentrysheet').setDefaultHeaders(); 
         document.querySelector('assesment-sheet-card').setPage('beginner-assesment-lang-markentrysheet');        
         }
-      }        
+      },
+       FnRefresh:function()
+      {
+        document.querySelector('#gradenam').selected=-1;
+        document.querySelector('#sectionnam').selected=-1;
+        document.querySelector('#subjectnam').selected=-1;
+        document.querySelector('#subjectnam').selected=-1;
+        document.querySelector('beginner-assesment-lang-markentrysheet').FnRefresh();
+        document.querySelector('beginner-assesment-markentrysheet').FnRefresh();
+        this.flag=0;
+      }      
     });      
   })();
   </script>

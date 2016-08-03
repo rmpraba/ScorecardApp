@@ -42,7 +42,7 @@
           </paper-dropdown-menu>-->
 
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+            <paper-menu id="gradenam1" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
                 <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
               </template>
@@ -50,7 +50,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+            <paper-menu id="sectionnam1" class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
                 <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
               </template>
@@ -58,7 +58,7 @@
           </paper-dropdown-menu>
 
            <paper-dropdown-menu hidden$="{{hideassesment}}" id="assessment" label="Select Assesment" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required> 
+            <paper-menu id="assesmentcat1" class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required> 
               <template is="dom-repeat" items="{{assesmentarr}}">
                 <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>      
               </template>
@@ -66,7 +66,7 @@
           </paper-dropdown-menu> 
 
           <paper-dropdown-menu hidden$="{{hideassesmenttype}}" id="assesmenttype" label="Select type" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesmentType"  attr-for-selected="value" required>   
+            <paper-menu id="assestype1" class="dropdown-content"  on-iron-select="FnSelectAssesmentType"  attr-for-selected="value" required>   
               <!-- <template is="dom-repeat" items="{{typearr}}"> -->
                 <paper-item value="{{FA1}}">{{FA1}}</paper-item>
                 <paper-item value="{{FA2}}">{{FA2}}</paper-item>
@@ -76,7 +76,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>   
+            <paper-menu id="subjectnam1" class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>   
               <template is="dom-repeat" items="{{subjectarr}}">
                 <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
               </template>
@@ -204,6 +204,53 @@
           document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
           }
         }
+      },
+      FnRefresh:function()
+      {
+        document.querySelector('#gradenam1').selected=-1;
+        document.querySelector('#sectionnam1').selected=-1;
+        document.querySelector('#assesmentcat1').selected=-1;
+        document.querySelector('#assestype1').selected=-1;
+        document.querySelector('#subjectnam1').selected=-1;
+        this.flag=0;
+
+        var subj=localStorage.getItem("curr_sess_subject");
+        var assestype=localStorage.getItem("curr_sess_assesmenttype");
+        if(subj=="Mathematics")
+        {       
+           
+           document.querySelector('cc-maths-onetofour-card').FnRefresh();
+        }  
+        if(subj=="EVS"){        
+          
+          document.querySelector('cc-evs-onetofour-card').FnRefresh();
+        }
+         if(subj=="English"||subj=="Hindi"||subj=="Kannada"){      
+          
+          document.querySelector('cc-eng-onetofour-card').FnRefresh();
+        }
+        if(subj=="GK"){        
+         
+          document.querySelector('cc-gk-onetofour-card').FnRefresh();
+          
+        }       
+        if(subj=="Computer")
+        {        
+          
+          document.querySelector('cc-computer-onetofour-card').FnRefresh();
+        }        
+        
+                
+          if(assestype=="FA1"||assestype=="FA2"||assestype=="FA3"||assestype=="FA4"){
+         
+          document.querySelector('cc-fa-fivetoten-card').FnRefresh();  
+          }
+          if(assestype=="SA1"||assestype=="SA2"){
+         
+          document.querySelector('cc-sa-fivetoten-card').FnRefresh();
+          }
+        
+
       }
     });
   })();

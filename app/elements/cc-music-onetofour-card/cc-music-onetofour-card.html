@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/cc-music-onetofour-item-card/cc-music-onetofour-item-card.html">
-
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <dom-module id="cc-music-onetofour-card">
   <template>
     <style>
@@ -27,6 +27,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .studname{
         width: 20%;
+          }
+          .button{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+          #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
           }
     </style>
     <div>
@@ -53,10 +71,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <template is="dom-repeat" items="{{importarr}}" as="m">
 <tr><td></td>
 <template is="dom-repeat" items="{{m}}" as="mark1">
-<td><paper-input value="{{mark1.name}}" id="p2"></paper-input></td>
+<td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
-</paper-input></td>
+<!-- <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+</paper-input></td> -->
 <td hidden$="{{hidepaperinput}}"> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
 </paper-input></td>
 </template>
@@ -73,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
     </table>      
 
-    <paper-button class="button" on-click="importmark">Import Marks</paper-button>
+    <paper-button class="button" on-click="importmark">Submit</paper-button>
    
     <term-assesment-service id="assesmentservice"></term-assesment-service>  
 
@@ -111,16 +129,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.assesment="A2";
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
         this.assesment="A3";
-      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
-      if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
-        // alert('yes');
-        this.hidepaperitem=false;
-        this.hidepaperinput=true; 
-      }
-      else{
-        this.hidepaperitem=true;
-        this.hidepaperinput=false; 
-      }
+      // // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      // if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
+      //   // alert('yes');
+      //   this.hidepaperitem=false;
+      //   this.hidepaperinput=true; 
+      // }
+      // else{
+      //   this.hidepaperitem=true;
+      //   this.hidepaperinput=false; 
+      // }
       },
       hiddenbutton:function()
       {
@@ -128,7 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
        importmark:function()
       {
-        alert('import');
+        // alert('import');
         this.$.assesmentservice.Fnimportmark();
 
       },

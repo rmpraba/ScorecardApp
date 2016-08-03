@@ -1,7 +1,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../cs-games-itemcard/cs-games-itemcard.html">
-
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <dom-module id="cs-games-card">
   <template>
     <style>
@@ -18,6 +18,24 @@
           }
           #tb1{
              width:10%
+          }
+          .button{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+          #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
           }
     </style>
     <div>
@@ -46,10 +64,10 @@
 <template is="dom-repeat" items="{{importarr}}" as="m">
 <tr><td></td>
 <template is="dom-repeat" items="{{m}}" as="mark1">
-<td><paper-input value="{{mark1.name}}" id="p2"></paper-input></td>
+<td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
-</paper-input></td>
+<!-- <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+</paper-input></td> -->
 <td hidden$="{{hidepaperinput}}"> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
 </paper-input></td>
 </template>
@@ -64,7 +82,7 @@
       </tr>
       </template>
       </table>      
-    <paper-button class="button" on-click="importmark">Import Marks</paper-button>
+    <paper-button class="button" on-click="importmark">Submit</paper-button>
     <input type="button" id="btn2" onclick="tableToExcel('MarkTable1', 'Mark Report')" value="Export to Excel">
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
@@ -94,16 +112,16 @@ var tableToExcel = (function() {
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
-         // alert(sessionStorage.getItem("curr_sess_loggedrole"));
-      if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
-        // alert('yes');
-        this.hidepaperitem=false;
-        this.hidepaperinput=true; 
-      }
-      else{
-        this.hidepaperitem=true;
-        this.hidepaperinput=false; 
-      }
+      //    // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      // if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
+      //   // alert('yes');
+      //   this.hidepaperitem=false;
+      //   this.hidepaperinput=true; 
+      // }
+      // else{
+      //   this.hidepaperitem=true;
+      //   this.hidepaperinput=false; 
+      // }
       },
       hiddenbutton:function()
       {
@@ -111,7 +129,7 @@ var tableToExcel = (function() {
       },
        importmark:function()
       {
-        alert('import');
+        // alert('import');
         this.$.assesmentservice.Fnimportmark();
 
       },

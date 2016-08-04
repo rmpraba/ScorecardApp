@@ -151,8 +151,10 @@ app.post('/grade-service',  urlencodedParser,function (req, res)
 {
   var schoolid={school_id:req.query.schoolid};
   var loggedid={id:req.query.loggedid};
+  var roleid={role_id:req.query.roleid};
+  console.log(roleid);
   // var qur="select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where id='"+loggedid+"')";
-  connection.query('select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where ? and ?)',[schoolid,loggedid],
+  connection.query('select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where ? and ? and ?)',[roleid,schoolid,loggedid],
     function(err, rows)
     {
     if(!err)
@@ -175,7 +177,7 @@ app.post('/grade-service',  urlencodedParser,function (req, res)
 //fetching section info
 app.post('/section-service',  urlencodedParser,function (req, res)
 {  
-  var qur="select * from md_section where section_id in(select section_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and grade_id=(select grade_id from scorecarddb.md_grade where grade_name='"+req.query.gradename+"'))";
+  var qur="select * from md_section where section_id in(select section_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and role_id='"+req.query.roleid+"' and id='"+req.query.loggedid+"' and grade_id=(select grade_id from scorecarddb.md_grade where grade_name='"+req.query.gradename+"'))";
   connection.query(qur,
     function(err, rows)
     {
@@ -201,11 +203,19 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
 {
   // var qur="select subject_name from md_subject where subject_id in(select subject_id from mp_grade_subject where term_id=(select assesment_id from md_assesment_type where assesment_name='"+req.query.termtype+"') and grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"'))";
   // console.log(qur);
+  if(req.query.roleid=='subject-teacher'){
   var qur="select * from md_subject where subject_id in "+
+  "(select subject_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and "+
+  "grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
+  "section_id=(select section_id from md_section where section_name='"+req.query.section+"')) and subject_category='"+req.query.subjectcategory+"' and subject_id not in('s16','s17','s20')";
+  }
+  if(req.query.roleid=='class-teacher'){
+   var qur="select * from md_subject where subject_id in "+
   "(select subject_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and "+
   "grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
-  "section_id=(select section_id from md_section where section_name='"+req.query.section+"')) and subject_category='"+req.query.subjectcategory+"'";
-   // console.log(qur);
+  "section_id=(select section_id from md_section where section_name='"+req.query.section+"')) and subject_category='"+req.query.subjectcategory+"'"; 
+  }
+   console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -1241,8 +1251,8 @@ app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 
 app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 {
-  console.log('come');
-    var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and sub_category='"+req.query.sub_category+"'and student_id='"+req.query.studid+"'";
+  // console.log('come');
+  var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and sub_category='"+req.query.sub_category+"'and student_id='"+req.query.studid+"'";
       connection.query(qur,
         function(err, rows)
         {
@@ -1254,8 +1264,78 @@ app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
     {
       console.log('No data Fetched'+err);
     }
-});
   });
+});
+
+
+app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, res)
+{
+  
+    // var qur="select term_name,assesment_id,student_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    // "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as term_grade,"+
+    // "subject_id from tr_term_assesment_overall_marks where subject_id='EVS' and school_id='SCH001' "+ 
+    // "and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
+    // "group by subject_id,term_name,assesment_id,student_id ";
+
+    var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
+"lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade,"+
+"ta.subject_id,ba.grade as beginner_grade from scorecarddb.tr_term_assesment_overall_marks ta "+
+"join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
+"where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
+"and ta.grade='"+req.query.grade+"' and ta.section='"+req.query.section+"' "+
+"group by ta.subject_id,ta.term_name,ta.assesment_id,ta.student_id ";
+
+console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log('yessssssssssssssssssssss');
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      // console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req, res)
+{
+  
+    var qur="select ta.term_name,ta.assesment_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    "lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade, "+
+    "ta.subject_id,ba.grade as beginner_grade from scorecarddb.tr_term_assesment_overall_marks ta "+
+    "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
+    "group by ta.subject_id,ta.term_name,ta.assesment_id ";
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

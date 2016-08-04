@@ -300,9 +300,10 @@
       },
       callGradeService:function(){
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
-         var obj={"schoolid":"","loggedid":""};
+         var obj={"schoolid":"","loggedid":"","roleid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          this.gradeparam= obj;
          this.$.gradeajax.generateRequest();
       },
@@ -311,9 +312,10 @@
       },
       callSectionService:function(gradename){        
          this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
-         var obj={"schoolid":"","loggedid":"","gradename":""};
+         var obj={"schoolid":"","loggedid":"","gradename":"","roleid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          obj.gradename=gradename;
          this.sectionparam= obj;
          this.$.sectionajax.generateRequest();
@@ -323,9 +325,10 @@
       },
       callSubjectService:function(gradename,section){
          this.subjecturl=sessionStorage.getItem("addrinfo")+"/subject-service";
-         var obj={"schoolid":"","loggedid":"","gradename":"","section":"","subjectcategory":""};
+         var obj={"schoolid":"","loggedid":"","roleid":"","gradename":"","section":"","subjectcategory":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          obj.gradename=gradename;
          obj.section=section;
          obj.subjectcategory=localStorage.getItem("curr_sess_subjectcategory");

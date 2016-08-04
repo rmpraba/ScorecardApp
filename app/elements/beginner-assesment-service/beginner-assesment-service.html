@@ -115,9 +115,10 @@
       },
       callGradeService:function(){
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
-         var obj={"schoolid":"","loggedid":""};
+         var obj={"schoolid":"","loggedid":"","roleid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          this.gradeparam= obj;
          this.$.gradeajax.generateRequest();
       },
@@ -126,9 +127,10 @@
       },
       callSectionService:function(gradename){        
          this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
-         var obj={"schoolid":"","loggedid":"","gradename":""};
+         var obj={"schoolid":"","loggedid":"","gradename":"","roleid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          obj.gradename=gradename;
          this.sectionparam= obj;
          this.$.sectionajax.generateRequest();
@@ -143,7 +145,7 @@
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
          obj.gradename=gradename;
          obj.section=section;
-         obj.subjectcategory="category1";
+         obj.subjectcategory="category5";
          this.subjectparam= obj;
          this.$.subjectajax.generateRequest();
       },

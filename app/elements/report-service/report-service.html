@@ -1,0 +1,160 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="report-service">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+     <iron-ajax
+        method="post"
+        id="fetchstudnameajax"
+        url="{{fetchstudnameurl}}"
+        params="{{fetchstudnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudnameResponse"
+        debounce-duration="300"
+    > 
+
+    <iron-ajax
+        method="post"
+        id="fetchtermmarkforreportajax"
+        url="{{fetchtermmarkforreporturl}}"
+        params="{{fetchtermmarkforreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchtermmarkforreportResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="fetchbeginnermarkforreportajax"
+        url="{{fetchbeginnermarkforreporturl}}"
+        params="{{fetchbeginnermarkforreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchbeginnermarkforreportResponse"
+        debounce-duration="300"
+    >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var studarr=[];
+    var term=[];
+    var beginner=[];
+    Polymer({
+      is: 'report-service',
+      callFetchstudentnameService:function(){
+        this.fetchstudnameurl=sessionStorage.getItem("addrinfo")+"/fetchstudname-service";
+        var obj={"scoolid":"","roleid":"","grade":"","section":""};
+        obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        this.fetchstudnameparam=obj;
+        this.$.fetchstudnameajax.generateRequest();
+      },
+      fetchstudnameResponse:function(e){
+        studarr=e.detail.response.returnval;
+        // alert(JSON.stringify(studarr));        
+        document.querySelector('beginner-term-analysis-card').FnHide();
+        // document.querySelector('language-enrichment-card').studentarr=arr; 
+        this.callfetchtermmarkforreportService();       
+      },
+      callfetchtermmarkforreportService:function(){
+        // alert('yes');
+        this.fetchtermmarkforreporturl=sessionStorage.getItem("addrinfo")+"/fetchtermmarkforreport-service";
+        var obj={"schoolid":"","academicyear":"","grade":"","section":"","subject":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=localStorage.getItem("curr_sess_grade");;
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.subject=localStorage.getItem("curr_sess_subject");
+        this.fetchtermmarkforreportparam=obj;
+        this.$.fetchtermmarkforreportajax.generateRequest();
+      },
+      fetchtermmarkforreportResponse:function(e){
+        var overall=[];
+        var mark=[];      
+        // alert('yes yes');
+        // document.querySelector('beginner-term-analysis-card').FnHide();        
+        term=e.detail.response.returnval;
+        // alert(JSON.stringify(e.detail.response.returnval));
+        for(var i=0;i<studarr.length;i++){ 
+                  
+          for(var j=0;j<term.length;j++){
+          var obj={"id":"","name":"","beginner":"","term":""};            
+          // var obj={"id":"","name":"","beginner":"","t1a1":"","t1a2":"","t1a3":"","t2a1":"","t2a2":"","t2a3":"","t3a1":"","t3a2":"","t3a3":""};
+            this.flag=0;           
+            if(studarr[i].id==term[j].student_id){
+              if(overall.length>0){
+                for(var n=0;n<overall.length;n++){
+                  if(overall[n].id==obj.id)
+                    this.flag=1;
+                }
+              }
+              mark.push(term[j].term_grade);              
+              if(this.flag==0){
+              obj.id=studarr[i].id;
+              obj.name=studarr[i].student_name;
+              obj.beginner=term[j].beginner_grade;
+              obj.term=mark;              
+              overall.push(obj);
+              } 
+              /*obj.id=studarr[i].id;
+              obj.name=studarr[i].student_name;
+              obj.beginner=term[j].beginner_grade;
+              if(term[j].term_name=="term1"&&term[j].assesment_id=="Assesment1")
+                obj.t1a1=term[j].term_grade;
+              if(term[j].term_name=="term1"&&term[j].assesment_id=="Assesment2")
+                obj.t1a2=term[j].term_grade;
+              if(term[j].term_name=="term1"&&term[j].assesment_id=="Assesment3")
+                obj.t1a3=term[j].term_grade;
+              if(term[j].term_name=="term2"&&term[j].assesment_id=="Assesment1")
+                obj.t2a1=term[j].term_grade;
+              if(term[j].term_name=="term2"&&term[j].assesment_id=="Assesment2")
+                obj.t2a2=term[j].term_grade;
+              if(term[j].term_name=="term2"&&term[j].assesment_id=="Assesment3")
+                obj.t2a3=term[j].term_grade;
+              if(term[j].term_name=="term3"&&term[j].assesment_id=="Assesment1")
+                obj.t3a1=term[j].term_grade;
+              if(term[j].term_name=="term3"&&term[j].assesment_id=="Assesment2")
+                obj.t3a2=term[j].term_grade;
+              if(term[j].term_name=="term3"&&term[j].assesment_id=="Assesment3")
+                obj.t3a3=term[j].term_grade;
+              overall.push(obj);*/
+            }  
+
+          }
+          
+          
+        }
+        alert(JSON.stringify(overall));
+
+
+      }
+      // callfetchbeginnermarkforreportService:function(){
+      //   // alert('yes');
+      //   this.fetchbeginnermarkforreporturl=sessionStorage.getItem("addrinfo")+"/fetchbeginnermarkforreport-service";
+      //   var obj={"schoolid":"","academicyear":"","grade":"","section":"","subject":""};
+      //   obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+      //   obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+      //   obj.grade=localStorage.getItem("curr_sess_grade");;
+      //   obj.section=localStorage.getItem("curr_sess_section");
+      //   obj.subject=localStorage.getItem("curr_sess_subject");
+      //   this.fetchbeginnermarkforreportparam=obj;
+      //   this.$.fetchbeginnermarkforreportajax.generateRequest();
+      // },
+      // fetchtermmarkforreportResponse:function(e){
+      //   // document.querySelector('beginner-term-analysis-card').FnHide();        
+      //   // alert(JSON.stringify(e.detail.response.returnval));
+      //   beginner=e.detail.response.returnval;
+      // }
+
+    });
+  })();
+  </script>
+</dom-module>

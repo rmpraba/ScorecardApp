@@ -13,6 +13,8 @@
 <link rel="import" href="../term-scholastic-category/term-scholastic-category.html">
 <link rel="import" href="../term-coscholastic-category/term-coscholastic-category.html">
 <link rel="import" href="../term-assesment-sheet-card/term-assesment-sheet-card.html">
+<link rel="import" href="../language-enrichment-card/language-enrichment-card.html">
+<link rel="import" href="../beginner-term-analysis-card/beginner-term-analysis-card.html">
   <dom-module id="home-page">
   <template>
   <style>
@@ -33,6 +35,11 @@
   }
   .card{
     @apply(--layout-vertical);
+  }
+  label{
+    margin-left: 35%;
+    font-size: 20px;
+    font-weight: bold;
   }
   </style>
   <div class="card">
@@ -77,8 +84,14 @@
         <section data-category="cce-onetofour-score-card">
           <cce-onetofour-score-card></cce-onetofour-score-card>
         </section>
-          <section data-category="approveassesment">
+        <section data-category="approveassesment">
           <approve-one-to-four-card></approve-one-to-four-card>
+        </section>
+        <section data-category="languageenrichment">
+          <language-enrichment-card></language-enrichment-card>
+        </section>
+        <section data-category="beginnertermanalysis">
+          <beginner-term-analysis-card></beginner-term-analysis-card>
         </section>
       </iron-pages>
     </div>
@@ -140,6 +153,16 @@
        document.querySelector('teacherhome-card').FnRefresh();
        document.querySelector('beginner-assesment-card').FnRefresh();
     }
+     if(localStorage.getItem("curr_sess_page")=="beginner-assesment-markentrysheet")
+    {
+      
+      this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+    }
+  },
+  FnsetTitle:function(title){
+    this.title=title;
   } 
   });
   </script>

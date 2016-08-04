@@ -3,6 +3,7 @@
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="import" href="../scorecard-service/scorecard-service.html">
 <link rel="import" href="../onetofour-scorecard-service/onetofour-scorecard-service.html">
+<link rel="import" href="../report-service/report-service.html">
 
 <dom-module id="student-list-itemcard">
   <template>
@@ -28,6 +29,7 @@
     </div>
     <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
+    <report-service id="reportservice"></report-service>
   </template>
   <script>
   (function() {
@@ -35,13 +37,12 @@
     Polymer({
       is: 'student-list-itemcard',            
       FnView:function(){
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
         this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
         this.$.otfscorecardservice.callFetchsubjectinfoService(this.studentid);
         this.$.otfscorecardservice.callfetchscholasticmarkService(this.studentid);
-        // this.$.otfscorecardservice.callfetchcoscholasticmarkService(this.studentid);
-        // this.$.otfscorecardservice.callfetchcocurricularmarkService(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('cce-onetofour-score-card','');        
         document.querySelector('cce-onetofour-score-card').setDefaultHeaders();
@@ -52,12 +53,19 @@
         this.$.scorecardservice.callFetchsubjectinfoService(this.studentid);
         this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studentid);
         this.$.scorecardservice.callFetchmarkService(this.studentid); 
-        this.$.scorecardservice.callfetchcoscholasticmetricsService(this.studentid);  
+        this.$.scorecardservice.callfetchcoscholasticmetricsServicecls
+        (this.studentid);  
         this.$.scorecardservice.callfetchcoscholasticinfoService(this.studentid);
         this.$.scorecardservice.callFetchmarkService(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('ccefivetotenscorecard',''); 
         }
+      }
+      if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Analysis"){
+        this.$.reportservice.callfetchmarkforreportService(this.studentid);
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('languageenrichment','');
+      }
       }
     });
   })();

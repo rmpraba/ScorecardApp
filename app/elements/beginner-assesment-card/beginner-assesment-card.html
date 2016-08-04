@@ -53,9 +53,12 @@
           </paper-dropdown-menu>
           <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
             <paper-menu id="subjectnam" class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required> 
-              <template is="dom-repeat" items="{{subjectarr}}">
+              <paper-item value="English">English</paper-item>
+              <paper-item value="Mathematics">Mathematics</paper-item>
+              <paper-item value="EVS">EVS</paper-item>
+              <!-- <template is="dom-repeat" items="{{subjectarr}}">
                 <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
-              </template>
+              </template> -->
             </paper-menu>
           </paper-dropdown-menu>        
      </div>
@@ -73,7 +76,7 @@
       ready:function(){
         this.flag=0;
         this.hidesheet=true;
-        localStorage.setItem("curr_sess_showpage","beginner-assesment-card");        
+        localStorage.setItem("curr_sess_page","beginner-assesment-card");        
       },
       FnSelectacademicyear:function(e){
         academicyear = e.target.selectedItem.textContent.trim();
@@ -93,7 +96,7 @@
       FnSelectSection:function(e){        
         section = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",section); 
-        this.$.bassesmentservice.callSubjectService(gradename,section);    
+        // this.$.bassesmentservice.callSubjectService(gradename,section);    
         if(this.flag==1){
         this.FnServiceCall();  
         }     

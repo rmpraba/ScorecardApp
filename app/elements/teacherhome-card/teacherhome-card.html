@@ -54,6 +54,9 @@
       <div class="card" hidden$="{{Approve}}">
        <paper-button on-click="FnApprovecard" no ink><img src="../../images/approve.png" height="180px" width="180px"></paper-button>
       </div>
+      <div class="card" hidden$="{{Analysis}}">
+       <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
+      </div>
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -112,6 +115,11 @@
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('beginnerassesment','');
          }
+         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Analysis") 
+         {
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('beginnertermanalysis','');
+         } 
       },
       FnSelectPreEntryType:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','PreEntry');
@@ -174,7 +182,12 @@
       FnRefresh:function()
       {
          document.querySelector('#academicyr').selected=-1;
-          document.querySelector('#termtype').selected=-1;
+         document.querySelector('#termtype').selected=-1;
+      },
+      FnAnalysiscard:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','Analysis');        
+        this.$.scorecardservice.callGradeService();
+        this.$.cdialog.toggle();
       }
     });
   })();

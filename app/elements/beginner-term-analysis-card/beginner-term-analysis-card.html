@@ -1,0 +1,110 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="../scorecard-service/scorecard-service.html">
+<link rel="import" href="../report-service/report-service.html">
+<link rel="import" href="../language-enrichment-card/language-enrichment-card.html">
+
+<dom-module id="beginner-term-analysis-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card{
+      width: 100%;        
+      @apply(--layout-vertical);
+      }
+      .inner{
+      @apply(--layout-horizontal);
+      margin-left: 30%;
+      }
+      .list{
+      margin-left: 10%;
+      margin-top: 5%;
+      }
+      paper-dropdown-menu{
+        margin-left: 5%;
+      }
+    </style>
+      <div class="card">
+          <div class="inner">
+          <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{gradearr}}">
+                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{sectionarr}}">
+                <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="subject" label="Select Subject" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>
+              <!-- <template is="dom-repeat" items="{{sectionarr}}"> -->
+                <paper-item value="English">English</paper-item>
+                <paper-item value="Mathematics">Mathematics</paper-item>
+                <paper-item value="EVS">EVS</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+          </div>
+    <div class="list" hidden$="{{hidecard}}">
+    <language-enrichment-card id="lang"></language-enrichment-card>
+    </div>
+    </div>
+    <scorecard-service id="scorecardservice"></scorecard-service>
+    <report-service id="reportservice"></report-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var gradename;
+    var section;
+    var subject;
+    var item=[];
+    Polymer({
+      is: 'beginner-term-analysis-card',
+      ready:function(){
+        this.hidecard=true;         
+      },
+      FnHide:function(){
+        this.hidecard=false;        
+      },
+      FnSelectGrade:function(e){        
+        gradename = e.target.selectedItem.textContent.trim();       
+        localStorage.setItem("curr_sess_grade",gradename);
+        this.$.scorecardservice.callSectionService(gradename);
+        if(this.flag==1)
+          this.callService();
+      },
+      FnSelectSection:function(e){
+        section = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section",section);
+        if(this.flag==1)                
+        this.callService();
+      },
+      FnSelectSubject:function(e){
+        subject = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_subject",subject);
+        this.$.lang.setDefaultHeaders();                
+        this.callService();
+      },
+      callService:function(){
+        this.flag="1";
+        this.$.reportservice.callFetchstudentnameService();        
+        // this.$.reportservice.callfetchtermmarkforreportService();
+        // this.$.reportservice.callfetchtermmarkforreportService();
+      }
+    
+  });
+  })();
+  </script>
+</dom-module>

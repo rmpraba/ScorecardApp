@@ -24,7 +24,9 @@
 
     </style>
     <div>    
+    <div id="hidetop">
       <center><h1>{{schoolname}}</h1>
+      
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Term &nbsp&nbsp{{term}}  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <table border="1" >    
@@ -34,6 +36,7 @@
       <th id="tb1">Total Attendance</th>
       <th id="tb1">Total Working Days</th>
       </tr>  
+      </div>
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="4">
       <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}"></attendance-item-card>
@@ -53,13 +56,22 @@
       setWorkingDays:function(days){
         this.workingdays=days;
       },
-      setDefaultHeaders:function(){        
+      setDefaultHeaders:function(){   
+      this.$.hidetop.hidden=false;     
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");        
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+
         this.term=localStorage.getItem("curr_sess_termname");
+
+      },
+      FnRefresh:function()
+      {
+this.$.hidetop.hidden=true;
+this.studarr=[];
+
       }
     });
   })();

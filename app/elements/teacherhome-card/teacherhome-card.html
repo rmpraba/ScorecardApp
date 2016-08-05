@@ -99,6 +99,7 @@
         this.Approve=true;       
         this.BA=true;
         this.TA=true;
+        this.Analysis=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -163,6 +164,7 @@
         {
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('termscholasticcategory','');
+        document.querySelector('term-scholastic-category').FnHideView();
         }
       },
       FnYearToggle:function(){
@@ -180,15 +182,18 @@
           this.TA=false;
           this.GenerateReport=false;
         }  
-        if(sessionStorage.getItem("curr_sess_loggedroleid")=='class-teacher'){          
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=='class-teacher'){  
+          this.BA=false;        
           this.TA=false;
           this.GenerateReport=false;
-        }   
-
+        }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
+          this.BA=false;
+          this.TA=false;
           this.Report=false;
           this.GenerateReport=false;
           this.Approve=false;
+          this.Analysis=false;
         }
       },
       FnRefresh:function()

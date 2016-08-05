@@ -57,7 +57,7 @@
             </paper-menu>
           </paper-dropdown-menu>
 
-           <paper-dropdown-menu hidden$="{{hideassesment}}" id="assessment" label="Select Assesment" disabled="{{read}}" required>
+          <paper-dropdown-menu hidden$="{{hideassesment}}" id="assessment" label="Select Assesment" disabled="{{read}}" required>
             <paper-menu id="assesmentcat1" class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required> 
               <template is="dom-repeat" items="{{assesmentarr}}">
                 <paper-item value="{{item.assesment_cyclename}}">{{item.assesment_cyclename}}</paper-item>      

@@ -59,7 +59,7 @@
         
       },
       FnComprehension:function(){
-        
+        this.score=(parseInt(this.correctword)+parseInt(this.comprehension));
       },
       FnScore:function(){ 
         this.callFetchGrade();               
@@ -80,7 +80,7 @@
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
         }
-        this.FnFindGrade((parseInt(this.score)*4)/10);   
+        this.FnFindGrade(((this.score)*4)/10);   
       },
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          

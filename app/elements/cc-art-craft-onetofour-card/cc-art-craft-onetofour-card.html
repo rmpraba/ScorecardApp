@@ -119,7 +119,7 @@ var tableToExcel = (function() {
       is: 'cc-art-craft-onetofour-card',
 
        setDefaultHeaders:function(){
-         this.$.hidetop.hidden=true;
+         this.$.hidetop.hidden=false;
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");

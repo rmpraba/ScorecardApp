@@ -115,6 +115,7 @@
       </template>
 
      </table> 
+     <!-- <paper-button class="button" on-click="FnSave">Save</paper-button> -->
      <paper-button class="button" on-click="importmark">Submit</paper-button>
      <input type="button" id="btn2" onclick="tableToExcel('MarkTable8', 'Mark Report')" value="Export to Excel">      
      </center>
@@ -122,7 +123,7 @@
     <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
    <script type="text/javascript">
-var tableToExcel = (function() {
+  var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
     , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
@@ -170,11 +171,12 @@ var tableToExcel = (function() {
       {
         this.$.btn2.hidden=true;
       },
-       importmark:function()
-      {
+      // FnSave:function(e){
         
+      // }
+      importmark:function()      
+      {        
         this.$.assesmentservice.Fnimportmark();
-
       },
       fetchmark:function(e)
       {
@@ -185,15 +187,15 @@ var tableToExcel = (function() {
       },
         FnRefresh:function()
       {
- this.markarr=[];
- this.importarr=[];
- this.studarr=[];
- this.schoolname="";
+        this.markarr=[];
+        this.importarr=[];
+        this.studarr=[];
+        this.schoolname="";
         this.academicyear="";
         this.grade="";
         this.section="";
         this.subject="";
-         this.$.hidetop.hidden=true;
+        this.$.hidetop.hidden=true;
       }
     });
   })();

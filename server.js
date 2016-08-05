@@ -961,9 +961,9 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
   var academicyear={academic_year:req.query.academicyear}; 
-  var qur="select * from scorecarddb.tr_term_health th join scorecarddb.tr_term_attendance ta "+
-  "on (th.student_id=ta.student_id) where th.student_id='"+req.query.studid+"' "+
-  "and th.school_id='"+req.query.schoolid+"' and th.academic_year='"+req.query.academicyear+"'";
+  var qur="select * from scorecarddb.tr_term_attendance "+
+  " where student_id='"+req.query.studid+"' "+
+  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"'";
   console.log(qur);
   connection.query(qur,
     function(err, rows)

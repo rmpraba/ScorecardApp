@@ -92,11 +92,15 @@
             if(studarr[i].id==term[j].student_id){
               if(overall.length>0){
                 for(var n=0;n<overall.length;n++){
-                  if(overall[n].id==obj.id)
+                  if(overall[n].id==studarr[i].id)
                     this.flag=1;
                 }
               }
-              mark.push(term[j].term_grade);              
+              // for(var n=0;n<overall.length>0;n++){
+              // if(overall[n].id==term[j].student_id){
+              mark.push({"studid":term[j].student_id,"termgrade":term[j].term_grade}); 
+              // }  
+              // }           
               if(this.flag==0){
               obj.id=studarr[i].id;
               obj.name=studarr[i].student_name;
@@ -133,6 +137,7 @@
           
         }
         alert(JSON.stringify(overall));
+        document.querySelector("beginner-term-analysis-card").itemarr=overall;
 
 
       }

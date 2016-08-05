@@ -20,8 +20,14 @@
       <tr>
         <th></th><th></th><th></th><th>A1</th><th>A2</th><th>A3</th><th>A1</th><th>A2</th><th>A3</th><th>A1</th><th>A2</th><th>A3</th>
       </tr>
-      <template is="dom-repeat" items="{{studentarr}}">
-      <tr><td>{{item.student_name}}</td></tr>
+      <template is="dom-repeat" items="{{itemarr}}">      
+      <tr><td>{{item.id}}</td><td>{{item.name}}</td><td>{{item.beginner}}</td>
+      <template is="dom-repeat" items="{{item.term}}" as="i">
+      <template is="dom-if" if="[[i.studid==item.id]]">
+      <td>{{i.termgrade}}</td>
+      </template> 
+      </template>
+      </tr>
       </template>
       </table>
       </div>

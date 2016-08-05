@@ -97,6 +97,8 @@
         this.Report=true;
         this.GenerateReport=true;
         this.Approve=true;       
+        this.BA=true;
+        this.TA=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -172,7 +174,17 @@
         document.querySelector('home-page').setPage('approveassesment','');  
         this.$.assesmentservice.callApproveService();   
       },
-      FnHideView:function(){        
+      FnHideView:function(){ 
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
+          this.BA=false;
+          this.TA=false;
+          this.GenerateReport=false;
+        }  
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=='class-teacher'){          
+          this.TA=false;
+          this.GenerateReport=false;
+        }   
+
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
           this.Report=false;
           this.GenerateReport=false;

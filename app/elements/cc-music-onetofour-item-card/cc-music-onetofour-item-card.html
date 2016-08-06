@@ -1,12 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
@@ -27,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #p1{
         width: -5px;
       }
-      #p2{
+      /*#p2{
         width: 49px;
       }
       #p3{
@@ -41,17 +32,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .pi3{
         width: 11px;
-      }
+      }*/
       paper-input{
         text-align: center;
       }
     </style>
    <div>
      <table border="1">
-        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
-        <td><paper-input value="{{interest}}" id="p1" on-change="FnInterest"></td>
-        <td><paper-input value="{{rhythm}}" id="p1" on-change="FnRhythm"></paper-input></td>
-        <td><paper-input value="{{melody}}" id="p1" on-change="FnMelody"></paper-input></td>
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{interest}}" id="p1" on-change="FnInterest"></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{rhythm}}" id="p2" on-change="FnRhythm"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{melody}}" id="p3" on-change="FnMelody"></paper-input></td>
         </tr>
       </table> 
     </div>
@@ -80,16 +71,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready:function(){       
       },
       FnInterest:function(){
-        interest=parseFloat(this.interest).toFixed(2);        
+        interest=parseFloat(this.interest).toFixed(2); 
+        document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.interest);       
       } ,
       FnRhythm:function(){
-        rhythm=parseFloat(this.rhythm).toFixed(2);        
+        rhythm=parseFloat(this.rhythm).toFixed(2);  
+        document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.rhythm);      
       },
       FnMelody:function(){
+         if(this.interest==""||this.interest==null||this.rhythm==""||this.rhythm==null){
+        this.$.p1.validate();
+        this.$.p2.validate();
+      }  
+      else{
         melody=parseFloat(this.melody).toFixed(2); 
         this.total=parseInt(this.interest)+parseInt(this.rhythm)+parseInt(this.melody);
         this.reduction=parseFloat(this.total)/3;
-        this.callFetchGrade();      
+        this.callFetchGrade(); 
+        }     
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

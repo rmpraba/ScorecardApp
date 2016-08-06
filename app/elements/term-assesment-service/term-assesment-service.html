@@ -365,7 +365,7 @@
          document.querySelector('term-assesment-card').assesmentarr=e.detail.response.returnval;
       },
       callFetchStudentInfo:function(grade,section){       
-        
+        // alert(localStorage.getItem("curr_sess_termname"));
         if(localStorage.getItem('curr_sess_report')=="1")
          {
          this.fetchstudentreportService();
@@ -376,6 +376,9 @@
          var obj={"schoolid":"","gradename":"","section":"","subject":"","termname":"","assesment":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.termname= localStorage.getItem("curr_sess_termname");
+         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+          obj.assesment= "Assesment3";
+         else
          obj.assesment= localStorage.getItem("curr_sess_assesment");
          obj.gradename=grade;
          obj.section=section;
@@ -385,6 +388,7 @@
         }
       },
       fetchstudentreportService:function(){
+        // alert(localStorage.getItem("curr_sess_termname"));
          this.fetchstudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchstudentreport-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":"","assesment":"","termname":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -392,6 +396,9 @@
          obj.gradename=localStorage.getItem("curr_sess_grade");
          obj.section=localStorage.getItem("curr_sess_section");
          obj.subject= localStorage.getItem("curr_sess_subject");
+         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+          obj.assesment= "Assesment3";
+         else
          obj.assesment= localStorage.getItem("curr_sess_assesment");
          this.fetchstudentreportparam= obj;         
          this.$.fetchstudentreportajax.generateRequest();
@@ -479,7 +486,7 @@
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
         document.querySelector('cc-maths-onetofour-card').studarr=arr;  
-              document.querySelector('cc-maths-onetofour-card').hiddenbutton();
+              // document.querySelector('cc-maths-onetofour-card').hiddenbutton();
         }
         if(localStorage.getItem("curr_sess_subject")=="EVS")
         {        
@@ -537,6 +544,9 @@
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+         obj.assesmentid= "Assesment3";
+         else
          obj.assesmentid=localStorage.getItem("curr_sess_assesment");
          obj.termname=localStorage.getItem("curr_sess_termname");
          obj.classid=sessionStorage.getItem("curr_sess_classid");
@@ -549,6 +559,7 @@
          obj.subcategory=subcategory;
          obj.mark=mark;         
          this.insertassesmentmarkparam= obj;        
+
          this.$.insertassesmentmarkajax.generateRequest();
       },
       insertassesmentmarkResponse:function(e){
@@ -644,6 +655,7 @@
         this.updateflagurl=sessionStorage.getItem("addrinfo")+"/updateflag-service";
         this.updateflagparam=obj1;
         this.$.updateflagajax.generateRequest();
+        this.callOveralltermmarkinsertService();      
       }
        else if(sessionStorage.getItem("curr_sess_loggedrole")=="HeadMistress")
       {
@@ -659,7 +671,7 @@
         this.updateflagurl=sessionStorage.getItem("addrinfo")+"/updateflag-service";
         this.updateflagparam=obj1;
         this.$.updateflagajax.generateRequest();
-        this.callOveralltermmarkinsertService();        
+          
       }
 
       if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher")
@@ -672,6 +684,10 @@
       var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+         obj.assesmentid= "Assesment3";
+         else
         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.gradename= localStorage.getItem("curr_sess_grade"); 
@@ -690,9 +706,14 @@
           alert("Please make sure all the students entry!");
     },
     updateimportmarkService:function(){
+      // alert(localStorage.getItem("curr_sess_termname"));
         var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+         obj.assesmentid= "Assesment3";
+         else
         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.gradename= localStorage.getItem("curr_sess_grade"); 
@@ -703,7 +724,11 @@
         this.$.updateimportmarkajax.generateRequest();
     },    
     updateimportmarkResponse:function(e){
-      alert("Imported!");
+      // alert(e.detail.response.returnval);
+      if(e.detail.response.returnval=="exist")
+        alert('Already Imported');
+      if(e.detail.response.returnval=="succ")
+        alert("Imported!");
     },
     updateflagResponse:function(e){
       alert("Imported!");
@@ -764,7 +789,7 @@
       }
       else if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal")
       {
-        obj1.flag=2;
+        obj1.flag=1;
       }
        this.approvemarkurl=sessionStorage.getItem("addrinfo")+"/approvemark-service";
         this.approvemarkparam=obj1;

@@ -1243,26 +1243,45 @@ app.post('/updateimportmark-service' ,  urlencodedParser,function (req, res)
       subject:req.query.subject,
       flag:0
     };
- 
-    connection.query('insert into tr_term_assesment_import_marks set ?',[data],
-      function(err, rows)
+    var qur="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+    "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+    " and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmentid+"' and subject='"+req.query.subject+"' and flag='0'";
+    console.log('...............update import..........');
+    console.log(qur);
+    connection.query(qur,
+     function(err, rows)
       {
       if(!err)
       {
       if(rows.length>0)
       {
-
-      res.status(200).json({'returnval': rows});
+        res.status(200).json({'returnval': 'exist'});
       }
-      else
+      else{ 
+    connection.query('insert into tr_term_assesment_import_marks set ?',[data],
+      function(err, rows)
       {
-      res.status(200).json({'returnval': 'invalid'});
+      if(!err)
+      {
+      // if(rows.length>0)
+      // {
+
+      res.status(200).json({'returnval': 'succ'});
       }
-    }
+      // else
+      // {
+      // res.status(200).json({'returnval': 'invalid'});
+      // }
+    // }
     else
     {
       console.log('No data Fetched'+err);
     }
+});
+  }
+}
+else
+console.log(err);
 });
   });
 

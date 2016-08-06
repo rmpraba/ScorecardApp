@@ -1,0 +1,58 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="..\..\bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+
+<dom-module id="validationdialog-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="dialog">      
+      <paper-dialog modal id="validatedialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>{{message}}</p>
+      <paper-button on-click="FnCloseDialog">Ok</paper-button>
+    </paper-dialog>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'validationdialog-card',
+      FnSetMessage1:function(value){  
+      // alert(value);
+        this.flag=0;      
+        if(parseInt(value)<0){
+        this.flag=1;
+        this.message="Mark shoudn't less than 0";
+        }
+        else if(parseInt(value)>10)
+        {
+        this.flag=1;
+        this.message="Mark shoudn't greater than 10";
+        }
+        if(this.flag==1)        
+        this.$.validatedialog.toggle();        
+      },
+      FnSetMessage2:function(message){
+        this.message=message;
+        this.$.validatedialog.toggle();
+      },
+      FnSetMessage3:function(message){
+        this.message=message;
+        this.$.validatedialog.toggle();
+      },
+      FnCloseDialog:function(){
+        this.$.validatedialog.toggle();  
+      }
+    });
+  })();
+  </script>
+</dom-module>

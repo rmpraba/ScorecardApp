@@ -61,7 +61,7 @@
     </div>
     <div class="cdialog">      
       <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-         <paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
+         <paper-dropdown-menu id="academicyear" label="Select Academic Year" disabled="{{read}}" required>
             <paper-menu id="academicyr" class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
                 <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
@@ -136,6 +136,7 @@
         this.$.cdialog.toggle();    
       },
       FnSelectTermType:function(){
+        localStorage.setItem('curr_sess_report','0');
         localStorage.setItem('curr_sess_loggedassesmenttype','Term');
         this.$.assesmentservice.callAcademicService();
       },
@@ -172,6 +173,7 @@
       },
       FnApprovecard:function()
       {
+        localStorage.setItem('curr_sess_report','2');
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('approveassesment','');  
         this.$.assesmentservice.callApproveService();   
@@ -186,12 +188,14 @@
           this.BA=false;        
           this.TA=false;
           this.GenerateReport=false;
+          this.Analysis=false;
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
           this.BA=false;
           this.TA=false;
           this.Report=false;
           this.GenerateReport=false;
+          if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
           this.Approve=false;
           this.Analysis=false;
         }

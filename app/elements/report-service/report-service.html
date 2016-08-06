@@ -77,7 +77,7 @@
         this.$.fetchtermmarkforreportajax.generateRequest();
       },
       fetchtermmarkforreportResponse:function(e){
-        var overall=[];
+        /*var overall=[];
         var mark=[];      
         // alert('yes yes');
         // document.querySelector('beginner-term-analysis-card').FnHide();        
@@ -130,17 +130,62 @@
               if(term[j].term_name=="term3"&&term[j].assesment_id=="Assesment3")
                 obj.t3a3=term[j].term_grade;
               overall.push(obj);*/
-            }  
+          /*  }  
 
           }
           
           
         }
-        alert(JSON.stringify(overall));
+        alert(JSON.stringify(overall));*/
+
+
+       var overall=[];
+       var arr1=e.detail.response.returnval;
+
+       for(var x=0;x<studarr.length;x++){
+        for(var y=0;y<arr1.length;y++)
+        {
+          if(studarr[x].id==arr1[y].student_id)
+            arr1[y].student_name=studarr[x].student_name;
+          // alert('yes'+studarr[x].student_name);
+        }
+       }
+
+       // alert(JSON.stringify(arr1));
+       if(arr1.length>0){      
+       for(var i=0;i<arr1.length;i++)
+       {
+        var markarr=[];
+        // for(var x=0;x<studarr.length;x++){
+        
+        //   if(studarr[x].student_id==arr1[i].student_id){
+        //     alert('yes');
+        //    markarr.push(studarr[i].student_name);   
+        //   }
+        
+        // }
+        // markarr.push(arr1[i].student_id);
+        markarr.push(arr1[i].student_name);
+        markarr.push(arr1[i].beginner_grade);
+        markarr.push(arr1[i].term_grade);
+        for(var j=i+1;j<arr1.length;j++)
+        {
+           if(arr1[i].student_id==arr1[j].student_id)
+           {
+            markarr.push(arr1[j].term_grade);
+            arr1.splice(j,1);
+            j--;
+           }
+
+        }
+       overall.push(markarr);
+       }
+       // alert(JSON.stringify(overall));
         document.querySelector("beginner-term-analysis-card").itemarr=overall;
 
 
       }
+    }
       // callfetchbeginnermarkforreportService:function(){
       //   // alert('yes');
       //   this.fetchbeginnermarkforreporturl=sessionStorage.getItem("addrinfo")+"/fetchbeginnermarkforreport-service";

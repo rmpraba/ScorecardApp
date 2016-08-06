@@ -14,7 +14,7 @@
       #p1{
         width:-12%
       }
-      #p2{
+      /*#p2{
         width:-6%
       }
       #p3{
@@ -22,7 +22,7 @@
       }
         #p3{
         width:-30%
-      }
+      }*/
      
       paper-input{
         text-align:center;
@@ -31,19 +31,19 @@
     <div>
        <table border="1">
         <tr>
-           <td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
-        <td><paper-input value="{{Pronunciation}}" id="p1" on-change="FnPronunciation"></td>
-        <td><paper-input value="{{Fluency}}" id="p1" on-change="FnFluency"></paper-input></td>
-        <td><paper-input value="{{Comprehension}}" id="p1" on-change="FnComprehension"></paper-input></td>
-        <td><paper-input value="{{CreativeWriting}}" id="p2" on-change="FnCreative"></paper-input></td>
-        <td><paper-input value="{{Handwriting}}" id="p2" on-change="FnHandwriting"></paper-input></td>
-        <td><paper-input value="{{Grammer}}" id="p2" on-change="FnGrammer"></paper-input></td>
-        <td><paper-input value="{{Spelling}}" id="p2" on-change="FnSpelling"></paper-input></td>
-        <td><paper-input value="{{Vocabulary}}" id="p2" on-change="FnVocabulary"></paper-input></td>
-        <td><paper-input value="{{Conversation}}" id="p2" on-change="FnConversation"></paper-input></td>
-        <td><paper-input value="{{Recitation}}" id="p2" on-change="FnRecitation"></paper-input></td>
-        <td><paper-input value="{{LComprehension}}" id="p2" on-change="FnLComprehension"></paper-input></td>
-        <td><paper-input value="{{Activity}}" id="p2" on-change="FnActivity"></paper-input></td>
+           <td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Pronunciation}}" id="p1" on-change="FnPronunciation"></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Fluency}}" id="p2" on-change="FnFluency"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Comprehension}}" id="p3" on-change="FnComprehension"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{CreativeWriting}}" id="p4" on-change="FnCreative"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Handwriting}}" id="p5" on-change="FnHandwriting"></paper-input></td>
+        <td><paper-input  required allowed-pattern="[0-9]" value="{{Grammer}}" id="p6" on-change="FnGrammer"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Spelling}}" id="p7" on-change="FnSpelling"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Vocabulary}}" id="p8" on-change="FnVocabulary"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Conversation}}" id="p9" on-change="FnConversation"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Recitation}}" id="p10" on-change="FnRecitation"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{LComprehension}}" id="p11" on-change="FnLComprehension"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{Activity}}" id="p12" on-change="FnActivity"></paper-input></td>
         </tr>
       </table>
     </div>
@@ -72,68 +72,95 @@
 
      FnPronunciation:function(e)
      {
-       pronunciation=parseFloat(this.Pronunciation).toFixed(2);        
+       pronunciation=parseFloat(this.Pronunciation).toFixed(2); 
+       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Pronunciation);   
         
      },
      FnFluency:function(e)
      {
-      fluency=parseFloat(this.Fluency).toFixed(2);        
+      fluency=parseFloat(this.Fluency).toFixed(2); 
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Fluency);       
         
      },
      FnComprehension:function(e)
      {
-      comprehension=parseFloat(this.Comprehension).toFixed(2);        
+      comprehension=parseFloat(this.Comprehension).toFixed(2); 
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Comprehension);       
         
      },
      FnCreative:function(e)
      {
-        creativeWriting=parseFloat(this.CreativeWriting).toFixed(2);        
+        creativeWriting=parseFloat(this.CreativeWriting).toFixed(2); 
+        document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.CreativeWriting);       
         
      },
      FnHandwriting:function(e)
      {
-      handwriting=parseFloat(this.Handwriting).toFixed(2);        
+      handwriting=parseFloat(this.Handwriting).toFixed(2); 
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Handwriting);       
         
      },
      FnGrammer:function(e)
      {
-      grammer=parseFloat(this.Grammer).toFixed(2);        
+      grammer=parseFloat(this.Grammer).toFixed(2);
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Grammer);        
         
      },
      FnSpelling:function(e)
      {
       spelling=parseFloat(this.Spelling).toFixed(2);        
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Spelling);
         
      },
      FnVocabulary:function(e)
      {
-      vocabulary=parseFloat(this.Vocabulary).toFixed(2);        
+      vocabulary=parseFloat(this.Vocabulary).toFixed(2); 
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Vocabulary);       
         
      },
      FnConversation:function(e)
      {
-      conversation=parseFloat(this.Conversation).toFixed(2);        
+      conversation=parseFloat(this.Conversation).toFixed(2); 
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Conversation);       
         
      },
      FnRecitation:function(e)
      {
-      recitation=parseFloat(this.Recitation).toFixed(2);        
+      recitation=parseFloat(this.Recitation).toFixed(2); 
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Recitation);       
         
      },
      FnLComprehension:function(e)
      {
-      lcomprehension=parseFloat(this.LComprehension).toFixed(2);        
+      lcomprehension=parseFloat(this.LComprehension).toFixed(2); 
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.LComprehension);       
         
      },
      FnActivity:function(e)
      {
+      if(this.Pronunciation==""||this.Pronunciation==null||this.Fluency==""||this.Fluency==null||this.Comprehension==""||this.Comprehension==null||this.CreativeWriting==""||this.CreativeWriting==null||this.Handwriting==""||this.Handwriting==null||this.Grammer==""||this.Grammer==null||this.Spelling==""||this.Spelling==null||this.Vocabulary==""||this.Vocabulary==null||this.Conversation==""||this.Conversation==null||this.Recitation==""||this.Recitation==null||this.LComprehension==""||this.LComprehension==null){
+        this.$.p1.validate();
+        this.$.p2.validate();
+        this.$.p3.validate();
+        this.$.p4.validate();
+        this.$.p5.validate();
+        this.$.p6.validate();
+        this.$.p7.validate();
+        this.$.p8.validate();
+        this.$.p9.validate();
+        this.$.p10.validate();
+        this.$.p11.validate();
+        this.$.p12.validate();
+      }  
+      else{
       activity=parseFloat(this.Activity).toFixed(2);        
         this.readingskills=(parseInt(this.Pronunciation)+parseInt(this.Fluency)+parseInt(this.Comprehension))/3;
         this.writingskills=(parseInt(this.CreativeWriting)+parseInt(this.Handwriting)+parseInt(this.Grammer)+parseInt(this.Spelling)+parseInt(this.Vocabulary))/5;
         this.speakingskills=parseFloat((parseInt(this.Conversation)+parseInt(this.Recitation))/2).toFixed(2);
         this.listeningskills=this.LComprehension;
         this.writtenwork=this.Activity;
-        this.callFetchGrade();  
+        this.callFetchGrade(); 
+        } 
      },
      callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

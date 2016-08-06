@@ -2,6 +2,14 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../cc-maths-onetofour-item-card/cc-maths-onetofour-item-card.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+
+<link rel="import" href="..\..\bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="..\..\bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="..\..\bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
+<link rel="import" href="../validation-dialog/validation-dialog.html">
+
 <dom-module id="cc-maths-onetofour-card">
   <template>
     <style>
@@ -98,8 +106,8 @@
 <template is="dom-repeat" items="{{m}}" as="mark1">
 <td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<!-- <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
-</paper-input></td> -->
+<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+</paper-input></td>
 <td hidden$="{{hidepaperinput}}"> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
 </td>
 </template>
@@ -113,18 +121,26 @@
         <td colspan="66"><cc-maths-onetofour-item-card studid="{{item.id}}" studname="{{item.student_name}}"></cc-maths-onetofour-item-card></td>
       </tr>
       </template>
-
      </table> 
-     <!-- <paper-button class="button" on-click="FnSave">Save</paper-button> -->
-     <paper-button class="button" on-click="importmark">Submit</paper-button>
+     <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>
+     <paper-button class="button" id="submit" on-click="importmark">Submit</paper-button>
      <input type="button" id="btn2" onclick="tableToExcel('MarkTable8', 'Mark Report')" value="Export to Excel">      
      </center>
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
+
+
+ <validationdialog-card id="validatedialog"></validationdialog-card>
+    <!-- <paper-dialog modal id="showdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>{{message}}</p>
+      <paper-button on-click="FnCloseDialog">Ok</paper-button>
+    </paper-dialog> -->
+
+
   </template>
    <script type="text/javascript">
-  var tableToExcel = (function() {
-  var uri = 'data:application/vnd.ms-excel;base64,'
+   var tableToExcel = (function() {
+   var uri = 'data:application/vnd.ms-excel;base64,'
     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
     , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
     , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
@@ -139,10 +155,17 @@
   (function() {
     'use strict';
     Polymer({
-      is: 'cc-maths-onetofour-card',      
-      setDefaultHeaders:function(){
-        // alert('calling');
-         this.$.hidetop.hidden=false;
+      is: 'cc-maths-onetofour-card',
+      ready:function(){
+        this.$.btn2.hidden=true;
+        this.$.submit.hidden=true;
+        this.$.save.hidden=true;
+      },
+      FnToggleDialog:function(value){
+        this.$.validatedialog.FnSetMessage1(value);
+      } , 
+      setDefaultHeaders:function(){        
+        this.$.hidetop.hidden=false;
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
@@ -156,24 +179,43 @@
         this.assesment="A2";
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
         this.assesment="A3";
-      // // alert(sessionStorage.getItem("curr_sess_loggedrole"));
-      // if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
-      //   // alert('yes');
-      //   this.hidepaperitem=false;
-      //   this.hidepaperinput=true; 
-      // }
-      // else{
-      //   this.hidepaperitem=true;
-      //   this.hidepaperinput=false; 
-      // }
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        this.$.submit.hidden=true;
+        this.$.save.hidden=true;
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false;        
+        if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        this.$.save.hidden=true;
+        this.$.btn2.hidden=false;
+        }
+        if(localStorage.getItem('curr_sess_report')=='0')
+        {
+        this.$.submit.hidden=false; 
+        this.$.save.hidden=false;
+        this.$.btn2.hidden=true;
+        }
+        if(localStorage.getItem('curr_sess_report')=='2')
+        {
+        this.$.submit.hidden=false; 
+        this.$.save.hidden=true;
+        this.$.btn2.hidden=true;
+        }
+      }
+
       },
       hiddenbutton:function()
       {
-        this.$.btn2.hidden=false;
+        this.$.btn2.hidden=true;
       },
-      // FnSave:function(e){
-        
-      // }
+      FnSave:function(e){
+        alert('Student marks are saved!');
+      },
       importmark:function()      
       {        
         this.$.assesmentservice.Fnimportmark();

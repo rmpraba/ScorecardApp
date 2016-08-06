@@ -16,7 +16,7 @@
       #p1{
         width:-5px;
       }
-      #p2{
+      /*#p2{
         width: 49px;
       }
       #p3{
@@ -30,22 +30,22 @@
       }
       .pi3{
         width: 11px;
-      }
+      }*/
       paper-input{
         text-align: center;
       }
     </style>
     <div>
        <table border="1">
-        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
-        <td><paper-input value="{{assignment}}" id="p1" on-change="FnAssignment"></td>
-        <td><paper-input value="{{drawing}}" id="p1" on-change="FnDrawing"></paper-input></td>
-        <td><paper-input value="{{labeling}}" id="p1" on-change="FnLabeling"></paper-input></td>
-        <td><paper-input value="{{neatness}}" id="p1" on-change="FnNeatness"></paper-input></td>
-        <td><paper-input value="{{knowledge}}" id="p1" on-change="FnKnowledge"></paper-input></td>
-        <td><paper-input value="{{presentation}}" id="p1" on-change="FnPresentation"></paper-input></td>
-        <td><paper-input value="{{involvement}}" id="p1" on-change="FnInvolvement"></paper-input></td>
-        <td><paper-input value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-input required allowed-pattern="[0-9]"value="{{assignment}}" id="p1" on-change="FnAssignment"></td>
+        <td><paper-input required allowed-pattern="[0-9]"value="{{drawing}}" id="p1" on-change="FnDrawing"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{labeling}}" id="p2" on-change="FnLabeling"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{neatness}}" id="p3" on-change="FnNeatness"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]"value="{{knowledge}}" id="p4" on-change="FnKnowledge"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]"value="{{presentation}}" id="p5" on-change="FnPresentation"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{involvement}}" id="p6" on-change="FnInvolvement"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{activity}}" id="p7" on-change="FnActivity"></paper-input></td>
         </tr>
       </table>
     </div>
@@ -75,39 +75,57 @@
       },
       FnAssignment:function(e){               
         assignment=parseFloat(this.assignment).toFixed(2);
+        document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.assignment);
                
       },
       FnDrawing:function(e){               
         drawing=parseFloat(this.drawing).toFixed(2);  
+        document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.drawing);
            
       },
       FnLabeling:function(e){               
-        labeling=parseFloat(this.labeling).toFixed(2); 
+        labeling=parseFloat(this.labeling).toFixed(2);
+        document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.labeling); 
          
       },
       FnNeatness:function(){
-        neatness=parseFloat(this.neatness).toFixed(2); 
+        neatness=parseFloat(this.neatness).toFixed(2);
+        document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.neatness); 
         
       },
       FnKnowledge:function(){
         knowledge=parseFloat(this.knowledge).toFixed(2); 
+        document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.knowledge);
          
       },
       FnPresentation:function(){
         presentation=parseFloat(this.presentation).toFixed(2); 
-         
+         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.presentation);
       },
       FnInvolvement:function(){
         involvement=parseFloat(this.involvement).toFixed(2); 
-         
+         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.involvement);
       },
       FnActivity:function(){
         activity=parseFloat(this.activity).toFixed(2); 
+        document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.activity);
+        if(this.assignment==""||this.assignment==null||this.drawing==""||this.drawing==null||this.labeling==""||this.labeling==null||this.neatness==""||this.neatness==null||this.knowledge==""||this.knowledge==null||this.presentation==""||this.presentation==null||this.involvement==""||this.involvement==null){
+        this.$.p1.validate();
+        this.$.p2.validate();
+        this.$.p3.validate();
+        this.$.p4.validate();
+        this.$.p5.validate();
+        this.$.p6.validate();
+        this.$.p7.validate();
+        
+      }  
+      else{
         this.es=this.assignment;
         this.ap=(parseInt(this.drawing)+parseInt(this.labeling)+parseInt(this.neatness))/3;
         this.gd=(parseInt(this.knowledge)+parseInt(this.presentation)+parseInt(this.involvement))/3;
         this.ww=this.activity;
-        this.callFetchGrade();  
+        this.callFetchGrade(); 
+        } 
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

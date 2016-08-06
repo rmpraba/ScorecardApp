@@ -2,6 +2,12 @@
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="..\term-assesment-service/term-assesment-service.html">
+<link rel="import" href="..\validationdialog-card/validationdialog-card.html">
+
+<link rel="import" href="..\..\bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="..\..\bower_components/neon-animation/animations/fade-out-animation.html">
+ <link rel="import" href="..\..\bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 
 <dom-module id="cc-maths-onetofour-item-card">
   <template>
@@ -17,7 +23,7 @@
       #p1{
         width: -5px;
       }
-      #p2{
+      /*#p2{
         width: 49px;
       }
       #p3{
@@ -31,25 +37,27 @@
       }
       .pi3{
         width: 11px;
-      }
+      }*/
       paper-input{
         text-align:center;
       }
     </style>
     <div>
        <table border="1">
-        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
-        <td><paper-input value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
-        <td><paper-input value="{{groupactivity}}" id="p1" on-change="FnGroupactivity"></paper-input></td>
-        <td><paper-input value="{{individualactivity}}" id="p1" on-change="FnIndividualactivity"></paper-input></td>
-        <td><paper-input value="{{maaccuracy}}" id="p1" on-change="FnMAAccuracy"></paper-input></td>
-        <td><paper-input value="{{maknowledge}}" id="p1" on-change="FnMAKnowledge"></paper-input></td>
-        <td><paper-input value="{{taaccuracy}}" id="p1" on-change="FnTAAccuracy"></paper-input></td>
-        <td><paper-input value="{{taneatness}}" id="p1" on-change="FnTANeatness"></paper-input></td>
-        <td><paper-input value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
+        <td><paper-input required  allowed-pattern="[0-9]" value="{{groupactivity}}" id="p2" on-change="FnGroupactivity"></paper-input></td>
+        <td><paper-input required  allowed-pattern="[0-9]" value="{{individualactivity}}" id="p3" on-change="FnIndividualactivity"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{maaccuracy}}" id="p4" on-change="FnMAAccuracy"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{maknowledge}}" id="p5" on-change="FnMAKnowledge"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{taaccuracy}}" id="p6" on-change="FnTAAccuracy"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{taneatness}}" id="p7" on-change="FnTANeatness"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{activity}}" id="p8" on-change="FnActivity"></paper-input></td>
         </tr>
       </table>
     </div>
+
+
     <term-assesment-service id="assesmentservice"></term-assesment-service> 
     <iron-ajax        
         method="post"
@@ -60,7 +68,8 @@
         content-type="application/json"
         on-response="fetchgradesResponse"
         debounce-duration="300"
-    >
+    >  
+
   </template>
   <script>
   (function() {
@@ -72,36 +81,47 @@
     Polymer({
       is: 'cc-maths-onetofour-item-card',
       ready:function(){       
-      },
+      },     
       FnUnderstanding:function(e){               
         understanding=parseFloat(this.understanding).toFixed(2);        
-               
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.understanding);
       },
       FnGroupactivity:function(e){               
         groupactivity=parseFloat(this.groupactivity).toFixed(2);  
-            
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.groupactivity);   
       },
       FnIndividualactivity:function(e){               
         individualactivity=parseFloat(this.individualactivity).toFixed(2); 
-        
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.individualactivity);
       },
       FnMAAccuracy:function(){
         maaccuracy=parseFloat(this.maaccuracy).toFixed(2); 
-        
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maaccuracy);
       },
       FnMAKnowledge:function(){
         maknowledge=parseFloat(this.maknowledge).toFixed(2); 
-         
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maknowledge); 
       },
       FnTAAccuracy:function(){
         taaccuracy=parseFloat(this.taaccuracy).toFixed(2); 
-        
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.taaccuracy);
       },
       FnTANeatness:function(){
         taneatness=parseFloat(this.taneatness).toFixed(2); 
-        
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.taneatness);
       },
-      FnActivity:function(){        
+      FnActivity:function(){  
+        if(this.understanding==""||this.understanding==null||this.groupactivity==""||this.groupactivity==null||this.individualactivity==""||this.individualactivity==null||this.maaccuracy==""||this.maaccuracy==null||this.maknowledge==""||this.maknowledge==null||this.taaccuracy==""||this.taaccuracy==null||this.taneatness==""||this.taneatness==null){
+        this.$.p1.validate();
+        this.$.p2.validate();
+        this.$.p3.validate();
+        this.$.p4.validate();
+        this.$.p5.validate();
+        this.$.p6.validate();
+        this.$.p7.validate();
+        this.$.p8.validate();
+      }  
+      else{
         activity=parseFloat(this.activity).toFixed(2);         
         this.concept=this.understanding;
         this.activityproject=(parseInt(this.groupactivity)+parseInt(this.individualactivity))/2;
@@ -109,6 +129,7 @@
         this.tableactivity=parseFloat((parseInt(this.taaccuracy)+parseInt(this.taneatness))/2).toFixed(2);
         this.writtenwork=this.activity;
         this.callFetchGrade();         
+      }
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

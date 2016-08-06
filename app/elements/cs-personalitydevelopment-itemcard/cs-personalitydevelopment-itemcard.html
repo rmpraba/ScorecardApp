@@ -40,15 +40,15 @@
     <div> 
      <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input value="{{Courteousness}}" id="p1" on-change="FnCourteousness"></td>
-        <td><paper-input value="{{Confidence}}" id="p1" on-change="FnConfidence"></paper-input></td>
-        <td><paper-input value="{{Careofbelongings}}" id="p1" on-change="FnCareofbelongings"></paper-input></td>
-        <td><paper-input value="{{Neatness}}" id="p1" on-change="FnNeatness"></paper-input></td>
-        <td><paper-input value="{{RegularityandPunctuality}}" id="p1" on-change="FnRegularityandPunctuality"></paper-input></td>
-        <td><paper-input value="{{Initiative}}" id="p1" on-change="FnInitiative"></paper-input></td>
-        <td><paper-input value="{{SharingandCaring}}" id="p1" on-change="FnSharingandCaring"></paper-input></td>
-        <td><paper-input value="{{Respect}}" id="p1" on-change="FnRespect"></paper-input></td>
-        <td><paper-input value="{{Selfcontrol}}" id="p1" on-change="FnSelfcontrol"></paper-input></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{Courteousness}}" id="p1" on-change="FnCourteousness"></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{Confidence}}" id="p2" on-change="FnConfidence"></paper-input></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{Careofbelongings}}" id="p3" on-change="FnCareofbelongings"></paper-input></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{Neatness}}" id="p3" on-change="FnNeatness"></paper-input></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{RegularityandPunctuality}}" id="p4" on-change="FnRegularityandPunctuality"></paper-input></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{Initiative}}" id="p5" on-change="FnInitiative"></paper-input></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{SharingandCaring}}" id="p6" on-change="FnSharingandCaring"></paper-input></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{Respect}}" id="p7" on-change="FnRespect"></paper-input></td>
+        <td><paper-input allowed-pattern="[0-9]" value="{{Selfcontrol}}" id="p8" on-change="FnSelfcontrol"></paper-input></td>
         </tr>
       </table> 
     </div>
@@ -77,43 +77,64 @@
       ready:function(){       
       },
       FnCourteousness:function(){
-        Courteousness=this.FnFindGrade(this.Courteousness);         
+        Courteousness=this.FnFindGrade(this.Courteousness); 
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Courteousness);        
       },
       FnConfidence:function(){
-        Confidence=this.FnFindGrade(this.Confidence);       
+        Confidence=this.FnFindGrade(this.Confidence); 
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Confidence);       
       },
       FnCareofbelongings:function(){
-        Careofbelongings=this.FnFindGrade(this.Careofbelongings);       
+        Careofbelongings=this.FnFindGrade(this.Careofbelongings); 
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Careofbelongings);       
       },
       FnNeatness:function(){
-        Neatness=this.FnFindGrade(this.Neatness);       
+        Neatness=this.FnFindGrade(this.Neatness);
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Neatness);        
       },
       FnRegularityandPunctuality:function(){
-        RegularityandPunctuality=this.FnFindGrade(this.RegularityandPunctuality);         
+        RegularityandPunctuality=this.FnFindGrade(this.RegularityandPunctuality); 
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.RegularityandPunctuality);         
       },
       FnInitiative:function(){
-        Initiative=this.FnFindGrade(this.Initiative);        
+        Initiative=this.FnFindGrade(this.Initiative); 
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Initiative);        
       },
       FnSharingandCaring:function(){
-        SharingandCaring=this.FnFindGrade(this.SharingandCaring);        
+        SharingandCaring=this.FnFindGrade(this.SharingandCaring);
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.SharingandCaring);         
       },
       FnRespect:function(){
         Respect=this.FnFindGrade(this.Respect);       
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Respect); 
       },
       FnSelfcontrol:function(){
         Selfcontrol=this.FnFindGrade(this.Selfcontrol); 
-        this.callService();         
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Selfcontrol); 
+         if(this.Courteousness==""||this.Courteousness==null||this.Confidence==""||this.Confidence==null||this.Careofbelongings==""||this.Careofbelongings==null||this.Neatness==""||this.Neatness==null||this.RegularityandPunctuality==""||this.RegularityandPunctuality==null||this.Initiative==""||this.Initiative==null||this.SharingandCaring==""||this.SharingandCaring==null||this.Respect==""||this.Respect==null){
+        this.$.p1.validate();
+        this.$.p2.validate();
+        this.$.p3.validate();
+        this.$.p4.validate();
+        this.$.p5.validate();
+        this.$.p6.validate();
+        this.$.p7.validate();
+        this.$.p8.validate();
+      }  
+      else{
+        this.callService(); 
+        }        
       },      
       callService:function(){        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",Courteousness,9); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",Confidence,9); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",Careofbelongings,9); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",Neatness,9); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",RegularityandPunctuality,9); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",Initiative,9); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",SharingandCaring,9);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Respect","Respect",Respect,9);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",Selfcontrol,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",this.Courteousness,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",this.Confidence,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",this.Careofbelongings,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",this.Neatness,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",this.RegularityandPunctuality,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",this.Initiative,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",this.SharingandCaring,9);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Respect","Respect",this.Respect,9);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",this.Selfcontrol,9); 
         /*this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Courteousness",this.Courteousness,this.Courteousness,this.Courteousness);
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Confidence",this.Confidence,this.Confidence,this.Confidence);
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Careofbelongings",this.Careofbelongings,this.Careofbelongings,this.Careofbelongings);

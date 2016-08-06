@@ -19,7 +19,7 @@
       #p1{
         width: -5px;
       }
-      #p2{
+      /*#p2{
         width: 49px;
       }
       #p3{
@@ -33,17 +33,17 @@
       }
       .pi3{
         width: 11px;
-      }
+      }*/
       paper-input{
         text-align: center;
       }
     </style>
    <div>
        <table border="1">
-        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
-        <td><paper-input value="{{interest}}" id="p1" on-change="FnInterest"></td>
-        <td><paper-input value="{{rhythm}}" id="p1" on-change="FnRhythm"></paper-input></td>
-        <td><paper-input value="{{grace}}" id="p1" on-change="FnGrace"></paper-input></td>
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{interest}}" id="p1" on-change="FnInterest"></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{rhythm}}" id="p2" on-change="FnRhythm"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{grace}}" id="p3" on-change="FnGrace"></paper-input></td>
         </tr>
       </table> 
     </div>
@@ -75,15 +75,25 @@
       },
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2);        
+        document.querySelector('cc-dance-onetofour-card').FnToggleDialog(this.interest);
       } ,
       FnRhythm:function(){
         rhythm=parseFloat(this.rhythm).toFixed(2);        
+        document.querySelector('cc-dance-onetofour-card').FnToggleDialog(this.rhythm);
       },
       FnGrace:function(){
-        grace=parseFloat(this.grace).toFixed(2);         
+        grace=parseFloat(this.grace).toFixed(2);
+        document.querySelector('cc-dance-onetofour-card').FnToggleDialog(this.grace);
+        if(this.interest==""||this.interest==null||this.rhythm==""||this.rhythm==null||this.grace==""||this.grace==null){
+        this.$.p1.validate();
+        this.$.p2.validate();
+        this.$.p3.validate();
+        } 
+        else{        
         this.total=parseInt(this.interest)+parseInt(this.rhythm)+parseInt(this.grace);
         this.reduction=parseFloat(this.total)/3;
         this.callFetchGrade();      
+        }
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

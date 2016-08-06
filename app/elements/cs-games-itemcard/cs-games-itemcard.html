@@ -40,10 +40,10 @@
     <div> 
      <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input value="{{enthusiasm}}" id="p1" on-change="FnEnthusiasm"></td>
-        <td><paper-input value="{{discipline}}" id="p1" on-change="FnDiscipline"></paper-input></td>
-        <td><paper-input value="{{teamspirit}}" id="p1" on-change="FnTeamSpirit"></paper-input></td>
-        <td><paper-input value="{{talent}}" id="p1" on-change="FnTalent"></paper-input></td>
+        <td><paper-input required  allowed-pattern="[0-9]" value="{{enthusiasm}}" id="p1" on-change="FnEnthusiasm"></td>
+        <td><paper-input required  allowed-pattern="[0-9]" value="{{discipline}}" id="p2" on-change="FnDiscipline"></paper-input></td>
+        <td><paper-input required  allowed-pattern="[0-9]" value="{{teamspirit}}" id="p3" on-change="FnTeamSpirit"></paper-input></td>
+        <td><paper-input required  allowed-pattern="[0-9]" value="{{talent}}" id="p4" on-change="FnTalent"></paper-input></td>
         </tr>
       </table> 
     </div>
@@ -72,19 +72,30 @@
       ready:function(){       
       },
       FnEnthusiasm:function(){
-        enthusiasm=parseFloat(this.enthusiasm).toFixed(2);        
+        enthusiasm=parseFloat(this.enthusiasm).toFixed(2); 
+        document.querySelector('cs-games-card').FnToggleDialog(this.enthusiasm);       
       },
       FnDiscipline:function(){
         discipline=parseFloat(this.discipline).toFixed(2);          
+        document.querySelector('cs-games-card').FnToggleDialog(this.discipline);   
       },
       FnTeamSpirit:function(){
-        teamspirit=parseFloat(this.teamspirit).toFixed(2);          
+        teamspirit=parseFloat(this.teamspirit).toFixed(2); 
+        document.querySelector('cs-games-card').FnToggleDialog(this.teamspirit);            
       },
       FnTalent:function(){
         talent=parseFloat(this.talent).toFixed(2); 
+        document.querySelector('cs-games-card').FnToggleDialog(this.talent); 
+        if(this.enthusiasm==""||this.enthusiasm==null||this.discipline==""||this.discipline==null||this.teamspirit==""||this.teamspirit==null||this.talent==""||this.talent==null){
+          this.$.p1.validate();
+          this.$.p2.validate();
+          this.$.p3.validate();
+        }
+        else{
         this.total=parseInt(this.enthusiasm)+parseInt(this.discipline)+parseInt(this.teamspirit)+parseInt(this.talent);
         this.reduction=parseFloat(this.total)/4;
         this.callFetchGrade();      
+        }
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

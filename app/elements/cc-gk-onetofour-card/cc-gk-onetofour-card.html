@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/cc-gk-onetofour-item-card/cc-gk-onetofour-item-card.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="../validation-dialog/validation-dialog.html">
 <dom-module id="cc-gk-onetofour-card">
   <template>
     <style>
@@ -83,8 +84,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <template is="dom-repeat" items="{{m}}" as="mark1">
 <td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<!-- <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
-</paper-input></td> -->
+<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+</paper-input></td>
 <td hidden$="{{hidepaperinput}}"> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
 </td>
 </template>
@@ -102,8 +103,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     </table> 
-     <paper-button class="button" on-click="importmark">Submit</paper-button>
-   
+    <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>
+     <paper-button class="button" id="submit" on-click="importmark">Submit</paper-button>
+   <validationdialog-card id="validatedialog"></validationdialog-card>
     <term-assesment-service id="assesmentservice"></term-assesment-service> 
     <input type="button" id="btn2" onclick="tableToExcel('MarkTable7', 'Mark Report')" value="Export to Excel">     
     </div>
@@ -128,32 +130,65 @@ var tableToExcel = (function() {
     Polymer({
       is: 'cc-gk-onetofour-card',
 
-      setDefaultHeaders:function(){
-         this.$.hidetop.hidden=false;
+      ready:function(){
+        this.$.btn2.hidden=true;
+        this.$.submit.hidden=true;
+        this.$.save.hidden=true;
+      },
+      FnToggleDialog:function(value){
+        this.$.validatedialog.FnSetMessage1(value);
+      } , 
+      setDefaultHeaders:function(){        
+        this.$.hidetop.hidden=false;
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+        this.term=localStorage.getItem("curr_sess_termname");
+        // alert(this.schoolname+' '+this.academicyear);
         if(localStorage.getItem("curr_sess_assesment")=="Assesment1")
         this.assesment="A1";
         if(localStorage.getItem("curr_sess_assesment")=="Assesment2")
         this.assesment="A2";
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
         this.assesment="A3";
-      // if(sessionStorage.getItem("curr_sess_loggedrole")=="Principal"){
-      //   // alert('yes');
-      //   this.hidepaperitem=false;
-      //   this.hidepaperinput=true; 
-      // }
-      // else{
-      //   this.hidepaperitem=true;
-      //   this.hidepaperinput=false; 
-      // }
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        this.$.submit.hidden=true;
+        this.$.save.hidden=true;
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false;        
+        if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        this.$.save.hidden=true;
+        this.$.btn2.hidden=false;
+        }
+        if(localStorage.getItem('curr_sess_report')=='0')
+        {
+        this.$.submit.hidden=false; 
+        this.$.save.hidden=false;
+        this.$.btn2.hidden=true;
+        }
+        if(localStorage.getItem('curr_sess_report')=='2')
+        {
+        this.$.submit.hidden=false; 
+        this.$.save.hidden=true;
+        this.$.btn2.hidden=true;
+        }
+      }
+
       },
       hiddenbutton:function()
       {
         this.$.btn2.hidden=true;
+      },
+      FnSave:function(e){
+        alert('Student marks are saved!');
       },
       importmark:function()
       {

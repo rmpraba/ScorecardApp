@@ -19,7 +19,7 @@
       #p1{
         width:-5px;
       }
-      #p2{
+      /*#p2{
         width: 49px;
       }
       #p3{
@@ -33,17 +33,17 @@
       }
       .pi3{
         width: 11px;
-      }
+      }*/
       paper-input{
         text-align: center;
       }
     </style>
     <div> 
      <table border="1">
-        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
-        <td><paper-input value="{{creativity}}" id="p1" on-change="FnCreativity"></td>
-        <td><paper-input value="{{skill}}" id="p1" on-change="FnSkill"></paper-input></td>
-        <td><paper-input value="{{interest}}" id="p1" on-change="FnInterest"></paper-input></td>
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{creativity}}" id="p1" on-change="FnCreativity"></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{skill}}" id="p2" on-change="FnSkill"></paper-input></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{interest}}" id="p3" on-change="FnInterest"></paper-input></td>
         </tr>
       </table> 
     </div>
@@ -72,16 +72,27 @@
       ready:function(){       
       },
       FnCreativity:function(){
-        creativity=parseFloat(this.creativity).toFixed(2);         
+        creativity=parseFloat(this.creativity).toFixed(2); 
+        document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.creativity);        
       },
       FnSkill:function(){
-        skill=parseFloat(this.skill).toFixed(2);        
+        skill=parseFloat(this.skill).toFixed(2);
+        document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.skill);        
       } ,
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2);
+        document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.interest);
+         if(this.creativity==""||this.creativity==null||this.skill==""||this.skill==null||this.interest==""||this.interest==null){
+        this.$.p1.validate();
+        this.$.p2.validate();
+        this.$.p3.validate();
+       
+      }  
+      else{
         this.total=parseInt(this.creativity)+parseInt(this.skill)+parseInt(this.interest);
         this.reduction=parseFloat(this.total)/3;
-        this.callFetchGrade();      
+        this.callFetchGrade(); 
+        }     
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

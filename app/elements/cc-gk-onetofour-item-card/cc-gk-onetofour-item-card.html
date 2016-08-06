@@ -39,8 +39,8 @@
     </style>
     <div>
       <table border="1">
-        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-input value="{{studname}}"></paper-input></td>
-        <td><paper-input value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
+        <tr><td hidden><paper-input value="{{studid}}"></paper-item><paper-input value="{{studname}}"></paper-item></td>
+        <td><paper-input required allowed-pattern="[0-9]" value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
         </tr>
       </table>
     </div>
@@ -71,8 +71,14 @@
       FnActivity:function()
       {
         activity=parseFloat(this.activity).toFixed(2); 
+        document.querySelector('cc-gk-onetofour-card').FnToggleDialog(this.activity);
+        if(this.activity==""||this.activity==null){
+        this.$.p1.validate();
+        }
+        else{
         this.gk=this.activity;
         this.callFetchGrade(); 
+        }
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

@@ -78,8 +78,9 @@
         this.callService();
       },
       callService:function(){
-        this.flag="1";        
-        this.$.scorecardservice.callFetchstudentnameService();
+        this.flag="1"; 
+        this.$.scorecardservice.callscorecardreadynessService();       
+        // this.$.scorecardservice.callFetchstudentnameService();
       },
       autocompletearr:function(autocompletearr)
       {

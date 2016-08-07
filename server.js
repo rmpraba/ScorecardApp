@@ -319,6 +319,10 @@ app.post('/assesment-service',  urlencodedParser,function (req, res)
 app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
 {
 
+var qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+"grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+" and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in(0,1)";
+
 var qur="select * from scorecarddb.tr_student_to_subject "+
 "where  class_id="+
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
@@ -340,6 +344,8 @@ var qur2="select school_id,id,student_name,class_id from md_student where  class
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
 "school_id='"+req.query.schoolid+"' and id not in(select student_id from tr_term_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"'))";
 
+  console.log(qurcheck);
+  console.log('............................................'); 
   console.log(qur);
   console.log('............................................'); 
   console.log(qur1); 
@@ -347,6 +353,10 @@ var qur2="select school_id,id,student_name,class_id from md_student where  class
   console.log(qur2);     
   console.log('............................................'); 
 
+
+connection.query(qurcheck,function(err, rows){
+  console.log(rows.length);
+if(rows.length==0){
 connection.query(qur,
   function(err, rows)
   {
@@ -373,6 +383,10 @@ connection.query(qur,
     else
       console.log(err);
   
+});
+}
+else
+res.status(200).json({'returnval': 'imported'});
 });
 
 });
@@ -753,6 +767,39 @@ app.post('/overallinsertcocurricularmark-service',  urlencodedParser,function (r
 });
 
 
+//fetching student names
+app.post('/scorecardreadyness-service',  urlencodedParser,function (req,res)
+{   
+
+var qur="select * from md_grade_subject_count where no_of_subjects=(( "+
+"select count(distinct(subject_id)) from tr_term_assesment_overall_assesmentmarks where "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+"grade='"+req.query.grade+"' and section='"+req.query.section+"')/ "+
+"(select count(distinct(term_name)) from tr_term_assesment_overall_assesmentmarks where "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+"grade='"+req.query.grade+"' and section='"+req.query.section+"')) and school_id='"+req.query.schoolid+"' and "+
+"academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+
+console.log(qur);
+
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {  
+      if(rows.length>0)
+      res.status(200).json({'returnval': 'match'});
+      else
+      res.status(200).json({'returnval': 'mismatch'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
 
 //fetching student names
 app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
@@ -1244,8 +1291,8 @@ app.post('/updateimportmark-service' ,  urlencodedParser,function (req, res)
       flag:0
     };
     var qur="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
-    "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
-    " and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmentid+"' and subject='"+req.query.subject+"' and flag='0'";
+    "grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' "+
+    " and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmentid+"' and subject='"+req.query.subject+"' and flag=0";
     console.log('...............update import..........');
     console.log(qur);
     connection.query(qur,
@@ -1253,26 +1300,19 @@ app.post('/updateimportmark-service' ,  urlencodedParser,function (req, res)
       {
       if(!err)
       {
+        console.log();
       if(rows.length>0)
       {
         res.status(200).json({'returnval': 'exist'});
       }
       else{ 
-    connection.query('insert into tr_term_assesment_import_marks set ?',[data],
+      connection.query('insert into tr_term_assesment_import_marks set ?',[data],
       function(err, rows)
       {
       if(!err)
       {
-      // if(rows.length>0)
-      // {
-
       res.status(200).json({'returnval': 'succ'});
       }
-      // else
-      // {
-      // res.status(200).json({'returnval': 'invalid'});
-      // }
-    // }
     else
     {
       console.log('No data Fetched'+err);

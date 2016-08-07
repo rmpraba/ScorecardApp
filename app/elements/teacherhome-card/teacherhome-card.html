@@ -172,7 +172,7 @@
         this.$.cdialog.toggle();
       },
       FnApprovecard:function()
-      {
+      {        
         localStorage.setItem('curr_sess_report','2');
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('approveassesment','');  
@@ -188,7 +188,7 @@
           this.BA=false;        
           this.TA=false;
           this.GenerateReport=false;
-          this.Analysis=false;
+          this.Report=false;
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
           this.BA=false;

@@ -106,6 +106,17 @@
         on-response="fetchcoscholasticinfoResponse"
         debounce-duration="300"
     >
+    
+    <iron-ajax        
+        method="post"
+        id="scorecardreadynessajax"
+        url="{{scorecardreadynessurl}}"
+        params="{{scorecardreadynessparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="scorecardreadynessResponse"
+        debounce-duration="300"
+    >
 
   </template>
   <script>
@@ -155,6 +166,24 @@
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Analysis')
           document.querySelector('beginner-term-analysis-card').sectionarr=e.detail.response.returnval; 
       },
+      callscorecardreadynessService:function(){
+         this.scorecardreadynessurl=sessionStorage.getItem("addrinfo")+"/scorecardreadyness-service";
+         var obj={"academicyear":"","schoolid":"","grade":"","section":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.grade=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");         
+         this.scorecardreadynessparam= obj;
+         this.$.scorecardreadynessajax.generateRequest();
+      },
+      scorecardreadynessResponse:function(e){
+        
+        if(e.detail.response.returnval=='match'){
+          this.callFetchstudentnameService();
+        }
+        else
+          alert('Scorecard is not ready..!Due to evaluation pending....');
+      },
       callFetchstudentnameService:function(){
         this.fetchstudnameurl=sessionStorage.getItem("addrinfo")+"/fetchstudname-service";
         var obj={"scoolid":"","roleid":"","grade":"","section":""};
@@ -169,9 +198,8 @@
         var arr=e.detail.response.returnval;
         
         document.querySelector('cce-generate-score-card').FnHide();
-        document.querySelector('student-list-card').studentarr=arr;        
+        document.querySelector('student-list-card').studentarr=arr;  
         
-
       },
       callFetchstudentinfoService:function(studid){
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";

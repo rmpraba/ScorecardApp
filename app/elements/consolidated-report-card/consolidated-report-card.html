@@ -1,0 +1,169 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="../scorecard-service/scorecard-service.html">
+<link rel="import" href="../report-service/report-service.html">
+<link rel="import" href="../assesmentwise-report-card/assesmentwise-report-card.html">
+<link rel="import" href="../termwise-report-card/termwise-report-card.html">
+<link rel="import" href="../consolidatedtermwise-report-card/consolidatedwise-report-card.html">
+
+<dom-module id="consolidated-report-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card{
+      width: 100%;        
+      @apply(--layout-vertical);
+      }
+      .inner{
+      @apply(--layout-horizontal);
+      @apply(--layout-center-justified);
+      /*margin-left: 30%;*/
+      }
+      .list{
+      margin-left: 5%;
+      margin-top: 2%;
+      }
+      paper-dropdown-menu{
+        margin-left: 5%;
+      }
+    </style>
+
+      <div class="card">
+          <div class="inner">
+          <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+              <template is="dom-repeat" items="{{gradearr}}">
+                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{sectionarr}}">
+                <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>         
+
+          <paper-dropdown-menu id="type" label="Choose Report Type" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectType"  attr-for-selected="value" required>
+                <paper-item value="Subjectwise">Subjectwise</paper-item>
+                <paper-item value="Assesmentwise">Assesmentwise</paper-item>
+                <paper-item value="Termwise">Termwise</paper-item>
+                <paper-item value="ConsolidatedTerm">ConsolidatedTerm</paper-item>              
+            </paper-menu>
+          </paper-dropdown-menu>
+
+           <paper-dropdown-menu hidden$="{{hideterm}}" id="term" label="Select Term" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectTerm"  attr-for-selected="value" required>
+              <!-- <template is="dom-repeat" items="{{sectionarr}}"> -->
+                <paper-item value="term1">Term1</paper-item>
+                <paper-item value="term2">Term2</paper-item>
+                <paper-item value="term3">Term3</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu hidden$="{{hideassesment}}" id="term" label="Select Assesment" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required>
+              <!-- <template is="dom-repeat" items="{{sectionarr}}"> -->
+                <paper-item value="assesment1">Assesment1</paper-item>
+                <paper-item value="assesment2">Assesment2</paper-item>
+                <paper-item value="assesment3">Assesment3</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          </div>
+    <div class="list" hidden$="{{assesmentcard}}">
+    <assesmentwise-report-card id="assesment" itemarr="{{itemarr}}"></assesmentwise-report-card>
+    </div>
+    <div class="list" hidden$="{{termcard}}">
+    <termwise-report-card id="term" itemarr="{{itemarr}}"></termwise-report-card>
+    </div>
+    <div class="list" hidden$="{{consolidatedtermcard}}">
+    <consolidatedtermwise-report-card id="consolidated" itemarr="{{itemarr}}"></consolidatedtermwise-report-card>
+    </div>
+    </div>
+    <scorecard-service id="scorecardservice"></scorecard-service>
+    <report-service id="reportservice"></report-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var gradename;
+    var section;
+    var subject,type,termname,assesment;
+    var item=[];
+    Polymer({
+      is: 'consolidated-report-card',
+      ready:function(){
+        this.assesmentcard=true;  
+        this.termcard=true;  
+        this.consolidatedtermcard=true;
+        this.hideterm=true;
+        this.hideassesment=true; 
+      },
+      FnSelectGrade:function(e){        
+        gradename = e.target.selectedItem.textContent.trim();       
+        localStorage.setItem("curr_sess_grade",gradename);
+        this.$.scorecardservice.callSectionService(gradename);
+        if(this.flag==1)
+          this.callService();
+      },
+      FnSelectSection:function(e){
+        section = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_section",section);
+        if(this.flag==1)                
+        this.callService();
+      },
+      FnSelectType:function(e){
+        type = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_reporttype",type);
+        if(type=="Assesmentwise"){
+        this.hideterm=false;
+        this.hideassesment=false;
+        this.$.assesment.setDefaultHeaders();
+        }                
+        if(type=="Termwise"){
+        this.hideterm=false;        
+        this.$.term.setDefaultHeaders(); 
+        } 
+        if(type=="ConsolidatedTerm")
+        this.$.consolidated.setDefaultHeaders();        
+      },
+      FnSelectTerm:function(e){
+        termname = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_termname",termname);
+        if(type=="Termwise"){
+          this.$.reportservice.callFetchstudentnameService(); 
+        }
+      },
+      FnSelectAssesment:function(e){
+        assesment = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_assesment",assesment);
+        if(type=="Assesmentwise"){
+          this.$.reportservice.callFetchstudentnameService(); 
+        }
+      },
+      callService:function(){
+        this.flag="1";
+        this.$.reportservice.callFetchstudentnameService();        
+      } ,
+      FnHide:function(){
+        if(localStorage.getItem("curr_sess_reporttype")=="Assesmentwise"){
+          this.assesmentcard=false;
+        }
+        if(localStorage.getItem("curr_sess_reporttype")=="Termwise"){
+          this.termcard=false;
+        }
+      }
+  });
+  })();
+  </script>
+</dom-module>

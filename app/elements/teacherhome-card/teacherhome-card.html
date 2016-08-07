@@ -57,6 +57,9 @@
       <div class="card" hidden$="{{Analysis}}">
        <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
       </div>
+      <div class="card" hidden$="{{ConsolidatedReport}}">
+       <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/report-icon.jpg" height="180px" width="180px"></paper-button>
+      </div>
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -122,6 +125,12 @@
          {
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('beginnertermanalysis','');
+         } 
+         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Consolidatedreport") 
+         {
+          alert('consolidated');
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('consolidatedreport','');
          } 
       },
       FnSelectPreEntryType:function(){
@@ -193,6 +202,8 @@
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
           // this.BA=false;
           // this.TA=false;
+          if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal")
+          this.ConsolidatedReport=false;
           this.Report=false;
           this.GenerateReport=false;
           if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
@@ -207,6 +218,11 @@
       },
       FnAnalysiscard:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Analysis');        
+        this.$.scorecardservice.callGradeService();
+        this.$.cdialog.toggle();
+      },
+      FnConsolidatedReport:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','Consolidatedreport');
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle();
       }

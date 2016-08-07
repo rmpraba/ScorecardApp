@@ -1584,13 +1584,71 @@ app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, re
 
 
 app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req, res)
-{
-  
+{  
     var qur="select ta.term_name,ta.assesment_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
     "lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade, "+
     "ta.subject_id,ba.grade as beginner_grade from scorecarddb.tr_term_assesment_overall_marks ta "+
     "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
     "group by ta.subject_id,ta.term_name,ta.assesment_id ";
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+app.post('/assesmentwisereport-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select student_id,subject_id,avg(rtotal),(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
+    "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesment+"' "+
+    "and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by subject_id,student_id";
+    console.log('...............................assessmentwise..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+app.post('/termwisereport-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select assesment_id,student_id,subject_id,avg(rtotal),(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
+    "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' "+
+    "and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by assesment_id,subject_id,student_id";
+    
+    console.log('......................termwise..............................');
+    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {

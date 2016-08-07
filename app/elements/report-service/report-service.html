@@ -38,6 +38,27 @@
         on-response="fetchbeginnermarkforreportResponse"
         debounce-duration="300"
     >
+
+     <iron-ajax
+        method="post"
+        id="assesmentwisereportajax"
+        url="{{assesmentwisereporturl}}"
+        params="{{assesmentwisereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="assesmentwisereportResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="termwisereportajax"
+        url="{{termwisereporturl}}"
+        params="{{termwisereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="termwisereportResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -59,11 +80,22 @@
       },
       fetchstudnameResponse:function(e){
         studarr=e.detail.response.returnval;
-        // alert(JSON.stringify(studarr));        
-        document.querySelector('beginner-term-analysis-card').FnHide();
-        // document.querySelector('language-enrichment-card').studentarr=arr; 
-        this.callfetchtermmarkforreportService();       
+        // alert(JSON.stringify(studarr));  
+        // alert(localStorage.getItem("curr_sess_reporttype"));
+        if(localStorage.getItem("curr_sess_reporttype")=="Assesmentwise"){
+          document.querySelector('consolidated-report-card').FnHide();
+          this.callassesmentwisereportService();
+        } 
+        if(localStorage.getItem("curr_sess_reporttype")=="Termwise"){
+          document.querySelector('consolidated-report-card').FnHide();
+          this.calltermwisereportService();
+        } 
+        else{    
+        document.querySelector('beginner-term-analysis-card').FnHide();        
+        this.callfetchtermmarkforreportService(); 
+        }      
       },
+
       callfetchtermmarkforreportService:function(){
         // alert('yes');
         this.fetchtermmarkforreporturl=sessionStorage.getItem("addrinfo")+"/fetchtermmarkforreport-service";
@@ -76,95 +108,20 @@
         this.fetchtermmarkforreportparam=obj;
         this.$.fetchtermmarkforreportajax.generateRequest();
       },
-      fetchtermmarkforreportResponse:function(e){
-        /*var overall=[];
-        var mark=[];      
-        // alert('yes yes');
-        // document.querySelector('beginner-term-analysis-card').FnHide();        
-        term=e.detail.response.returnval;
-        // alert(JSON.stringify(e.detail.response.returnval));
-        for(var i=0;i<studarr.length;i++){ 
-                  
-          for(var j=0;j<term.length;j++){
-          var obj={"id":"","name":"","beginner":"","term":""};            
-          // var obj={"id":"","name":"","beginner":"","t1a1":"","t1a2":"","t1a3":"","t2a1":"","t2a2":"","t2a3":"","t3a1":"","t3a2":"","t3a3":""};
-            this.flag=0;           
-            if(studarr[i].id==term[j].student_id){
-              if(overall.length>0){
-                for(var n=0;n<overall.length;n++){
-                  if(overall[n].id==studarr[i].id)
-                    this.flag=1;
-                }
-              }
-              // for(var n=0;n<overall.length>0;n++){
-              // if(overall[n].id==term[j].student_id){
-              mark.push({"studid":term[j].student_id,"termgrade":term[j].term_grade}); 
-              // }  
-              // }           
-              if(this.flag==0){
-              obj.id=studarr[i].id;
-              obj.name=studarr[i].student_name;
-              obj.beginner=term[j].beginner_grade;
-              obj.term=mark;              
-              overall.push(obj);
-              } 
-              /*obj.id=studarr[i].id;
-              obj.name=studarr[i].student_name;
-              obj.beginner=term[j].beginner_grade;
-              if(term[j].term_name=="term1"&&term[j].assesment_id=="Assesment1")
-                obj.t1a1=term[j].term_grade;
-              if(term[j].term_name=="term1"&&term[j].assesment_id=="Assesment2")
-                obj.t1a2=term[j].term_grade;
-              if(term[j].term_name=="term1"&&term[j].assesment_id=="Assesment3")
-                obj.t1a3=term[j].term_grade;
-              if(term[j].term_name=="term2"&&term[j].assesment_id=="Assesment1")
-                obj.t2a1=term[j].term_grade;
-              if(term[j].term_name=="term2"&&term[j].assesment_id=="Assesment2")
-                obj.t2a2=term[j].term_grade;
-              if(term[j].term_name=="term2"&&term[j].assesment_id=="Assesment3")
-                obj.t2a3=term[j].term_grade;
-              if(term[j].term_name=="term3"&&term[j].assesment_id=="Assesment1")
-                obj.t3a1=term[j].term_grade;
-              if(term[j].term_name=="term3"&&term[j].assesment_id=="Assesment2")
-                obj.t3a2=term[j].term_grade;
-              if(term[j].term_name=="term3"&&term[j].assesment_id=="Assesment3")
-                obj.t3a3=term[j].term_grade;
-              overall.push(obj);*/
-          /*  }  
-
-          }
-          
-          
-        }
-        alert(JSON.stringify(overall));*/
-
-
+      fetchtermmarkforreportResponse:function(e){      
        var overall=[];
        var arr1=e.detail.response.returnval;
-
        for(var x=0;x<studarr.length;x++){
         for(var y=0;y<arr1.length;y++)
         {
           if(studarr[x].id==arr1[y].student_id)
-            arr1[y].student_name=studarr[x].student_name;
-          // alert('yes'+studarr[x].student_name);
+            arr1[y].student_name=studarr[x].student_name;          
         }
        }
-
-       // alert(JSON.stringify(arr1));
        if(arr1.length>0){      
        for(var i=0;i<arr1.length;i++)
        {
         var markarr=[];
-        // for(var x=0;x<studarr.length;x++){
-        
-        //   if(studarr[x].student_id==arr1[i].student_id){
-        //     alert('yes');
-        //    markarr.push(studarr[i].student_name);   
-        //   }
-        
-        // }
-        // markarr.push(arr1[i].student_id);
         markarr.push(arr1[i].student_name);
         markarr.push(arr1[i].beginner_grade);
         markarr.push(arr1[i].term_grade);
@@ -176,34 +133,124 @@
             arr1.splice(j,1);
             j--;
            }
-
         }
        overall.push(markarr);
        }
-       // alert(JSON.stringify(overall));
         document.querySelector("beginner-term-analysis-card").itemarr=overall;
+      }
+    },
+    callassesmentwisereportService:function(){
+       this.assesmentwisereporturl=sessionStorage.getItem("addrinfo")+"/assesmentwisereport-service";
+        var obj={"schoolid":"","academicyear":"","grade":"","section":"","assesment":"","termname":""};
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=localStorage.getItem("curr_sess_grade");;
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.assesment=localStorage.getItem("curr_sess_assesment");
+        this.assesmentwisereportparam=obj;
+        this.$.assesmentwisereportajax.generateRequest();
+    },
+    assesmentwisereportResponse:function(e){
+      var overall=[];
+      var subarr=[];
+      var subfinal=[];
+       var arr1=e.detail.response.returnval;
+       // alert(JSON.stringify(arr1));
+       for(var x=0;x<studarr.length;x++){
+        for(var y=0;y<arr1.length;y++)
+        {
+          if(studarr[x].id==arr1[y].student_id)
+            arr1[y].student_name=studarr[x].student_name;          
+        }
+       }
+       if(arr1.length>0){      
+       for(var i=0;i<arr1.length;i++)
+       {
+        var markarr=[];
+        markarr.push(arr1[i].student_name);
+        subarr.push(arr1[i].subject_id);
+        
+        markarr.push(arr1[i].grade);
+        for(var j=i+1;j<arr1.length;j++)
+        {
+           if(arr1[i].student_id==arr1[j].student_id)
+           {
+            markarr.push(arr1[j].grade);
+            subarr.push(arr1[j].subject_id);
+            arr1.splice(j,1);
+            j--;
+           }
+        }
 
+       overall.push(markarr);
+       }
 
+        var subfinal=this.eliminateDuplicates(subarr);                
+       // alert(JSON.stringify(subfinal));
+       document.querySelector("assesmentwise-report-card").subjectarr=subfinal;
+        document.querySelector("assesmentwise-report-card").itemarr=overall;
+      }
+    },
+    eliminateDuplicates:function(arr) {
+var i;
+  var len=arr.length;
+  var out=[];
+  var obj={};
+  out.push("Sno");
+  out.push("Student Name");
+
+ for (i=0;i<len;i++) {
+ obj[arr[i]]=0;
+ }
+ for (i in obj) {
+ out.push(i);
+ }
+ return out;
+},
+    calltermwisereportService:function(){
+       this.termwisereporturl=sessionStorage.getItem("addrinfo")+"/termwisereportreport-service";
+        var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
+        obj.subject=localStorage.getItem("curr_sess_termname");
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=localStorage.getItem("curr_sess_grade");;
+        obj.section=localStorage.getItem("curr_sess_section");
+        // obj.assesment=localStorage.getItem("curr_sess_assesment");
+        this.termwisereportparam=obj;
+        this.$.termwisereportajax.generateRequest();
+    },
+    termwisereportResponse:function(e){
+      var overall=[];
+       var arr1=e.detail.response.returnval;
+       for(var x=0;x<studarr.length;x++){
+        for(var y=0;y<arr1.length;y++)
+        {
+          if(studarr[x].id==arr1[y].student_id)
+            arr1[y].student_name=studarr[x].student_name;          
+        }
+       }
+       if(arr1.length>0){      
+       for(var i=0;i<arr1.length;i++)
+       {
+        var markarr=[];
+        markarr.push(arr1[i].student_name);
+        // markarr.push(arr1[i].beginner_grade);
+        markarr.push(arr1[i].grade);
+        for(var j=i+1;j<arr1.length;j++)
+        {
+           if(arr1[i].student_id==arr1[j].student_id)
+           {
+            markarr.push(arr1[j].term_grade);
+            arr1.splice(j,1);
+            j--;
+           }
+        }
+       overall.push(markarr);
+       }
+        document.querySelector("termwise-report-card").itemarr=overall;
       }
     }
-      // callfetchbeginnermarkforreportService:function(){
-      //   // alert('yes');
-      //   this.fetchbeginnermarkforreporturl=sessionStorage.getItem("addrinfo")+"/fetchbeginnermarkforreport-service";
-      //   var obj={"schoolid":"","academicyear":"","grade":"","section":"","subject":""};
-      //   obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-      //   obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-      //   obj.grade=localStorage.getItem("curr_sess_grade");;
-      //   obj.section=localStorage.getItem("curr_sess_section");
-      //   obj.subject=localStorage.getItem("curr_sess_subject");
-      //   this.fetchbeginnermarkforreportparam=obj;
-      //   this.$.fetchbeginnermarkforreportajax.generateRequest();
-      // },
-      // fetchtermmarkforreportResponse:function(e){
-      //   // document.querySelector('beginner-term-analysis-card').FnHide();        
-      //   // alert(JSON.stringify(e.detail.response.returnval));
-      //   beginner=e.detail.response.returnval;
-      // }
-
     });
   })();
   </script>

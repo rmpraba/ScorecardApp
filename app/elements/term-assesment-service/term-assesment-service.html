@@ -348,9 +348,9 @@
          this.$.subjectajax.generateRequest();
       },
       subjectResponse:function(e){ 
-          if(localStorage.getItem("curr_sess_subjectcategory")=="category1")        
+          // if(localStorage.getItem("curr_sess_subjectcategory")=="category1")        
           document.querySelector('term-assesment-card').subjectarr=e.detail.response.returnval;
-          if(localStorage.getItem("curr_sess_subjectcategory")=="category2"||localStorage.getItem("curr_sess_subjectcategory")=="category3"||localStorage.getItem("curr_sess_subjectcategory")=="category4")  
+          // if(localStorage.getItem("curr_sess_subjectcategory")=="category2"||localStorage.getItem("curr_sess_subjectcategory")=="category3"||localStorage.getItem("curr_sess_subjectcategory")=="category4")  
           document.querySelector('coscholastic-assesment-card').subjectarr=e.detail.response.returnval;  
       },
       callAssesmentService:function(termtype,termname,gradename){

@@ -193,7 +193,8 @@
         this.$.insertbamarkajax.generateRequest();
       },
       insertbamarkResponse:function(e){
-        alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
+        alert("Inserted!");
       },
       callFetchGradeService:function(score){
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

@@ -60,9 +60,10 @@
       },
       FnComprehension:function(){
         this.score=(parseInt(this.correctword)+parseInt(this.comprehension));
+        this.callFetchGrade(); 
       },
       FnScore:function(){ 
-        this.callFetchGrade();               
+                      
         this.mark=this.score;        
       },
       callService:function(){

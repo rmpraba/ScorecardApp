@@ -272,7 +272,8 @@
       },
       fetchmarkResponse:function(e){         
         this.finalarr=[];       
-        var arr=e.detail.response.returnval;        
+        var arr=e.detail.response.returnval;
+        
         for(var i=0;i<subjectarr.length;i++){
           var obj={"subject_name":"","FA1":"","FA2":"","SA1":"","tot1":"","FA3":"","FA4":"","SA2":"","tot2":"","FA":"","SA":"","Grade":"","Point":""};
           this.no=0;
@@ -377,7 +378,7 @@
         this.$.fetchcoscholasticinfoajax.generateRequest(); 
       },
       fetchcoscholasticinfoResponse:function(e){
-        // alert(JSON.stringify(e.detail.response));
+        alert(JSON.stringify(e.detail.response));
         // alert(JSON.stringify(lower));
         var lsarr=[];
         var wkarr=[];

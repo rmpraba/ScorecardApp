@@ -4,11 +4,11 @@
 <link rel="import" href="..\term-assesment-service/term-assesment-service.html">
 <link rel="import" href="..\validationdialog-card/validationdialog-card.html">
 
-<link rel="import" href="..\..\bower_components/neon-animation/animations/scale-up-animation.html">
+<!-- <link rel="import" href="..\..\bower_components/neon-animation/animations/scale-up-animation.html">
 <link rel="import" href="..\..\bower_components/neon-animation/animations/fade-out-animation.html">
  <link rel="import" href="..\..\bower_components/neon-animation/neon-animations.html">
-<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
-
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html"> -->
+<link rel="import" href="..\..\bower_components/paper-checkbox/paper-checkbox.html">
 <dom-module id="cc-maths-onetofour-item-card">
   <template>
     <style>
@@ -43,20 +43,31 @@
       }
     </style>
     <div>
+
        <table border="1">
-        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
-        <td><paper-input required  allowed-pattern="[0-9]" value="{{groupactivity}}" id="p2" on-change="FnGroupactivity"></paper-input></td>
-        <td><paper-input required  allowed-pattern="[0-9]" value="{{individualactivity}}" id="p3" on-change="FnIndividualactivity"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{maaccuracy}}" id="p4" on-change="FnMAAccuracy"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{maknowledge}}" id="p5" on-change="FnMAKnowledge"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{taaccuracy}}" id="p6" on-change="FnTAAccuracy"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{taneatness}}" id="p7" on-change="FnTANeatness"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{activity}}" id="p8" on-change="FnActivity"></paper-input></td>
+
+        <tr>
+        <!-- <td><paper-checkbox checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> -->
+        <td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <!-- <td>{{serialno}}</td><td>{{studname}}</td> -->
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required  allowed-pattern="[0-9]" value="{{groupactivity}}" id="p2" on-change="FnGroupactivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required  allowed-pattern="[0-9]" value="{{individualactivity}}" id="p3" on-change="FnIndividualactivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{maaccuracy}}" id="p4" on-change="FnMAAccuracy"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{maknowledge}}" id="p5" on-change="FnMAKnowledge"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{taaccuracy}}" id="p6" on-change="FnTAAccuracy"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{taneatness}}" id="p7" on-change="FnTANeatness"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{activity}}" id="p8" on-change="FnActivity"></paper-input></td>
+        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>        
         </tr>
       </table>
     </div>
 
+    <paper-dialog modal id="adialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>Mark as absent?</p>
+      <paper-button on-click="FnYes">Ok</paper-button>  
+      <!-- <paper-button on-click="FnNo">No</paper-button>       -->
+    </paper-dialog>
 
     <term-assesment-service id="assesmentservice"></term-assesment-service> 
     <iron-ajax        
@@ -81,7 +92,37 @@
     Polymer({
       is: 'cc-maths-onetofour-item-card',
       ready:function(){       
-      },     
+      }, 
+      FnYes:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnNo:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnChange:function(e){
+         // alert(e.target.checked);
+        if(e.target.checked==false){
+          var id='adialog';          
+          document.getElementById(id).opened=true;          
+          this.read=true;
+          this.understanding=0;
+          this.groupactivity=0;
+          this.individualactivity=0;
+          this.maaccuracy=0;
+          this.maknowledge=0;
+          this.taaccuracy=0;
+          this.taneatness=0;
+          this.activity=0;
+          localStorage.setItem("curr_sess_absflag",0);
+          this.callService();
+        }
+
+      },
+      
       FnUnderstanding:function(e){               
         understanding=parseFloat(this.understanding).toFixed(2);        
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.understanding);
@@ -122,6 +163,7 @@
         this.$.p8.validate();
       }  
       else{
+        localStorage.setItem("curr_sess_absflag",1);
         activity=parseFloat(this.activity).toFixed(2);         
         this.concept=this.understanding;
         this.activityproject=(parseInt(this.groupactivity)+parseInt(this.individualactivity))/2;

@@ -633,7 +633,8 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
          subject_id:req.query.subject,
          category:req.query.category,
          sub_category:req.query.subcategory,
-         mark:req.query.mark                 
+         mark:req.query.mark,
+         flag:req.query.absflag                 
   }
   var cond1={school_id:req.query.schoolid};
   var cond2={academic_year:req.query.academicyear};
@@ -1054,10 +1055,12 @@ app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid}; 
   var academicyear={academic_year:req.query.academicyear};  
-
-  connection.query("SELECT * FROM tr_term_assesment_overall_assesmentmarks am join "+
-  "md_grade_descriptor gd on(am.category=gd.category) WHERE ? AND ? AND ? and am.term_cat_grade=gd.grade and "+
-  "am.subject_id=gd.subject_name",[studid,schoolid,academicyear],
+  var qur="SELECT * FROM tr_term_assesment_overall_assesmentmarks am join "+
+  "md_grade_descriptor gd on(am.category=gd.category) WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studid+"' and am.term_cat_grade=gd.grade and "+
+  "am.subject_id=gd.subject_name";
+  console.log('.........................Score card....................................');
+  console.log(qur);
+  connection.query(qur,
     function(err, rows)
     {
     if(!err)

@@ -478,7 +478,7 @@
       }
       },
       fetchstudentResponse:function(e){ 
-      // alert(e.detail.response.returnval) ;       
+      // alert(JSON.stringify(e.detail.response.returnval)) ;       
         var arr=e.detail.response.returnval;
         if(arr=='imported')
           alert('Marks are already submitted!');
@@ -489,7 +489,7 @@
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=i+1;
         }
-        }
+        
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
         document.querySelector('cc-maths-onetofour-card').studarr=arr;  
@@ -532,8 +532,7 @@
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cs-personalitydevelopment-card').studarr=arr;
         }   
-        // this.fetchstudentreportService();
-        this.fetchimportmark(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_termname"),localStorage.getItem("curr_sess_assesment"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_section"),localStorage.getItem("curr_sess_subject"));
+       
         }
         else
         {
@@ -543,13 +542,17 @@
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
         document.querySelector('cc-sa-fivetoten-card').studarr=arr;        
         }
-        }       
+        } 
         }
+          // this.fetchstudentreportService();
+        this.fetchimportmark(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_termname"),localStorage.getItem("curr_sess_assesment"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_section"),localStorage.getItem("curr_sess_subject"));      
+        }
+
       },
       callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark,count){ 
          tempcnt1=count;       
          this.insertassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertassesmentmark-service";
-         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":""};
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":"","absflag":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
@@ -565,7 +568,8 @@
          obj.subject=localStorage.getItem("curr_sess_subject");
          obj.category=category;
          obj.subcategory=subcategory;
-         obj.mark=mark;         
+         obj.mark=mark;  
+         obj.absflag=localStorage.getItem("curr_sess_absflag");         
          this.insertassesmentmarkparam= obj;        
 
          this.$.insertassesmentmarkajax.generateRequest();

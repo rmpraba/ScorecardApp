@@ -9,6 +9,7 @@
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 
 <link rel="import" href="../validationdialog-card/validationdialog-card.html">
+<link rel="import" href="..\..\bower_components/paper-checkbox/paper-checkbox.html">
 
 <dom-module id="cc-maths-onetofour-card">
   <template>
@@ -25,6 +26,8 @@
           width:11%;
         }
          #tb2{width:21%;
+          }
+          #tb3{width:2.5%;
           }
        
       .studname{
@@ -61,6 +64,7 @@
       <th colspan="2" id="tb2">MentalAbility</th>
       <th colspan="2" id="tb2">TableActivity</th>
       <th colspan="1" id="tb1">WrittenWork</th>
+      <th colspan="1" id="tb3"></th>
       </tr>
       <tr><th></th><th></th>
       <th  id="tb1"> Understanding</th>      
@@ -75,6 +79,7 @@
       <th id="tb1">Neatness</th>
 
       <th id="tb1">Activity</th>
+      <th></th>
       </tr>
       <tr><th></th><th></th>
       <th>{{assesment}}(10)</th>
@@ -89,6 +94,7 @@
       <th>{{assesment}}(10)</th>
 
       <th>{{assesment}}(10)</th>
+      <th></th>
       </tr>
       </div>
 <template is="dom-repeat" items="{{markarr}}" as="m">
@@ -114,8 +120,9 @@
 
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
+        <!-- <td><paper-checkbox checked id="{{item.id}}" on-change="FnChange"></paper-checkbox></td> -->
         <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
-        <td colspan="66"><cc-maths-onetofour-item-card studid="{{item.id}}" studname="{{item.student_name}}"></cc-maths-onetofour-item-card></td>
+        <td colspan="66"><cc-maths-onetofour-item-card serialno="{{item.serialno}}" studid="{{item.id}}" studname="{{item.student_name}}"></cc-maths-onetofour-item-card></td>
       </tr>
       </template>
      </table> 
@@ -126,9 +133,9 @@
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <validationdialog-card id="validatedialog"></validationdialog-card>
-    <!-- <paper-dialog modal id="showdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <p>{{message}}</p>
-      <paper-button on-click="FnCloseDialog">Ok</paper-button>
+   <!--  <paper-dialog modal id="absentdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>It will mark as absent?</p>
+      <paper-button on-click="FnYes">Yes</paper-button>      
     </paper-dialog> -->
   </template>
    <script type="text/javascript">
@@ -147,6 +154,7 @@
   <script>
   (function() {
     'use strict';
+    var id;
     Polymer({
       is: 'cc-maths-onetofour-card',
       ready:function(){
@@ -154,6 +162,9 @@
         this.$.submit.hidden=true;
         this.$.save.hidden=true;
       },
+      // FnAbsentDialog:function(){        
+      //     this.$.absentdialog.toggle();  
+      // },
       FnToggleDialog:function(value){
         this.$.validatedialog.FnSetMessage1(value);
       } , 

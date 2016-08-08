@@ -18,21 +18,7 @@
       #p1{
         width: -48px;
       }
-      /*#p2{
-        width: 49px;
-      }
-      #p3{
-        width: 50.5px;
-      }
-      .pi1{
-        width: 57px;
-      }
-      .pi2{
-        width: 72px;
-      }
-      .pi3{
-        width: 11px;
-      }*/
+
       paper-input{
         text-align: center;
       }
@@ -40,18 +26,26 @@
     <div> 
      <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{Courteousness}}" id="p1" on-change="FnCourteousness"></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{Confidence}}" id="p2" on-change="FnConfidence"></paper-input></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{Careofbelongings}}" id="p3" on-change="FnCareofbelongings"></paper-input></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{Neatness}}" id="p3" on-change="FnNeatness"></paper-input></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{RegularityandPunctuality}}" id="p4" on-change="FnRegularityandPunctuality"></paper-input></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{Initiative}}" id="p5" on-change="FnInitiative"></paper-input></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{SharingandCaring}}" id="p6" on-change="FnSharingandCaring"></paper-input></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{Respect}}" id="p7" on-change="FnRespect"></paper-input></td>
-        <td><paper-input allowed-pattern="[a-zA-Z]" value="{{Selfcontrol}}" id="p8" on-change="FnSelfcontrol"></paper-input></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{Courteousness}}" id="p1" on-change="FnCourteousness"></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{Confidence}}" id="p2" on-change="FnConfidence"></paper-input></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{Careofbelongings}}" id="p3" on-change="FnCareofbelongings"></paper-input></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{Neatness}}" id="p3" on-change="FnNeatness"></paper-input></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{RegularityandPunctuality}}" id="p4" on-change="FnRegularityandPunctuality"></paper-input></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{Initiative}}" id="p5" on-change="FnInitiative"></paper-input></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{SharingandCaring}}" id="p6" on-change="FnSharingandCaring"></paper-input></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{Respect}}" id="p7" on-change="FnRespect"></paper-input></td>
+        <td><paper-input allowed-pattern="[A-D+]" value="{{Selfcontrol}}" id="p8" on-change="FnSelfcontrol"></paper-input></td>
+        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>        
         </tr>
       </table> 
     </div>
+
+    <paper-dialog modal id="adialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>Mark as absent?</p>
+      <paper-button on-click="FnYes">Ok</paper-button>  
+      <!-- <paper-button on-click="FnNo">No</paper-button>       -->
+    </paper-dialog>
+
      <!-- <co-scholastic-service id="assesmentservice"></co-scholastic-service> -->
      <term-assesment-service id="assesmentservice"></term-assesment-service> 
       <iron-ajax        
@@ -79,38 +73,58 @@
       FnCourteousness:function(){
         Courteousness=this.FnFindGrade(this.Courteousness); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Courteousness);        
+        if(this.flag==1)
+          this.FnValidateCall();
       },
       FnConfidence:function(){
         Confidence=this.FnFindGrade(this.Confidence); 
-        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Confidence);       
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Confidence); 
+        if(this.flag==1)
+          this.FnValidateCall();      
       },
       FnCareofbelongings:function(){
         Careofbelongings=this.FnFindGrade(this.Careofbelongings); 
-        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Careofbelongings);       
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Careofbelongings); 
+        if(this.flag==1)
+          this.FnValidateCall();      
       },
       FnNeatness:function(){
         Neatness=this.FnFindGrade(this.Neatness);
-        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Neatness);        
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Neatness);
+        if(this.flag==1)
+          this.FnValidateCall();        
       },
       FnRegularityandPunctuality:function(){
         RegularityandPunctuality=this.FnFindGrade(this.RegularityandPunctuality); 
-        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.RegularityandPunctuality);         
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.RegularityandPunctuality);
+        if(this.flag==1)
+          this.FnValidateCall();         
       },
       FnInitiative:function(){
         Initiative=this.FnFindGrade(this.Initiative); 
-        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Initiative);        
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Initiative);  
+        if(this.flag==1)
+          this.FnValidateCall();      
       },
       FnSharingandCaring:function(){
         SharingandCaring=this.FnFindGrade(this.SharingandCaring);
-        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.SharingandCaring);         
+        document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.SharingandCaring); 
+        if(this.flag==1)
+          this.FnValidateCall();        
       },
       FnRespect:function(){
         Respect=this.FnFindGrade(this.Respect);       
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Respect); 
+        if(this.flag==1)
+          this.FnValidateCall();
       },
       FnSelfcontrol:function(){
         Selfcontrol=this.FnFindGrade(this.Selfcontrol); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Selfcontrol); 
+            this.FnValidateCall();
+      },      
+      FnValidateCall:function(){
+        this.flag=1;
          if(this.Courteousness==""||this.Courteousness==null||this.Confidence==""||this.Confidence==null||this.Careofbelongings==""||this.Careofbelongings==null||this.Neatness==""||this.Neatness==null||this.RegularityandPunctuality==""||this.RegularityandPunctuality==null||this.Initiative==""||this.Initiative==null||this.SharingandCaring==""||this.SharingandCaring==null||this.Respect==""||this.Respect==null){
         this.$.p1.validate();
         this.$.p2.validate();
@@ -123,8 +137,8 @@
       }  
       else{
         this.callService(); 
-        }        
-      },      
+        }    
+      },
       callService:function(){        
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",this.Courteousness,9); 
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",this.Confidence,9); 

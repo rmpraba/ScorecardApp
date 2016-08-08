@@ -23,21 +23,6 @@
       #p1{
         width: -5px;
       }
-      /*#p2{
-        width: 49px;
-      }
-      #p3{
-        width: 50.5px;
-      }
-      .pi1{
-        width: 57px;
-      }
-      .pi2{
-        width: 72px;
-      }
-      .pi3{
-        width: 11px;
-      }*/
       paper-input{
         text-align:center;
       }
@@ -50,14 +35,14 @@
         <!-- <td><paper-checkbox checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> -->
         <td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
         <!-- <td>{{serialno}}</td><td>{{studname}}</td> -->
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required  allowed-pattern="[0-9]" value="{{groupactivity}}" id="p2" on-change="FnGroupactivity"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required  allowed-pattern="[0-9]" value="{{individualactivity}}" id="p3" on-change="FnIndividualactivity"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{maaccuracy}}" id="p4" on-change="FnMAAccuracy"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{maknowledge}}" id="p5" on-change="FnMAKnowledge"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{taaccuracy}}" id="p6" on-change="FnTAAccuracy"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{taneatness}}" id="p7" on-change="FnTANeatness"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="[0-9]" value="{{activity}}" id="p8" on-change="FnActivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required  allowed-pattern="^[0-9.a,]+$" value="{{groupactivity}}" id="p2" on-change="FnGroupactivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required  allowed-pattern="^[0-9.a,]+$" value="{{individualactivity}}" id="p3" on-change="FnIndividualactivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{maaccuracy}}" id="p4" on-change="FnMAAccuracy"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{maknowledge}}" id="p5" on-change="FnMAKnowledge"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{taaccuracy}}" id="p6" on-change="FnTAAccuracy"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{taneatness}}" id="p7" on-change="FnTANeatness"></paper-input></td>
+        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{activity}}" id="p8" on-change="FnActivity"></paper-input></td>
         <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>        
         </tr>
       </table>
@@ -89,9 +74,11 @@
     var higher=[];
     var grade=[];
     var understanding,groupactivity,individualactivity,maaccuracy,maknowledge,taaccuracy,taneatness,activity;
+
     Polymer({
       is: 'cc-maths-onetofour-item-card',
-      ready:function(){       
+      ready:function(){ 
+      this.flag=0;      
       }, 
       FnYes:function(){
         var id='adialog';          
@@ -126,33 +113,53 @@
       FnUnderstanding:function(e){               
         understanding=parseFloat(this.understanding).toFixed(2);        
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.understanding);
+        if(this.flag==1)
+          this.FnValidateCall();
       },
       FnGroupactivity:function(e){               
         groupactivity=parseFloat(this.groupactivity).toFixed(2);  
-        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.groupactivity);   
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.groupactivity); 
+        if(this.flag==1)
+          this.FnValidateCall();  
       },
       FnIndividualactivity:function(e){               
         individualactivity=parseFloat(this.individualactivity).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.individualactivity);
+        if(this.flag==1)
+          this.FnValidateCall();
       },
       FnMAAccuracy:function(){
         maaccuracy=parseFloat(this.maaccuracy).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maaccuracy);
+        if(this.flag==1)
+          this.FnValidateCall();
       },
       FnMAKnowledge:function(){
         maknowledge=parseFloat(this.maknowledge).toFixed(2); 
-        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maknowledge); 
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maknowledge);
+        if(this.flag==1)
+          this.FnValidateCall(); 
       },
       FnTAAccuracy:function(){
         taaccuracy=parseFloat(this.taaccuracy).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.taaccuracy);
+        if(this.flag==1)
+          this.FnValidateCall();
       },
       FnTANeatness:function(){
         taneatness=parseFloat(this.taneatness).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.taneatness);
+        if(this.flag==1)
+          this.FnValidateCall();
       },
-      FnActivity:function(){  
-      if(this.understanding==""||this.understanding==null||this.groupactivity==""||this.groupactivity==null||this.individualactivity==""||this.individualactivity==null||this.maaccuracy==""||this.maaccuracy==null||this.maknowledge==""||this.maknowledge==null||this.taaccuracy==""||this.taaccuracy==null||this.taneatness==""||this.taneatness==null){
+      FnActivity:function(){    
+        activity=parseFloat(this.activity).toFixed(2); 
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.activity);            
+        this.FnValidateCall();
+      },
+      FnValidateCall:function(){
+        this.flag=1;
+        if(this.understanding==""||this.understanding==null||this.groupactivity==""||this.groupactivity==null||this.individualactivity==""||this.individualactivity==null||this.maaccuracy==""||this.maaccuracy==null||this.maknowledge==""||this.maknowledge==null||this.taaccuracy==""||this.taaccuracy==null||this.taneatness==""||this.taneatness==null){
         this.$.p1.validate();
         this.$.p2.validate();
         this.$.p3.validate();
@@ -164,7 +171,6 @@
       }  
       else{
         localStorage.setItem("curr_sess_absflag",1);
-        activity=parseFloat(this.activity).toFixed(2);         
         this.concept=this.understanding;
         this.activityproject=(parseInt(this.groupactivity)+parseInt(this.individualactivity))/2;
         this.mentalability=parseFloat((parseInt(this.maaccuracy)+parseInt(this.maknowledge))/2).toFixed(2);

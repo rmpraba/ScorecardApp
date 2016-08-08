@@ -484,7 +484,7 @@
       }
       },
       fetchstudentResponse:function(e){ 
-      alert(JSON.stringify(e.detail.response.returnval)) ;       
+      // alert(JSON.stringify(e.detail.response.returnval)) ;       
         var arr=e.detail.response.returnval;
         if(arr=='imported')
           alert('Marks are already submitted!');
@@ -583,7 +583,7 @@
       insertassesmentmarkResponse:function(e){
         // tempcnt2++;
         // if(tempcnt1==tempcnt2){
-        // alert("Inserted!");  
+        // alert(e.detail.response.returnval);  
         // }
       },
       
@@ -741,7 +741,7 @@
         this.$.updateimportmarkajax.generateRequest();
     },    
     updateimportmarkResponse:function(e){
-      alert(e.detail.response.returnval);
+      // alert(e.detail.response.returnval);
       if(e.detail.response.returnval=="exist")
         alert('Already Imported');
       if(e.detail.response.returnval=="succ")
@@ -839,7 +839,7 @@
        var a=[];
        var arr1=e.detail.response.returnval;
        // this.studarrlength=arr1.length;
-       alert(JSON.stringify(arr1));
+       // alert(JSON.stringify(arr1));
        if(arr1!="invalid"){       
        for(var i=0;i<arr1.length;i++)
        {

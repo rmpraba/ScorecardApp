@@ -75,7 +75,7 @@
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
 <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
 </paper-input></td>
-<td hidden$="{{hidepaperinput}}"> <paper-input value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
+<td hidden$="{{hidepaperinput}}"> <paper-input allowed-pattern="^[0-9.a,]+$" value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
 </paper-input></td>
 </template>
 </template>

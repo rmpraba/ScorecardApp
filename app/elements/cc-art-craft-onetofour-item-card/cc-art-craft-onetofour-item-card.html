@@ -19,21 +19,6 @@
       #p1{
         width:-5px;
       }
-      /*#p2{
-        width: 49px;
-      }
-      #p3{
-        width: 50.5px;
-      }
-      .pi1{
-        width: 57px;
-      }
-      .pi2{
-        width: 72px;
-      }
-      .pi3{
-        width: 11px;
-      }*/
       paper-input{
         text-align: center;
       }
@@ -41,9 +26,9 @@
     <div> 
      <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{creativity}}" id="p1" on-change="FnCreativity"></td>
-        <td><paper-input  disabled="{{read}}" required allowed-pattern="[0-9]" value="{{skill}}" id="p2" on-change="FnSkill"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{interest}}" id="p3" on-change="FnInterest"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{creativity}}" id="p1" on-change="FnCreativity"></td>
+        <td><paper-input  disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{skill}}" id="p2" on-change="FnSkill"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{interest}}" id="p3" on-change="FnInterest"></paper-input></td>
         <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>
         </tr>
       </table> 
@@ -106,14 +91,22 @@
       FnCreativity:function(){
         creativity=parseFloat(this.creativity).toFixed(2); 
         document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.creativity);        
+        if(this.flag==1)
+         this.FnValidateCall(); 
       },
       FnSkill:function(){
         skill=parseFloat(this.skill).toFixed(2);
-        document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.skill);        
+        document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.skill);  
+        if(this.flag==1)
+         this.FnValidateCall();      
       } ,
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2);
         document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.interest);
+        this.FnValidateCall();
+      },
+      FnValidateCall:function(){
+        this.flag=1;
          if(this.creativity==""||this.creativity==null||this.skill==""||this.skill==null||this.interest==""||this.interest==null){
         this.$.p1.validate();
         this.$.p2.validate();

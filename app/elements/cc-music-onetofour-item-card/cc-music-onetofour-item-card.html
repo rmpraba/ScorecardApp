@@ -18,21 +18,7 @@
       #p1{
         width: -5px;
       }
-      /*#p2{
-        width: 49px;
-      }
-      #p3{
-        width: 50.5px;
-      }
-      .pi1{
-        width: 57px;
-      }
-      .pi2{
-        width: 72px;
-      }
-      .pi3{
-        width: 11px;
-      }*/
+     
       paper-input{
         text-align: center;
       }
@@ -40,9 +26,9 @@
    <div>
      <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{interest}}" id="p1" on-change="FnInterest"></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{rhythm}}" id="p2" on-change="FnRhythm"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{melody}}" id="p3" on-change="FnMelody"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{interest}}" id="p1" on-change="FnInterest"></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{rhythm}}" id="p2" on-change="FnRhythm"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{melody}}" id="p3" on-change="FnMelody"></paper-input></td>
          <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> 
         </tr>
       </table> 
@@ -105,24 +91,34 @@
       },
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2); 
-        document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.interest);       
+        document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.interest); 
+        if(this.flag==1)
+          this.FnValidateCall();      
       } ,
       FnRhythm:function(){
         rhythm=parseFloat(this.rhythm).toFixed(2);  
         document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.rhythm);      
+        if(this.flag==1)
+          this.FnValidateCall();
       },
       FnMelody:function(){
+        melody=parseFloat(this.melody).toFixed(2); 
+        document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.melody);
+          this.FnValidateCall();
+      },
+      FnValidateCall:function(){
+        this.flag=1;
          if(this.interest==""||this.interest==null||this.rhythm==""||this.rhythm==null){
         this.$.p1.validate();
         this.$.p2.validate();
       }  
       else{
         localStorage.setItem("curr_sess_absflag",1);
-        melody=parseFloat(this.melody).toFixed(2); 
+        
         this.total=parseInt(this.interest)+parseInt(this.rhythm)+parseInt(this.melody);
         this.reduction=parseFloat(this.total)/3;
         this.callFetchGrade(); 
-        }     
+        }   
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

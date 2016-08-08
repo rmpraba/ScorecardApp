@@ -1,4 +1,4 @@
-var express    = require("express");
+ var express    = require("express");
  var mysql      = require('mysql');
  var email   = require("emailjs/email");
  var connection = mysql.createConnection({
@@ -646,13 +646,14 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   var cond8={category:req.query.category};
   var cond9={sub_category:req.query.subcategory};
   var subname={subject_name:req.query.subject};
+  var mark={mark:req.query.mark};
 
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
   {
   response.subject_category=rows[0].subject_category;
-  // connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
-  // if(rows.length==0){
+  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
+  if(rows.length==0){
   connection.query("INSERT INTO tr_term_assesment_marks set ?",[response],
   function(err, rows)
     {
@@ -666,13 +667,23 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'fail'});
     }
   });
-  // }
+  }
+  else{
+   connection.query("UPDATE tr_term_assesment_marks SET ? WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[mark,cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
+    if(!err){
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else{
+      res.status(200).json({'returnval': 'fail'});
+    }
+   }); 
+  }
   // else
     // res.status(200).json({'returnval': 'Duplicate entry!'});
   // });
-  });
 });
-
+});
+});
 
 //Storing overall marks for the assesment
 app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res){

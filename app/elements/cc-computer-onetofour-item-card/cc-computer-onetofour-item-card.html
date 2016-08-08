@@ -24,7 +24,7 @@
     <div>
        <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
         <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>
         </tr>
       </table>
@@ -85,6 +85,10 @@
       FnActivity:function(){
         activity=parseFloat(this.activity).toFixed(2);
         document.querySelector('cc-computer-onetofour-card').FnToggleDialog(this.activity);
+        this.FnValidateCall();
+      }, 
+      FnValidateCall:function(){
+        this.flag=1;
         if(this.activity==""||this.activity==null){
           this.$.p1.validate();
         }
@@ -93,7 +97,7 @@
         this.cs=this.activity;
         this.callFetchGrade();
         } 
-      },      
+      },     
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
         this.$.fetchgradesajax.generateRequest(); 

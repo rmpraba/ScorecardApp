@@ -14,15 +14,6 @@
       #p1{
         width:-12%
       }
-      /*#p2{
-        width:-6%
-      }
-      #p3{
-        width:-18%
-      }
-        #p3{
-        width:-30%
-      }*/
      
       paper-input{
         text-align:center;
@@ -32,18 +23,18 @@
        <table border="1">
         <tr>
            <td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input disabled="{{read}}" required  allowed-pattern="[0-9]" value="{{Pronunciation}}" id="p1" on-change="FnPronunciation"></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Fluency}}" id="p2" on-change="FnFluency"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Comprehension}}" id="p3" on-change="FnComprehension"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{CreativeWriting}}" id="p4" on-change="FnCreative"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Handwriting}}" id="p5" on-change="FnHandwriting"></paper-input></td>
-        <td><paper-input disabled="{{read}}"  required allowed-pattern="[0-9]" value="{{Grammer}}" id="p6" on-change="FnGrammer"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Spelling}}" id="p7" on-change="FnSpelling"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Vocabulary}}" id="p8" on-change="FnVocabulary"></paper-input></td>
-        <td><paper-input  disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Conversation}}" id="p9" on-change="FnConversation"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Recitation}}" id="p10" on-change="FnRecitation"></paper-input></td>
-        <td><paper-input  disabled="{{read}}" required allowed-pattern="[0-9]" value="{{LComprehension}}" id="p11" on-change="FnLComprehension"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Activity}}" id="p12" on-change="FnActivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required  allowed-pattern="^[0-9.a,]+$" value="{{Pronunciation}}" id="p1" on-change="FnPronunciation"></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Fluency}}" id="p2" on-change="FnFluency"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Comprehension}}" id="p3" on-change="FnComprehension"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{CreativeWriting}}" id="p4" on-change="FnCreative"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Handwriting}}" id="p5" on-change="FnHandwriting"></paper-input></td>
+        <td><paper-input disabled="{{read}}"  required allowed-pattern="^[0-9.a,]+$" value="{{Grammer}}" id="p6" on-change="FnGrammer"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Spelling}}" id="p7" on-change="FnSpelling"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Vocabulary}}" id="p8" on-change="FnVocabulary"></paper-input></td>
+        <td><paper-input  disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Conversation}}" id="p9" on-change="FnConversation"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Recitation}}" id="p10" on-change="FnRecitation"></paper-input></td>
+        <td><paper-input  disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{LComprehension}}" id="p11" on-change="FnLComprehension"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Activity}}" id="p12" on-change="FnActivity"></paper-input></td>
         <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> 
         </tr>
       </table>
@@ -116,71 +107,88 @@
      {
        pronunciation=parseFloat(this.Pronunciation).toFixed(2); 
        document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Pronunciation);   
-        
+       if(this.flag==1)
+          this.FnValidateCall();
      },
      FnFluency:function(e)
      {
       fluency=parseFloat(this.Fluency).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Fluency);       
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnComprehension:function(e)
      {
       comprehension=parseFloat(this.Comprehension).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Comprehension);       
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnCreative:function(e)
      {
         creativeWriting=parseFloat(this.CreativeWriting).toFixed(2); 
         document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.CreativeWriting);       
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnHandwriting:function(e)
      {
       handwriting=parseFloat(this.Handwriting).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Handwriting);       
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnGrammer:function(e)
      {
       grammer=parseFloat(this.Grammer).toFixed(2);
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Grammer);        
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnSpelling:function(e)
      {
       spelling=parseFloat(this.Spelling).toFixed(2);        
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Spelling);
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnVocabulary:function(e)
      {
       vocabulary=parseFloat(this.Vocabulary).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Vocabulary);       
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnConversation:function(e)
      {
       conversation=parseFloat(this.Conversation).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Conversation);       
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnRecitation:function(e)
      {
       recitation=parseFloat(this.Recitation).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Recitation);       
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnLComprehension:function(e)
      {
       lcomprehension=parseFloat(this.LComprehension).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.LComprehension);       
-        
+        if(this.flag==1)
+          this.FnValidateCall();
      },
      FnActivity:function(e)
      {
-      if(this.Pronunciation==""||this.Pronunciation==null||this.Fluency==""||this.Fluency==null||this.Comprehension==""||this.Comprehension==null||this.CreativeWriting==""||this.CreativeWriting==null||this.Handwriting==""||this.Handwriting==null||this.Grammer==""||this.Grammer==null||this.Spelling==""||this.Spelling==null||this.Vocabulary==""||this.Vocabulary==null||this.Conversation==""||this.Conversation==null||this.Recitation==""||this.Recitation==null||this.LComprehension==""||this.LComprehension==null){
+      activity=parseFloat(this.Activity).toFixed(2); 
+      document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Activity); 
+      this.FnValidateCall();
+     },
+     FnValidateCall:function(){
+      this.flag=1;
+     if(this.Pronunciation==""||this.Pronunciation==null||this.Fluency==""||this.Fluency==null||this.Comprehension==""||this.Comprehension==null||this.CreativeWriting==""||this.CreativeWriting==null||this.Handwriting==""||this.Handwriting==null||this.Grammer==""||this.Grammer==null||this.Spelling==""||this.Spelling==null||this.Vocabulary==""||this.Vocabulary==null||this.Conversation==""||this.Conversation==null||this.Recitation==""||this.Recitation==null||this.LComprehension==""||this.LComprehension==null){
         this.$.p1.validate();
         this.$.p2.validate();
         this.$.p3.validate();
@@ -196,7 +204,7 @@
       }  
       else{
         localStorage.setItem("curr_sess_absflag",1);
-      activity=parseFloat(this.Activity).toFixed(2);        
+             
         this.readingskills=(parseInt(this.Pronunciation)+parseInt(this.Fluency)+parseInt(this.Comprehension))/3;
         this.writingskills=(parseInt(this.CreativeWriting)+parseInt(this.Handwriting)+parseInt(this.Grammer)+parseInt(this.Spelling)+parseInt(this.Vocabulary))/5;
         this.speakingskills=parseFloat((parseInt(this.Conversation)+parseInt(this.Recitation))/2).toFixed(2);

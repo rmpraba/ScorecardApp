@@ -18,21 +18,7 @@
       #p1{
         width:-5px;
       }
-      #p2{
-        width: 49px;
-      }
-      #p3{
-        width: 50.5px;
-      }
-      .pi1{
-        width: 57px;
-      }
-      .pi2{
-        width: 72px;
-      }
-      .pi3{
-        width: 11px;
-      }
+     
       paper-input{
         text-align: center;
       }
@@ -40,10 +26,10 @@
     <div> 
      <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input required disabled="{{read}}"  allowed-pattern="[0-9]" value="{{enthusiasm}}" id="p1" on-change="FnEnthusiasm"></td>
-        <td><paper-input required disabled="{{read}}"  allowed-pattern="[0-9]" value="{{discipline}}" id="p2" on-change="FnDiscipline"></paper-input></td>
-        <td><paper-input required disabled="{{read}}"  allowed-pattern="[0-9]" value="{{teamspirit}}" id="p3" on-change="FnTeamSpirit"></paper-input></td>
-        <td><paper-input required disabled="{{read}}"  allowed-pattern="[0-9]" value="{{talent}}" id="p4" on-change="FnTalent"></paper-input></td>
+        <td><paper-input required disabled="{{read}}"  allowed-pattern="^[0-9.a,]+$" value="{{enthusiasm}}" id="p1" on-change="FnEnthusiasm"></td>
+        <td><paper-input required disabled="{{read}}"  allowed-pattern="^[0-9.a,]+$" value="{{discipline}}" id="p2" on-change="FnDiscipline"></paper-input></td>
+        <td><paper-input required disabled="{{read}}"  allowed-pattern="^[0-9.a,]+$" value="{{teamspirit}}" id="p3" on-change="FnTeamSpirit"></paper-input></td>
+        <td><paper-input required disabled="{{read}}"  allowed-pattern="^[0-9.a,]+$" value="{{talent}}" id="p4" on-change="FnTalent"></paper-input></td>
          <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> 
         </tr>
       </table> 
@@ -104,19 +90,29 @@
       },
       FnEnthusiasm:function(){
         enthusiasm=parseFloat(this.enthusiasm).toFixed(2); 
-        document.querySelector('cs-games-card').FnToggleDialog(this.enthusiasm);       
+        document.querySelector('cs-games-card').FnToggleDialog(this.enthusiasm);
+        if(this.flag==1)
+          this.FnValidateCall();       
       },
       FnDiscipline:function(){
         discipline=parseFloat(this.discipline).toFixed(2);          
-        document.querySelector('cs-games-card').FnToggleDialog(this.discipline);   
+        document.querySelector('cs-games-card').FnToggleDialog(this.discipline);
+        if(this.flag==1)
+          this.FnValidateCall();   
       },
       FnTeamSpirit:function(){
         teamspirit=parseFloat(this.teamspirit).toFixed(2); 
-        document.querySelector('cs-games-card').FnToggleDialog(this.teamspirit);            
+        document.querySelector('cs-games-card').FnToggleDialog(this.teamspirit); 
+        if(this.flag==1)
+          this.FnValidateCall();           
       },
       FnTalent:function(){
         talent=parseFloat(this.talent).toFixed(2); 
         document.querySelector('cs-games-card').FnToggleDialog(this.talent); 
+        this.FnValidateCall();
+      },
+      FnValidateCall:function(){
+        this.flag=1;
         if(this.enthusiasm==""||this.enthusiasm==null||this.discipline==""||this.discipline==null||this.teamspirit==""||this.teamspirit==null||this.talent==""||this.talent==null){
           this.$.p1.validate();
           this.$.p2.validate();

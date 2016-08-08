@@ -208,10 +208,25 @@ var i;
  }
  return out;
 },
+ eliminateDuplicates1:function(arr) {
+var i;
+  var len=arr.length;
+  var out=[];
+  var obj={};
+
+
+ for (i=0;i<len;i++) {
+ obj[arr[i]]=0;
+ }
+ for (i in obj) {
+ out.push(i);
+ }
+ return out;
+},
     calltermwisereportService:function(){
-       this.termwisereporturl=sessionStorage.getItem("addrinfo")+"/termwisereportreport-service";
+       this.termwisereporturl=sessionStorage.getItem("addrinfo")+"/termwisereport-service";
         var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
-        obj.subject=localStorage.getItem("curr_sess_termname");
+        obj.termname=localStorage.getItem("curr_sess_termname");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.grade=localStorage.getItem("curr_sess_grade");;
@@ -222,7 +237,10 @@ var i;
     },
     termwisereportResponse:function(e){
       var overall=[];
+      var assesmentarr=[];
+      var subarr=[];
        var arr1=e.detail.response.returnval;
+       // alert(JSON.stringify(arr1));
        for(var x=0;x<studarr.length;x++){
         for(var y=0;y<arr1.length;y++)
         {
@@ -235,19 +253,38 @@ var i;
        {
         var markarr=[];
         markarr.push(arr1[i].student_name);
-        // markarr.push(arr1[i].beginner_grade);
+        assesmentarr.push(arr1[i].assesment_id);
+        subarr.push(arr1[i].subject_id);
         markarr.push(arr1[i].grade);
         for(var j=i+1;j<arr1.length;j++)
         {
            if(arr1[i].student_id==arr1[j].student_id)
            {
-            markarr.push(arr1[j].term_grade);
+            markarr.push(arr1[j].grade);
+            assesmentarr.push(arr1[j].assesment_id);
+            subarr.push(arr1[j].subject_id);
             arr1.splice(j,1);
             j--;
            }
         }
        overall.push(markarr);
        }
+       // alert(JSON.stringify(subarr));
+       // alert(JSON.stringify(assesmentarr));
+       var assfinal=this.eliminateDuplicates1(assesmentarr);
+       var subfinal=this.eliminateDuplicates(subarr);
+       var subjectarr=[];
+       subjectarr.push(subfinal[0]);
+       subjectarr.push(subfinal[1]);
+       for(var i=0;i<assfinal.length;i++){
+        for(var j=2;j<subfinal.length;j++)
+        {
+          subjectarr.push(subfinal[j]);
+        }
+       }
+
+        document.querySelector("termwise-report-card").assesmentarr=assfinal;
+        document.querySelector("termwise-report-card").subjectarr=subjectarr;
         document.querySelector("termwise-report-card").itemarr=overall;
       }
     }

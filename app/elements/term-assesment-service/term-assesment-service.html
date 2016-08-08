@@ -284,10 +284,11 @@
     var arr=[];
     var n1=0,n2=0;
     var tempcnt1=0,tempcnt2=0;
-
+    
     Polymer({
       is: 'term-assesment-service',
       ready:function(){ 
+    this.studarrlength=0;
       // localStorage.setItem("curr_sess_fetchstudent",'0');       
       },
       callAcademicService:function(){
@@ -373,6 +374,12 @@
          }
         else
         {
+            this.fetchimportmark(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_termname"),localStorage.getItem("curr_sess_assesment"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_section"),localStorage.getItem("curr_sess_subject")); 
+        
+        }
+      },
+      fetchstudentService:function(){
+        // alert('fetch student.............');
          this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
          var obj={"academicyear":"","schoolid":"","gradename":"","section":"","subject":"","termname":"","assesment":""};
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -382,12 +389,11 @@
           obj.assesment= "Assesment3";
          else
          obj.assesment= localStorage.getItem("curr_sess_assesment");
-         obj.gradename=grade;
-         obj.section=section;
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
          obj.subject= localStorage.getItem("curr_sess_subject");
          this.fetchstudentparam= obj;         
          this.$.fetchstudentajax.generateRequest(); 
-        }
       },
       fetchstudentreportService:function(){
         // alert(localStorage.getItem("curr_sess_termname"));
@@ -437,7 +443,7 @@
         {        
         document.querySelector('cc-evs-onetofour-card').markarr=overall;
         }
-        if(localStorage.getItem("curr_sess_subject")=="English"){        
+        if(localStorage.getItem("curr_sess_subject")=="English"||localStorage.getItem("curr_sess_subject")=="Hindi"||localStorage.getItem("curr_sess_subject")=="Kannada"){        
         document.querySelector('cc-eng-onetofour-card').markarr=overall;
         }
         if(localStorage.getItem("curr_sess_subject")=="GK"){        
@@ -478,16 +484,17 @@
       }
       },
       fetchstudentResponse:function(e){ 
-      // alert(JSON.stringify(e.detail.response.returnval)) ;       
+      alert(JSON.stringify(e.detail.response.returnval)) ;       
         var arr=e.detail.response.returnval;
         if(arr=='imported')
           alert('Marks are already submitted!');
         // localStorage.setItem('curr_sess_fetchstudent','1');
         // alert(arr);
         else{
-        if(arr!='invalid'){               
+        if(arr!='invalid'){ 
+        // alert(this.studarrlength);              
         for(var i=0;i<arr.length;i++){
-          arr[i].serialno=i+1;
+          arr[i].serialno=parseInt(this.studarrlength)+(i+1);
         }
         
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
@@ -544,8 +551,7 @@
         }
         } 
         }
-          // this.fetchstudentreportService();
-        this.fetchimportmark(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_termname"),localStorage.getItem("curr_sess_assesment"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_section"),localStorage.getItem("curr_sess_subject"));      
+         
         }
 
       },
@@ -832,12 +838,15 @@
        var overall=[];
        var a=[];
        var arr1=e.detail.response.returnval;
-       // alert(JSON.stringify(arr1));       
+       // this.studarrlength=arr1.length;
+       alert(JSON.stringify(arr1));
+       if(arr1!="invalid"){       
        for(var i=0;i<arr1.length;i++)
        {
         var markarr=[];
-        var nameobj={"name":"","marks":""}
-        nameobj.name=arr1[i].student_name;       
+        var nameobj={"serialno":"","name":"","marks":""}
+        nameobj.name=arr1[i].student_name; 
+        nameobj.serialno=i+1; 
         var obj={"mark":"","sub_category":"","name":""};
         obj.mark=arr1[i].mark;
         obj.sub_category=arr1[i].sub_category;
@@ -861,7 +870,8 @@
         a=[];
         overall.push(markarr);
        }
-       
+       this.studarrlength=(overall.length);
+       // alert(JSON.stringify(markarr));
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"||localStorage.getItem("curr_sess_importsubject")=="Personality Development"){
         document.querySelector('home-page').setPage('coscholasticassesment','');
         // if(localStorage.getItem("curr_sess_fetchstudent")!='1')
@@ -887,7 +897,7 @@
         document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
         document.querySelector('cc-evs-onetofour-card').importarr=overall;
         }
-        if(localStorage.getItem("curr_sess_importsubject")=="English"){ 
+        if(localStorage.getItem("curr_sess_importsubject")=="English"||localStorage.getItem("curr_sess_importsubject")=="Hindi"||localStorage.getItem("curr_sess_importsubject")=="Kannada"){ 
                
         document.querySelector('term-assesment-sheet-card').setPage('cc-eng-onetofour-card'); 
         document.querySelector('cc-eng-onetofour-card').setDefaultHeaders();      
@@ -936,6 +946,10 @@
         document.querySelector('cs-personalitydevelopment-card').setDefaultHeaders();    
         document.querySelector('cs-personalitydevelopment-card').importarr=overall;
         } 
+        }
+        else
+        this.studarrlength=0;
+        this.fetchstudentService();
     },
     Fnupdatemark:function(sname,scategory,svalue)
     {

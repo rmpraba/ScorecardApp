@@ -27,6 +27,25 @@
       #tb3{
         width:2%
       }
+       .button{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+            margin-left: 45%;
+          }
+      #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
     </style>
     <div>
     <!-- <template is="dom-repeat" items="{{label}}"> -->
@@ -62,8 +81,10 @@
       </center> 
     <!-- </template>      -->
     </div>
+    <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>  
     <!-- <component-service id="componentservice" label="{{label}}"></component-service> -->
   </template>
+
    <script type="text/javascript">
 var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
@@ -83,6 +104,9 @@ var tableToExcel = (function() {
     Polymer({
       is: 'cce-fivetoten-health-card',
       ready:function(){      
+      },
+      FnSave:function(){
+        alert("Mark entry for this section completed!");
       },
       setDefaultHeaders:function(){
         // alert('headers');

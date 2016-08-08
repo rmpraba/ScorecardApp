@@ -21,7 +21,25 @@
       #tb1{
         width:15%
       }
-
+      .button{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+            margin-left: 45%;
+          }
+      #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
     </style>
     <div>    
     <div id="hidetop">
@@ -42,8 +60,9 @@
       <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}"></attendance-item-card>
       </td></tr>
       </template>
-      </table>
-      </center>     
+      </table>      
+      </center> 
+      <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>     
     </div>    
   </template>
   <script>
@@ -55,6 +74,9 @@
       },
       setWorkingDays:function(days){
         this.workingdays=days;
+      },
+      FnSave:function(){
+        alert('Attendance for this section is complete!');
       },
       setDefaultHeaders:function(){   
       this.$.hidetop.hidden=false;     

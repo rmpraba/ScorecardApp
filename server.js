@@ -1338,7 +1338,7 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
 {
   var qur="select * from md_workingdays where ? and ? and ? and ?";
-  // console.log(qur);
+  console.log(qur);
   var academicyear={academic_year:req.query.academicyear};
   var schoolid={school_id:req.query.schoolid};
   var termname={term_name:req.query.termname};

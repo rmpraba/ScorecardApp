@@ -158,7 +158,8 @@
         this.$.fetchworkingdaysajax.generateRequest();
       },
       fetchworkingdaysResponse:function(e){
-        var warr=e.detail.response.returnval;        
+        var warr=e.detail.response.returnval; 
+        // alert(warr[0].no_of_days);       
         document.querySelector('attendance-card').setWorkingDays(warr[0].no_of_days);
       },
       callAcademicService:function(){

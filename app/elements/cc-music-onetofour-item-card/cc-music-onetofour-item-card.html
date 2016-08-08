@@ -90,6 +90,7 @@
       FnChange:function(e){
          // alert(e.target.checked);
         if(e.target.checked==false){
+
           var id='adialog';          
           document.getElementById(id).opened=true;          
           this.read=true;
@@ -116,6 +117,7 @@
         this.$.p2.validate();
       }  
       else{
+        localStorage.setItem("curr_sess_absflag",1);
         melody=parseFloat(this.melody).toFixed(2); 
         this.total=parseInt(this.interest)+parseInt(this.rhythm)+parseInt(this.melody);
         this.reduction=parseFloat(this.total)/3;

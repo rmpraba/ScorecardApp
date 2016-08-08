@@ -121,6 +121,7 @@
        
       }  
       else{
+        localStorage.setItem("curr_sess_absflag",1);
         this.total=parseInt(this.creativity)+parseInt(this.skill)+parseInt(this.interest);
         this.reduction=parseFloat(this.total)/3;
         this.callFetchGrade(); 

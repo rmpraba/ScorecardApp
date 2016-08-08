@@ -119,7 +119,8 @@
         this.$.p2.validate();
         this.$.p3.validate();
         } 
-        else{        
+        else{     
+        localStorage.setItem("curr_sess_absflag",1);   
         this.total=parseInt(this.interest)+parseInt(this.rhythm)+parseInt(this.grace);
         this.reduction=parseFloat(this.total)/3;
         this.callFetchGrade();      

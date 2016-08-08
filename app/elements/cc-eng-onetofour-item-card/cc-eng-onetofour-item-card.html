@@ -195,6 +195,7 @@
         this.$.p12.validate();
       }  
       else{
+        localStorage.setItem("curr_sess_absflag",1);
       activity=parseFloat(this.Activity).toFixed(2);        
         this.readingskills=(parseInt(this.Pronunciation)+parseInt(this.Fluency)+parseInt(this.Comprehension))/3;
         this.writingskills=(parseInt(this.CreativeWriting)+parseInt(this.Handwriting)+parseInt(this.Grammer)+parseInt(this.Spelling)+parseInt(this.Vocabulary))/5;

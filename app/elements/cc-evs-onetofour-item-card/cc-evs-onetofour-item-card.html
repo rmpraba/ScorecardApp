@@ -155,6 +155,7 @@
         
       }  
       else{
+        localStorage.setItem("curr_sess_absflag",1);
         this.es=this.assignment;
         this.ap=(parseInt(this.drawing)+parseInt(this.labeling)+parseInt(this.neatness))/3;
         this.gd=(parseInt(this.knowledge)+parseInt(this.presentation)+parseInt(this.involvement))/3;

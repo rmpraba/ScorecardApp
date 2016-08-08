@@ -123,6 +123,7 @@
           this.$.p3.validate();
         }
         else{
+          localStorage.setItem("curr_sess_absflag",1);
         this.total=parseInt(this.enthusiasm)+parseInt(this.discipline)+parseInt(this.teamspirit)+parseInt(this.talent);
         this.reduction=parseFloat(this.total)/4;
         this.callFetchGrade();      

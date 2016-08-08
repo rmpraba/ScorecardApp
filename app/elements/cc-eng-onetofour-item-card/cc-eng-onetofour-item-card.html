@@ -32,21 +32,27 @@
        <table border="1">
         <tr>
            <td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Pronunciation}}" id="p1" on-change="FnPronunciation"></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Fluency}}" id="p2" on-change="FnFluency"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Comprehension}}" id="p3" on-change="FnComprehension"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{CreativeWriting}}" id="p4" on-change="FnCreative"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Handwriting}}" id="p5" on-change="FnHandwriting"></paper-input></td>
-        <td><paper-input  required allowed-pattern="[0-9]" value="{{Grammer}}" id="p6" on-change="FnGrammer"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Spelling}}" id="p7" on-change="FnSpelling"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Vocabulary}}" id="p8" on-change="FnVocabulary"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Conversation}}" id="p9" on-change="FnConversation"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Recitation}}" id="p10" on-change="FnRecitation"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{LComprehension}}" id="p11" on-change="FnLComprehension"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{Activity}}" id="p12" on-change="FnActivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required  allowed-pattern="[0-9]" value="{{Pronunciation}}" id="p1" on-change="FnPronunciation"></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Fluency}}" id="p2" on-change="FnFluency"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Comprehension}}" id="p3" on-change="FnComprehension"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{CreativeWriting}}" id="p4" on-change="FnCreative"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Handwriting}}" id="p5" on-change="FnHandwriting"></paper-input></td>
+        <td><paper-input disabled="{{read}}"  required allowed-pattern="[0-9]" value="{{Grammer}}" id="p6" on-change="FnGrammer"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Spelling}}" id="p7" on-change="FnSpelling"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Vocabulary}}" id="p8" on-change="FnVocabulary"></paper-input></td>
+        <td><paper-input  disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Conversation}}" id="p9" on-change="FnConversation"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Recitation}}" id="p10" on-change="FnRecitation"></paper-input></td>
+        <td><paper-input  disabled="{{read}}" required allowed-pattern="[0-9]" value="{{LComprehension}}" id="p11" on-change="FnLComprehension"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{Activity}}" id="p12" on-change="FnActivity"></paper-input></td>
+        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> 
         </tr>
       </table>
     </div>
+     <paper-dialog modal id="adialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>Mark as absent?</p>
+      <paper-button on-click="FnYes">Ok</paper-button>  
+      <!-- <paper-button on-click="FnNo">No</paper-button>       -->
+    </paper-dialog>
     <term-assesment-service id="assesmentservice"></term-assesment-service> 
     <iron-ajax        
         method="post"
@@ -69,6 +75,42 @@
 
     Polymer({
       is: 'cc-eng-onetofour-item-card',
+
+ FnYes:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnNo:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnChange:function(e){
+         // alert(e.target.checked);
+        if(e.target.checked==false){
+          var id='adialog';          
+          document.getElementById(id).opened=true;          
+          this.read=true;
+          this.Pronunciation=0;
+          this.Fluency=0;
+          this.Comprehension=0;
+          this.CreativeWriting=0;
+          this.Handwriting=0;
+          this.Grammer=0;
+          this.Spelling=0;
+          this.Vocabulary=0;
+          this.Conversation=0;
+           this.Recitation=0;
+            this.LComprehension=0;
+             this.Activity=0;
+          localStorage.setItem("curr_sess_absflag",0);
+          this.callService();
+        }
+
+      },
+
+
 
      FnPronunciation:function(e)
      {

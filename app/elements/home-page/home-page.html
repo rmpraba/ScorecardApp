@@ -166,6 +166,13 @@
        document.querySelector('teacherhome-card').FnRefresh();
        document.querySelector('beginner-assesment-card').FnRefresh();
     }
+     if(localStorage.getItem("curr_sess_page")=="consolidatedreport")
+    {
+      
+       this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('consolidated-report-card').FnRefresh();
+    }
   },
   FnsetTitle:function(title){
     this.title=title;

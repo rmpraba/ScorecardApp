@@ -35,7 +35,7 @@
       <div class="card">
           <div class="inner">
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
+            <paper-menu class="dropdown-content" id="gradetyp"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
                 <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
               </template>
@@ -43,7 +43,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="sectyp"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
                 <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
               </template>
@@ -51,7 +51,7 @@
           </paper-dropdown-menu>         
 
           <paper-dropdown-menu id="type" label="Choose Report Type" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectType"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="rpttype"  on-iron-select="FnSelectType"  attr-for-selected="value" required>
                 <paper-item value="Subjectwise">Subjectwise</paper-item>
                 <paper-item value="Assesmentwise">Assesmentwise</paper-item>
                 <paper-item value="Termwise">Termwise</paper-item>
@@ -60,7 +60,7 @@
           </paper-dropdown-menu>
 
            <paper-dropdown-menu hidden$="{{hideterm}}" id="term" label="Select Term" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectTerm"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="termtyp"  on-iron-select="FnSelectTerm"  attr-for-selected="value" required>
               <!-- <template is="dom-repeat" items="{{sectionarr}}"> -->
                 <paper-item value="term1">Term1</paper-item>
                 <paper-item value="term2">Term2</paper-item>
@@ -70,7 +70,7 @@
           </paper-dropdown-menu>
 
           <paper-dropdown-menu hidden$="{{hideassesment}}" id="term" label="Select Assesment" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectAssesment"  attr-for-selected="value" required>
+            <paper-menu class="dropdown-content" id="asstyp" on-iron-select="FnSelectAssesment"  attr-for-selected="value" required>
               <!-- <template is="dom-repeat" items="{{sectionarr}}"> -->
                 <paper-item value="assesment1">Assesment1</paper-item>
                 <paper-item value="assesment2">Assesment2</paper-item>
@@ -162,6 +162,21 @@
         if(localStorage.getItem("curr_sess_reporttype")=="Termwise"){
           this.termcard=false;
         }
+      },
+      FnRefresh:function()
+      {
+        this.gradearr=[];
+        this.sectionarr=[];
+         document.querySelector('#gradetyp').selected=-1;
+          document.querySelector('#sectyp').selected=-1;
+        document.querySelector('#rpttype').selected=-1;
+        document.querySelector('#termtyp').selected=-1;
+        document.querySelector('#asstyp').selected=-1;
+         this.assesmentcard=true;  
+        this.termcard=true;  
+        this.consolidatedtermcard=true;
+        this.hideterm=true;
+        this.hideassesment=true;
       }
   });
   })();

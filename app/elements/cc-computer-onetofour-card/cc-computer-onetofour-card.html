@@ -38,6 +38,12 @@
             font-family: Calibri;
             font-size: 17px;
           }
+          paper-item,paper-input{
+            text-align: center;
+          }
+           paper-input,paper-item,td{
+            text-align: center;
+          }
     </style>
     <div class="card">
      <center><h1>{{schoolname}}</h1>
@@ -72,8 +78,9 @@
 
 
 <template is="dom-repeat" items="{{importarr}}" as="m">
-<tr><td></td>
+<tr>
 <template is="dom-repeat" items="{{m}}" as="mark1">
+<td><paper-item value="{{mark1.serialno}}" id="p2">{{mark1.serialno}}</paper-item></td>
 <td><paper-input value="{{mark1.name}}" id="p2"></paper-input></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
 <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
@@ -82,6 +89,7 @@
 </td>
 </template>
 </template>
+<td><paper-checkbox disabled checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>  
 </tr>
 </template>
 
@@ -98,6 +106,12 @@
 <input type="button" id="btn2" onclick="tableToExcel('MarkTable2', 'Mark Report')" value="Export to Excel">
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <paper-dialog modal id="adialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>Mark as absent?</p>
+      <paper-button on-click="FnYes">Ok</paper-button>  
+      <!-- <paper-button on-click="FnNo">No</paper-button>       -->
+    </paper-dialog>
+<validationdialog-card id="validatedialog"></validationdialog-card>
   </template>
    <script type="text/javascript">
 var tableToExcel = (function() {

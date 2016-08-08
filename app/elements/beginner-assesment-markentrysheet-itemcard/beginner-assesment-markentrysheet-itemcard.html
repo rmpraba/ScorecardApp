@@ -28,7 +28,7 @@
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
         <td id="tb1"><paper-input on-change="FnCorrectWords" value="{{correctword}}"></paper-input></td>
         <td id="tb1"><paper-input on-change="FnComprehension" value="{{comprehension}}"></paper-input></td>
-        <td id="tb1"><paper-input on-change="FnScore" value="{{score}}"></paper-input></td>
+        <td id="tb1"><paper-item value="{{score}}">{{score}}</paper-item></td>
         <td id="tb1"><paper-item>{{grade}}</paper-item></td>
         </tr></table>
     </div>
@@ -81,7 +81,7 @@
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
         }
-        this.FnFindGrade(((this.score)*4)/10);   
+        this.FnFindGrade(((this.score)*2)/10);   
       },
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          

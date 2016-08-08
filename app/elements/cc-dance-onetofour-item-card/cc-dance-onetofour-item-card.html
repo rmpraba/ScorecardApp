@@ -41,12 +41,18 @@
    <div>
        <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{interest}}" id="p1" on-change="FnInterest"></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{rhythm}}" id="p2" on-change="FnRhythm"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{grace}}" id="p3" on-change="FnGrace"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{interest}}" id="p1" on-change="FnInterest"></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{rhythm}}" id="p2" on-change="FnRhythm"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{grace}}" id="p3" on-change="FnGrace"></paper-input></td>
+        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>
         </tr>
       </table> 
     </div>
+    <paper-dialog modal id="adialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>Mark as absent?</p>
+      <paper-button on-click="FnYes">Ok</paper-button>  
+      <!-- <paper-button on-click="FnNo">No</paper-button>       -->
+    </paper-dialog>
      <!-- <cocurricular-service id="assesmentservice"></cocurricular-service> -->
     <term-assesment-service id="assesmentservice"></term-assesment-service>     
      <iron-ajax        
@@ -72,6 +78,30 @@
     Polymer({
       is: 'cc-dance-onetofour-item-card',
       ready:function(){       
+      },
+      FnYes:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnNo:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnChange:function(e){
+         // alert(e.target.checked);
+        if(e.target.checked==false){
+          var id='adialog';          
+          document.getElementById(id).opened=true;          
+          this.read=true;
+          this.interest=0;
+          this.rhythm=0;
+          this.grace=0;          
+          localStorage.setItem("curr_sess_absflag",0);
+          this.callService();
+        }
+
       },
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2);        

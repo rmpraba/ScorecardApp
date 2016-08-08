@@ -38,18 +38,24 @@
     <div>
        <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
-        <td><paper-input required allowed-pattern="[0-9]"value="{{assignment}}" id="p1" on-change="FnAssignment"></td>
-        <td><paper-input required allowed-pattern="[0-9]"value="{{drawing}}" id="p1" on-change="FnDrawing"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{labeling}}" id="p2" on-change="FnLabeling"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{neatness}}" id="p3" on-change="FnNeatness"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]"value="{{knowledge}}" id="p4" on-change="FnKnowledge"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]"value="{{presentation}}" id="p5" on-change="FnPresentation"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{involvement}}" id="p6" on-change="FnInvolvement"></paper-input></td>
-        <td><paper-input required allowed-pattern="[0-9]" value="{{activity}}" id="p7" on-change="FnActivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{assignment}}" id="p1" on-change="FnAssignment"></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{drawing}}" id="p1" on-change="FnDrawing"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{labeling}}" id="p2" on-change="FnLabeling"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{neatness}}" id="p3" on-change="FnNeatness"></paper-input></td>
+        <td><paper-input disabled="{{read}}"required allowed-pattern="[0-9]" value="{{knowledge}}" id="p4" on-change="FnKnowledge"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{presentation}}" id="p5" on-change="FnPresentation"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{involvement}}" id="p6" on-change="FnInvolvement"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="[0-9]" value="{{activity}}" id="p7" on-change="FnActivity"></paper-input></td>
+        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>
         </tr>
       </table>
     </div>
 
+    <paper-dialog modal id="adialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>Mark as absent?</p>
+      <paper-button on-click="FnYes">Ok</paper-button>  
+      <!-- <paper-button on-click="FnNo">No</paper-button>       -->
+    </paper-dialog>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <iron-ajax        
         method="post"
@@ -72,6 +78,35 @@
     Polymer({
       is: 'cc-evs-onetofour-item-card',
       ready:function(){       
+      },
+      FnYes:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnNo:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnChange:function(e){
+         // alert(e.target.checked);
+        if(e.target.checked==false){
+          var id='adialog';          
+          document.getElementById(id).opened=true;          
+          this.read=true;
+          this.assignment=0;
+          this.drawing=0;
+          this.labeling=0;
+          this.neatness=0;
+          this.knowledge=0;
+          this.presentation=0;
+          this.involvement=0;
+          this.activity=0;
+          localStorage.setItem("curr_sess_absflag",0);
+          this.callService();
+        }
+
       },
       FnAssignment:function(e){               
         assignment=parseFloat(this.assignment).toFixed(2);

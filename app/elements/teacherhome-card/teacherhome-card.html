@@ -103,6 +103,7 @@
         this.BA=true;
         this.TA=true;
         this.Analysis=true;
+        this.ConsolidatedReport=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -202,7 +203,7 @@
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
           // this.BA=false;
           // this.TA=false;
-          if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal")
+          if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
           this.ConsolidatedReport=false;
           this.Report=false;
           this.GenerateReport=false;

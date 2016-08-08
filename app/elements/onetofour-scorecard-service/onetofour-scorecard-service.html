@@ -177,7 +177,7 @@
         for(var i=0;i<scholasticarr.length;i++){
           var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
           if(scholasticarr[i].subject_name=="English"){
-            obj.category=scholasticarr[i].sub_category;
+            obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
             obj.t1grade=scholasticarr[i].term_cat_grade;
@@ -256,7 +256,18 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;     
             acarr.push(obj);
           }
-          if(scholasticarr[i].subject_name=="music"){
+          if(scholasticarr[i].subject_name=="Music"){
+            obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].term_cat_grade;
+            mdarr.push(obj);
+          }
+          if(scholasticarr[i].subject_name=="Dance"){
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")

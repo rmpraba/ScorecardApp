@@ -126,6 +126,8 @@
     if(localStorage.getItem("curr_sess_page")=="termscholasticcategory")
     {
       this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      
     }
     if(localStorage.getItem("curr_sess_page")=="termassesment")
     {
@@ -172,6 +174,14 @@
        this.page="teacherhomecard";
        document.querySelector('teacherhome-card').FnRefresh();
        document.querySelector('consolidated-report-card').FnRefresh();
+    }
+     if(localStorage.getItem("curr_sess_page")=="cce-onetofour-score-card")
+    {
+      
+       this.page="scorecard";
+       localStorage.setItem("curr_sess_page",this.page);
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('cce-generate-score-card').FnRefresh();
     }
   },
   FnsetTitle:function(title){

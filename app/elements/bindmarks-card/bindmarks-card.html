@@ -1,0 +1,50 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\term-assesment-service/term-assesment-service.html">
+
+<dom-module id="bindmarks-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+    <table>
+      <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mark}}">{{mark}}</paper-item>
+      </paper-input></td>
+      <td hidden$="{{hidepaperinput}}"> 
+      <paper-input hidden class="category" value="{{category}}"></paper-input>
+      <paper-input hidden class="name" value="{{name}}"></paper-input>
+      <paper-input hidden class="name" value="{{subcategory}}"></paper-input>
+      <paper-input allowed-pattern="^[0-9.a,]+$" value="{{mark}}" id="p1" on-change="fetchmark"></paper-input>
+      </td>
+    </div>
+    </table>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'bindmarks-card', 
+      fetchmark:function(e)
+      {
+        // alert(this.name+""+this.category+""+this.subcategory+""+this.mark);
+        this.$.assesmentservice.Fnupdatemark(this.name,this.category,this.subcategory,this.mark);        
+      },
+      FnHide:function(){
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        }
+        else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false; 
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

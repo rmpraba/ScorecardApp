@@ -63,7 +63,8 @@
     var grade=[];
     Polymer({
       is: 'cc-evs-onetofour-item-card',
-      ready:function(){       
+      ready:function(){ 
+      this.flag=0;      
       },
       FnYes:function(){
         var id='adialog';          
@@ -98,53 +99,63 @@
         assignment=parseFloat(this.assignment).toFixed(2);
         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.assignment);
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Environmental sensitivity","Assignment",this.assignment,1);
                
       },
       FnDrawing:function(e){               
         drawing=parseFloat(this.drawing).toFixed(2);  
         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.drawing);
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Drawing",this.drawing,2); 
            
       },
       FnLabeling:function(e){               
         labeling=parseFloat(this.labeling).toFixed(2);
         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.labeling); 
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Labeling",this.labeling,3);
          
       },
       FnNeatness:function(){
         neatness=parseFloat(this.neatness).toFixed(2);
         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.neatness); 
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Neatness",this.neatness,4); 
         
       },
       FnKnowledge:function(){
         knowledge=parseFloat(this.knowledge).toFixed(2); 
         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.knowledge);
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Knowledge",this.knowledge,5);
          
       },
       FnPresentation:function(){
         presentation=parseFloat(this.presentation).toFixed(2); 
          document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.presentation);
          if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Presentation",this.presentation,6);
       },
       FnInvolvement:function(){
         involvement=parseFloat(this.involvement).toFixed(2); 
          document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.involvement);
          if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Involvement",this.involvement,7);
       },
       FnActivity:function(){
         activity=parseFloat(this.activity).toFixed(2); 
         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.activity);
+        if(this.flag==0)
         this.FnValidateCall();
+        if(this.flag==1)
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8);
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -193,13 +204,13 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Environmental sensitivity","Assignment",this.assignment,8);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Drawing",this.drawing,8);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Labeling",this.labeling,8);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Neatness",this.neatness,8); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Knowledge",this.knowledge,8);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Presentation",this.presentation,8);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Involvement",this.involvement,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Environmental sensitivity","Assignment",this.assignment,1);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Drawing",this.drawing,2);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Labeling",this.labeling,3);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Neatness",this.neatness,4); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Knowledge",this.knowledge,5);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Presentation",this.presentation,6);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Group Discussion","Involvement",this.involvement,7);
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8);
         /*this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Environmental sensitivity",this.es,this.es,this.conceptgrade,4);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Activity/Project",this.ap,this.ap,this.apgrade,4);

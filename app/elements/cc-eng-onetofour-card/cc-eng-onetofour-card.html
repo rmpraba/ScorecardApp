@@ -3,6 +3,7 @@
 <link rel="import" href="../cc-eng-onetofour-item-card/cc-eng-onetofour-item-card.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="../validation-dialog/validation-dialog.html">
+<link rel="import" href="../bindmarks-card/bindmarks-card.html">
 <dom-module id="cc-eng-onetofour-card">
 
  <template>
@@ -50,8 +51,8 @@
           }
           #tb5{width:2.5%;
           }
-           paper-input,paper-item,td{
-            text-align: center;
+           paper-item,td,paper-input{
+            text-align:center;
           }
     </style>
    <div class="card">
@@ -75,7 +76,7 @@
       <th id="tb1">Creative Writing</th>
       <th id="tb1">Handwriting</th>
       
-      <th id="tb1">Grammer</th>
+      <th id="tb1">Grammar</th>
       <th id="tb1">Spelling</th>
       <th id="tb1">Vocabulary</th>
 
@@ -121,9 +122,12 @@
 <td><paper-item value="{{mark1.serialno}}" id="p2">{{mark1.serialno}}</paper-item></td>
 <td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+<!-- <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
 </paper-input></td>
 <td hidden$="{{hidepaperinput}}"> <paper-input allowed-pattern="^[0-9.a,]+$" value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
+</td> -->
+<td>
+<bindmarks-card hidepaperitem="{{hidepaperitem}}" hidepaperinput="{{hidepaperinput}}" mark="{{mm.mark}}" category="{{mm.category}}" subcategory="{{mm.sub_category}}" name="{{mm.name}}"></bindmarks-card>
 </td>
 </template>
 </template>
@@ -137,7 +141,7 @@
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
         <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
-        <td colspan="66"><cc-eng-onetofour-item-card studid="{{item.id}}" studname="{{item.student_name}}"></cc-eng-onetofour-item-card></td>
+        <td colspan="66"><cc-eng-onetofour-item-card flag="{{flag}}" studid="{{item.id}}" studname="{{item.student_name}}"></cc-eng-onetofour-item-card></td>
       </tr>
       </template>
 
@@ -175,6 +179,11 @@ var tableToExcel = (function() {
         this.$.btn2.hidden=true;
         this.$.submit.hidden=true;
         this.$.save.hidden=true;
+      },
+        FnResetFlag:function(){
+        // var flag=1;
+        this.flag=1;
+        // document.querySelector('cc-eng-onetofour-item-card').FnResetFlag(flag);
       },
       FnToggleDialog:function(value){
         this.$.validatedialog.FnSetMessage1(value);

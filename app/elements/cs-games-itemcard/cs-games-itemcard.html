@@ -62,7 +62,8 @@
     var grade=[];
     Polymer({
       is: 'cs-games-itemcard',
-      ready:function(){       
+      ready:function(){ 
+      this.flag=0;      
       },
       FnYes:function(){
         var id='adialog';          
@@ -92,24 +93,30 @@
         enthusiasm=parseFloat(this.enthusiasm).toFixed(2); 
         document.querySelector('cs-games-card').FnToggleDialog(this.enthusiasm);
         if(this.flag==1)
-          this.FnValidateCall();       
+          // this.FnValidateCall(); 
+           this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Enthusiasm",this.enthusiasm,1);      
       },
       FnDiscipline:function(){
         discipline=parseFloat(this.discipline).toFixed(2);          
         document.querySelector('cs-games-card').FnToggleDialog(this.discipline);
         if(this.flag==1)
-          this.FnValidateCall();   
+          // this.FnValidateCall(); 
+            this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Discipline",this.discipline,2);   
       },
       FnTeamSpirit:function(){
         teamspirit=parseFloat(this.teamspirit).toFixed(2); 
         document.querySelector('cs-games-card').FnToggleDialog(this.teamspirit); 
         if(this.flag==1)
-          this.FnValidateCall();           
+          // this.FnValidateCall(); 
+            this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Team Spirit",this.teamspirit,3);           
       },
       FnTalent:function(){
         talent=parseFloat(this.talent).toFixed(2); 
         document.querySelector('cs-games-card').FnToggleDialog(this.talent); 
+        if(this.flag==0)
         this.FnValidateCall();
+        if(this.flag==1)
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Talent",this.talent,4);  
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -148,9 +155,9 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Enthusiasm",this.enthusiasm,4);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Discipline",this.discipline,4);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Team Spirit",this.teamspirit,4);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Enthusiasm",this.enthusiasm,1);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Discipline",this.discipline,2);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Team Spirit",this.teamspirit,3);  
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Talent",this.talent,4);  
         // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Games",this.total,this.reduction,this.grade);
       }          

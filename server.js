@@ -634,7 +634,8 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
          category:req.query.category,
          sub_category:req.query.subcategory,
          mark:req.query.mark,
-         flag:req.query.absflag                 
+         flag:req.query.absflag,
+         sub_cat_sequence:req.query.subcatseq                 
   }
   var cond1={school_id:req.query.schoolid};
   var cond2={academic_year:req.query.academicyear};
@@ -1515,7 +1516,7 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
 app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 {
 
-  var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"'";
+  var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' order by sub_cat_sequence";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -1541,7 +1542,7 @@ app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 {
   // console.log('come');
-  var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and sub_category='"+req.query.sub_category+"'and student_id='"+req.query.studid+"'";
+  var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and category='"+req.query.category+"' and sub_category='"+req.query.sub_category+"' and student_id='"+req.query.studid+"'";
       connection.query(qur,
         function(err, rows)
         {

@@ -61,8 +61,9 @@
     var grade=[];
     Polymer({
       is: 'cc-art-craft-onetofour-item-card',
-      ready:function(){       
-      },
+      ready:function(){
+this.flag=0;
+},
        FnYes:function(){
         var id='adialog';          
           document.getElementById(id).opened=false;          
@@ -92,18 +93,24 @@
         creativity=parseFloat(this.creativity).toFixed(2); 
         document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.creativity);        
         if(this.flag==1)
-         this.FnValidateCall(); 
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Creativity",this.creativity,1); 
+         // this.FnValidateCall(); 
       },
       FnSkill:function(){
         skill=parseFloat(this.skill).toFixed(2);
         document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.skill);  
         if(this.flag==1)
-         this.FnValidateCall();      
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Skill",this.skill,2);
+         // this.FnValidateCall();      
       } ,
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2);
         document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.interest);
-        this.FnValidateCall();
+         if(this.flag==0)
+      this.FnValidateCall();
+      if(this.flag==1)
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Interest",this.interest,3)
+        // this.FnValidateCall();
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -143,8 +150,8 @@
         return this.grade;        
       },
       callService:function(){ 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Creativity",this.creativity,3); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Skill",this.skill,3);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Creativity",this.creativity,1); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Skill",this.skill,2);
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Interest",this.interest,3); 
         // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Art&Craft",this.total,this.reduction,this.grade);   
       }

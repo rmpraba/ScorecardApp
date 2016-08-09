@@ -114,48 +114,58 @@
         understanding=parseFloat(this.understanding).toFixed(2);        
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.understanding);
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding,1);
       },
       FnGroupactivity:function(e){               
         groupactivity=parseFloat(this.groupactivity).toFixed(2);  
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.groupactivity); 
         if(this.flag==1)
-          this.FnValidateCall();  
+          // this.FnValidateCall();
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity,2);   
       },
       FnIndividualactivity:function(e){               
         individualactivity=parseFloat(this.individualactivity).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.individualactivity);
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity,3);
       },
       FnMAAccuracy:function(){
         maaccuracy=parseFloat(this.maaccuracy).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maaccuracy);
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy,4); 
       },
       FnMAKnowledge:function(){
         maknowledge=parseFloat(this.maknowledge).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maknowledge);
         if(this.flag==1)
-          this.FnValidateCall(); 
+          // this.FnValidateCall(); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge,5);
       },
       FnTAAccuracy:function(){
         taaccuracy=parseFloat(this.taaccuracy).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.taaccuracy);
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy,6); 
       },
       FnTANeatness:function(){
         taneatness=parseFloat(this.taneatness).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.taneatness);
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness,7);  
       },
       FnActivity:function(){    
         activity=parseFloat(this.activity).toFixed(2); 
-        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.activity);            
+        document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.activity); 
+        if(this.flag==0)           
         this.FnValidateCall();
+        if(this.flag==1)
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8); 
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -206,13 +216,13 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding,8);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity,8); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity,8);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy,8); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge,8);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy,8); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness,8);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding,1);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity,2); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity,3);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy,4); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge,5);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy,6); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness,7);  
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8); 
         /*this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Concept",this.concept,this.concept,this.conceptgrade,5);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Activity/Project",this.activityproject,this.activityproject,this.activityprojectgrade,5);

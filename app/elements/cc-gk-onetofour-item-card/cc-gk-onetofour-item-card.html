@@ -72,7 +72,7 @@
     Polymer({
       is: 'cc-gk-onetofour-item-card',
       ready:function(){
-       
+       this.flag=0;
       },
       FnYes:function(){
         var id='adialog';          
@@ -101,7 +101,10 @@
       {
         activity=parseFloat(this.activity).toFixed(2); 
         document.querySelector('cc-gk-onetofour-card').FnToggleDialog(this.activity);
+        if(this.flag==0)
         this.FnValidateCall();
+        if(this.flag==1)
+         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"General Knowledge","Activity",this.activity,1);
       },
       FnValidateCall:function(){
         this.flag=1;

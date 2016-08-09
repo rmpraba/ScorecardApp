@@ -2,6 +2,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\cs-personalitydevelopment-itemcard/cs-personalitydevelopment-itemcard.html">
 <link rel="import" href="../validation-dialog/validation-dialog.html">
+<link rel="import" href="../bindmarks-card/bindmarks-card.html">
 <dom-module id="cs-personalitydevelopment-card">
   <template>
     <style>
@@ -39,7 +40,7 @@
             font-family: Calibri;
             font-size: 17px;
           }
-           paper-input,paper-item,td{
+           paper-item,td,paper-input{
             text-align:center;
           }
     </style>
@@ -52,15 +53,15 @@
        <tr>
        <th>Sl.No</th>
        <th id="tb2">Student's Names</th>
-       <th id="tb1">Courte ousness(10)</th>
-       <th id="tb1">Confidence(10)</th>
-       <th id="tb1">Care of belongings(10)</th>
-       <th id="tb1">Neatness(10)</th>
-       <th id="tb1">Regularity and Punctuality(10)</th>
-       <th id="tb1">Initiative(10)</th>
-       <th id="tb1">Sharing and Caring(10)</th>
-       <th id="tb1">Respect for other's property(10)</th>
-       <th id="tb1">Self control(10)</th>
+       <th id="tb1">Courte ousness</th>
+       <th id="tb1">Confidence</th>
+       <th id="tb1">Care of belongings</th>
+       <th id="tb1">Neatness</th>
+       <th id="tb1">Regularity and Punctuality</th>
+       <th id="tb1">Initiative</th>
+       <th id="tb1">Sharing and Caring</th>
+       <th id="tb1">Respect for other's property</th>
+       <th id="tb1">Self control</th>
        <th colspan="1" id="tb3"></th>
        </tr>
        </div>
@@ -78,10 +79,13 @@
 <td><paper-item value="{{mark1.serialno}}" id="p2">{{mark1.serialno}}</paper-item></td>
 <td><paper-item value="{{mark1.name}}" id="p2"></paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
+<!-- <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
 </paper-input></td>
-<td hidden$="{{hidepaperinput}}"> <paper-input allowed-pattern="^[0-9.a,]+$" value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
-</paper-input></td>
+<td hidden$="{{hidepaperinput}}"> <paper-input  value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
+</paper-input></td> -->
+<td>
+<bindmarks-card hidepaperitem="{{hidepaperitem}}" hidepaperinput="{{hidepaperinput}}" mark="{{mm.mark}}" category="{{mm.category}}" subcategory="{{mm.sub_category}}" name="{{mm.name}}"></bindmarks-card>
+</td>
 </template>
 </template>
 </tr>
@@ -89,7 +93,7 @@
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
         <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
-        <td colspan="66"><cs-personalitydevelopment-itemcard studid="{{item.id}}" studname="{{item.student_name}}"></cs-personalitydevelopment-itemcard></td>
+        <td colspan="66"><cs-personalitydevelopment-itemcard flag="{{flag}}" studid="{{item.id}}" studname="{{item.student_name}}"></cs-personalitydevelopment-itemcard></td>
       </tr>
       </template>
       </table>    
@@ -123,6 +127,11 @@ var tableToExcel = (function() {
         this.$.btn2.hidden=true;
         this.$.submit.hidden=true;
         this.$.save.hidden=true;
+      },
+        FnResetFlag:function(){
+        // var flag=1;
+        this.flag=1;
+        // document.querySelector('cc-eng-onetofour-item-card').FnResetFlag(flag);
       },
       FnToggleDialog:function(value){
         this.$.validatedialog.FnSetMessage1(value);

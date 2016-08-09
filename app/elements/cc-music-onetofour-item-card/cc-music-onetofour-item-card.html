@@ -60,7 +60,8 @@
     var grade=[];
     Polymer({
       is: 'cc-music-onetofour-item-card',
-      ready:function(){       
+      ready:function(){  
+      this.flag=0     
       },
 
       FnYes:function(){
@@ -93,18 +94,23 @@
         interest=parseFloat(this.interest).toFixed(2); 
         document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.interest); 
         if(this.flag==1)
-          this.FnValidateCall();      
+          // this.FnValidateCall();      
+         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest,1);
       } ,
       FnRhythm:function(){
         rhythm=parseFloat(this.rhythm).toFixed(2);  
         document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.rhythm);      
         if(this.flag==1)
-          this.FnValidateCall();
+          // this.FnValidateCall();
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm,2);  
       },
       FnMelody:function(){
         melody=parseFloat(this.melody).toFixed(2); 
         document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.melody);
+          if(this.flag==0)
           this.FnValidateCall();
+          if(this.flag==1)
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody,3);  
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -143,8 +149,8 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest,3);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm,3);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest,1);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm,2);  
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody,3);  
         // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Music",this.total,this.reduction,this.grade);
       }         

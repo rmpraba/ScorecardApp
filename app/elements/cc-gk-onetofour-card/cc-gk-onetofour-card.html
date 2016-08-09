@@ -1,17 +1,8 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/cc-gk-onetofour-item-card/cc-gk-onetofour-item-card.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="../validation-dialog/validation-dialog.html">
+<link rel="import" href="../bindmarks-card/bindmarks-card.html">
 <dom-module id="cc-gk-onetofour-card">
   <template>
     <style>
@@ -47,8 +38,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
            #tb5{width:2.5%;
           }
-          paper-input,paper-item,td{
-            text-align: center;
+           paper-item,td,paper-input{
+            text-align:center;
           }
     </style>
     <div>
@@ -63,15 +54,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <th>Student's Name</th>
       <th >Activity</th>
    <th colspan="1" id="tb5"></th>
-      </tr>
-     
-      <tr>
-
- 
-      <th></th>
-      <th></th>
-    <th>(10)</th>
-
       </tr>
       </div>
 <template is="dom-repeat" items="{{markarr}}" as="m">
@@ -90,9 +72,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <td><paper-item value="{{mark1.serialno}}" id="p2">{{mark1.serialno}}</paper-item></td>
 <td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
-<td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
-</paper-input></td>
-<td hidden$="{{hidepaperinput}}"> <paper-input allowed-pattern="^[0-9.a,]+$" value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input>
+<td>
+<bindmarks-card hidepaperitem="{{hidepaperitem}}" hidepaperinput="{{hidepaperinput}}" mark="{{mm.mark}}" category="{{mm.category}}" subcategory="{{mm.sub_category}}" name="{{mm.name}}"></bindmarks-card>
 </td>
 </template>
 </template>
@@ -104,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
         <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
-        <td colspan="66"><cc-gk-onetofour-item-card studid="{{item.id}}" studname="{{item.student_name}}"></cc-gk-onetofour-item-card></td>
+        <td colspan="66"><cc-gk-onetofour-item-card flag="{{flag}}" studid="{{item.id}}" studname="{{item.student_name}}"></cc-gk-onetofour-item-card></td>
       </tr>
       </template>
 
@@ -141,6 +122,11 @@ var tableToExcel = (function() {
         this.$.btn2.hidden=true;
         this.$.submit.hidden=true;
         this.$.save.hidden=true;
+      },
+       FnResetFlag:function(){
+        // var flag=1;
+        this.flag=1;
+        // document.querySelector('cc-eng-onetofour-item-card').FnResetFlag(flag);
       },
       FnToggleDialog:function(value){
         this.$.validatedialog.FnSetMessage1(value);

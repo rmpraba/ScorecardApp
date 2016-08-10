@@ -486,8 +486,9 @@
       fetchstudentResponse:function(e){ 
       // alert(JSON.stringify(e.detail.response.returnval)) ;       
         var arr=e.detail.response.returnval;
-        if(arr=='imported')
-          alert('Marks are already submitted!');
+        if(arr=='imported'){
+          // alert('Marks are already submitted!');
+        }
         // localStorage.setItem('curr_sess_fetchstudent','1');
         // alert(arr);
         else{

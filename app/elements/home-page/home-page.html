@@ -122,7 +122,7 @@
    window.location.href="../index.html";   
   },
   FnHome:function(){    
-     //alert(localStorage.getItem("curr_sess_page"));
+     alert(localStorage.getItem("curr_sess_page"));
     if(localStorage.getItem("curr_sess_page")=="termscholasticcategory")
     {
       this.page="teacherhomecard";
@@ -137,7 +137,9 @@
     }
     if(localStorage.getItem("curr_sess_page")=="coscholasticassesment")
     {
-      this.page="termscholasticcategory";
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+        document.querySelector('teacherhome-card').FnRefresh();
       document.querySelector('coscholastic-assesment-card').FnRefresh();
     }
     if(localStorage.getItem("curr_sess_page")=="beginnerassesment")
@@ -149,10 +151,12 @@
     if(localStorage.getItem("curr_sess_page")=="scorecard")
     {
       this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
     }
     if(localStorage.getItem("curr_sess_page")=="approveassesment")
     {
       this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
     }
     if(localStorage.getItem("curr_sess_page")=="beginner-assesment-lang-markentrysheet")
     {

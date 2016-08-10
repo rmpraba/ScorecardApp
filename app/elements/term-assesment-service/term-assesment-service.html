@@ -374,6 +374,10 @@
          }
         else
         {
+            if(localStorage.getItem("curr_sess_subject")=='music'||localStorage.getItem("curr_sess_subject")=='dance'||localStorage.getItem("curr_sess_subject")=='Art&Craft'||localStorage.getItem("curr_sess_subject")=='Games'||localStorage.getItem("curr_sess_subject")=='Personality Development'){
+                this.fetchimportmark(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_termname"),"Assesment3",localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_section"),localStorage.getItem("curr_sess_subject")); 
+            }
+            else
             this.fetchimportmark(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_termname"),localStorage.getItem("curr_sess_assesment"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_section"),localStorage.getItem("curr_sess_subject")); 
         
         }

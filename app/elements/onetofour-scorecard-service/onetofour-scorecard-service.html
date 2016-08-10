@@ -110,7 +110,7 @@
       },
       fetchhealthattendanceinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
+        alert(JSON.stringify(arr));
         
         if(arr.length==1||arr.length==2||arr.length==3){
         document.querySelector('cce-onetofour-score-card').adterm1=arr[0].attendance;
@@ -175,6 +175,7 @@
         var parr=[];
         scholasticarr=e.detail.response.returnval;
         for(var i=0;i<scholasticarr.length;i++){
+          // alert(scholasticarr[i].subject_name);
           var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
           if(scholasticarr[i].subject_name=="English"){
             obj.category=scholasticarr[i].category;
@@ -221,6 +222,7 @@
             hinarr.push(obj);
           }
           if(scholasticarr[i].subject_name=="Computer"){
+            // alert('yes');
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -230,6 +232,7 @@
             if(scholasticarr[i].term_name=="term3")
             obj.t3grade=scholasticarr[i].term_cat_grade;
             comarr.push(obj);
+            // alert(JSON.stringify(comarr));
           }          
           if(scholasticarr[i].subject_name=="GK"){
             obj.category=scholasticarr[i].category;
@@ -256,7 +259,7 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;     
             acarr.push(obj);
           }
-          if(scholasticarr[i].subject_name=="Music"){
+          if(scholasticarr[i].subject_name=="music"){
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -267,7 +270,7 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             mdarr.push(obj);
           }
-          if(scholasticarr[i].subject_name=="Dance"){
+          if(scholasticarr[i].subject_name=="dance"){
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -310,6 +313,15 @@
         }
        }
         // alert(JSON.stringify(parr));
+        // alert(JSON.stringify(acarr));
+        // alert(JSON.stringify(mdarr));
+        // alert(JSON.stringify(gamearr));
+        // alert(JSON.stringify(engarr));
+        // alert(JSON.stringify(matharr));
+        // alert(JSON.stringify(evsarr));
+        // alert(JSON.stringify(hinarr));
+        // alert(JSON.stringify(comarr));
+        // alert(JSON.stringify(gkarr));
         document.querySelector('cce-onetofour-score-card').personalityArray=parr;
         // alert(JSON.stringify(acarr));
         // alert(document.querySelector('cce-onetofour-score-card'));

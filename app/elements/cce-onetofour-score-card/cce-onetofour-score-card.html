@@ -1,13 +1,14 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <dom-module id="cce-onetofour-score-card">
 <style>
   .card{
     width: 800px;
     /*height: 2000px;*/
     border: 1px solid black;
-    margin-left: 15%;
+    margin-left: 1%;
     margin-top: 5%;
   }
   .logo{
@@ -164,6 +165,7 @@
    <tr><th>Weight</th><th>{{t1weight}}</th><th>{{t2weight}}</th><th>{{t3weight}}</th></tr>
    </table>
    <br><br>
+   <paper-button on-click='print'>Print</paper-button>
 </div>
 </template>
 <script>
@@ -177,7 +179,25 @@
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
-      }    
+      },
+       print:function(){
+
+              // this.$.pdf.hidden=true;
+              // this.$.email.hidden=true;
+              // this.$.print.hidden=true;
+
+
+            if (!window.print){
+            alert("You need NS4.x to use this print button!")
+            return
+            }
+            window.print()
+
+
+              // this.$.pdf.hidden=false;
+              // this.$.email.hidden=false;
+              // this.$.print.hidden=false;
+      }
     });
   })();
 </script>

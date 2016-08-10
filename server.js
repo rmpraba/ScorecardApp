@@ -905,13 +905,13 @@ app.post('/scorecardreadyness-service',  urlencodedParser,function (req,res)
 var qur="select * from md_grade_subject_count where no_of_subjects=(( "+
 "select count(distinct(subject_id)) from tr_term_assesment_overall_assesmentmarks where "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
-"grade='"+req.query.grade+"' and section='"+req.query.section+"')/ "+
+"grade='"+req.query.grade+"' and section='"+req.query.section+"')/"+
 "(select count(distinct(term_name)) from tr_term_assesment_overall_assesmentmarks where "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
 "grade='"+req.query.grade+"' and section='"+req.query.section+"')) and school_id='"+req.query.schoolid+"' and "+
 "academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
-
-// console.log(qur);
+console.log('.........................score card-----------------------------------');
+console.log(qur);
 
   connection.query(qur,
     function(err, rows)
@@ -1237,9 +1237,9 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
   var academicyear={academic_year:req.query.academicyear}; 
-  var qur="select * from scorecarddb.tr_term_attendance "+
-  " where student_id='"+req.query.studid+"' "+
-  "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"'";
+  var qur="select * from scorecarddb.tr_term_attendance ta join tr_term_health th on(ta.student_id=th.student_id)"+
+  " where ta.student_id='"+req.query.studid+"' "+
+  "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"'";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)

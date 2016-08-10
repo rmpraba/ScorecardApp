@@ -18,7 +18,7 @@
         height: 2%;
       }
          #tb1{
-        width:25%
+        width:20%
       }
     </style>
     <div class="card">
@@ -26,8 +26,20 @@
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>   
-        <td id="tb1"><paper-input on-change="FnWorkingDays" value="{{workingdays}}"></paper-input></td>  
+        <td id="tb1"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>
+        <td id="tb1">
+          <paper-dropdown-menu id="generic" label="Select comment" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectComment"  attr-for-selected="value" required>  
+              <!-- <template is="dom-repeat" items="{{commentarr}}"> -->
+                <paper-item value="Good">Good</paper-item>
+                <paper-item value="Excellent">Excellent</paper-item>
+                <paper-item value="Poor">Poor</paper-item>
+                <paper-item value="Average">Average</paper-item>                             
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+        </td>   
+        <td id="tb1"><paper-input on-change="FnSpecific" value="{{specificcomment}}"></paper-input></td>  
         </tr>
         </table>
     </div>
@@ -39,16 +51,27 @@
     var lower=[];
     var higher=[];
     var grade=[];
+    var generic;
     Polymer({
       is: 'attendance-item-card',
       ready:function(){
-
+        this.flag=0;
       },     
       FnAttendance:function(e){  
-        this.callService();        
+         if(this.flag==1)
+         this.callService();     
+      },
+      FnSpecific:function(){
+        if(this.flag==1)
+          this.callService();
+      },
+      FnSelectComment:function(e){
+        this.flag=1;
+        generic = e.target.selectedItem.textContent.trim();
+        this.callService();  
       },
       callService:function(){           
-        this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays); 
+        this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays,generic,this.specificcomment); 
       }
     });
   })();

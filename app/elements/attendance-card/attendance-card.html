@@ -47,16 +47,18 @@
       
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Term &nbsp&nbsp{{term}}  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
+      <h4>Total Working Days: {{workingdays}}</h4>
       <table border="1" >    
       <tr>
       <th id="tb1">SNo</th>
       <th id="tb1">Name</th>
       <th id="tb1">Total Attendance</th>
-      <th id="tb1">Total Working Days</th>
+      <th id="tb1">Generic Comment</th>
+      <th id="tb1">Specific Comment</th>
       </tr>  
       </div>
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="4">
+      <tr><td colspan="5">
       <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}"></attendance-item-card>
       </td></tr>
       </template>

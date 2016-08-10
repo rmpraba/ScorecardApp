@@ -346,9 +346,9 @@
       overallinsertcoassesmentResponse:function(e){
         alert(e.detail.response.returnval);
       },
-      callinsertattendanceService:function(studid,studname,attendance,workingdays){
+      callinsertattendanceService:function(studid,studname,attendance,workingdays,generic,specific){
         this.insertattendanceurl=sessionStorage.getItem("addrinfo")+"/insertattendance-service";
-         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","attendance":"","workingdays":""};
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","attendance":"","workingdays":"","generic":"","specific":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.termname=localStorage.getItem("curr_sess_termname");
@@ -359,7 +359,10 @@
          obj.section=localStorage.getItem("curr_sess_section");
          obj.attendance=attendance;
          obj.workingdays=workingdays;         
-         this.insertattendanceparam= obj;        
+         obj.generic=generic;
+         obj.specific=specific;
+         this.insertattendanceparam= obj; 
+         alert(JSON.stringify(obj));       
          this.$.insertattendanceajax.generateRequest();
       },
       insertattendanceResponse:function(e){

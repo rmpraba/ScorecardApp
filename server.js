@@ -1145,9 +1145,20 @@ app.post('/insertattendance-service',  urlencodedParser,function (req,res)
          student_id:req.query.studentid,
          student_name:req.query.studentname,         
          attendance:req.query.attendance,
-         working_days:req.query.workingdays                 
-  }  
+         working_days:req.query.workingdays,
+         generic:req.query.generic,
+         speccomment:req.query.specific                 
+  } 
+  var qur="SELECT * FROM tr_term_attendance where school_id='"+req.query.schoolid+"' and "+
+  "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and class_id='"+req.query.classid+"' and "+
+  "student_id='"+req.query.studentid+"'";
 
+  console.log(qur);
+  
+connection.query(qur,
+function(err, rows)
+{
+  if(rows.length==0){ 
   connection.query("INSERT INTO tr_term_attendance SET ?",[response],
     function(err, rows)
     {
@@ -1157,11 +1168,30 @@ app.post('/insertattendance-service',  urlencodedParser,function (req,res)
     }
     else
     {
-      console.log(err);
+      console.log("error in insert......"+err);
       res.status(200).json({'returnval': 'fail'});
     }  
 
   });
+}
+else
+{
+  connection.query("UPDATE tr_term_attendance SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log("error in update......"+err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+}
+});
 });
 
 //term health

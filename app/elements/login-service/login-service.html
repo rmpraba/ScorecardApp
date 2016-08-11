@@ -86,9 +86,10 @@
       {
         username=uname;
         this.loginurl=sessionStorage.getItem("addrinfo")+"/login-card";
-        var obj={"username":"","password":""};
+        var obj={"username":"","password":"","schoolid":""};
         obj.username=uname;
         obj.password=pass;
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         this.loginparam=obj;
         this.$.loginajax.generateRequest();
       },
@@ -105,10 +106,11 @@
 
 rolecheckResponse:function(e)
 {
-//alert(JSON.stringify(e.detail.response.returnval));
+// alert(JSON.stringify(e.detail.response.returnval));
 var rolearr=e.detail.response.returnval;
 document.querySelector('login-card').rolearr=rolearr;
-
+document.querySelector('login-card').schname=rolearr[0].name;
+sessionStorage.setItem("curr_sess_loggedschoolid",rolearr[0].school_id);
 },
 roletype:function(rolename,roleid)
 {
@@ -139,6 +141,8 @@ sessionStorage.setItem("curr_sess_loggedroleid",roleid);
         document.querySelector('home-page').setPage('teacherhomecard',''); 
         document.querySelector('home-page').FnsetTitle(name);
         document.querySelector('teacherhome-card').FnHideView();
+
+
         }           
         else 
         {

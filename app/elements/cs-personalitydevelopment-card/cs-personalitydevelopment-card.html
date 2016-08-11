@@ -74,10 +74,10 @@
 </template>
 
 <template is="dom-repeat" items="{{importarr}}" as="m">
-<tr><td></td>
+<tr>
 <template is="dom-repeat" items="{{m}}" as="mark1">
 <td><paper-item value="{{mark1.serialno}}" id="p2">{{mark1.serialno}}</paper-item></td>
-<td><paper-item value="{{mark1.name}}" id="p2"></paper-item></td>
+<td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
 <!-- <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
 </paper-input></td>

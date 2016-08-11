@@ -83,18 +83,24 @@
         gradename = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_grade",gradename);
         this.$.assesmentservice.callSectionService(gradename);
+        if(this.flag==1)
+          this.callService();
       },
       FnSelectSection:function(e){
         section = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",section);
         this.$.termassesmentservice.callSubjectService(gradename,section);       
+        if(this.flag==1)
+          this.callService();
       },
       FnSelectSubject:function(e){
+        this.flag=1;
         subject = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_subject",subject);              
         this.callService();
       },
       callService:function(){
+        this.FnRefresh();
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
         if(subject=="Health"){        
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card'); 
@@ -164,7 +170,7 @@
 
          var subj=localStorage.getItem("curr_sess_subject");
          var grad=localStorage.getItem("curr_sess_grade");
-
+         this.flag=0;
       if(subj=="Health"){         
         document.querySelector('cce-fivetoten-health-card').FnRefresh(); 
         }

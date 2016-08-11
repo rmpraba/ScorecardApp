@@ -159,6 +159,7 @@
         this.callService();       
       },
       FnSelectAssesment:function(e){
+        // document.querySelector('#subjectnam1').selected=-1;
         assesment = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_assesment",assesment);
         if(this.flag==1)
@@ -171,11 +172,19 @@
           this.callService();
       },
       callService:function(){
+        // document.querySelector('#gradenam1').selected=-1;
+        // document.querySelector('#sectionnam1').selected=-1;
+        // document.querySelector('#assesmentcat1').selected=-1;
+        // document.querySelector('#assestype1').selected=-1;
+        // document.querySelector('#subjectnam1').selected=-1;
+        // alert('calling....');
+        this.FnRefresh();
         if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4")
         {
 
         if(subject=="Mathematics")
-        {  
+        {
+        // alert('yes');  
            document.querySelector('cc-maths-onetofour-card').studarr=[];     
            this.$.assesmentservice.callFetchStudentInfo(gradename,section);                   
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');

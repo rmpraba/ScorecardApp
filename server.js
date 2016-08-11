@@ -46,7 +46,11 @@ app.post('/rolecheck-service',  urlencodedParser,function (req, res)
   var id={"id":req.query.username};
   var username={"id":req.query.username};
   var password={"password":req.query.password};
-  connection.query('select id,role_name from md_role where id in (select role_id from md_employee where ? and ? )',[id,password],
+  // connection.query('select id,role_name from md_role where id in (select role_id from md_employee where ? and ? )',[id,password],
+  var qur="select mr.id,mr.role_name,(select name from md_school where id=me.school_id) as name,me.school_id "+
+  "from md_role mr join md_employee me on(mr.id=me.role_id) "+
+  "where me.id='"+req.query.username+"' and password='"+req.query.password+"'";
+  connection.query(qur,
     function(err, rows)
     {
     if(!err)
@@ -74,7 +78,8 @@ app.post('/login-card',  urlencodedParser,function (req, res)
   var id={"id":req.query.username};
   var username={"id":req.query.username};
   var password={"password":req.query.password};
-  connection.query('SELECT  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr  from md_employee where ? and ? ',[id,username,password],
+  var schoolid={school_id:req.query.schoolid};
+  connection.query('SELECT  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr  from md_employee where ? and ? and ? and ?',[id,username,password,schoolid],
     function(err, rows)
     {
     if(!err)

@@ -128,6 +128,7 @@
           this.callService();       
       },*/
       FnSelectGrade:function(e){
+        document.querySelector('#subjectnam1').selected=-1;
         gradename = e.target.selectedItem.textContent.trim();
         // alert(gradename);
         if(gradename=="Grade-1"||gradename=="Grade-2"||gradename=="Grade-3"||gradename=="Grade-4"){

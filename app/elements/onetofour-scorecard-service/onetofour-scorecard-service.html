@@ -210,7 +210,7 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             evsarr.push(obj);
           }
-          if(scholasticarr[i].subject_name=="Hindi"){
+          if((scholasticarr[i].subject_name).trim()=="Hindi"){
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -221,7 +221,18 @@
             obj.t3grade=scholasticarr[i].term_cat_grade;
             hinarr.push(obj);
           }
-          if(scholasticarr[i].subject_name=="Computer"){
+           if((scholasticarr[i].subject_name).trim()=="Kannada"){
+            obj.category=scholasticarr[i].category;
+            obj.comment=scholasticarr[i].description;
+            if(scholasticarr[i].term_name=="term1")
+            obj.t1grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term2")
+            obj.t2grade=scholasticarr[i].term_cat_grade;
+            if(scholasticarr[i].term_name=="term3")
+            obj.t3grade=scholasticarr[i].term_cat_grade;
+            hinarr.push(obj);
+          }
+          if((scholasticarr[i].subject_name).trim()=="Computer"){
             // alert('yes');
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
@@ -333,6 +344,9 @@
         document.querySelector('cce-onetofour-score-card').mathArray=matharr;
         document.querySelector('cce-onetofour-score-card').evsArray=evsarr;
         document.querySelector('cce-onetofour-score-card').secArray=hinarr;
+        // alert(JSON.stringify(comarr));
+
+        // document.querySelector('cce-onetofour-score-card').hinArray=hinarr;
         document.querySelector('cce-onetofour-score-card').csArray=comarr;
         document.querySelector('cce-onetofour-score-card').gkArray=gkarr;
       },

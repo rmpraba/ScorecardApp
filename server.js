@@ -103,6 +103,35 @@ app.post('/login-card',  urlencodedParser,function (req, res)
   });
 });
 
+//changing teachers password
+app.post('/changepassword-service',  urlencodedParser,function (req, res)
+{
+  
+  var username={"id":req.query.username};
+  var oldpassword={"password":req.query.oldpassword};
+  var newpassword={"password":req.query.newpassword};
+  connection.query('UPDATE md_employee SET ? WHERE ? and ?',[newpassword,username,oldpassword],
+    function(err,result)
+    {
+      console.log('..............result..............');
+      console.log(result.affectedRows);
+    if(!err)
+    {  
+      if(result.affectedRows>0)  
+      res.status(200).json({'returnval': 'Password changed!'});
+    
+    else
+    {
+      console.log(err);     
+      res.status(200).json({'returnval': 'Password not changed!'});
+    }
+    }
+    else
+      console.log(err);
+    
+  });
+});
+
 
 //Function to select the assesment type id
 app.post('/assesmenttype-service',  urlencodedParser,function (req, res)
@@ -999,10 +1028,10 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
 "(select grade_id from mp_grade_section where class_id=s.class_id)) grade,"+
 "(select section_name from md_section where section_id="+
 "(select section_id from mp_grade_section where class_id=s.class_id)) section,"+
-"s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.email,p.mobile,p.address1 "+
+"s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1 "+
 "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
 
-// console.log(qur);
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -1425,7 +1454,8 @@ qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result
 "and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmentid+"') AS count1, "+
 "(select count(*) from tr_student_to_subject where school_id='"+req.query.schoolid+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
-"section_id from md_section where section_name='"+req.query.sectionname+"' and subject_name='"+req.query.subject+"' and school_id='"+req.query.schoolid+"'))) AS count2)  AS counts";
+"section_id from md_section where section_name='"+req.query.sectionname+"') and subject_id="+
+"(SELECT subject_id from md_subject where subject_name='"+req.query.subject+"') and school_id='"+req.query.schoolid+"')) AS count2)  AS counts";
 }
 else{
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+

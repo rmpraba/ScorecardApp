@@ -1,7 +1,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\..\bower_components/paper-fab/paper-fab.html">
 <dom-module id="cce-onetofour-score-card">
 <style>
   .card{
@@ -55,128 +55,227 @@
   @media print {
     footer {page-break-after: always;}
   }
+ .health:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .health:nth-child(even) {
+  background-color: #d98cd9;
+  }
+ .pd:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .pd:nth-child(even) {
+  background-color: #dfff80;
+  }
+ .game:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .game:nth-child(even) {
+  background-color: #b3d1ff;
+  }
+ .eng:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .eng:nth-child(even) {
+  background-color: #b3d1ff;
+  }
+ .math:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .math:nth-child(even) {
+  background-color: #dfff80;
+  }
+ .evs:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .evs:nth-child(even) {
+  background-color: #ffd699;
+  }
+ .hin:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .hin:nth-child(even) {
+  background-color: #d98cd9;
+  }
+ .comp:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .comp:nth-child(even) {
+  background-color: #b3d1ff;
+  }
+ .gk:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .gk:nth-child(even) {
+  background-color: #ffd699;
+  }
+ .art:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .art:nth-child(even) {
+  background-color: #dfff80;
+  }
+ .music:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .music:nth-child(even) {
+  background-color: #d98cd9;
+  }
+  .saph{
+    margin-left: 3%;
+  }
+  .circle
+    {
+    width:40px;
+    height:40px;
+    border-radius:50px;
+    font-size:15px;
+    /*color:#fff;*/
+    line-height:40px;
+    text-align:center;
+    background:#d6d6c2;
+    }
+    .fab{
+    width:70px;
+    height:45px;
+    border-radius:95px;
+    font-size:15px;
+    /*color:#fff;*/
+    line-height:50px;
+    text-align:center;
+    background:#f5f5ef; 
+    }
 </style>
 <template>
 <div class="card">
   <table class="logo">
       <tr><th><img src="../../images/zeesouth.png" height="100px" width="100px"></img></th>
       <th>
-        <h1 id="pr">MountLitera</h1>
+        <!--<h1 id="pr">MountLitera</h1>
         <h1 id="pr"> Zee School</h1>
-        <h4>Great School.Great Future</h4>
+        <h4>Great School.Great Future</h4>-->
+        <img src="../../images/mount.png"></img>
         <p>{{schoolname}}</p>
         <h1>ACHIEVEMENT RECORD({{academicyear}})</h1>
       </th>
       <th><img src="../../images/zee.gif" height="100px" width="100px"></img></th></tr>
   </table>
-  <br><br>
-  <table border='1' class="studentinfo" style="border-collapse: collapse;">
+  <br>
+  <div class="saph">
+    <img src="../../images/saph.jpg" height="160px" width="760px"></img>
+  </div>
+  <table class="studentinfo" style="border-collapse: collapse;">
       <tr>
       <th align="left">Student's Name: </th>
-      <th align="left" colspan="3">{{studentname}}</th>
+      <th align="left" colspan="3" style="background-color: white;">{{studentname}}</th>
       </tr>
+      <tr style="height: 10px;"><th colspan="4"></th></tr>
       <tr>
       <th align="left">Parent's Name: </th>
-      <th align="left" colspan="3">{{parentname}}</th>
+      <th align="left" colspan="3" style="background-color: white;">{{parentname}}</th>
       </tr>
+      <tr style="height: 10px;"><th colspan="4"></th></tr>
       <tr>
       <th align="left">Class: </th>
-      <th align="left">{{grade}}&nbsp;&nbsp;{{section}}</th>
+      <th align="left" style="background-color: white;">{{grade}}&nbsp;&nbsp;{{section}}</th>
       <th align="left">Admission No: </th>
-      <th align="left">{{enrno}}</th>
-      </tr>
+      <th align="left" style="background-color: white;">{{enrno}}</th>
+      </tr>      
   </table>
 
   <br><br>
 
-  <table border="1" style="border-collapse: collapse;" class="attendance">
+  <table style="border-collapse: collapse;" class="attendance">
       <tr><th style="width: 25%;">Attendance</th><th colspan="2" style="width: 25%;">Term1</th><th colspan="2" style="width: 25%;">Term2</th><th colspan="2" style="width: 25%;">Term3</th></tr>
-      <tr><td style="width: 25%;">Total Attended Days</td><td align="right" style="width: 13%;">{{adterm1}}</td><td rowspan="2" align="right">{{pterm1}}</td><td align="right" style="width: 13%;">{{adterm2}}</td><td rowspan="2" align="right">{{pterm2}}</td><td align="right" style="width: 13%;">{{adterm3}}</td><td rowspan="2" align="right">{{pterm3}}</td></tr>
+      <tr style="height: 10px;"><th colspan="7"></th></tr>
+      <tr><td style="width: 25%;">Total Attended Days</td><td align="right" style="width: 13%;">{{adterm1}}</td><td rowspan="2" align="right"><div class="fab">{{pterm1}}</div></td><td align="right" style="width: 13%;">{{adterm2}}</td><td rowspan="2" align="right"><div class="fab">{{pterm2}}</div></td><td align="right" style="width: 13%;">{{adterm3}}</td><td rowspan="2" align="right"><div class="fab">{{pterm3}}</div></td></tr>
+      <tr style="height: 10px;"><th colspan="7"></th></tr>
       <tr><td style="width: 25%;">Total Working Days</td><td align="right" style="width: 13%;">{{wdterm1}}</td><td align="right" style="width: 13%;">{{wdterm2}}</td><td align="right" style="width: 13%;">{{wdterm3}}</td></tr>
   </table>
   <br><br><br>
   <table  class="general">
-      <tr><th style="width: 25%;">General Feedback: </th><th>{{generalfeedback}}</th></tr>
+      <tr><th style="width: 25%;">General Feedback: </th><th style="background-color: white;">{{generalfeedback}}</th></tr>
   </table>
 
-  <br><br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br>
 
   <table  class="signature">
     <tr><th>--------------------------</th><th></th><th>---------------------------</th><th></th><th>---------------------------</th><th></th></tr>
     <tr><th>Class Teacher</th><th></th><th>Principal</th><th></th><th>Parent</th><th></th></tr>
   </table>
 
-  <br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br><br><br>
 
 
   <table class="subject">    
-    <tr style="background: blue;"><th style="width: 35%;">ENGLISH</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #4d94ff;"><th style="width: 35%;">ENGLISH</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{engArray}}" as="item">
-     <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+     <tr class="eng"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">
+     <div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background: green;"><th style="width: 35%;" >MATHEMATICS</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #86b300;"><th style="width: 35%;" >MATHEMATICS</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{mathArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="math"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background: orange;"><th style="width: 35%;">EVS</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #ffad33;"><th style="width: 35%;">EVS</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{evsArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="evs"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background: purple;"><th style="width: 35%;">HINDI/KANADA(II Language)</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #ac39ac;"><th style="width: 35%;">HINDI/KANADA(II Language)</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{secArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="hin"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background: blue;"><th style="width: 35%;">COMPUTER SCIENCE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #4d94ff;"><th style="width: 35%;">COMPUTER SCIENCE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{csArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="comp"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background: orange;"><th style="width: 35%;">GENERAL KNOWLEDGE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #ac39ac;"><th style="width: 35%;">GENERAL KNOWLEDGE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{gkArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="gk"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table> 
 
   <table class="subject">    
-    <tr style="background: green;"><th style="width: 35%;">ART/CRAFT</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #86b300;"><th style="width: 35%;">ART/CRAFT</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{acArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="art"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background: purple;"><th style="width: 35%;">MUSIC/DANCE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background:  #ac39ac;"><th style="width: 35%;">MUSIC/DANCE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{mdArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="music"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background: blue;"><th style="width: 35%;">GAMES</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #4d94ff;"><th style="width: 35%;">GAMES</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{gamesArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="game"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
 
    <table class="subject">    
-    <tr style="background: green;"><th style="width: 35%;">PERSONALITY DEVELOPMENT</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background:  #86b300;"><th style="width: 35%;">PERSONALITY DEVELOPMENT</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
     <template is="dom-repeat" items="{{personalityArray}}" as="item">
-    <tr><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">{{item.t1grade}}</th><th style="width: 5%;">{{item.t2grade}}</th><th style="width: 5%;">{{item.t3grade}}</th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="pd"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
    </table>
    <br><br><br>
 
    <table class="health" border="1" style="border-collapse: collapse;;">  
-   <tr style="background: purple;"><th>Health</th><th>T1</th><th>T2</th><th>T3</th></tr>
-   <tr><th>Height</th><th>{{t1height}}</th><th>{{t2height}}</th><th>{{t3height}}</th></tr>
-   <tr><th>Weight</th><th>{{t1weight}}</th><th>{{t2weight}}</th><th>{{t3weight}}</th></tr>
+   <tr style="background: #ac39ac;"><th>Health</th><th>T1</th><th>T2</th><th>T3</th></tr>
+   <tr class="health"><th>Height</th><th>{{t1height}}</th><th>{{t2height}}</th><th>{{t3height}}</th></tr>
+   <tr class="health"><th>Weight</th><th>{{t1weight}}</th><th>{{t2weight}}</th><th>{{t3weight}}</th></tr>
    </table>
    <br><br>
    

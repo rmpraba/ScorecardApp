@@ -51,6 +51,18 @@
         >
 
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="changepasswordajax"
+        url="{{changepasswordurl}}"
+        params="{{changepasswordparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="changepasswordResponse"
+        debounce-duration="300"
+        >
+
+  </iron-ajax>
   <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
   </template>
 
@@ -59,12 +71,22 @@
    
     Polymer({
       is: "login-service",
-
+     changepassword:function(username,oldpassword,newpassword){
+      this.changepasswordurl=sessionStorage.getItem("addrinfo")+"/changepassword-service";
+      var obj={"username":"","oldpassword":"","newpassword":""}
+      obj.username=username;
+      obj.oldpassword=oldpassword;
+      obj.newpassword=newpassword;
+      this.changepasswordparam=obj;
+      this.$.changepasswordajax.generateRequest();
+     },
+     changepasswordResponse:function(e){
+      alert(e.detail.response.returnval);
+     },
      addressResponse:function(e)
       {
         var addr=e.detail.response.address;
         sessionStorage.setItem("addrinfo",addr);
-
       },
       checkschool:function(uname)
       {
@@ -104,21 +126,19 @@
         this.$.rolecheckajax.generateRequest();
       },
 
-rolecheckResponse:function(e)
-{
-// alert(JSON.stringify(e.detail.response.returnval));
-var rolearr=e.detail.response.returnval;
-document.querySelector('login-card').rolearr=rolearr;
-document.querySelector('login-card').schname=rolearr[0].name;
-sessionStorage.setItem("curr_sess_loggedschoolid",rolearr[0].school_id);
-},
-roletype:function(rolename,roleid)
-{
-sessionStorage.setItem("curr_sess_loggedrole",rolename);
-sessionStorage.setItem("curr_sess_loggedroleid",roleid);
-},
-
-
+      rolecheckResponse:function(e)
+      {
+      // alert(JSON.stringify(e.detail.response.returnval));
+      var rolearr=e.detail.response.returnval;
+      document.querySelector('login-card').rolearr=rolearr;
+      document.querySelector('login-card').schname=rolearr[0].name;
+      sessionStorage.setItem("curr_sess_loggedschoolid",rolearr[0].school_id);
+      },
+      roletype:function(rolename,roleid)
+      {
+      sessionStorage.setItem("curr_sess_loggedrole",rolename);
+      sessionStorage.setItem("curr_sess_loggedroleid",roleid);
+      },
      //loginResponse from the loginajax
       loginResponse:function(e)
       {
@@ -141,8 +161,6 @@ sessionStorage.setItem("curr_sess_loggedroleid",roleid);
         document.querySelector('home-page').setPage('teacherhomecard',''); 
         document.querySelector('home-page').FnsetTitle(name);
         document.querySelector('teacherhome-card').FnHideView();
-
-
         }           
         else 
         {

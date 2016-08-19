@@ -841,7 +841,7 @@
        var overall=[];
        var a=[];
        var arr1=e.detail.response.returnval;
-       // alert(JSON.stringify(arr1));
+       //alert(JSON.stringify(arr1));
        if(arr1!="invalid"){   
        for(var i=0;i<arr1.length;i++)
        {
@@ -849,21 +849,23 @@
         var nameobj={"serialno":"","name":"","marks":""};
         nameobj.name=arr1[i].student_name; 
         nameobj.serialno=i+1; 
-        var obj={"mark":"","category":"","sub_category":"","name":""};
+        var obj={"mark":"","category":"","sub_category":"","name":"","subseq":""};
         obj.mark=arr1[i].mark;
         obj.sub_category=arr1[i].sub_category;
         obj.category=arr1[i].category;
         obj.name=arr1[i].student_id;
+        obj.subseq=arr1[i].sub_cat_sequence;
         a.push(obj);
         for(var j=i+1;j<arr1.length;j++)
         {
            if(arr1[i].student_id==arr1[j].student_id)
            {
-             var obj1={"mark":"","category":"","sub_category":"","name":""}
+             var obj1={"mark":"","category":"","sub_category":"","name":"","subseq":""}
              obj1.mark=arr1[j].mark;
              obj1.category=arr1[j].category;
              obj1.sub_category=arr1[j].sub_category;
              obj1.name=arr1[j].student_id;
+             obj1.subseq=arr1[j].sub_cat_sequence;
              a.push(obj1);
              arr1.splice(j,1);
              j--;
@@ -874,6 +876,7 @@
         a=[];
         overall.push(markarr);
        }
+       //alert(JSON.stringify(overall));
        this.studarrlength=(overall.length);       
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"||localStorage.getItem("curr_sess_importsubject")=="Personality Development"){
         document.querySelector('home-page').setPage('coscholasticassesment','');

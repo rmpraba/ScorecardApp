@@ -96,6 +96,7 @@
         this.flag=1;
         if(this.activity==""||this.activity==null){
           this.$.p1.validate();
+           this.callFetchGrade();
         }
         else{
           localStorage.setItem("curr_sess_absflag",1);

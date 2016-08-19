@@ -1595,8 +1595,8 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
 app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 {
 
-  var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' order by sub_cat_sequence";
-  // console.log(qur);
+  var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' order by CAST(sub_cat_sequence AS UNSIGNED)";
+  //console.log(qur);
   connection.query(qur,
     function(err, rows)
     {

@@ -130,7 +130,7 @@
       FnSelfcontrol:function(){
         Selfcontrol=this.FnFindGrade(this.Selfcontrol); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Selfcontrol); 
-          if(this.flag==0)
+          // if(this.flag==0)
             this.FnValidateCall();
             if(this.flag==1)
              this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",Selfcontrol,9);

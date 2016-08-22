@@ -106,7 +106,7 @@ this.flag=0;
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2);
         document.querySelector('cc-art-craft-onetofour-card').FnToggleDialog(this.interest);
-         if(this.flag==0)
+         // if(this.flag==0)
       this.FnValidateCall();
       if(this.flag==1)
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Art&Craft","Interest",this.interest,3)

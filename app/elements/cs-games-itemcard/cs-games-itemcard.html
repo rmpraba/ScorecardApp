@@ -113,7 +113,7 @@
       FnTalent:function(){
         talent=parseFloat(this.talent).toFixed(2); 
         document.querySelector('cs-games-card').FnToggleDialog(this.talent); 
-        if(this.flag==0)
+        // if(this.flag==0)
         this.FnValidateCall();
         if(this.flag==1)
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Talent",this.talent,4);  

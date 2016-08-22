@@ -152,7 +152,7 @@
       FnActivity:function(){
         activity=parseFloat(this.activity).toFixed(2); 
         document.querySelector('cc-evs-onetofour-card').FnToggleDialog(this.activity);
-        if(this.flag==0)
+        // if(this.flag==0)
         this.FnValidateCall();
         if(this.flag==1)
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8);

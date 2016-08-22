@@ -94,9 +94,9 @@ this.flag=0;
           this.Spelling=0;
           this.Vocabulary=0;
           this.Conversation=0;
-           this.Recitation=0;
-            this.LComprehension=0;
-             this.Activity=0;
+          this.Recitation=0;
+          this.LComprehension=0;
+          this.Activity=0;
           localStorage.setItem("curr_sess_absflag",0);
           this.callService();
         }
@@ -196,16 +196,22 @@ this.flag=0;
      },
      FnActivity:function(e)
      {
+      // alert(this.flag);
       activity=parseFloat(this.Activity).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Activity); 
-      if(this.flag==0)
+      // if(this.flag==0)
       this.FnValidateCall();
       if(this.flag==1)
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity,12);
+      this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity,12);
      },
      FnValidateCall:function(){
       this.flag=1;
-     if(this.Pronunciation==""||this.Pronunciation==null||this.Fluency==""||this.Fluency==null||this.Comprehension==""||this.Comprehension==null||this.CreativeWriting==""||this.CreativeWriting==null||this.Handwriting==""||this.Handwriting==null||this.Grammer==""||this.Grammer==null||this.Spelling==""||this.Spelling==null||this.Vocabulary==""||this.Vocabulary==null||this.Conversation==""||this.Conversation==null||this.Recitation==""||this.Recitation==null||this.LComprehension==""||this.LComprehension==null){
+      // alert(this.Pronunciation+" "+this.Fluency+" "+this.Comprehension);
+      // alert(this.CreativeWriting+" "+this.Handwriting+" "+this.Grammer);
+      // alert(this.Spelling+" "+this.Vocabulary+" "+this.Conversation);
+      // alert(this.Recitation+" "+this.LComprehension+" "+this.activity);
+     if(this.Pronunciation==""||this.Pronunciation==null||this.Fluency==""||this.Fluency==null||this.Comprehension==""||this.Comprehension==null||this.CreativeWriting==""||this.CreativeWriting==null||this.Handwriting==""||this.Handwriting==null||this.Grammer==""||this.Grammer==null||this.Spelling==""||this.Spelling==null||this.Vocabulary==""||this.Vocabulary==null||this.Conversation==""||this.Conversation==null||this.Recitation==""||this.Recitation==null||this.LComprehension==""||this.LComprehension==null||this.activity==""||this.activity==null){
+      // alert('empty!');
         this.$.p1.validate();
         this.$.p2.validate();
         this.$.p3.validate();
@@ -221,6 +227,7 @@ this.flag=0;
         this.callFetchGrade(); 
       }  
       else{
+        // alert('filled!');
         localStorage.setItem("curr_sess_absflag",1);
              
         this.readingskills=(parseInt(this.Pronunciation)+parseInt(this.Fluency)+parseInt(this.Comprehension))/3;

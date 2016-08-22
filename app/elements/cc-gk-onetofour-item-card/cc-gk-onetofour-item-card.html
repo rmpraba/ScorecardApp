@@ -101,7 +101,7 @@
       {
         activity=parseFloat(this.activity).toFixed(2); 
         document.querySelector('cc-gk-onetofour-card').FnToggleDialog(this.activity);
-        if(this.flag==0)
+        // if(this.flag==0)
         this.FnValidateCall();
         if(this.flag==1)
          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"General Knowledge","Activity",this.activity,1);

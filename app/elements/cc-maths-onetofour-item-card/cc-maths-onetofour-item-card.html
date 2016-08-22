@@ -35,14 +35,14 @@
         <!-- <td><paper-checkbox checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> -->
         <td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
         <!-- <td>{{serialno}}</td><td>{{studname}}</td> -->
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required  allowed-pattern="^[0-9.a,]+$" value="{{groupactivity}}" id="p2" on-change="FnGroupactivity"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required  allowed-pattern="^[0-9.a,]+$" value="{{individualactivity}}" id="p3" on-change="FnIndividualactivity"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{maaccuracy}}" id="p4" on-change="FnMAAccuracy"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{maknowledge}}" id="p5" on-change="FnMAKnowledge"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{taaccuracy}}" id="p6" on-change="FnTAAccuracy"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{taneatness}}" id="p7" on-change="FnTANeatness"></paper-input></td>
-        <td><paper-input disabled="{{read}}" id="{{studid}}" required allowed-pattern="^[0-9.a,]+$" value="{{activity}}" id="p8" on-change="FnActivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}"  required allowed-pattern="^[0-9.a,]+$" value="{{understanding}}" id="p1" on-change="FnUnderstanding"></td>
+        <td><paper-input disabled="{{read}}"  required  allowed-pattern="^[0-9.a,]+$" value="{{groupactivity}}" id="p2" on-change="FnGroupactivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}"  required  allowed-pattern="^[0-9.a,]+$" value="{{individualactivity}}" id="p3" on-change="FnIndividualactivity"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{maaccuracy}}" id="p4" on-change="FnMAAccuracy"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{maknowledge}}" id="p5" on-change="FnMAKnowledge"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{taaccuracy}}" id="p6" on-change="FnTAAccuracy"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{taneatness}}" id="p7" on-change="FnTANeatness"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{activity}}" id="p8" on-change="FnActivity"></paper-input></td>
         <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>        
         </tr>
       </table>
@@ -162,7 +162,7 @@
       FnActivity:function(){    
         activity=parseFloat(this.activity).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.activity); 
-        if(this.flag==0)           
+        // if(this.flag==0)           
         this.FnValidateCall();
         if(this.flag==1)
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8); 

@@ -87,7 +87,7 @@
         activity=parseFloat(this.activity).toFixed(2);
         document.querySelector('cc-computer-onetofour-card').FnToggleDialog(this.activity);
         // this.FnValidateCall();
-         if(this.flag==0)
+         // if(this.flag==0)
       this.FnValidateCall();
       if(this.flag==1)
         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Computer Science","Activity",this.activity,1);

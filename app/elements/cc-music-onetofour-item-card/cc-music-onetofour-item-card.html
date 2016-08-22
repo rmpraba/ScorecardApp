@@ -107,7 +107,7 @@
       FnMelody:function(){
         melody=parseFloat(this.melody).toFixed(2); 
         document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.melody);
-          if(this.flag==0)
+          // if(this.flag==0)
           this.FnValidateCall();
           if(this.flag==1)
           this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody,3);  

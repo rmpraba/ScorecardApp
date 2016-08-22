@@ -239,6 +239,10 @@ var i;
       var overall=[];
       var assesmentarr=[];
       var subarr=[];
+      var subcount=1;
+      var asses1=0;
+      var asses2=0;
+      var asses3=0;
        var arr1=e.detail.response.returnval;
        // alert(JSON.stringify(arr1));
        for(var x=0;x<studarr.length;x++){
@@ -252,9 +256,28 @@ var i;
        for(var i=0;i<arr1.length;i++)
        {
         var markarr=[];
+
+        markarr.push(i+1);
         markarr.push(arr1[i].student_name);
         assesmentarr.push(arr1[i].assesment_id);
+       // alert(i+''+arr1.length);
+       if(subcount==1)
+       {
+        if(arr1[i].assesment_id=="Assesment1")
+        {
+          asses1++;
+        }
+        if(arr1[i].assesment_id=="Assesment2")
+        {
+          asses2++;
+        }
+        if(arr1[i].assesment_id=="Assesment3")
+        {
+          asses3++;
+        }
         subarr.push(arr1[i].subject_id);
+      }
+       
         markarr.push(arr1[i].grade);
         for(var j=i+1;j<arr1.length;j++)
         {
@@ -262,11 +285,29 @@ var i;
            {
             markarr.push(arr1[j].grade);
             assesmentarr.push(arr1[j].assesment_id);
-            subarr.push(arr1[j].subject_id);
+            if(subcount==1)
+           {
+             if(arr1[j].assesment_id=="Assesment1")
+        {
+          asses1++;
+        }
+        if(arr1[j].assesment_id=="Assesment2")
+        {
+          asses2++;
+        }
+        if(arr1[j].assesment_id=="Assesment3")
+        {
+          asses3++;
+        }
+          subarr.push(arr1[j].subject_id);
+           }
             arr1.splice(j,1);
             j--;
            }
         }
+        subcount++;
+
+       // subarr.push(arr1[i].subject_id);
        overall.push(markarr);
        }
        // alert(JSON.stringify(subarr));
@@ -276,16 +317,17 @@ var i;
        var subjectarr=[];
        subjectarr.push(subfinal[0]);
        subjectarr.push(subfinal[1]);
-       for(var i=0;i<assfinal.length;i++){
-        for(var j=2;j<subfinal.length;j++)
+       for(var i=0;i<subarr.length;i++)
         {
-          subjectarr.push(subfinal[j]);
+          subjectarr.push(subarr[i]);
         }
-       }
-
+       // alert(asses1+''+asses2+''+asses3);
+       //alert(JSON.stringify(subarr));
+       //alert(JSON.stringify(subjectarr));
         document.querySelector("termwise-report-card").assesmentarr=assfinal;
         document.querySelector("termwise-report-card").subjectarr=subjectarr;
         document.querySelector("termwise-report-card").itemarr=overall;
+        document.querySelector("termwise-report-card").assesmentlen(asses1,asses2,asses3);
       }
     }
     });

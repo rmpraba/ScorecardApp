@@ -20,10 +20,12 @@
       <tr>
         <th></th><th></th><th></th><th>A1</th><th>A2</th><th>A3</th><th>A1</th><th>A2</th><th>A3</th><th>A1</th><th>A2</th><th>A3</th>
       </tr> -->
-      <tr><td></td>
-      <template is="dom-repeat" items="{{assesmentarr}}" as="item">
-      <td>{{item}}</td>
-      </template>
+      <tr><td></td><td></td><td></td>
+     
+      <td id="assesment1">Assesment1</td>
+      <td id="assesment2">Assesment2</td>
+      <td id="assesment3">Assesment3</td>
+      
       </tr>
       <tr><td></td>
       <template is="dom-repeat" items="{{subjectarr}}" as="item">
@@ -62,6 +64,27 @@
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+      },
+      assesmentlen:function(asses1,asses2,asses3)
+      {
+        if(asses1==0)
+        {
+            this.$.assesment1.hidden=true;
+
+        }
+         if(asses2==0)
+        {
+            this.$.assesment2.hidden=true;
+
+        }
+         if(asses3==0)
+        {
+            this.$.assesment3.hidden=true;
+
+        }
+        document.getElementById("assesment1").colSpan=asses1;
+        document.getElementById("assesment2").colSpan=asses2;
+        document.getElementById("assesment3").colSpan=asses3;
       }
 
     });

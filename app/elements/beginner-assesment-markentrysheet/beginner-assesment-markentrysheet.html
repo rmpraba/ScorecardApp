@@ -1,8 +1,8 @@
 
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../component-service/component-service.html">
 <link rel="import" href="../beginner-assesment-markentrysheet-itemcard/beginner-assesment-markentrysheet-itemcard.html">
+<link rel="import" href="../bindmarks-card/bindmarks-card.html">
 
 <dom-module id="beginner-assesment-markentrysheet">
   <template>
@@ -54,12 +54,14 @@
       <th id="tb1">{{item.Comprehension}}</th>
       <th id="tb1">{{item.Score}}</th>
       <th id="tb1">{{item.Grade}}</th>   
-      </tr>      
+      </tr>
+
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="6">
       <beginner-assesment-markentrysheet-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></beginner-assesment-markentrysheet-itemcard>
       </td></tr>
       </template>
+
       </table>
       </center> 
     </template>     
@@ -85,7 +87,7 @@
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
       },
-        FnRefresh:function()
+      FnRefresh:function()
       {
         this.studarr=[];
         this.label=[];

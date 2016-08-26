@@ -1,6 +1,9 @@
  var express    = require("express");
  var mysql      = require('mysql');
  var email   = require("emailjs/email");
+ var htmlToPdf = require('html-to-pdf');
+ // var pdf = require('html-pdf');
+ var email   = require("emailjs/email");
  var connection = mysql.createConnection({
    host     : 'localhost',
    user     : 'root',
@@ -323,7 +326,7 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
   "(select subject_id from mp_teacher_grade where "+
   "school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and "+
   "grade_id=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
-  "section_id=(select section_id from md_section where section_name='"+req.query.section+"')) "+
+  "section_id=(select section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"')) "+
   "and subject_category in('"+req.query.subjectcategory+"')";
   }
   else if(req.query.roleid=='class-teacher')
@@ -473,12 +476,10 @@ app.post('/assesment-service',  urlencodedParser,function (req, res)
 //fetching student info
 app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
 {
-
 var qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
 "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
 " and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in(0,1)";
-
-var qur="select * from scorecarddb.tr_student_to_subject "+
+var qur="select * from tr_student_to_subject "+
 "where  class_id="+
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
@@ -486,7 +487,7 @@ var qur="select * from scorecarddb.tr_student_to_subject "+
 "subject_id=(select subject_id from md_subject where subject_name='"+req.query.subject+"') and "+
 "school_id='"+req.query.schoolid+"')";
 var qur1="select school_id,student_id as id,student_name,class_id "+
-"from scorecarddb.tr_student_to_subject "+
+"from tr_student_to_subject "+
 "where  class_id="+
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
@@ -545,60 +546,9 @@ res.status(200).json({'returnval': 'imported'});
 });
 
 });
-/*var qur2="select school_id,id,student_name,class_id from md_student where  class_id="+
-"(select class_id from mp_grade_section where grade_id=(select grade_id "+
-"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
-"section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
-"school_id='"+req.query.schoolid+"')";
 
-var qur1="select distinct student_id as id,student_name,school_id,class_id from tr_student_to_subject where "+
-"grade=(select grade_id from md_grade where grade_name='"+req.query.gradename+"') and "+
-"section=(select section_id from md_section where section_name='"+req.query.section+"' "+
-"and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"'";
 
-var qur="select * from mp_teacher_grade tg join tr_student_to_subject ss "+
-        "on(tg.subject_id=ss.subject_id) and ss.subject_id=(select subject_id from md_subject where "+
-        "subject_name='"+req.query.subject+"') and ss.grade=tg.grade_id "+
-        "and ss.section=tg.section_id";
-
-  console.log(qur);
-  console.log('............................................'); 
-  console.log(qur1); 
-  console.log('............................................'); 
-  console.log(qur2);     
-  console.log('............................................'); 
-  connection.query(qur,
-    function(err, rows)
-    {
-    if(!err)
-    {
-    if(rows.length>0)
-    {
-      console.log('qur1');
-      connection.query(qur1,function(err, rows){
-       if(rows.length>0) 
-        res.status(200).json({'returnval': rows});
-       else
-        res.status(200).json({'returnval': 'invalid'});
-      });
-      //res.status(200).json({'returnval': rows});
-    }
-    else
-    {
-      console.log('qur1');
-      connection.query(qur2,function(err, rows){
-       if(rows.length>0) 
-        res.status(200).json({'returnval': rows});
-       else
-        res.status(200).json({'returnval': 'invalid'});
-      });
-      //console.log(err);
-      //res.status(200).json({'returnval': 'invalid'});
-    }
-    }
-    else
-      console.log(err);
-  });*/
+// fetchmarkexiststudentinfo-service
 
 //Storing marks for assesment
 app.post('/insertbamark-service',  urlencodedParser,function (req, res)
@@ -615,7 +565,28 @@ app.post('/insertbamark-service',  urlencodedParser,function (req, res)
          score:req.query.score,
          grade:req.query.grade                       
   }
-  connection.query("INSERT INTO tr_beginner_assesment_marks set ?",[response],
+  var checkqur="SELECT * FROM tr_beginner_assesment_marks WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
+  " and assesment_id='"+req.query.assesmentid+"' and subject_id='"+req.query.subject+"' and category_id='"+req.query.category+"' and "+
+  "class_id='"+req.query.classid+"'";
+  var updatequr="UPDATE tr_beginner_assesment_marks SET ? WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
+  " and assesment_id='"+req.query.assesmentid+"' and subject_id='"+req.query.subject+"' and category_id='"+req.query.category+"' and "+
+  "class_id='"+req.query.classid+"'";
+  console.log('.............................checkqur.............................');
+  console.log(checkqur);
+  console.log('..................................................................');
+  connection.query(checkqur,function(err, rows)
+    {
+    if(!err){
+    if(rows.length>0){
+    connection.query(updatequr,[response],function(err, rows){
+    if(!err)
+      res.status(200).json({'returnval': 'succ'});
+    else
+      res.status(200).json({'returnval': 'fail'});
+    });
+    }
+    else{
+    connection.query("INSERT INTO tr_beginner_assesment_marks set ?",[response],
     function(err, rows)
     {
     if(!err)
@@ -626,9 +597,13 @@ app.post('/insertbamark-service',  urlencodedParser,function (req, res)
     {
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
-    }  
-
-  });
+    }
+    });
+    }
+    }
+    else
+      console.log(err);
+    });
 });
 
 
@@ -1025,11 +1000,11 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
   var schoolid={school_id:req.query.schoolid};
   var studid={id:req.query.studid};
   var qur="select (select grade_name from md_grade where grade_id="+
-"(select grade_id from mp_grade_section where class_id=s.class_id)) grade,"+
-"(select section_name from md_section where section_id="+
-"(select section_id from mp_grade_section where class_id=s.class_id)) section,"+
-"s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1 "+
-"from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
+  "(select grade_id from mp_grade_section where class_id=s.class_id)) grade,"+
+  "(select section_name from md_section where section_id="+
+  "(select section_id from mp_grade_section where class_id=s.class_id)) section,"+
+  "s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1 "+
+  "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
 
   console.log(qur);
   connection.query(qur,
@@ -1037,6 +1012,7 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
     {
     if(!err)
     {       
+      global.studentinfo=rows; 
       res.status(200).json({'returnval': rows});
     }
     else
@@ -1064,6 +1040,7 @@ app.post('/fetchsubjectname-service',  urlencodedParser,function (req,res)
     {
     if(!err)
     {       
+      global.subjectinfo=rows;
       res.status(200).json({'returnval': rows});
     }
     else
@@ -1080,7 +1057,6 @@ app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
-
   connection.query("SELECT * FROM tr_term_assesment_overall_marks WHERE ? AND ? order by subject_id",[studid,schoolid],
     function(err, rows)
     {
@@ -1093,10 +1069,8 @@ app.post('/fetchmark-service',  urlencodedParser,function (req,res)
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
     }  
-
   });
 });
-
 
 //fetchscholasticmark-service
 app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
@@ -1114,6 +1088,7 @@ app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
     {
     if(!err)
     {       
+      global.scholasticinfo=rows;
       res.status(200).json({'returnval': rows});
     }
     else
@@ -1121,7 +1096,6 @@ app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
     }  
-
   });
 });
 
@@ -1136,7 +1110,8 @@ app.post('/fetchcoscholasticmark-service',  urlencodedParser,function (req,res)
     function(err, rows)
     {
     if(!err)
-    {       
+    {
+      global.coscholasticinfo=rows;       
       res.status(200).json({'returnval': rows});
     }
     else
@@ -1159,7 +1134,8 @@ app.post('/fetchcocurricularmark-service',  urlencodedParser,function (req,res)
     function(err, rows)
     {
     if(!err)
-    {       
+    {  
+      global.cocurricularinfo=rows;     
       res.status(200).json({'returnval': rows});
     }
     else
@@ -1190,7 +1166,7 @@ app.post('/insertattendance-service',  urlencodedParser,function (req,res)
   "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and class_id='"+req.query.classid+"' and "+
   "student_id='"+req.query.studentid+"'";
 
-  console.log(qur);
+  // console.log(qur);
   
 connection.query(qur,
 function(err, rows)
@@ -1213,7 +1189,9 @@ function(err, rows)
 }
 else
 {
-  connection.query("UPDATE tr_term_attendance SET ?",[response],
+  connection.query("UPDATE tr_term_attendance SET ? where school_id='"+req.query.schoolid+"' and "+
+  "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and class_id='"+req.query.classid+"' and "+
+  "student_id='"+req.query.studentid+"'",[response],
     function(err, rows)
     {
     if(!err)
@@ -1274,7 +1252,7 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
   var academicyear={academic_year:req.query.academicyear}; 
-  var qur="select * from scorecarddb.tr_term_attendance ta join tr_term_health th on(ta.student_id=th.student_id)"+
+  var qur="select * from tr_term_attendance ta join tr_term_health th on(ta.student_id=th.student_id)"+
   " where ta.student_id='"+req.query.studid+"' "+
   "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"'";
   // console.log(qur);
@@ -1282,8 +1260,10 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
     function(err, rows)
     {
     if(!err)
-    {       
+    {  
+      global.healthattendanceinfo=rows;     
       res.status(200).json({'returnval': rows});
+
     }
     else
     {
@@ -1400,8 +1380,11 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
     if(!err)
     {
     if(rows.length>0)
-    {
+    { 
+
+      
       res.status(200).json({'returnval': rows});
+      
     }
     else
     {
@@ -1646,7 +1629,7 @@ app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, re
 
     var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
 "lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade,"+
-"ta.subject_id,ba.grade as beginner_grade from scorecarddb.tr_term_assesment_overall_marks ta "+
+"ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
 "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
 "where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
 "and ta.grade='"+req.query.grade+"' and ta.section='"+req.query.section+"' "+
@@ -1679,7 +1662,7 @@ app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req
 {  
     var qur="select ta.term_name,ta.assesment_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
     "lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade, "+
-    "ta.subject_id,ba.grade as beginner_grade from scorecarddb.tr_term_assesment_overall_marks ta "+
+    "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
     "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
     "group by ta.subject_id,ta.term_name,ta.assesment_id ";
     connection.query(qur,
@@ -1759,6 +1742,371 @@ app.post('/termwisereport-service' ,  urlencodedParser,function (req, res)
     else
       console.log(err);
 });
+});
+
+app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
+{
+        var adterm1="";
+        var adterm2="";
+        var adterm3="";
+        var wdterm1="";
+        var wdterm2="";
+        var wdterm3="";
+        var pterm1="";
+        var pterm2="";
+        var pterm3="";
+        var t1height="";
+        var t2height="";
+        var t3height="";
+        var t1weight="";
+        var t2weight="";
+        var t3weight="";
+
+        console.log('.........................healthattendanceinfo....................................');
+        console.log(global.healthattendanceinfo.length);
+        console.log('.................................................................................');
+
+        if(global.healthattendanceinfo.length==1||global.healthattendanceinfo.length==2||global.healthattendanceinfo.length==3){
+        adterm1=global.healthattendanceinfo[0].attendance;
+        wdterm1=global.healthattendanceinfo[0].working_days;
+        pterm1=parseFloat((global.healthattendanceinfo[0].attendance/global.healthattendanceinfo[0].working_days)*100).toFixed(2)+"%";
+        t1height=global.healthattendanceinfo[0].height;
+        t1weight=global.healthattendanceinfo[0].weight;        
+        }
+        if(global.healthattendanceinfo.length==2){
+        adterm2=global.healthattendanceinfo[1].attendance;
+        wdterm2=global.healthattendanceinfo[1].working_days;
+        pterm2=parseFloat((global.healthattendanceinfo[1].attendance/global.healthattendanceinfo[1].working_days)*100).toFixed(2)+"%";
+        t2height=global.healthattendanceinfo[1].height;
+        t2weight=global.healthattendanceinfo[1].weight;
+        }
+        if(global.healthattendanceinfo.length==3){
+        adterm3=global.healthattendanceinfo[2].attendance; 
+        wdterm3=global.healthattendanceinfo[2].working_days;
+        pterm3=parseFloat((global.healthattendanceinfo[2].attendance/global.healthattendanceinfo[2].working_days)*100).toFixed(2)+"%";
+        t3height=global.healthattendanceinfo[2].height;
+        t3weight=global.healthattendanceinfo[2].weight;
+        }
+
+        var engarr=[];
+        var matharr=[];
+        var evsarr=[];
+        var hinarr=[];
+        var comarr=[];
+        var gkarr=[];
+        var acarr=[];
+        var mdarr=[];
+        var gamearr=[];
+        var parr=[];
+        
+        for(var i=0;i<global.scholasticinfo.length;i++){          
+          var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
+          if(global.scholasticinfo[i].subject_name=="English"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;    
+            engarr.push(obj);
+          }
+          if(global.scholasticinfo[i].subject_name=="Mathematics"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            matharr.push(obj);
+          }
+          if(global.scholasticinfo[i].subject_name=="EVS"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            evsarr.push(obj);
+          }
+          if((global.scholasticinfo[i].subject_name).trim()=="Hindi"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            hinarr.push(obj);
+          }
+           if((global.scholasticinfo[i].subject_name).trim()=="Kannada"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            hinarr.push(obj);
+          }
+          if((global.scholasticinfo[i].subject_name).trim()=="Computer"){            
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            comarr.push(obj);            
+          }          
+          if(global.scholasticinfo[i].subject_name=="GK"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            gkarr.push(obj);
+          }          
+                   
+          if(global.scholasticinfo[i].subject_name=="Art&Craft"){            
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;     
+            acarr.push(obj);
+          }
+          if(global.scholasticinfo[i].subject_name=="music"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            mdarr.push(obj);
+          }
+          if(global.scholasticinfo[i].subject_name=="dance"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            mdarr.push(obj);
+          }
+          if(global.scholasticinfo[i].subject_name=="Games"){
+            obj.category=global.scholasticinfo[i].category;
+            obj.comment=global.scholasticinfo[i].description;
+            if(global.scholasticinfo[i].term_name=="term1")
+            obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term2")
+            obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+            if(global.scholasticinfo[i].term_name=="term3")
+            obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+            gamearr.push(obj);
+          }
+
+        if(global.scholasticinfo[i].subject_name=="Personality Development"){ 
+          obj.category=global.scholasticinfo[i].category; 
+          obj.comment=global.scholasticinfo[i].description;      
+          if(global.scholasticinfo[i].term_name=="term1"){            
+          obj.t1grade=global.scholasticinfo[i].term_cat_grade;
+          }
+          if(global.scholasticinfo[i].term_name=="term2"){            
+          obj.t2grade=global.scholasticinfo[i].term_cat_grade;
+          }
+          if(global.scholasticinfo[i].term_name=="term3"){            
+          obj.t3grade=global.scholasticinfo[i].term_cat_grade;
+          }
+          parr.push(obj);          
+        }
+       }
+    console.log('....................schoolname.........................');
+    console.log(req.query.schoolname+"   "+req.query.academicyear); 
+    console.log('.......................................................');
+      
+    var header = "<table class='logo' style='width:100%;height: 15%; margin-top: 4%;'><tr><th><img src='./app/images/zeesouth.png' height='100px' width='100px'></img></th><th>"
+    header += "<img src='./app/images/mount.png' height='110px' width='200px' style='margin-left:100px'></img><center><p>"+req.query.schoolname+"</p>ACHIEVEMENT RECORD("+req.query.academicyear+")</center></th>"
+    header += "<th><img src='./app/images/zee.gif' height='100px' width='100px'></img></th></tr></table><br>"
+    header += "<div class='saph' style='margin-left: 3%;'><img src='./app/images/saph.jpg' height='120px' width='630px'></img></div>";
+
+    var studinfo= "<table class='studentinfo' style='border-collapse: collapse;width:95%;height: 10%;margin-left: 3%;margin-top: 5%;'><tr><th align='left'>Student Name: </th>"
+    studinfo += "<th align='left' colspan='3' style='background-color: white;'>"+global.studentinfo[0].student_name+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr>"
+    studinfo += "<th align='left'>Parent Name: </th><th align='left' colspan='3' style='background-color: white;'>"+global.studentinfo[0].parent_name+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr><th align='left'>Class: </th>";    
+    studinfo += "<th align='left' style='background-color: white;'>"+req.query.grade+"&nbsp;&nbsp;"+req.query.section+"</th><th align='left'>Admission No: </th><th align='left' style='background-color: white;'>"+global.studentinfo[0].student_id+"</th></tr></table> <br><br><br>";
+     
+    var attendance= "<table style='border-collapse: collapse;width:95%;height: 15%; margin-left: 3%;margin-top: 5%;' class='attendance'><tr><th style='width: 25%;'>Attendance</th><th colspan='2' style='width: 25%;'>Term1</th><th colspan='2' style='width: 25%;'>Term2</th><th colspan='2' style='width: 25%;'>Term3</th></tr>"
+    attendance += "<tr style='height: 10px;'><th colspan='7'></th></tr><tr><td style='width: 25%;'>Total Attended Days</td><td align='right' style='width: 13%;'>"+adterm1+"</td>"
+    attendance += "<td rowspan='2' align='right'><div class='fab'>"+pterm1+"</div></td><td align='right' style='width: 13%;'>"+adterm2+"</td>"
+    attendance += "<td rowspan='2' align='right'><div class='fab'>"+pterm2+"</div></td><td align='right' style='width: 13%;'>"+adterm3+"</td>"
+    attendance += "<td rowspan='2' align='right'><div class='fab'>"+pterm3+"</div></td></tr><tr style='height: 10px;'><th colspan='7'></th></tr>"
+    attendance += "<tr><td style='width: 25%;'>Total Working Days</td><td align='right' style='width: 13%;'>"+wdterm1+"</td>"
+    attendance += "<td align='right' style='width: 13%;'>"+wdterm2+"</td><td align='right' style='width: 13%;'>"+wdterm3+"</td></tr></table><br><br><br>"
+    attendance += "<table  style='width: 95%;margin-left: 3%;' class='general'> <tr><th style='width: 25%;'>General Feedback: </th><th style='background-color: white;'></th></tr></table><br><br><br><br><br><br><br><br>"; 
+
+    var signature= "<table  style='width: 650px;margin-left:10px;' class='signature'><tr><th>----------------------------------------</th><th></th><th>---------------------------------------</th><th></th>"
+    signature += "<th>----------------------------------------</th><th></th></tr><tr><th><center>Class Teacher</center></th><th></th><th><center>Principal</center></th><th></th><th><center>Parent</center></th><th></th></tr></table><br><br><br><br>";
+
+    var clr;
+    var subjecteng = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #4d94ff;'><th style='width: 35%;'>ENGLISH</th><th style='width:5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width:50%;'>Comments</th></tr>"
+    for(var i=0; i<engarr.length; i++) {
+    if(i%2!=0){
+    subjecteng += "<tr class='eng' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+engarr[i].category+"</th><th style='width: 5%;'>"
+    subjecteng += "<div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+engarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+engarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+engarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+engarr[i].comment+"</th></tr>"  
+    }else{ 
+    subjecteng += "<tr class='eng' style='background:#b3d1ff'><th style='width: 35%;text-align: left;'>"+engarr[i].category+"</th><th style='width: 5%;'>"
+    subjecteng += "<div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+engarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+engarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+engarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+engarr[i].comment+"</th></tr>"
+    }
+    }
+    subjecteng += "</table>";
+
+    var subjectmath = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #86b300;'><th style='width: 35%;' >MATHEMATICS</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<matharr.length; i++) {
+    if(i%2!=0)
+    {
+    subjectmath += "<tr class='math' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+matharr[i].category+"</th><th style='width: 5%;'>"
+    subjectmath += "<div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+matharr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+matharr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+matharr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+matharr[i].comment+"</th></tr>"
+    }
+    else{
+    subjectmath += "<tr class='math' style='background:#dfff80'><th style='width: 35%;text-align: left;'>"+matharr[i].category+"</th><th style='width: 5%;'>"
+    subjectmath += "<div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+matharr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+matharr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+matharr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+matharr[i].comment+"</th></tr>"
+    }
+    }
+    subjectmath += "</table>";
+
+    var subjectevs = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ffad33;'><th style='width: 35%;'>EVS</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<evsarr.length; i++) {
+    if(i%2!=0)
+    subjectevs += "<tr class='evs' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+evsarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+evsarr[i].comment+"</th></tr>"
+    else
+    subjectevs += "<tr class='evs' style='background:#ffd699'><th style='width: 35%;text-align: left;'>"+evsarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+evsarr[i].comment+"</th></tr>"
+    }
+    subjectevs += "</table>";
+
+    var subjecthindi = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>HINDI/KANADA(II Language)</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<hinarr.length; i++) {
+    if(i%2!=0)
+    subjecthindi += "<tr class='hin' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+hinarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+hinarr[i].comment+"</th></tr>"
+    else
+    subjecthindi += "<tr class='hin' style='background:#d98cd9'><th style='width: 35%;text-align: left;'>"+hinarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+hinarr[i].comment+"</th></tr>"
+    }
+    subjecthindi += "</table>";
+
+    var subjectcomputer = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #4d94ff;'><th style='width: 35%;'>COMPUTER SCIENCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<comarr.length; i++) {
+    if(i%2!=0)
+    subjectcomputer += "<tr class='comp' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+comarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+comarr[i].comment+"</th></tr>"
+    else
+    subjectcomputer += "<tr class='comp' style='background:#b3d1ff'><th style='width: 35%;text-align: left;'>"+comarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+comarr[i].comment+"</th></tr>"
+    }
+    subjectcomputer += "</table>";
+
+    var subjectgk = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>GENERAL KNOWLEDGE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<gkarr.length; i++) {
+    if(i%2!=0)
+    subjectgk += "<tr class='gk' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+gkarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gkarr[i].comment+"</th></tr>"
+    else
+    subjectgk += "<tr class='gk' style='background:#ffd699'><th style='width: 35%;text-align: left;'>"+gkarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gkarr[i].comment+"</th></tr>"
+    }
+    subjectgk += "</table>";
+
+    var subjectartcraft = "<table style='width: 95%;margin-left: 3%;' class='subject'> <tr style='background: #86b300;'><th style='width: 35%;'>ART/CRAFT</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<acarr.length; i++) {
+    if(i%2!=0)
+    subjectartcraft += "<tr class='art' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+acarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+acarr[i].comment+"</th></tr>"
+    else
+    subjectartcraft += "<tr class='art' style='background:#dfff80'><th style='width: 35%;text-align: left;'>"+acarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+acarr[i].comment+"</th></tr>"
+    }
+    subjectartcraft += "</table>";
+
+    var subjectmusic = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #ac39ac;'><th style='width: 35%;'>MUSIC/DANCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<mdarr.length; i++) {
+    if(i%2!=0)
+    subjectmusic += "<tr class='music' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+mdarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+mdarr[i].comment+"</th></tr>"
+    else
+    subjectmusic += "<tr class='music' style='background:#d98cd9'><th style='width: 35%;text-align: left;'>"+mdarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+mdarr[i].comment+"</th></tr>"
+    }
+    subjectmusic += "</table>";
+
+    var subjectgames = "<table style='width: 95%;margin-left: 3%;' class='subject'> <tr style='background: #4d94ff;'><th style='width: 35%;'>GAMES</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<gamearr.length; i++) {
+    if(i%2!=0)
+    subjectgames += "<tr class='game' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+gamearr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gamearr[i].comment+"</th></tr>"
+    else
+    subjectgames += "<tr class='game' style='background:#b3d1ff'><th style='width: 35%;text-align: left;'>"+gamearr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gamearr[i].comment+"</th></tr>"
+    }
+    subjectgames += "</table>";
+
+    var subjectpersonality = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #86b300;'><th style='width: 35%;'>PERSONALITY DEVELOPMENT</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    for(var i=0; i<parr.length; i++) {
+    if(i%2!=0)
+    subjectpersonality += "<tr class='pd' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+parr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+parr[i].comment+"</th></tr>"
+    else
+    subjectpersonality += "<tr class='pd' style='background:#dfff80'><th style='width: 35%;text-align: left;'>"+parr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+parr[i].comment+"</th></tr>"
+    }
+    subjectpersonality += "</table>   <br><br><br>";
+
+    var health = "<table class='health' border='1' style='border-collapse: collapse;width: 95%;margin-left: 3%;'><tr style='background: #ac39ac;'><th>Health</th><th>T1</th><th>T2</th><th>T3</th></tr>"
+    health += "<tr class='health'><th>Height</th><th>"+t1height+"</th><th>"+t2height+"</th><th>"+t3height+"</th></tr>"
+    health += "<tr class='health'><th>Weight</th><th>"+t1weight+"</th><th>"+t2weight+"</th><th>"+t3weight+"</th></tr></table><br><br>";
+
+    // $('tr:nth-child(even)').css("background", "red");
+
+
+    var finalpdf=header+studinfo+attendance+signature+subjecteng+subjectmath+subjectevs+subjecthindi+subjectcomputer+subjectgk+subjectartcraft+subjectmusic+subjectgames+subjectpersonality+health;
+
+    htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/reportcard.pdf',
+    function (error, success) {
+       if (error) {
+            console.log('Oh noes! Errorz!');
+            console.log(error);
+        } else {
+          console.log('Converted');
+          res.status(200).json({'returnval': 'converted'});     
+        }
+    });
+});
+
+
+app.post('/sendmail-service', urlencodedParser,function (req, res) {
+  console.log(global.studentinfo[0].email);
+  var server  = email.server.connect({
+   user:    "samsidhgroupzeeschool@gmail.com",
+   password:"mlzsinstitutions",
+   host:    "smtp.gmail.com",
+   ssl:     true
+  });
+  server.send({
+   text:    "Score Card",
+   from:    "samsidhgroupzeeschool@gmail.com",
+   to:      "rmpraba@gmail.com",
+   subject: "Score Card",
+   attachment:
+   [{
+    filename: 'reportcard.pdf',
+    path: './app/reportcard/reportcard.pdf',
+    type: 'application/pdf'
+   }]
+  },function(err, message) { console.log(err || message); });
+  res.status(200).json('mail sent');
 });
 
 var server = app.listen(5000, function () {

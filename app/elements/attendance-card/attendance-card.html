@@ -3,6 +3,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../component-service/component-service.html">
 <link rel="import" href="../attendance-item-card/attendance-item-card.html">
+<link rel="import" href="../bindmarks-card/bindmarks-card.html">
 
 <dom-module id="attendance-card">
   <template>
@@ -57,6 +58,7 @@
       <th id="tb1">Specific Comment</th>
       </tr>  
       </div>
+
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="5">
       <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}"></attendance-item-card>
@@ -81,21 +83,18 @@
         alert('Attendance for this section is complete!');
       },
       setDefaultHeaders:function(){   
-      this.$.hidetop.hidden=false;     
+        this.$.hidetop.hidden=false;     
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");        
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
-
         this.term=localStorage.getItem("curr_sess_termname");
-
       },
       FnRefresh:function()
       {
-this.$.hidetop.hidden=true;
-this.studarr=[];
-
+        this.$.hidetop.hidden=true;
+        this.studarr=[];
       }
     });
   })();

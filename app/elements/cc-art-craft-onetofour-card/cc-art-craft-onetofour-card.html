@@ -77,7 +77,7 @@
 <template is="dom-repeat" items="{{markarr}}" as="m">
 <tr><td></td>
 <template is="dom-repeat" items="{{m}}" as="mark">
-<td  colspan="3">{{mark}}</td>
+<td colspan="3">{{mark}}</td>
 </template>
 </tr>
 </template>
@@ -91,9 +91,6 @@
 <template is="dom-repeat" items="{{mark1.marks}}" as="mm">
 <td>
 <bindmarks-card hidepaperitem="{{hidepaperitem}}" hidepaperinput="{{hidepaperinput}}" mark="{{mm.mark}}" category="{{mm.category}}" subcategory="{{mm.sub_category}}" name="{{mm.name}}"></bindmarks-card>
-<!-- <td hidden$="{{hidepaperitem}}"> <paper-item value="{{mm.mark}}">{{mm.mark}}</paper-item>
-</paper-input></td>
-<td hidden$="{{hidepaperinput}}"> <paper-input allowed-pattern="^[0-9.a,]+$" value="{{mm.mark}}" name="{{mm.sub_category}}" id="p1" results="{{mm.name}}" on-change="fetchmark"></paper-input> -->
 </td>
 </template>
 </template>
@@ -101,13 +98,12 @@
 </tr>
 </template>
 
-
  <template is="dom-repeat" items="{{studarr}}">
       <tr>
         <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
         <td colspan="66"><cc-art-craft-onetofour-item-card flag="{{flag}}" studid="{{item.id}}" studname="{{item.student_name}}"></cc-art-craft-onetofour-item-card></td>
       </tr>
-      </template>
+ </template>
     </table>   
 <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>   
 <paper-button class="button" id="submit" on-click="importmark">Submit</paper-button>
@@ -205,22 +201,20 @@ var tableToExcel = (function() {
       {
         alert('import');
         this.$.assesmentservice.Fnimportmark();
-
       },
       fetchmark:function(e)
       {
         var scategory=e.target.name;
         var svalue=e.target.value;
         var sname=e.target.results;
-        this.$.assesmentservice.Fnupdatemark(sname,scategory,svalue);
-        
+        this.$.assesmentservice.Fnupdatemark(sname,scategory,svalue);        
       },
       FnRefresh:function()
       {
- this.markarr=[];
- this.importarr=[];
- this.studarr=[];
- this.schoolname="";
+        this.markarr=[];
+        this.importarr=[];
+        this.studarr=[];
+        this.schoolname="";
         this.academicyear="";
         this.grade="";
         this.section="";

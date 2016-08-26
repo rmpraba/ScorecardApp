@@ -26,8 +26,8 @@
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input required allowed-pattern="^[0-9.a,]+$" on-change="FnCorrectWords" value="{{correctword}}"></paper-input></td>
-        <td id="tb1"><paper-input required allowed-pattern="^[0-9.a,]+$" on-change="FnComprehension" value="{{comprehension}}"></paper-input></td>
+        <td id="tb1"><paper-input required allowed-pattern="^[0-9.a,]+$" on-change="FnReading" value="{{readingscore}}"></paper-input></td>
+        <td id="tb1"><paper-input required allowed-pattern="^[0-9.a,]+$" on-change="FnActivity" value="{{activity}}"></paper-input></td>
         <td id="tb1"><paper-item value="{{score}}">{{score}}</paper-item></td>
         <td id="tb1"><paper-item>{{grade}}</paper-item></td>
         </tr></table>
@@ -55,20 +55,19 @@
       ready:function(){
 
       },
-      FnCorrectWords:function(){
+      FnReading:function(){
         
       },
-      FnComprehension:function(){
-        this.score=(parseInt(this.correctword)+parseInt(this.comprehension));
+      FnActivity:function(){
+        this.score=((parseInt(this.readingscore)/4)+parseInt(this.activity))*2;
         this.callFetchGrade(); 
       },
-      FnScore:function(){ 
-                      
+      FnScore:function(){               
         this.mark=this.score;        
       },
       callService:function(){
-        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Correct Words",this.correctword,this.score,this.grade);
-        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Comprehension",this.comprehension,this.score,this.grade);
+        this.$.bassesmentservice.callbamarkinsertService(this.studid,"ReadingScore",this.readingscore,this.score,this.grade);
+        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Activity",this.activity,this.score,this.grade);
       },
       callFetchGrade:function(){
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
@@ -81,7 +80,7 @@
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
         }
-        this.FnFindGrade(((this.score)*2)/10);   
+        this.FnFindGrade(((this.score))/10);   
       },
       FnFindGrade:function(mark){        
         for(var i=0;i<lower.length;i++){          

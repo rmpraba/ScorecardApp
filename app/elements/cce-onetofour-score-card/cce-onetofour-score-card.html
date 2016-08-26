@@ -2,11 +2,15 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="import" href="..\..\bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../onetofour-scorecard-service/onetofour-scorecard-service.html">
 <dom-module id="cce-onetofour-score-card">
 <style>
+  .buttoncard{
+    @apply(--layout-horizontal);
+    margin-left: 20%;
+  }
   .card{
     width: 800px;
-    /*height: 2000px;*/
     border: 1px solid black;
     margin-left: 1%;
     margin-top: 5%;
@@ -50,7 +54,7 @@
     color: white;
     margin-top: 2%;
     text-transform: none;
-    margin-left: 50%;
+    margin-left: 2%;
   }
   @media print {
     footer {page-break-after: always;}
@@ -59,73 +63,73 @@
     background-color: #f1f1f1;
   }
  .health:nth-child(even) {
-  background-color: #d98cd9;
+    background-color: #d98cd9;
   }
  .pd:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .pd:nth-child(even) {
-  background-color: #dfff80;
+    background-color: #dfff80;
   }
  .game:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .game:nth-child(even) {
-  background-color: #b3d1ff;
+    background-color: #b3d1ff;
   }
  .eng:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .eng:nth-child(even) {
-  background-color: #b3d1ff;
+    background-color: #b3d1ff;
   }
  .math:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .math:nth-child(even) {
-  background-color: #dfff80;
+    background-color: #dfff80;
   }
  .evs:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .evs:nth-child(even) {
-  background-color: #ffd699;
+    background-color: #ffd699;
   }
  .hin:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .hin:nth-child(even) {
-  background-color: #d98cd9;
+    background-color: #d98cd9;
   }
  .comp:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .comp:nth-child(even) {
-  background-color: #b3d1ff;
+    background-color: #b3d1ff;
   }
  .gk:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .gk:nth-child(even) {
-  background-color: #ffd699;
+    background-color: #ffd699;
   }
  .art:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .art:nth-child(even) {
-  background-color: #dfff80;
+    background-color: #dfff80;
   }
  .music:nth-child(odd) {
     background-color: #f1f1f1;
   }
  .music:nth-child(even) {
-  background-color: #d98cd9;
+    background-color: #d98cd9;
   }
   .saph{
     margin-left: 3%;
   }
   .circle
-    {
+  {
     width:40px;
     height:40px;
     border-radius:50px;
@@ -134,8 +138,8 @@
     line-height:40px;
     text-align:center;
     background:#d6d6c2;
-    }
-    .fab{
+  }
+  .fab{
     width:70px;
     height:45px;
     border-radius:95px;
@@ -144,7 +148,7 @@
     line-height:50px;
     text-align:center;
     background:#f5f5ef; 
-    }
+  }
 </style>
 <template>
 <div class="card">
@@ -188,9 +192,13 @@
   <table style="border-collapse: collapse;" class="attendance">
       <tr><th style="width: 25%;">Attendance</th><th colspan="2" style="width: 25%;">Term1</th><th colspan="2" style="width: 25%;">Term2</th><th colspan="2" style="width: 25%;">Term3</th></tr>
       <tr style="height: 10px;"><th colspan="7"></th></tr>
-      <tr><td style="width: 25%;">Total Attended Days</td><td align="right" style="width: 13%;">{{adterm1}}</td><td rowspan="2" align="right"><div class="fab">{{pterm1}}</div></td><td align="right" style="width: 13%;">{{adterm2}}</td><td rowspan="2" align="right"><div class="fab">{{pterm2}}</div></td><td align="right" style="width: 13%;">{{adterm3}}</td><td rowspan="2" align="right"><div class="fab">{{pterm3}}</div></td></tr>
+      <tr><td style="width: 25%;">Total Attended Days</td><td align="right" style="width: 13%;">{{adterm1}}</td>
+      <td rowspan="2" align="right"><div class="fab">{{pterm1}}</div></td><td align="right" style="width: 13%;">{{adterm2}}</td>
+      <td rowspan="2" align="right"><div class="fab">{{pterm2}}</div></td><td align="right" style="width: 13%;">{{adterm3}}</td>
+      <td rowspan="2" align="right"><div class="fab">{{pterm3}}</div></td></tr>
       <tr style="height: 10px;"><th colspan="7"></th></tr>
-      <tr><td style="width: 25%;">Total Working Days</td><td align="right" style="width: 13%;">{{wdterm1}}</td><td align="right" style="width: 13%;">{{wdterm2}}</td><td align="right" style="width: 13%;">{{wdterm3}}</td></tr>
+      <tr><td style="width: 25%;">Total Working Days</td><td align="right" style="width: 13%;">{{wdterm1}}</td>
+      <td align="right" style="width: 13%;">{{wdterm2}}</td><td align="right" style="width: 13%;">{{wdterm3}}</td></tr>
   </table>
   <br><br><br>
   <table  class="general">
@@ -200,7 +208,8 @@
   <br><br><br><br><br><br>
 
   <table  class="signature">
-    <tr><th>--------------------------</th><th></th><th>---------------------------</th><th></th><th>---------------------------</th><th></th></tr>
+    <tr><th>--------------------------</th><th></th><th>---------------------------</th><th></th>
+    <th>--------------------------</th><th></th></tr>
     <tr><th>Class Teacher</th><th></th><th>Principal</th><th></th><th>Parent</th><th></th></tr>
   </table>
 
@@ -280,7 +289,13 @@
    <br><br>
    
 </div>
+
+<div class="buttoncard">
 <paper-button  class="button" on-click='print'>Print</paper-button>
+<paper-button  class="button" on-click='email'>Email</paper-button>
+</div>
+
+<onetofour-scorecard-service id="ss"></onetofour-scorecard-service>
 </template>
 <script>
   (function() {
@@ -311,6 +326,9 @@
               // this.$.pdf.hidden=false;
               // this.$.email.hidden=false;
               // this.$.print.hidden=false;
+      },
+      email:function(){
+        this.$.ss.mailReportcardService();
       }
     });
   })();

@@ -26,7 +26,7 @@
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input  value="{{score}}"></paper-input></td>   
+        <td id="tb1"><paper-input  value="{{score}}" on-change="FnActivity"></paper-input></td>   
         <td id="tb1"><paper-item>{{grade}}</paper-item></td>
         </tr>
         </table>
@@ -52,20 +52,13 @@
     Polymer({
       is: 'beginner-assesment-lang-markentrysheet-itemcard',
       ready:function(){
-
       },
-      FnCorrectWords:function(){
-        
-      },
-      FnComprehension:function(){
-        this.callFetchGrade();  
-      },
-      FnActivity:function(e){
-              
-        this.mark=this.score;         
+      FnActivity:function(e){      
+        this.mark=this.score; 
+        this.callFetchGrade();        
       },
       callService:function(){           
-        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Activity",'',this.score,this.grade);        
+        this.$.bassesmentservice.callbamarkinsertService(this.studid,"Activity",this.score,(parseInt(this.score)*4),this.grade); 
       },
       callFetchGrade:function(){
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
@@ -87,8 +80,7 @@
           }
         }
         this.callService();
-      }
-     
+      }   
     });
   })();
   </script>

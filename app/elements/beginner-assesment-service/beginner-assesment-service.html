@@ -83,7 +83,17 @@
         content-type="application/json"
         on-response="fetchgradeResponse"
         debounce-duration="300"
-    >   
+    > 
+    <iron-ajax        
+        method="post"
+        id="markexiststudentinfoajax"
+        url="{{markexiststudentinfourl}}"
+        params="{{markexiststudentinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="markexiststudentinfoResponse"
+        debounce-duration="300"
+    >  
   </template>
   <script>
   (function() {
@@ -209,6 +219,20 @@
         document.querySelector('beginner-assesment-markentrysheet-itemcard').FnSetGrade(returnval);
         else
         document.querySelector('beginner-assesment-lang-markentrysheet-itemcard').FnSetGrade(returnval);
+      },
+      callMarkexistStudentinfo:function(){
+         this.markexiststudentinfourl=sessionStorage.getItem("addrinfo")+"/fetchmarkexiststudentinfo-service";
+         var obj={"schoolid":"","academicyear":"","gradename":"","section":"","subject":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_grade");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.markexiststudentinfoparam= obj;
+         this.$.markexiststudentinfoajax.generateRequest();
+      },
+      markexiststudentinfoResponse:function(e){
+
       }
     });
   })();

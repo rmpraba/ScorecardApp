@@ -229,10 +229,7 @@
         on-response="approvemarkResponse"
         debounce-duration="300"
     >  
-
-
-
-     <iron-ajax
+    <iron-ajax
         method="post"
         id="fetchimportmarkajax"
         url="{{fetchimportmarkurl}}"
@@ -288,8 +285,8 @@
     Polymer({
       is: 'term-assesment-service',
       ready:function(){ 
-    this.studarrlength=0;
-      // localStorage.setItem("curr_sess_fetchstudent",'0');       
+        this.studarrlength=0;
+        // localStorage.setItem("curr_sess_fetchstudent",'0');       
       },
       callAcademicService:function(){
         this.$.academicajax.generateRequest();
@@ -321,7 +318,7 @@
          this.$.gradeajax.generateRequest();
       },
       gradeResponse:function(e){
-          document.querySelector('term-assesment-card').gradearr=e.detail.response.returnval;
+         document.querySelector('term-assesment-card').gradearr=e.detail.response.returnval;
       },
       callSectionService:function(gradename){        
          this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
@@ -409,11 +406,11 @@
          obj.section=localStorage.getItem("curr_sess_section");
          obj.subject= localStorage.getItem("curr_sess_subject");
          if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
-          obj.assesment= "Assesment3";
+           obj.assesment= "Assesment3";
          else
-         obj.assesment= localStorage.getItem("curr_sess_assesment");
-         this.fetchstudentreportparam= obj;         
-         this.$.fetchstudentreportajax.generateRequest();
+           obj.assesment= localStorage.getItem("curr_sess_assesment");
+           this.fetchstudentreportparam= obj;         
+           this.$.fetchstudentreportajax.generateRequest();
       },
       fetchstudentreportResponse:function(e)
       {
@@ -543,6 +540,14 @@
         if(localStorage.getItem("curr_sess_subject")=="Personality Development"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cs-personalitydevelopment-card').studarr=arr;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Attendance"){ 
+        // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
+        document.querySelector('attendance-card').studarr=arr;
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Health"){ 
+        // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
+        document.querySelector('cce-fivetoten-health-card').studarr=arr;
         }   
        
         }
@@ -952,13 +957,24 @@
         document.querySelector('cs-games-card').importarr=overall;
         document.querySelector('cs-games-card').FnResetFlag();
         } 
-        if(localStorage.getItem("curr_sess_importsubject")=="Personality Development"){   
-            
+        if(localStorage.getItem("curr_sess_importsubject")=="Personality Development"){            
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card'); 
         document.querySelector('cs-personalitydevelopment-card').setDefaultHeaders();    
         document.querySelector('cs-personalitydevelopment-card').importarr=overall;
         document.querySelector('cs-personalitydevelopment-card').FnResetFlag();
-        } 
+        }
+        /*if(localStorage.getItem("curr_sess_subject")=="Attendance"){ 
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
+        document.querySelector('attendance-card').setDefaultHeaders();    
+        document.querySelector('attendance-card').importarr=overall;
+        document.querySelector('attendance-card').FnResetFlag();
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Health"){ 
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card'); 
+        document.querySelector('cce-fivetoten-health-card').setDefaultHeaders();    
+        document.querySelector('cce-fivetoten-health-card').importarr=overall;
+        document.querySelector('cce-fivetoten-health-card').FnResetFlag();
+        }*/  
         }
         else
         this.studarrlength=0;
@@ -966,7 +982,6 @@
     },
     Fnupdatemark:function(sname,category,subcategory,svalue)
     {
-
          this.updatemarkurl=sessionStorage.getItem("addrinfo")+"/updatemark-service";
          var obj={"schoolid":"","academic":"","term":"","assesment":"","subject":"","category":"","sub_category":"","mark":"","studid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");

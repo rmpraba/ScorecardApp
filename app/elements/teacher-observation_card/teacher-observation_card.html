@@ -111,7 +111,7 @@
       </paper-menu>
      </paper-dropdown-menu>
       <paper-dropdown-menu label="SectionName">
-      <paper-menu id="subj"  class="dropdown-content"  on-iron-select="sectionid">   
+      <paper-menu id="sucj"  class="dropdown-content"  on-iron-select="sectionid">   
             <template is="dom-repeat" items="{{sectionarr}}" as="view">
                 <paper-item value="{{view.section_id}}">{{view.section_id}}</paper-item>
             </template>
@@ -238,6 +238,7 @@
       //this.empty1();  
       document.querySelector('#grdj').selected=-1;
       document.querySelector('#subj').selected=-1;
+      document.querySelector('#sucj').selected=-1;
       this.obid=e.target.selectedItem.value;
       //alert(this.staffid);
       //alert("hi");
@@ -258,6 +259,7 @@
       //this.tm();
       document.querySelector('#grdj').selected=-1;
       document.querySelector('#subj').selected=-1;
+      document.querySelector('#sucj').selected=-1;
       //this.$.tb9.hidden=true;
       //alert(this.staffid);
       this.$.observerservice.Fnteachergrade(this.staffid);
@@ -274,18 +276,19 @@
       this.secid=e.target.selectedItem.value;
       this.$.observerservice.Fnteachersubject(this.staffid,this.grid,this.secid);
       },
-      subjectid:function(e){
-
+       subjectid:function(e){
        this.sid=e.target.selectedItem.value;
-
        this.$.observerservice.Fnobservermark(this.staffid,this.grid,this.secid,this.sid);
+       this.fnentermark();
+       alert("wedf"); 
        this.$.tb3.hidden=false;
        this.$.tb6.hidden=false;
        this.$.tb10.hidden=false;
        this.$.tb0.hidden=false;
-       
-              
-     },
+       this.hidescore1=false;
+       this.hidescorearr1=false;
+
+},
 
     fnentermark:function(f)
     { 

@@ -1,346 +1,364 @@
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+<link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
+<link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
 
-<link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="teacher-observation-card">
+<dom-module id="teacher-observation_card">
   <template>
     <style>
       :host {
         display: block;
       }
-       .tb1{
-               position: relative;
-               width: 60%;
-               height: 100%;
-               border: 1px solid black;
-               top:90px;
-               left: 250px
+      .tb1{
+            position: relative;
+            width: 60%;
+            height: 100%;
+            border: 1px solid black;
+            top:90px;
+           left: 250px
         }
-      .tb0{
-               position: relative;
-               width: 50%;
-               height: 10%;
+      #tb0{
+              position:relative;
+              width: 50%;
+              height: 10%;
               text-align: center;
-               top:60px;
-               left: 300px
+            top:100px;
+              left:350px
         }
      #tb2{
               width:20%;
          }
 
-    .tb3{
+    #tb3{
               position: relative;
+              height: 100%;
+              border: 1px solid black;
+              top:100px;
+              left: 350px;
+              text-align: left;
+       }
+    #tb6{
+                position: relative;
               width: 70%;
               height: 100%;
               border: 1px solid black;
               top:150px;
               left: 200px
        }
-    .tb6{
+       #tb10{
               position: relative;
               width: 70%;
               height: 100%;
-              border: 1px solid black;
+          
               top:200px;
               left: 200px
        }
 
+
    #tb4{
-             width:8%
+             width:2%
        }
-   #tb5{
-             width:22%
+        #tb5{
+             height:60px;
        }
+
     #tb7{
              width:10%
        }
      #tb8{
              width:60%
-       }    
-
+       }
+       #tc{
+        color:#003399;
+       } 
+        #tb9{
+        color:white;
+        background:#336699;
+       } 
+      .row{
+        margin: 5%auto;
+        text-align: center;
+        @apply(--layout-horizontal);
+      }
+      #div1
+      {
+        @apply(--layout-horizontal);
+      }
     </style>
-    <div>
-        <div class="tb0">
-              <h1>Mount Litera Zee School Teacher Observation Form</h1>
+<div>
+    <div class="row">
+      
+     <paper-dropdown-menu label="Select TeacherName">
+      <paper-menu class="dropdown-content"  on-iron-select="teachersid">   
+        <template is="dom-repeat" items="{{teacharr}}" as="view">
+                <paper-item value="{{view.id}}">{{view.password}}</paper-item>
+        </template>
+      </paper-menu>
+     </paper-dropdown-menu>
+           <paper-input label="Observername" id="Observername" value="{{uname}}"></paper-input>   
+
+     <paper-dropdown-menu label="GradeName">
+      <paper-menu  id="grdj" class="dropdown-content"  on-iron-select="gradeid">   
+        <template is="dom-repeat" items="{{gradearrs}}" as="view">
+                <paper-item value="{{view.gid}}">{{view.gradename}}</paper-item>
+        </template>
+      </paper-menu>
+     </paper-dropdown-menu>
+      <paper-dropdown-menu label="SectionName">
+      <paper-menu id="subj"  class="dropdown-content"  on-iron-select="sectionid">   
+            <template is="dom-repeat" items="{{sectionarr}}" as="view">
+                <paper-item value="{{view.section_id}}">{{view.section_id}}</paper-item>
+            </template>
+      </paper-menu>
+     </paper-dropdown-menu>
+    
+      <paper-dropdown-menu label=" Subject Name">
+      <paper-menu id="subj"  class="dropdown-content"  on-iron-select="subjectid">   
+            <template is="dom-repeat" items="{{subarrs}}" as="view">
+                <paper-item value="{{view.sid}}">{{view.subjectname}}</paper-item>
+            </template>
+      </paper-menu>
+     </paper-dropdown-menu>
+    </div>
+ <div>
+        <div id="tb0">
+              <h1>Teacher Observation Form</h1>
         </div>
-      <table border="1" class="tb1">
-      <tbody>
-        <!-- <h2>Mount Litera Zee School Teacher Observation Form</h2> -->
-         <tr>
-            <th id="tb2">School Name</th>
-            <th id="tb2"></th>
-            <th id="tb2"></th>
-            <th id="tb2"></th>
-            <th id="tb2">Total Score</th>
-         </tr>
-           <tr>
-            <th id="tb2">Observer Name</th>
-            <th id="tb2"></th>
-            <th id="tb2"></th>
-            <th id="tb2"></th>
-            <th id="tb2"></th>
-         </tr>
-           <tr>
-            <th id="tb2">Teacher Observed</th>
-            <th id="tb2"></th>
-            <th id="tb2"></th>
-            <th id="tb2"></th>
-            <th id="tb2" rowspan="2">Shared with Teacher On</th>
-         </tr>
-           <tr>
-            <th id="tb2">Class Observed</th>
-            <th id="tb2"></th>
-            <th id="tb2">Subject Observed</th>
-            
-            <th id="tb2"></th>
-         </tr>
+        <div id="div1">
+        <table border="1" width="50%" id="tb3">
+        
+         <template is="dom-repeat" items="{{descriptorarr}}" as="view">
           <tr>
-            <th id="tb2">Date of Observation</th>
-            <th id="tb2"></th>
-            <th id="tb2">Time of Observation</th>
-            <th id="tb2"></th>
-            <th id="tb2"></th>
+         <th id="tb5" height="100px">{{view.description}}</th>
          </tr>
-
-
-
-        </tbody>
-        </table>
-        <table border="1" class="tb3">
-        <tbody>
-            <tr>
-            <th id="tb5">Observation Parameters</th>
-            <th id="tb4">1</th>
-            <th id="tb4">2</th>
-            <th id="tb4">3</th>
-            <th id="tb4">4</th>
-            <th id="tb4">5</th>
-             <th id="tb4">Score</th>
-          </tr>
-         <tr>
-            <th id="tb5">The specific aims of the lesson are clear to the teachers.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">The content being transacted is appropriate to the level of students.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Teaching techniques are appropriate to the lesson being taught.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">The content is broken into small learning chunks to enable learning of learners.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-          <th id="tb5">Learning of concepts and principles is ensured through verbal, visual and experiential modes.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Sequencing of lesson is logical and follows a plan.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-             <th id="tb5">Active participation by learners (Learner Talk time). Learners are free to ask questions or raise doubts</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Teachers’ question are open-ended and appropriate.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Positive re-enforcement is evident.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Communication is effective and clear.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Sequencing of lesson is logical and follows a plan.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Blackboard work and teaching aids as teachers’ input is effective.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Students interest has been sustained through the lesson.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Assessment of learners’  learning in relation to aim is appropriate.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-            <th id="tb5">Pair work/Group work has been used.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
+         </template>
+         </table>
+         <table border="1" hidden$="{{hidescorearr1}}" id="tb3">
+          <template is="dom-repeat" items="{{scorearr1}}" as="view1">
           <tr>
-           <th id="tb5">Confidence of teacher is evident</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
+         <th id="tb5" height="100px">{{view1.score}}</th>
+         </tr>
+          </template>
+          </table>
+           <table border="1" hidden$="{{hidescorearr2}}" id="tb3">
+          <template is="dom-repeat" items="{{scorearr2}}" as="view1">
+          <tr>
+         <th id="tb5" height="100px">{{view1.score}}</th>
+         </tr>
+          </template>
+          </table>
+           <table border="1" hidden$="{{hidescorearr3}}" id="tb3">
+          <template is="dom-repeat" items="{{scorearr3}}" as="view1">
+          <tr>
+         <th id="tb5" height="100px">{{view1.score}}</th>
+         </tr>
+          </template>
+          </table>
+           <table border="1" id="tb3" hidden$="{{hidescore1}}">
+          <template is="dom-repeat" items="{{descriptorarr}}" as="view">
+          <tr>
+          <td id="tb5" height="100px"><paper-input   name="{{view.id}}" hidden$="{{hidescore1}}" auto-validate allowed-pattern="[0-9,.]$"  on-change="FnScore"></paper-input></td>
           </tr>
-           <tr>
-            <th id="tb5">Re-capitulation of main points at the end of the lesson was appropriate.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-          </tr>
-           <tr>
-           <th id="tb5">Incorporation of values is evident during the transaction of the lesson.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-           <th id="tb5">Teacher is empathetic to the needs of all the students.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-           <tr>
-           <th id="tb5">Home work given by the teacher is interesting and thought provoking.</th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-            <th id="tb4"></th>
-             <th id="tb4"></th>
-          </tr>
-       <table border="1" class="tb6">
+          </template>
+          </table>
+           </div>
+          <table border="1" id="tb6">
          <tbody>
               <tr>
-           <th id="tb7">Strength:</th><th id="tb8"></th>
+           <th id="tb7">Strength:</th><th id="tb8">
+            
+             <paper-textarea  value="{{Strength}}" style="width:60%"></paper-textarea>
+           </th>
+            </tr>
+            <tr>
+           <th id="tb7">Improvement Areas:</th> <th id="tb8">
+            <paper-input value="{{Areas}}" ></paper-input> 
+           </th>
            
            
             
           </tr>
             <tr>
-           <th id="tb7">Improvement Areas:</th> <th id="tb8"></th>
+           <th id="tb7">Innovation:</th> <th id="tb8">
+             <paper-input value="{{Innovation}}"></paper-input>
+           </th>
            
            
             
           </tr>
             <tr>
-           <th id="tb7">Innovation:</th> <th id="tb8"></th>
-           
-           
-            
-          </tr>
-            <tr>
-           <th id="tb7">Any other comment:</th> <th id="tb8"></th>
-           
-           
-            
-          </tr>
-
-
-
-
-
-         </tbody>
+              <th id="tb7">Any other comment:</th> <th id="tb8">
+                <paper-input value="{{comment}}"></paper-input>
+              </th> 
+           </tr>
+          
+     </tbody>
        </table>
          
-      
-
-    </div>
+<table border="0" id="tb10">
+             <tbody>
+             <tr >
+             <th ><paper-button on-click="sumbitmark" id="tb9">Submit</paper-button></th>
+              <th><paper-button on-click="tupdate" id="tb9">Update</paper-button></th>
+               <tr>
+             </tbody>
+           </table>
+</div>
+<teacher-observation_service id="observerservice"></teacher-observation_service>
   </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'teacher-observation-card',
-    });
+      is: 'teacher-observation_card',
+     ready:function(){
+      this.$.tb3.hidden=true;
+      //this.$.tb6.hidden=true;
+      //this.$.tb10.hidden=true;
+      //this.$.tb0.hidden=true;
+     /* this.$.service.teachersids();
+      this.$.service.observerids(); 
+     */
+      //this.$.tb4.hidden=true;
+     // this.uname=sessionStorage.getItem("curr_sess_loggeduname");
+      //alert(this.uname);
+      },
+      Fnobservername:function()
+      {
+        this.uname=sessionStorage.getItem("curr_sess_loggeduname");
+      },
+      observerid:function(e){
+      //this.empty1();  
+      document.querySelector('#grdj').selected=-1;
+      document.querySelector('#subj').selected=-1;
+      this.obid=e.target.selectedItem.value;
+      //alert(this.staffid);
+      //alert("hi");
+     // this.$.service.cal();
+     
+     },
+     
+      teachersid:function(e){
+     
+      //this.$.tb4.hidden=true;
+      //this.empty1();
+      //this.empty();
+      
+      this.staffid=e.target.selectedItem.value;
+      //this.$.service.tfun(this.staffid);
 
+      //this.empty();
+      //this.tm();
+      document.querySelector('#grdj').selected=-1;
+      document.querySelector('#subj').selected=-1;
+      //this.$.tb9.hidden=true;
+      //alert(this.staffid);
+      this.$.observerservice.Fnteachergrade(this.staffid);
+          
+      },
+      gradeid:function(e){
+      
+      this.grid=e.target.selectedItem.value;
+      this.$.observerservice.Fnteachersection(this.staffid,this.grid);
+    //  this.$.service.ofun();
+      },
+      sectionid:function(e)
+      {
+      this.secid=e.target.selectedItem.value;
+      this.$.observerservice.Fnteachersubject(this.staffid,this.grid,this.secid);
+      },
+      subjectid:function(e){
+
+       this.sid=e.target.selectedItem.value;
+
+       this.$.observerservice.Fnobservermark(this.staffid,this.grid,this.secid,this.sid);
+       this.$.tb3.hidden=false;
+       this.$.tb6.hidden=false;
+       this.$.tb10.hidden=false;
+       this.$.tb0.hidden=false;
+       
+              
+     },
+
+    fnentermark:function(f)
+    { 
+      if(f==0)
+      {
+      this.hidescorearr1=true;
+      this.hidescorearr2=true;
+      this.hidescorearr3=true;
+      }
+    else if(f==1)
+    {
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      {
+        this.hidescore1=true;
+        this.hidescorearr2=true;
+        this.hidescorearr3=true;
+
+      }
+      else
+      {
+        this.hidescore1=false;
+      }
+      
+    }
+    else if(f==2)
+    {
+      var role=sessionStorage.getItem("curr_sess_loggedroleid");
+       if(role=="co-ordinator"||role=="headmistress")
+       {
+        this.hidescore1=true;
+        this.hidescorearr3=true;
+      }
+      else
+      {
+        this.hidescore1=false;
+         this.hidescorearr3=true;
+
+      }
+    }
+ else if(f==3)
+    {
+      var role=sessionStorage.getItem("curr_sess_loggedroleid");
+     if(role=="principal"||role=="headmistress"||role=="co-ordinator")
+       {
+        this.hidescore1=true;
+        
+      }
+      else
+      {
+        this.hidescore1=false;
+      }
+    }
+
+    },
+    FnScore:function(e)
+    {
+    //alert(e.target.value+''+e.target.name);
+    var did=e.target.name;
+    var val=e.target.value;
+      var obid=sessionStorage.getItem("curr_sess_loggedid");
+      var rid=sessionStorage.getItem("curr_sess_loggedroleid");
+    this.$.observerservice.Fnobserverscore(did,val,this.staffid,obid,rid,this.grid,this.secid,this.sid);
+    },
+    sumbitmark:function(e)
+    {
+      this.$.observerservice.Fnobserverupdateflag(this.staffid,this.grid,this.secid,this.sid);
+    }
+
+
+
+
+         
+    });
   })();
   </script>
 </dom-module>

@@ -149,11 +149,14 @@
         var school=e.detail.response.returnval[0].school;
         var name=e.detail.response.returnval[0].name;
         var address=e.detail.response.returnval[0].addr;
+        var uname=e.detail.response.returnval[0].uname;
+       // alert(uname);
         //var roleid=e.detail.response.returnval[0].id;
         sessionStorage.setItem("curr_sess_loggedid",username);
         
         sessionStorage.setItem("curr_sess_loggedschoolid",school);
         sessionStorage.setItem("curr_sess_loggedschoolname",name);
+        sessionStorage.setItem("curr_sess_loggeduname",uname);
         sessionStorage.setItem("curr_sess_loggedschooladdress",address);
         this.$.bassesmentservice.callAcademicService(); 
         localStorage.setItem('curr_sess_report','0');        

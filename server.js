@@ -82,7 +82,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
   var username={"id":req.query.username};
   var password={"password":req.query.password};
   var schoolid={school_id:req.query.schoolid};
-  connection.query('SELECT  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr  from md_employee where ? and ? and ? and ?',[id,username,password,schoolid],
+  connection.query('SELECT name as uname,  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr  from md_employee where ? and ? and ? and ?',[id,username,password,schoolid],
     function(err, rows)
     {
     if(!err)
@@ -1761,6 +1761,337 @@ app.post('/termwisereport-service' ,  urlencodedParser,function (req, res)
 });
 });
 
+app.post('/teacherid-service' ,  urlencodedParser,function (req, res)
+{ 
+  var qur;
+ var schol={school_id:req.query.schoolid};
+ var teacherid=req.query.id;
+ if(req.query.roleid=="co-ordinator")
+ {
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+ }
+ else  if(req.query.roleid=="headmistress")
+ {
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag>='0') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+ }
+  else  if(req.query.roleid=="principal")
+ {
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag>='1') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+ }
+connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+app.post('/observerdescriptor-service' ,  urlencodedParser,function (req, res)
+{ 
+
+connection.query("select * from md_observer_descriptor",
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+app.post('/teachergrade-service' ,  urlencodedParser,function (req, res)
+{ 
+  var qur;
+
+var schol={school_id:req.query.schoolid};
+ var teacherid={id:req.query.id};
+ if(req.query.roleid=="co-ordinator")
+ {
+  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
+
+}
+else  if(req.query.roleid=="headmistress")
+ {
+  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag>='0' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
+
+}
+else  if(req.query.roleid=="principal")
+ {
+  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag>='1' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
+
+}
+connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+app.post('/teachersection-service' ,  urlencodedParser,function (req, res)
+{ 
+  var qur;
+
+var schol={school_id:req.query.schoolid};
+ var teacherid={id:req.query.id};
+ var gradeid={grade_id:req.query.gradeid};
+  if(req.query.roleid=="co-ordinator")
+ {
+  qur="select  distinct section_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
+}
+else if(req.query.roleid=="headmistress")
+ {
+  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag>='0') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
+}
+else if(req.query.roleid=="principal")
+ {
+  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag>='1') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
+}
+connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+
+
+app.post('/teachersubject-service' ,  urlencodedParser,function (req, res)
+{ 
+  var qur;
+var schol={school_id:req.query.schoolid};
+ var teacherid={id:req.query.id};
+ var gradeid={grade_id:req.query.gradeid};
+ var sectionid={section_id:req.query.sectionid};
+ if(req.query.roleid=="co-ordinator")
+ {
+qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+}
+else if(req.query.roleid=="headmistress")
+ {
+qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in (select subject from tr_teacher_observation_flag where flag>='0' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+}
+else if(req.query.roleid=="principal")
+ {
+qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in(select subject from tr_teacher_observation_flag where flag>='1' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+}
+connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+
+app.post('/observermarkflag-service' ,  urlencodedParser,function (req, res)
+{ 
+var schol={school_id:req.query.schoolid};
+ var teacherid={name:req.query.id};
+ var gradeid={grade:req.query.gradeid};
+ var sectionid={section:req.query.sectionid};
+ var subjectid={subject:req.query.subjectid};
+connection.query("select * from tr_teacher_observation_flag where ? and ? and ? and ? and ?",[schol,teacherid,gradeid,sectionid,subjectid],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+app.post('/observerscore-service',  urlencodedParser,function (req, res)
+{  
+  var response={
+         
+         description_id:req.query.desid,
+         score:req.query.score,
+         teacher_id:req.query.teacherid,
+         observer_id:req.query.observerid,
+         role:req.query.roleid,
+         grade:req.query.grade,
+         section:req.query.section,
+         subject:req.query.subject                      
+  }
+  connection.query("INSERT INTO tr_teacher_observation_mark set ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+app.post('/observerinsertflag-service',  urlencodedParser,function (req, res)
+{  
+  var response={
+         
+         school_id:req.query.schoolid,
+         name:req.query.id,
+         grade:req.query.gradeid,
+         section:req.query.sectionid,
+         subject:req.query.subjectid,
+         flag:req.query.flag                    
+  }
+  connection.query("INSERT INTO tr_teacher_observation_flag set ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+app.post('/observerupdateflag-service',  urlencodedParser,function (req, res)
+{  
+  
+         
+       var schol= {school_id:req.query.schoolid};
+       var name={name:req.query.id};
+       var grade={grade:req.query.gradeid};
+        var section={section:req.query.sectionid};
+        var subject={subject:req.query.subjectid};
+        var flag={flag:req.query.flag};                    
+  
+  connection.query(" update tr_teacher_observation_flag set ? where ? and ? and ? and ? and ?",[flag,schol,name,grade,section,subject],
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+app.post('/fetchobservermark-service' ,  urlencodedParser,function (req, res)
+{ 
+ var teacherid={teacher_id:req.query.id};
+ var gradeid={grade:req.query.gradeid};
+ var sectionid={section:req.query.sectionid};
+ var subjectid={subject:req.query.subjectid};
+connection.query("select * from tr_teacher_observation_mark where ? and ? and ? and ?",[teacherid,gradeid,sectionid,subjectid],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

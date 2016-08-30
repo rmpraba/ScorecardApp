@@ -72,6 +72,40 @@
         on-response="fetchstudentResponse"
         debounce-duration="300"
     >
+
+    <iron-ajax
+        method="post"
+        id="fetchstudentreportforhealthajax"
+        url="{{fetchstudentreportforhealthurl}}"
+        params="{{fetchstudentreportforhealthparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentreportforhealthResponse"
+        debounce-duration="300"
+    >
+
+
+    <iron-ajax
+        method="post"
+        id="fetchstudentforattendanceajax"
+        url="{{fetchstudentforattendanceurl}}"
+        params="{{fetchstudentforattendanceparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentforattendanceResponse"
+        debounce-duration="300"
+    >
+
+    <iron-ajax
+        method="post"
+        id="fetchstudentreportforattendanceajax"
+        url="{{fetchstudentreportforattendanceurl}}"
+        params="{{fetchstudentreportforattendanceparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentreportforattendanceResponse"
+        debounce-duration="300"
+    >
    <iron-ajax        
         method="post"
         id="fetchlifeskillajax"
@@ -139,6 +173,10 @@
   (function() {
     'use strict';
     var tempcnt1=0,tempcnt2=0;
+    var hgrade;
+    var hsection;
+    var healtharr=[];
+    var attendancearr=[];
     Polymer({
       is: 'co-scholastic-service',
       callWorkingdaysService:function(){
@@ -206,23 +244,53 @@
          document.querySelector('coscholastic-assesment-card').sectionarr=e.detail.response.returnval; 
       },
       callFetchStudentInfo:function(grade,section){
-         this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
+        hgrade=grade;
+        hsection=section;
+
+         this.fetchstudentreportforhealthurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforhealth-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.gradename=grade;
          obj.section=section;
          obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchstudentreportforhealthparam= obj;
+         // alert(JSON.stringify(obj));
+         this.$.fetchstudentreportforhealthajax.generateRequest();
+        
+      },
+      fetchstudentreportforhealthResponse:function(e)
+      {
+        healtharr=e.detail.response.returnval;
+        
+        this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudentforhealth-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.gradename=hgrade;
+         obj.section=hsection;
+         obj.subject=localStorage.getItem("curr_sess_subject");
          this.fetchstudentparam= obj;
          // alert(JSON.stringify(obj));
          this.$.fetchstudentajax.generateRequest();
       },
-      fetchstudentResponse:function(e){         
-        var arr=e.detail.response.returnval;        
-        for(var i=0;i<arr.length;i++){
-          arr[i].serialno=parseInt(i)+1;
+      fetchstudentResponse:function(e){ 
+
+        var arr=e.detail.response.returnval;      
+       // alert(JSON.stringify(arr));  
+       
+        for(var i=0;i<arr.length;i++)
+        {
+            healtharr.push(arr[i]);
         }
+
+         for(var i=0;i<healtharr.length;i++)
+         {
+
+          healtharr[i].serialno=parseInt(i)+1;
+         }
+         // alert(JSON.stringify(healtharr));
         if(localStorage.getItem("curr_sess_subject")=="Health"){
-        document.querySelector('cce-fivetoten-health-card').studarr=arr;           
+            //alert('d');
+        document.querySelector('cce-fivetoten-health-card').studarr=healtharr;           
         } 
         else if(localStorage.getItem("curr_sess_subject")=="Attendance"){            
         document.querySelector('attendance-card').studarr=arr;                 
@@ -344,7 +412,7 @@
          this.$.overallinsertcoassesmentajax.generateRequest();
       },
       overallinsertcoassesmentResponse:function(e){
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
       },
       callinsertattendanceService:function(studid,studname,attendance,workingdays,generic,specific){
         this.insertattendanceurl=sessionStorage.getItem("addrinfo")+"/insertattendance-service";
@@ -394,7 +462,57 @@
       inserthealthResponse:function(e){        
         if(e.detail.response.returnval=="succ")
           alert('Inserted!');
-      }     
+      } ,
+      callFetchStudentInfoforattendance:function(){
+       
+
+         this.fetchstudentreportforattendanceurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforattendance-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchstudentreportforattendanceparam= obj;
+         // alert(JSON.stringify(obj));
+         this.$.fetchstudentreportforattendanceajax.generateRequest();
+        
+      },
+      fetchstudentreportforattendanceResponse:function(e)
+      {
+        attendancearr=e.detail.response.returnval;
+        
+        this.fetchstudentforattendanceurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforattendance-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
+         
+          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchstudentforattendanceparam= obj;
+         this.$.fetchstudentforattendanceajax.generateRequest();
+      },
+      fetchstudentforattendanceResponse:function(e)
+      {
+         var arr=e.detail.response.returnval;      
+       // alert(JSON.stringify(arr));  
+       
+        for(var i=0;i<arr.length;i++)
+        {
+            attendancearr.push(arr[i]);
+        }
+
+         for(var i=0;i<attendancearr.length;i++)
+         {
+
+          attendancearr[i].serialno=parseInt(i)+1;
+         }
+           document.querySelector('attendance-card').studarr=attendancearr;
+      }
+
     });
   })();
   </script>

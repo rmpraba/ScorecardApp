@@ -63,6 +63,18 @@
         on-response="fetchstudentResponse"
         debounce-duration="300"
     > 
+
+
+     <iron-ajax
+        method="post"
+        id="fetchstudbeginnerreportajax"
+        url="{{fetchstudbeginnerreporturl}}"
+        params="{{fetchstudbeginnerreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudbeginnerreportResponse"
+        debounce-duration="300"
+    > 
     <iron-ajax
         method="post"
         id="insertbamarkajax"
@@ -97,7 +109,11 @@
   </template>
   <script>
   (function() {
-    'use strict';
+    var studentarr=[];
+    var bgrade;
+    var bsection;
+    var bsubject;
+
     Polymer({
       is: 'beginner-assesment-service',
       ready:function(){
@@ -163,26 +179,123 @@
           // alert(JSON.stringify(e.detail.response.returnval));
           document.querySelector('beginner-assesment-card').subjectarr=e.detail.response.returnval;
       },
-      callFetchStudentInfo:function(grade,section){
-         this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudent-service";
-         var obj={"schoolid":"","gradename":"","section":""};
+      callFetchStudentInfo:function(grade,section,subject){
+        bgrade=grade;
+        bsection=section;
+        bsubject=subject;
+         this.fetchstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstudentbeginner-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.gradename=grade;
          obj.section=section;
+         obj.subject=subject;
          this.fetchstudentparam= obj;
          this.$.fetchstudentajax.generateRequest();
+
+
+        
+      },
+      fetchstudbeginnerreportResponse:function(e)
+      {
+        var reportarr=[];
+        var arr=e.detail.response.returnval;
+        //alert(JSON.stringify(arr));
+         if(localStorage.getItem("curr_sess_subject")!="English") 
+         {
+        for(var i=0;i<arr.length;i++)
+        {
+          var obj={"school_id":"","id":"","student_name":"","class_id":"","score":"","grade":""}
+          obj.school_id=arr[i].school_id;
+          obj.id=arr[i].student_id;
+          obj.student_name=arr[i].student_name;
+          obj.class_id=arr[i].class_id;
+          obj.grade=arr[i].grade;
+          obj.score=arr[i].mark;
+          reportarr.push(obj);
+        }
+      }
+      else
+      {
+
+        for(var i=0;i<arr.length;i++)
+        {
+          var engarr=[];
+          var obj={"category_id":"","mark":"","score":"","grade":""}
+          obj.category=arr[i].category_id;
+          obj.mark=arr[i].mark;
+          obj.score=arr[i].score;
+          obj.grade=arr[i].grade;
+          engarr.push(obj);
+          for(var j=i+1;j<arr.length;j++)
+          {
+            if(arr[i].student_id==arr[j].student_id)
+            {
+          var obj={"category_id":"","mark":"","score":"","grade":""}
+          obj.category=arr[j].category_id;
+          obj.mark=arr[j].mark;
+          obj.score=arr[j].score;
+          obj.grade=arr[j].grade;
+          engarr.push(obj);
+          arr.splice(j,1);
+            }
+          }
+          var obj={"school_id":"","id":"","student_name":"","class_id":"","mark1":"","mark2":"","score":"","grade":""}
+          obj.school_id=arr[i].school_id;
+          obj.id=arr[i].student_id;
+          obj.student_name=arr[i].student_name;
+          obj.class_id=arr[i].class_id;
+          obj.grade=arr[i].grade;
+          obj.score=arr[i].score;
+          obj.score=engarr[0].score;
+          obj.grade=engarr[0].grade;
+
+          if(engarr[0].category_id=="ReadingScore")
+          {
+            obj.mark1=engarr[0].mark;
+          }
+          else
+          {
+            obj.mark2=engarr[0].mark;
+          }
+          if(engarr[1].category_id=="Activity")
+          {
+            obj.mark2=engarr[1].mark;
+          }
+          else
+          {
+            obj.mark1=engarr[1].mark;
+          }
+          reportarr.push(obj);
+        }
+      }
+        for(var i=0;i<studentarr.length;i++)
+        {
+          reportarr.push(studentarr[i]);
+        }
+        for(var i=0;i<reportarr.length;i++){
+          reportarr[i].serialno=i+1;
+         } 
+         //alert(JSON.stringify(reportarr));
+        sessionStorage.setItem("curr_sess_classid",reportarr[0].class_id);    
+        if(localStorage.getItem("curr_sess_subject")=="English")    
+        document.querySelector('beginner-assesment-markentrysheet').studarr=reportarr;
+        else
+        document.querySelector('beginner-assesment-lang-markentrysheet').studarr=reportarr;
       },
       fetchstudentResponse:function(e){   
-         // alert(JSON.stringify(e.detail.response.returnval));      
+
+         //alert(JSON.stringify(e.detail.response.returnval));      
          var arr=e.detail.response.returnval;
-         for(var i=0;i<arr.length;i++){
-          arr[i].serialno=i+1;
-         } 
-        sessionStorage.setItem("curr_sess_classid",arr[0].class_id);    
-        if(localStorage.getItem("curr_sess_subject")=="English")    
-        document.querySelector('beginner-assesment-markentrysheet').studarr=arr;
-        else
-        document.querySelector('beginner-assesment-lang-markentrysheet').studarr=arr;
+         studentarr=arr;
+          this.fetchstudbeginnerreporturl=sessionStorage.getItem("addrinfo")+"/fetchstudbeginnerreport-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.gradename=bgrade;
+         obj.section=bsection;
+         obj.subject=bsubject;
+         this.fetchstudbeginnerreportparam= obj;
+         this.$.fetchstudbeginnerreportajax.generateRequest();
+         
       },
       callbamarkinsertService:function(studentid,category,mark,score,grade){
         // alert(mark+" "+score);

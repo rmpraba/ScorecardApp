@@ -29,7 +29,7 @@
         <td id="tb1"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>
         <td id="tb1">
           <paper-dropdown-menu id="generic" label="Select comment" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectComment"  attr-for-selected="value" required>  
+            <paper-menu class="dropdown-content" selected="{{generic}}"  on-iron-select="FnSelectComment"  attr-for-selected="value" required>  
               <!-- <template is="dom-repeat" items="{{commentarr}}"> -->
                 <paper-item value="Good">Good</paper-item>
                 <paper-item value="Excellent">Excellent</paper-item>
@@ -57,20 +57,24 @@
       ready:function(){
         this.flag=0;
       },     
-      FnAttendance:function(e){  
+      FnAttendance:function(e)
+      {  
          if(this.flag==1)
          this.callService();     
       },
-      FnSpecific:function(){
-        if(this.flag==1)
+      FnSpecific:function()
+      {
+            this.flag=1;
           this.callService();
       },
-      FnSelectComment:function(e){
-        this.flag=1;
+      FnSelectComment:function(e)
+      {
         generic = e.target.selectedItem.textContent.trim();
-        this.callService();  
+         if(this.flag==1)
+         this.callService();   
       },
-      callService:function(){           
+      callService:function()
+      {           
         this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays,generic,this.specificcomment); 
       }
     });

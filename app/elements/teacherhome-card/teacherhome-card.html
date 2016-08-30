@@ -60,6 +60,9 @@
       <div class="card" hidden$="{{ConsolidatedReport}}">
        <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
       </div>
+       <div class="card" hidden$="{{teach_obser}}">
+       <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
+     </div>
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -89,6 +92,7 @@
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
+    <teacher-observation_service id="observerservice"></teacher-observation_service>
   </template>
   <script>
   (function() {
@@ -104,6 +108,7 @@
         this.TA=true;
         this.Analysis=true;
         this.ConsolidatedReport=true;
+        this.teach_obser=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -204,12 +209,18 @@
           // this.BA=false;
           // this.TA=false;
           if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
+          {
           this.ConsolidatedReport=false;
           this.Report=false;
           this.GenerateReport=false;
+          this.teach_obser=false;
+        }
           if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+          {
           this.Approve=false;
           this.Analysis=false;
+          this.teach_obser=false;
+          }
         }
       },
       FnRefresh:function()
@@ -226,6 +237,18 @@
         localStorage.setItem('curr_sess_loggedassesmenttype','Consolidatedreport');
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle();
+      },
+      FnTeacherbserver:function()
+      {
+        localStorage.setItem('curr_sess_loggedassesmenttype','teach_obser'); 
+        this.$.cdialog.toggle();
+         document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('teacherobservation','Teacher Observation Card'); 
+         this.$.observerservice.fetchobserverdescription();
+        this.$.observerservice.fetchteachersid();
+         document.querySelector('teacher-observation_card').Fnobservername();
+       //this.$.service.uname=sessionStorage.getItem("curr_sess_loggeduname");
+             
       }
     });
   })();

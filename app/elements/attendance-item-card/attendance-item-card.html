@@ -57,20 +57,24 @@
       ready:function(){
         this.flag=0;
       },     
-      FnAttendance:function(e){  
+      FnAttendance:function(e)
+      {  
          if(this.flag==1)
          this.callService();     
       },
-      FnSpecific:function(){
-        if(this.flag==1)
+      FnSpecific:function()
+      {
+            this.flag=1;
           this.callService();
       },
-      FnSelectComment:function(e){
-        this.flag=1;
+      FnSelectComment:function(e)
+      {
         generic = e.target.selectedItem.textContent.trim();
-        //this.callService();  
+         if(this.flag==1)
+         this.callService();   
       },
-      callService:function(){           
+      callService:function()
+      {           
         this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays,generic,this.specificcomment); 
       }
     });

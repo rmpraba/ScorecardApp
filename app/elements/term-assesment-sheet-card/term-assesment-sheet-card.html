@@ -51,9 +51,9 @@
     Polymer({
       is: 'term-assesment-sheet-card',
       setPage:function(page){
-        
-        // localStorage.setItem("curr_sess_page",page);
-        // document.querySelector('component-service').callcomponentService();        
+        // alert(page);
+        localStorage.setItem("curr_sess_page",page);
+        document.querySelector('component-service').callcomponentService();        
         this.page=page;
       }
     });

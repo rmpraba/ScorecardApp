@@ -228,9 +228,11 @@
         }
         else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4")
         {  
+          // alert('yes');
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);           
           if(assesmenttype=="FA1"||assesmenttype=="FA2"||assesmenttype=="FA3"||assesmenttype=="FA4")
           {
+            // alert('in');
           document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
           document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
 

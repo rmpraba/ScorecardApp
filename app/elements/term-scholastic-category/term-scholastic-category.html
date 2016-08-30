@@ -36,6 +36,11 @@
        </paper-button>
         <center><h4>General</h4></center>
       </div>
+      <div class="card" hidden$="{{talent}}">
+       <paper-button  on-click="FnTalent" no ink><img src="../../images/talent.jpg" height="180px" width="180px">
+       </paper-button>
+        <center><h4>Talent Identification</h4></center>
+      </div>
     </div>
   </template>
   <script>
@@ -49,6 +54,7 @@
         this.coscholastic=true;
         this.coactivity=true;
         this.general=true;
+        this.talent=true;
       },
       FnHideView:function(){ 
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){  
@@ -59,6 +65,7 @@
           this.coscholastic=false;
           this.coactivity=false;
           this.general=false;
+          this.talent=false;
         }
       },
       FnScholastic:function(){
@@ -81,6 +88,12 @@
       },
       FnGeneral:function(){
         localStorage.setItem("curr_sess_subjectcategory","category4");
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('coscholasticassesment','');
+        document.querySelector('coscholastic-assesment-card').callDefaultService();
+      },
+      FnTalent:function(){
+        localStorage.setItem("curr_sess_subjectcategory","category5");
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('coscholasticassesment','');
         document.querySelector('coscholastic-assesment-card').callDefaultService();

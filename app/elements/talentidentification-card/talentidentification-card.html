@@ -1,0 +1,225 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\talentidentification-item-card/talentidentification-item-card.html">
+<link rel="import" href="../bindmarks-card/bindmarks-card.html">
+
+<link rel="import" href="../validation-dialog/validation-dialog.html">
+<link rel="import" href="../bindmarks-card/bindmarks-card.html">
+<dom-module id="talentidentification-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+        table{
+          width:60%;
+          border-collapse: collapse;
+          margin-left: 1%;
+      }
+      .studname{
+        width: 30%;
+          }
+          #tb1{
+             width:10%
+
+          }
+           #tb3{width:2.5%;
+          }
+          .button{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+          #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
+          paper-item,td{
+            text-align:left;
+          }
+          paper-input{
+            text-align:center;
+          }
+    </style>
+    <div>
+     <center><h1>{{schoolname}}</h1>
+     <div id="hidetop">
+      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+      <h4>Term - &nbsp&nbsp{{term}}  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4>
+    <table border="1" id="MarkTable1">
+     
+      <tr>
+
+       <th>Sl.No</th>
+       <th>Student's Names</th>
+       <th id="tb1">Interest area</th>
+       <th id="tb1">Identified talent</th>
+       <th id="tb1">Member of school team</th>
+       <th id="tb1">Out of school coaching taken</th>
+       <th id="tb1">Competitions attended</th>
+       <th id="tb1">Prizes won</th>
+       <th colspan="1" id="tb3"></th>
+       </tr>
+     
+      </div>
+<template is="dom-repeat" items="{{markarr}}" as="m">
+<tr><td></td>
+<template is="dom-repeat" items="{{m}}" as="mark">
+<td colspan="3">{{mark}}</td>
+</template>
+</tr>
+</template>
+
+
+<template is="dom-repeat" items="{{importarr}}" as="m">
+<tr>
+<template is="dom-repeat" items="{{m}}" as="mark1">
+<td><paper-item value="{{mark1.serialno}}" id="p2">{{mark1.serialno}}</paper-item></td>
+<td><paper-item value="{{mark1.name}}" id="p2">{{mark1.name}}</paper-item></td>
+<template is="dom-repeat" items="{{mark1.marks}}" as="mm">
+<td>
+<bindmarks-card hidepaperitem="{{hidepaperitem}}" hidepaperinput="{{hidepaperinput}}" mark="{{mm.mark}}" category="{{mm.category}}" subcategory="{{mm.sub_category}}" name="{{mm.name}}"></bindmarks-card>
+</td>
+</template>
+</template>
+<td><paper-checkbox disabled checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>  
+</tr>
+</template>
+
+ <template is="dom-repeat" items="{{studarr}}">
+      <tr>
+        <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
+        <td colspan="66"><talentidentification-item-card flag="{{flag}}" studid="{{item.id}}" studname="{{item.student_name}}"></talentidentification-item-card></td>
+      </tr>
+ </template>
+    </table>   
+<paper-button class="button" id="save" on-click="FnSave">Save</paper-button>   
+<paper-button class="button" id="submit" on-click="importmark">Submit</paper-button>
+<input type="button" id="btn2" onclick="tableToExcel('MarkTable1', 'Mark Report')" value="Export to Excel">
+    </div>
+    <validationdialog-card id="validatedialog"></validationdialog-card>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+  </template>
+   <script type="text/javascript">
+var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+})()
+</script>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'talentidentification-card',
+
+       ready:function(){
+        this.$.btn2.hidden=true;
+        this.$.submit.hidden=true;
+        this.$.save.hidden=true;
+      },
+         FnResetFlag:function(){
+        // var flag=1;
+        this.flag=1;
+        // document.querySelector('cc-eng-onetofour-item-card').FnResetFlag(flag);
+      },
+      FnToggleDialog:function(value){
+        this.$.validatedialog.FnSetMessage1(value);
+      } , 
+      setDefaultHeaders:function(){        
+        this.$.hidetop.hidden=false;
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.subject=localStorage.getItem("curr_sess_subject");
+        this.term=localStorage.getItem("curr_sess_termname");
+        // alert(this.schoolname+' '+this.academicyear);
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment1")
+        this.assesment="A1";
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment2")
+        this.assesment="A2";
+        if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
+        this.assesment="A3";
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        this.$.submit.hidden=true;
+        this.$.save.hidden=true;
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false;        
+        if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        this.$.save.hidden=true;
+        this.$.btn2.hidden=false;
+        }
+        if(localStorage.getItem('curr_sess_report')=='0')
+        {
+        this.$.submit.hidden=false; 
+        this.$.save.hidden=false;
+        this.$.btn2.hidden=true;
+        }
+        if(localStorage.getItem('curr_sess_report')=='2')
+        {
+        this.$.submit.hidden=false; 
+        this.$.save.hidden=true;
+        this.$.btn2.hidden=true;
+        }
+      }
+
+      },
+      hiddenbutton:function()
+      {
+        this.$.btn2.hidden=true;
+      },
+      FnSave:function(e){
+        alert('Student marks are saved!');
+      },
+      importmark:function()
+      {
+        alert('import');
+        this.$.assesmentservice.Fnimportmark();
+      },
+      fetchmark:function(e)
+      {
+        var scategory=e.target.name;
+        var svalue=e.target.value;
+        var sname=e.target.results;
+        this.$.assesmentservice.Fnupdatemark(sname,scategory,svalue);        
+      },
+      FnRefresh:function()
+      {
+        this.markarr=[];
+        this.importarr=[];
+        this.studarr=[];
+        this.schoolname="";
+        this.academicyear="";
+        this.grade="";
+        this.section="";
+        this.subject="";
+        this.$.hidetop.hidden=true;
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

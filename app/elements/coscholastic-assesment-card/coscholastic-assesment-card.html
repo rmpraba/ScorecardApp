@@ -107,7 +107,15 @@
       },
       callService:function(){
         this.FnRefresh();
-        this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
+        this.$.termassesmentservice.callFetchStudentInfo(gradename,section);  
+        if(subject=="Art Verticals"){        
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('talentidentification-card'); 
+        document.querySelector('talentidentification-card').setDefaultHeaders(); 
+        } 
+        if(subject=="Physical Education"){        
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('talentidentification-card'); 
+        document.querySelector('talentidentification-card').setDefaultHeaders(); 
+        }       
         if(subject=="Health"){        
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card'); 
         document.querySelector('cce-fivetoten-health-card').setDefaultHeaders(); 

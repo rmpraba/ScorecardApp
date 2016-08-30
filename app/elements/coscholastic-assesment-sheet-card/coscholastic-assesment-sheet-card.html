@@ -15,6 +15,7 @@
 <link rel="import" href="../cc-music-onetofour-card/cc-music-onetofour-card.html">
 <link rel="import" href="../cs-games-card/cs-games-card.html">
 <link rel="import" href="../cs-personalitydevelopment-card/cs-personalitydevelopment-card.html">
+<link rel="import" href="../talentidentification-card/talentidentification-card.html">
 <dom-module id="coscholastic-assesment-sheet-card">
   <template>
     <style>
@@ -23,6 +24,9 @@
       }
     </style>
     <iron-pages selected="{{page}}" attr-for-selected="data-category">
+        <section data-category="talentidentification-card">        
+          <talentidentification-card></talentidentification-card>
+        </section> 
         <section data-category="cc-art-craft-onetofour-card">        
           <cc-art-craft-onetofour-card></cc-art-craft-onetofour-card>
         </section> 

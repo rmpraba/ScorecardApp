@@ -281,7 +281,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     "(select section_id from mp_teacher_grade where "+
     "grade_id in(select grade_id from mp_teacher_grade where grade_id=(select grade_id from md_grade "+
     "where grade_name='"+req.query.gradename+"') and "+
-    "school_id='"+req.query.schoolid+"')) and school_id='"+req.query.schoolid+"'";
+    "school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"'";
   }
    else if(req.query.roleid=='principal')
   {
@@ -289,7 +289,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     "(select section_id from mp_teacher_grade where "+
     "grade_id in(select grade_id from mp_teacher_grade where grade_id=(select grade_id from md_grade "+
     "where grade_name='"+req.query.gradename+"') and "+
-    "school_id='"+req.query.schoolid+"')) and school_id='"+req.query.schoolid+"'";
+    "school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"'";
   }
 
 

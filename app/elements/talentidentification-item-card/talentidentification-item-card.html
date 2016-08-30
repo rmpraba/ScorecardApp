@@ -1,0 +1,224 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../cocurricular-service/cocurricular-service.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+
+<dom-module id="talentidentification-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+       table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      #p1{
+        width:-5px;
+      }
+      paper-input{
+        text-align: center;
+      }
+    </style>
+    <div> 
+     <table border="1">
+        <tr><td hidden><paper-input value="{{studid}}"></paper-input><paper-item value="{{studname}}"></paper-item></td>
+        <td><paper-dropdown-menu id="generic" label="Select Intrest Area" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectinterest"  attr-for-selected="value" required>               
+                <paper-item value="Theatre">Theatre</paper-item>
+                <paper-item value="Music">Music</paper-item>
+                <paper-item value="Dance">Dance</paper-item>
+                <paper-item value="Instruments">Instruments</paper-item>                           
+              
+            </paper-menu>
+          </paper-dropdown-menu></td>
+        <td><paper-dropdown-menu id="generic" label="Select Identified Talent" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelecttalent"  attr-for-selected="value" required>               
+                <paper-item value="Theatre">Theatre</paper-item>
+                <paper-item value="Music">Music</paper-item>
+                <paper-item value="Dance">Dance</paper-item>
+                <paper-item value="Instruments">Instruments</paper-item>                           
+              
+            </paper-menu>
+          </paper-dropdown-menu></td>
+        <td><paper-dropdown-menu id="generic" label="Select Membership" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectmemebership"  attr-for-selected="value" required>               
+                <paper-item value="Theatre">Theatre</paper-item>
+                <paper-item value="Music">Music</paper-item>
+                <paper-item value="Dance">Dance</paper-item>
+                <paper-item value="Instruments">Instruments</paper-item>                           
+              
+            </paper-menu>
+          </paper-dropdown-menu></td>
+        <td><paper-dropdown-menu id="generic" label="Select Coaching Taken" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content"  on-iron-select="FnSelectcoaching"  attr-for-selected="value" required>               
+                <paper-item value="Yes">Yes</paper-item>
+                <paper-item value="No">No</paper-item>                                      
+              
+            </paper-menu>
+          </paper-dropdown-menu></td>
+        <td><paper-input disabled="{{read}}" required value="{{competition}}" id="p3" on-change="FnCompetition"></paper-input></td>
+        <td><paper-input disabled="{{read}}" required  value="{{prize}}" id="p3" on-change="FnPrize"></paper-input></td>
+        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>
+        </tr>
+      </table> 
+    </div>
+    <paper-dialog modal id="adialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <p>Mark as absent?</p>
+      <paper-button on-click="FnYes">Ok</paper-button>  
+      <!-- <paper-button on-click="FnNo">No</paper-button>       -->
+    </paper-dialog>
+
+     <!-- <cocurricular-service id="assesmentservice"></cocurricular-service> -->
+     <term-assesment-service id="assesmentservice"></term-assesment-service>
+     <iron-ajax        
+        method="post"
+        id="fetchgradesajax"
+        url="{{fetchgradesurl}}"
+        params="{{fetchgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradesResponse"
+        debounce-duration="300"
+     >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var interest,talent,membership,coaching,competition,prize;
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    Polymer({
+      is: 'talentidentification-item-card',
+      ready:function(){
+        this.flag=0;
+      },
+       FnYes:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnNo:function(){
+        var id='adialog';          
+          document.getElementById(id).opened=false;          
+          // this.read=true;
+      },
+      FnChange:function(e){
+         // alert(e.target.checked);
+        if(e.target.checked==false){
+          var id='adialog';          
+          document.getElementById(id).opened=true;          
+          this.read=true;
+          this.creativity=0;
+          this.skill=0;
+          this.interest=0;
+          localStorage.setItem("curr_sess_absflag",0);
+          this.callService();
+        }
+
+      },
+      
+      FnSelectinterest:function(e){
+        interest=e.target.selectedItem.textContent.trim();
+        document.querySelector('talentidentification-card').FnToggleDialog(interest);        
+        if(this.flag==1)
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Intrested Area","Intrested Area",interest,1); 
+         // this.FnValidateCall(); 
+      },
+      FnSelecttalent:function(e){
+        talent=e.target.selectedItem.textContent.trim();
+        document.querySelector('talentidentification-card').FnToggleDialog(talent);  
+        if(this.flag==1)
+          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Identified Talent","Identified Talent",talent,2);
+         // this.FnValidateCall();      
+      } ,
+      FnSelectmemebership:function(e){
+        membership=e.target.selectedItem.textContent.trim();
+        document.querySelector('talentidentification-card').FnToggleDialog(membership); 
+      // this.FnValidateCall();
+      if(this.flag==1)
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Member of school team","Member of school team",membership,3)
+        // this.FnValidateCall();
+      },
+      FnSelectcoaching:function(e){
+        coaching=e.target.selectedItem.textContent.trim();
+        document.querySelector('talentidentification-card').FnToggleDialog(coaching); 
+         // if(this.flag==0)
+      // this.FnValidateCall();
+      if(this.flag==1)
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Out of school Coaching taken","Out of school Coaching taken",coaching,4)
+        // this.FnValidateCall();
+      },
+      FnCompetition:function(){
+        competition=this.competition;
+        document.querySelector('talentidentification-card').FnToggleDialog(this.competition);
+         // if(this.flag==0)
+      // this.FnValidateCall();
+      if(this.flag==1)
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Competitions Attended","Competitions Attended",this.interest,5)
+        // this.FnValidateCall();
+      },
+      FnPrize:function(){
+        prize=this.prize;
+        document.querySelector('talentidentification-card').FnToggleDialog(this.prize);
+         // if(this.flag==0)
+      this.FnValidateCall();
+      if(this.flag==1)
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Prizes won","Prizes won",this.prize,6)
+        // this.FnValidateCall();
+      },
+      FnValidateCall:function(){
+        this.flag=1;
+         if(this.prize==""||this.prize==null||this.competition==""||this.competition==null){
+        // this.$.p1.validate();
+        // this.$.p2.validate();
+        // this.$.p3.validate();
+         this.callFetchGrade();
+       
+      }  
+      else{
+        localStorage.setItem("curr_sess_absflag",1);
+        // this.total=parseInt(this.creativity)+parseInt(this.skill)+parseInt(this.interest);
+        // this.reduction=parseFloat(this.total)/3;
+        this.callFetchGrade(); 
+        }     
+      },
+      callFetchGrade:function(){
+        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
+        this.$.fetchgradesajax.generateRequest(); 
+      },
+      fetchgradesResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.grade=this.FnFindGrade((parseInt(this.reduction)));  
+        this.callService();  
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+      },
+      callService:function(){ 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Intrested Area","Intrested Area",interest,1); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Identified Talent","Identified Talent",talent,2);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Member of school team","Member of school team",membership,3);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Out of school Coaching taken","Out of school Coaching taken",coaching,4); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Competitions Attended","Competitions Attended",this.competition,5); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Prizes won","Prizes won",this.prize,6);
+        // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Art&Craft",this.total,this.reduction,this.grade);   
+      }
+    });
+  })();
+  </script>
+</dom-module>

@@ -114,7 +114,7 @@
         document.querySelector('cce-fivetoten-health-card').setDefaultHeaders(); 
         }
         else if(subject=="Attendance"){
-        this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
+        this.$.assesmentservice.callFetchStudentInfoforattendance();          
         this.$.assesmentservice.callWorkingdaysService();         
         document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card');
         document.querySelector('attendance-card').setDefaultHeaders();  

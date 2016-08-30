@@ -521,6 +521,52 @@ app.post('/fetchstudentforhealth-service',  urlencodedParser,function (req, res)
 });
 
 
+
+app.post('/fetchstudentforattendance-service',  urlencodedParser,function (req, res)
+{
+  var qur="select school_id,id,student_name,class_id  from md_student where  class_id="+
+"(select class_id   from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"')) and "+
+"school_id='"+req.query.schoolid+"' and id not in(select student_id from tr_term_attendance where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"')";
+ connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+     res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+app.post('/fetchstudentreportforattendance-service',  urlencodedParser,function (req, res)
+{
+  var qur="select student_id as id ,student_name,attendance,working_days,speccomment,generic from tr_term_attendance where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"'";
+ connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
 app.post('/fetchstudentreportforhealth-service',  urlencodedParser,function (req, res)
 {
   var qur="select student_id as id,student_name,grade,section,height,weight,blood_group,vision_left,vision_right,dental from tr_term_health where  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"'";
@@ -1251,7 +1297,9 @@ app.post('/insertattendance-service',  urlencodedParser,function (req,res)
          attendance:req.query.attendance,
          working_days:req.query.workingdays,
          generic:req.query.generic,
-         speccomment:req.query.specific                 
+         speccomment:req.query.specific,
+         grade:req.query.grade,
+         section:req.query.section                 
   } 
   var qur="SELECT * FROM tr_term_attendance where school_id='"+req.query.schoolid+"' and "+
   "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and class_id='"+req.query.classid+"' and "+

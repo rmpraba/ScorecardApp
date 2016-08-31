@@ -43,6 +43,7 @@
         this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
         this.$.otfscorecardservice.callFetchsubjectinfoService(this.studentid);
         this.$.otfscorecardservice.callfetchscholasticmarkService(this.studentid);
+        this.$.otfscorecardservice.fetchoveralltermwisegradeService(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('cce-onetofour-score-card','');        
         document.querySelector('cce-onetofour-score-card').setDefaultHeaders();

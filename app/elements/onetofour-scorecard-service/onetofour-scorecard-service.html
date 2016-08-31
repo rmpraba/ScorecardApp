@@ -84,6 +84,17 @@
         on-response="sendmailResponse"
         debounce-duration="300"
     >
+    
+     <iron-ajax
+        method="post"
+        id="fetchoveralltermwisegradeajax"
+        url="{{fetchoveralltermwisegradeurl}}"
+        params="{{fetchoveralltermwisegradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchoveralltermwisegradeResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -454,6 +465,131 @@
       },
       sendmailResponse:function(e){
         alert(e.detail.response);
+      },
+      fetchoveralltermwisegradeService:function(studid){
+        this.fetchoveralltermwisegradeurl=sessionStorage.getItem("addrinfo")+"/fetchoveralltermwisegrade-service";
+        var obj={"schoolid":"","studid":"","academicyear":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.studid=studid;
+        this.fetchoveralltermwisegradeparam=obj;
+        this.$.fetchoveralltermwisegradeajax.generateRequest(); 
+      },
+      fetchoveralltermwisegradeResponse:function(e){
+        var arr=e.detail.response.returnval;
+        // alert(JSON.stringify(arr));
+        for(var i=0;i<arr.length;i++){
+          // alert(scholasticarr[i].subject_name);
+          // var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
+          if(arr[i].subject_id=="English"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').et1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').et2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').et3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Mathematics"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').mt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').mt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').mt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="EVS"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').evt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').evt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').evt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Hindi"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').ht1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').ht2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').ht3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Kannada"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').ht1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').ht2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').ht3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Computer"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').ct1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').ct2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').ct3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="GK"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').gt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').gt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').gt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Art&Craft"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').at1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').at2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').at3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="music"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').mdt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').mdt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').mdt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="dance"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').mdt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').mdt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').mdt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Games"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').gat1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').gat2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').gat3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Personality Development"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('cce-onetofour-score-card').pdt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('cce-onetofour-score-card').pdt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('cce-onetofour-score-card').pdt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+        }
       }
       });
   })();

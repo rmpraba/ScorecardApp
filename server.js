@@ -2584,3 +2584,33 @@ var host = server.address().address
 var port = server.address().port
 console.log("Example app listening at http://%s:%s", host, port)
 });
+
+app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select assesment_id,student_id,subject_id,term_name,avg(rtotal),(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
+    "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' "+
+    " and  student_id='"+req.query.studid+"' group by assesment_id,subject_id,student_id";
+    
+    console.log('......................termwise..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});

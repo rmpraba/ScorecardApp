@@ -150,8 +150,9 @@
         var name=e.detail.response.returnval[0].name;
         var address=e.detail.response.returnval[0].addr;
         var uname=e.detail.response.returnval[0].uname;
-       // alert(uname);
-        //var roleid=e.detail.response.returnval[0].id;
+
+       // alert(name);
+       //var roleid=e.detail.response.retur
         sessionStorage.setItem("curr_sess_loggedid",username);
         
         sessionStorage.setItem("curr_sess_loggedschoolid",school);
@@ -163,6 +164,7 @@
         document.querySelector('app-card').setPage('homepage','Assesment Screen'); 
         document.querySelector('home-page').setPage('teacherhomecard',''); 
         document.querySelector('home-page').FnsetTitle(name);
+        document.querySelector('home-page').setUsername(uname);
         document.querySelector('teacherhome-card').FnHideView();
         }           
         else 

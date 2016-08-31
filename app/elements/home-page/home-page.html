@@ -22,6 +22,7 @@
   <style>
   .in
   {
+
   float:right;
   font-size:12px;
   }
@@ -41,14 +42,22 @@
   }
   label{
     margin-left: 35%;
+    /*font-size: 20px;*/
+    /*font-weight: bold;*/
+    
+  }
+  b{
     font-size: 20px;
-    font-weight: bold;
+  }
+  i{
+    margin-left: 15%;
+    text-transform: capitalize;
   }
   </style>
   <div class="card">
     <div class="head">
-      <paper-icon-button icon="home" on-click="FnHome"></paper-icon-button>
-      <label>{{title}}</label>
+      <paper-icon-button icon="home" on-click="FnHome"></paper-icon-button>      
+      <label><b>{{title}}</b><i>Hello!{{username}}</i></label>
       <paper-button class="in" on-click="signout">Sign Out</paper-button>
     </div>
 
@@ -115,9 +124,13 @@
   is: "home-page",
   ready: function(){      
   },
+  setUsername:function(name){
+    this.username=name;
+    this.title=sessionStorage.getItem("curr_sess_loggedschoolname");
+  },
   setPage:function(page,title){    
    this.page=page;
-   this.title=title;
+   // this.title=title;
    localStorage.setItem("curr_sess_page",page);
   },
   signout:function()

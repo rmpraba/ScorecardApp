@@ -1907,6 +1907,34 @@ connection.query(qur,
     {
     if(rows.length>0)
     {
+     // console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+app.post('/observername-service' ,  urlencodedParser,function (req, res)
+{ 
+var observersid={name:req.query.id};
+var observersid1={name:req.query.id1};
+var observersid2={name:req.query.id2};
+console.log(observersid);
+console.log(observersid1);
+console.log(observersid2);
+connection.query("select name,role_id from md_employee where (id='"+req.query.id+"'or id='"+req.query.id1+"' or id='"+req.query.id2+"')and role_id not in('subject-teacher')",
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
       console.log(rows);
       res.status(200).json({'returnval': rows});
     }
@@ -1945,6 +1973,9 @@ connection.query("select * from md_observer_descriptor",
       console.log(err);
 });
 });
+
+
+
 
 app.post('/teachergrade-service' ,  urlencodedParser,function (req, res)
 { 

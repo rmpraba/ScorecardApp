@@ -472,21 +472,28 @@
         if(localStorage.getItem("curr_sess_subject")=="Personality Development"){        
         document.querySelector('cs-personalitydevelopment-card').markarr=overall;
         }
+
+
+              
         
         }
+
         else
         {
+          // alert(localStorage.getItem("curr_sess_subject"));
          if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
         document.querySelector('cc-fa-fivetoten-card').markarr=overall; 
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
         document.querySelector('cc-sa-fivetoten-card').markarr=overall;        
         }
+        
         }       
       }
       },
       fetchstudentResponse:function(e){ 
-      // alert(JSON.stringify(e.detail.response.returnval)) ;       
+      // alert(JSON.stringify(e.detail.response.returnval)) ;  
+      // alert(localStorage.getItem("curr_sess_subject"));     
         var arr=e.detail.response.returnval;
         if(arr=='imported'){
           // alert('Marks are already submitted!');
@@ -563,6 +570,29 @@
         }
         else
         {
+        if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
+        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
+        document.querySelector('cc-ntlife-skill-card').studarr=arr;
+        else
+        document.querySelector('cs-life-skill-card').studarr=arr;    
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Work Education"){
+        document.querySelector('cs-education-card').studarr=arr;        
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"){
+        document.querySelector('cs-visual-performing-card').studarr=arr;       
+        // document.querySelector('cs-visualerforming-card').studarr=arr;   
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Attitudes And values"){
+        document.querySelector('cs-attitudes-card').studarr=arr;        
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"){
+        document.querySelector('cs-co-curricular-card').studarr=arr;        
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Health and Physical Education"){
+        document.querySelector('cs-health-physical-education-card').studarr=arr;         
+        }
+
          if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
         document.querySelector('cc-fa-fivetoten-card').studarr=arr;         
         } 

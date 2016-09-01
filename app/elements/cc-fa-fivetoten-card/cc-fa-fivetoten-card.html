@@ -24,6 +24,24 @@
       #tb2{
          width:20%
           }
+           .button{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+          #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
     </style>
     <div>
     <template is="dom-repeat" items="{{label}}">
@@ -35,7 +53,7 @@
       <th id="tb1">{{item.SNo}}</th>
       <th id="tb2">{{item.Name}}</th>
       <th id="tb1">{{item.Activity1}}</th>
-      <th  id="tb1">{{item.Activity2}}</th>
+      <!-- <th  id="tb1">{{item.Activity2}}</th> -->
       <th id="tb1">{{item.Activity3}}</th>
       <th id="tb1">{{item.Activity4}}</th>
       <!-- <th id="tb1">{{item.Activity5}}</th> -->
@@ -56,6 +74,8 @@
       </td></tr>
       </template>
       </table>
+        <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>  
+        <paper-button class="button" id="submit" on-click="importmark">Submit</paper-button>
         <input type="button" id="btn2" onclick="tableToExcel('MarkTable6', 'Mark Report')" value="Export to Excel">
       </center> 
     </template>     
@@ -82,7 +102,7 @@ var tableToExcel = (function() {
       is: 'cc-fa-fivetoten-card',
       ready:function()
       {
-                
+          // this.$.btn2.hidden=true;
       },
       setDefaultHeaders:function(){
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");

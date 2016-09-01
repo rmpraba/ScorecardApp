@@ -30,7 +30,7 @@
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb2"><paper-item>{{studname}}</paper-item></td>
         <td id="tb1"><paper-input id="score1" required on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
-        <td id="tb1"><paper-input id="score2" required on-change="FnActivity2" value="{{score2}}"></paper-input></td>  
+        <!-- <td id="tb1"><paper-input id="score2" required on-change="FnActivity2" value="{{score2}}"></paper-input></td>   -->
         <td id="tb1"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
         <td id="tb1"><paper-input id="score4" required on-change="FnActivity4" value="{{score4}}"></paper-input></td>  
         <!-- <td id="tb1"><paper-input id="score5" required on-change="FnActivity5" value="{{score5}}"></paper-input></td>  -->
@@ -85,16 +85,16 @@
       },
       insertService:function(){
         this.$.score1.validate();
-        this.$.score2.validate();
+        // this.$.score2.validate();
         this.$.score3.validate();
         this.$.score4.validate();        
-        if(this.mark1==""||this.mark2==""||this.mark3==""||this.mark4==""||this.mark1==null||this.mark2==null||this.mark3==null||this.mark4==null){
+        if(this.mark1==""||this.mark3==""||this.mark4==""||this.mark1==null||this.mark3==null||this.mark4==null){
           if(this.flag=="1")
           alert("Please enter mark in previous fields!");
         }
         else{               
-        this.total=((parseInt(Math.max(parseInt(this.score1),parseInt(this.score2),parseInt(this.score3)))+parseInt(this.score4))/40)*100;
-        this.reduction=this.total/10;  
+        this.total=((parseInt(Math.max(parseInt(this.score1),parseInt(this.score3)))+parseInt(this.score4))/2)*10;
+        this.reduction=parseFloat(this.total/10).toFixed(2);  
         this.callFetchGrade(); 
         }        
       },

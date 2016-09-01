@@ -107,7 +107,7 @@
       },
       callService:function(){
         this.FnRefresh();
-
+        alert(subject);
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);  
         if(subject=="Art Verticals"){        
         document.querySelector('coscholastic-assesment-sheet-card').setPage('talentidentification-card'); 
@@ -184,7 +184,7 @@
         document.querySelector('cs-visual-performing-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-visual-performing-card'); 
         }
-        else if(subject=="Attitudes & Values"){
+        else if(subject=="Attitudes And values"){
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
 
         document.querySelector('cs-attitudes-card').setDefaultHeaders();  
@@ -196,7 +196,7 @@
         document.querySelector('cs-co-curricular-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-co-curricular-card'); 
         }
-        else if(subject=="Health & Physical Activities"){
+        else if(subject=="Health and Physical Education"){
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
 
         document.querySelector('cs-health-physical-education-card').setDefaultHeaders();  

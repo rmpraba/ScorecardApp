@@ -422,7 +422,7 @@
        var overall=[];
        var arr1=e.detail.response.returnval;
        // alert(JSON.stringify(arr1));
-       if(arr1.length>0){      
+       if(arr1!='invalid'){      
        for(var i=0;i<arr1.length;i++)
        {
         var markarr=[];
@@ -503,6 +503,9 @@
         }
         
         }       
+      }
+      else{
+        this.FnSpinnerDeactive();
       }
       },
       fetchstudentResponse:function(e){ 
@@ -1109,6 +1112,52 @@
     Fnprepareupdatemark:function(updatemarkarr){
         updatereqcount++;
         updatemarkarray.push(updatemarkarr);
+    },
+    FnSpinnerDeactive:function(){
+       if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
+        // document.querySelector('cc-maths-onetofour-card').markarr=overall;  
+        document.querySelector('cc-maths-onetofour-card').FnSpinnerrActive(false);       
+        }
+        if(localStorage.getItem("curr_sess_subject")=="EVS")
+        {        
+        // document.querySelector('cc-evs-onetofour-card').markarr=overall;
+        document.querySelector('cc-evs-onetofour-card').FnSpinnerrActive(false); 
+        }
+        if(localStorage.getItem("curr_sess_subject")=="English"||localStorage.getItem("curr_sess_subject")=="Hindi"||localStorage.getItem("curr_sess_subject")=="Kannada"){        
+        // document.querySelector('cc-eng-onetofour-card').markarr=overall;
+        document.querySelector('cc-eng-onetofour-card').FnSpinnerrActive(false); 
+        }
+        if(localStorage.getItem("curr_sess_subject")=="GK"){        
+        // document.querySelector('cc-gk-onetofour-card').markarr=overall;
+        document.querySelector('cc-gk-onetofour-card').FnSpinnerrActive(false); 
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Computer"){   
+         
+        // document.querySelector('cc-computer-onetofour-card').markarr=overall;
+        document.querySelector('cc-computer-onetofour-card').FnSpinnerrActive(false); 
+        }      
+
+        if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
+       
+        // document.querySelector('cc-art-craft-onetofour-card').markarr=overall;
+        document.querySelector('cc-art-craft-onetofour-card').FnSpinnerrActive(false); 
+        }
+        if(localStorage.getItem("curr_sess_subject")=="dance"){        
+        // document.querySelector('cc-dance-onetofour-card').markarr=overall;
+        document.querySelector('cc-dance-onetofour-card').FnSpinnerrActive(false); 
+        }
+        if(localStorage.getItem("curr_sess_subject")=="music"){        
+        // document.querySelector('cc-music-onetofour-card').markarr=overall;
+        document.querySelector('cc-music-onetofour-card').FnSpinnerrActive(false); 
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Games"){        
+        // document.querySelector('cs-games-card').markarr=overall;
+        document.querySelector('cs-games-card').FnSpinnerrActive(false); 
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Personality Development"){        
+        // document.querySelector('cs-personalitydevelopment-card').markarr=overall;
+        document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(false); 
+        }
     }
     });
   })();

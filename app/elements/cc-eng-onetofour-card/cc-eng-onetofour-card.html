@@ -5,6 +5,9 @@
 <link rel="import" href="../validation-dialog/validation-dialog.html">
 <link rel="import" href="../bindmarks-card/bindmarks-card.html">
 <link rel="import" href="..\..\bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="..\..\bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="..\..\bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="..\..\bower_components/paper-dialog/paper-dialog.html">
 <dom-module id="cc-eng-onetofour-card">
 
  <template>
@@ -58,7 +61,20 @@
            #submit{
             width: 15%;
           }
+          .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
     </style>
+    <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
    <div class="card">
    <center><h1>{{schoolname}}</h1>
    <div id="hidetop">
@@ -133,6 +149,7 @@
 <td>
 <bindmarks-card hidepaperitem="{{hidepaperitem}}" hidepaperinput="{{hidepaperinput}}" mark="{{mm.mark}}" category="{{mm.category}}" subcategory="{{mm.sub_category}}" name="{{mm.name}}"></bindmarks-card>
 </td>
+
 </template>
 </template>
 <!-- <td><paper-checkbox disabled checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>   -->
@@ -273,6 +290,12 @@ var tableToExcel = (function() {
         this.section="";
         this.subject="";
          this.$.hidetop.hidden=true;
+      },
+        FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
       }
     });
   })();

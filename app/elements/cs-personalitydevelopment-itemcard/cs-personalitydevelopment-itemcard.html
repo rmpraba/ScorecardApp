@@ -35,7 +35,9 @@
         <td><paper-input allowed-pattern="[A-D+]" value="{{SharingandCaring}}" id="p6" on-change="FnSharingandCaring"></paper-input></td>
         <td><paper-input allowed-pattern="[A-D+]" value="{{Respect}}" id="p7" on-change="FnRespect"></paper-input></td>
         <td><paper-input allowed-pattern="[A-D+]" value="{{Selfcontrol}}" id="p8" on-change="FnSelfcontrol"></paper-input></td>
-        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>        
+        <!-- <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>         -->
+         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
       </table> 
     </div>
@@ -74,67 +76,70 @@
       FnCourteousness:function(){
         Courteousness=this.FnFindGrade(this.Courteousness); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Courteousness);        
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",Courteousness,1); 
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",Courteousness,1); 
       },
       FnConfidence:function(){
         Confidence=this.FnFindGrade(this.Confidence); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Confidence); 
-        if(this.flag==1)
-          // this.FnValidateCall();      
-         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",Confidence,2); 
+        // if(this.flag==1)
+        //   // this.FnValidateCall();      
+        //  this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",Confidence,2); 
       },
       FnCareofbelongings:function(){
         Careofbelongings=this.FnFindGrade(this.Careofbelongings); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(Careofbelongings); 
-        if(this.flag==1)
-          // this.FnValidateCall();      
-         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",Careofbelongings,3); 
+        // if(this.flag==1)
+        //   // this.FnValidateCall();      
+        //  this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",Careofbelongings,3); 
       },
       FnNeatness:function(){
         Neatness=this.FnFindGrade(this.Neatness);
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Neatness);
-        if(this.flag==1)
-          // this.FnValidateCall();        
-         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",Neatness,4);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();        
+        //  this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",Neatness,4);
       },
       FnRegularityandPunctuality:function(){
         RegularityandPunctuality=this.FnFindGrade(this.RegularityandPunctuality); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(RegularityandPunctuality);
-        if(this.flag==1)
-          // this.FnValidateCall(); 
-           this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",RegularityandPunctuality,5);        
+        // if(this.flag==1)
+        //   // this.FnValidateCall(); 
+        //    this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",RegularityandPunctuality,5);        
       },
       FnInitiative:function(){
         Initiative=this.FnFindGrade(this.Initiative); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Initiative);  
-        if(this.flag==1)
-          // this.FnValidateCall();
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",Initiative,6);       
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        //   this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",Initiative,6);       
       },
       FnSharingandCaring:function(){
         SharingandCaring=this.FnFindGrade(this.SharingandCaring);
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.SharingandCaring); 
-        if(this.flag==1)
-          // this.FnValidateCall();       
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",SharingandCaring,7); 
+        // if(this.flag==1)
+        //   // this.FnValidateCall();       
+        //   this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",SharingandCaring,7); 
       },
       FnRespect:function(){
         Respect=this.FnFindGrade(this.Respect);       
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Respect); 
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Respect","Respect",Respect,8);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Respect","Respect",Respect,8);
       },
       FnSelfcontrol:function(){
         Selfcontrol=this.FnFindGrade(this.Selfcontrol); 
         document.querySelector('cs-personalitydevelopment-card').FnToggleDialog(this.Selfcontrol); 
           // if(this.flag==0)
-            this.FnValidateCall();
-            if(this.flag==1)
-             this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",Selfcontrol,9);
+            // this.FnValidateCall();
+            // if(this.flag==1)
+            //  this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",Selfcontrol,9);
       },      
+      FnSave:function(){
+        this.FnValidateCall();
+      },
       FnValidateCall:function(){
         this.flag=1;
          if(this.Courteousness==""||this.Courteousness==null||this.Confidence==""||this.Confidence==null||this.Careofbelongings==""||this.Careofbelongings==null||this.Neatness==""||this.Neatness==null||this.RegularityandPunctuality==""||this.RegularityandPunctuality==null||this.Initiative==""||this.Initiative==null||this.SharingandCaring==""||this.SharingandCaring==null||this.Respect==""||this.Respect==null){
@@ -153,15 +158,15 @@
         }    
       },
       callService:function(){        
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",Courteousness,1); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",Confidence,2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",Careofbelongings,3); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",Neatness,4); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",RegularityandPunctuality,5); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",Initiative,6); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",SharingandCaring,7);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Respect","Respect",Respect,8);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",Selfcontrol,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Courteousness","Courteousness",Courteousness,1,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Confidence","Confidence",Confidence,2,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Careofbelongings","Careofbelongings",Careofbelongings,3,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Neatness","Neatness",Neatness,4,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"RegularityandPunctuality","RegularityandPunctuality",RegularityandPunctuality,5,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Initiative","Initiative",Initiative,6,9); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"SharingandCaring","SharingandCaring",SharingandCaring,7,9);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Respect","Respect",Respect,8,9);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Selfcontrol","Selfcontrol",Selfcontrol,9,9); 
         /*this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Courteousness",this.Courteousness,this.Courteousness,this.Courteousness);
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Confidence",this.Confidence,this.Confidence,this.Confidence);
         this.$.assesmentservice.calloverallinsertcoassesmentService(this.studid,this.studname,"Careofbelongings",this.Careofbelongings,this.Careofbelongings,this.Careofbelongings);

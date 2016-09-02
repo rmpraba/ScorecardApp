@@ -1740,7 +1740,7 @@ app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 {
   // console.log('come');
-  var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and category='"+req.query.category+"' and sub_category='"+req.query.sub_category+"' and student_id='"+req.query.studid+"'";
+  var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where academic_year='"+req.query.academic+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and category='"+req.query.category+"' and sub_category='"+req.query.sub_category+"' and student_id='"+req.query.studid+"'";
       console.log(qur);
       connection.query(qur,
         function(err, result)

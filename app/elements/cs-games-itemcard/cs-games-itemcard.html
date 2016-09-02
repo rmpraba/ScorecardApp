@@ -30,7 +30,9 @@
         <td><paper-input required disabled="{{read}}"  allowed-pattern="^[0-9.a,]+$" value="{{discipline}}" id="p2" on-change="FnDiscipline"></paper-input></td>
         <td><paper-input required disabled="{{read}}"  allowed-pattern="^[0-9.a,]+$" value="{{teamspirit}}" id="p3" on-change="FnTeamSpirit"></paper-input></td>
         <td><paper-input required disabled="{{read}}"  allowed-pattern="^[0-9.a,]+$" value="{{talent}}" id="p4" on-change="FnTalent"></paper-input></td>
-         <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> 
+         <!-- <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>  -->
+         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
       </table> 
     </div>
@@ -65,16 +67,7 @@
       ready:function(){ 
       this.flag=0;      
       },
-      FnYes:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
-      FnNo:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
+     
       FnChange:function(e){
          // alert(e.target.checked);
         if(e.target.checked==false){
@@ -92,31 +85,34 @@
       FnEnthusiasm:function(){
         enthusiasm=parseFloat(this.enthusiasm).toFixed(2); 
         document.querySelector('cs-games-card').FnToggleDialog(this.enthusiasm);
-        if(this.flag==1)
-          // this.FnValidateCall(); 
-           this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Enthusiasm",this.enthusiasm,1);      
+        // if(this.flag==1)
+        //   // this.FnValidateCall(); 
+        //    this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Enthusiasm",this.enthusiasm,1);      
       },
       FnDiscipline:function(){
         discipline=parseFloat(this.discipline).toFixed(2);          
         document.querySelector('cs-games-card').FnToggleDialog(this.discipline);
-        if(this.flag==1)
-          // this.FnValidateCall(); 
-            this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Discipline",this.discipline,2);   
+        // if(this.flag==1)
+        //   // this.FnValidateCall(); 
+        //     this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Discipline",this.discipline,2);   
       },
       FnTeamSpirit:function(){
         teamspirit=parseFloat(this.teamspirit).toFixed(2); 
         document.querySelector('cs-games-card').FnToggleDialog(this.teamspirit); 
-        if(this.flag==1)
-          // this.FnValidateCall(); 
-            this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Team Spirit",this.teamspirit,3);           
+        // if(this.flag==1)
+        //   // this.FnValidateCall(); 
+        //     this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Team Spirit",this.teamspirit,3);           
       },
       FnTalent:function(){
         talent=parseFloat(this.talent).toFixed(2); 
         document.querySelector('cs-games-card').FnToggleDialog(this.talent); 
         // if(this.flag==0)
+        // this.FnValidateCall();
+        // if(this.flag==1)
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Talent",this.talent,4);  
+      },
+      FnSave:function(){
         this.FnValidateCall();
-        if(this.flag==1)
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Talent",this.talent,4);  
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -156,10 +152,10 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Enthusiasm",this.enthusiasm,1);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Discipline",this.discipline,2);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Team Spirit",this.teamspirit,3);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Talent",this.talent,4);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Enthusiasm",this.enthusiasm,1,4);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Discipline",this.discipline,2,4);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Team Spirit",this.teamspirit,3,4);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Games","Talent",this.talent,4,4);  
         // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Games",this.total,this.reduction,this.grade);
       }          
     });

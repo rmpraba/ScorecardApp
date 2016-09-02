@@ -431,7 +431,7 @@
         for(var j=i+1;j<arr1.length;j++)
         {
            if(arr1[i].student_id==arr1[j].student_id)
-           {
+           {            
             markarr.push(arr1[j].mark);
             arr1.splice(j,1);
             j--;
@@ -920,6 +920,20 @@
            if(arr1[i].student_id==arr1[j].student_id)
            {
              var obj1={"mark":"","category":"","sub_category":"","name":"","subseq":""}
+             // alert(arr1[j].mark);
+            if(localStorage.getItem("curr_sess_subject")=="Personality Development"){
+              if(arr1[j].mark=='10')
+                obj1.mark="A+";
+              if(arr1[j].mark=='9')
+                obj1.mark="A";
+              if(arr1[j].mark=='8')
+                obj1.mark="B";
+              if(arr1[j].mark=='7')
+                obj1.mark="C";
+              if(arr1[j].mark=='6')
+                obj1.mark="D";
+            }
+            else
              obj1.mark=arr1[j].mark;
              obj1.category=arr1[j].category;
              obj1.sub_category=arr1[j].sub_category;
@@ -1037,12 +1051,18 @@
     Fnupdatemark:function()
     {
          this.updatemarkurl=sessionStorage.getItem("addrinfo")+"/updatemark-service";
-         var obj={"schoolid":"","academic":"","term":"","assesment":"","subject":"","category":"","sub_category":"","mark":"","studid":""};
+         var obj={"grade":"","section":"","schoolid":"","academic":"","term":"","assesment":"","subject":"","category":"","sub_category":"","mark":"","studid":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academic=localStorage.getItem("curr_sess_academicyear");
          obj.term=localStorage.getItem("curr_sess_termname");
+         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+         obj.assesment= "Assesment3";
+         else
+         // obj.assesmentid=localStorage.getItem("curr_sess_assesment");
          obj.assesment=localStorage.getItem("curr_sess_assesment");
          obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.grade=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
          // alert(updatecount+" "+updatereqcount+" "+updatemarkarray.length);
          if(updatemarkarray.length>0){
          for(var i=0;i<updatemarkarray.length;i++){

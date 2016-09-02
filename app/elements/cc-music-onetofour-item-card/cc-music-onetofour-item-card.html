@@ -29,7 +29,9 @@
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{interest}}" id="p1" on-change="FnInterest"></td>
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{rhythm}}" id="p2" on-change="FnRhythm"></paper-input></td>
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{melody}}" id="p3" on-change="FnMelody"></paper-input></td>
-         <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> 
+         <!-- <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>  -->
+         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
       </table> 
     </div>
@@ -62,18 +64,7 @@
       is: 'cc-music-onetofour-item-card',
       ready:function(){  
       this.flag=0     
-      },
-
-      FnYes:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
-      FnNo:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
+      },    
       FnChange:function(e){
          // alert(e.target.checked);
         if(e.target.checked==false){
@@ -93,24 +84,27 @@
       FnInterest:function(){
         interest=parseFloat(this.interest).toFixed(2); 
         document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.interest); 
-        if(this.flag==1)
-          // this.FnValidateCall();      
-         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest,1);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();      
+        //  this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest,1);
       } ,
       FnRhythm:function(){
         rhythm=parseFloat(this.rhythm).toFixed(2);  
         document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.rhythm);      
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm,2);  
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm,2);  
       },
       FnMelody:function(){
         melody=parseFloat(this.melody).toFixed(2); 
         document.querySelector('cc-music-onetofour-card').FnToggleDialog(this.melody);
           // if(this.flag==0)
-          this.FnValidateCall();
-          if(this.flag==1)
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody,3);  
+          // this.FnValidateCall();
+          // if(this.flag==1)
+          // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody,3);  
+      },
+      FnSave:function(){
+        this.FnValidateCall();
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -150,9 +144,9 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest,1);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm,2);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody,3);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Interest",this.interest,1,3);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Rhythm",this.rhythm,2,3);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Music","Melody",this.melody,3,3);  
         // this.$.assesmentservice.calloverallinsertcocurricularmarkService(this.studid,this.studname,"Music",this.total,this.reduction,this.grade);
       }         
      

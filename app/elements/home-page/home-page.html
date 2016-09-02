@@ -50,7 +50,7 @@
     font-size: 20px;
   }
   i{
-    margin-left: 15%;
+    margin-left: 10%;
     text-transform: capitalize;
   }
   </style>
@@ -125,7 +125,7 @@
   ready: function(){      
   },
   setUsername:function(name){
-    this.username=name;
+    this.username=name+" ("+sessionStorage.getItem("curr_sess_loggedrole")+")";
     this.title=sessionStorage.getItem("curr_sess_loggedschoolname");
   },
   setPage:function(page,title){    

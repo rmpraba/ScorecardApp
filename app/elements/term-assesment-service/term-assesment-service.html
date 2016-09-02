@@ -281,6 +281,11 @@
     var arr=[];
     var n1=0,n2=0;
     var tempcnt1=0,tempcnt2=0;
+    var updatecount=0,updatereqcount=0,updatefailcount=0;
+
+    var insertflag=0,insertcheckflag=0;
+
+    var updatemarkarray=[];
     
     Polymer({
       is: 'term-assesment-service',
@@ -472,9 +477,7 @@
         if(localStorage.getItem("curr_sess_subject")=="Personality Development"){        
         document.querySelector('cs-personalitydevelopment-card').markarr=overall;
         }
-
-
-              
+    
         
         }
 
@@ -509,45 +512,55 @@
         
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
-        document.querySelector('cc-maths-onetofour-card').studarr=arr;  
+        document.querySelector('cc-maths-onetofour-card').studarr=arr; 
+        document.querySelector('cc-maths-onetofour-card').FnSpinnerrActive(false); 
               // document.querySelector('cc-maths-onetofour-card').hiddenbutton();
         }
         if(localStorage.getItem("curr_sess_subject")=="EVS")
         {        
         document.querySelector('cc-evs-onetofour-card').studarr=arr;
+        document.querySelector('cc-evs-onetofour-card').FnSpinnerrActive(false); 
         // document.querySelector('cc-evs-onetofour-card').hiddenbutton();
         }
         if(localStorage.getItem("curr_sess_subject")=="English"||localStorage.getItem("curr_sess_subject")=="Hindi"||localStorage.getItem("curr_sess_subject")=="Kannada"){        
         document.querySelector('cc-eng-onetofour-card').studarr=arr;
+        document.querySelector('cc-eng-onetofour-card').FnSpinnerrActive(false); 
         // document.querySelector('cc-eng-onetofour-card').hiddenbutton();
         }
         if(localStorage.getItem("curr_sess_subject")=="GK"){   
         // document.querySelector('cc-gk-onetofour-card').hiddenbutton();     
         document.querySelector('cc-gk-onetofour-card').studarr=arr;
+        document.querySelector('cc-gk-onetofour-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_subject")=="Computer"){   
         // document.querySelector('cc-computer-onetofour-card').hiddenbutton();
         document.querySelector('cc-computer-onetofour-card').studarr=arr;
+        document.querySelector('cc-computer-onetofour-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"){        
         // document.querySelector('cc-art-craft-onetofour-card').hiddenbutton();
         document.querySelector('cc-art-craft-onetofour-card').studarr=arr;
+        document.querySelector('cc-art-craft-onetofour-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_subject")=="dance"){  
         // document.querySelector('cc-dance-onetofour-card').hiddenbutton();      
         document.querySelector('cc-dance-onetofour-card').studarr=arr;
+        document.querySelector('cc-dance-onetofour-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_subject")=="music"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cc-music-onetofour-card').studarr=arr;
+        document.querySelector('cc-music-onetofour-card').FnSpinnerrActive(false);
         } 
         if(localStorage.getItem("curr_sess_subject")=="Games"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cs-games-card').studarr=arr;
+        document.querySelector('cs-games-card').FnSpinnerrActive(false);
         }  
         if(localStorage.getItem("curr_sess_subject")=="Personality Development"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cs-personalitydevelopment-card').studarr=arr;
+        document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(false);
         }
         if(localStorage.getItem("curr_sess_subject")=="Attendance"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
@@ -605,8 +618,8 @@
         }
 
       },
-      callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark,seqno){ 
-         // tempcnt1=count;       
+      callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark,seqno,catcount){ 
+         insertcheckflag=catcount;       
          this.insertassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertassesmentmark-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","category":"","subcategory":"","mark":"","total":"","assesmentflag":"","absflag":"","subcatseq":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -631,12 +644,13 @@
          this.$.insertassesmentmarkajax.generateRequest();
       },
       insertassesmentmarkResponse:function(e){
-        // tempcnt2++;
-        // if(tempcnt1==tempcnt2){
-        // alert(e.detail.response.returnval);  
-        // }
-      },
-      
+        if(e.detail.response.returnval=='succ')
+        insertflag++;
+        if(insertflag==insertcheckflag){
+          alert('Marks saved!');
+          insertflag=0;
+        }
+      },      
       callinsertattendanceinfo:function(studid,studname,attendance,workingdays){
          this.termattendanceurl=sessionStorage.getItem("addrinfo")+"/termattendance-service";
          var obj={"schoolid":"","academicyear":"","termname":"","studentid":"","studentname":"","classid":"",
@@ -1020,7 +1034,7 @@
         this.studarrlength=0;
         this.fetchstudentService();
     },
-    Fnupdatemark:function(sname,category,subcategory,svalue)
+    Fnupdatemark:function()
     {
          this.updatemarkurl=sessionStorage.getItem("addrinfo")+"/updatemark-service";
          var obj={"schoolid":"","academic":"","term":"","assesment":"","subject":"","category":"","sub_category":"","mark":"","studid":""};
@@ -1029,15 +1043,42 @@
          obj.term=localStorage.getItem("curr_sess_termname");
          obj.assesment=localStorage.getItem("curr_sess_assesment");
          obj.subject=localStorage.getItem("curr_sess_subject");
-         obj.category=category;
-         obj.sub_category=subcategory;
-         obj.mark=svalue;
-         obj.studid=sname;
-         this.updatemarkparam= obj; 
-         // alert(JSON.stringify(obj));        
+         // alert(updatecount+" "+updatereqcount+" "+updatemarkarray.length);
+         if(updatemarkarray.length>0){
+         for(var i=0;i<updatemarkarray.length;i++){
+         obj.category=updatemarkarray[i].category;
+         obj.sub_category=updatemarkarray[i].subcategory;
+         obj.mark=updatemarkarray[i].mark;
+         obj.studid=updatemarkarray[i].name;
+         this.updatemarkparam= obj;                
          this.$.updatemarkajax.generateRequest();
+         }
+         }
+         else
+          alert('No Changes to update!');
+    },
+    updatemarkResponse:function(e){         
+      if(e.detail.response=='succ'){         
+         updatecount++;         
+      }
+      if(e.detail.response=='fail'){         
+         updatefailcount=-1;         
+      }
+      if(updatecount==updatereqcount){
+        alert('Marks updated!'); 
+        updatecount=0;
+        updatereqcount=0;
+        updatemarkarray=[]; 
+        // alert(updatemarkarray.length);    
+      }
+      if(updatefailcount==-1)
+        alert('Marks not updated!');
+    
+    },
+    Fnprepareupdatemark:function(updatemarkarr){
+        updatereqcount++;
+        updatemarkarray.push(updatemarkarr);
     }
-
     });
   })();
   </script>

@@ -3,6 +3,9 @@
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
 <link rel="import" href="../validation-dialog/validation-dialog.html">
 <link rel="import" href="../bindmarks-card/bindmarks-card.html">
+<link rel="import" href="..\..\bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="..\..\bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="..\..\bower_components/paper-dialog/paper-dialog.html">
 <dom-module id="cc-gk-onetofour-card">
   <template>
     <style>
@@ -41,7 +44,23 @@
            paper-item,td,paper-input{
             text-align:center;
           }
+           #submit{
+            width: 15%;
+          }
+          .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
     </style>
+    <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
     <div>
      <center><h1>{{schoolname}}</h1>
      <div id="hidetop">
@@ -53,6 +72,7 @@
       <th>Sl.No</th>
       <th>Student's Name</th>
       <th >Activity</th>
+      <th></th>
    <!-- <th colspan="1" id="tb5"></th> -->
       </tr>
       </div>
@@ -77,7 +97,9 @@
 </td>
 </template>
 </template>
-<td><paper-checkbox disabled checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>  
+<!-- <td><paper-checkbox disabled checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>   -->
+<td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave" ></paper-icon-button>
+<paper-tooltip for="ps" offset="0">update</paper-tooltip></td>
 </tr>
 </template>
 
@@ -91,8 +113,8 @@
 
 
     </table> 
-    <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>
-     <paper-button class="button" id="submit" on-click="importmark">Submit</paper-button>
+    <!-- <paper-button class="button" id="save" on-click="FnSave">Save</paper-button> -->
+     <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
    <validationdialog-card id="validatedialog"></validationdialog-card>
     <term-assesment-service id="assesmentservice"></term-assesment-service> 
     <input type="button" id="btn2" onclick="tableToExcel('MarkTable7', 'Mark Report')" value="Export to Excel">     
@@ -121,7 +143,7 @@ var tableToExcel = (function() {
       ready:function(){
         this.$.btn2.hidden=true;
         this.$.submit.hidden=true;
-        this.$.save.hidden=true;
+        // this.$.save.hidden=true;
       },
        FnResetFlag:function(){
         // var flag=1;
@@ -146,31 +168,39 @@ var tableToExcel = (function() {
         this.assesment="A2";
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3")
         this.assesment="A3";
+
+       if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      {
+        this.importlabel='Approve';
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
+        this.importlabel='Submit for approval';
+      }
       // alert(sessionStorage.getItem("curr_sess_loggedrole"));
       if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
         this.hidepaperitem=false;
         this.hidepaperinput=true; 
         this.$.submit.hidden=true;
-        this.$.save.hidden=true;
+        // this.$.save.hidden=true;
       }
       else{
         this.hidepaperitem=true;
         this.hidepaperinput=false;        
         if(localStorage.getItem('curr_sess_report')=='1'){
         this.$.submit.hidden=true; 
-        this.$.save.hidden=true;
+        // this.$.save.hidden=true;
         this.$.btn2.hidden=false;
         }
         if(localStorage.getItem('curr_sess_report')=='0')
         {
         this.$.submit.hidden=false; 
-        this.$.save.hidden=false;
+        // this.$.save.hidden=false;
         this.$.btn2.hidden=true;
         }
         if(localStorage.getItem('curr_sess_report')=='2')
         {
         this.$.submit.hidden=false; 
-        this.$.save.hidden=true;
+        // this.$.save.hidden=true;
         this.$.btn2.hidden=true;
         }
       }
@@ -181,7 +211,8 @@ var tableToExcel = (function() {
         this.$.btn2.hidden=true;
       },
       FnSave:function(e){
-        alert('Student marks are saved!');
+        // alert('Student marks are saved!');
+        this.$.assesmentservice.Fnupdatemark();
       },
       importmark:function()
       {
@@ -191,15 +222,21 @@ var tableToExcel = (function() {
       },
         FnRefresh:function()
       {
- this.markarr=[];
- this.importarr=[];
- this.studarr=[];
- this.schoolname="";
+         this.markarr=[];
+         this.importarr=[];
+         this.studarr=[];
+         this.schoolname="";
         this.academicyear="";
         this.grade="";
         this.section="";
         this.subject="";
          this.$.hidetop.hidden=true;
+      },
+       FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
       }
     });
   })();

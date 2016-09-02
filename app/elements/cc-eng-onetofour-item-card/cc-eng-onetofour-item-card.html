@@ -1,4 +1,4 @@
-
+<link rel="import" href="..\..\bower_components/paper-tooltip/paper-tooltip.html">
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <dom-module id="cc-eng-onetofour-item-card">
@@ -35,7 +35,9 @@
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Recitation}}" id="p10" on-change="FnRecitation"></paper-input></td>
         <td><paper-input  disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{LComprehension}}" id="p11" on-change="FnLComprehension"></paper-input></td>
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{Activity}}" id="p12" on-change="FnActivity"></paper-input></td>
-        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> 
+        <!-- <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>  -->
+        <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>        
         </tr>
       </table>
     </div>
@@ -66,18 +68,8 @@
 
     Polymer({
       is: 'cc-eng-onetofour-item-card',
-ready:function(){
-this.flag=0;
-},
- FnYes:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
-      FnNo:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
+      ready:function(){
+      this.flag=0;
       },
       FnChange:function(e){
          // alert(e.target.checked);
@@ -102,97 +94,94 @@ this.flag=0;
         }
 
       },
-      // FnResetFlag:function(){
-      //   this.flag=1;
-      // },
      FnPronunciation:function(e)
      {
        pronunciation=parseFloat(this.Pronunciation).toFixed(2); 
        document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Pronunciation);   
-       if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Pronunciation",this.Pronunciation,1);
+       // if(this.flag==1)
+       //    // this.FnValidateCall();
+       //  this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Pronunciation",this.Pronunciation,1);
      },
      FnFluency:function(e)
      {
       fluency=parseFloat(this.Fluency).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Fluency);       
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Fluency",this.Fluency,2);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Fluency",this.Fluency,2);
      },
      FnComprehension:function(e)
      {
       comprehension=parseFloat(this.Comprehension).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Comprehension);       
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Comprehension",this.Comprehension,3);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Comprehension",this.Comprehension,3);
      },
      FnCreative:function(e)
      {
         creativeWriting=parseFloat(this.CreativeWriting).toFixed(2); 
         document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.CreativeWriting);       
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","CreativeWriting",this.CreativeWriting,4);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","CreativeWriting",this.CreativeWriting,4);
      },
      FnHandwriting:function(e)
      {
       handwriting=parseFloat(this.Handwriting).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Handwriting);       
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Handwriting",this.Handwriting,5);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Handwriting",this.Handwriting,5);
      },
      FnGrammer:function(e)
      {
       grammer=parseFloat(this.Grammer).toFixed(2);
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Grammer);        
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Grammer",this.Grammer,6);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Grammer",this.Grammer,6);
      },
      FnSpelling:function(e)
      {
       spelling=parseFloat(this.Spelling).toFixed(2);        
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Spelling);
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Spelling",this.Spelling,7);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Spelling",this.Spelling,7);
      },
      FnVocabulary:function(e)
      {
       vocabulary=parseFloat(this.Vocabulary).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Vocabulary);       
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Vocabulary",this.Vocabulary,8);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Vocabulary",this.Vocabulary,8);
      },
      FnConversation:function(e)
      {
       conversation=parseFloat(this.Conversation).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Conversation);       
-        if(this.flag==1)
-          // this.FnValidateCall();
-         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Conversation",this.Conversation,9);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        //  this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Conversation",this.Conversation,9);
      },
      
      FnRecitation:function(e)
      {
       recitation=parseFloat(this.Recitation).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Recitation);       
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Recitation",this.Recitation,10);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Recitation",this.Recitation,10);
        },
      FnLComprehension:function(e)
      {
       lcomprehension=parseFloat(this.LComprehension).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.LComprehension);       
-        if(this.flag==1)
-          // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Listening Skills","LComprehension",this.LComprehension,11);
+        // if(this.flag==1)
+        //   // this.FnValidateCall();
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Listening Skills","LComprehension",this.LComprehension,11);
      },
      FnActivity:function(e)
      {
@@ -200,10 +189,13 @@ this.flag=0;
       activity=parseFloat(this.Activity).toFixed(2); 
       document.querySelector('cc-eng-onetofour-card').FnToggleDialog(this.Activity); 
       // if(this.flag==0)
-      this.FnValidateCall();
-      if(this.flag==1)
-      this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity,12);
+      
+      // if(this.flag==1)
+      // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity,12);
      },
+      FnSave:function(){
+        this.FnValidateCall();
+      },
      FnValidateCall:function(){
       this.flag=1;
       // alert(this.Pronunciation+" "+this.Fluency+" "+this.Comprehension);
@@ -265,18 +257,18 @@ this.flag=0;
         return this.grade;        
      },
      callService:function(){
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Pronunciation",this.Pronunciation,1); 
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Fluency",this.Fluency,2);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Comprehension",this.Comprehension,3);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","CreativeWriting",this.CreativeWriting,4);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Handwriting",this.Handwriting,5);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Grammer",this.Grammer,6);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Spelling",this.Spelling,7);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Vocabulary",this.Vocabulary,8);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Conversation",this.Conversation,9);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Recitation",this.Recitation,10);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Listening Skills","LComprehension",this.LComprehension,11);
-       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Pronunciation",this.Pronunciation,1,12); 
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Fluency",this.Fluency,2,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Reading Skills","Comprehension",this.Comprehension,3,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","CreativeWriting",this.CreativeWriting,4,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Handwriting",this.Handwriting,5,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Grammer",this.Grammer,6,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Spelling",this.Spelling,7,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Writing Skills","Vocabulary",this.Vocabulary,8,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Conversation",this.Conversation,9,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Speaking Skills","Recitation",this.Recitation,10,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Listening Skills","LComprehension",this.LComprehension,11,12);
+       this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.Activity,12,12);
 
         /*this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Reading Skills",this.readingskills,this.readingskills,this.readinggrade,5);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Writing Skills",this.writingskills,this.writingskills,this.writinggrade,5);

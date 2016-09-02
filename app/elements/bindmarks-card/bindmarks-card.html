@@ -26,13 +26,23 @@
   </template>
   <script>
   (function() {
+
     'use strict';
+    
     Polymer({
       is: 'bindmarks-card', 
       fetchmark:function(e)
       {
+        var updatemarkarr=[];
+        var obj={"name":"","category":"","subcategory":"","mark":""};
+        obj.name=this.name;        
+        obj.category=this.category;
+        obj.subcategory=this.subcategory;
+        obj.mark=this.mark;
+        updatemarkarr.push(obj);
+        this.$.assesmentservice.Fnprepareupdatemark(obj);
         // alert(this.name+""+this.category+""+this.subcategory+""+this.mark);
-        this.$.assesmentservice.Fnupdatemark(this.name,this.category,this.subcategory,this.mark);        
+        // this.$.assesmentservice.Fnupdatemark(this.name,this.category,this.subcategory,this.mark);        
       },
       FnHide:function(){
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
@@ -43,6 +53,9 @@
         this.hidepaperitem=true;
         this.hidepaperinput=false; 
         }
+      },
+      Fnclearupdatearr:function(){
+        updatemarkarr=[];
       }
     });
   })();

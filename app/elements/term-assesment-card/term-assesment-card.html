@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../term-assesment-service/term-assesment-service.html">
 <link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
 <link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
@@ -42,6 +43,8 @@
     <div class='card'>
      
      <div class='drop'>
+
+     
       
           <!--<paper-dropdown-menu id="academicyear" label="Select academicyear" disabled="{{read}}" required>
             <paper-menu class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
@@ -172,7 +175,7 @@
         if(this.flag==1)
           this.callService();
       },
-      callService:function(){
+      callService:function(){        
         // document.querySelector('#gradenam1').selected=-1;
         // document.querySelector('#sectionnam1').selected=-1;
         // document.querySelector('#assesmentcat1').selected=-1;
@@ -190,7 +193,7 @@
            this.$.assesmentservice.callFetchStudentInfo(gradename,section);                   
            document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
            document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();
-            
+           document.querySelector('cc-maths-onetofour-card').FnSpinnerrActive(true); 
         }  
         if(subject=="EVS")
         { 
@@ -198,6 +201,7 @@
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-evs-onetofour-card');
           document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
+          document.querySelector('cc-evs-onetofour-card').FnSpinnerrActive(true); 
           
         }
          if(subject=="English"||subject=="Hindi"||subject=="Kannada")
@@ -206,7 +210,7 @@
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-eng-onetofour-card');
           document.querySelector('cc-eng-onetofour-card').setDefaultHeaders();
-          
+          document.querySelector('cc-eng-onetofour-card').FnSpinnerrActive(true); 
         }
         if(subject=="GK")
         {   
@@ -214,7 +218,7 @@
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');
           document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();
-          
+          document.querySelector('cc-gk-onetofour-card').FnSpinnerrActive(true); 
           
         }       
         if(subject=="Computer")
@@ -223,7 +227,7 @@
           this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
           document.querySelector('term-assesment-sheet-card').setPage('cc-computer-onetofour-card');
           document.querySelector('cc-computer-onetofour-card').setDefaultHeaders();
-          
+          document.querySelector('cc-computer-onetofour-card').FnSpinnerrActive(true); 
         }        
         }
         else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4")

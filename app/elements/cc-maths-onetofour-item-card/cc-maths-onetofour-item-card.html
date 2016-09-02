@@ -1,9 +1,10 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="..\term-assesment-service/term-assesment-service.html">
 <link rel="import" href="..\validationdialog-card/validationdialog-card.html">
-
+<link rel="import" href="..\..\bower_components/paper-tooltip/paper-tooltip.html">
 <!-- <link rel="import" href="..\..\bower_components/neon-animation/animations/scale-up-animation.html">
 <link rel="import" href="..\..\bower_components/neon-animation/animations/fade-out-animation.html">
  <link rel="import" href="..\..\bower_components/neon-animation/neon-animations.html">
@@ -43,7 +44,9 @@
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{taaccuracy}}" id="p6" on-change="FnTAAccuracy"></paper-input></td>
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{taneatness}}" id="p7" on-change="FnTANeatness"></paper-input></td>
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{activity}}" id="p8" on-change="FnActivity"></paper-input></td>
-        <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>        
+        <!-- <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>         -->
+        <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
       </table>
     </div>
@@ -80,16 +83,6 @@
       ready:function(){ 
       this.flag=0;      
       }, 
-      FnYes:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
-      FnNo:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
       FnChange:function(e){
          // alert(e.target.checked);
         if(e.target.checked==false){
@@ -113,59 +106,62 @@
       FnUnderstanding:function(e){               
         understanding=parseFloat(this.understanding).toFixed(2);        
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.understanding);
-        if(this.flag==1)
+        // if(this.flag==1)
           // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding,1);
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding,1);
       },
       FnGroupactivity:function(e){               
         groupactivity=parseFloat(this.groupactivity).toFixed(2);  
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.groupactivity); 
-        if(this.flag==1)
+        // if(this.flag==1)
           // this.FnValidateCall();
-          this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity,2);   
+          // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity,2);   
       },
       FnIndividualactivity:function(e){               
         individualactivity=parseFloat(this.individualactivity).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.individualactivity);
-        if(this.flag==1)
+        // if(this.flag==1)
           // this.FnValidateCall();
-         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity,3);
+         // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity,3);
       },
       FnMAAccuracy:function(){
         maaccuracy=parseFloat(this.maaccuracy).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maaccuracy);
-        if(this.flag==1)
+        // if(this.flag==1)
           // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy,4); 
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy,4); 
       },
       FnMAKnowledge:function(){
         maknowledge=parseFloat(this.maknowledge).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.maknowledge);
-        if(this.flag==1)
+        // if(this.flag==1)
           // this.FnValidateCall(); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge,5);
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge,5);
       },
       FnTAAccuracy:function(){
         taaccuracy=parseFloat(this.taaccuracy).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.taaccuracy);
-        if(this.flag==1)
+        // if(this.flag==1)
           // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy,6); 
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy,6); 
       },
       FnTANeatness:function(){
         taneatness=parseFloat(this.taneatness).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.taneatness);
-        if(this.flag==1)
+        // if(this.flag==1)
           // this.FnValidateCall();
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness,7);  
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness,7);  
       },
       FnActivity:function(){    
         activity=parseFloat(this.activity).toFixed(2); 
         document.querySelector('cc-maths-onetofour-card').FnToggleDialog(this.activity); 
         // if(this.flag==0)           
+        
+        // if(this.flag==1)
+        // this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8); 
+      },
+      FnSave:function(){
         this.FnValidateCall();
-        if(this.flag==1)
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8); 
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -178,7 +174,7 @@
         this.$.p6.validate();
         this.$.p7.validate();
         this.$.p8.validate();
-         this.callFetchGrade();
+        this.callFetchGrade();
       }  
       else{
         localStorage.setItem("curr_sess_absflag",1);
@@ -217,14 +213,14 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding,1);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity,2); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity,3);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy,4); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge,5);
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy,6); 
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness,7);  
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Concept","Understanding",this.understanding,1,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Group Activity",this.groupactivity,2,8); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Activity/Project","Individual Activity",this.individualactivity,3,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Accuracy",this.maaccuracy,4,8); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Mental Ability","Knowledge",this.maknowledge,5,8);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Accuracy",this.taaccuracy,6,8); 
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Table Activity","Neatness",this.taneatness,7,8);  
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"Written Work","Activity",this.activity,8,8); 
         /*this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Concept",this.concept,this.concept,this.conceptgrade,5);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Activity/Project",this.activityproject,this.activityproject,this.activityprojectgrade,5);
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"Mental Ability",this.mentalability,this.mentalability,this.mentalabilitygrade,5);

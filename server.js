@@ -1737,17 +1737,22 @@ app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
   });
 });
 
-
 app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 {
   // console.log('come');
   var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and category='"+req.query.category+"' and sub_category='"+req.query.sub_category+"' and student_id='"+req.query.studid+"'";
+      console.log(qur);
       connection.query(qur,
-        function(err, rows)
+        function(err, result)
         {
         if(!err)
     {
       console.log('s');
+      if(result.affectedRows>0){
+        res.status(200).json('succ');
+      }
+      else
+        res.status(200).json('fail');
     }
     else
     {

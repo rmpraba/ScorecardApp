@@ -135,30 +135,35 @@
 
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-art-craft-onetofour-card');
         document.querySelector('cc-art-craft-onetofour-card').setDefaultHeaders();
+        document.querySelector('cc-art-craft-onetofour-card').FnSpinnerrActive(true); 
         }
         else if(subject=="dance"){      
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
 
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-dance-onetofour-card');
         document.querySelector('cc-dance-onetofour-card').setDefaultHeaders();
+        document.querySelector('cc-dance-onetofour-card').FnSpinnerrActive(true); 
         }
         else if(subject=="music"){    
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
 
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-music-onetofour-card');
         document.querySelector('cc-music-onetofour-card').setDefaultHeaders();
+        document.querySelector('cc-music-onetofour-card').FnSpinnerrActive(true); 
         }  
         else if(subject=="Games"){   
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
 
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-games-card');
         document.querySelector('cs-games-card').setDefaultHeaders();
+        document.querySelector('cs-games-card').FnSpinnerrActive(true); 
         } 
         else if(subject=="Personality Development"){
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
 
         document.querySelector('cs-personalitydevelopment-card').setDefaultHeaders();                   
-        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card');        
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card'); 
+        document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(true);        
         }      
         else if(subject=="Life Skills"){
         this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          

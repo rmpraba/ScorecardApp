@@ -41,7 +41,9 @@
       <table border="1">
         <tr><td hidden><paper-input value="{{studid}}"></paper-item><paper-input value="{{studname}}"></paper-item></td>
         <td><paper-input disabled="{{read}}" required allowed-pattern="^[0-9.a,]+$" value="{{activity}}" id="p1" on-change="FnActivity"></paper-input></td>
-         <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td>
+         <!-- <td><paper-checkbox disabled="{{read}}" checked id="{{studid}}" on-change="FnChange"></paper-checkbox></td> -->
+         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
       </table>
     </div>
@@ -74,16 +76,7 @@
       ready:function(){
        this.flag=0;
       },
-      FnYes:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
-      FnNo:function(){
-        var id='adialog';          
-          document.getElementById(id).opened=false;          
-          // this.read=true;
-      },
+     
       FnChange:function(e){
          // alert(e.target.checked);
         if(e.target.checked==false){
@@ -102,9 +95,12 @@
         activity=parseFloat(this.activity).toFixed(2); 
         document.querySelector('cc-gk-onetofour-card').FnToggleDialog(this.activity);
         // if(this.flag==0)
+        // this.FnValidateCall();
+        // if(this.flag==1)
+        //  this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"General Knowledge","Activity",this.activity,1);
+      },
+      FnSave:function(){
         this.FnValidateCall();
-        if(this.flag==1)
-         this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"General Knowledge","Activity",this.activity,1);
       },
       FnValidateCall:function(){
         this.flag=1;
@@ -141,7 +137,7 @@
         return this.grade;        
       },
       callService:function(){
-        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"General Knowledge","Activity",this.activity,1);
+        this.$.assesmentservice.callinsertassesmentmarkService(this.studid,this.studname,"General Knowledge","Activity",this.activity,1,1);
         // this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,"General Knowledge",this.gk,this.gk,this.gkgrade,1);  
       }     
     });

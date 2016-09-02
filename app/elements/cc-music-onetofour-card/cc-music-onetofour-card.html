@@ -188,6 +188,11 @@
         this.hidepaperitem=false;
         this.hidepaperinput=true; 
         this.$.submit.hidden=true;
+         if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn2.hidden=false;
+        }
         // this.$.save.hidden=true;
       }
       else{

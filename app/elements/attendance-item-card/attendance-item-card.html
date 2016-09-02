@@ -18,7 +18,7 @@
         height: 2%;
       }
          #tb1{
-        width:20%
+        width:15%
       }
     </style>
     <div class="card">
@@ -28,18 +28,20 @@
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
         <td id="tb1"><paper-input on-change="FnAttendance" value="{{attendance}}"></paper-input></td>
         <td id="tb1">
-          <paper-dropdown-menu id="generic" label="Select comment" disabled="{{read}}" required>
+        <paper-input on-change="FnGeneric" value="{{genericcomment}}"></paper-input>
+         <!--  <paper-dropdown-menu id="generic" label="Select comment" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{generic}}"  on-iron-select="FnSelectComment"  attr-for-selected="value" required>  
               <!-- <template is="dom-repeat" items="{{commentarr}}"> -->
-                <paper-item value="Good">Good</paper-item>
+               <!--  <paper-item value="Good">Good</paper-item>
                 <paper-item value="Excellent">Excellent</paper-item>
                 <paper-item value="Poor">Poor</paper-item>
-                <paper-item value="Average">Average</paper-item>                             
+                <paper-item value="Average">Average</paper-item> -->                             
               <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
+            <!-- </paper-menu>
+          </paper-dropdown-menu>  -->
         </td>   
         <td id="tb1"><paper-input on-change="FnSpecific" value="{{specificcomment}}"></paper-input></td>  
+        <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button></td>
         </tr>
         </table>
     </div>
@@ -59,23 +61,27 @@
       },     
       FnAttendance:function(e)
       {  
-         if(this.flag==1)
-         this.callService();     
+         // if(this.flag==1)
+         // this.callService();     
       },
       FnSpecific:function()
       {
-            this.flag=1;
-          this.callService();
+          //   this.flag=1;
+          // this.callService();
       },
-      FnSelectComment:function(e)
+      FnGeneric:function(e)
       {
-        generic = e.target.selectedItem.textContent.trim();
-         if(this.flag==1)
-         this.callService();   
+        // generic = e.target.selectedItem.textContent.trim();
+         // if(this.flag==1)
+         // this.callService();   
+      },
+      FnSave:function(){
+        this.flag=1;
+        this.callService();
       },
       callService:function()
       {           
-        this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays,generic,this.specificcomment); 
+        this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays,this.genericcomment,this.specificcomment); 
       }
     });
   })();

@@ -56,17 +56,18 @@
       <th id="tb1">Total Attendance</th>
       <th id="tb1">Generic Comment</th>
       <th id="tb1">Specific Comment</th>
+      <th id="tb1"></th>
       </tr>  
       </div>
 
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="5">
+      <tr><td colspan="6">
       <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" generic="{{item.generic}}"></attendance-item-card>
       </td></tr>
       </template>
       </table>      
       </center> 
-      <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>     
+      <!-- <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>      -->
     </div>    
   </template>
   <script>

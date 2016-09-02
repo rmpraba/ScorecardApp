@@ -65,7 +65,7 @@
              width:2%
        }
         #tb5{
-             height:60px;
+             height:80px;
        }
 
     #tb7{
@@ -130,9 +130,11 @@
         <div id="tb0">
               <h1>Teacher Observation Form</h1>
         </div>
+      
         <div id="div1">
+
         <table border="1" width="50%" id="tb3">
-        
+          <tr><th id="tb5" height="100px"><center>OBSERVATION TILTE</center></th></tr>
          <template is="dom-repeat" items="{{descriptorarr}}" as="view">
           <tr>
          <th id="tb5" height="100px">{{view.description}}</th>
@@ -140,6 +142,7 @@
          </template>
          </table>
          <table border="1" hidden$="{{hidescorearr1}}" id="tb3">
+        <tr><th id="tb5" height="100px">{{scorearr11}}</th></tr>
           <template is="dom-repeat" items="{{scorearr1}}" as="view1">
           <tr>
          <th id="tb5" height="100px">{{view1.score}}</th>
@@ -147,6 +150,8 @@
           </template>
           </table>
            <table border="1" hidden$="{{hidescorearr2}}" id="tb3">
+           <tr><th id="tb5" height="100px">{{scorearr12}}</th></tr>
+        
           <template is="dom-repeat" items="{{scorearr2}}" as="view1">
           <tr>
          <th id="tb5" height="100px">{{view1.score}}</th>
@@ -154,6 +159,8 @@
           </template>
           </table>
            <table border="1" hidden$="{{hidescorearr3}}" id="tb3">
+           <tr><th id="tb5" height="100px">{{scorearr13}}</th></tr>
+        
           <template is="dom-repeat" items="{{scorearr3}}" as="view1">
           <tr>
          <th id="tb5" height="100px">{{view1.score}}</th>
@@ -161,9 +168,14 @@
           </template>
           </table>
            <table border="1" id="tb3" hidden$="{{hidescore1}}">
+           <tr>
+            <td  id="tb5" height="100px">{{uname}}</td>
+            </tr>
           <template is="dom-repeat" items="{{descriptorarr}}" as="view">
           <tr>
-          <td id="tb5" height="100px"><paper-input   name="{{view.id}}" hidden$="{{hidescore1}}" auto-validate allowed-pattern="[0-9,.]$"  on-change="FnScore"></paper-input></td>
+         
+
+          <td id="tb5" height="100px"><paper-input  id="score{{index}}"  name="{{view.id}}" hidden$="{{hidescore1}}" auto-validate allowed-pattern="[0-9,.]$" char-counter maxlength="1" on-change="FnScore"></paper-input></td>
           </tr>
           </template>
           </table>
@@ -220,6 +232,7 @@
       is: 'teacher-observation_card',
      ready:function(){
       this.$.tb3.hidden=true;
+      this.$.div1.hidden=true;
       //this.$.tb6.hidden=true;
       //this.$.tb10.hidden=true;
       //this.$.tb0.hidden=true;
@@ -277,18 +290,24 @@
       this.$.observerservice.Fnteachersubject(this.staffid,this.grid,this.secid);
       },
        subjectid:function(e){
+     
        this.sid=e.target.selectedItem.value;
        this.$.observerservice.Fnobservermark(this.staffid,this.grid,this.secid,this.sid);
-       this.fnentermark();
-       alert("wedf"); 
+       
        this.$.tb3.hidden=false;
        this.$.tb6.hidden=false;
        this.$.tb10.hidden=false;
        this.$.tb0.hidden=false;
        this.hidescore1=false;
-       this.hidescorearr1=false;
-
-},
+      this.hidescorearr1=false;
+       this.hidescorearr2=false;
+       this.hidescorearr3=false;
+       this.$.div1.hidden=false;
+      
+       for(var i=0;i<this.descriptorarr.length;i++)
+       document.querySelector('#score'+i).value="";
+      
+ },
 
     fnentermark:function(f)
     { 
@@ -348,13 +367,17 @@
     //alert(e.target.value+''+e.target.name);
     var did=e.target.name;
     var val=e.target.value;
-      var obid=sessionStorage.getItem("curr_sess_loggedid");
-      var rid=sessionStorage.getItem("curr_sess_loggedroleid");
+    var obid=sessionStorage.getItem("curr_sess_loggedid");
+    var rid=sessionStorage.getItem("curr_sess_loggedroleid");
     this.$.observerservice.Fnobserverscore(did,val,this.staffid,obid,rid,this.grid,this.secid,this.sid);
+    //alert("submit successfully");
+    
+
     },
     sumbitmark:function(e)
     {
       this.$.observerservice.Fnobserverupdateflag(this.staffid,this.grid,this.secid,this.sid);
+     
     }
 
 

@@ -200,6 +200,7 @@
       },
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
+        // alert(JSON.stringify(arr));
         
         document.querySelector('cce-generate-score-card').FnHide();
         document.querySelector('student-list-card').studentarr=arr;  
@@ -214,7 +215,8 @@
         this.$.fetchstudinfoajax.generateRequest();
       },
       fetchstudinfoResponse:function(e){        
-        var arr=e.detail.response.returnval;        
+        var arr=e.detail.response.returnval; 
+        // alert(JSON.stringify(arr));       
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){          
         document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
         document.querySelector('cce-onetofour-score-card').studname=arr[0].student_name;        

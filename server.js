@@ -1088,7 +1088,7 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
   var gradeid={grade_id:req.query.grade};
   var sectionid={section_id:req.query.section};
 
-  var qur="SELECT * FROM md_student where class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"') and section_id=(select section_id from md_section where section_name='"+req.query.section+"'))";
+  var qur="SELECT * FROM md_student where class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"') and section_id=(select section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"')) and school_id='"+req.query.schoolid+"'";
   connection.query(qur,
     function(err, rows)
     {
@@ -1137,9 +1137,9 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
   var schoolid={school_id:req.query.schoolid};
   var studid={id:req.query.studid};
   var qur="select (select grade_name from md_grade where grade_id="+
-  "(select grade_id from mp_grade_section where class_id=s.class_id)) grade,"+
+  "(select grade_id from mp_grade_section where class_id=s.class_id )) grade,"+
   "(select section_name from md_section where section_id="+
-  "(select section_id from mp_grade_section where class_id=s.class_id)) section,"+
+  "(select section_id from mp_grade_section where class_id=s.class_id and school_id='"+req.query.schoolid+"')) section,"+
   "s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1 "+
   "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
 

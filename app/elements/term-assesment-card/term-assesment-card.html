@@ -101,13 +101,13 @@
   </template>
   <script>
   (function() {
-    var flag=0;
+    // var flag=0;
     'use strict';
     var gradename,section,term,assesment,subject,academicyear;
     Polymer({
       is: 'term-assesment-card',
       ready:function(){
-       
+       this.flag=0;
       },
       FnHideView:function(){
          this.flag=0;
@@ -250,22 +250,22 @@
       },
       FnRefresh:function()
       {
-        document.querySelector('#gradenam1').selected=-1;
-        document.querySelector('#sectionnam1').selected=-1;
-        document.querySelector('#assesmentcat1').selected=-1;
-        document.querySelector('#assestype1').selected=-1;
-        document.querySelector('#subjectnam1').selected=-1;
-        this.flag=0;
+        // document.querySelector('#gradenam1').selected=-1;
+        // document.querySelector('#sectionnam1').selected=-1;
+        // document.querySelector('#assesmentcat1').selected=-1;
+        // document.querySelector('#assestype1').selected=-1;
+        // document.querySelector('#subjectnam1').selected=-1;
+        // this.flag=0;
 
         var subj=localStorage.getItem("curr_sess_subject");
         var assestype=localStorage.getItem("curr_sess_assesmenttype");
         if(subj=="Mathematics")
         {       
-           
+           // document.querySelector('#subjectnam1').selected=-1;
            document.querySelector('cc-maths-onetofour-card').FnRefresh();
         }  
         if(subj=="EVS"){        
-          
+          // document.querySelector('#subjectnam1').selected=-1;
           document.querySelector('cc-evs-onetofour-card').FnRefresh();
         }
          if(subj=="English"||subj=="Hindi"||subj=="Kannada"){      
@@ -293,7 +293,17 @@
           }
         
 
+      },
+      FnRefreshcard:function(){
+        
+        document.querySelector('#gradenam1').selected=-1;
+        document.querySelector('#sectionnam1').selected=-1;
+        document.querySelector('#assesmentcat1').selected=-1;
+        document.querySelector('#assestype1').selected=-1;
+        document.querySelector('#subjectnam1').selected=-1;
+        this.flag=0;
       }
+
     });
   })();
   </script>

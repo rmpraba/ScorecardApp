@@ -607,9 +607,6 @@ app.post('/fetchstudbeginnerreport-service',  urlencodedParser,function (req, re
   });
 });
 
-
-
-
 //fetching student info
 app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
 {
@@ -1714,11 +1711,20 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
 
 app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 {
+  var qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+  " and term_name='"+req.query.term+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in(0,1)";
 
-  var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' order by CAST(sub_cat_sequence AS UNSIGNED)";
+  console.log('Query check........');
+  console.log(qurcheck);
+  console.log('...................');
+
+  var qur="select * from tr_term_assesment_marks where academic_year='"+req.query.academicyear+"' and grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' order by CAST(sub_cat_sequence AS UNSIGNED)";
   //console.log(qur);
-  connection.query(qur,
-    function(err, rows)
+  connection.query(qurcheck,function(err, rows){
+    if(!err){
+      if(rows.length==0){
+  connection.query(qur,function(err, rows)
     {
     if(!err)
     {
@@ -1734,6 +1740,12 @@ app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
     }
     else
       console.log(err);
+  });
+    }
+    else{
+      res.status(200).json({'returnval': 'imported'});
+    }
+    }
   });
 });
 
@@ -2615,11 +2627,6 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
   res.status(200).json('mail sent');
 });
 
-var server = app.listen(5000, function () {
-var host = server.address().address
-var port = server.address().port
-console.log("Example app listening at http://%s:%s", host, port)
-});
 
 app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
 {  
@@ -2650,3 +2657,10 @@ app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req,
       console.log(err);
 });
 });
+
+var server = app.listen(5000, function () {
+var host = server.address().address
+var port = server.address().port
+console.log("Example app listening at http://%s:%s", host, port)
+});
+

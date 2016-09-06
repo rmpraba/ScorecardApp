@@ -66,7 +66,7 @@
             background-color: transparent;
           }
     </style>
-     <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+     <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
    <div class="card">
    <center><h1>{{schoolname}}</h1>
    <div id="hidetop">
@@ -143,7 +143,7 @@
 
       <template is="dom-repeat" items="{{studarr}}">
       <tr>
-        <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
+        <td>{{item.serialno}}</td><td style="text-align: left;">{{item.student_name}}</td>
         <td colspan="66"><cc-evs-onetofour-item-card flag="{{flag}}" studid="{{item.id}}" studname="{{item.student_name}}"></cc-evs-onetofour-item-card></td>
       </tr>
       </template>

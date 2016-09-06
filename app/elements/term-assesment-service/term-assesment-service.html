@@ -375,13 +375,12 @@
          this.fetchstudentreportService();
          }
         else
-        {
+        {            
             if(localStorage.getItem("curr_sess_subject")=='music'||localStorage.getItem("curr_sess_subject")=='dance'||localStorage.getItem("curr_sess_subject")=='Art&Craft'||localStorage.getItem("curr_sess_subject")=='Games'||localStorage.getItem("curr_sess_subject")=='Personality Development'){
                 this.fetchimportmark(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_termname"),"Assesment3",localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_section"),localStorage.getItem("curr_sess_subject")); 
             }
             else
             this.fetchimportmark(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_termname"),localStorage.getItem("curr_sess_assesment"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_section"),localStorage.getItem("curr_sess_subject")); 
-        
         }
       },
       fetchstudentService:function(){
@@ -437,9 +436,7 @@
             arr1.splice(j,1);
             j--;
            }
-
         }
-
        overall.push(markarr);
        }
        // alert(JSON.stringify(overall));
@@ -487,11 +484,9 @@
         if(localStorage.getItem("curr_sess_subject")=="Personality Development"){        
         document.querySelector('cs-personalitydevelopment-card').markarr=overall;
         document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(false); 
-        }
-    
+        }  
         
         }
-
         else
         {
           // alert(localStorage.getItem("curr_sess_subject"));
@@ -513,12 +508,14 @@
       // alert(localStorage.getItem("curr_sess_subject"));     
         var arr=e.detail.response.returnval;
         if(arr=='imported'){
-          // alert('Marks are already submitted!');
+           this.FnSpinnerDeactive();
+           alert('Marks already submitted!');
         }
         // localStorage.setItem('curr_sess_fetchstudent','1');
         // alert(arr);
         else{
         if(arr!='invalid'){ 
+        // alert(JSON.stringify(e.detail.response.returnval)) ;  
         // alert(this.studarrlength);              
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=parseInt(this.studarrlength)+(i+1);
@@ -619,8 +616,7 @@
         if(localStorage.getItem("curr_sess_subject")=="Health and Physical Education"){
         document.querySelector('cs-health-physical-education-card').studarr=arr;         
         }
-
-         if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
+        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
         document.querySelector('cc-fa-fivetoten-card').studarr=arr;         
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
@@ -628,9 +624,12 @@
         }
         } 
         }
+        else{
+          // alert('hi');
+        this.FnSpinnerDeactive();
+        }
          
         }
-
       },
       callinsertassesmentmarkService:function(studid,studname,category,subcategory,mark,seqno,catcount){ 
          insertcheckflag=catcount;       
@@ -899,8 +898,9 @@
     {
       localStorage.setItem("curr_sess_importsubject",subject);      
       this.fetchimportmarkurl=sessionStorage.getItem("addrinfo")+"/fetchimportmark-service";
-         var obj={"schoolid":"","gradename":"","section":"","subject":"","assesment":"","term":""};
+         var obj={"academicyear":"","schoolid":"","gradename":"","section":"","subject":"","assesment":"","term":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");         
          obj.gradename=grade;
          obj.section=section;
          obj.subject=subject;
@@ -915,7 +915,13 @@
        var a=[];
        var arr1=e.detail.response.returnval;
        // alert(JSON.stringify(arr1));
-       if(arr1!="invalid"){   
+       if(arr1=="imported"){
+        this.FnSpinnerDeactive();
+        alert('Marks already submitted!');
+       }
+       else{
+       if(arr1!="invalid")
+       {
        for(var i=0;i<arr1.length;i++)
        {
         var markarr=[];
@@ -1057,10 +1063,11 @@
         document.querySelector('cce-fivetoten-health-card').importarr=overall;
         document.querySelector('cce-fivetoten-health-card').FnResetFlag();
         }*/  
-        }
+        }        
         else
         this.studarrlength=0;
-        this.fetchstudentService();
+        this.fetchstudentService(); 
+        }  
     },
     Fnupdatemark:function()
     {

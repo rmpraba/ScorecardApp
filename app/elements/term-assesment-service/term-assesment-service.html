@@ -286,6 +286,8 @@
     var insertflag=0,insertcheckflag=0;
 
     var updatemarkarray=[];
+
+    var overallfetchimportarr=[];
     
     Polymer({
       is: 'term-assesment-service',
@@ -505,7 +507,10 @@
       },
       fetchstudentResponse:function(e){ 
       // alert(JSON.stringify(e.detail.response.returnval)) ;  
-      // alert(localStorage.getItem("curr_sess_subject"));     
+      // alert(localStorage.getItem("curr_sess_subject")); 
+
+        var temparr=[]; 
+        var flag=0;   
         var arr=e.detail.response.returnval;
         if(arr=='imported'){
            this.FnSpinnerDeactive();
@@ -515,8 +520,39 @@
         // alert(arr);
         else{
         if(arr!='invalid'){ 
-        // alert(JSON.stringify(e.detail.response.returnval)) ;  
-        // alert(this.studarrlength);              
+        // alert(overallfetchimportarr.length);
+        // alert(arr.length);
+
+        if(overallfetchimportarr.length>0){
+          
+
+        for(var i=0;i<arr.length;i++){
+          flag=0;
+          for(var j=0;j<overallfetchimportarr.length;j++){  
+          // alert(overallfetchimportarr[j].overall[0].marks[0].name);          
+            if(overallfetchimportarr[j].overall[0].marks[0].name==arr[i].id)
+              {
+                // alert(overallfetchimportarr[j].overall[0].marks[0].name+"  "+arr[i].id);
+                flag=1;
+              }
+            
+          }
+          if(flag==0){ 
+          // alert(JSON.stringify(arr[i]));           
+            temparr.push(arr[i]);
+            // break;
+          }
+            
+        }
+
+        arr=temparr;
+        }
+        if(overallfetchimportarr.length==0)
+         arr=e.detail.response.returnval; 
+        overallfetchimportarr=[];
+        // alert(arr.length);
+        // alert(JSON.stringify(arr));
+        // alert(JSON.stringify(overallfetchimportarr));
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=parseInt(this.studarrlength)+(i+1);
         }
@@ -968,7 +1004,10 @@
         markarr.push(nameobj);
         a=[];
         overall.push(markarr);
+        overallfetchimportarr.push({"overall":markarr});
        }
+
+       
        // alert(JSON.stringify(overall));
        this.studarrlength=(overall.length);       
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"||localStorage.getItem("curr_sess_importsubject")=="Personality Development"){
@@ -1121,6 +1160,7 @@
         updatemarkarray.push(updatemarkarr);
     },
     FnSpinnerDeactive:function(){
+       overallfetchimportarr=[];
        if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
         // document.querySelector('cc-maths-onetofour-card').markarr=overall;  
         document.querySelector('cc-maths-onetofour-card').FnSpinnerrActive(false);       

@@ -627,12 +627,12 @@ var qur1="select school_id,student_id as id,student_name,class_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
 "subject_id=(select subject_id from md_subject where subject_name='"+req.query.subject+"') and "+
-"school_id='"+req.query.schoolid+"' and student_id not in(select student_id from tr_term_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"'))";
+"school_id='"+req.query.schoolid+"')";
 var qur2="select school_id,id,student_name,class_id from md_student where  class_id="+
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
-"school_id='"+req.query.schoolid+"' and id not in(select student_id from tr_term_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"'))";
+"school_id='"+req.query.schoolid+"')";
 
   console.log(qurcheck);
   console.log('............................................'); 
@@ -640,8 +640,7 @@ var qur2="select school_id,id,student_name,class_id from md_student where  class
   console.log('............................................'); 
   console.log(qur1); 
   console.log('............................................'); 
-  console.log(qur2);     
-  console.log('............................................'); 
+  
 
 
 connection.query(qurcheck,function(err, rows){
@@ -663,10 +662,15 @@ connection.query(qur,
       else
       {
        connection.query(qur2,function(err, rows){
+        console.log('............normal subject............'); 
+        console.log(qur2);     
+        console.log('............................................'); 
        if(rows.length>0) 
         res.status(200).json({'returnval': rows});
-       else
+       else{
+        console.log(err);
         res.status(200).json({'returnval': 'invalid'});
+      }
       });
       }
     }
@@ -674,6 +678,7 @@ connection.query(qur,
       console.log(err);
   
 });
+
 }
 else
 res.status(200).json({'returnval': 'imported'});

@@ -2181,7 +2181,8 @@ app.post('/observerscore-service',  urlencodedParser,function (req, res)
          role:req.query.roleid,
          grade:req.query.grade,
          section:req.query.section,
-         subject:req.query.subject                      
+         subject:req.query.subject,   
+                              
   }
   connection.query("INSERT INTO tr_teacher_observation_mark set ?",[response],
     function(err, rows)
@@ -2198,7 +2199,37 @@ app.post('/observerscore-service',  urlencodedParser,function (req, res)
 
   });
 });
+/*app.post('/fnstrength-service',  urlencodedParser,function (req, res)
+{  
+  var response={
+          Strength:req.query.Strength, 
+          Areas:req.query.Areas,  
+          Innovation:req.query.Innovation,
+          comment:req.query.comment                        
+       }
+  var role={ role:req.query.roleid}
+  var obs={observer_id:req.query.observerid};
+  var des={description_id:req.query.desid};
+ var teacherid={teacher_id:req.query.teacherid};
+ var gradeid={ grade:req.query.grade};
+ var sectionid={section:req.query.section};
+ var subjectid={subject:req.query.subject};
+  connection.query("INSERT INTO tr_teacher_observation_mark set ? where ?and ? and ? and ? and ? and ?",[response,des,obs,teacherid,gradeid,sectionid,subjectid],
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
 
+  });
+});
+*/
 
 app.post('/observerinsertflag-service',  urlencodedParser,function (req, res)
 {  

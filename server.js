@@ -797,20 +797,34 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   var cond7={subject_id:req.query.subject};
   var cond8={category:req.query.category};
   var cond9={sub_category:req.query.subcategory};
+  var cond10={grade:req.query.grade};
+  var cond11={section:req.query.section};
   var subname={subject_name:req.query.subject};
   var mark={mark:req.query.mark};
+
+  console.log(response);
 
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
   {
   response.subject_category=rows[0].subject_category;
-  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
+  console.log(response.subject_category);
+
+  var q="SELECT * FROM tr_term_assesment_marks WHERE grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'"+
+  " and assesment_id='"+req.query.assesmentid+"' and term_name='"+req.query.termname+"' and class_id='"+req.query.classid+"'"+
+  " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"'";
+  console.log('..................................');
+  console.log(q);
+  console.log('..................................');
+  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9,cond10,cond11],function(err, rows) {
+  console.log("length..........."+rows.length);
   if(rows.length==0){
   connection.query("INSERT INTO tr_term_assesment_marks set ?",[response],
-  function(err, rows)
+  function(err, result)
     {
     if(!err)
-    {    
+    {  
+     console.log("rows affected............"+result.affectedRows);  
       res.status(200).json({'returnval': 'succ'});
     }
     else

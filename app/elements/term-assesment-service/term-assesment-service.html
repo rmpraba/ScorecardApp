@@ -514,6 +514,7 @@
         var arr=e.detail.response.returnval;
         if(arr=='imported'){
            this.FnSpinnerDeactive();
+           if(sessionStorage.getItem("curr_sess_loggedroleid")!="co-ordinator")
            alert('Marks already submitted!');
         }
         // localStorage.setItem('curr_sess_fetchstudent','1');
@@ -905,8 +906,9 @@
       },
     callApproveService:function()
     {
-      var obj1={"schoolid":"","flag":""}
+      var obj1={"schoolid":"","flag":"","loggedid":""}
       obj1.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+      obj1.loggedid=sessionStorage.getItem("curr_sess_loggedid");
       if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
       {
 
@@ -934,14 +936,15 @@
     {
       localStorage.setItem("curr_sess_importsubject",subject);      
       this.fetchimportmarkurl=sessionStorage.getItem("addrinfo")+"/fetchimportmark-service";
-         var obj={"academicyear":"","schoolid":"","gradename":"","section":"","subject":"","assesment":"","term":""};
+         var obj={"roleid":"","academicyear":"","schoolid":"","gradename":"","section":"","subject":"","assesment":"","term":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");         
          obj.gradename=grade;
          obj.section=section;
          obj.subject=subject;
          obj.assesment=assesment;
-         obj.term=term
+         obj.term=term;
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          this.fetchimportmarkparam= obj;          
          this.$.fetchimportmarkajax.generateRequest();
     },
@@ -953,6 +956,7 @@
        // alert(JSON.stringify(arr1));
        if(arr1=="imported"){
         this.FnSpinnerDeactive();
+        if(sessionStorage.getItem("curr_sess_loggedroleid")!='co-ordinator')
         alert('Marks already submitted!');
        }
        else{

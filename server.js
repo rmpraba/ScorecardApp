@@ -1705,8 +1705,15 @@ app.post('/updateflag-service' ,  urlencodedParser,function (req, res)
 app.post('/approvemark-service',  urlencodedParser,function (req, res)
 {
 
-  var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
-  
+  //var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
+  var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
+"and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
+"id='"+req.query.loggedid+"'))";
+
+console.log('............................................');
+console.log(qur);
+console.log('............................................');
+
   connection.query(qur,
     function(err, rows)
     {
@@ -1730,9 +1737,18 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
 
 app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 {
+  var flag="";
+  if(req.query.roleid=="subject-teacher"||req.query.roleid=="class-teacher"){
+    flag="0";
+  }
+  else if(req.query.roleid=="co-ordinator")
+  {
+    flag="1";
+  }
+
   var qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
   "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
-  " and term_name='"+req.query.term+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in(0,1)";
+  " and term_name='"+req.query.term+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in('"+flag+"')";
 
   console.log('Query check........');
   console.log(qurcheck);

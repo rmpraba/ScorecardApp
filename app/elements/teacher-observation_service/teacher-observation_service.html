@@ -138,6 +138,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="observernameResponse"
         debounce-duration="300" 
+    >
+     <iron-ajax
+        
+        method="post"
+        id="fnstrengthajax"
+        url="{{fnstrengthurl}}"
+        params="{{fnstrengthparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fnstrengthResponse"
+        debounce-duration="300" 
     >                  
   </template>      
   <script>
@@ -315,12 +326,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
         
       }
-      alert(m);
-      alert(n);
-      alert(r);
-
-
-     
+      
       if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
       {
       document.querySelector('teacher-observation_card').scorearr1=scorearr1;
@@ -352,8 +358,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            obj.id1=observer2arr;
             obj.id2=observer3arr;
          this.observernameparam=obj;
-           alert('hi'); 
-           alert(JSON.stringify(obj));
+            
+          
            this.$.observernameajax.generateRequest();
          }
 
@@ -366,8 +372,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            obj.id=observer1arr;
            obj.id1=observer2arr;
          this.observernameparam=obj;
-           alert('hi'); 
-           alert(JSON.stringify(obj));
+          
            this.$.observernameajax.generateRequest();
          }
          else if(m=="co-ordinator"|| n=="headmistress"||r=="principal")
@@ -377,8 +382,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            var obj={"id":""};
            obj.id=observer1arr;
            this.observernameparam=obj;
-           alert('hi'); 
-           alert(JSON.stringify(obj));
+           
            this.$.observernameajax.generateRequest();
           
 
@@ -427,18 +431,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        },
       observernameResponse:function(e)
      {
-       
-
-       var res=e.detail.response.returnval  ; 
-        alert(JSON.stringify(res));
+        var res=e.detail.response.returnval  ; 
+       // alert(JSON.stringify(res));
        var scorearr11;
        var scorearr12;
        var scorearr13;
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
         {
          scorearr11=res[0].name;
-         alert(scorearr11);
-         alert("sdxfcg");
          document.querySelector('teacher-observation_card').scorearr11=scorearr11;
       }
      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
@@ -477,6 +477,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            obj.subject=subject;
            this.observerscoreparam=obj;
            this.$.observerscoreajax.generateRequest();
+     },
+     fnstrength:function(desid,score,teacherid,observerid,roleid,grade,section,subject,Strength,Areas,Innovation,comment)
+     {
+
+          this.fnstrengthurl=sessionStorage.getItem("addrinfo")+"/fnstrength-service";
+           var obj={"desid":"","score":"","teacherid":"","observerid":"","roleid":"","grade":"","section":"","subject":"","Strength":"","Areas":"","Innovation":"","comment":""};
+           obj.desid=desid;
+           obj.score=score;
+           obj.teacherid=teacherid;
+           obj.observerid=observerid;
+           obj.roleid=roleid;
+           obj.grade=grade;
+           obj.section=section;
+           obj.subject=subject;
+           obj.Strength=Strength;
+           obj.Areas=Areas;
+           obj.Innovation=Innovation;
+           obj.comment=comment;
+
+           this.fnstrengthparam=obj;
+           alert(JSON.stringify.obj);
+           this.$.fnstrengthajax.generateRequest();
      },
      Fnobserverupdateflag:function(teacherid,gradeid,sectionid,subjectid)
      {

@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../term-assesment-service/term-assesment-service.html">
 <link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
@@ -28,8 +29,8 @@
               width: 50%;
               height: 10%;
               text-align: center;
-            top:100px;
-              left:350px
+            top:50px;
+              left:200px
         }
      #tb2{
               width:20%;
@@ -39,17 +40,18 @@
               position: relative;
               height: 100%;
               border: 1px solid black;
-              top:100px;
-              left: 350px;
+              top:70px;
+              left: 200px;
               text-align: left;
        }
     #tb6{
-                position: relative;
+            position: relative;
               width: 70%;
               height: 100%;
               border: 1px solid black;
               top:150px;
               left: 200px
+
        }
        #tb10{
               position: relative;
@@ -65,15 +67,13 @@
              width:2%
        }
         #tb5{
-             height:80px;
+             height:100px;
        }
 
     #tb7{
              width:10%
        }
-     #tb8{
-             width:60%
-       }
+    
        #tc{
         color:#003399;
        } 
@@ -82,9 +82,11 @@
         background:#336699;
        } 
       .row{
-        margin: 5%auto;
+        margin:0 auto;
         text-align: center;
         @apply(--layout-horizontal);
+          top:20px;
+          left: 200px;
       }
       #div1
       {
@@ -93,7 +95,6 @@
     </style>
 <div>
     <div class="row">
-      
      <paper-dropdown-menu label="Select TeacherName">
       <paper-menu class="dropdown-content"  on-iron-select="teachersid">   
         <template is="dom-repeat" items="{{teacharr}}" as="view">
@@ -141,8 +142,12 @@
          </tr>
          </template>
          </table>
+       
+
          <table border="1" hidden$="{{hidescorearr1}}" id="tb3">
-        <tr><th id="tb5" height="100px">{{scorearr11}}</th></tr>
+        <tr>
+        <th id="tb5" height="100px">{{scorearr11}}</th>
+        </tr>
           <template is="dom-repeat" items="{{scorearr1}}" as="view1">
           <tr>
          <th id="tb5" height="100px">{{view1.score}}</th>
@@ -150,7 +155,9 @@
           </template>
           </table>
            <table border="1" hidden$="{{hidescorearr2}}" id="tb3">
-           <tr><th id="tb5" height="100px">{{scorearr12}}</th></tr>
+           <tr>
+           <th id="tb5" height="100px">{{scorearr12}}</th>
+           </tr>
         
           <template is="dom-repeat" items="{{scorearr2}}" as="view1">
           <tr>
@@ -159,7 +166,7 @@
           </template>
           </table>
            <table border="1" hidden$="{{hidescorearr3}}" id="tb3">
-           <tr><th id="tb5" height="100px">{{scorearr13}}</th></tr>
+           <tr><th  id="tb5" height="100px">{{scorearr13}}</th></tr>
         
           <template is="dom-repeat" items="{{scorearr3}}" as="view1">
           <tr>
@@ -175,38 +182,34 @@
           <tr>
          
 
-          <td id="tb5" height="100px"><paper-input  id="score{{index}}"  name="{{view.id}}" hidden$="{{hidescore1}}" auto-validate allowed-pattern="[0-9,.]$" char-counter maxlength="1" on-change="FnScore"></paper-input></td>
+          <td id="tb5" height="100px"><paper-input    id="score{{index}}" on-change="FnScore"  name="{{view.id}}" hidden$="{{hidescore1}}" auto-validate allowed-pattern="[0-9,.]$" char-counter maxlength="1"></paper-input></td>
           </tr>
           </template>
           </table>
            </div>
-          <table border="1" id="tb6">
+          <table border="0" id="tb6">
          <tbody>
               <tr>
            <th id="tb7">Strength:</th><th id="tb8">
             
-             <paper-textarea  value="{{Strength}}" style="width:60%"></paper-textarea>
+        
+              <iron-autogrow-textarea   value="{{Strength}}" style="width:70%"></iron-autogrow-textarea>
            </th>
             </tr>
             <tr>
-           <th id="tb7">Improvement Areas:</th> <th id="tb8">
-            <paper-input value="{{Areas}}" ></paper-input> 
+           <th id="tb7">Improvement Areas:</th> <th>
+              <iron-autogrow-textarea  value="{{Areas}}" style="width:70%"></iron-autogrow-textarea>
            </th>
-           
-           
-            
-          </tr>
+            </tr>
             <tr>
-           <th id="tb7">Innovation:</th> <th id="tb8">
-             <paper-input value="{{Innovation}}"></paper-input>
+           <th id="tb7">Innovation:</th> <th>
+             <iron-autogrow-textarea  value="{{Innovation}}" style="width:70%"></iron-autogrow-textarea>
            </th>
-           
-           
-            
-          </tr>
+           </tr>
             <tr>
-              <th id="tb7">Any other comment:</th> <th id="tb8">
-                <paper-input value="{{comment}}"></paper-input>
+              <th id="tb7">Any other comment:</th> <th>
+               
+                 <iron-autogrow-textarea  value="{{comment}}"  style="width:70%"></iron-autogrow-textarea>
               </th> 
            </tr>
           
@@ -215,10 +218,9 @@
          
 <table border="0" id="tb10">
              <tbody>
-             <tr >
+             <tr>
              <th ><paper-button on-click="sumbitmark" id="tb9">Submit</paper-button></th>
-              <th><paper-button on-click="tupdate" id="tb9">Update</paper-button></th>
-               <tr>
+             <tr>
              </tbody>
            </table>
 </div>
@@ -303,11 +305,7 @@
        this.hidescorearr2=false;
        this.hidescorearr3=false;
        this.$.div1.hidden=false;
-      
-       for(var i=0;i<this.descriptorarr.length;i++)
-       document.querySelector('#score'+i).value="";
-      
- },
+      },
 
     fnentermark:function(f)
     { 
@@ -365,18 +363,28 @@
     FnScore:function(e)
     {
     //alert(e.target.value+''+e.target.name);
-    var did=e.target.name;
-    var val=e.target.value;
-    var obid=sessionStorage.getItem("curr_sess_loggedid");
-    var rid=sessionStorage.getItem("curr_sess_loggedroleid");
-    this.$.observerservice.Fnobserverscore(did,val,this.staffid,obid,rid,this.grid,this.secid,this.sid);
+     this.did=e.target.name;
+     this.val=e.target.value;
+     this.obid=sessionStorage.getItem("curr_sess_loggedid");
+     this.rid=sessionStorage.getItem("curr_sess_loggedroleid");
+     this.$.observerservice.Fnobserverscore(this.did,this.val,this.staffid,this.obid,this.rid,this.grid,this.secid,this.sid);
     //alert("submit successfully");
     
 
     },
     sumbitmark:function(e)
     {
-      this.$.observerservice.Fnobserverupdateflag(this.staffid,this.grid,this.secid,this.sid);
+       alert("welcome");
+       var obid=sessionStorage.getItem("curr_sess_loggedid");
+       var rid=sessionStorage.getItem("curr_sess_loggedroleid");
+       this.$.observerservice.fnstrength(this.did,val,this.staffid,obid,rid,this.grid,this.secid,this.sid,this.Strength,this.Areas,this.Innovation,this.comment);
+     this.$.observerservice.Fnobserverupdateflag(this.staffid,this.grid,this.secid,this.sid);
+      for(var i=0;i<this.descriptorarr.length;i++)
+       document.querySelector('#score'+i).value="";
+        this.Strength="";
+        this.Areas="";
+        this.Innovation="";
+        this.comment="";
      
     }
 

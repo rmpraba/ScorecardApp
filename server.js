@@ -628,7 +628,7 @@ var qur1="select school_id,student_id as id,student_name,class_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
 "subject_id=(select subject_id from md_subject where subject_name='"+req.query.subject+"') and "+
-"school_id='"+req.query.schoolid+"' and student_id not in(select student_id from tr_term_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"'))";
+"school_id='"+req.query.schoolid+"')";
 var qur2="select school_id,id,student_name,class_id from md_student where  class_id="+
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
@@ -641,8 +641,7 @@ var qur2="select school_id,id,student_name,class_id from md_student where  class
   console.log('............................................'); 
   console.log(qur1); 
   console.log('............................................'); 
-  console.log(qur2);     
-  console.log('............................................'); 
+  
 
 
 connection.query(qurcheck,function(err, rows){
@@ -653,8 +652,7 @@ connection.query(qur,
   {
     if(!err)
     {
-      if(rows.length>0){console.log('qur1');
-
+      if(rows.length>0){
        connection.query(qur1,function(err, rows){
        if(rows.length>0) 
         res.status(200).json({'returnval': rows});
@@ -664,19 +662,16 @@ connection.query(qur,
       }
       else
       {
-        console.log('qur2');
        connection.query(qur2,function(err, rows){
+        console.log('............normal subject............'); 
+        console.log(qur2);     
+        console.log('............................................'); 
        if(rows.length>0) 
-       {
-        console.log(rows);
         res.status(200).json({'returnval': rows});
-        
-       }
-       else
-       {
-        console.log('no');
+       else{
+        console.log(err);
         res.status(200).json({'returnval': 'invalid'});
-        }
+      }
       });
       }
     }
@@ -684,10 +679,12 @@ connection.query(qur,
       console.log(err);
   
 });
+
 }
 else
 res.status(200).json({'returnval': 'imported'});
 });
+
 
 });
 
@@ -776,7 +773,7 @@ app.post('/fetchgrade-service',  urlencodedParser,function (req,res)
 //Storing marks for assesment
 app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
 { 
-  var response={
+ var response={
          school_id:req.query.schoolid,
          academic_year:req.query.academicyear,   
          assesment_id:req.query.assesmentid,
@@ -802,23 +799,34 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   var cond7={subject_id:req.query.subject};
   var cond8={category:req.query.category};
   var cond9={sub_category:req.query.subcategory};
+  var cond10={grade:req.query.grade};
+  var cond11={section:req.query.section};
   var subname={subject_name:req.query.subject};
   var mark={mark:req.query.mark};
+
+  console.log(response);
 
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
   {
   response.subject_category=rows[0].subject_category;
-  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],
-    function(err, rows) {
+  console.log(response.subject_category);
+
+  var q="SELECT * FROM tr_term_assesment_marks WHERE grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'"+
+  " and assesment_id='"+req.query.assesmentid+"' and term_name='"+req.query.termname+"' and class_id='"+req.query.classid+"'"+
+  " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"'";
+  console.log('..................................');
+  console.log(q);
+  console.log('..................................');
+  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9,cond10,cond11],function(err, rows) {
+  console.log("length..........."+rows.length);
   if(rows.length==0){
   connection.query("INSERT INTO tr_term_assesment_marks set ?",[response],
-  function(err, rows)
-
-
+  function(err, result)
     {
     if(!err)
-    {    
+    {  
+     console.log("rows affected............"+result.affectedRows);  
       res.status(200).json({'returnval': 'succ'});
     }
     else
@@ -1724,8 +1732,15 @@ app.post('/updateflag-service' ,  urlencodedParser,function (req, res)
 app.post('/approvemark-service',  urlencodedParser,function (req, res)
 {
 
-  var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
-  
+   //var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
+  var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
+"and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
+"id='"+req.query.loggedid+"'))";
+
+console.log('............................................');
+console.log(qur);
+console.log('............................................');
+
   connection.query(qur,
     function(err, rows)
     {
@@ -1750,10 +1765,29 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
 app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 {
 
-  var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' order by CAST(sub_cat_sequence AS UNSIGNED)";
+ var flag="";
+  if(req.query.roleid=="subject-teacher"||req.query.roleid=="class-teacher"){
+    flag="0";
+  }
+  else if(req.query.roleid=="co-ordinator")
+  {
+    flag="1";
+  }
+
+  var qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+  " and term_name='"+req.query.term+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in('"+flag+"')";
+
+  console.log('Query check........');
+  console.log(qurcheck);
+  console.log('...................');
+
+  var qur="select * from tr_term_assesment_marks where academic_year='"+req.query.academicyear+"' and grade='"+req.query.gradename+"'and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' order by CAST(sub_cat_sequence AS UNSIGNED)";
   //console.log(qur);
-  connection.query(qur,
-    function(err, rows)
+  connection.query(qurcheck,function(err, rows){
+    if(!err){
+      if(rows.length==0){
+  connection.query(qur,function(err, rows)
     {
     if(!err)
     {
@@ -1770,19 +1804,31 @@ app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
     else
       console.log(err);
   });
+    }
+    else{
+      res.status(200).json({'returnval': 'imported'});
+    }
+    }
+  });
 });
 
 
 app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 {
   // console.log('come');
-  var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and category='"+req.query.category+"' and sub_category='"+req.query.sub_category+"' and student_id='"+req.query.studid+"'";
+  var qur="update tr_term_assesment_marks set mark='"+req.query.mark+"' where academic_year='"+req.query.academic+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.term+"' and academic_year='"+req.query.academic+"' and category='"+req.query.category+"' and sub_category='"+req.query.sub_category+"' and student_id='"+req.query.studid+"'";
+      console.log(qur);
       connection.query(qur,
-        function(err, rows)
+        function(err, result)
         {
         if(!err)
     {
       console.log('s');
+      if(result.affectedRows>0){
+        res.status(200).json('succ');
+      }
+      else
+        res.status(200).json('fail');
     }
     else
     {

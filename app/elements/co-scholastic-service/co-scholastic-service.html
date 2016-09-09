@@ -243,7 +243,8 @@
       sectionResponse:function(e){        
          document.querySelector('coscholastic-assesment-card').sectionarr=e.detail.response.returnval; 
       },
-      callFetchStudentInfo:function(grade,section){
+      callFetchStudentInfo:function(grade,section)
+      {
         hgrade=grade;
         hsection=section;
 
@@ -275,7 +276,7 @@
       fetchstudentResponse:function(e){ 
 
         var arr=e.detail.response.returnval;      
-       alert(JSON.stringify(arr));  
+       //alert(JSON.stringify(arr));  
        
         for(var i=0;i<arr.length;i++)
         {
@@ -287,9 +288,9 @@
 
           healtharr[i].serialno=parseInt(i)+1;
          }
-         // alert(JSON.stringify(healtharr));
+          //alert(JSON.stringify(healtharr));
         if(localStorage.getItem("curr_sess_subject")=="Health"){
-            //alert('d');
+           // alert('d');
         document.querySelector('cce-fivetoten-health-card').studarr=healtharr;           
         } 
         else if(localStorage.getItem("curr_sess_subject")=="Attendance"){            

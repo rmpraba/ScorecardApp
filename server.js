@@ -608,8 +608,6 @@ app.post('/fetchstudbeginnerreport-service',  urlencodedParser,function (req, re
 });
 
 
-
-
 //fetching student info
 app.post('/fetchstudent-service',  urlencodedParser,function (req, res)
 {
@@ -1328,7 +1326,7 @@ function(err, rows)
     {
     if(!err)
     {       
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'inserted'});
     }
     else
     {
@@ -1347,7 +1345,7 @@ else
     {
     if(!err)
     {       
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'updated'});
     }
     else
     {
@@ -1389,7 +1387,7 @@ connection.query("select* from tr_term_health where student_id='"+req.query.stud
     {
     if(!err)
     {       
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'inserted'});
     }
     else
     {
@@ -1406,7 +1404,7 @@ connection.query("select* from tr_term_health where student_id='"+req.query.stud
     {
     if(!err)
     {       
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'updated'});
     }
     else
     {

@@ -516,6 +516,7 @@
            this.FnSpinnerDeactive();
            if(sessionStorage.getItem("curr_sess_loggedroleid")!="co-ordinator")
            alert('Marks already submitted!');
+         // alert('student');
         }
         // localStorage.setItem('curr_sess_fetchstudent','1');
         // alert(arr);
@@ -958,6 +959,7 @@
         this.FnSpinnerDeactive();
         if(sessionStorage.getItem("curr_sess_loggedroleid")!='co-ordinator')
         alert('Marks already submitted!');
+      // alert('not import');
        }
        else{
        if(arr1!="invalid")
@@ -969,6 +971,19 @@
         nameobj.name=arr1[i].student_name; 
         nameobj.serialno=i+1; 
         var obj={"mark":"","category":"","sub_category":"","name":"","subseq":""};
+        if(localStorage.getItem("curr_sess_subject")=="Personality Development"){
+              if(arr1[i].mark=='10')
+                obj.mark="A+";
+              if(arr1[i].mark=='9')
+                obj.mark="A";
+              if(arr1[i].mark=='8')
+                obj.mark="B";
+              if(arr1[i].mark=='7')
+                obj.mark="C";
+              if(arr1[i].mark=='6')
+                obj.mark="D";
+            }
+              else
         obj.mark=arr1[i].mark;
         obj.sub_category=arr1[i].sub_category;
         obj.category=arr1[i].category;

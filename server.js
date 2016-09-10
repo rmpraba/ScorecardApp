@@ -799,8 +799,10 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   var cond9={sub_category:req.query.subcategory};
   var cond10={grade:req.query.grade};
   var cond11={section:req.query.section};
+  var cond12={sub_cat_sequence:req.query.subcatseq};
   var subname={subject_name:req.query.subject};
   var mark={mark:req.query.mark};
+  
 
   console.log(response);
 
@@ -812,11 +814,11 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
 
   var q="SELECT * FROM tr_term_assesment_marks WHERE grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'"+
   " and assesment_id='"+req.query.assesmentid+"' and term_name='"+req.query.termname+"' and class_id='"+req.query.classid+"'"+
-  " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"'";
+  " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"' and sub_cat_sequence='"+req.query.subcatseq+"'";
   console.log('..................................');
   console.log(q);
   console.log('..................................');
-  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9,cond10,cond11],function(err, rows) {
+  connection.query("SELECT * FROM tr_term_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9,cond10,cond11,cond12],function(err, rows) {
   console.log("length..........."+rows.length);
   if(rows.length==0){
   connection.query("INSERT INTO tr_term_assesment_marks set ?",[response],
@@ -1734,7 +1736,7 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
   //var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
   var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
 "and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
-"id='"+req.query.loggedid+"'))";
+"id='"+req.query.loggedid+"' and role_id='co-ordinator'))";
 
 console.log('............................................');
 console.log(qur);

@@ -28,7 +28,8 @@
         <td style="width: 8%;"><paper-input on-change="FnBloodgroup" value="{{bloodgroup}}"></paper-input></td> 
         <td style="width: 8%;"><paper-input on-change="FnVisionleft" value="{{visionleft}}"></paper-input></td> 
         <td style="width: 8%;"><paper-input on-change="FnVisionright" value="{{visionright}}"></paper-input></td>  
-        <td style="width: 8%;"><paper-input on-change="FnDental" value="{{dental}}"></paper-input></td>  
+        <td style="width: 8%;"><paper-input on-change="FnDental" value="{{dental}}"></paper-input></td> 
+        <td style="width: 8%;"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button></td> 
         </tr>
         </table>
     </div>
@@ -56,7 +57,11 @@
       FnVisionright:function(e){        
       },
       FnDental:function(e){        
-        this.callService();  
+        // this.callService();  
+      },
+      FnSave:function()
+      {
+       this.callService();
       },
       callService:function(){           
         this.$.assesmentservice.callinserthealthService(this.studid,this.studname,this.height,this.weight,this.bloodgroup,this.visionleft,this.visionright,this.dental); 

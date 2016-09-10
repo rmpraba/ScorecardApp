@@ -63,11 +63,12 @@
       <th id="tb1">Vision Left</th>
       <th id="tb1">Vision Right</th>
       <th id="tb1">Dental Hygiene</th>
+      <th id="tb1"></th>
       </tr>  
       </div>
    
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="8">
+      <tr><td colspan="9">
       <cce-fivetoten-health-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" height="{{item.height}}" weight="{{item.weight}}" bloodgroup="{{item.blood_group}}" visionleft="{{item.vision_left}}" visionright="{{item.vision_right}}" dental="{{item.dental}}"></cce-fivetoten-health-itemcard>
       </td></tr>
       </template>

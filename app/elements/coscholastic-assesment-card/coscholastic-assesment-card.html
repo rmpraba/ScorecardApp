@@ -108,7 +108,15 @@
       callService:function(){
         this.FnRefresh();
         // alert(subject);
-        this.$.termassesmentservice.callFetchStudentInfo(gradename,section);  
+        // this.$.termassesmentservice.callFetchStudentInfo(gradename,section); 
+        if(subject=="Health"||subject=="Attendance")
+        {
+
+        } 
+        else
+        {
+          this.$.termassesmentservice.callFetchStudentInfo(gradename,section);
+        } 
         if(subject=="Art Verticals"){        
         document.querySelector('coscholastic-assesment-sheet-card').setPage('talentidentification-card'); 
         document.querySelector('talentidentification-card').setDefaultHeaders(); 

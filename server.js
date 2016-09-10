@@ -1332,7 +1332,7 @@ function(err, rows)
     {
     if(!err)
     {       
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'inserted'});
     }
     else
     {
@@ -1351,7 +1351,7 @@ else
     {
     if(!err)
     {       
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'updated'});
     }
     else
     {
@@ -1384,6 +1384,11 @@ app.post('/inserthealth-service',  urlencodedParser,function (req,res)
          dental:req.query.dental
   }  
 
+  connection.query("select* from tr_term_health where student_id='"+req.query.studentid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and school_id='"+req.query.schoolid+"'",
+  function(err, rows)
+    {
+      if(rows.length==0)
+      {
   connection.query("INSERT INTO tr_term_health SET ?",[response],
     function(err, rows)
     {
@@ -1398,6 +1403,27 @@ app.post('/inserthealth-service',  urlencodedParser,function (req,res)
     }  
 
   });
+   }
+  else
+  {
+    connection.query("update tr_term_health SET ? where student_id='"+req.query.studentid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and school_id='"+req.query.schoolid+"' ",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+
+  }
+});
+
 });
 
 

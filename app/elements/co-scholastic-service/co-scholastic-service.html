@@ -275,7 +275,7 @@
       fetchstudentResponse:function(e){ 
 
         var arr=e.detail.response.returnval;      
-       alert(JSON.stringify(arr));  
+       // alert(JSON.stringify(arr));  
        
         for(var i=0;i<arr.length;i++)
         {
@@ -435,8 +435,10 @@
       },
       insertattendanceResponse:function(e){
         //alert(e.detail.response.returnval);
-        if(e.detail.response.returnval=="succ")
-          alert("Inserted!");
+         if(e.detail.response.returnval=="inserted")
+          alert("Attendance Saved!");
+         if(e.detail.response.returnval=="updated")
+          alert("Attendance updated!");
       },
       callinserthealthService:function(studid,studname,height,weight,bloodgroup,visionleft,visionright,dental){
          this.inserthealthurl=sessionStorage.getItem("addrinfo")+"/inserthealth-service";
@@ -460,15 +462,16 @@
          this.$.inserthealthajax.generateRequest();
       },
       inserthealthResponse:function(e){        
-        if(e.detail.response.returnval=="succ")
-          alert('Inserted!');
+         if(e.detail.response.returnval=="inserted")
+          alert("Health info Saved!");
+         if(e.detail.response.returnval=="updated")
+          alert("Health info updated!");
       } ,
       callFetchStudentInfoforattendance:function(){
        
-
          this.fetchstudentreportforattendanceurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforattendance-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
-        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.termname= localStorage.getItem("curr_sess_termname");
          obj.gradename=localStorage.getItem("curr_sess_grade");
@@ -485,8 +488,7 @@
         
         this.fetchstudentforattendanceurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforattendance-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
-         
-          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.termname= localStorage.getItem("curr_sess_termname");
          obj.gradename=localStorage.getItem("curr_sess_grade");

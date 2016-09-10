@@ -42,7 +42,9 @@
             font-size: 17px;
           }
     </style>
-    <div>    
+    <div>  
+    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>  
     <div id="hidetop">
       <center><h1>{{schoolname}}</h1>
       
@@ -96,6 +98,12 @@
       {
         this.$.hidetop.hidden=true;
         this.studarr=[];
+      },
+       FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
       }
     });
   })();

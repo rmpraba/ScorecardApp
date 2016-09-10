@@ -290,7 +290,8 @@
          // alert(JSON.stringify(healtharr));
         if(localStorage.getItem("curr_sess_subject")=="Health"){
             //alert('d');
-        document.querySelector('cce-fivetoten-health-card').studarr=healtharr;           
+        document.querySelector('cce-fivetoten-health-card').studarr=healtharr;  
+        document.querySelector('cce-fivetoten-health-card').FnSpinnerrActive(false);         
         } 
         else if(localStorage.getItem("curr_sess_subject")=="Attendance"){            
         document.querySelector('attendance-card').studarr=arr;                 
@@ -513,6 +514,7 @@
           attendancearr[i].serialno=parseInt(i)+1;
          }
            document.querySelector('attendance-card').studarr=attendancearr;
+           document.querySelector('attendance-card').FnSpinnerrActive(false);
       }
 
     });

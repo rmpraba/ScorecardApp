@@ -1394,7 +1394,7 @@ app.post('/inserthealth-service',  urlencodedParser,function (req,res)
     {
     if(!err)
     {       
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'inserted'});
     }
     else
     {
@@ -1411,7 +1411,7 @@ app.post('/inserthealth-service',  urlencodedParser,function (req,res)
     {
     if(!err)
     {       
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'updated'});
     }
     else
     {
@@ -1764,17 +1764,24 @@ console.log('............................................');
 app.post('/fetchimportmark-service',  urlencodedParser,function (req, res)
 {
   var flag="";
+  var qurcheck="";
   if(req.query.roleid=="subject-teacher"||req.query.roleid=="class-teacher"){
     flag="0";
+  qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+  " and term_name='"+req.query.term+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in('0','1')";
   }
   else if(req.query.roleid=="co-ordinator")
   {
     flag="1";
-  }
-
-  var qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
   "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
   " and term_name='"+req.query.term+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in('"+flag+"')";
+  }
+
+  // var qurcheck="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  // "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+  // " and term_name='"+req.query.term+"' and assesment_id='"+req.query.assesment+"' and subject='"+req.query.subject+"' and flag in('"+flag+"')";
 
   console.log('Query check........');
   console.log(qurcheck);

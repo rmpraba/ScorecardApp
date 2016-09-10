@@ -30,8 +30,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 70%;
         border-collapse: collapse;
       }
+      .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
     </style>
-   
+    <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>
      <center><h1>Mount Litera Zee School</h1>
      <div id="hidetop">
       <h3>Continuous Comprehensive Evaluation -AY-2016-2017</h3>  
@@ -64,6 +77,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'approve-one-to-four-card',
+       FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
+      }
 
    
     });

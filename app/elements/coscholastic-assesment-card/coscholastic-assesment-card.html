@@ -132,6 +132,7 @@
 
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card'); 
         document.querySelector('cce-fivetoten-health-card').setDefaultHeaders(); 
+        document.querySelector('cce-fivetoten-health-card').FnSpinnerrActive(true); 
         }
         else if(subject=="Attendance"){
         document.querySelector('attendance-card').studarr=[]; 
@@ -139,6 +140,7 @@
         this.$.assesmentservice.callWorkingdaysService();         
         document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card');
         document.querySelector('attendance-card').setDefaultHeaders();  
+        document.querySelector('attendance-card').FnSpinnerrActive(true); 
         } 
         else if(subject=="Art&Craft"){   
         document.querySelector('cc-art-craft-onetofour-card').studarr=[];     

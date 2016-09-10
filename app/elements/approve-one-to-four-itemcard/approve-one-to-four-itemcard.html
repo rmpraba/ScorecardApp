@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'approve-one-to-four-itemcard',
 
-       Fnview:function()
+     Fnview:function()
      {
       localStorage.setItem("curr_sess_academicyear",this.academic);
       localStorage.setItem("curr_sess_termname",this.term);
@@ -59,7 +59,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       localStorage.setItem("curr_sess_grade",this.grade);
       localStorage.setItem("curr_sess_section",this.section);
       // alert(localStorage.getItem("curr_sess_grade"));
-     this.$.assesmentservice.fetchimportmark(this.academic,this.term,this.assesment,this.grade,this.section,this.subject);
+      // document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true); 
+      this.$.assesmentservice.fetchimportmark(this.academic,this.term,this.assesment,this.grade,this.section,this.subject);
      }
     });
   })();

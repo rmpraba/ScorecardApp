@@ -613,11 +613,13 @@
         if(localStorage.getItem("curr_sess_subject")=="Attendance"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('attendance-card').studarr=arr;
+        document.querySelector('attendance-card').FnSpinnerrActive(false);
         }
         if(localStorage.getItem("curr_sess_subject")=="Health"){ 
           //alert('dd');
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
         document.querySelector('cce-fivetoten-health-card').studarr=arr;
+        document.querySelector('cce-fivetoten-health-card').FnSpinnerrActive(false);
         } 
         if(localStorage.getItem("curr_sess_subject")=="Art Verticals"){ 
         // document.querySelector('cc-music-onetofour-card').hiddenbutton();       
@@ -931,6 +933,7 @@
     {
       var approvearr=e.detail.response.returnval;
       document.querySelector('approve-one-to-four-card').approvearr=approvearr;
+
     },
     fetchimportmark:function(academic,term,assesment,grade,section,subject)
     {
@@ -1043,7 +1046,8 @@
         document.querySelector('term-assesment-sheet-card').setPage('cc-maths-onetofour-card');
         document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();   
         document.querySelector('cc-maths-onetofour-card').importarr=overall;
-        document.querySelector('cc-maths-onetofour-card').FnResetFlag();        
+        document.querySelector('cc-maths-onetofour-card').FnResetFlag(); 
+                 
         }
         if(localStorage.getItem("curr_sess_importsubject")=="EVS")
         {           
@@ -1051,6 +1055,7 @@
         document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
         document.querySelector('cc-evs-onetofour-card').importarr=overall;
         document.querySelector('cc-evs-onetofour-card').FnResetFlag();
+        
         }
         if(localStorage.getItem("curr_sess_importsubject")=="English"||localStorage.getItem("curr_sess_importsubject")=="Hindi"||localStorage.getItem("curr_sess_importsubject")=="Kannada"){   
 
@@ -1145,6 +1150,20 @@
          for(var i=0;i<updatemarkarray.length;i++){
          obj.category=updatemarkarray[i].category;
          obj.sub_category=updatemarkarray[i].subcategory;
+         if(localStorage.getItem("curr_sess_subject")=="Personality Development")
+         {
+           if(updatemarkarray[i].mark=='A+')
+            obj.mark="10";
+          if(updatemarkarray[i].mark=='A')
+            obj.mark="9";
+          if(updatemarkarray[i].mark=='B')
+            obj.mark="8";
+          if(updatemarkarray[i].mark=='C')
+            obj.mark="7";
+          if(updatemarkarray[i].mark=='D')
+            obj.mark="6";
+         }
+         else
          obj.mark=updatemarkarray[i].mark;
          obj.studid=updatemarkarray[i].name;
          this.updatemarkparam= obj;                

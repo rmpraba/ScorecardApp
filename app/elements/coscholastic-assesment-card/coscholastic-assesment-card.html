@@ -109,7 +109,7 @@
         this.FnRefresh();
         // alert(subject);
         // this.$.termassesmentservice.callFetchStudentInfo(gradename,section); 
-        if(subject=="Health"||subject=="Attendance")
+        if(subject=="Health"||subject=="Attendance"||subject=="Physical Education"||subject=="Art Verticals")
         {
 
         } 
@@ -117,11 +117,14 @@
         {
           this.$.termassesmentservice.callFetchStudentInfo(gradename,section);
         } 
-        if(subject=="Art Verticals"){        
-        document.querySelector('coscholastic-assesment-sheet-card').setPage('talentidentification-card'); 
-        document.querySelector('talentidentification-card').setDefaultHeaders(); 
+        if(subject=="Art Verticals"){  
+         this.$.assesmentservice.callFetchStudentInfoforartverticals(); 
+         document.querySelector('coscholastic-assesment-sheet-card').setPage('artverticals-card'); 
+        document.querySelector('art-verticals-card').setDefaultHeaders();       
+        
         } 
-        if(subject=="Physical Education"){        
+        if(subject=="Physical Education"){ 
+         this.$.assesmentservice.callFetchStudentInfoforphysical();        
         document.querySelector('coscholastic-assesment-sheet-card').setPage('talentidentification-card'); 
         document.querySelector('talentidentification-card').setDefaultHeaders(); 
         }       

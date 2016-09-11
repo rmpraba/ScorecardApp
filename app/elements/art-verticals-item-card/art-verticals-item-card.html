@@ -6,7 +6,7 @@
 <link rel="import" href="../cocurricular-service/cocurricular-service.html">
 <link rel="import" href="../term-assesment-service/term-assesment-service.html">
 
-<dom-module id="talentidentification-item-card">
+<dom-module id="art-verticals-item-card">
   <template>
     <style>
       :host {
@@ -30,37 +30,40 @@
         <td ><paper-input hidden value="{{studid}}"></paper-input><paper-item >{{studname}}</paper-item></td>
         <td><paper-dropdown-menu id="generic"  label="Select Intrest Area" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{interest}}"  on-iron-select="FnSelectinterest"  attr-for-selected="value" required>               
-                <paper-item value="Basket ball">Basket ball</paper-item>
-                <paper-item value="Foot ball">Foot ball</paper-item>
-                <paper-item value="Athletics">Athletics</paper-item>
-                <paper-item value="Cricket">Cricket</paper-item>                           
-              <paper-item value="Taekwondo">Taekwondo</paper-item>  
-              <paper-item value="Tennis">Tennis</paper-item>  
+                 <paper-item value="Theatre">Theatre</paper-item>
+                <paper-item value="Dance">Dance</paper-item>
+                <paper-item value="Music">Music</paper-item>
+                <paper-item value="Instruments">Instruments</paper-item>  
             </paper-menu>
           </paper-dropdown-menu></td>
         <td><paper-dropdown-menu id="generic" label="Select Identified Talent" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{talent}}"  on-iron-select="FnSelecttalent"  attr-for-selected="value" required>               
-                <paper-item value="Basket ball">Basket ball</paper-item>
-                <paper-item value="Foot ball">Foot ball</paper-item>
-                <paper-item value="Athletics">Athletics</paper-item>
-                <paper-item value="Cricket">Cricket</paper-item>                           
-              <paper-item value="Taekwondo">Taekwondo</paper-item>  
-              <paper-item value="Tennis">Tennis</paper-item>                          
+               <paper-item value="Theatre">Theatre</paper-item>
+                <paper-item value="Dance">Dance</paper-item>
+                <paper-item value="Music">Music</paper-item>
+                <paper-item value="Instruments">Instruments</paper-item>                          
               
             </paper-menu>
           </paper-dropdown-menu></td>
         <td><paper-dropdown-menu id="generic" label="Select Membership" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{membership}}"  on-iron-select="FnSelectmemebership"  attr-for-selected="value" required>               
-                 <paper-item value="Basket ball">Basket ball</paper-item>
-                <paper-item value="Foot ball">Foot ball</paper-item>
-                <paper-item value="Athletics">Athletics</paper-item>
-                <paper-item value="Cricket">Cricket</paper-item>                           
-              <paper-item value="Taekwondo">Taekwondo</paper-item>  
-              <paper-item value="Tennis">Tennis</paper-item>                            
+                 <paper-item value="Theatre">Theatre</paper-item>
+                <paper-item value="Dance">Dance</paper-item>
+                <paper-item value="Music">Music</paper-item>
+                <paper-item value="Instruments">Instruments</paper-item>                           
+                                        
               
             </paper-menu>
           </paper-dropdown-menu></td>
-        
+          <td><paper-dropdown-menu id="generic" label="Select Coaching Taken" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content" selected="{{coaching}}"  on-iron-select="FnSelectcoaching"  attr-for-selected="value" required>               
+                 <paper-item value="Theatre">Yes</paper-item>
+                <paper-item value="Dance">No</paper-item>
+                                          
+                                        
+              
+            </paper-menu>
+          </paper-dropdown-menu></td>
         <td><paper-input disabled="{{read}}" required value="{{competition}}" id="p3" on-change="FnCompetition"></paper-input></td>
         <td><paper-input disabled="{{read}}" required  value="{{prize}}" id="p3" on-change="FnPrize"></paper-input></td>
         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
@@ -90,7 +93,7 @@
     var higher=[];
     var grade=[];
     Polymer({
-      is: 'talentidentification-item-card',
+      is: 'art-verticals-item-card',
       ready:function(){
         this.flag=0;
       },
@@ -196,7 +199,7 @@
       callService:function()
       { 
         //alert('1');
-        this.$.coscholasticservice.callinsertphysicalService(this.studid,this.studname,interest,talent,membership,this.competition,this.prize); 
+        this.$.coscholasticservice.callinsertartverticalService(this.studid,this.studname,interest,talent,membership,coaching,this.competition,this.prize); 
           
       }
     });

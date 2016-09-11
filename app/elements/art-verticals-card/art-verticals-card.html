@@ -5,7 +5,7 @@
 
 <link rel="import" href="../validation-dialog/validation-dialog.html">
 <link rel="import" href="../bindmarks-card/bindmarks-card.html">
-<dom-module id="talentidentification-card">
+<dom-module id="art-verticals-card">
   <template>
     <style>
       :host {
@@ -64,6 +64,7 @@
        <th id="tb1">Interest area</th>
        <th id="tb1">Identified talent</th>
        <th id="tb1">Member of school team</th>
+       <th id="tb1">Out of school coaching taken</th>
        <th id="tb1">Competitions attended</th>
        <th id="tb1">Prizes won</th>
        <th colspan="1" id="tb3"></th>
@@ -71,8 +72,8 @@
      
       </div>
  <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="8">
-      <talentidentification-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" interest="{{item.interest_area}}" talent="{{item.identified_talent}}" membership="{{item.member_of_school}}"  competition="{{item.competitions_attended}}"  prize="{{item.prize_won}}"></talentidentification-item-card>
+      <tr><td colspan="9">
+      <art-verticals-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" interest="{{item.interest_area}}" talent="{{item.identified_talent}}" membership="{{item.member_of_school}}" coaching="{{item.coaching}}" competition="{{item.competitions_attended}}"  prize="{{item.prize_won}}"></art-verticals-item-card>
       </td></tr>
       </template>
       </table>      
@@ -98,7 +99,7 @@ var tableToExcel = (function() {
     'use strict';
 
     Polymer({
-      is: 'talentidentification-card',
+      is: 'art-verticals-card',
 
        ready:function(){
         //this.$.btn2.hidden=true;

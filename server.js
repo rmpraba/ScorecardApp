@@ -567,6 +567,99 @@ app.post('/fetchstudentreportforattendance-service',  urlencodedParser,function 
   });
 });
 
+
+app.post('/fetchstudentforphysical-service',  urlencodedParser,function (req, res)
+{
+  var qur="select school_id,id,student_name,class_id  from md_student where  class_id="+
+"(select class_id   from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"')) and "+
+"school_id='"+req.query.schoolid+"' and id not in(select student_id from tr_term_physical_education where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"')";
+ connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+     res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+app.post('/fetchstudentreportforphysical-service',  urlencodedParser,function (req, res)
+{
+  var qur="select student_id as id ,student_name,interest_area,identified_talent,member_of_school,competitions_attended,prize_won from tr_term_physical_education where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"'";
+ connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+
+app.post('/fetchstudentforartverticals-service',  urlencodedParser,function (req, res)
+{
+  var qur="select school_id,id,student_name,class_id  from md_student where  class_id="+
+"(select class_id   from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"')) and "+
+"school_id='"+req.query.schoolid+"' and id not in(select student_id from tr_term_art_verticals where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"')";
+ connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+     res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+app.post('/fetchstudentreportforartverticals-service',  urlencodedParser,function (req, res)
+{
+  var qur="select student_id as id ,student_name,interest_area,identified_talent,member_of_school,competitions_attended,prize_won from tr_term_art_verticals where academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"'";
+ connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
 app.post('/fetchstudentreportforhealth-service',  urlencodedParser,function (req, res)
 {
   var qur="select student_id as id,student_name,grade,section,height,weight,blood_group,vision_left,vision_right,dental from tr_term_health where  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"'";
@@ -651,8 +744,10 @@ connection.query(qur,
   {
     if(!err)
     {
-      if(rows.length>0){
-       connection.query(qur1,function(err, rows){
+      if(rows.length>0)
+      {
+       connection.query(qur1,function(err, rows)
+       {
        if(rows.length>0) 
         res.status(200).json({'returnval': rows});
        else
@@ -1428,6 +1523,128 @@ app.post('/inserthealth-service',  urlencodedParser,function (req,res)
 
 });
 
+app.post('/insertphysical-service',  urlencodedParser,function (req,res)
+{   
+
+  var response={
+         school_id: req.query.schoolid, 
+         academic_year: req.query.academicyear,         
+         term_id:req.query.termname,
+         class_id:req.query.classid,
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         interest_area:req.query.interest,
+         identified_talent:req.query.talent,
+         grade:req.query.grade,
+         section:req.query.section,
+         member_of_school:req.query.membership,                          
+         competitions_attended:req.query.competition,
+         prize_won:req.query.prize
+  }  
+
+  connection.query("select* from tr_term_physical_education where student_id='"+req.query.studentid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and school_id='"+req.query.schoolid+"'",
+  function(err, rows)
+    {
+      if(rows.length==0)
+      {
+  connection.query("INSERT INTO tr_term_physical_education SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': 'inserted'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+   }
+  else
+  {
+    connection.query("update tr_term_physical_education SET ? where student_id='"+req.query.studentid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and school_id='"+req.query.schoolid+"' ",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': 'updated'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+
+  }
+});
+
+});
+
+app.post('/insertartvertical-service',  urlencodedParser,function (req,res)
+{   
+
+  var response={
+         school_id: req.query.schoolid, 
+         academic_year: req.query.academicyear,         
+         term_id:req.query.termname,
+         class_id:req.query.classid,
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         interest_area:req.query.interest,
+         identified_talent:req.query.talent,
+         grade:req.query.grade,
+         section:req.query.section,
+         member_of_school:req.query.membership,  
+         coaching:req.query.coaching,                        
+         competitions_attended:req.query.competition,
+         prize_won:req.query.prize
+  }  
+
+  connection.query("select* from tr_term_art_verticals where student_id='"+req.query.studentid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and school_id='"+req.query.schoolid+"'",
+  function(err, rows)
+    {
+      if(rows.length==0)
+      {
+  connection.query("INSERT INTO tr_term_art_verticals SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': 'inserted'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+   }
+  else
+  {
+    connection.query("update tr_term_art_verticals SET ? where student_id='"+req.query.studentid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and school_id='"+req.query.schoolid+"' ",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      res.status(200).json({'returnval': 'updated'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+
+  }
+});
+
+});
 
 //fetchhealthattendanceinfo
 app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,res)

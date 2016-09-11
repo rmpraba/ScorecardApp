@@ -106,6 +106,55 @@
         on-response="fetchstudentreportforattendanceResponse"
         debounce-duration="300"
     >
+
+
+
+     <iron-ajax
+        method="post"
+        id="fetchstudentforphysicalajax"
+        url="{{fetchstudentforphysicalurl}}"
+        params="{{fetchstudentforphysicalparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentforphysicalResponse"
+        debounce-duration="300"
+    >
+
+    <iron-ajax
+        method="post"
+        id="fetchstudentreportforphysicalajax"
+        url="{{fetchstudentreportforphysicalurl}}"
+        params="{{fetchstudentreportforphysicalparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentreportforphysicalResponse"
+        debounce-duration="300"
+    >
+
+
+
+
+    <iron-ajax
+        method="post"
+        id="fetchstudentforartverticalsajax"
+        url="{{fetchstudentforartverticalsurl}}"
+        params="{{fetchstudentforartverticalsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentforartverticalsResponse"
+        debounce-duration="300"
+    >
+
+    <iron-ajax
+        method="post"
+        id="fetchstudentreportforartverticalsajax"
+        url="{{fetchstudentreportforartverticalsurl}}"
+        params="{{fetchstudentreportforartverticalsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentreportforartverticalsResponse"
+        debounce-duration="300"
+    >
    <iron-ajax        
         method="post"
         id="fetchlifeskillajax"
@@ -147,6 +196,26 @@
         on-response="inserthealthResponse"
         debounce-duration="300"
     >
+     <iron-ajax
+        method="post"
+        id="insertphysicalajax"
+        url="{{insertphysicalurl}}"
+        params="{{insertphysicalparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertphysicalResponse"
+        debounce-duration="300"
+    >
+     <iron-ajax
+        method="post"
+        id="insertartverticalajax"
+        url="{{insertartverticalurl}}"
+        params="{{insertartverticalparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertartverticalResponse"
+        debounce-duration="300"
+    >
     <iron-ajax
         method="post"
         id="fetchworkingdaysajax"
@@ -177,6 +246,8 @@
     var hsection;
     var healtharr=[];
     var attendancearr=[];
+    var physicalarr=[];
+    var artverticalsarr=[];
     Polymer({
       is: 'co-scholastic-service',
       callWorkingdaysService:function(){
@@ -468,6 +539,65 @@
          if(e.detail.response.returnval=="updated")
           alert("Health info updated!");
       } ,
+
+ callinsertphysicalService:function(studid,studname,interest,talent,membership,competition,prize)
+ {
+         this.insertphysicalurl=sessionStorage.getItem("addrinfo")+"/insertphysical-service";
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","interest":"","talent":"","membership":"","coaching":"","competition":"","prize":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");         
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=studid;
+         obj.studentname=studname;        
+         obj.grade=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section"); 
+         // alert(sessionStorage.getItem("curr_sess_classid"));                 
+         obj.interest=interest;
+         obj.talent=talent;
+         obj.membership=membership;                
+         obj.competition=competition;         
+         obj.prize=prize;         
+         this.insertphysicalparam= obj;        
+         this.$.insertphysicalajax.generateRequest();
+      },
+      insertphysicalResponse:function(e){        
+         if(e.detail.response.returnval=="inserted")
+          alert("Physical Education info Saved!");
+         if(e.detail.response.returnval=="updated")
+          alert("Physical Education info updated!");
+      } ,
+
+      callinsertartverticalService:function(studid,studname,interest,talent,membership,coaching,competition,prize)
+ {
+         this.insertartverticalurl=sessionStorage.getItem("addrinfo")+"/insertartvertical-service";
+         var obj={"schoolid":"","academicyear":"","assesmentid":"","classid":"","studentid":"","studentname":"","termname":"","grade":"","section":"","subject":"","interest":"","talent":"","membership":"","coaching":"","competition":"","prize":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");         
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.classid=sessionStorage.getItem("curr_sess_classid");
+         obj.studentid=studid;
+         obj.studentname=studname;        
+         obj.grade=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section"); 
+         // alert(sessionStorage.getItem("curr_sess_classid"));                 
+         obj.interest=interest;
+         obj.talent=talent;
+         obj.membership=membership;  
+         obj.coaching =coaching;            
+         obj.competition=competition;         
+         obj.prize=prize;         
+         this.insertartverticalparam= obj;        
+         this.$.insertartverticalajax.generateRequest();
+      },
+      insertartverticalResponse:function(e){        
+         if(e.detail.response.returnval=="inserted")
+          alert("Physical Education info Saved!");
+         if(e.detail.response.returnval=="updated")
+          alert("Physical Education info updated!");
+      } ,
+
+
       callFetchStudentInfoforattendance:function(){
        
          this.fetchstudentreportforattendanceurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforattendance-service";
@@ -515,7 +645,108 @@
          }
            document.querySelector('attendance-card').studarr=attendancearr;
            document.querySelector('attendance-card').FnSpinnerrActive(false);
+      },
+
+       callFetchStudentInfoforphysical:function(){
+       
+         this.fetchstudentreportforphysicalurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforphysical-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchstudentreportforphysicalparam= obj;
+         // alert(JSON.stringify(obj));
+         this.$.fetchstudentreportforphysicalajax.generateRequest();
+        
+      },
+      fetchstudentreportforphysicalResponse:function(e)
+      {
+        physicalarr=e.detail.response.returnval;
+        
+        this.fetchstudentforphysicalurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforphysical-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchstudentforphysicalparam= obj;
+         this.$.fetchstudentforphysicalajax.generateRequest();
+      },
+      fetchstudentforphysicalResponse:function(e)
+      {
+         var arr=e.detail.response.returnval;      
+       // alert(JSON.stringify(arr));  
+       
+        for(var i=0;i<arr.length;i++)
+        {
+            physicalarr.push(arr[i]);
+        }
+
+         for(var i=0;i<physicalarr.length;i++)
+         {
+
+          physicalarr[i].serialno=parseInt(i)+1;
+         }
+         //alert(JSON.stringify(physicalarr));
+           document.querySelector('talentidentification-card').studarr=physicalarr;
+           //document.querySelector('attendance-card').FnSpinnerrActive(false);
+      },
+
+ callFetchStudentInfoforartverticals:function(){
+       
+         this.fetchstudentreportforartverticalsurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforartverticals-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchstudentreportforartverticalsparam= obj;
+         // alert(JSON.stringify(obj));
+         this.$.fetchstudentreportforartverticalsajax.generateRequest();
+        
+      },
+      fetchstudentreportforartverticalsResponse:function(e)
+      {
+        artverticalsarr=e.detail.response.returnval;
+        
+        this.fetchstudentforartverticalsurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforartverticals-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchstudentforartverticalsparam= obj;
+         this.$.fetchstudentforartverticalsajax.generateRequest();
+      },
+      fetchstudentforartverticalsResponse:function(e)
+      {
+         var arr=e.detail.response.returnval;      
+       // alert(JSON.stringify(arr));  
+       
+        for(var i=0;i<arr.length;i++)
+        {
+            artverticalsarr.push(arr[i]);
+        }
+
+         for(var i=0;i<artverticalsarr.length;i++)
+         {
+
+          artverticalsarr[i].serialno=parseInt(i)+1;
+         }
+        // alert(JSON.stringify(artverticalsarr));
+           document.querySelector('art-verticals-card').studarr=artverticalsarr;
+           //document.querySelector('attendance-card').FnSpinnerrActive(false);
       }
+
 
     });
   })();

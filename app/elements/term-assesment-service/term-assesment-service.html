@@ -1028,7 +1028,7 @@
        }
 
        
-       // alert(JSON.stringify(overall));
+       alert(JSON.stringify(overall));
        this.studarrlength=(overall.length);       
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"||localStorage.getItem("curr_sess_importsubject")=="Personality Development"){
         document.querySelector('home-page').setPage('coscholasticassesment','');
@@ -1112,6 +1112,14 @@
         document.querySelector('cs-personalitydevelopment-card').importarr=overall;
         document.querySelector('cs-personalitydevelopment-card').FnResetFlag();
         }
+         if(localStorage.getItem("curr_sess_importsubject")=="Physical Education"){
+         alert('come');           
+        //document.querySelector('coscholastic-assesment-sheet-card').setPage('talentidentification-card'); 
+        //document.querySelector('talentidentification-card').setDefaultHeaders();    
+        document.querySelector('talentidentification-card').importarr=overall;
+       // document.querySelector('talentidentification-card').FnResetFlag();
+        }
+       
         /*if(localStorage.getItem("curr_sess_subject")=="Attendance"){ 
         document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
         document.querySelector('attendance-card').setDefaultHeaders();    

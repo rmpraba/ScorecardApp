@@ -787,7 +787,7 @@
         this.updateflagurl=sessionStorage.getItem("addrinfo")+"/updateflag-service";
         this.updateflagparam=obj1;
         this.$.updateflagajax.generateRequest();
-        this.callOveralltermmarkinsertService();      
+            
       }
        else if(sessionStorage.getItem("curr_sess_loggedrole")=="HeadMistress")
       {
@@ -817,9 +817,9 @@
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
-         obj.assesmentid= "Assesment3";
-         else
+        if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+        obj.assesmentid= "Assesment3";
+        else
         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.gradename= localStorage.getItem("curr_sess_grade"); 
@@ -858,12 +858,20 @@
     updateimportmarkResponse:function(e){
       // alert(e.detail.response.returnval);
       if(e.detail.response.returnval=="exist")
-        alert('Already Imported');
+        alert('Already Submitted');
       if(e.detail.response.returnval=="succ")
-        alert("Imported!");
+        alert("Submitted!");
     },
     updateflagResponse:function(e){
-      alert("Imported!");
+      // alert(e.detail.response.returnval);
+      if(e.detail.response.returnval=='exist')
+      alert("Already Approved!");
+      if(e.detail.response.returnval=='updated'){
+      this.callOveralltermmarkinsertService();    
+      
+      }
+      if(e.detail.response.returnval=='not updated')
+      alert("Unable to approve!");
     },
     callOveralltermmarkinsertService:function(){ 
         // alert('calling....');       
@@ -881,7 +889,9 @@
          this.$.overalltermmarkinsertajax.generateRequest();
       },
       overalltermmarkinsertResponse:function(e){        
-        alert("Inserted!");
+        // alert("Inserted!");
+        if(e.detail.response.returnval=="succ")
+          alert('Approved!');
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3"||localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development")
           this.calloveralltermassesmentinsertService();
         // n1++;
@@ -904,7 +914,7 @@
       overalltermassesmentinsertResponse:function(e){    
         // alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="succ")
-          alert("Inserted!");
+          alert("All assesments are approved in this term!");
       },
     callApproveService:function()
     {

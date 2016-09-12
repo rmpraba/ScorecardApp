@@ -1894,8 +1894,7 @@ app.post('/updateimportmark-service' ,  urlencodedParser,function (req, res)
      function(err, rows)
       {
       if(!err)
-      {
-        console.log();
+      {        
       if(rows.length>0)
       {
         res.status(200).json({'returnval': 'exist'});
@@ -1918,40 +1917,54 @@ app.post('/updateimportmark-service' ,  urlencodedParser,function (req, res)
 else
 console.log(err);
 });
-  });
-
+});
 
 
 app.post('/updateflag-service' ,  urlencodedParser,function (req, res)
-{
-    
+{    
+ var qurcheck="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmentid+"'  and subject='"+req.query.subject+"'";
  var qur="update tr_term_assesment_import_marks set flag='"+req.query.flag+"' where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmentid+"'  and subject='"+req.query.subject+"'";
-      connection.query(qur,
-        function(err, rows)
-        {
-        if(!err)
+  
+ console.log('--------------Query check in update flag------------------');
+ console.log(qurcheck);
+ console.log('----------------------------------------------------------');
+ console.log('--------------Query in update flag------------------');
+ console.log(qur);
+ console.log('----------------------------------------------------');
+  connection.query(qurcheck,function(err, rows){
+    if(!err){
+    if(rows.length==0){
+    connection.query(qur,function(err, result){
+    if(!err)
     {
-      if(rows.length>0)
+      if(result.affectedRows>0)
       {
 
-      res.status(200).json({'returnval': rows});
+      res.status(200).json({'returnval': 'updated'});
       }
       else
       {
-      res.status(200).json({'returnval': 'invalid'});
+      res.status(200).json({'returnval': 'not updated'});
       }
     }
     else
     {
       console.log('No data Fetched'+err);
     }
-});
+    });
+    }
+    else
+      res.status(200).json({'returnval': 'exist'});
+    }
   });
+});
+
+
 app.post('/approvemark-service',  urlencodedParser,function (req, res)
 {
 
-  //var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
-  var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
+//var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
+var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
 "and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
 "id='"+req.query.loggedid+"' and role_id='co-ordinator'))";
 

@@ -1038,7 +1038,7 @@
        }
 
        
-       alert(JSON.stringify(overall));
+       // alert(JSON.stringify(overall));
        this.studarrlength=(overall.length);       
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"||localStorage.getItem("curr_sess_importsubject")=="Personality Development"){
         document.querySelector('home-page').setPage('coscholasticassesment','');
@@ -1057,7 +1057,7 @@
         document.querySelector('cc-maths-onetofour-card').setDefaultHeaders();   
         document.querySelector('cc-maths-onetofour-card').importarr=overall;
         document.querySelector('cc-maths-onetofour-card').FnResetFlag(); 
-                 
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);         
         }
         if(localStorage.getItem("curr_sess_importsubject")=="EVS")
         {           
@@ -1065,7 +1065,7 @@
         document.querySelector('cc-evs-onetofour-card').setDefaultHeaders();
         document.querySelector('cc-evs-onetofour-card').importarr=overall;
         document.querySelector('cc-evs-onetofour-card').FnResetFlag();
-        
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_importsubject")=="English"||localStorage.getItem("curr_sess_importsubject")=="Hindi"||localStorage.getItem("curr_sess_importsubject")=="Kannada"){   
 
@@ -1073,6 +1073,7 @@
         document.querySelector('cc-eng-onetofour-card').setDefaultHeaders();         
         document.querySelector('cc-eng-onetofour-card').importarr=overall;
         document.querySelector('cc-eng-onetofour-card').FnResetFlag();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_importsubject")=="GK"){ 
               
@@ -1080,6 +1081,7 @@
         document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();    
         document.querySelector('cc-gk-onetofour-card').importarr=overall;
         document.querySelector('cc-gk-onetofour-card').FnResetFlag();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_importsubject")=="Computer"){
                 
@@ -1087,6 +1089,7 @@
         document.querySelector('cc-computer-onetofour-card').setDefaultHeaders();
         document.querySelector('cc-computer-onetofour-card').importarr=overall;
         document.querySelector('cc-computer-onetofour-card').FnResetFlag();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }      
         if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"){   
                
@@ -1094,6 +1097,7 @@
         document.querySelector('cc-art-craft-onetofour-card').setDefaultHeaders();
         document.querySelector('cc-art-craft-onetofour-card').importarr=overall;
         document.querySelector('cc-art-craft-onetofour-card').FnResetFlag();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_importsubject")=="dance"){    
         
@@ -1101,6 +1105,7 @@
         document.querySelector('cc-dance-onetofour-card').setDefaultHeaders();  
         document.querySelector('cc-dance-onetofour-card').importarr=overall;
         document.querySelector('cc-dance-onetofour-card').FnResetFlag();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_importsubject")=="music"){   
             
@@ -1108,6 +1113,7 @@
         document.querySelector('cc-music-onetofour-card').setDefaultHeaders();    
         document.querySelector('cc-music-onetofour-card').importarr=overall;
         document.querySelector('cc-music-onetofour-card').FnResetFlag();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }     
         if(localStorage.getItem("curr_sess_importsubject")=="Games"){   
             
@@ -1115,15 +1121,17 @@
         document.querySelector('cs-games-card').setDefaultHeaders();    
         document.querySelector('cs-games-card').importarr=overall;
         document.querySelector('cs-games-card').FnResetFlag();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         } 
         if(localStorage.getItem("curr_sess_importsubject")=="Personality Development"){            
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card'); 
         document.querySelector('cs-personalitydevelopment-card').setDefaultHeaders();    
         document.querySelector('cs-personalitydevelopment-card').importarr=overall;
         document.querySelector('cs-personalitydevelopment-card').FnResetFlag();
+        document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
          if(localStorage.getItem("curr_sess_importsubject")=="Physical Education"){
-         alert('come');           
+         // alert('come');           
         //document.querySelector('coscholastic-assesment-sheet-card').setPage('talentidentification-card'); 
         //document.querySelector('talentidentification-card').setDefaultHeaders();    
         document.querySelector('talentidentification-card').importarr=overall;

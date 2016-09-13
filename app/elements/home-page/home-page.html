@@ -17,6 +17,7 @@
 <link rel="import" href="../beginner-term-analysis-card/beginner-term-analysis-card.html">
 <link rel="import" href="../consolidated-report-card/consolidated-report-card.html">
 <link rel="import" href="../teacher-observation_card/teacher-observation_card.html">
+<link rel="import" href="../comparisonreport-card/comparisonreport-card.html">
   <dom-module id="home-page">
   <template>
   <style>
@@ -108,8 +109,11 @@
         <section data-category="consolidatedreport">
           <consolidated-report-card></consolidated-report-card>
         </section>
-         <section data-category="teacherobservation">
+        <section data-category="teacherobservation">
           <teacher-observation_card></teacher-observation_card>
+        </section>
+        <section data-category="comparisonreport">
+          <comparisonreport-card></comparisonreport-card>
         </section>
       </iron-pages>
     </div>
@@ -287,6 +291,12 @@
        localStorage.setItem("curr_sess_page",this.page);
        document.querySelector('teacherhome-card').FnRefresh();
        document.querySelector('cce-generate-score-card').FnRefresh();
+    }
+     if(localStorage.getItem("curr_sess_page")=="comparisonreport")
+    {
+      this.page="scorecard";      
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('cce-generate-score-card').FnRefresh();    
     }
   },
   FnsetTitle:function(title){

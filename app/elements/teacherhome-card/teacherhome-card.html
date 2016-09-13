@@ -62,6 +62,9 @@
        <div class="card" hidden$="{{teach_obser}}">
        <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
      </div>
+     <div class="card" hidden$="{{comparison}}">
+       <paper-button on-click="FnComparison" no ink><img src="../../images/comparison.jpg" height="180px" width="180px"></paper-button>
+     </div>
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -108,6 +111,7 @@
         this.Analysis=true;
         this.ConsolidatedReport=true;
         this.teach_obser=true;
+        this.comparison=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -137,6 +141,11 @@
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('consolidatedreport','');
          } 
+         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport") 
+         {          
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('scorecard','');
+         }
       },
       FnSelectPreEntryType:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','PreEntry');
@@ -203,6 +212,7 @@
           this.TA=false;
           this.GenerateReport=false;
           this.Report=false;
+          this.comparison=false;
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
           // this.BA=false;
@@ -213,9 +223,10 @@
           this.Report=false;
           this.GenerateReport=false;
           this.teach_obser=false;
-        }
+          }
           if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
           {
+          this.GenerateReport=false;
           this.Approve=false;
           this.Analysis=false;
           this.teach_obser=false;
@@ -246,8 +257,12 @@
          this.$.observerservice.fetchobserverdescription();
         this.$.observerservice.fetchteachersid();
          document.querySelector('teacher-observation_card').Fnobservername();
-       //this.$.service.uname=sessionStorage.getItem("curr_sess_loggeduname");
-             
+       //this.$.service.uname=sessionStorage.getItem("curr_sess_loggeduname");     
+      },
+      FnComparison:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','Comparisonreport');
+        this.$.scorecardservice.callGradeService();
+        this.$.cdialog.toggle();
       }
     });
   })();

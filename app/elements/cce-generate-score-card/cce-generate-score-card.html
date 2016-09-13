@@ -35,6 +35,16 @@
     </style>
       <div class="card">
           <div class="inner">
+
+          <paper-dropdown-menu id="term" label="Select Term" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content" id="rterm"  on-iron-select="FnSelectTerm"  attr-for-selected="value" required>     
+                <paper-item value="Term1">Term1</paper-item>
+                <paper-item value="Term2">Term2</paper-item>
+                <paper-item value="Term3">Term3</paper-item>
+              
+            </paper-menu>
+          </paper-dropdown-menu>
+
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" id="rgrade"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
@@ -62,6 +72,7 @@
     'use strict';
     var gradename;
     var section;
+    var termname;
     var item=[];
     Polymer({
       is: 'cce-generate-score-card',
@@ -78,6 +89,12 @@ document.querySelector('#rsection').selected=-1;
 this.hidecard=true;
 this.flag=0;
 
+      },
+      FnSelectTerm:function(e){
+        termname = e.target.selectedItem.textContent.trim();       
+        localStorage.setItem("curr_sess_termname",termname);        
+        if(this.flag==1)
+          this.callService();
       },
       FnSelectGrade:function(e){        
         gradename = e.target.selectedItem.textContent.trim();       

@@ -269,6 +269,16 @@
         on-response="updateimportmarkcheckResponse"
         debounce-duration="300"
     >
+    <iron-ajax
+        method="post"
+        id="audittermajax"
+        url="{{audittermurl}}"
+        params="{{audittermparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="audittermResponse"
+        debounce-duration="300"
+    >
       
   </template>
   <script>
@@ -771,6 +781,44 @@
         }
         return this.grade;        
      },
+     Fnauditterm:function(){
+       var obj={"checkflag":"","updateflag":"","schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.sectionname=localStorage.getItem("curr_sess_section");
+         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+            // if(localStorage.getItem("curr_sess_grade")=='Grade-1'||localStorage.getItem("curr_sess_grade")=='Grade-2'||localStorage.getItem("curr_sess_grade")=='Grade-3'||localStorage.getItem("curr_sess_grade")=='Grade-4'){
+            this.audittermurl=sessionStorage.getItem("addrinfo")+"/auditterm-service";
+            this.audittermparam=obj;
+            this.$.audittermajax.generateRequest();
+            // }
+         }
+         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher")
+         {
+          this.Fnimportmark();
+         }
+
+     },
+     audittermResponse:function(e){
+
+      if(e.detail.response.returnval=='exist'){        
+        alert('Assesment already approved!');
+      }
+      else if(e.detail.response.returnval=='not exist'){        
+        alert('Please approve the previous assesment of this term!');
+      }
+      else
+      {
+        if(e.detail.response.returnval=='updated')
+          this.Fnimportmark();
+        if(e.detail.response.returnval=='not updated')
+          alert('Unable to approve!!');
+      }
+     },
     Fnimportmark:function()
     {   
       var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
@@ -867,8 +915,7 @@
       if(e.detail.response.returnval=='exist')
       alert("Already Approved!");
       if(e.detail.response.returnval=='updated'){
-      this.callOveralltermmarkinsertService();    
-      
+      this.callOveralltermmarkinsertService();   
       }
       if(e.detail.response.returnval=='not updated')
       alert("Unable to approve!");

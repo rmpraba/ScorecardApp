@@ -1,15 +1,36 @@
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
-<link rel="import" href="..\..\bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
+<link rel="stylesheet" href="../../bower_components/paper-styles/demo.css">
+<link rel="import" href="../cce-onetofour-score-card/cce-onetofour-score-card.html">
 <link rel="import" href="../onetofour-scorecard-service/onetofour-scorecard-service.html">
-<dom-module id="cce-onetofour-score-card">
-<style>
-  .buttoncard{
-    @apply(--layout-horizontal);
-    margin-left: 20%;
-  }
-  .card{
+
+<dom-module id="comparisonreport-card">
+
+  <template>
+    <style is="custom-style">
+      .heading {
+        padding: 10px 15px;
+        margin-top: 20px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 90%;
+        text-align: left;
+      }
+      .content {
+        padding: 15px;
+        /*border: 1px solid #dedede;*/
+        border-top: none;
+        /*border-bottom-left-radius: 5px;*/
+        /*border-bottom-right-radius: 5px;*/
+        /*@apply(--shadow-elevation-2dp);*/
+      }
+      .card{
     width: 800px;
     border: 1px solid black;
     margin-left: 1%;
@@ -149,9 +170,15 @@
     text-align:center;
     background:#f5f5ef; 
   }
-</style>
-<template>
-<div class="card">
+    </style>
+    <div class="heading" on-click="FnExpandScorecard">Expand to view scorecard</div>
+
+    <iron-collapse id="collapse1">
+      <div class="content">
+        <!-- <div>halo scorecard</div> -->
+        <!-- <cce-onetofour-score-card academicyear="{{academicyear}}" grade="{{grade}}" section="{{section}}" enrno="{{enrno}}" studentname="{{studentname}}" parentname="{{parentname}}" adterm1="{{adterm1}}" wdterm1="{{wdterm1}}" pterm1="{{pterm1}}" t1height="{{t1height}}" t1weight="{{t1weight}}" adterm2="{{adterm2}}" wdterm2="{{wdterm2}}" pterm2="{{pterm2}}" t2height="{{t2height}}" t2weight="{{t2weight}}" adterm3="{{adterm3}}" wdterm3="{{wdterm3}}" pterm3="{{pterm3}}" t3height="{{t3height}}" t3weight="{{t3weight}}" personalityArray="{{personalityArray}}" acArray="{{acArray}}" mdArray="{{mdArray}}" gamesArray="{{gamesArray}}" engArray="{{engArray}}" mathArray="{{mathArray}}" evsArray="{{evsArray}}" secArray="{{secArray}}" csArray="{{csArray}}" gkArray="{{gkArray}}"></cce-onetofour-score-card> -->
+
+        <div class="card">
   <table class="logo">
       <tr><th><img src="../../images/zeesouth.png" height="100px" width="100px"></img></th>
       <th>
@@ -303,58 +330,113 @@
 
    <table class="health" border="1" style="border-collapse: collapse;;">  
    <tr style="background: #ac39ac;"><th>Health</th><th>T1</th><th>T2</th><th>T3</th></tr>
-   <tr class="health"><th>Height</th><th>{{t1height}}</th><th>{{t2height}}</th><th>{{t3height}}</th></tr>
-   <tr class="health"><th>Weight</th><th>{{t1weight}}</th><th>{{t2weight}}</th><th>{{t3weight}}</th></tr>
+   <tr class="health"><th>Height</th><th>{{t1height}} </th><th>{{t2height}} </th><th>{{t3height}} </th></tr>
+   <tr class="health"><th>Weight</th><th>{{t1weight}} </th><th>{{t2weight}} </th><th>{{t3weight}} </th></tr>
    </table>
    <br><br>
    
-</div>
+   </div>
 
-<div class="buttoncard">
-<paper-button  class="button" on-click='print'>Print</paper-button>
-<paper-button  class="button" on-click='email'>Email</paper-button>
-</div>
+      </div>
+    </iron-collapse>
+    
+    <div class="heading" on-click="FnExpandHealth">Expand to view health info</div>
 
-<onetofour-scorecard-service id="ss"></onetofour-scorecard-service>
-</template>
-<script>
+    <iron-collapse id="collapse2">
+      <div class="content">
+        <div>
+          <table width='80%'>
+            <tr><th>Height</th><th>Weight</th><th>Blood Group</th><th>Vision Left</th><th>Vision Right</th><th>Denetal Hygeine</th></tr>
+            <template is="dom-repeat" items="{{healthArray}}" as="item">
+            <tr><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.blood_group}}</td><td>{{item.vision_left}}</td><td>{{item.vision_right}}</td><td>{{item.dental}}</td></tr>
+            </template>
+          </table>
+        </div>
+      </div>
+    </iron-collapse>
+
+    <div class="heading" on-click="FnExpandTalent">Expand to view talent info</div>
+
+    <iron-collapse id="collapse3">
+      <!-- <div class="content"> -->
+      <div class="heading" on-click="FnExpandArt">Art Verticals</div>
+        <iron-collapse id="collapse4">
+          <div class="content">
+             <table width='80%'>
+            <tr><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Outside Coaching</th><th>Competitions Attended</th><th>Prizes Won</th></tr>
+            <template is="dom-repeat" items="{{artArray}}" as="item">
+            <tr><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.coaching}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
+            </template>
+          </table>
+          </div>
+        </iron-collapse>
+      <div class="heading" on-click="FnExpandPhysical">Physical Education</div>
+        <iron-collapse id="collapse5">
+          <div class="content">
+            <table width='80%'>
+            <tr><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Competitions Attended</th><th>Prizes Won</th></tr>
+            <template is="dom-repeat" items="{{physicalArray}}" as="item">
+            <tr><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
+            </template>
+          </table>
+          </div>
+        </iron-collapse>
+      <!-- </div> -->
+    </iron-collapse>
+    <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
+  </template>
+
+  <script>
   (function() {
     'use strict';
+
     Polymer({
-      is: 'cce-onetofour-score-card',
-      setDefaultHeaders:function(){
-        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+      is: 'comparisonreport-card',
+      setStudentId:function(studentid){
+        this.studentid=studentid;
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
-        this.subject=localStorage.getItem("curr_sess_subject");
       },
-       print:function(){
-
-              // this.$.pdf.hidden=true;
-              // this.$.email.hidden=true;
-              // this.$.print.hidden=true;
-
-
-            if (!window.print){
-            alert("You need NS4.x to use this print button!")
-            return
-            }
-            window.print()
-
-
-              // this.$.pdf.hidden=false;
-              // this.$.email.hidden=false;
-              // this.$.print.hidden=false;
+      FnExpandScorecard:function(){
+        document.querySelector('#collapse1').toggle();
+        //  if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+        // this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
+        // this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
+        // this.$.otfscorecardservice.callFetchsubjectinfoService(this.studentid);
+        // this.$.otfscorecardservice.callfetchscholasticmarkService(this.studentid);
+        // this.$.otfscorecardservice.fetchoveralltermwisegradeService(this.studentid);
+        // document.querySelector('#collapse1').toggle();
+        // }
+        // if(this.$.collapse1.opened==false)
+        // this.$.collapse1.opened=true;
+        // if(this.$.collapse1.opened==true)
+        // this.$.collapse1.opened=false;
       },
-      email:function(){
-        this.$.ss.mailReportcardService();
+      FnExpandHealth:function(){
+        document.querySelector('#collapse2').toggle();
+        // if(this.$.collapse2.opened==false)
+        // this.$.collapse2.opened=true;
+        // if(this.$.collapse2.opened==true)
+        // this.$.collapse2.opened=false;
       },
-      FnSetArray:function(eng){
-        // alert(JSON.stringify(eng));
-        this.engArray=eng;
+      FnExpandTalent:function(){
+        document.querySelector('#collapse3').toggle();
+        // if(this.$.collapse3.opened==false)
+        // this.$.collapse3.opened=true;
+        // if(this.$.collapse3.opened==true)
+        // this.$.collapse3.opened=false;
+      },
+      FnExpandArt:function(){
+        document.querySelector('#collapse4').toggle();
+      },
+      FnExpandPhysical:function(){
+        document.querySelector('#collapse5').toggle();  
+      },
+      FnToggle:function(){
+        document.querySelector('#collapse1').toggle();
       }
     });
   })();
-</script>
+  </script>
 </dom-module>

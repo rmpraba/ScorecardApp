@@ -1329,7 +1329,7 @@ app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
   var studid={student_id:req.query.studid}; 
   var academicyear={academic_year:req.query.academicyear};  
   var qur="SELECT * FROM tr_term_assesment_overall_assesmentmarks am join "+
-  "md_grade_descriptor gd on(am.category=gd.category) WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studid+"' and am.term_cat_grade=gd.grade and "+
+  "md_grade_descriptor gd on(am.category=gd.category_check) WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studid+"' and am.term_cat_grade=gd.grade and "+
   "am.subject_id=gd.subject_name";
   console.log('.........................Score card....................................');
   console.log(qur);

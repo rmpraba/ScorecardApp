@@ -1032,13 +1032,13 @@
         if(localStorage.getItem("curr_sess_subject")=="Personality Development"){
           if(arr1[i].mark=='10')
             obj.mark="A+";
-          if(arr1[i].mark=='9')
-            obj.mark="A";
           if(arr1[i].mark=='8')
-            obj.mark="B";
+            obj.mark="A";
           if(arr1[i].mark=='7')
+            obj.mark="B";
+          if(arr1[i].mark=='5')
             obj.mark="C";
-          if(arr1[i].mark=='6')
+          if(arr1[i].mark=='3')
             obj.mark="D";
         }
         else
@@ -1057,13 +1057,13 @@
             if(localStorage.getItem("curr_sess_subject")=="Personality Development"){
               if(arr1[j].mark=='10')
                 obj1.mark="A+";
-              if(arr1[j].mark=='9')
-                obj1.mark="A";
               if(arr1[j].mark=='8')
-                obj1.mark="B";
+                obj1.mark="A";
               if(arr1[j].mark=='7')
+                obj1.mark="B";
+              if(arr1[j].mark=='5')
                 obj1.mark="C";
-              if(arr1[j].mark=='6')
+              if(arr1[j].mark=='3')
                 obj1.mark="D";
             }
             else
@@ -1228,13 +1228,13 @@
            if(updatemarkarray[i].mark=='A+')
             obj.mark="10";
           if(updatemarkarray[i].mark=='A')
-            obj.mark="9";
-          if(updatemarkarray[i].mark=='B')
             obj.mark="8";
-          if(updatemarkarray[i].mark=='C')
+          if(updatemarkarray[i].mark=='B')
             obj.mark="7";
+          if(updatemarkarray[i].mark=='C')
+            obj.mark="5";
           if(updatemarkarray[i].mark=='D')
-            obj.mark="6";
+            obj.mark="3";
          }
          else
          obj.mark=updatemarkarray[i].mark;

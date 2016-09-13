@@ -298,6 +298,22 @@
       document.querySelector('teacherhome-card').FnRefresh();
       document.querySelector('cce-generate-score-card').FnRefresh();    
     }
+    if(localStorage.getItem("curr_sess_page")=="artverticals-card")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('coscholastic-assesment-card').FnRefreshcard(); 
+      document.querySelector('art-verticals-card').FnRefresh();   
+    }
+    if(localStorage.getItem("curr_sess_page")=="talentidentification-card")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('coscholastic-assesment-card').FnRefreshcard();  
+      document.querySelector('talentidentification-card').FnRefresh();    
+    }
   },
   FnsetTitle:function(title){
     this.title=title;

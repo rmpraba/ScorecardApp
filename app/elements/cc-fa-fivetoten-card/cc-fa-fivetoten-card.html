@@ -70,7 +70,7 @@
 </template>
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="10">
-      <cc-fa-fivetoten-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cc-fa-fivetoten-itemcard>
+      <cc-fa-fivetoten-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}" score3="{{item.mark2}}" score4="{{item.mark3}}" total="{{item.sum}}" reduction="{{item.reducetotal}}" grade="{{item.grade}}" ></cc-fa-fivetoten-itemcard>
       </td></tr>
       </template>
       </table>

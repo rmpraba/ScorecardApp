@@ -1462,7 +1462,7 @@ app.post('/fetchscholasticmark-service',  urlencodedParser,function (req,res)
   var studid={student_id:req.query.studid}; 
   var academicyear={academic_year:req.query.academicyear};  
   var qur="SELECT * FROM tr_term_assesment_overall_assesmentmarks am join "+
-  "md_grade_descriptor gd on(am.category=gd.category) WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studid+"' and am.term_cat_grade=gd.grade and "+
+  "md_grade_descriptor gd on(am.category=gd.category_check) WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studid+"' and am.term_cat_grade=gd.grade and "+
   "am.subject_id=gd.subject_name";
   console.log('.........................Score card....................................');
   console.log(qur);
@@ -1903,7 +1903,6 @@ app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
 
 app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 {
-
   var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"'";
   console.log('----------------------------------------fetchreport----------');
   console.log(qur);
@@ -1914,7 +1913,6 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
     {
     if(rows.length>0)
     { 
-
       
       res.status(200).json({'returnval': rows});
       
@@ -1929,6 +1927,7 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
       console.log(err);
   });
 });
+
 
 app.post('/fetchfastudentreport-service',  urlencodedParser,function (req, res)
 {
@@ -1958,6 +1957,7 @@ app.post('/fetchfastudentreport-service',  urlencodedParser,function (req, res)
       console.log(err);
   });
 });
+
 
 app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
 {
@@ -2081,6 +2081,90 @@ console.log(err);
 });
 });
 
+app.post('/auditterm-service' ,  urlencodedParser,function (req, res)
+{
+var querycheck='';
+var insertqur='';
+var updatequr='';
+var updateval='';
+var response={
+  school_id:req.query.schoolid,
+  academic_year:req.query.academicyear,
+  term_name:req.query.termname,
+  grade:req.query.gradename,
+  section:req.query.sectionname,
+  subject_id:req.query.subject,
+  assesment_level2:req.query.assesmentid
+};
+
+if(req.query.assesmentid=='Assesment1'){
+qurcheck="select * from tr_term_auditimport where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_level2='"+req.query.assesmentid+"'  and subject_id='"+req.query.subject+"'";  
+insertqur="insert into tr_term_auditimport set ?";
+}
+else if(req.query.assesmentid=='Assesment2'){
+qurcheck="select * from tr_term_auditimport where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_level2='Assesment1'  and subject_id='"+req.query.subject+"'";  
+// response.assesment_level2='Assesment1';
+updatequr="update tr_term_auditimport set ? where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_level2='Assesment1'  and subject_id='"+req.query.subject+"'";
+updateval={assesment_level2:req.query.assesmentid};
+}
+else if(req.query.assesmentid=='Assesment3'){
+qurcheck="select * from tr_term_auditimport where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_level2='Assesment2'  and subject_id='"+req.query.subject+"'";  
+// response.assesment_level2='Assesment2';
+updatequr="update tr_term_auditimport set ? where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and  section='"+req.query.sectionname+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_level2='Assesment2'  and subject_id='"+req.query.subject+"'";  
+updateval={assesment_level2:req.query.assesmentid};
+}
+
+ console.log('------------audit term check-----------------------');
+ console.log(qurcheck);
+ console.log('------------audit term insert----------------------');
+ console.log(insertqur);
+ console.log('------------audit term update----------------------');
+ console.log(updatequr);
+
+  connection.query(qurcheck,function(err, rows){
+    if(!err){
+    if(req.query.assesmentid=='Assesment1'){
+    if(rows.length==0){
+      connection.query(insertqur,[response],function(err, result){
+      if(result.affectedRows>0)
+      {
+      res.status(200).json({'returnval': 'updated'});
+      }
+      else
+      {
+      console.log(err);
+      res.status(200).json({'returnval': 'not updated'});
+      }
+      });
+    }
+    
+    else
+      res.status(200).json({'returnval': 'exist'});
+    }
+    else{
+      if(rows.length==1){
+      connection.query(updatequr,[updateval],function(err, result){
+      if(result.affectedRows>0)
+      {
+      res.status(200).json({'returnval': 'updated'});
+      }
+      else
+      {
+      console.log(err);
+      res.status(200).json({'returnval': 'not updated'});
+      }
+      });
+      }
+      else
+       res.status(200).json({'returnval': 'not exist'}); 
+    }    
+    }  
+    else
+      console.log(err);
+    
+  });
+});
+
 
 app.post('/updateflag-service' ,  urlencodedParser,function (req, res)
 {    
@@ -2101,7 +2185,6 @@ app.post('/updateflag-service' ,  urlencodedParser,function (req, res)
     {
       if(result.affectedRows>0)
       {
-
       res.status(200).json({'returnval': 'updated'});
       }
       else
@@ -3119,6 +3202,122 @@ app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req,
       console.log(err);
 });
 });
+
+
+app.post('/fetchhealthinfo-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select * from tr_term_health where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' "+
+    " and  student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+    
+    console.log('......................healthinfo..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+app.post('/fetchartinfo-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select * from tr_term_art_verticals where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'"+
+    " and  student_id='"+req.query.studid+"'";
+    
+    console.log('......................talent art..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+app.post('/fetchphysicalinfo-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select * from tr_term_physical_education where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'"+
+    " and  student_id='"+req.query.studid+"'";
+    
+    console.log('......................talent physical..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+app.post('/fetchgradeseperation-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select * from tr_term_assesment_marks where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'"+
+    " and  student_id='"+req.query.studid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"'";
+    
+    console.log('......................fetchgradeseperation..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
 
 var server = app.listen(5000, function () {
 var host = server.address().address

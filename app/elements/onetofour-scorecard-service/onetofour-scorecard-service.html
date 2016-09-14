@@ -95,6 +95,46 @@
         on-response="fetchoveralltermwisegradeResponse"
         debounce-duration="300"
     >
+    <iron-ajax
+        method="post"
+        id="fetchhealthinfoajax"
+        url="{{fetchhealthinfourl}}"
+        params="{{fetchhealthinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="healthinfoResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="fetchartinfoajax"
+        url="{{fetchartinfourl}}"
+        params="{{fetchartinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="artinfoResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="fetchphysicalinfoajax"
+        url="{{fetchphysicalinfourl}}"
+        params="{{fetchphysicalinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="physicalinfoResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="fetchgradeseperationajax"
+        url="{{fetchgradeseperationurl}}"
+        params="{{fetchgradeseperationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeseperationResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -121,10 +161,17 @@
       fetchstudinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
         // alert(JSON.stringify(arr));       
-        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){          
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
         document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
         document.querySelector('cce-onetofour-score-card').studentname=arr[0].student_name;        
         document.querySelector('cce-onetofour-score-card').parentname=arr[0].parent_name;
+        }
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){
+        document.querySelector('comparisonreport-card').enrno=arr[0].student_id;
+        document.querySelector('comparisonreport-card').studentname=arr[0].student_name;        
+        document.querySelector('comparisonreport-card').parentname=arr[0].parent_name;
+        }
         }
       },
       callfetchhealthattendanceinfoService:function(studid){
@@ -137,27 +184,64 @@
         this.$.fetchhealthattendanceinfoajax.generateRequest();
       },
       fetchhealthattendanceinfoResponse:function(e){        
-        var arr=e.detail.response.returnval;        
+        var arr=e.detail.response.returnval;  
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
         if(arr.length==1||arr.length==2||arr.length==3){
         document.querySelector('cce-onetofour-score-card').adterm1=arr[0].attendance;
         document.querySelector('cce-onetofour-score-card').wdterm1=arr[0].working_days;
         document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
-        document.querySelector('cce-onetofour-score-card').t1height=arr[0].height;
-        document.querySelector('cce-onetofour-score-card').t1weight=arr[0].weight;        
+        document.querySelector('cce-onetofour-score-card').t1height=arr[0].height+" cm";
+        document.querySelector('cce-onetofour-score-card').t1weight=arr[0].weight+" Kg";  
+        document.querySelector('cce-onetofour-score-card').generalfeedback=arr[0].generic; 
+        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[0].speccomment;     
         }
         if(arr.length==2){
         document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;
         document.querySelector('cce-onetofour-score-card').wdterm2=arr[1].working_days;
         document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
-        document.querySelector('cce-onetofour-score-card').t2height=arr[1].height;
-        document.querySelector('cce-onetofour-score-card').t2weight=arr[1].weight;
+        document.querySelector('cce-onetofour-score-card').t2height=arr[1].height+" cm";
+        document.querySelector('cce-onetofour-score-card').t2weight=arr[1].weight+" Kg";
+        document.querySelector('cce-onetofour-score-card').generalfeedback=arr[1].generic; 
+        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[1].speccomment;  
         }
         if(arr.length==3){
         document.querySelector('cce-onetofour-score-card').adterm3=arr[2].attendance; 
         document.querySelector('cce-onetofour-score-card').wdterm3=arr[2].working_days;
         document.querySelector('cce-onetofour-score-card').pterm1=parseFloat((arr[2].attendance/arr[2].working_days)*100).toFixed(2)+"%";
-        document.querySelector('cce-onetofour-score-card').t3height=arr[2].height;
-        document.querySelector('cce-onetofour-score-card').t3weight=arr[2].weight;
+        document.querySelector('cce-onetofour-score-card').t3height=arr[2].height+" cm";
+        document.querySelector('cce-onetofour-score-card').t3weight=arr[2].weight+" Kg";
+        document.querySelector('cce-onetofour-score-card').generalfeedback=arr[2].generic; 
+        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[2].speccomment;  
+        }
+        }
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){          
+        if(arr.length==1||arr.length==2||arr.length==3){
+        document.querySelector('comparisonreport-card').adterm1=arr[0].attendance;
+        document.querySelector('comparisonreport-card').wdterm1=arr[0].working_days;
+        document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        document.querySelector('comparisonreport-card').t1height=arr[0].height+" cm";
+        document.querySelector('comparisonreport-card').t1weight=arr[0].weight+" Kg"; 
+        document.querySelector('comparisonreport-card').generalfeedback=arr[0].generic; 
+        document.querySelector('comparisonreport-card').specificfeedback=arr[0].speccomment;         
+        }
+        if(arr.length==2){
+        document.querySelector('comparisonreport-card').adterm2=arr[1].attendance;
+        document.querySelector('comparisonreport-card').wdterm2=arr[1].working_days;
+        document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[1].attendance/arr[1].working_days)*100).toFixed(2)+"%";
+        document.querySelector('comparisonreport-card').t2height=arr[1].height+" cm";
+        document.querySelector('comparisonreport-card').t2weight=arr[1].weight+" Kg";
+        document.querySelector('comparisonreport-card').generalfeedback=arr[1].generic; 
+        document.querySelector('comparisonreport-card').specificfeedback=arr[1].speccomment;  
+        }
+        if(arr.length==3){
+        document.querySelector('comparisonreport-card').adterm3=arr[2].attendance; 
+        document.querySelector('comparisonreport-card').wdterm3=arr[2].working_days;
+        document.querySelector('comparisonreport-card').pterm1=parseFloat((arr[2].attendance/arr[2].working_days)*100).toFixed(2)+"%";
+        document.querySelector('comparisonreport-card').t3height=arr[2].height+" cm";
+        document.querySelector('comparisonreport-card').t3weight=arr[2].weight+" Kg";
+        document.querySelector('comparisonreport-card').generalfeedback=arr[2].generic; 
+        document.querySelector('comparisonreport-card').specificfeedback=arr[2].speccomment;  
+        }
         }
         /*document.querySelector('cce-onetofour-score-card').height=arr[0].height;
         document.querySelector('cce-onetofour-score-card').width=arr[0].width;
@@ -201,8 +285,10 @@
         scholasticarr=e.detail.response.returnval;
         for(var i=0;i<scholasticarr.length;i++){
           // alert(scholasticarr[i].subject_name);
-          var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
+          var obj={"catcheck":"","subject":"","category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
           if(scholasticarr[i].subject_name=="English"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -214,6 +300,8 @@
             engarr.push(obj);
           }
           if(scholasticarr[i].subject_name=="Mathematics"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -225,6 +313,8 @@
             matharr.push(obj);
           }
           if(scholasticarr[i].subject_name=="EVS"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -236,6 +326,8 @@
             evsarr.push(obj);
           }
           if((scholasticarr[i].subject_name).trim()=="Hindi"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -247,6 +339,8 @@
             hinarr.push(obj);
           }
            if((scholasticarr[i].subject_name).trim()=="Kannada"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -258,7 +352,8 @@
             hinarr.push(obj);
           }
           if((scholasticarr[i].subject_name).trim()=="Computer"){
-            // alert('yes');
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -271,6 +366,8 @@
             // alert(JSON.stringify(comarr));
           }          
           if(scholasticarr[i].subject_name=="GK"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -284,7 +381,9 @@
         
         // for(var i=0;i<scholasticarr.length;i++){
           // var obj={"category":"","t1grade":"","t2grade":"","t3grade":""};          
-          if(scholasticarr[i].subject_name=="Art&Craft"){            
+          if(scholasticarr[i].subject_name=="Art&Craft"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;            
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -296,6 +395,8 @@
             acarr.push(obj);
           }
           if(scholasticarr[i].subject_name=="music"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -307,6 +408,8 @@
             mdarr.push(obj);
           }
           if(scholasticarr[i].subject_name=="dance"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -318,6 +421,8 @@
             mdarr.push(obj);
           }
           if(scholasticarr[i].subject_name=="Games"){
+            obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.catcheck=scholasticarr[i].category_check;
             obj.category=scholasticarr[i].category;
             obj.comment=scholasticarr[i].description;
             if(scholasticarr[i].term_name=="term1")
@@ -331,7 +436,9 @@
 
         if(scholasticarr[i].subject_name=="Personality Development"){ 
           obj.category=scholasticarr[i].category; 
-          obj.comment=scholasticarr[i].description;      
+          obj.comment=scholasticarr[i].description; 
+          obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+          obj.catcheck=scholasticarr[i].category_check;     
           if(scholasticarr[i].term_name=="term1"){
             // alert('term1');
           obj.t1grade=scholasticarr[i].term_cat_grade;
@@ -347,7 +454,7 @@
           parr.push(obj);                  
         }
        }
-
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){  
         document.querySelector('cce-onetofour-score-card').personalityArray=parr;
         document.querySelector('cce-onetofour-score-card').acArray=acarr;
         document.querySelector('cce-onetofour-score-card').mdArray=mdarr;
@@ -360,6 +467,25 @@
 
         document.querySelector('cce-onetofour-score-card').csArray=comarr;
         document.querySelector('cce-onetofour-score-card').gkArray=gkarr;
+        }
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){  
+        // alert('yes');        
+        document.querySelector('comparisonreport-card').personalityArray=parr;
+        // alert(JSON.stringify(document.querySelector('comparisonreport-card').personalityArray));
+        document.querySelector('comparisonreport-card').acArray=acarr;
+        document.querySelector('comparisonreport-card').mdArray=mdarr;
+        document.querySelector('comparisonreport-card').gamesArray=gamearr;
+
+        document.querySelector('comparisonreport-card').engArray=engarr;
+        document.querySelector('comparisonreport-card').mathArray=matharr;
+        document.querySelector('comparisonreport-card').evsArray=evsarr;
+        document.querySelector('comparisonreport-card').secArray=hinarr;
+
+        document.querySelector('comparisonreport-card').csArray=comarr;
+        document.querySelector('comparisonreport-card').gkArray=gkarr;
+
+        // document.querySelector('comparisonreport-card').FnSetArray(engArray);
+        }
       },
       callfetchcoscholasticmarkService:function(studid){
         this.fetchcoscholasticmarkurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticmark-service";
@@ -480,7 +606,8 @@
         // alert(JSON.stringify(arr));
         for(var i=0;i<arr.length;i++){
           // alert(scholasticarr[i].subject_name);
-          // var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
+          // var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""}; 
+          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
           if(arr[i].subject_id=="English"){      
             if(arr[i].term_name=="term1")
             document.querySelector('cce-onetofour-score-card').et1=arr[i].grade;
@@ -589,7 +716,273 @@
             document.querySelector('cce-onetofour-score-card').pdt3=arr[i].grade;   
             // engarr.push(obj);
           }
+          }
+          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){          
+          if(arr[i].subject_id=="English"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').et1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').et2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').et3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Mathematics"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').mt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').mt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').mt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="EVS"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').evt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').evt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').evt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Hindi"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').ht1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').ht2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').ht3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Kannada"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').ht1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').ht2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').ht3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Computer"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').ct1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').ct2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').ct3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="GK"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').gt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').gt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').gt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Art&Craft"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').at1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').at2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').at3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="music"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').mdt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').mdt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').mdt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="dance"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').mdt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').mdt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').mdt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Games"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').gat1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').gat2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').gat3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          if(arr[i].subject_id=="Personality Development"){      
+            if(arr[i].term_name=="term1")
+            document.querySelector('comparisonreport-card').pdt1=arr[i].grade;
+            if(arr[i].term_name=="term2")
+            document.querySelector('comparisonreport-card').pdt2=arr[i].grade;
+            if(arr[i].term_name=="term3")
+            document.querySelector('comparisonreport-card').pdt3=arr[i].grade;   
+            // engarr.push(obj);
+          }
+          }
+
         }
+      },
+      FnFetchHealthinfo:function(studid){
+        this.fetchhealthinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthinfo-service";
+        var obj={"termname":"","schoolid":"","studid":"","academicyear":"","grade":"","section":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.studid=studid;
+        this.fetchhealthinfoparam=obj;
+        this.$.fetchhealthinfoajax.generateRequest(); 
+      },
+      healthinfoResponse:function(e){
+        document.querySelector('comparisonreport-card').healthArray=e.detail.response.returnval;
+      },
+      FnFetchArtinfo:function(studid){
+        this.fetchartinfourl=sessionStorage.getItem("addrinfo")+"/fetchartinfo-service";
+        var obj={"termname":"","schoolid":"","studid":"","academicyear":"","grade":"","section":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.studid=studid;
+        this.fetchartinfoparam=obj;
+        this.$.fetchartinfoajax.generateRequest(); 
+      },
+      artinfoResponse:function(e){
+        document.querySelector('comparisonreport-card').artArray=e.detail.response.returnval;
+      },
+      FnFetchPhysicalinfo:function(studid){
+        this.fetchphysicalinfourl=sessionStorage.getItem("addrinfo")+"/fetchphysicalinfo-service";
+        var obj={"termname":"","schoolid":"","studid":"","academicyear":"","grade":"","section":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.studid=studid;
+        this.fetchphysicalinfoparam=obj;
+        this.$.fetchphysicalinfoajax.generateRequest(); 
+      },
+      physicalinfoResponse:function(e){
+        document.querySelector('comparisonreport-card').physicalArray=e.detail.response.returnval;
+      },
+      fetchgradeseperationService:function(term,subject,category){
+        this.fetchgradeseperationurl=sessionStorage.getItem("addrinfo")+"/fetchgradeseperation-service";
+        var obj={"termname":"","schoolid":"","studid":"","academicyear":"","grade":"","section":"","subject":"","category":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");        
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.studid=localStorage.getItem("curr_sess_viewstudid");
+        obj.termname=term;
+        obj.subject=subject;
+        obj.category=category;
+        this.fetchgradeseperationparam=obj;
+        this.$.fetchgradeseperationajax.generateRequest(); 
+      },
+      fetchgradeseperationResponse:function(e){        
+        var arr1=e.detail.response.returnval;
+        // alert(JSON.stringify(arr1));
+        var subcat=[];
+        var subcatmark=[];
+        var ass1=[];
+        var ass2=[];
+        var ass3=[];
+        var flag=0;
+        for(var i=0;i<arr1.length;i++){
+            if(i==0)
+                subcat.push(arr1[i].sub_category);
+            else{
+            for(var j=0;j<subcat.length;j++){
+                if(subcat[j]==arr1[i].sub_category)
+                    flag=1;
+                else
+                    subcat.push(arr1[i].sub_category);
+            }
+            if(flag==1)
+                break;
+            }
+        }
+
+        // alert(JSON.stringify(subcat));
+
+        for(var j=0;j<arr1.length;j++){
+        for(var i=0;i<subcat.length;i++){
+            
+                if(arr1[j].assesment_id=="Assesment1"){
+                if(subcat[i]==arr1[j].sub_category){
+                    if(arr1[i].subject_id=="Personality Development"){
+                        if(arr1[j].mark=='8')
+                          ass1.push('A');
+                        if(arr1[j].mark=='7')
+                          ass1.push('B');
+                        if(arr1[j].mark=='5')
+                          ass1.push('C');  
+                        if(arr1[j].mark=='3')
+                          ass1.push('D');
+                    }
+                    else
+                    ass1.push(arr1[j].mark);
+                }
+                }
+            }
+        }
+        for(var j=0;j<arr1.length;j++){
+        for(var i=0;i<subcat.length;i++){
+            
+                if(arr1[j].assesment_id=="Assesment2"){
+                if(subcat[i]==arr1[j].sub_category){
+                    if(arr1[j].subject_id=="Personality Development"){
+                        if(arr1[j].mark=='8')
+                          ass2.push('A');
+                        if(arr1[j].mark=='7')
+                          ass2.push('B');
+                        if(arr1[j].mark=='5')
+                          ass2.push('C');  
+                        if(arr1[j].mark=='3')
+                          ass2.push('D');
+                    }
+                    else
+                    ass2.push(arr1[j].mark);
+                }
+                }
+            }
+        }
+        for(var j=0;j<arr1.length;j++){
+        for(var i=0;i<subcat.length;i++){
+            
+                if(arr1[j].assesment_id=="Assesment3"){
+                if(subcat[i]==arr1[j].sub_category){
+                    if(arr1[j].subject_id=="Personality Development"){
+                        if(arr1[j].mark=='8')
+                          ass3.push('A');
+                        if(arr1[j].mark=='7')
+                          ass3.push('B');
+                        if(arr1[j].mark=='5')
+                          ass3.push('C');  
+                        if(arr1[j].mark=='3')
+                          ass3.push('D');
+                    }
+                    else
+                    ass3.push(arr1[j].mark);
+                }
+                }
+            }
+        }
+
+        document.querySelector('comparisonreport-card').subcatarr=subcat;
+        document.querySelector('comparisonreport-card').ass1=ass1;
+        document.querySelector('comparisonreport-card').ass2=ass2;
+        document.querySelector('comparisonreport-card').ass3=ass3;
       }
       });
   })();

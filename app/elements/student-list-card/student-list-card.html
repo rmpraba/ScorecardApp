@@ -11,7 +11,7 @@
       table{
         /*width: 60%;*/
         border-collapse: collapse;
-        width:70%
+        width:80%
       }
        #tb1{
          width:15%
@@ -22,19 +22,35 @@
         #tb3{
          width:10%
         }
+        #itemcard:nth-child(odd) {
+        background-color: white;
+       
+      }
+      #itemcard:nth-child(even) {
+        background-color: #f1f1f1;
+      }
+      #itemcard{
+        width: 80%;
+      }
 </style>
     <div>
-      <table border="1">
+      <table >
 
-      <tr><th>Student Id</th><th colspan="2">Student Name</th></tr>
+      <tr><th>Student Id</th><th colspan="2">Student Name</th><th>View</th></tr>
+
+      </table>
 
       <template is="dom-repeat" items="{{studentarr}}">
-      <tr>
-        <td colspan="3"><student-list-itemcard studentid="{{item.id}}" studentname="{{item.student_name}}"></student-list-itemcard></td>
-      </tr>
+      <!-- <tr> -->
+        <!-- <td colspan="3">-->
+        <div id='itemcard'>
+        <student-list-itemcard studentid="{{item.id}}" studentname="{{item.student_name}}"></student-list-itemcard>
+        </div>
+        <!-- </td>  -->
+      <!-- </tr> -->
       <!-- <tr><th>{{item.id}}</th><th>{{item.student_name}}</th><th><paper-button on-click="FnView">View</paper-button></th></tr> -->
       </template>
-      </table>
+      <!-- </table> -->
     </div>
   </template>
   <script>

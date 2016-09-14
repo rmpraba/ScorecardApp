@@ -17,6 +17,7 @@
 <link rel="import" href="../beginner-term-analysis-card/beginner-term-analysis-card.html">
 <link rel="import" href="../consolidated-report-card/consolidated-report-card.html">
 <link rel="import" href="../teacher-observation_card/teacher-observation_card.html">
+<link rel="import" href="../comparisonreport-card/comparisonreport-card.html">
   <dom-module id="home-page">
   <template>
   <style>
@@ -33,12 +34,17 @@
   }
   .head{
      height: 10%;
+     margin-top: -3.5%;
+     margin-left: -2%;
+
+     width: 105%;
      /*background-color:slategrey;*/
      background-color: #12A5F4;
      color: white;
   }
   .card{
     @apply(--layout-vertical);
+    /*width: 105%;*/
   }
   label{
     margin-left: 35%;
@@ -55,7 +61,7 @@
   }
   </style>
   <div class="card">
-    <div class="head">
+    <div class="head" id="templateheader">
       <paper-icon-button icon="home" on-click="FnHome"></paper-icon-button>      
       <label><b>{{title}}</b><i>Hello! {{username}}</i></label>
       <paper-button class="in" on-click="signout">Sign Out</paper-button>
@@ -108,8 +114,11 @@
         <section data-category="consolidatedreport">
           <consolidated-report-card></consolidated-report-card>
         </section>
-         <section data-category="teacherobservation">
+        <section data-category="teacherobservation">
           <teacher-observation_card></teacher-observation_card>
+        </section>
+        <section data-category="comparisonreport">
+          <comparisonreport-card></comparisonreport-card>
         </section>
       </iron-pages>
     </div>
@@ -288,9 +297,34 @@
        document.querySelector('teacherhome-card').FnRefresh();
        document.querySelector('cce-generate-score-card').FnRefresh();
     }
+     if(localStorage.getItem("curr_sess_page")=="comparisonreport")
+    {
+      this.page="teacherhomecard";      
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('cce-generate-score-card').FnRefresh();    
+    }
+    if(localStorage.getItem("curr_sess_page")=="artverticals-card")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('coscholastic-assesment-card').FnRefreshcard(); 
+      document.querySelector('art-verticals-card').FnRefresh();   
+    }
+    if(localStorage.getItem("curr_sess_page")=="talentidentification-card")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('coscholastic-assesment-card').FnRefreshcard();  
+      document.querySelector('talentidentification-card').FnRefresh();    
+    }
   },
   FnsetTitle:function(title){
     this.title=title;
+  },
+  FnHideView:function(flag){
+    this.$.templateheader.hidden=flag;
   } 
   });
   </script>

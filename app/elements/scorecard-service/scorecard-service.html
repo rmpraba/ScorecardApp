@@ -147,6 +147,8 @@
       gradeResponse:function(e){
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Scorecard')
           document.querySelector('cce-generate-score-card').gradearr=e.detail.response.returnval;
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Comparisonreport')
+          document.querySelector('cce-generate-score-card').gradearr=e.detail.response.returnval;
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Analysis')
           document.querySelector('beginner-term-analysis-card').gradearr=e.detail.response.returnval;
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Consolidatedreport')
@@ -164,6 +166,8 @@
       },
       sectionResponse:function(e){        
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Scorecard')
+          document.querySelector('cce-generate-score-card').sectionarr=e.detail.response.returnval; 
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Comparisonreport')
           document.querySelector('cce-generate-score-card').sectionarr=e.detail.response.returnval; 
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Analysis')
           document.querySelector('beginner-term-analysis-card').sectionarr=e.detail.response.returnval; 

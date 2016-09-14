@@ -301,6 +301,16 @@
         on-response="updateimportmarkcheckResponse"
         debounce-duration="300"
     >
+    <iron-ajax
+        method="post"
+        id="audittermajax"
+        url="{{audittermurl}}"
+        params="{{audittermparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="audittermResponse"
+        debounce-duration="300"
+    >
       
   </template>
   <script>
@@ -920,6 +930,44 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         }
         return this.grade;        
      },
+     Fnauditterm:function(){
+       var obj={"checkflag":"","updateflag":"","schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.sectionname=localStorage.getItem("curr_sess_section");
+         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+            // if(localStorage.getItem("curr_sess_grade")=='Grade-1'||localStorage.getItem("curr_sess_grade")=='Grade-2'||localStorage.getItem("curr_sess_grade")=='Grade-3'||localStorage.getItem("curr_sess_grade")=='Grade-4'){
+            this.audittermurl=sessionStorage.getItem("addrinfo")+"/auditterm-service";
+            this.audittermparam=obj;
+            this.$.audittermajax.generateRequest();
+            // }
+         }
+         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher")
+         {
+          this.Fnimportmark();
+         }
+
+     },
+     audittermResponse:function(e){
+
+      if(e.detail.response.returnval=='exist'){        
+        alert('Assesment already approved!');
+      }
+      else if(e.detail.response.returnval=='not exist'){        
+        alert('Please approve the previous assesment of this term!');
+      }
+      else
+      {
+        if(e.detail.response.returnval=='updated')
+          this.Fnimportmark();
+        if(e.detail.response.returnval=='not updated')
+          alert('Unable to approve!!');
+      }
+     },
     Fnimportmark:function()
     {   
       var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
@@ -1016,8 +1064,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       if(e.detail.response.returnval=='exist')
       alert("Already Approved!");
       if(e.detail.response.returnval=='updated'){
-      this.callOveralltermmarkinsertService();    
-      
+      this.callOveralltermmarkinsertService();   
       }
       if(e.detail.response.returnval=='not updated')
       alert("Unable to approve!");
@@ -1134,13 +1181,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(localStorage.getItem("curr_sess_subject")=="Personality Development"){
           if(arr1[i].mark=='10')
             obj.mark="A+";
-          if(arr1[i].mark=='9')
-            obj.mark="A";
           if(arr1[i].mark=='8')
-            obj.mark="B";
+            obj.mark="A";
           if(arr1[i].mark=='7')
+            obj.mark="B";
+          if(arr1[i].mark=='5')
             obj.mark="C";
-          if(arr1[i].mark=='6')
+          if(arr1[i].mark=='3')
             obj.mark="D";
         }
         else
@@ -1159,13 +1206,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
             if(localStorage.getItem("curr_sess_subject")=="Personality Development"){
               if(arr1[j].mark=='10')
                 obj1.mark="A+";
-              if(arr1[j].mark=='9')
-                obj1.mark="A";
               if(arr1[j].mark=='8')
-                obj1.mark="B";
+                obj1.mark="A";
               if(arr1[j].mark=='7')
+                obj1.mark="B";
+              if(arr1[j].mark=='5')
                 obj1.mark="C";
-              if(arr1[j].mark=='6')
+              if(arr1[j].mark=='3')
                 obj1.mark="D";
             }
             else
@@ -1330,13 +1377,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
            if(updatemarkarray[i].mark=='A+')
             obj.mark="10";
           if(updatemarkarray[i].mark=='A')
-            obj.mark="9";
-          if(updatemarkarray[i].mark=='B')
             obj.mark="8";
-          if(updatemarkarray[i].mark=='C')
+          if(updatemarkarray[i].mark=='B')
             obj.mark="7";
+          if(updatemarkarray[i].mark=='C')
+            obj.mark="5";
           if(updatemarkarray[i].mark=='D')
-            obj.mark="6";
+            obj.mark="3";
          }
          else
          obj.mark=updatemarkarray[i].mark;

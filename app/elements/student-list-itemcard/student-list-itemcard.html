@@ -17,15 +17,27 @@
       }
       td{
         width: 41%;        
-      }     
+      } 
+      .card{
+        @apply(--layout-horizontal);
+      } 
+      p{
+        width: 25%;
+        margin-left: 10%;
+      } 
+      paper-button{
+        text-transform: none;
+        height: 25px;
+      }  
     </style>
-    <div>
-      <table border="1">
-        <tr id="tb1"><td>{{studentid}}</td>
-        <td id="tb2">{{studentname}}</td><td>
-        <paper-button id="tb3" on-click="FnView">View</paper-button></td>
-        </tr>
-      </table>      
+    <div class='card'>
+      <!-- <table border="1"> -->
+        <!-- <tr id="tb1"> -->
+        <p>{{studentid}}</p>
+        <p>{{studentname}}</p>        
+        <p><paper-button id="tb3" on-click="FnView">View</paper-button></p>
+        <!-- </tr> -->
+      <!-- </table>       -->
     </div>
     <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
@@ -37,6 +49,7 @@
     Polymer({
       is: 'student-list-itemcard',            
       FnView:function(){
+        localStorage.setItem("curr_sess_viewstudid",this.studentid);
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
@@ -66,6 +79,19 @@
         this.$.reportservice.callfetchmarkforreportService(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('languageenrichment','');
+      }
+      if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){ 
+        this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
+        this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
+        this.$.otfscorecardservice.callFetchsubjectinfoService(this.studentid);
+        this.$.otfscorecardservice.callfetchscholasticmarkService(this.studentid);
+        this.$.otfscorecardservice.fetchoveralltermwisegradeService(this.studentid); 
+        this.$.otfscorecardservice.FnFetchHealthinfo(this.studentid); 
+        this.$.otfscorecardservice.FnFetchArtinfo(this.studentid);
+        this.$.otfscorecardservice.FnFetchPhysicalinfo(this.studentid);      
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('comparisonreport','');
+        document.querySelector('comparisonreport-card').setStudentId(this.studentid);
       }
       }
     });

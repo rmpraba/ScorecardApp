@@ -16,11 +16,12 @@
         border: 1px solid #dedede;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
-        font-size: 18px;
+        font-size: 16px;
         cursor: pointer;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         width: 90%;
         text-align: left;
+        font-family: verdana;
       }
       .content {
         padding: 15px;
@@ -146,6 +147,12 @@
  .music:nth-child(even) {
     background-color: #d98cd9;
   }
+ /* #tab:nth-child(odd) {
+    background-color: grey;
+  }
+ #tab:nth-child(even) {
+    background-color: white;
+  }*/
   .saph{
     margin-left: 3%;
   }
@@ -170,8 +177,11 @@
     text-align:center;
     background:#f5f5ef; 
   }
+  #tab{
+    font-size: 16px;
+  }
     </style>
-    <div class="heading" on-click="FnExpandScorecard">Expand to view scorecard</div>
+    <div class="heading" on-click="FnExpandScorecard">View Reportcard</div>
 
     <iron-collapse id="collapse1">
       <div class="content">
@@ -340,45 +350,49 @@
       </div>
     </iron-collapse>
     
-    <div class="heading" on-click="FnExpandHealth">Expand to view health info</div>
+    <div class="heading" on-click="FnExpandHealth">View health info</div>
 
     <iron-collapse id="collapse2">
       <div class="content">
         <div>
-          <table width='80%'>
-            <tr><th>Height</th><th>Weight</th><th>Blood Group</th><th>Vision Left</th><th>Vision Right</th><th>Denetal Hygeine</th></tr>
-            <template is="dom-repeat" items="{{healthArray}}" as="item">
-            <tr><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.blood_group}}</td><td>{{item.vision_left}}</td><td>{{item.vision_right}}</td><td>{{item.dental}}</td></tr>
-            </template>
+        <template is="dom-repeat" items="{{healthArray}}" as="item">
+          <table id="tab" width='80%'>
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>Height</th><th>Weight</th><th>Blood Group</th><th>Vision Left</th><th>Vision Right</th><th>Denetal Hygeine</th></tr>
+            
+            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.blood_group}}</td><td>{{item.vision_left}}</td><td>{{item.vision_right}}</td><td>{{item.dental}}</td></tr>
+            
           </table>
+          </template>
         </div>
       </div>
     </iron-collapse>
 
-    <div class="heading" on-click="FnExpandTalent">Expand to view talent info</div>
+    <div class="heading" on-click="FnExpandTalent">View talent info</div>
 
     <iron-collapse id="collapse3">
       <!-- <div class="content"> -->
-      <div class="heading" on-click="FnExpandArt">Art Verticals</div>
+      <div style="margin-left: 5%;width: 80%;" class="heading" on-click="FnExpandArt">Art Verticals</div>
         <iron-collapse id="collapse4">
           <div class="content">
-             <table width='80%'>
-            <tr><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Outside Coaching</th><th>Competitions Attended</th><th>Prizes Won</th></tr>
-            <template is="dom-repeat" items="{{artArray}}" as="item">
-            <tr><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.coaching}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
-            </template>
-          </table>
+          <template is="dom-repeat" items="{{artArray}}" as="item">
+            <table id="tab" width='80%' style="margin-left: 5%;">
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Outside Coaching</th><th>Competitions Attended</th><th>Prizes Won</th></tr>            
+            <tr style="text-align: center;height: 30px;"><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.coaching}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>            
+            </table>
+          </template> 
           </div>
         </iron-collapse>
-      <div class="heading" on-click="FnExpandPhysical">Physical Education</div>
+      <div style="margin-left: 5%;width: 80%;" class="heading" on-click="FnExpandPhysical">Physical Education</div>
         <iron-collapse id="collapse5">
           <div class="content">
-            <table width='80%'>
-            <tr><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Competitions Attended</th><th>Prizes Won</th></tr>
-            <template is="dom-repeat" items="{{physicalArray}}" as="item">
-            <tr><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
-            </template>
-          </table>
+          <template is="dom-repeat" items="{{physicalArray}}" as="item">
+            <table id="tab" width='80%' style="margin-left: 5%;">
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Competitions Attended</th><th>Prizes Won</th></tr>
+            
+            <tr style="text-align: center;height: 30px;"><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
+            
+            </table>
+          </template>
           </div>
         </iron-collapse>
       <!-- </div> -->
@@ -400,6 +414,12 @@
       },
       FnExpandScorecard:function(){
         document.querySelector('#collapse1').toggle();
+        if(this.$.collapse1.opened==true){
+        this.$.collapse2.opened=false;
+        this.$.collapse3.opened=false;
+        this.$.collapse4.opened=false;
+        this.$.collapse5.opened=false;
+        }
         //  if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         // this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
         // this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
@@ -417,11 +437,21 @@
         document.querySelector('#collapse2').toggle();
         // if(this.$.collapse2.opened==false)
         // this.$.collapse2.opened=true;
-        // if(this.$.collapse2.opened==true)
-        // this.$.collapse2.opened=false;
+        if(this.$.collapse2.opened==true){
+        this.$.collapse1.opened=false;
+        this.$.collapse3.opened=false;
+        this.$.collapse4.opened=false;
+        this.$.collapse5.opened=false;
+        }
       },
       FnExpandTalent:function(){
         document.querySelector('#collapse3').toggle();
+        if(this.$.collapse3.opened==true){
+        this.$.collapse1.opened=false;
+        this.$.collapse2.opened=false;
+        this.$.collapse4.opened=false;
+        this.$.collapse5.opened=false;
+        }
         // if(this.$.collapse3.opened==false)
         // this.$.collapse3.opened=true;
         // if(this.$.collapse3.opened==true)
@@ -429,12 +459,15 @@
       },
       FnExpandArt:function(){
         document.querySelector('#collapse4').toggle();
+        if(this.$.collapse4.opened==true){
+        this.$.collapse5.opened=false;
+        }
       },
       FnExpandPhysical:function(){
-        document.querySelector('#collapse5').toggle();  
-      },
-      FnToggle:function(){
-        document.querySelector('#collapse1').toggle();
+        document.querySelector('#collapse5').toggle();
+        if(this.$.collapse5.opened==true){
+        this.$.collapse4.opened=false;
+        }  
       }
     });
   })();

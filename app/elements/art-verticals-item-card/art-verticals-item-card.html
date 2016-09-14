@@ -16,22 +16,40 @@
         border-collapse: collapse;
         width: 100%;
       }
-      #p1{
-        width:-5px;
-      }
+
       paper-input{
         text-align: center;
       }
       td{
-        width:10%;
+        width: 8%;
       }
+     
+      /*#p1{
+        width: 7%;
+      }
+      #p2,#p3,#p4{
+        width: 8%;
+      }
+      #p5,#p6{
+        width: 10%;
+      }
+      #p7{
+        width: 12%;
+      }
+      #p8{
+        width: 8%;
+      }
+      #p9{
+        width: 7%;
+      }*/
+
     </style>
     <div> 
      <table border="1">
         <tr>
-         <td><paper-item >{{serialno}}</paper-item></td>
-        <td ><paper-input hidden value="{{studid}}"></paper-input><paper-item >{{studname}}</paper-item></td>
-        <td><paper-dropdown-menu id="generic"  label="Select Intrest Area" disabled="{{read}}" required>
+         <td id="p1"><paper-item >{{serialno}}</paper-item></td>
+        <td id="p2"><paper-input hidden value="{{studid}}"></paper-input><paper-item >{{studname}}</paper-item></td>
+        <td id="p3"><paper-dropdown-menu id="generic"  label="Select Intrest Area" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{interest}}"  on-iron-select="FnSelectinterest"  attr-for-selected="value" required>               
                  <paper-item value="Theatre">Theatre</paper-item>
                 <paper-item value="Dance">Dance</paper-item>
@@ -39,7 +57,7 @@
                 <paper-item value="Instruments">Instruments</paper-item>  
             </paper-menu>
           </paper-dropdown-menu></td>
-        <td><paper-dropdown-menu id="generic" label="Select Identified Talent" disabled="{{read}}" required>
+        <td id="p4"><paper-dropdown-menu id="generic" label="Select Identified Talent" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{talent}}"  on-iron-select="FnSelecttalent"  attr-for-selected="value" required>               
                <paper-item value="Theatre">Theatre</paper-item>
                 <paper-item value="Dance">Dance</paper-item>
@@ -48,7 +66,7 @@
               
             </paper-menu>
           </paper-dropdown-menu></td>
-        <td><paper-dropdown-menu id="generic" label="Select Membership" disabled="{{read}}" required>
+        <td id="p5"><paper-dropdown-menu id="generic" label="Select Membership" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{membership}}"  on-iron-select="FnSelectmemebership"  attr-for-selected="value" required>               
                  <paper-item value="Theatre">Theatre</paper-item>
                 <paper-item value="Dance">Dance</paper-item>
@@ -58,7 +76,7 @@
               
             </paper-menu>
           </paper-dropdown-menu></td>
-          <td><paper-dropdown-menu id="generic" label="Select Coaching Taken" disabled="{{read}}" required>
+          <td id="p6"><paper-dropdown-menu id="generic" label="Select Coaching Taken" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{coaching}}"  on-iron-select="FnSelectcoaching"  attr-for-selected="value" required>               
                  <paper-item value="Theatre">Yes</paper-item>
                 <paper-item value="Dance">No</paper-item>
@@ -67,9 +85,9 @@
               
             </paper-menu>
           </paper-dropdown-menu></td>
-        <td><paper-input disabled="{{read}}" required value="{{competition}}" id="p3" on-change="FnCompetition"></paper-input></td>
-        <td><paper-input disabled="{{read}}" required  value="{{prize}}" id="p3" on-change="FnPrize"></paper-input></td>
-        <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <td id="p7"><paper-input disabled="{{read}}" required value="{{competition}}" id="p3" on-change="FnCompetition"></paper-input></td>
+        <td id="p8"><paper-input disabled="{{read}}" required  value="{{prize}}" id="p3" on-change="FnPrize"></paper-input></td>
+        <td id="p9"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
         <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
       </table> 

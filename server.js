@@ -1770,7 +1770,6 @@ app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
 
 app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 {
-
   var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"'";
   console.log('----------------------------------------fetchreport----------');
   console.log(qur);
@@ -1781,7 +1780,6 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
     {
     if(rows.length>0)
     { 
-
       
       res.status(200).json({'returnval': rows});
       
@@ -1796,6 +1794,7 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
       console.log(err);
   });
 });
+
 
 app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
 {

@@ -168,6 +168,9 @@
         localStorage.setItem('curr_sess_report','1');
         localStorage.setItem('curr_sess_loggedassesmenttype','Term');
         this.$.assesmentservice.callAcademicService();
+        // localStorage.setItem('curr_sess_report','1');
+        // localStorage.setItem('curr_sess_loggedassesmenttype','Term');
+        // this.$.assesmentservice.callAcademicService();
       },
       FnToggle:function(){
         this.$.dialog.toggle();
@@ -182,7 +185,9 @@
         if(localStorage.getItem('curr_sess_report')=="1")
         {
         document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('termassesment','');        
+        document.querySelector('home-page').setPage('termscholasticcategory','');
+        document.querySelector('term-scholastic-category').FnHideView();
+        // document.querySelector('home-page').setPage('termassesment','');        
         }
         else
         {

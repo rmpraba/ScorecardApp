@@ -782,6 +782,29 @@ res.status(200).json({'returnval': 'imported'});
 });
 
 
+app.post('/fetchfastudent-service',  urlencodedParser,function (req, res)
+{
+  console.log('sa');
+  var qur2="select school_id,id,student_name,class_id from md_student where  class_id="+
+"(select class_id from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
+"school_id='"+req.query.schoolid+"')";
+
+connection.query(qur2,function(err, rows){
+        console.log('............normal subject............'); 
+        console.log(qur2);     
+        console.log('............................................'); 
+       if(rows.length>0) 
+        res.status(200).json({'returnval': rows});
+       else{
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+
+  });
+
+});
 // fetchmarkexiststudentinfo-service
 
 //Storing marks for assesment
@@ -933,6 +956,116 @@ app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
   }
   else{
    connection.query("UPDATE tr_term_assesment_marks SET ? WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[mark,cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
+    if(!err){
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else{
+      res.status(200).json({'returnval': 'fail'});
+    }
+   }); 
+  }
+  // else
+    // res.status(200).json({'returnval': 'Duplicate entry!'});
+  // });
+});
+});
+});
+
+//Storing overall marks for the assesment
+app.post('/overalltermmarkinsert-service',  urlencodedParser,function (req, res){
+
+  var qur="INSERT INTO tr_term_assesment_overall_marks SELECT school_id,academic_year,assesment_id,term_name,student_id,subject_id,category,sum(mark) as total, "+
+  "sum(mark)/count(*) as rtotal,grade,section from tr_term_assesment_marks where academic_year='"+req.query.academicyear+"' "+
+  "and school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmentid+"' "+
+  "and grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"' "+
+  "group by school_id,academic_year,assesment_id,term_name,subject_id,grade,section,category,student_id";
+
+  connection.query(qur,
+  function(err, rows){
+     if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+  });
+});
+
+
+
+app.post('/insertfaassesmentmark-service',  urlencodedParser,function (req, res)
+{ 
+  console.log('fa');
+  var response={
+         school_id:req.query.schoolid,
+         academic_year:req.query.academicyear,   
+         assesment_id:req.query.assesmentid,
+         term_name:req.query.termname,
+         class_id:req.query.classid,
+         student_id:req.query.studentid,
+         student_name:req.query.studentname,         
+         grade:req.query.grade,
+         section:req.query.section,
+         subject_id:req.query.subject,
+         category:req.query.category,
+         sub_category:req.query.subcategory,
+         mark:req.query.mark,
+         flag:req.query.absflag,
+         sub_cat_sequence:req.query.subcatseq                 
+  }
+  var cond1={school_id:req.query.schoolid};
+  var cond2={academic_year:req.query.academicyear};
+  var cond3={assesment_id:req.query.assesmentid};
+  var cond4={term_name:req.query.termname};
+  var cond5={class_id:req.query.classid};
+  var cond6={student_id:req.query.studentid};
+  var cond7={subject_id:req.query.subject};
+  var cond8={category:req.query.category};
+  var cond9={sub_category:req.query.subcategory};
+  var cond10={grade:req.query.grade};
+  var cond11={section:req.query.section};
+  var cond12={sub_cat_sequence:req.query.subcatseq};
+  var subname={subject_name:req.query.subject};
+  var mark={mark:req.query.mark};
+  
+
+  console.log(response);
+
+  connection.query("SELECT subject_category FROM md_subject where ?",[subname],
+  function(err, rows)
+  {
+  response.subject_category=rows[0].subject_category;
+  console.log(response.subject_category);
+
+  var q="SELECT * FROM tr_term_fa_assesment_marks WHERE grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'"+
+  " and assesment_id='"+req.query.assesmentid+"' and term_name='"+req.query.termname+"' and class_id='"+req.query.classid+"'"+
+  " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"' and sub_cat_sequence='"+req.query.subcatseq+"'";
+  console.log('..................................');
+  console.log(q);
+  console.log('..................................');
+  connection.query("SELECT * FROM tr_term_fa_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9,cond10,cond11,cond12],function(err, rows) {
+  console.log("length..........."+rows.length);
+  if(rows.length==0){
+  connection.query("INSERT INTO tr_term_fa_assesment_marks set ?",[response],
+  function(err, result)
+    {
+    if(!err)
+    {  
+     console.log("rows affected............"+result.affectedRows);  
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+  });
+  }
+  else{
+   connection.query("UPDATE tr_term_fa_assesment_marks SET ? WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[mark,cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
     if(!err){
       res.status(200).json({'returnval': 'succ'});
     }
@@ -1772,6 +1905,35 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 {
 
   var qur="select * from tr_term_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"'";
+  console.log('----------------------------------------fetchreport----------');
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    { 
+
+      
+      res.status(200).json({'returnval': rows});
+      
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
+
+app.post('/fetchfastudentreport-service',  urlencodedParser,function (req, res)
+{
+
+  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"'";
   console.log('----------------------------------------fetchreport----------');
   console.log(qur);
   connection.query(qur,

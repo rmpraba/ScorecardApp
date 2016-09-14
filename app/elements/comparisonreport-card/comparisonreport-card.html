@@ -1,5 +1,6 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 <link rel="stylesheet" href="../../bower_components/paper-styles/demo.css">
 <link rel="import" href="../cce-onetofour-score-card/cce-onetofour-score-card.html">
@@ -9,6 +10,17 @@
 
   <template>
     <style is="custom-style">
+    paper-dialog{
+      margin-top: -10%;
+      background-color: #f3f3f3;
+      border: 1px solid #dedede;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 16px;
+      padding: 5px 5px;
+      font-family: verdana;
+      width: 45%;      
+    }
       .heading {
         padding: 10px 15px;
         margin-top: 20px;
@@ -180,6 +192,21 @@
   #tab{
     font-size: 16px;
   }
+  .cat{
+    @apply(--layout-horizontal);
+  }
+  #title{
+    margin-left: 25%;
+  }
+  #close{
+    margin-left: 80%;
+    text-transform: none;
+    width: 10%;
+    height: 25px;
+    background: #252626;
+    color: white;
+    margin-top: 2%;            
+  }
     </style>
     <div class="heading" on-click="FnExpandScorecard">View Reportcard</div>
 
@@ -260,8 +287,9 @@
     <tr style="background: #4d94ff;"><th></th><th style="width: 5%;">
      <div class='circle'>{{et1}}</div></th><th style="width: 5%;"><div class='circle'>{{et2}}</div></th><th style="width: 5%;"><div class='circle'>{{et3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{engArray}}" as="item">
+    <!-- <tr hidden><paper-input ></paper-input></tr> -->
      <tr class="eng"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;">
-     <div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+     <div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
@@ -269,7 +297,7 @@
      <tr style="background: #86b300;"><th></th><th style="width: 5%;">
      <div class='circle'>{{mt1}}</div></th><th style="width: 5%;"><div class='circle'>{{mt2}}</div></th><th style="width: 5%;"><div class='circle'>{{mt3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{mathArray}}" as="item">
-    <tr class="math"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="math"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
@@ -277,7 +305,7 @@
      <tr style="background: #ffad33;"><th></th><th style="width: 5%;">
      <div class='circle'>{{evt1}}</div></th><th style="width: 5%;"><div class='circle'>{{evt2}}</div></th><th style="width: 5%;"><div class='circle'>{{evt3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{evsArray}}" as="item">
-    <tr class="evs"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="evs"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
@@ -285,7 +313,7 @@
      <tr style="background: #ac39ac;"><th></th><th style="width: 5%;">
      <div class='circle'>{{ht1}}</div></th><th style="width: 5%;"><div class='circle'>{{ht2}}</div></th><th style="width: 5%;"><div class='circle'>{{ht3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{secArray}}" as="item">
-    <tr class="hin"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="hin"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
@@ -293,7 +321,7 @@
      <tr style="background: #4d94ff;"><th></th><th style="width: 5%;">
      <div class='circle'>{{ct1}}</div></th><th style="width: 5%;"><div class='circle'>{{ct2}}</div></th><th style="width: 5%;"><div class='circle'>{{ct3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{csArray}}" as="item">
-    <tr class="comp"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="comp"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
@@ -301,7 +329,7 @@
      <tr style="background: #ac39ac;"><th></th><th style="width: 5%;">
      <div class='circle'>{{gt1}}</div></th><th style="width: 5%;"><div class='circle'>{{gt2}}</div></th><th style="width: 5%;"><div class='circle'>{{gt3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{gkArray}}" as="item">
-    <tr class="gk"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="gk"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table> 
 
@@ -310,7 +338,7 @@
      <tr style="background: #86b300;"><th></th><th style="width: 5%;">
      <div class='circle'>{{at1}}</div></th><th style="width: 5%;"><div class='circle'>{{at2}}</div></th><th style="width: 5%;"><div class='circle'>{{at3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{acArray}}" as="item">
-    <tr class="art"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="art"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
@@ -318,7 +346,7 @@
      <tr style="background:  #ac39ac;"><th></th><th style="width: 5%;">
      <div class='circle'>{{mdt1}}</div></th><th style="width: 5%;"><div class='circle'>{{mdt2}}</div></th><th style="width: 5%;"><div class='circle'>{{mdt3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{mdArray}}" as="item">
-    <tr class="music"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="music"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    
@@ -326,7 +354,7 @@
      <tr style="background: #4d94ff;"><th></th><th style="width: 5%;">
      <div class='circle'>{{gat1}}</div></th><th style="width: 5%;"><div class='circle'>{{gat2}}</div></th><th style="width: 5%;"><div class='circle'>{{gat3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{gamesArray}}" as="item">
-    <tr class="game"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="game"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
 
@@ -335,7 +363,7 @@
      <tr style="background:  #86b300;"><th></th><th style="width: 5%;">
      <div class='circle'>{{pdt1}}</div></th><th style="width: 5%;"><div class='circle'>{{pdt2}}</div></th><th style="width: 5%;"><div class='circle'>{{pdt3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{personalityArray}}" as="item">
-    <tr class="pd"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    <tr class="pd"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle' title='{{item.subject}}' id="{{item.catcheck}}" on-click="FnFetchGradeSeperation">{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
    </table>
    <br><br><br>
@@ -399,9 +427,39 @@
         </iron-collapse>
       <!-- </div> -->
     </iron-collapse>
+    <div>
+      <paper-dialog id="showgrade" modal>
+        <div>
+        <div class="cat" id="title">
+        <template is="dom-repeat" items="{{subcatarr}}" as="item">
+        <p>{{item}}</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment1</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass1}}" as="item1">
+        <p style="margin-left:10%;">{{item1}}</p>
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment2</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass2}}" as="item2">
+        <p style="margin-left:10%;">{{item2}}</p>
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment3</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass3}}" as="item3">
+        <p style="margin-left:10%;">{{item3}}</p>
+        </template>
+        </div>
+              
+        </div>
+        <paper-button id="close" on-click="FnCloseDialog">Close</paper-button>
+      </paper-dialog>
+    </div>
     <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
   </template>
-
   <script>
   (function() {
     'use strict';
@@ -415,7 +473,7 @@
         this.section=localStorage.getItem("curr_sess_section");
         document.querySelector('#img1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid")+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
         document.querySelector('#img2').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid")+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
-        // document.querySelector('#img2').src=
+        
       },
       FnExpandScorecard:function(){
         document.querySelector('#collapse1').toggle();
@@ -425,23 +483,10 @@
         this.$.collapse4.opened=false;
         this.$.collapse5.opened=false;
         }
-        //  if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
-        // this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
-        // this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
-        // this.$.otfscorecardservice.callFetchsubjectinfoService(this.studentid);
-        // this.$.otfscorecardservice.callfetchscholasticmarkService(this.studentid);
-        // this.$.otfscorecardservice.fetchoveralltermwisegradeService(this.studentid);
-        // document.querySelector('#collapse1').toggle();
-        // }
-        // if(this.$.collapse1.opened==false)
-        // this.$.collapse1.opened=true;
-        // if(this.$.collapse1.opened==true)
-        // this.$.collapse1.opened=false;
+     
       },
       FnExpandHealth:function(){
         document.querySelector('#collapse2').toggle();
-        // if(this.$.collapse2.opened==false)
-        // this.$.collapse2.opened=true;
         if(this.$.collapse2.opened==true){
         this.$.collapse1.opened=false;
         this.$.collapse3.opened=false;
@@ -457,10 +502,6 @@
         this.$.collapse4.opened=false;
         this.$.collapse5.opened=false;
         }
-        // if(this.$.collapse3.opened==false)
-        // this.$.collapse3.opened=true;
-        // if(this.$.collapse3.opened==true)
-        // this.$.collapse3.opened=false;
       },
       FnExpandArt:function(){
         document.querySelector('#collapse4').toggle();
@@ -473,6 +514,19 @@
         if(this.$.collapse5.opened==true){
         this.$.collapse4.opened=false;
         }  
+      },
+      FnFetchGradeSeperation:function(e){
+        // alert(e.target.id+" "+e.target.title);
+        this.$.showgrade.toggle();
+        var category=e.target.id;
+        var val=e.target.title;
+        var inx=val.indexOf("@");
+        var subject=val.substring(0,inx);
+        var term=val.substring(inx+1);
+        document.querySelector('onetofour-scorecard-service').fetchgradeseperationService(term,subject,category);        
+      },
+      FnCloseDialog:function(){
+        this.$.showgrade.toggle();
       }
     });
   })();

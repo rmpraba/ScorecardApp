@@ -49,6 +49,7 @@
     Polymer({
       is: 'student-list-itemcard',            
       FnView:function(){
+        localStorage.setItem("curr_sess_viewstudid",this.studentid);
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);

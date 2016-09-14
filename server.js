@@ -3127,6 +3127,34 @@ app.post('/fetchphysicalinfo-service' ,  urlencodedParser,function (req, res)
 });
 });
 
+app.post('/fetchgradeseperation-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select * from tr_term_assesment_marks where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'"+
+    " and  student_id='"+req.query.studid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"'";
+    
+    console.log('......................fetchgradeseperation..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
 
 
 var server = app.listen(5000, function () {

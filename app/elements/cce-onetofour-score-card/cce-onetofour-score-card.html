@@ -149,6 +149,9 @@
     text-align:center;
     background:#f5f5ef; 
   }
+  @media print {
+    #footer {page-break-after: auto;}
+  }
 </style>
 <template>
 <div class="card">
@@ -202,19 +205,21 @@
   </table>
   <br><br><br>
   <table  class="general">
-      <tr><th style="width: 25%;">General Feedback: </th><th style="background-color: white;">{{generalfeedback}}</th></tr>
+      <tr><th style="width: 25%;">General Feedback: </th><td style="background-color: white;text-align: left;">{{generalfeedback}}</td></tr>
+      <tr><th style="width: 25%;">Specific Feedback: </th><td style="background-color: white;text-align: left;">{{specificfeedback}}</td></tr>
   </table>
 
   <br><br><br><br><br><br>
 
   <table  class="signature">
+    <tr><th><img id='img1' width="60px;height:20px;"></th><th></th><th><img id='img2' width="60px;height:20px;"></th><th></th><th></th><th></th></tr>
     <tr><th>--------------------------</th><th></th><th>---------------------------</th><th></th>
     <th>--------------------------</th><th></th></tr>
     <tr><th>Class Teacher</th><th></th><th>Principal</th><th></th><th>Parent</th><th></th></tr>
   </table>
 
   <br><br><br><br><br><br><br><br>
-
+  <div id="footer"></div>
 
   <table class="subject">    
     <tr style="background: #4d94ff;"><th style="width: 35%;">ENGLISH</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
@@ -233,6 +238,7 @@
     <tr class="math"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
+  <div id="footer"></div>
   <table class="subject">    
     <tr style="background: #ffad33;"><th style="width: 35%;">EVS</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
      <tr style="background: #ffad33;"><th></th><th style="width: 5%;">
@@ -249,6 +255,7 @@
     <tr class="hin"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
+  <div id="footer"></div>
   <table class="subject">    
     <tr style="background: #4d94ff;"><th style="width: 35%;">COMPUTER SCIENCE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
      <tr style="background: #4d94ff;"><th></th><th style="width: 5%;">
@@ -290,7 +297,7 @@
     <tr class="game"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
-
+  <div id="footer"></div>
    <table class="subject">    
     <tr style="background:  #86b300;"><th style="width: 35%;">PERSONALITY DEVELOPMENT</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
      <tr style="background:  #86b300;"><th></th><th style="width: 5%;">
@@ -307,12 +314,12 @@
    <tr class="health"><th>Weight</th><th>{{t1weight}}</th><th>{{t2weight}}</th><th>{{t3weight}}</th></tr>
    </table>
    <br><br>
-   
+   <div id="footer"></div>
 </div>
 
 <div class="buttoncard">
-<paper-button  class="button" on-click='print'>Print</paper-button>
-<paper-button  class="button" on-click='email'>Email</paper-button>
+<paper-button  id='print' class="button" on-click='print'>Print</paper-button>
+<paper-button  id='email' class="button" on-click='email'>Email</paper-button>
 </div>
 
 <onetofour-scorecard-service id="ss"></onetofour-scorecard-service>
@@ -328,12 +335,14 @@
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+        document.querySelector('#img1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid")+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+        document.querySelector('#img2').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid")+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
       },
        print:function(){
 
-              // this.$.pdf.hidden=true;
-              // this.$.email.hidden=true;
-              // this.$.print.hidden=true;
+              document.querySelector('home-page').FnHideView(true);
+              this.$.email.hidden=true;
+              this.$.print.hidden=true;
 
 
             if (!window.print){
@@ -343,9 +352,9 @@
             window.print()
 
 
-              // this.$.pdf.hidden=false;
-              // this.$.email.hidden=false;
-              // this.$.print.hidden=false;
+              document.querySelector('home-page').FnHideView(false);
+              this.$.email.hidden=false;
+              this.$.print.hidden=false;
       },
       email:function(){
         this.$.ss.mailReportcardService();

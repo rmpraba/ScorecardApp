@@ -238,15 +238,17 @@
       <td align="right" style="width: 13%;">{{wdterm2}}</td><td align="right" style="width: 13%;">{{wdterm3}}</td></tr>
   </table>
   <br><br><br>
-  <table  class="general">
-      <tr><th style="width: 25%;">General Feedback: </th><th style="background-color: white;">{{generalfeedback}}</th></tr>
+  <table  class="general" >
+      <tr><th style="width: 25%;">General Feedback: </th><td style="background-color: white;text-align: left;">{{generalfeedback}}</td></tr>
+      <tr><th style="width: 25%;">Specific Feedback: </th><td style="background-color: white;text-align: left;">{{specificfeedback}}</td></tr>
   </table>
 
   <br><br><br><br><br><br>
 
   <table  class="signature">
+    <tr><th><img id='img1' width="60px;height:20px;"></th><th></th><th><img id='img2' width="60px;height:20px;"></th><th></th><th></th><th></th></tr>
     <tr><th>--------------------------</th><th></th><th>---------------------------</th><th></th>
-    <th>--------------------------</th><th></th></tr>
+    <th>--------------------------</th><th></th></tr>    
     <tr><th>Class Teacher</th><th></th><th>Principal</th><th></th><th>Parent</th><th></th></tr>
   </table>
 
@@ -411,6 +413,9 @@
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
+        document.querySelector('#img1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid")+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+        document.querySelector('#img2').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid")+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
+        // document.querySelector('#img2').src=
       },
       FnExpandScorecard:function(){
         document.querySelector('#collapse1').toggle();

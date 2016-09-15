@@ -485,15 +485,11 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         obj.sum=parseInt(parseInt(sum)/3)*10;
         var rtotal=parseFloat((sum/3)*10/10).toFixed(2);
         obj.reducetotal=parseFloat((sum/3)*10/10).toFixed(2);
-        obj.grade=this.FnFindGrade(rtotal);
+        obj.grade=this.FnFindGrade((parseInt(rtotal)));
         obj.serialno=i+1;
-        //alert(JSON.stringify(obj));
-        //markarr.push(obj);
-       overall.push(obj);
-
+        overall.push(obj);
        }
        this.len=overall.length;
-       //alert(JSON.stringify(overall));
         if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4")
         {
         //document.querySelector('cc-fa-fivetoten-card').markarr=overall; 
@@ -521,8 +517,6 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        fetchfastudentResponse:function(e)
        { 
     var arr=e.detail.response.returnval;
-    //alert(JSON.stringify(sarr1));
-//alert(JSON.stringify(arr));
     for(var i=0;i<arr.length;i++)
     {
       for(var j=0;j<sarr1.length;j++)
@@ -540,8 +534,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         overall.push(arr[i]);
           
         }
-       // alert(JSON.stringify(overall));
-        //alert('s'+JSON.stringify(arr));
+      
  if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
         document.querySelector('cc-fa-fivetoten-card').studarr=overall;         
         } 
@@ -950,9 +943,12 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
           grade.push(returnval[i].grade);
         } 
       },
-      FnFindGrade:function(mark){        
-        for(var i=0;i<lower.length;i++){          
-          if(mark>=lower[i]&&mark<=higher[i]){            
+      FnFindGrade:function(mark)
+      {        
+        for(var i=0;i<lower.length;i++)
+        {         
+          if(mark>=lower[i]&&mark<=higher[i])
+          {            
             this.grade=grade[i];
           }
         }
@@ -980,8 +976,8 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          }
 
      },
-     audittermResponse:function(e){
-
+     audittermResponse:function(e)
+     {
       if(e.detail.response.returnval=='exist'){        
         alert('Assesment already approved!');
       }

@@ -874,7 +874,7 @@ app.post('/fetchgrade-service',  urlencodedParser,function (req,res)
     {
     if(!err)
     { 
-      // console.log(JSON.stringify(rows));   
+      console.log(JSON.stringify(rows));   
       res.status(200).json({'returnval': rows});
     }
     else

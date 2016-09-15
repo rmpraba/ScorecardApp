@@ -500,7 +500,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         obj.serialno=i+1;
         overall.push(obj);
        }
-       this.len=overall.length;
+       
         if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4")
         {
         //document.querySelector('cc-fa-fivetoten-card').markarr=overall; 
@@ -510,7 +510,14 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        //document.querySelector('cc-sa-fivetoten-card').markarr=overall;        
         }
       }
-
+      if(sarr1!='invalid')
+      {
+      this.len=overall.length;
+      }
+      else
+      {
+        this.len=0;
+      }
 
       this.fetchfastudenturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent-service";
          var obj={"academicyear":"","schoolid":"","gradename":"","section":"","subject":"","termname":"","assesment":""};

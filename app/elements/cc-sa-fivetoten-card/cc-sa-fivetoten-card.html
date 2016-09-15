@@ -40,7 +40,8 @@
       <th id="tb1">{{item.Max}}</th>
       <th id="tb1">{{item.Convert}}</th>
       <th id="tb1">{{item.Reduce}}</th>
-      <th id="tb1">{{item.Grade}}</th>   
+      <th id="tb1">{{item.Grade}}</th>
+      <th colspan="1" id="tb1"></th>   
       </tr>      
       <template is="dom-repeat" items="{{markarr}}" as="m">
 <tr><td></td>
@@ -50,7 +51,7 @@
 </tr>
 </template>
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="6">
+      <tr><td colspan="7">
       <cc-sa-fivetoten-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score="{{item.mark1}}" convert="{{item.sum}}" reduce="{{item.reducetotal}}" grade="{{item.grade}}"></cc-sa-fivetoten-itemcard>
       </td></tr>
       </template>

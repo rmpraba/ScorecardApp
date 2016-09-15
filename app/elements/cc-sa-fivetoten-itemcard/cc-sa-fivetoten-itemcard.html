@@ -36,6 +36,8 @@
         <td id="tb1"><paper-item>{{convert}}</paper-item></td>
         <td id="tb1"><paper-item>{{reduce}}</paper-item></td>  
         <td id="tb1"><paper-item>{{grade}}</paper-item></td>
+         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
     </div>
@@ -68,7 +70,7 @@
         this.convert=parseFloat((parseInt(this.score)/90)*100).toFixed(2);
         this.reduce=parseInt(this.convert)/10;                 
       },
-      callService:function(){           
+      FnSave:function(){           
         this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Activity",this.score,1,1);  
         this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),this.convert,this.reduce,this.grade);     
       },
@@ -91,7 +93,6 @@
             this.grade=grade[i];
           }
         }
-        this.callService();
       }
     });
   })();

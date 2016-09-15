@@ -59,7 +59,8 @@
       <!-- <th id="tb1">{{item.Activity5}}</th> -->
       <th id="tb1">{{item.Total}}</th>
       <th id="tb1">{{item.Reduction}}</th>
-      <th id="tb1">{{item.Grade}}</th>   
+      <th id="tb1">{{item.Grade}}</th> 
+      <th  id="tb1"></th>  
       </tr>  
 <template is="dom-repeat" items="{{markarr}}" as="m">
 <tr>
@@ -69,7 +70,7 @@
 </tr>
 </template>
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="10">
+      <tr><td colspan="9">
       <cc-fa-fivetoten-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}" score3="{{item.mark2}}" score4="{{item.mark3}}" total="{{item.sum}}" reduction="{{item.reducetotal}}" grade="{{item.grade}}" ></cc-fa-fivetoten-itemcard>
       </td></tr>
       </template>

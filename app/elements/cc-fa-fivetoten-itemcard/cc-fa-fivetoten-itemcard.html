@@ -18,10 +18,14 @@
         height: 2%;
       }
       #tb1{
-        width:9%
+        width:10%
       }
         #tb2{
          width:20%
+          }
+          #tb3
+          {
+            width:10%
           }
     </style>
     <div class="card">
@@ -31,12 +35,14 @@
         <td id="tb2"><paper-item>{{studname}}</paper-item></td>
         <td id="tb1"><paper-input id="score1" required on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
         <!-- <td id="tb1"><paper-input id="score2" required on-change="FnActivity2" value="{{score2}}"></paper-input></td>   -->
-        <td id="tb1"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
+        <td id="tb3"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
         <td id="tb1"><paper-input id="score4" required on-change="FnActivity4" value="{{score4}}"></paper-input></td>  
         <!-- <td id="tb1"><paper-input id="score5" required on-change="FnActivity5" value="{{score5}}"></paper-input></td>  -->
         <td id="tb1"><paper-item>{{total}}</paper-item></td>
         <td id="tb1"><paper-item>{{reduction}}</paper-item></td>
         <td id="tb1"><paper-item>{{grade}}</paper-item></td>
+         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
     </div>
@@ -65,40 +71,37 @@
       },
       FnActivity1:function(e){        
         this.mark1=this.score1;
-        this.flag="0";
         this.insertService();         
       },
       FnActivity2:function(e){                
         this.mark2=this.score2; 
-        this.flag="0";
         this.insertService();        
       },
       FnActivity3:function(e){                
         this.mark3=this.score3;
-        this.flag="0";
         this.insertService();         
       },
       FnActivity4:function(e){               
         this.mark4=this.score4; 
-        this.flag="1";   
         this.insertService();       
       },
       insertService:function(){
         this.$.score1.validate();
         // this.$.score2.validate();
         this.$.score3.validate();
-        this.$.score4.validate();        
-        if(this.mark1==""||this.mark3==""||this.mark4==""||this.mark1==null||this.mark3==null||this.mark4==null){
-          if(this.flag=="1")
-          alert("Please enter mark in previous fields!");
+        this.$.score4.validate();      
+        if(this.score1==""||this.score3==""||this.score4==""||this.score1==null||this.score3==null||this.score4==null)
+        {
+          //alert("Please enter mark in previous fields!");
         }
-        else{               
+        else
+        {      
         this.total=((parseInt(Math.max(parseInt(this.score1),parseInt(this.score3)))+parseInt(this.score4))/2)*10;
         this.reduction=parseFloat(this.total/10).toFixed(2);  
         this.callFetchGrade(); 
         }        
       },
-      callService:function(){           
+      FnSave:function(){           
         this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Individual Activity1",this.score1,1,4); 
        // this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Individual Activity2",this.score2,2,4);
         this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Group Activity",this.score3,3,4);
@@ -124,7 +127,6 @@
             this.grade=grade[i];
           }
         }
-        this.callService();
       }
     });
   })();

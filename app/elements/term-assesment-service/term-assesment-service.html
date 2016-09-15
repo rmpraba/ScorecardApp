@@ -441,6 +441,8 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          obj.section=localStorage.getItem("curr_sess_section");
          obj.subject= localStorage.getItem("curr_sess_subject");
          obj.assesment= localStorage.getItem("curr_sess_assesment");
+         obj.assesmenttype=localStorage.getItem("curr_sess_assesmenttype");
+         //alert(JSON.stringify(obj));
            this.fetchfastudentreportparam= obj;         
            this.$.fetchfastudentreportajax.generateRequest();
 
@@ -467,8 +469,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         obj.student_name=sarr1[i].student_name;
         obj.mark1=sarr1[i].mark;
         sum=parseInt(sum)+parseInt(sarr1[i].mark);
-       // markarr.push(obj.student_name);
-        //markarr.push(obj.mark1);
+       
         for(var j=i+1;j<sarr1.length;j++)
         {
            if(sarr1[i].student_id==sarr1[j].student_id)
@@ -482,9 +483,19 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
            k++;
 
         }
+        var rtotal;
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
+        {
+        obj.sum=parseFloat((parseInt(sum)/90)*100).toFixed(2);
+        rtotal=parseInt((parseInt(sum)/90)*100)/10;  
+        obj.reducetotal=parseInt((parseInt(sum)/90)*100)/10; 
+        }
+        else
+        {
         obj.sum=parseInt(parseInt(sum)/3)*10;
-        var rtotal=parseFloat((sum/3)*10/10).toFixed(2);
+         rtotal=parseFloat((sum/3)*10/10).toFixed(2);
         obj.reducetotal=parseFloat((sum/3)*10/10).toFixed(2);
+         }
         obj.grade=this.FnFindGrade((parseInt(rtotal)));
         obj.serialno=i+1;
         overall.push(obj);

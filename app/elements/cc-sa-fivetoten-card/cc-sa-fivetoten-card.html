@@ -51,7 +51,7 @@
 </template>
       <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="6">
-      <cc-sa-fivetoten-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cc-sa-fivetoten-itemcard>
+      <cc-sa-fivetoten-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score="{{item.mark1}}" convert="{{item.sum}}" reduce="{{item.reducetotal}}" grade="{{item.grade}}"></cc-sa-fivetoten-itemcard>
       </td></tr>
       </template>
       </table>

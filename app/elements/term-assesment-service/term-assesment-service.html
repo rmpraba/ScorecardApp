@@ -312,6 +312,17 @@
         on-response="audittermResponse"
         debounce-duration="300"
     >
+
+     <iron-ajax
+        method="post"
+        id="updateattendanceflagajax"
+        url="{{updateattendanceflagurl}}"
+        params="{{updateattendanceflagparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updateattendanceflagResponse"
+        debounce-duration="300"
+    > 
       
   </template>
   <script>
@@ -1274,7 +1285,6 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         overall.push(markarr);
         overallfetchimportarr.push({"overall":markarr});
        }
-
        
        // alert(JSON.stringify(overall));
        this.studarrlength=(overall.length);       
@@ -1505,6 +1515,92 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         // document.querySelector('cs-personalitydevelopment-card').markarr=overall;
         document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(false); 
         }
+    },
+    Fnimportattendancemark:function()
+    {   
+      var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
+         obj1.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj1.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj1.termname=localStorage.getItem("curr_sess_termname");
+         obj1.assesmentid='Assesment3';
+         obj1.subject=localStorage.getItem("curr_sess_subject");
+         obj1.gradename=localStorage.getItem("curr_sess_grade");
+         obj1.sectionname=localStorage.getItem("curr_sess_section");
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+      {
+        obj1.flag=1;
+        this.updateattendanceflagurl=sessionStorage.getItem("addrinfo")+"/updateattendanceflag-service";
+        this.updateattendanceflagparam=obj1;
+        this.$.updateattendanceflagajax.generateRequest();
+            
+      }      
+
+      
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher")
+      {
+        this.updateattendanceimportmarkcheckService();
+      }      
+    },
+     updateattendanceflagResponse:function(e){
+      // alert(e.detail.response.returnval);
+      if(e.detail.response.returnval=='exist')
+      alert("Already Approved!");
+      if(e.detail.response.returnval=='updated'){
+      alert("Approved!");
+      // this.callOveralltermmarkinsertService();   
+      }
+      if(e.detail.response.returnval=='not updated')
+      alert("Unable to approve!");
+    },
+    updateattendanceimportmarkcheckService:function(){
+      var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+        obj.assesmentid= "Assesment3";
+        else
+        obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.gradename= localStorage.getItem("curr_sess_grade"); 
+        obj.sectionname=localStorage.getItem("curr_sess_section");    
+        obj.subject=localStorage.getItem("curr_sess_subject");
+        this.updateimportmarkcheckurl=sessionStorage.getItem("addrinfo")+"/updateattendanceimportmarkcheck-service";
+        this.updateimportmarkcheckparam=obj;
+        this.$.updateimportmarkcheckajax.generateRequest();
+    },
+    updateattendanceimportmarkcheckResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
+        var arr=e.detail.response.returnval;
+        if(arr[0].result=='match')
+          this.updateimportmarkService();
+        else
+          alert("Please make sure all the students entry!");
+    },
+    updateattendanceimportmarkService:function(){
+      // alert(localStorage.getItem("curr_sess_termname"));
+        var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         if(localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development"||localStorage.getItem("curr_sess_subject")=="Attendance"||localStorage.getItem("curr_sess_subject")=="Health")
+         obj.assesmentid= "Assesment3";
+         else
+        obj.assesmentid=localStorage.getItem("curr_sess_assesment");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.gradename= localStorage.getItem("curr_sess_grade"); 
+        obj.sectionname=localStorage.getItem("curr_sess_section");    
+        obj.subject=localStorage.getItem("curr_sess_subject");
+        this.updateimportmarkurl=sessionStorage.getItem("addrinfo")+"/updateattendanceimportmark-service";
+        this.updateimportmarkparam=obj;
+        this.$.updateimportmarkajax.generateRequest();
+    },    
+    updateattendanceimportmarkResponse:function(e){
+      // alert(e.detail.response.returnval);
+      if(e.detail.response.returnval=="exist")
+        alert('Already Submitted');
+      if(e.detail.response.returnval=="succ")
+        alert("Submitted!");
     }
     });
   })();

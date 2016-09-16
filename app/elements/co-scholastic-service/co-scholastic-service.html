@@ -643,8 +643,23 @@
 
           attendancearr[i].serialno=parseInt(i)+1;
          }
-           document.querySelector('attendance-card').studarr=attendancearr;
-           document.querySelector('attendance-card').FnSpinnerrActive(false);
+           // document.querySelector('home-page').setPage('coscholasticassesmentsheet');
+           // document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
+           // document.querySelector('attendance-card').setDefaultHeaders();
+            // alert(localStorage.getItem('curr_sess_report'));
+            
+            if(localStorage.getItem('curr_sess_report')=='2') { 
+            document.querySelector('home-page').setPage('coscholasticassesment',''); 
+            document.querySelector('coscholastic-assesment').hiddenpage();
+            document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
+            document.querySelector('attendance-card').setDefaultHeaders();
+            document.querySelector('attendance-card').studarr=attendancearr;
+            document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false);  
+            } 
+            else{        
+            document.querySelector('attendance-card').studarr=attendancearr;
+            document.querySelector('attendance-card').FnSpinnerrActive(false);
+            }
       },
 
        callFetchStudentInfoforphysical:function(){

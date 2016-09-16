@@ -23,7 +23,7 @@
         width:15%
       }
       .button{
-            width: 10%;
+            width: 15%;
             background: #252626;
             color: white;
             margin-top: 2%;
@@ -69,8 +69,10 @@
       </template>
       </table>      
       </center> 
+      <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
       <!-- <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>      -->
     </div>    
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
   <script>
   (function() {
@@ -93,6 +95,18 @@
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
         this.term=localStorage.getItem("curr_sess_termname");
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      {
+        this.importlabel='Approve';
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
+        this.importlabel='Submit for approval';
+      }
+      },
+      importmark:function()
+      {
+        // alert('import');
+        this.$.assesmentservice.Fnimportattendancemark();
       },
       FnRefresh:function()
       {

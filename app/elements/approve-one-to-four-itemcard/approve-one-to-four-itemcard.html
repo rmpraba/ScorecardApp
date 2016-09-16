@@ -64,6 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- </tr> -->
 <!-- </table> -->
  <term-assesment-service id="assesmentservice"></term-assesment-service>
+ <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
   </template>
   <script>
   (function() {
@@ -82,6 +83,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       localStorage.setItem("curr_sess_section",this.section);
       // alert(localStorage.getItem("curr_sess_grade"));
       document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true); 
+      if(this.subject=="Attendance"){
+        // alert('hi');
+        this.$.coscholasticservice.callFetchStudentInfoforattendance();
+        // document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
+        // document.querySelector('attendance-card').setDefaultHeaders(); 
+      }
+      else
       this.$.assesmentservice.fetchimportmark(this.academic,this.term,this.assesment,this.grade,this.section,this.subject);
      }
     });

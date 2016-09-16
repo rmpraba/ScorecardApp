@@ -580,7 +580,7 @@
         this.$.mailreportcardajax.generateRequest();
       },
       mailreportcardResponse:function(e){
-        alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
         if(e.detail.response.returnval=='converted'){
           this.sendmailService();
         }

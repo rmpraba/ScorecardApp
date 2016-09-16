@@ -1531,9 +1531,8 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         obj1.flag=1;
         this.updateattendanceflagurl=sessionStorage.getItem("addrinfo")+"/updateattendanceflag-service";
         this.updateattendanceflagparam=obj1;
-        this.$.updateattendanceflagajax.generateRequest();
-            
-      }      
+        this.$.updateattendanceflagajax.generateRequest();            
+      }     
 
       
       if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher")

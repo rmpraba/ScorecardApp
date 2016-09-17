@@ -73,7 +73,7 @@
       },
       FnSave:function(){           
         this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Activity",this.score,1,1);  
-        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),this.convert,this.reduce,this.grade);     
+        // this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),this.convert,this.reduce,this.grade);     
       },
       callFetchGrade:function(){
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

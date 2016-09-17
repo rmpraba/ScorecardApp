@@ -323,6 +323,22 @@
       document.querySelector('coscholastic-assesment-card').FnRefreshcard();  
       document.querySelector('talentidentification-card').FnRefresh();    
     }
+    if(localStorage.getItem("curr_sess_page")=="cc-fa-fivetoten-card")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('term-assesment-card').FnRefreshcard();  
+      document.querySelector('cc-fa-fivetoten-card').FnRefresh();    
+    }
+     if(localStorage.getItem("curr_sess_page")=="cc-sa-fivetoten-card")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('term-assesment-card').FnRefreshcard();  
+      document.querySelector('cc-sa-fivetoten-card').FnRefresh();    
+    }
   },
   FnsetTitle:function(title){
     this.title=title;

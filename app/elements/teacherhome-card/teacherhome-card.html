@@ -57,13 +57,13 @@
        <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
       </div>
       <div class="card" hidden$="{{ConsolidatedReport}}">
-       <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
       </div>
        <div class="card" hidden$="{{teach_obser}}">
        <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
      </div>
      <div class="card" hidden$="{{comparison}}">
-       <paper-button on-click="FnComparison" no ink><img src="../../images/comparison.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
      </div>
     <!-- </center>   -->
     </div>
@@ -228,6 +228,7 @@
           this.Report=false;
           this.GenerateReport=false;
           this.teach_obser=false;
+          this.comparison=false;
           }
           if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
           {

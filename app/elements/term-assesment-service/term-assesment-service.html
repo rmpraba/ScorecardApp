@@ -1052,6 +1052,14 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          this.insertfaassesmentmarkparam= obj;  
          this.$.insertfaassesmentmarkajax.generateRequest();
       },
+      insertfaassesmentmarkResponse:function(e){
+        if(e.detail.response.returnval=='succ')
+        insertflag++;
+        if(insertflag==insertcheckflag){
+          alert('Marks saved!');
+          insertflag=0;
+        }
+      }, 
       insertassesmentmarkResponse:function(e){
         if(e.detail.response.returnval=='succ')
         insertflag++;

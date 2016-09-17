@@ -218,7 +218,7 @@ app.post('/grade-service',  urlencodedParser,function (req, res)
     "in(select grade_id from mp_teacher_grade where "+
     "school_id='"+req.query.schoolid+"')";
   }
-   else if(req.query.roleid=='principal')
+   else if(req.query.roleid=='principal'||req.query.roleid=='headofedn')
   {
     var qur="select grade_name from md_grade where grade_id "+
     "in(select grade_id from mp_teacher_grade where "+
@@ -283,7 +283,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     "where grade_name='"+req.query.gradename+"') and "+
     "school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"'";
   }
-   else if(req.query.roleid=='principal')
+   else if(req.query.roleid=='principal'||req.query.roleid=='headofedn')
   {
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
@@ -350,7 +350,7 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
     "(select subject_id from mp_grade_subject where "+
     "grade_id in('g1','g2','g3','g4'))";
   }
-   else if(req.query.roleid=='principal')
+   else if(req.query.roleid=='principal'||req.query.roleid=='headofedn')
   {
     var qur="select * from md_subject where subject_id in "+
     "(select subject_id from mp_grade_subject)";
@@ -2647,7 +2647,7 @@ app.post('/teacherid-service' ,  urlencodedParser,function (req, res)
  {
   qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag>='0') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
  }
-  else  if(req.query.roleid=="principal")
+  else  if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
  {
   qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag>='1') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
  }
@@ -2744,7 +2744,7 @@ else  if(req.query.roleid=="headmistress")
   qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag>='0' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
 
 }
-else  if(req.query.roleid=="principal")
+else  if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
  {
   qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag>='1' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
 
@@ -2786,7 +2786,7 @@ else if(req.query.roleid=="headmistress")
  {
   qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag>='0') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="principal")
+else if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
  {
   qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag>='1') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
 }
@@ -2829,7 +2829,7 @@ else if(req.query.roleid=="headmistress")
  {
 qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in (select subject from tr_teacher_observation_flag where flag>='0' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="principal")
+else if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
  {
 qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in(select subject from tr_teacher_observation_flag where flag>='1' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
 }

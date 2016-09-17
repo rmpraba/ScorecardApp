@@ -109,11 +109,11 @@
         }        
       },
       FnSave:function(){           
-        this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Individual Activity1",this.score1,1,4); 
+        this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Individual Activity1",this.score1,1,3); 
        // this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Individual Activity2",this.score2,2,4);
-        this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Group Activity",this.score3,3,4);
-        this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Written Work",this.score4,4,4);
-        this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),this.total,this.reduction,this.grade);     
+        this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Group Activity",this.score3,2,3);
+        this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Written Work",this.score4,2,3);
+        // this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),this.total,this.reduction,this.grade);     
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

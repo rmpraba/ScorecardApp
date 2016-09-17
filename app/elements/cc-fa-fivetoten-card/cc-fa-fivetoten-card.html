@@ -62,11 +62,20 @@
       <th id="tb1">{{item.Grade}}</th> 
       <th  id="tb1"></th>  
       </tr>  
-<template is="dom-repeat" items="{{markarr}}" as="m">
+<template is="dom-repeat" items="{{markarr}}">
 <tr>
-<template is="dom-repeat" items="{{m}}" as="mark">
-<td>{{mark}}</td>
-</template>
+ 
+        <td id="tb1"><paper-item>{{item.serialno}}</paper-item></td>
+        <td id="tb2"><paper-item>{{item.student_name}}</paper-item></td>
+        <td id="tb1" ><paper-item>{{item.mark1}}</paper-item></td>   
+       
+        <td id="tb3" ><paper-item>{{item.mark2}}</paper-item></td>   
+        <td id="tb1" ><paper-item>{{item.mark3}}</paper-item></td> 
+         
+       
+        <td id="tb1"><paper-item>{{item.sum}}</paper-item></td>
+        <td id="tb1"><paper-item>{{item.reducetotal}}</paper-item></td>
+        <td id="tb1"><paper-item>{{item.grade}}</paper-item></td>
 </tr>
 </template>
       <template is="dom-repeat" items="{{studarr}}">
@@ -79,7 +88,7 @@
       </center> 
     </template>     
    <center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
-<input type="button" id="btn3" onclick="tableToExcel('MarkTable2', 'Mark Report')" value="Export to Excel"></center>
+<input type="button" id="btn3" onclick="tableToExcel('MarkTable6', 'Mark Report')" value="Export to Excel"></center>
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
 

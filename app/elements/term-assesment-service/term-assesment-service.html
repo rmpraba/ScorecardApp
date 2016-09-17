@@ -213,6 +213,17 @@
 
     <iron-ajax
         method="post"
+        id="fetchfareportajax"
+        url="{{fetchfareporturl}}"
+        params="{{fetchfareportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfareportResponse"
+        debounce-duration="300"
+    > 
+
+    <iron-ajax
+        method="post"
         id="fetchfastudentreportajax"
         url="{{fetchfastudentreporturl}}"
         params="{{fetchfastudentreportparam}}"
@@ -478,7 +489,13 @@
       },
       callFetchFaStudentInfo:function()
       {
+         if(localStorage.getItem('curr_sess_report')=="1")
+         {
+         this.fetchfareportService();
+         }
 
+else
+{
 this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudentreport-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":"","assesment":"","termname":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -495,7 +512,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
            this.$.fetchfastudentreportajax.generateRequest();
 
 
-
+}
   
       },
  fetchfastudentreportResponse:function(e)
@@ -658,6 +675,83 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
            this.fetchstudentreportparam= obj;         
            this.$.fetchstudentreportajax.generateRequest();
       },
+
+
+      fetchfareportService:function(){
+        // alert(localStorage.getItem("curr_sess_termname"));
+         this.fetchfareporturl=sessionStorage.getItem("addrinfo")+"/fetchfareport-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","assesment":"","termname":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject= localStorage.getItem("curr_sess_subject");
+           obj.assesment= localStorage.getItem("curr_sess_assesment");
+           obj.assesmenttype=localStorage.getItem("curr_sess_assesmenttype");
+           this.fetchfareportparam= obj;         
+           this.$.fetchfareportajax.generateRequest();
+      },
+       fetchfareportResponse:function(e)
+      {
+
+          var faoverall=[];
+        var faarr=e.detail.response.returnval;
+        //alert(JSON.stringify(faarr));
+        if(faarr!='invalid')
+       {      
+       for(var i=0;i<faarr.length;i++)
+       {
+        var obj={};
+        var k=1;
+        var sum=0
+        var markarr=[];
+       // markarr.push(i+1);
+       obj.id=faarr[i].student_id;
+        obj.student_name=faarr[i].student_name;
+        obj.mark1=faarr[i].mark;
+        sum=parseInt(sum)+parseInt(faarr[i].mark);
+       
+        for(var j=i+1;j<faarr.length;j++)
+        {
+           if(faarr[i].student_id==faarr[j].student_id)
+           {      
+           sum=parseInt(sum)+parseInt(faarr[j].mark);
+          obj['mark'+(k+1)]=faarr[j].mark;     
+            //markarr.push(obj.mark1);
+            faarr.splice(j,1);
+            j--;
+           }
+           k++;
+
+        }
+        var rtotal;
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
+        {
+        obj.sum=parseFloat((parseInt(sum)/90)*100).toFixed(2);
+        rtotal=parseInt((parseInt(sum)/90)*100)/10;  
+        obj.reducetotal=parseInt((parseInt(sum)/90)*100)/10; 
+        }
+        else
+        {
+        obj.sum=parseInt(parseInt(sum)/3)*10;
+         rtotal=parseFloat((sum/3)*10/10).toFixed(2);
+        obj.reducetotal=parseFloat((sum/3)*10/10).toFixed(2);
+         }
+        obj.grade=this.FnFindGrade((parseInt(rtotal)));
+        obj.serialno=i+1;
+        faoverall.push(obj);
+       }
+       
+      }
+       if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
+        document.querySelector('cc-fa-fivetoten-card').markarr=faoverall;         
+        } 
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
+        document.querySelector('cc-sa-fivetoten-card').markarr=faoverall;        
+        }
+
+      },
+
       fetchstudentreportResponse:function(e)
       {
        var overall=[];

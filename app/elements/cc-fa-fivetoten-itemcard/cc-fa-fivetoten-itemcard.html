@@ -33,10 +33,17 @@
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb2"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input id="score1" required on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
+        <td id="tb1" hidden$="{{hidepaperinput}}"><paper-input id="score1" required on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
         <!-- <td id="tb1"><paper-input id="score2" required on-change="FnActivity2" value="{{score2}}"></paper-input></td>   -->
-        <td id="tb3"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
-        <td id="tb1"><paper-input id="score4" required on-change="FnActivity4" value="{{score4}}"></paper-input></td>  
+        <td id="tb3" hidden$="{{hidepaperinput}}"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
+        <td id="tb1" hidden$="{{hidepaperinput}}"><paper-input id="score4" required on-change="FnActivity4" value="{{score4}}"></paper-input></td> 
+
+
+ <td id="tb1" hidden$="{{hidepaperitem}}"><paper-item>{{score1}}</paper-item></td>   
+        <!-- <td id="tb1"><paper-input id="score2" required on-change="FnActivity2" value="{{score2}}"></paper-input></td>   -->
+        <td id="tb3" hidden$="{{hidepaperitem}}"><<paper-item>{{score3}}</paper-item></td>   
+        <td id="tb1" hidden$="{{hidepaperitem}}"><paper-item>{{score4}}</paper-item></td> 
+         
         <!-- <td id="tb1"><paper-input id="score5" required on-change="FnActivity5" value="{{score5}}"></paper-input></td>  -->
         <td id="tb1"><paper-item>{{total}}</paper-item></td>
         <td id="tb1"><paper-item>{{reduction}}</paper-item></td>

@@ -145,7 +145,8 @@
     var grade=[];
     var scholasticarr;
     var coscholasticarr;
-    var cocurriculararr;  
+    var cocurriculararr; 
+    // var markarr=[]; 
     Polymer({
       is: 'onetofour-scorecard-service',
       ready:function(){        
@@ -570,11 +571,13 @@
       },
       mailReportcardService:function(){
         this.mailreportcardurl=sessionStorage.getItem("addrinfo")+"/mailreportcard-service"; 
-        var obj={"schoolname":"","academicyear":"","grade":"","section":""}; 
+        var obj={"schoolid":"","loggedid":"","schoolname":"","academicyear":"","grade":"","section":""}; 
         obj.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.grade=localStorage.getItem("curr_sess_grade");
         obj.section=localStorage.getItem("curr_sess_section");
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
         this.mailreportcardparam=obj;
         // alert(JSON.stringify(obj));      
         this.$.mailreportcardajax.generateRequest();
@@ -889,100 +892,111 @@
         this.fetchgradeseperationparam=obj;
         this.$.fetchgradeseperationajax.generateRequest(); 
       },
-      fetchgradeseperationResponse:function(e){        
-        var arr1=e.detail.response.returnval;
-        // alert(JSON.stringify(arr1));
+      fetchgradeseperationResponse:function(e){ 
+        var arr1=e.detail.response.returnval;        
+        var markarr=[];
+        // alert(JSON.stringify(markarr));
+        // var arr1=a;
+        // alert(JSON.stringify(arr1.length));
+        
         var subcat=[];
         var subcatmark=[];
         var ass1=[];
         var ass2=[];
         var ass3=[];
-        var flag=0;
+
+        for(var i=0;i<arr1.length;i++)
+            markarr.push(arr1[i]); 
+
         for(var i=0;i<arr1.length;i++){
-            if(i==0)
-                subcat.push(arr1[i].sub_category);
-            else{
-            for(var j=0;j<subcat.length;j++){
-                if(subcat[j]==arr1[i].sub_category)
-                    flag=1;
-                else
-                    subcat.push(arr1[i].sub_category);
-            }
-            if(flag==1)
-                break;
-            }
+                       
+            for(var j=i+1;j<arr1.length;j++){
+                if(arr1[i].sub_category==arr1[j].sub_category)
+                    arr1.splice(j,1);
+            }           
         }
 
-        // alert(JSON.stringify(subcat));
+        var subcatlen=arr1.length;
 
-        for(var j=0;j<arr1.length;j++){
-        for(var i=0;i<subcat.length;i++){
+        arr1.splice(subcatlen-1,1);
+        
+        
+        // alert(JSON.stringify(markarr.length));      
+        // alert(JSON.stringify(arr1.length));
+        for(var j=0;j<markarr.length;j++){
+        for(var i=0;i<arr1.length;i++){
             
-                if(arr1[j].assesment_id=="Assesment1"){
-                if(subcat[i]==arr1[j].sub_category){
-                    if(arr1[i].subject_id=="Personality Development"){
-                        if(arr1[j].mark=='8')
+                if(markarr[j].assesment_id=="Assesment1"){
+                if(markarr[j].sub_category==arr1[i].sub_category){
+                    if(markarr[j].subject_id=="Personality Development"){
+                        if(markarr[j].mark=='8')
                           ass1.push('A');
-                        if(arr1[j].mark=='7')
+                        if(markarr[j].mark=='7')
                           ass1.push('B');
-                        if(arr1[j].mark=='5')
+                        if(markarr[j].mark=='5')
                           ass1.push('C');  
-                        if(arr1[j].mark=='3')
+                        if(markarr[j].mark=='3')
                           ass1.push('D');
                     }
                     else
-                    ass1.push(arr1[j].mark);
+                    ass1.push(markarr[j].mark);
                 }
                 }
             }
         }
-        for(var j=0;j<arr1.length;j++){
-        for(var i=0;i<subcat.length;i++){
+        for(var j=0;j<markarr.length;j++){
+        for(var i=0;i<arr1.length;i++){
             
-                if(arr1[j].assesment_id=="Assesment2"){
-                if(subcat[i]==arr1[j].sub_category){
-                    if(arr1[j].subject_id=="Personality Development"){
-                        if(arr1[j].mark=='8')
+                if(markarr[j].assesment_id=="Assesment2"){
+                if(markarr[j].sub_category==arr1[i].sub_category){
+                    if(markarr[j].subject_id=="Personality Development"){
+                        if(markarr[j].mark=='8')
                           ass2.push('A');
-                        if(arr1[j].mark=='7')
+                        if(markarr[j].mark=='7')
                           ass2.push('B');
-                        if(arr1[j].mark=='5')
+                        if(markarr[j].mark=='5')
                           ass2.push('C');  
-                        if(arr1[j].mark=='3')
+                        if(markarr[j].mark=='3')
                           ass2.push('D');
                     }
                     else
-                    ass2.push(arr1[j].mark);
-                }
-                }
-            }
-        }
-        for(var j=0;j<arr1.length;j++){
-        for(var i=0;i<subcat.length;i++){
-            
-                if(arr1[j].assesment_id=="Assesment3"){
-                if(subcat[i]==arr1[j].sub_category){
-                    if(arr1[j].subject_id=="Personality Development"){
-                        if(arr1[j].mark=='8')
-                          ass3.push('A');
-                        if(arr1[j].mark=='7')
-                          ass3.push('B');
-                        if(arr1[j].mark=='5')
-                          ass3.push('C');  
-                        if(arr1[j].mark=='3')
-                          ass3.push('D');
-                    }
-                    else
-                    ass3.push(arr1[j].mark);
+                    ass2.push(markarr[j].mark);
                 }
                 }
             }
         }
 
-        document.querySelector('comparisonreport-card').subcatarr=subcat;
+        for(var j=0;j<markarr.length;j++){
+        for(var i=0;i<arr1.length;i++){
+            
+                if(markarr[j].assesment_id=="Assesment3"){
+                if(markarr[j].sub_category==arr1[i].sub_category){
+                    if(markarr[j].subject_id=="Personality Development"){
+                        if(markarr[j].mark=='8')
+                          ass3.push('A');
+                        if(markarr[j].mark=='7')
+                          ass3.push('B');
+                        if(markarr[j].mark=='5')
+                          ass3.push('C');  
+                        if(markarr[j].mark=='3')
+                          ass3.push('D');
+                    }
+                    else
+                    ass3.push(markarr[j].mark);
+                }
+                }
+            }
+        }
+        document.querySelector('comparisonreport-card').subcatarr=arr1;
         document.querySelector('comparisonreport-card').ass1=ass1;
         document.querySelector('comparisonreport-card').ass2=ass2;
         document.querySelector('comparisonreport-card').ass3=ass3;
+        document.querySelector('comparisonreport-card').FnCloseDialog();
+        subcat=[];        
+        ass1=[];
+        ass2=[];
+        ass3=[];
+        markarr=[];
       }
       });
   })();

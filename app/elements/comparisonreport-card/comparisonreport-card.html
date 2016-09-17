@@ -19,7 +19,7 @@
       font-size: 16px;
       padding: 5px 5px;
       font-family: verdana;
-      width: 45%;      
+      width: 55%;      
     }
       .heading {
         padding: 10px 15px;
@@ -206,6 +206,9 @@
     background: #252626;
     color: white;
     margin-top: 2%;            
+  }
+  p{
+    font-size: 12px;
   }
     </style>
     <div class="heading" on-click="FnExpandScorecard">View Reportcard</div>
@@ -433,25 +436,25 @@
         <div>
         <div class="cat" id="title">
         <template is="dom-repeat" items="{{subcatarr}}" as="item">
-        <p>{{item}}</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <p>{{item.sub_category}}</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </template>
         </div>
         <div class="cat" id="ass">
         <p>Assesment1</p>&nbsp;&nbsp;&nbsp;&nbsp;
         <template is="dom-repeat" items="{{ass1}}" as="item1">
-        <p style="margin-left:10%;">{{item1}}</p>
+        <p style="margin-left:14%;text-align: left;">{{item1}}</p>
         </template>
         </div>
         <div class="cat" id="ass">
         <p>Assesment2</p>&nbsp;&nbsp;&nbsp;&nbsp;
         <template is="dom-repeat" items="{{ass2}}" as="item2">
-        <p style="margin-left:10%;">{{item2}}</p>
+        <p style="margin-left:14%;text-align: left;">{{item2}}</p>
         </template>
         </div>
         <div class="cat" id="ass">
         <p>Assesment3</p>&nbsp;&nbsp;&nbsp;&nbsp;
         <template is="dom-repeat" items="{{ass3}}" as="item3">
-        <p style="margin-left:10%;">{{item3}}</p>
+        <p style="margin-left:14%;text-align: left;">{{item3}}</p>
         </template>
         </div>
               
@@ -518,7 +521,7 @@
       },
       FnFetchGradeSeperation:function(e){
         // alert(e.target.id+" "+e.target.title);
-        this.$.showgrade.toggle();
+        
         var category=e.target.id;
         var val=e.target.title;
         var inx=val.indexOf("@");
@@ -527,7 +530,9 @@
         document.querySelector('onetofour-scorecard-service').fetchgradeseperationService(term,subject,category);        
       },
       FnCloseDialog:function(){
+        // if(flag==true)
         this.$.showgrade.toggle();
+
       }
     });
   })();

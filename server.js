@@ -2972,7 +2972,7 @@ connection.query("select * from tr_teacher_observation_mark where ? and ? and ? 
 });
 app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 {
-        var adterm1="";
+         var adterm1="";
         var adterm2="";
         var adterm3="";
         var wdterm1="";
@@ -3165,6 +3165,121 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
           parr.push(obj);          
         }
        }
+
+       var et1,et2,et3,mt1,mt2,mt3,evt1,evt2,evt3,ht1,ht2,ht3,ct1,ct2,ct3,gt1,gt2,gt3,at1,at2,at3,mdt1,mdt2,mdt3,gat1,gat2,gat3,pdt1,pdt2,pdt3;
+       for(var i=0;i<global.overalltermwisegrade.length;i++){
+                  
+          if(global.overalltermwisegrade[i].subject_id=="English"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            et1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            et2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            et3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="Mathematics"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            mt1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            mt2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            mt3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="EVS"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            evt1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            evt2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            evt3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="Hindi"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            ht1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            ht2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            ht3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="Kannada"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            ht1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            ht2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            ht3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="Computer"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            ct1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            ct2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            ct3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="GK"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            gt1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            gt2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            gt3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="Art&Craft"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            at1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            at2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            at3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="music"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            mdt1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            mdt2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            mdt3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="dance"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            mdt1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            mdt2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            mdt3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="Games"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            gat1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            gat2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            gat3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          if(global.overalltermwisegrade[i].subject_id=="Personality Development"){      
+            if(global.overalltermwisegrade[i].term_name=="term1")
+            pdt1=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term2")
+            pdt2=global.overalltermwisegrade[i].grade;
+            if(global.overalltermwisegrade[i].term_name=="term3")
+            pdt3=global.overalltermwisegrade[i].grade;   
+            // engarr.push(obj);
+          }
+          }
+         
+
     console.log('....................schoolname.........................');
     console.log(req.query.schoolname+"   "+req.query.academicyear); 
     console.log('.......................................................');
@@ -3188,11 +3303,16 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     attendance += "<td align='right' style='width: 13%;'>"+wdterm2+"</td><td align='right' style='width: 13%;'>"+wdterm3+"</td></tr></table><br><br><br>"
     attendance += "<table  style='width: 95%;margin-left: 3%;' class='general'> <tr><th style='width: 25%;'>General Feedback: </th><th style='background-color: white;'></th></tr></table><br><br><br><br><br><br><br><br>"; 
 
-    var signature= "<table  style='width: 650px;margin-left:10px;' class='signature'><tr><th>----------------------------------------</th><th></th><th>---------------------------------------</th><th></th>"
+    var signature= "<table  style='width: 650px;margin-left:10px;' class='signature'>"
+    signature += "<tr style='height:20px;'></tr>"
+    signature += "<tr><th style='width: 25%;>Specific Feedback: </th><td style='background-color: white;text-align: left;'></td></tr>"
+    // signature += "<tr><th><img id='img1' src='./app/images/'+req.query.loggedid+req.query.schoolid+'.jpg' width='100px;height:30px;''></th><th></th><th><img id='img2' width='130px;height:40px;''></th><th></th><th></th><th></th></tr>";
+    signature += "<tr><th>----------------------------------------</th><th></th><th>---------------------------------------</th><th></th>"
     signature += "<th>----------------------------------------</th><th></th></tr><tr><th><center>Class Teacher</center></th><th></th><th><center>Principal</center></th><th></th><th><center>Parent</center></th><th></th></tr></table><br><br><br><br>";
 
     var clr;
     var subjecteng = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #4d94ff;'><th style='width: 35%;'>ENGLISH</th><th style='width:5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width:50%;'>Comments</th></tr>"
+    subjecteng += "<tr style='background: #4d94ff;'><th style='width: 35%;'></th><th style='width:5%;'>"+et1+"</th><th style='width: 5%;'>"+et2+"</th><th style='width: 5%;'>"+et3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<engarr.length; i++) {
     if(i%2!=0){
     subjecteng += "<tr class='eng' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+engarr[i].category+"</th><th style='width: 5%;'>"
@@ -3205,6 +3325,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjecteng += "</table>";
 
     var subjectmath = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #86b300;'><th style='width: 35%;' >MATHEMATICS</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectmath += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+mt1+"</th><th style='width: 5%;'>"+mt2+"</th><th style='width: 5%;'>"+mt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<matharr.length; i++) {
     if(i%2!=0)
     {
@@ -3219,6 +3340,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectmath += "</table>";
 
     var subjectevs = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ffad33;'><th style='width: 35%;'>EVS</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectevs += "<tr style='background: #ffad33;'><th style='width: 35%;'></th><th style='width:5%;'>"+evt1+"</th><th style='width: 5%;'>"+evt2+"</th><th style='width: 5%;'>"+evt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<evsarr.length; i++) {
     if(i%2!=0)
     subjectevs += "<tr class='evs' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+evsarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+evsarr[i].comment+"</th></tr>"
@@ -3228,6 +3350,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectevs += "</table>";
 
     var subjecthindi = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>HINDI/KANADA(II Language)</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjecthindi += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+ht1+"</th><th style='width: 5%;'>"+ht2+"</th><th style='width: 5%;'>"+ht3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<hinarr.length; i++) {
     if(i%2!=0)
     subjecthindi += "<tr class='hin' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+hinarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+hinarr[i].comment+"</th></tr>"
@@ -3237,6 +3360,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjecthindi += "</table>";
 
     var subjectcomputer = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #4d94ff;'><th style='width: 35%;'>COMPUTER SCIENCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectcomputer += "<tr style='background: #4d94ff;'><th style='width: 35%;'></th><th style='width:5%;'>"+ct1+"</th><th style='width: 5%;'>"+ct2+"</th><th style='width: 5%;'>"+ct3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<comarr.length; i++) {
     if(i%2!=0)
     subjectcomputer += "<tr class='comp' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+comarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+comarr[i].comment+"</th></tr>"
@@ -3246,6 +3370,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectcomputer += "</table>";
 
     var subjectgk = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>GENERAL KNOWLEDGE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectgk += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+gt1+"</th><th style='width: 5%;'>"+gt2+"</th><th style='width: 5%;'>"+gt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<gkarr.length; i++) {
     if(i%2!=0)
     subjectgk += "<tr class='gk' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+gkarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gkarr[i].comment+"</th></tr>"
@@ -3255,6 +3380,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectgk += "</table>";
 
     var subjectartcraft = "<table style='width: 95%;margin-left: 3%;' class='subject'> <tr style='background: #86b300;'><th style='width: 35%;'>ART/CRAFT</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectartcraft += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+at1+"</th><th style='width: 5%;'>"+at2+"</th><th style='width: 5%;'>"+at3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<acarr.length; i++) {
     if(i%2!=0)
     subjectartcraft += "<tr class='art' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+acarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+acarr[i].comment+"</th></tr>"
@@ -3264,6 +3390,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectartcraft += "</table>";
 
     var subjectmusic = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #ac39ac;'><th style='width: 35%;'>MUSIC/DANCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectmusic += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+mdt1+"</th><th style='width: 5%;'>"+mdt2+"</th><th style='width: 5%;'>"+mdt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<mdarr.length; i++) {
     if(i%2!=0)
     subjectmusic += "<tr class='music' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+mdarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+mdarr[i].comment+"</th></tr>"
@@ -3273,6 +3400,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectmusic += "</table>";
 
     var subjectgames = "<table style='width: 95%;margin-left: 3%;' class='subject'> <tr style='background: #4d94ff;'><th style='width: 35%;'>GAMES</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectgames += "<tr style='background: #4d94ff;'><th style='width: 35%;'></th><th style='width:5%;'>"+gat1+"</th><th style='width: 5%;'>"+gat2+"</th><th style='width: 5%;'>"+gat3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<gamearr.length; i++) {
     if(i%2!=0)
     subjectgames += "<tr class='game' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+gamearr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gamearr[i].comment+"</th></tr>"
@@ -3282,6 +3410,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectgames += "</table>";
 
     var subjectpersonality = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #86b300;'><th style='width: 35%;'>PERSONALITY DEVELOPMENT</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectpersonality += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+pdt1+"</th><th style='width: 5%;'>"+pdt2+"</th><th style='width: 5%;'>"+pdt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<parr.length; i++) {
     if(i%2!=0)
     subjectpersonality += "<tr class='pd' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+parr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+parr[i].comment+"</th></tr>"
@@ -3353,6 +3482,7 @@ app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req,
     {
     if(rows.length>0)
     {
+      global.overalltermwisegrade=rows;
       res.status(200).json({'returnval': rows});
     }
     else

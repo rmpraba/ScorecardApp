@@ -59,6 +59,9 @@
       <div class="card" hidden$="{{ConsolidatedReport}}">
        <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
       </div>
+      <div class="card" hidden$="{{Approvalstatus}}">
+       <paper-button on-click="FnApprovalStatus" no ink><img src="../../images/approvalstatus.jpg" height="180px" width="180px"></paper-button>
+      </div>
        <!--<div class="card" hidden$="{{teach_obser}}">
        <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
      </div>-->
@@ -112,6 +115,7 @@
         this.ConsolidatedReport=true;
        // this.teach_obser=true;
         this.comparison=true;
+        this.approvalstatus=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -145,6 +149,10 @@
          {          
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('scorecard','');
+         }
+         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Approvalstatus") 
+         {     
+          this.$.assesmentservice.callTermService("Term");
          }
       },
       FnSelectPreEntryType:function(){
@@ -189,6 +197,11 @@
         document.querySelector('term-scholastic-category').FnHideView();
         // document.querySelector('home-page').setPage('termassesment','');        
         }
+        else if(localStorage.getItem('curr_sess_report')=="3"){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('approvalstatus');
+        this.$.assesmentservice.FnFetchApprovalStatus();
+        }
         else
         {
         document.querySelector('app-card').setPage('homepage','');
@@ -229,6 +242,7 @@
           this.GenerateReport=false;
           //this.teach_obser=false;
           this.comparison=false;
+          this.approvalstatus=false;
           }
           if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
           {
@@ -236,6 +250,7 @@
           this.Approve=false;
           this.Analysis=false;
           //this.teach_obser=false;
+          this.approvalstatus=false;
           }
         }
       },
@@ -269,6 +284,12 @@
         localStorage.setItem('curr_sess_loggedassesmenttype','Comparisonreport');
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle();
+      },
+      FnApprovalStatus:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','Approvalstatus');
+        localStorage.setItem('curr_sess_report','3');
+        this.$.scorecardservice.callGradeService();
+        this.$.cdialog.toggle(); 
       }
     });
   })();

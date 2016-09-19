@@ -381,6 +381,17 @@
         on-response="updateattendanceflagResponse"
         debounce-duration="300"
     > 
+
+     <iron-ajax
+        method="post"
+        id="fetchapprovalstatusajax"
+        url="{{fetchapprovalstatusurl}}"
+        params="{{fetchapprovalstatusparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchapprovalstatusResponse"
+        debounce-duration="300"
+    > 
       
   </template>
   <script>
@@ -1905,6 +1916,26 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         alert('Already Submitted');
       if(e.detail.response.returnval=="succ")
         alert("Submitted!");
+    },
+    FnFetchApprovalStatus:function(){
+      var obj={"schoolid":"","academicyear":"","termname":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");      
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        this.fetchapprovalstatusurl=sessionStorage.getItem("addrinfo")+"/fetchapprovalstatus-service";
+        this.fetchapprovalstatusparam=obj;
+        this.$.fetchapprovalstatusajax.generateRequest();
+    },
+    fetchapprovalstatusResponse:function(e){
+      // alert(JSON.stringify(e.detail.response.returnval));
+      var arr=e.detail.response.returnval;
+      for(var i=0;i<arr.length;i++){
+        if(arr[i].flag=="0")
+          arr[i].flag="Pending for approval";
+        if(arr[i].flag=="1")
+          arr[i].flag="Approved";
+      }
+      document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
     }
     });
   })();

@@ -285,6 +285,7 @@
         var mdarr=[];
         var gamearr=[];
         var parr=[];
+        var dancearr=[];
         scholasticarr=e.detail.response.returnval;
         for(var i=0;i<scholasticarr.length;i++){
           // alert(scholasticarr[i].subject_name);
@@ -421,7 +422,7 @@
             obj.t2grade=scholasticarr[i].term_cat_grade;
             if(scholasticarr[i].term_name=="term3")
             obj.t3grade=scholasticarr[i].term_cat_grade;
-            mdarr.push(obj);
+            dancearr.push(obj);
           }
           if(scholasticarr[i].subject_name=="Games"){
             obj.subject=scholasticarr[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
@@ -470,6 +471,7 @@
 
         document.querySelector('cce-onetofour-score-card').csArray=comarr;
         document.querySelector('cce-onetofour-score-card').gkArray=gkarr;
+        document.querySelector('cce-onetofour-score-card').danceArray=dancearr;
         }
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){  
         // alert('yes');        
@@ -486,7 +488,7 @@
 
         document.querySelector('comparisonreport-card').csArray=comarr;
         document.querySelector('comparisonreport-card').gkArray=gkarr;
-
+        document.querySelector('comparisonreport-card').danceArray=dancearr;
         // document.querySelector('comparisonreport-card').FnSetArray(engArray);
         }
       },
@@ -699,13 +701,14 @@
             document.querySelector('cce-onetofour-score-card').mdt3=arr[i].grade;   
             // engarr.push(obj);
           }
+         
           if(arr[i].subject_id=="dance"){      
             if(arr[i].term_name=="term1")
-            document.querySelector('cce-onetofour-score-card').mdt1=arr[i].grade;
+            document.querySelector('cce-onetofour-score-card').dant1=arr[i].grade;
             if(arr[i].term_name=="term2")
-            document.querySelector('cce-onetofour-score-card').mdt2=arr[i].grade;
+            document.querySelector('cce-onetofour-score-card').dant2=arr[i].grade;
             if(arr[i].term_name=="term3")
-            document.querySelector('cce-onetofour-score-card').mdt3=arr[i].grade;   
+            document.querySelector('cce-onetofour-score-card').dant3=arr[i].grade;   
             // engarr.push(obj);
           }
           if(arr[i].subject_id=="Games"){      
@@ -811,11 +814,11 @@
           }
           if(arr[i].subject_id=="dance"){      
             if(arr[i].term_name=="term1")
-            document.querySelector('comparisonreport-card').mdt1=arr[i].grade;
+            document.querySelector('comparisonreport-card').dant1=arr[i].grade;
             if(arr[i].term_name=="term2")
-            document.querySelector('comparisonreport-card').mdt2=arr[i].grade;
+            document.querySelector('comparisonreport-card').dant2=arr[i].grade;
             if(arr[i].term_name=="term3")
-            document.querySelector('comparisonreport-card').mdt3=arr[i].grade;   
+            document.querySelector('comparisonreport-card').dant3=arr[i].grade;   
             // engarr.push(obj);
           }
           if(arr[i].subject_id=="Games"){      

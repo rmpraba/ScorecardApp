@@ -125,6 +125,12 @@
  .music:nth-child(even) {
     background-color: #d98cd9;
   }
+ .dance:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+ .dance:nth-child(even) {
+    background-color: #ffd699;;
+  }
   .saph{
     margin-left: 3%;
   }
@@ -307,11 +313,19 @@
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background:  #ac39ac;"><th style="width: 35%;">MUSIC/DANCE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background:  #ac39ac;"><th style="width: 35%;">MUSIC</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
      <tr style="background:  #ac39ac;"><th></th><th style="width: 5%;">
      <div class='circle'>{{mdt1}}</div></th><th style="width: 5%;"><div class='circle'>{{mdt2}}</div></th><th style="width: 5%;"><div class='circle'>{{mdt3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{mdArray}}" as="item">
     <tr class="music"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
+    </template>    
+  </table>
+  <table class="subject">    
+    <tr style="background:  #ffad33;"><th style="width: 35%;">DANCE</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+     <tr style="background:  #ffad33;"><th></th><th style="width: 5%;">
+     <div class='circle'>{{dant1}}</div></th><th style="width: 5%;"><div class='circle'>{{dant2}}</div></th><th style="width: 5%;"><div class='circle'>{{dant3}}</div></th><th></th></tr>
+    <template is="dom-repeat" items="{{danceArray}}" as="item">
+    <tr class="dance"><th style="width: 35%;text-align: left;">{{item.category}}</th><th style="width: 5%;"><div class='circle'>{{item.t1grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t2grade}}</div></th><th style="width: 5%;"><div class='circle'>{{item.t3grade}}</div></th><th style="width: 50%;text-align: left;">{{item.comment}}</th></tr>
     </template>    
   </table>
   <table class="subject">    

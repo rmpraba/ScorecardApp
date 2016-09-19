@@ -3082,6 +3082,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         var mdarr=[];
         var gamearr=[];
         var parr=[];
+        var dancearr=[];
         
         for(var i=0;i<global.scholasticinfo.length;i++){          
           var obj={"category":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
@@ -3194,8 +3195,9 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
             if(global.scholasticinfo[i].term_name=="term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
-            mdarr.push(obj);
+            dancearr.push(obj);
           }
+
           if(global.scholasticinfo[i].subject_name=="Games"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
@@ -3223,6 +3225,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
           parr.push(obj);          
         }
        }
+
+
 
        var et1="";
        var et2="";
@@ -3254,6 +3258,9 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
        var pdt1="";
        var pdt2="";
        var pdt3="";
+       var dant1="";
+       var dant2="";
+       var dant3="";
        for(var i=0;i<global.overalltermwisegrade.length;i++){
                   
           if(global.overalltermwisegrade[i].subject_id=="English"){      
@@ -3339,11 +3346,11 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
           }
           if(global.overalltermwisegrade[i].subject_id=="dance"){      
             if(global.overalltermwisegrade[i].term_name=="term1")
-            mdt1=global.overalltermwisegrade[i].grade;
+            dant1=global.overalltermwisegrade[i].grade;
             if(global.overalltermwisegrade[i].term_name=="term2")
-            mdt2=global.overalltermwisegrade[i].grade;
+            dant2=global.overalltermwisegrade[i].grade;
             if(global.overalltermwisegrade[i].term_name=="term3")
-            mdt3=global.overalltermwisegrade[i].grade;   
+            dant3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="Games"){      
@@ -3400,7 +3407,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     var clr;
     var subjecteng = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #4d94ff;'><th style='width: 35%;'>ENGLISH</th><th style='width:5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width:50%;'>Comments</th></tr>"
-    subjecteng += "<tr style='background: #4d94ff;'><th style='width: 35%;'></th><th style='width:5%;'>"+et1+"</th><th style='width: 5%;'>"+et2+"</th><th style='width: 5%;'>"+et3+"</th><th style='width:50%;'></th></tr>"
+    subjecteng += "<tr style='background: #4d94ff;'><th style='width: 35%;text-align: center;'></th><th style='width:5%;text-align:center;'>"+et1+"</th><th style='width: 5%;text-align: center;' >"+et2+"</th><th style='width: 5%;text-align: center;'>"+et3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<engarr.length; i++) {
     if(i%2!=0){
     subjecteng += "<tr class='eng' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+engarr[i].category+"</th><th style='width: 5%;'>"
@@ -3415,7 +3422,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('eng done....');
 
     var subjectmath = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #86b300;'><th style='width: 35%;' >MATHEMATICS</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjectmath += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+mt1+"</th><th style='width: 5%;'>"+mt2+"</th><th style='width: 5%;'>"+mt3+"</th><th style='width:50%;'></th></tr>"
+    subjectmath += "<tr style='background: #86b300;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+mt1+"</th><th style='width: 5%;text-align:center;'>"+mt2+"</th><th style='width: 5%;text-align: center;'>"+mt3+"</th><th style='width:50%;text-align: left;'></th></tr>"
     for(var i=0; i<matharr.length; i++) {
     if(i%2!=0)
     {
@@ -3432,7 +3439,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('math done....');
 
     var subjectevs = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ffad33;'><th style='width: 35%;'>EVS</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjectevs += "<tr style='background: #ffad33;'><th style='width: 35%;'></th><th style='width:5%;'>"+evt1+"</th><th style='width: 5%;'>"+evt2+"</th><th style='width: 5%;'>"+evt3+"</th><th style='width:50%;'></th></tr>"
+    subjectevs += "<tr style='background: #ffad33;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+evt1+"</th><th style='width: 5%;text-align: center;'>"+evt2+"</th><th style='width: 5%;text-align: center;'>"+evt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<evsarr.length; i++) {
     if(i%2!=0)
     subjectevs += "<tr class='evs' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+evsarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+evsarr[i].comment+"</th></tr>"
@@ -3444,7 +3451,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('evs done....');
 
     var subjecthindi = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>HINDI/KANADA(II Language)</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjecthindi += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+ht1+"</th><th style='width: 5%;'>"+ht2+"</th><th style='width: 5%;'>"+ht3+"</th><th style='width:50%;'></th></tr>"
+    subjecthindi += "<tr style='background: #ac39ac;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+ht1+"</th><th style='width: 5%;text-align: center;'>"+ht2+"</th><th style='width: 5%;text-align: center;'>"+ht3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<hinarr.length; i++) {
     if(i%2!=0)
     subjecthindi += "<tr class='hin' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+hinarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+hinarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+hinarr[i].comment+"</th></tr>"
@@ -3456,7 +3463,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('hindi done....');
 
     var subjectcomputer = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #4d94ff;'><th style='width: 35%;'>COMPUTER SCIENCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjectcomputer += "<tr style='background: #4d94ff;'><th style='width: 35%;'></th><th style='width:5%;'>"+ct1+"</th><th style='width: 5%;'>"+ct2+"</th><th style='width: 5%;'>"+ct3+"</th><th style='width:50%;'></th></tr>"
+    subjectcomputer += "<tr style='background: #4d94ff;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+ct1+"</th><th style='width: 5%;text-align: center;'>"+ct2+"</th><th style='width: 5%;text-align: center;'>"+ct3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<comarr.length; i++) {
     if(i%2!=0)
     subjectcomputer += "<tr class='comp' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+comarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+comarr[i].comment+"</th></tr>"
@@ -3468,7 +3475,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('computer done....');
 
     var subjectgk = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>GENERAL KNOWLEDGE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjectgk += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+gt1+"</th><th style='width: 5%;'>"+gt2+"</th><th style='width: 5%;'>"+gt3+"</th><th style='width:50%;'></th></tr>"
+    subjectgk += "<tr style='background: #ac39ac;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+gt1+"</th><th style='width: 5%;text-align: center;'>"+gt2+"</th><th style='width: 5%;text-align: center;'>"+gt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<gkarr.length; i++) {
     if(i%2!=0)
     subjectgk += "<tr class='gk' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+gkarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gkarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gkarr[i].comment+"</th></tr>"
@@ -3480,7 +3487,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('gk done....');
 
     var subjectartcraft = "<table style='width: 95%;margin-left: 3%;' class='subject'> <tr style='background: #86b300;'><th style='width: 35%;'>ART/CRAFT</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjectartcraft += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+at1+"</th><th style='width: 5%;'>"+at2+"</th><th style='width: 5%;'>"+at3+"</th><th style='width:50%;'></th></tr>"
+    subjectartcraft += "<tr style='background: #86b300;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+at1+"</th><th style='width: 5%;text-align: center;'>"+at2+"</th><th style='width: 5%;text-align: center;'>"+at3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<acarr.length; i++) {
     if(i%2!=0)
     subjectartcraft += "<tr class='art' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+acarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+acarr[i].comment+"</th></tr>"
@@ -3491,8 +3498,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     console.log('artcraft done....');
 
-    var subjectmusic = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #ac39ac;'><th style='width: 35%;'>MUSIC/DANCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjectmusic += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+mdt1+"</th><th style='width: 5%;'>"+mdt2+"</th><th style='width: 5%;'>"+mdt3+"</th><th style='width:50%;'></th></tr>"
+    var subjectmusic = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #ac39ac;'><th style='width: 35%;'>MUSIC</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectmusic += "<tr style='background: #ac39ac;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+mdt1+"</th><th style='width: 5%;text-align: center;'>"+mdt2+"</th><th style='width: 5%;text-align: center;'>"+mdt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<mdarr.length; i++) {
     if(i%2!=0)
     subjectmusic += "<tr class='music' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+mdarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+mdarr[i].comment+"</th></tr>"
@@ -3503,8 +3510,18 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     console.log('music done....');
 
+    var subjectdance = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #ffad33;'><th style='width: 35%;'>DANCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    subjectdance += "<tr style='background: #ffad33;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+dant1+"</th><th style='width: 5%;text-align: center;'>"+dant2+"</th><th style='width: 5%;text-align: center;'>"+dant3+"</th><th style='width:50%;'></th></tr>"
+    for(var i=0; i<dancearr.length; i++) {
+    if(i%2!=0)
+    subjectdance += "<tr class='music' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+dancearr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+dancearr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+dancearr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+dancearr[i].comment+"</th></tr>"
+    else
+    subjectdance += "<tr class='music' style='background:#ffad33'><th style='width: 35%;text-align: left;'>"+dancearr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+mdarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+dancearr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+dancearr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+dancearr[i].comment+"</th></tr>"
+    }
+    subjectdance += "</table>";
+
     var subjectgames = "<table style='width: 95%;margin-left: 3%;' class='subject'> <tr style='background: #4d94ff;'><th style='width: 35%;'>GAMES</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjectgames += "<tr style='background: #4d94ff;'><th style='width: 35%;'></th><th style='width:5%;'>"+gat1+"</th><th style='width: 5%;'>"+gat2+"</th><th style='width: 5%;'>"+gat3+"</th><th style='width:50%;'></th></tr>"
+    subjectgames += "<tr style='background: #4d94ff;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+gat1+"</th><th style='width: 5%;text-align: center;'>"+gat2+"</th><th style='width: 5%;text-align: center;'>"+gat3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<gamearr.length; i++) {
     if(i%2!=0)
     subjectgames += "<tr class='game' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+gamearr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gamearr[i].comment+"</th></tr>"
@@ -3516,7 +3533,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('games done....');
 
     var subjectpersonality = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #86b300;'><th style='width: 35%;'>PERSONALITY DEVELOPMENT</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
-    subjectpersonality += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+pdt1+"</th><th style='width: 5%;'>"+pdt2+"</th><th style='width: 5%;'>"+pdt3+"</th><th style='width:50%;'></th></tr>"
+    subjectpersonality += "<tr style='background: #86b300;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+pdt1+"</th><th style='width: 5%;text-align: center;'>"+pdt2+"</th><th style='width: 5%;text-align: center;'>"+pdt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<parr.length; i++) {
     if(i%2!=0)
     subjectpersonality += "<tr class='pd' style='background:#f1f1f1'><th style='width: 35%;text-align: left;'>"+parr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+parr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+parr[i].comment+"</th></tr>"
@@ -3534,7 +3551,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('pd done....');
 
 
-    var finalpdf=header+studinfo+attendance+signature+subjecteng+subjectmath+subjectevs+subjecthindi+subjectcomputer+subjectgk+subjectartcraft+subjectmusic+subjectgames+subjectpersonality+health;
+    var finalpdf=header+studinfo+attendance+signature+subjecteng+subjectmath+subjectevs+subjecthindi+subjectcomputer+subjectgk+subjectartcraft+subjectmusic+subjectdance+subjectgames+subjectpersonality+health;
 
     htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/reportcard.pdf',
     function (error, success) {
@@ -3561,7 +3578,7 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
   server.send({
    text:    "Report Card",
    from:    "samsidhgroupzeeschool@gmail.com",
-   to:      "rmpraba@gmail.com",
+   to:      global.studentinfo[0].email,
    cc:      req.query.secmail,
    subject: "Term1 Report Card",
    text: "Dear Parent,"+"\n\n"+"Enclosed please find the report card of your ward.Kindly do not reply to this mail id.But you may contact the class teacher in case of any query."+"\n\n\n"+"Thanks&Regards,"+"\n"+"Class Teacher",
@@ -3851,6 +3868,22 @@ app.post('/updateattendanceflag-service' ,  urlencodedParser,function (req, res)
     else
       res.status(200).json({'returnval': 'exist'});
     }
+  });
+});
+
+app.post('/fetchapprovalstatus-service' ,  urlencodedParser,function (req, res)
+{    
+ var qur="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"'";
+  
+ console.log('--------------approval status------------------');
+ console.log(qur);
+
+  connection.query(qur,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'no rows'});
   });
 });
 

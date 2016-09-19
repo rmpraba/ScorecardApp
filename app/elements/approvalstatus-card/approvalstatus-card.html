@@ -1,0 +1,115 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="approvalstatus-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+       .viewdata{
+        margin-top: 5%;
+        /*font-size: 12px;*/
+        cursor: pointer;
+        color:blue;
+      }
+       .outcard{
+        margin-left: 0%;
+        margin-top: 5%;
+      }
+      table{
+        width: 90%;
+
+        /*border-collapse: collapse;*/
+      }
+      .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
+      #itemcard:nth-child(odd) {
+        background-color: white;
+       
+      }
+      #itemcard:nth-child(even) {
+        background-color: #f1f1f1;
+      }
+      #itemcard{
+        margin-left: 7%;
+        width: 83%;
+      }
+      #itemcard{
+        @apply(--layout-horizontal);
+      }
+      p{
+        width: 17%;
+      }
+    </style>
+    <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>
+     <center><h1>Mount Litera Zee School</h1>
+     <div id="hidetop">
+      <h3>Continuous Comprehensive Evaluation -AY-2016-2017</h3>  
+      </div>
+      </center>
+       <div class="outcard">
+       <table id="Mark">
+       <tr>
+       <th id="tb1">Academic Year</th>
+       <th id="tb1">Term</th>
+       <th id="tb1">Assesment</th>
+       <th id="tb1">Grade</th>
+       <th id="tb1">Section</th>
+       <th id="tb1">Subject</th>
+       <th id="tb1">Status</th>
+       </tr>
+       </table>
+     
+<template is="dom-repeat" items="{{approvalarr}}" as="item">
+<div id="itemcard">
+   <p class='p1' style="margin-left: 0%;">{{item.academic_year}}</p>
+   <p class='p2' style="margin-left: 10%;">{{item.term_name}}</p>
+   <p class='p3' style="margin-left: 5%;">{{item.assesment_id}}</p>
+   <p class='p4' style="margin-left: 5%;">{{item.grade}}</p>
+   <p class='p5' style="margin-left: 5%;">{{item.section}}</p>
+   <p class='p6' style="margin-left: 5%;">{{item.subject}}</p>
+   <p class='p6' style="margin-left: 5%;">{{item.flag}}</p>
+</div>
+</template>
+ 
+ </div>
+ </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'approvalstatus-card',
+       FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
+      }
+
+   
+    });
+  })();
+  </script>
+</dom-module>

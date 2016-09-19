@@ -3029,8 +3029,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         pterm1=parseFloat((global.healthattendanceinfo[0].attendance/global.healthattendanceinfo[0].working_days)*100).toFixed(2)+"%";
         t1height=global.healthattendanceinfo[0].height;
         t1weight=global.healthattendanceinfo[0].weight; 
-        generic=arr[0].generic; 
-        specific=arr[0].speccomment;        
+        generic=global.healthattendanceinfo[0].generic; 
+        specific=global.healthattendanceinfo[0].speccomment;        
         }
         if(global.healthattendanceinfo.length==2){
         adterm2=global.healthattendanceinfo[1].attendance;
@@ -3038,8 +3038,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         pterm2=parseFloat((global.healthattendanceinfo[1].attendance/global.healthattendanceinfo[1].working_days)*100).toFixed(2)+"%";
         t2height=global.healthattendanceinfo[1].height;
         t2weight=global.healthattendanceinfo[1].weight;
-        generic=arr[1].generic; 
-        specific=arr[1].speccomment; 
+        generic=global.healthattendanceinfo[1].generic; 
+        specific=global.healthattendanceinfo[1].speccomment; 
         }
         if(global.healthattendanceinfo.length==3){
         adterm3=global.healthattendanceinfo[2].attendance; 
@@ -3047,8 +3047,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         pterm3=parseFloat((global.healthattendanceinfo[2].attendance/global.healthattendanceinfo[2].working_days)*100).toFixed(2)+"%";
         t3height=global.healthattendanceinfo[2].height;
         t3weight=global.healthattendanceinfo[2].weight;
-        generic=arr[2].generic; 
-        specific=arr[2].speccomment; 
+        generic=global.healthattendanceinfo[2].generic; 
+        specific=global.healthattendanceinfo[2].speccomment; 
         }
 
         var engarr=[];
@@ -3366,8 +3366,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     attendance += "<td rowspan='2' align='right'><div class='fab'>"+pterm3+"</div></td></tr><tr style='height: 10px;'><th colspan='7'></th></tr>"
     attendance += "<tr><td style='width: 25%;'>Total Working Days</td><td align='right' style='width: 13%;'>"+wdterm1+"</td>"
     attendance += "<td align='right' style='width: 13%;'>"+wdterm2+"</td><td align='right' style='width: 13%;'>"+wdterm3+"</td></tr></table><br><br><br>"
-    attendance += "<table  style='width: 95%;margin-left: 3%;' class='general'> <tr><th style='width: 25%;'>General Feedback: </th><th style='background-color: white;'></th></tr></table><br><br>"
-    attendance += "<table  style='width: 95%;margin-left: 3%;' class='specific'> <tr><th style='width: 25%;'>Specific Feedback: </th><th style='background-color: white;'></th></tr></table><br><br><br><br><br>";
+    attendance += "<table  style='width: 95%;margin-left: 3%;' class='general'> <tr><th style='width: 25%;'>General Feedback: </th><th style='background-color: white;'>"+generic+"</th></tr></table><br><br>"
+    attendance += "<table  style='width: 95%;margin-left: 3%;' class='specific'> <tr><th style='width: 25%;'>Specific Feedback: </th><th style='background-color: white;'>"+specific+"</th></tr></table><br><br><br><br><br>";
 
 
     var signature= "<table  style='width: 650px;margin-left:10px;' class='signature'>"

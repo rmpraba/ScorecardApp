@@ -856,6 +856,7 @@
         this.$.fetchhealthinfoajax.generateRequest(); 
       },
       healthinfoResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
         document.querySelector('comparisonreport-card').healthArray=e.detail.response.returnval;
       },
       FnFetchArtinfo:function(studid){
@@ -871,6 +872,7 @@
         this.$.fetchartinfoajax.generateRequest(); 
       },
       artinfoResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
         document.querySelector('comparisonreport-card').artArray=e.detail.response.returnval;
       },
       FnFetchPhysicalinfo:function(studid){
@@ -886,6 +888,7 @@
         this.$.fetchphysicalinfoajax.generateRequest(); 
       },
       physicalinfoResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
         document.querySelector('comparisonreport-card').physicalArray=e.detail.response.returnval;
       },
       fetchgradeseperationService:function(term,subject,category){

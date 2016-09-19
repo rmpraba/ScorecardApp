@@ -152,6 +152,30 @@
   @media print {
     #footer {page-break-after: auto;}
   }
+   #close{
+    /*margin-left: 80%;*/
+    text-transform: none;
+    /*width: 10%;*/
+    height: 35px;
+    background: #252626;
+    color: white;
+    margin-top: 2%;            
+  }
+   paper-dialog{
+      margin-top: -10%;
+      background-color: #f3f3f3;
+      border: 1px solid #dedede;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 16px;
+      padding: 5px 5px;
+      font-family: verdana;
+      width: 40%;      
+    }
+    .dialogbtncard{
+      margin-left: 40%;
+      @apply(--layout-horizontal);
+    }
 </style>
 <template>
 <div class="card">
@@ -323,6 +347,23 @@
 <paper-button  id='email' class="button" on-click='email'>Email</paper-button>
 </div>
 
+<div>
+  <paper-dialog id="showpopup" modal>
+    <div>
+      <paper-input readonly label="Student Name" value="{{studentname}}"></paper-input>
+      <paper-input label="Parent Email" value="{{parentemail}}"></paper-input>
+      <paper-input label="Secondary Email" value="{{secemail}}"></paper-input>
+    </div>
+    <div class='dialogbtncard'>
+    <paper-button id="close" on-click="FnCancel">Cancel</paper-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <paper-button id="close" on-click="FnSendEmail">Send</paper-button>
+    </div>
+  </paper-dialog>
+</div>
+
+<div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+<div>
+
 <onetofour-scorecard-service id="ss"></onetofour-scorecard-service>
 </template>
 <script>
@@ -358,11 +399,23 @@
               this.$.print.hidden=false;
       },
       email:function(){
+        this.$.showpopup.toggle();
+      },
+      FnSendEmail:function(){
+        this.$.showpopup.toggle();
+        this.$.spinner.active=true;
+        localStorage.setItem("curr_sess_secmail",this.secemail);
         this.$.ss.mailReportcardService();
       },
       FnSetArray:function(eng){
         // alert(JSON.stringify(eng));
         this.engArray=eng;
+      },
+      FnCloseSpinner:function(){
+        this.$.spinner.active=false;
+      },
+      FnCancel:function(){
+        this.$.showpopup.toggle();
       }
     });
   })();

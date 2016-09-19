@@ -2517,7 +2517,7 @@ app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, re
     // "and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
     // "group by subject_id,term_name,assesment_id,student_id ";
 
-    var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM md_grade_rating WHERE "+
 "lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade,"+
 "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
 "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
@@ -2550,7 +2550,7 @@ app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, re
 
 app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select ta.term_name,ta.assesment_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    var qur="select ta.term_name,ta.assesment_id,(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade, "+
     "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
     "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
@@ -2577,7 +2577,7 @@ app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req
 
 app.post('/assesmentwisereport-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select student_id,subject_id,avg(rtotal),(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    var qur="select student_id,subject_id,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesment+"' "+
@@ -2606,7 +2606,7 @@ app.post('/assesmentwisereport-service' ,  urlencodedParser,function (req, res)
 
 app.post('/termwisereport-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select assesment_id,student_id,subject_id,avg(rtotal),(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    var qur="select assesment_id,student_id,subject_id,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' "+
@@ -2998,7 +2998,7 @@ connection.query("select * from tr_teacher_observation_mark where ? and ? and ? 
 });
 app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 {
-         var adterm1="";
+        var adterm1="";
         var adterm2="";
         var adterm3="";
         var wdterm1="";
@@ -3013,6 +3013,11 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         var t1weight="";
         var t2weight="";
         var t3weight="";
+        var generic="";
+        var specific="";
+
+        var img1="./app/images/"+req.query.loggedid+req.query.schoolid+".jpg";
+        var img2="./app/images/principal"+req.query.schoolid+".jpg";
 
         console.log('.........................healthattendanceinfo....................................');
         console.log(global.healthattendanceinfo.length);
@@ -3023,7 +3028,9 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         wdterm1=global.healthattendanceinfo[0].working_days;
         pterm1=parseFloat((global.healthattendanceinfo[0].attendance/global.healthattendanceinfo[0].working_days)*100).toFixed(2)+"%";
         t1height=global.healthattendanceinfo[0].height;
-        t1weight=global.healthattendanceinfo[0].weight;        
+        t1weight=global.healthattendanceinfo[0].weight; 
+        generic=arr[0].generic; 
+        specific=arr[0].speccomment;        
         }
         if(global.healthattendanceinfo.length==2){
         adterm2=global.healthattendanceinfo[1].attendance;
@@ -3031,6 +3038,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         pterm2=parseFloat((global.healthattendanceinfo[1].attendance/global.healthattendanceinfo[1].working_days)*100).toFixed(2)+"%";
         t2height=global.healthattendanceinfo[1].height;
         t2weight=global.healthattendanceinfo[1].weight;
+        generic=arr[1].generic; 
+        specific=arr[1].speccomment; 
         }
         if(global.healthattendanceinfo.length==3){
         adterm3=global.healthattendanceinfo[2].attendance; 
@@ -3038,6 +3047,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         pterm3=parseFloat((global.healthattendanceinfo[2].attendance/global.healthattendanceinfo[2].working_days)*100).toFixed(2)+"%";
         t3height=global.healthattendanceinfo[2].height;
         t3weight=global.healthattendanceinfo[2].weight;
+        generic=arr[2].generic; 
+        specific=arr[2].speccomment; 
         }
 
         var engarr=[];
@@ -3192,7 +3203,36 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         }
        }
 
-       var et1,et2,et3,mt1,mt2,mt3,evt1,evt2,evt3,ht1,ht2,ht3,ct1,ct2,ct3,gt1,gt2,gt3,at1,at2,at3,mdt1,mdt2,mdt3,gat1,gat2,gat3,pdt1,pdt2,pdt3;
+       var et1="";
+       var et2="";
+       var et3="";
+       var mt1="";
+       var mt2="";
+       var mt3="";
+       var evt1="";
+       var evt2="";
+       var evt3="";
+       var ht1="";
+       var ht2="";
+       var ht3="";
+       var ct1="";
+       var ct2="";
+       var ct3="";
+       var gt1="";
+       var gt2="";
+       var gt3="";
+       var at1="";
+       var at2="";
+       var at3="";
+       var mdt1="";
+       var mdt2="";
+       var mdt3="";
+       var gat1="";
+       var gat2="";
+       var gat3="";
+       var pdt1="";
+       var pdt2="";
+       var pdt3="";
        for(var i=0;i<global.overalltermwisegrade.length;i++){
                   
           if(global.overalltermwisegrade[i].subject_id=="English"){      
@@ -3309,7 +3349,6 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('....................schoolname.........................');
     console.log(req.query.schoolname+"   "+req.query.academicyear); 
     console.log('.......................................................');
-      
     var header = "<table class='logo' style='width:100%;height: 15%; margin-top: 4%;'><tr><th><img src='./app/images/zeesouth.png' height='100px' width='100px'></img></th><th>"
     header += "<img src='./app/images/mount.png' height='110px' width='200px' style='margin-left:100px'></img><center><p>"+req.query.schoolname+"</p>ACHIEVEMENT RECORD("+req.query.academicyear+")</center></th>"
     header += "<th><img src='./app/images/zee.gif' height='100px' width='100px'></img></th></tr></table><br>"
@@ -3327,14 +3366,16 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     attendance += "<td rowspan='2' align='right'><div class='fab'>"+pterm3+"</div></td></tr><tr style='height: 10px;'><th colspan='7'></th></tr>"
     attendance += "<tr><td style='width: 25%;'>Total Working Days</td><td align='right' style='width: 13%;'>"+wdterm1+"</td>"
     attendance += "<td align='right' style='width: 13%;'>"+wdterm2+"</td><td align='right' style='width: 13%;'>"+wdterm3+"</td></tr></table><br><br><br>"
-    attendance += "<table  style='width: 95%;margin-left: 3%;' class='general'> <tr><th style='width: 25%;'>General Feedback: </th><th style='background-color: white;'></th></tr></table><br><br><br><br><br><br><br><br>"; 
+    attendance += "<table  style='width: 95%;margin-left: 3%;' class='general'> <tr><th style='width: 25%;'>General Feedback: </th><th style='background-color: white;'></th></tr></table><br><br>"
+    attendance += "<table  style='width: 95%;margin-left: 3%;' class='specific'> <tr><th style='width: 25%;'>Specific Feedback: </th><th style='background-color: white;'></th></tr></table><br><br><br><br><br>";
+
 
     var signature= "<table  style='width: 650px;margin-left:10px;' class='signature'>"
-    signature += "<tr style='height:20px;'></tr>"
-    signature += "<tr><th style='width: 25%;>Specific Feedback: </th><td style='background-color: white;text-align: left;'></td></tr>"
-    // signature += "<tr><th><img id='img1' src='./app/images/'+req.query.loggedid+req.query.schoolid+'.jpg' width='100px;height:30px;''></th><th></th><th><img id='img2' width='130px;height:40px;''></th><th></th><th></th><th></th></tr>";
+    signature +="<tr><th style='text-align:center;'><img width='100px' height='45px' src='"+img1+"'></th><th width='100px'></th><th style='text-align:center;'><img width='100px' height='45px' src='"+img2+"'></th><th></th></tr>"
     signature += "<tr><th>----------------------------------------</th><th></th><th>---------------------------------------</th><th></th>"
     signature += "<th>----------------------------------------</th><th></th></tr><tr><th><center>Class Teacher</center></th><th></th><th><center>Principal</center></th><th></th><th><center>Parent</center></th><th></th></tr></table><br><br><br><br>";
+
+    console.log('signature done....');
 
     var clr;
     var subjecteng = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #4d94ff;'><th style='width: 35%;'>ENGLISH</th><th style='width:5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width:50%;'>Comments</th></tr>"
@@ -3349,6 +3390,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     }
     }
     subjecteng += "</table>";
+
+    console.log('eng done....');
 
     var subjectmath = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #86b300;'><th style='width: 35%;' >MATHEMATICS</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjectmath += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+mt1+"</th><th style='width: 5%;'>"+mt2+"</th><th style='width: 5%;'>"+mt3+"</th><th style='width:50%;'></th></tr>"
@@ -3365,6 +3408,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     }
     subjectmath += "</table>";
 
+    console.log('math done....');
+
     var subjectevs = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ffad33;'><th style='width: 35%;'>EVS</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjectevs += "<tr style='background: #ffad33;'><th style='width: 35%;'></th><th style='width:5%;'>"+evt1+"</th><th style='width: 5%;'>"+evt2+"</th><th style='width: 5%;'>"+evt3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<evsarr.length; i++) {
@@ -3374,6 +3419,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectevs += "<tr class='evs' style='background:#ffd699'><th style='width: 35%;text-align: left;'>"+evsarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+evsarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+evsarr[i].comment+"</th></tr>"
     }
     subjectevs += "</table>";
+
+    console.log('evs done....');
 
     var subjecthindi = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>HINDI/KANADA(II Language)</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjecthindi += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+ht1+"</th><th style='width: 5%;'>"+ht2+"</th><th style='width: 5%;'>"+ht3+"</th><th style='width:50%;'></th></tr>"
@@ -3385,6 +3432,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     }
     subjecthindi += "</table>";
 
+    console.log('hindi done....');
+
     var subjectcomputer = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #4d94ff;'><th style='width: 35%;'>COMPUTER SCIENCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjectcomputer += "<tr style='background: #4d94ff;'><th style='width: 35%;'></th><th style='width:5%;'>"+ct1+"</th><th style='width: 5%;'>"+ct2+"</th><th style='width: 5%;'>"+ct3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<comarr.length; i++) {
@@ -3394,6 +3443,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectcomputer += "<tr class='comp' style='background:#b3d1ff'><th style='width: 35%;text-align: left;'>"+comarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+comarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+comarr[i].comment+"</th></tr>"
     }
     subjectcomputer += "</table>";
+
+    console.log('computer done....');
 
     var subjectgk = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>GENERAL KNOWLEDGE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjectgk += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+gt1+"</th><th style='width: 5%;'>"+gt2+"</th><th style='width: 5%;'>"+gt3+"</th><th style='width:50%;'></th></tr>"
@@ -3405,6 +3456,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     }
     subjectgk += "</table>";
 
+    console.log('gk done....');
+
     var subjectartcraft = "<table style='width: 95%;margin-left: 3%;' class='subject'> <tr style='background: #86b300;'><th style='width: 35%;'>ART/CRAFT</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjectartcraft += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+at1+"</th><th style='width: 5%;'>"+at2+"</th><th style='width: 5%;'>"+at3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<acarr.length; i++) {
@@ -3414,6 +3467,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectartcraft += "<tr class='art' style='background:#dfff80'><th style='width: 35%;text-align: left;'>"+acarr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+acarr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+acarr[i].comment+"</th></tr>"
     }
     subjectartcraft += "</table>";
+
+    console.log('artcraft done....');
 
     var subjectmusic = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #ac39ac;'><th style='width: 35%;'>MUSIC/DANCE</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjectmusic += "<tr style='background: #ac39ac;'><th style='width: 35%;'></th><th style='width:5%;'>"+mdt1+"</th><th style='width: 5%;'>"+mdt2+"</th><th style='width: 5%;'>"+mdt3+"</th><th style='width:50%;'></th></tr>"
@@ -3425,6 +3480,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     }
     subjectmusic += "</table>";
 
+    console.log('music done....');
+
     var subjectgames = "<table style='width: 95%;margin-left: 3%;' class='subject'> <tr style='background: #4d94ff;'><th style='width: 35%;'>GAMES</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjectgames += "<tr style='background: #4d94ff;'><th style='width: 35%;'></th><th style='width:5%;'>"+gat1+"</th><th style='width: 5%;'>"+gat2+"</th><th style='width: 5%;'>"+gat3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<gamearr.length; i++) {
@@ -3434,6 +3491,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     subjectgames += "<tr class='game' style='background:#b3d1ff'><th style='width: 35%;text-align: left;'>"+gamearr[i].category+"</th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t1grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t2grade+"</div></th><th style='width: 5%;'><div class='circle' style='width:40px;height:40px;border-radius:50px;font-size:15px;line-height:40px;text-align:center;background:#d6d6c2;'>"+gamearr[i].t3grade+"</div></th><th style='width: 50%;text-align: left;'>"+gamearr[i].comment+"</th></tr>"
     }
     subjectgames += "</table>";
+
+    console.log('games done....');
 
     var subjectpersonality = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background:  #86b300;'><th style='width: 35%;'>PERSONALITY DEVELOPMENT</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjectpersonality += "<tr style='background: #86b300;'><th style='width: 35%;'></th><th style='width:5%;'>"+pdt1+"</th><th style='width: 5%;'>"+pdt2+"</th><th style='width: 5%;'>"+pdt3+"</th><th style='width:50%;'></th></tr>"
@@ -3450,6 +3509,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     health += "<tr class='health'><th>Weight</th><th>"+t1weight+"</th><th>"+t2weight+"</th><th>"+t3weight+"</th></tr></table><br><br>";
 
     // $('tr:nth-child(even)').css("background", "red");
+
+    console.log('pd done....');
 
 
     var finalpdf=header+studinfo+attendance+signature+subjecteng+subjectmath+subjectevs+subjecthindi+subjectcomputer+subjectgk+subjectartcraft+subjectmusic+subjectgames+subjectpersonality+health;
@@ -3468,7 +3529,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
 
 app.post('/sendmail-service', urlencodedParser,function (req, res) {
-  console.log(global.studentinfo[0].email);
+  console.log(global.studentinfo[0].email+"  "+req.query.secmail);
+  var secmail=req.query.secmail;
   var server  = email.server.connect({
    user:    "samsidhgroupzeeschool@gmail.com",
    password:"mlzsinstitutions",
@@ -3479,9 +3541,12 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
    text:    "Report Card",
    from:    "samsidhgroupzeeschool@gmail.com",
    to:      "rmpraba@gmail.com",
-   subject: "Report Card",
+   cc:      req.query.secmail,
+   subject: "Term1 Report Card",
+   text: "Dear Parent,"+"\n\n"+"Enclosed please find the report card of your ward.Kindly do not reply to this mail id.But you may contact the class teacher in case of any query."+"\n\n\n"+"Thanks&Regards,"+"\n"+"Class Teacher",
    attachment:
    [{
+    
     filename: 'reportcard.pdf',
     path: './app/reportcard/reportcard.pdf',
     type: 'application/pdf'
@@ -3493,7 +3558,7 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
 
 app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select assesment_id,student_id,subject_id,term_name,avg(rtotal),(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    var qur="select assesment_id,student_id,subject_id,term_name,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' "+

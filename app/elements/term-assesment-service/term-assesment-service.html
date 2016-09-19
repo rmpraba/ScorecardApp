@@ -199,7 +199,19 @@
         on-response="fetchgradeforscoreResponse"
         debounce-duration="300"
     >
+     
 
+       <iron-ajax    
+     auto    
+        method="post"
+        id="fetchfagradeforscoreajax"
+        url="{{fetchfagradeforscoreurl}}"
+        params="{{fetchfagradeforscoreparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfagradeforscoreResponse"
+        debounce-duration="300"
+    >
     <iron-ajax
         method="post"
         id="fetchstudentreportajax"
@@ -377,6 +389,9 @@
     var lower=[];
     var higher=[];
     var grade=[];
+    var fa_lower=[];
+    var fa_higher=[];
+    var fa_grade=[];
     var name;
     var arr=[];
     var overall=[];
@@ -553,20 +568,22 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
            k++;
 
         }
-        var rtotal;
+        var rtotal,fasum;
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
         {
         obj.sum=parseFloat((parseInt(sum)/90)*100).toFixed(2);
+        fasum=(parseInt(sum)/90)*100;
         rtotal=parseInt((parseInt(sum)/90)*100)/10;  
         obj.reducetotal=parseInt((parseInt(sum)/90)*100)/10; 
         }
         else
         {
+          fasum=parseInt(parseInt(sum)/3)*10;
         obj.sum=parseInt(parseInt(sum)/3)*10;
          rtotal=parseFloat((sum/3)*10/10).toFixed(2);
         obj.reducetotal=parseFloat((sum/3)*10/10).toFixed(2);
          }
-        obj.grade=this.FnFindGrade((parseInt(rtotal)));
+        obj.grade=this.FnFindFaGrade((parseInt(fasum)));
         obj.serialno=i+1;
         overall.push(obj);
        }
@@ -1116,6 +1133,9 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        {
         this.fetchgradeforscoreurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
         this.$.fetchgradeforscoreajax.generateRequest(); 
+        this.fetchfagradeforscoreurl=sessionStorage.getItem("addrinfo")+"/fetchfagrade-service"; 
+        this.$.fetchfagradeforscoreajax.generateRequest(); 
+
       },
        fetchgradeforscoreResponse:function(e)
        {
@@ -1128,6 +1148,17 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
           grade.push(returnval[i].grade);
         } 
       },
+      fetchfagradeforscoreResponse:function(e)
+       {
+        var returnval=e.detail.response.returnval; 
+        // alert(returnval);      
+        for(var i=0;i<returnval.length;i++)
+        {
+          fa_lower.push(returnval[i].lower_limit);
+          fa_higher.push(returnval[i].higher_limit);
+          fa_grade.push(returnval[i].grade);
+        } 
+      },
       FnFindGrade:function(mark)
       {        
         for(var i=0;i<lower.length;i++)
@@ -1135,6 +1166,17 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
           if(mark>=lower[i]&&mark<=higher[i])
           {            
             this.grade=grade[i];
+          }
+        }
+        return this.grade;        
+     },
+      FnFindFaGrade:function(mark)
+      {        
+        for(var i=0;i<fa_lower.length;i++)
+        {         
+          if(mark>=fa_lower[i]&&mark<=fa_higher[i])
+          {            
+            this.grade=fa_grade[i];
           }
         }
         return this.grade;        

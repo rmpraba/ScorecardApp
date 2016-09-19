@@ -56,12 +56,12 @@
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <iron-ajax        
         method="post"
-        id="fetchgradesajax"
-        url="{{fetchgradesurl}}"
-        params="{{fetchgradesparam}}"
+        id="fetchfagradesajax"
+        url="{{fetchfagradesurl}}"
+        params="{{fetchfagradesparam}}"
         handle-as="json"
         content-type="application/json"
-        on-response="fetchgradesResponse"
+        on-response="fetchfagradesResponse"
         debounce-duration="300"
     >
   </template>
@@ -116,21 +116,24 @@
         // this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),this.total,this.reduction,this.grade);     
       },
       callFetchGrade:function(){
-        this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
-        this.$.fetchgradesajax.generateRequest(); 
+        this.fetchfagradesurl=sessionStorage.getItem("addrinfo")+"/fetchfagrade-service"; 
+        this.$.fetchfagradesajax.generateRequest(); 
       },
-      fetchgradesResponse:function(e){
+      fetchfagradesResponse:function(e){
         var returnval=e.detail.response.returnval;       
         for(var i=0;i<returnval.length;i++){
           lower.push(returnval[i].lower_limit);
           higher.push(returnval[i].higher_limit);
           grade.push(returnval[i].grade);
         }
-        this.FnFindGrade((parseInt(this.reduction)));   
+        this.FnFindGrade((parseInt(this.total)));   
       },
-      FnFindGrade:function(mark){        
-        for(var i=0;i<lower.length;i++){          
-          if(mark>=lower[i]&&mark<=higher[i]){            
+      FnFindGrade:function(mark)
+      {        
+        for(var i=0;i<lower.length;i++)
+        {        
+          if(mark>=lower[i]&&mark<=higher[i])
+          {  
             this.grade=grade[i];
           }
         }

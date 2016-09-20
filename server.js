@@ -3584,7 +3584,7 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
    text: "Dear Parent,"+"\n\n"+"Enclosed please find the report card of your ward.Kindly do not reply to this mail id.But you may contact the class teacher in case of any query."+"\n\n\n"+"Thanks&Regards,"+"\n"+"Class Teacher",
    attachment:
    [{
-    
+    name: 'Reportcard- '+global.studentinfo[0].student_name,
     filename: 'reportcard.pdf',
     path: './app/reportcard/reportcard.pdf',
     type: 'application/pdf'

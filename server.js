@@ -3596,11 +3596,11 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
 
 app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select assesment_id,student_id,subject_id,term_name,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
+    var qur="select student_id,subject_id,term_name,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' "+
-    " and  student_id='"+req.query.studid+"' group by assesment_id,subject_id,student_id";
+    " and  student_id='"+req.query.studid+"' group by term_name,subject_id,student_id";
     
     console.log('......................termwise..............................');
     console.log(qur);

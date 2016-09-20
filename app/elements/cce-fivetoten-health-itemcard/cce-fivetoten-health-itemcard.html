@@ -44,7 +44,14 @@
     Polymer({
       is: 'cce-fivetoten-health-itemcard',
       ready:function(){
-
+        this.studid="";
+        this.studname="";
+        this.height="";
+        this.weight="";
+        this.bloodgroup="";
+        this.visionleft="";
+        this.visionright="";
+        this.dental="";
       },     
       FnHeight:function(e){        
       },
@@ -61,9 +68,22 @@
       },
       FnSave:function()
       {
+        if(this.height==""||this.height==null)
+          this.height="";
+        if(this.weight==""||this.weight==null)
+          this.bloodgroup="";
+        if(this.bloodgroup==""||this.bloodgroup==null)
+          this.bloodgroup="";
+        if(this.visionleft==""||this.visionleft==null)
+          this.visionleft="";
+        if(this.visionright==""||this.visionright==null)
+          this.visionright="";
+        if(this.dental==""||this.dental==null)
+          this.dental="";
        this.callService();
       },
-      callService:function(){           
+      callService:function(){  
+      // alert(this.studid+" "+this.studname+" "+this.height+" "+this.weight+" "+this.bloodgroup+" "+this.visionleft+" "+this.visionright+" "+this.dental);         
         this.$.assesmentservice.callinserthealthService(this.studid,this.studname,this.height,this.weight,this.bloodgroup,this.visionleft,this.visionright,this.dental); 
       }
     });

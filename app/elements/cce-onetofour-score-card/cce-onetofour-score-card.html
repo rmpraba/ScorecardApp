@@ -209,7 +209,7 @@
       <tr style="height: 10px;"><th colspan="4"></th></tr>
       <tr>
       <th align="left">Parent's Name: </th>
-      <th align="left" colspan="3" style="background-color: white;">{{parentname}}</th>
+      <th align="left" colspan="3" style="background-color: white;"><paper-input value="{{parentname}}"></paper-input></th>
       </tr>
       <tr style="height: 10px;"><th colspan="4"></th></tr>
       <tr>
@@ -279,7 +279,7 @@
     </template>    
   </table>
   <table class="subject">    
-    <tr style="background: #ac39ac;"><th style="width: 35%;">HINDI/KANADA(II Language)</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
+    <tr style="background: #ac39ac;"><th style="width: 35%;">HINDI/KANNADA(II Language)</th><th style="width: 5%;">T1</th><th style="width: 5%;">T2</th><th style="width: 5%;">T3</th><th style="width: 50%;">Comments</th></tr>
      <tr style="background: #ac39ac;"><th></th><th style="width: 5%;">
      <div class='circle'>{{ht1}}</div></th><th style="width: 5%;"><div class='circle'>{{ht2}}</div></th><th style="width: 5%;"><div class='circle'>{{ht3}}</div></th><th></th></tr>
     <template is="dom-repeat" items="{{secArray}}" as="item">
@@ -419,7 +419,7 @@
         this.$.showpopup.toggle();
         this.$.spinner.active=true;
         localStorage.setItem("curr_sess_secmail",this.secemail);
-        this.$.ss.mailReportcardService();
+        this.$.ss.mailReportcardService(this.parentname);
       },
       FnSetArray:function(eng){
         // alert(JSON.stringify(eng));

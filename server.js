@@ -3384,7 +3384,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     var studinfo= "<table class='studentinfo' style='border-collapse: collapse;width:95%;height: 10%;margin-left: 3%;margin-top: 5%;'><tr><th align='left'>Student Name: </th>"
     studinfo += "<th align='left' colspan='3' style='background-color: white;'>"+global.studentinfo[0].student_name+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr>"
-    studinfo += "<th align='left'>Parent Name: </th><th align='left' colspan='3' style='background-color: white;'>"+global.studentinfo[0].parent_name+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr><th align='left'>Class: </th>";    
+    studinfo += "<th align='left'>Parent Name: </th><th align='left' colspan='3' style='background-color: white;'>"+req.query.parentname+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr><th align='left'>Class: </th>";    
     studinfo += "<th align='left' style='background-color: white;'>"+req.query.grade+"&nbsp;&nbsp;"+req.query.section+"</th><th align='left'>Admission No: </th><th align='left' style='background-color: white;'>"+global.studentinfo[0].student_id+"</th></tr></table> <br><br><br>";
      
     var attendance= "<table style='border-collapse: collapse;width:95%;height: 15%; margin-left: 3%;margin-top: 5%;' class='attendance'><tr><th style='width: 25%;'>Attendance</th><th colspan='2' style='width: 25%;'>Term1</th><th colspan='2' style='width: 25%;'>Term2</th><th colspan='2' style='width: 25%;'>Term3</th></tr>"
@@ -3450,7 +3450,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     console.log('evs done....');
 
-    var subjecthindi = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>HINDI/KANADA(II Language)</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
+    var subjecthindi = "<table style='width: 95%;margin-left: 3%;' class='subject'><tr style='background: #ac39ac;'><th style='width: 35%;'>HINDI/KANNADA(II Language)</th><th style='width: 5%;'>T1</th><th style='width: 5%;'>T2</th><th style='width: 5%;'>T3</th><th style='width: 50%;'>Comments</th></tr>"
     subjecthindi += "<tr style='background: #ac39ac;text-align: center;'><th style='width: 35%;'></th><th style='width:5%;text-align: center;'>"+ht1+"</th><th style='width: 5%;text-align: center;'>"+ht2+"</th><th style='width: 5%;text-align: center;'>"+ht3+"</th><th style='width:50%;'></th></tr>"
     for(var i=0; i<hinarr.length; i++) {
     if(i%2!=0)

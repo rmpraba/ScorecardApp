@@ -3567,7 +3567,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
 
 app.post('/sendmail-service', urlencodedParser,function (req, res) {
-  console.log(global.studentinfo[0].email+"  "+req.query.secmail);
+  console.log(req.query.parentmail+"  "+req.query.secmail);
   var secmail=req.query.secmail;
   var server  = email.server.connect({
    user:    "samsidhgroupzeeschool@gmail.com",
@@ -3578,7 +3578,7 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
   server.send({
    text:    "Report Card",
    from:    "samsidhgroupzeeschool@gmail.com",
-   to:      global.studentinfo[0].email,
+   to:      req.query.parentmail,
    cc:      req.query.secmail,
    subject: "Term1 Report Card",
    text: "Dear Parent,"+"\n\n"+"Enclosed please find the report card of your ward.Kindly do not reply to this mail id.But you may contact the class teacher in case of any query."+"\n\n\n"+"Thanks&Regards,"+"\n"+"Class Teacher",

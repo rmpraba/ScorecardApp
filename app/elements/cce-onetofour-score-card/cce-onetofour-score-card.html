@@ -418,6 +418,7 @@
       FnSendEmail:function(){
         this.$.showpopup.toggle();
         this.$.spinner.active=true;
+        localStorage.setItem("curr_sess_parentmail",this.parentemail);
         localStorage.setItem("curr_sess_secmail",this.secemail);
         this.$.ss.mailReportcardService(this.parentname);
       },

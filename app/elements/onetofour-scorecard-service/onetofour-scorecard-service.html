@@ -594,8 +594,9 @@
         }
       },
       sendmailService:function(){
-        var obj={"secmail":""};
+        var obj={"secmail":"","parentmail":""};
         obj.secmail=localStorage.getItem("curr_sess_secmail");
+        obj.parentmail=localStorage.getItem("curr_sess_parentmail");
         this.sendmailurl=sessionStorage.getItem("addrinfo")+"/sendmail-service";
         this.sendmailparam=obj;
         this.$.sendmailajax.generateRequest();

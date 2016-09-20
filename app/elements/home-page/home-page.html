@@ -155,7 +155,7 @@
    window.location.href="../index.html";   
   },
   FnHome:function(){    
-     alert(localStorage.getItem("curr_sess_page"));
+     // alert(localStorage.getItem("curr_sess_page"));
     if(localStorage.getItem("curr_sess_page")=="cc-eng-onetofour-card")
     {
       this.page="teacherhomecard";
@@ -270,6 +270,7 @@
       this.page="teacherhomecard";
       document.querySelector('teacherhome-card').FnRefresh();
       document.querySelector('cce-generate-score-card').FnRefresh();
+      document.querySelector('cce-onetofour-score-card').FnRefresh();
     }
     if(localStorage.getItem("curr_sess_page")=="approveassesment")
     {
@@ -303,13 +304,17 @@
        this.page="scorecard";
        localStorage.setItem("curr_sess_page",this.page);
        document.querySelector('teacherhome-card').FnRefresh();
-       document.querySelector('cce-generate-score-card').FnRefresh();
+       // document.querySelector('cce-generate-score-card').FnRefresh();
+       document.querySelector('cce-onetofour-score-card').FnRefresh();
     }
      if(localStorage.getItem("curr_sess_page")=="comparisonreport")
     {
-      this.page="teacherhomecard";      
+      this.page="scorecard"; 
+      localStorage.setItem("curr_sess_page",this.page);     
       document.querySelector('teacherhome-card').FnRefresh();
-      document.querySelector('cce-generate-score-card').FnRefresh();    
+      // document.querySelector('cce-generate-score-card').FnRefresh();   
+      document.querySelector('comparisonreport-card').FnRefresh(); 
+
     }
     if(localStorage.getItem("curr_sess_page")=="artverticals-card")
     {
@@ -329,6 +334,7 @@
     }
     if(localStorage.getItem("curr_sess_page")=="cc-fa-fivetoten-card")
     {
+
       this.page="teacherhomecard";
       // this.page="termscholasticcategory";
       document.querySelector('teacherhome-card').FnRefresh();
@@ -343,7 +349,16 @@
       document.querySelector('term-assesment-card').FnRefreshcard();  
       document.querySelector('cc-sa-fivetoten-card').FnRefresh();    
     }
+     if(localStorage.getItem("curr_sess_page")=="approvalstatus")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('term-assesment-card').FnRefreshcard();  
+      document.querySelector('approvalstatus-card').FnRefresh();    
+    }
   },
+
   FnsetTitle:function(title){
     this.title=title;
   },

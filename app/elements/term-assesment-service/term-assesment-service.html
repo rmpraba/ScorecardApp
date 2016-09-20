@@ -589,10 +589,10 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         }
         else
         {
-          fasum=parseInt(parseInt(sum)/3)*10;
-        obj.sum=parseInt(parseInt(sum)/3)*10;
-         rtotal=parseFloat((sum/3)*10/10).toFixed(2);
-        obj.reducetotal=parseFloat((sum/3)*10/10).toFixed(2);
+          fasum=((parseInt(Math.max(parseInt(obj.mark1),parseInt(obj.mark2)))+parseInt(obj.mark3))/2)*10;
+        obj.sum=((parseInt(Math.max(parseInt(obj.mark1),parseInt(obj.mark2)))+parseInt(obj.mark3))/2)*10;
+         rtotal=parseFloat(fasum/10).toFixed(2); 
+        obj.reducetotal=parseFloat(fasum/10).toFixed(2);
          }
         obj.grade=this.FnFindFaGrade((parseInt(fasum)));
         obj.serialno=i+1;

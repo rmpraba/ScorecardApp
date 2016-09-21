@@ -111,6 +111,10 @@ this.flag=0;
       },
       callService:function(){
         this.flag="1"; 
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Editinfo"){
+          this.$.scorecardservice.callFetchstudentnameService();
+        }
+        else
         this.$.scorecardservice.callscorecardreadynessService();       
         // this.$.scorecardservice.callFetchstudentnameService();
       },

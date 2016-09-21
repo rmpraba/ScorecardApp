@@ -4,6 +4,7 @@
 <link rel="import" href="../scorecard-service/scorecard-service.html">
 <link rel="import" href="../onetofour-scorecard-service/onetofour-scorecard-service.html">
 <link rel="import" href="../report-service/report-service.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
 
 <dom-module id="student-list-itemcard">
   <template>
@@ -28,7 +29,8 @@
       paper-button{
         text-transform: none;
         height: 25px;
-      }  
+      } 
+
     </style>
     <div class='card'>
       <!-- <table border="1"> -->
@@ -39,6 +41,7 @@
         <!-- </tr> -->
       <!-- </table>       -->
     </div>
+    <term-assesment-service id='assesmentservice'></term-assesment-service>
     <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
     <report-service id="reportservice"></report-service>
@@ -92,6 +95,15 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('comparisonreport','');
         document.querySelector('comparisonreport-card').setStudentId(this.studentid);
+      }
+       if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Editinfo"){ 
+       this.$.assesmentservice.callstudentinfo(this.studentid); 
+       this.$.assesmentservice.callstudentparentinfo(this.studentid);            
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('studentinfoedit','');
+        document.querySelector('studentinfoedit-card').FnSetStudentId(this.studentid);
+        
+        
       }
       }
     });

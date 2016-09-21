@@ -103,7 +103,7 @@
         }
         else
         {      
-        this.total=((parseInt(Math.max(parseInt(this.score1),parseInt(this.score3)))+parseInt(this.score4))/2)*10;
+        this.total=parseFloat(((parseFloat(Math.max(parseFloat(this.score1),parseFloat(this.score3)))+parseFloat(this.score4))/2)*10).toFixed(2);
         this.reduction=parseFloat(this.total/10).toFixed(2);  
         this.callFetchGrade(); 
         }        

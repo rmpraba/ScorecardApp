@@ -1,0 +1,69 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\term-assesment-service\term-assesment-service.html">
+
+<dom-module id="studentinfoedit-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .dialogbtncard{
+      margin-left: 40%;
+      @apply(--layout-horizontal);
+      }
+      .input{
+      @apply(--layout-vertical);
+      }
+
+      .card{
+        width: 30%;
+        margin-left: 30%;
+        margin-top: 5%;
+      }
+       #close{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+    </style>
+    <div class="card">
+      <div class='input'>
+      <paper-input readonly label="Enrollment No" value="{{enrno}}"></paper-input>
+      <paper-input label="Student Name" value="{{studentname}}"></paper-input>
+      <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
+      <paper-input label="Parent Email" value="{{parentmail}}"></paper-input>
+      </div>
+      <div class='dialogbtncard'>
+      <paper-button id="close" on-click="FnUpdate">Update</paper-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <paper-button id="close" on-click="FnCancel">Cancel</paper-button>
+      </div>
+    </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'studentinfoedit-card',
+
+      FnSetStudentId:function(studid){
+        this.enrno=studid;
+      },
+      FnUpdate:function(){
+        this.$.assesmentservice.callUpdateStudentInfo(this.enrno,this.studentname,this.parentname,this.parentmail);
+      },
+      FnRefresh:function(){
+        this.enrno="";
+        this.studentname="";
+        this.parentname="";
+        this.parentmail="";
+      }
+    });
+  })();
+  </script>
+</dom-module>

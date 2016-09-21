@@ -68,6 +68,9 @@
      <div class="card" hidden$="{{comparison}}">
        <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
      </div>
+     <div class="card" hidden$="{{editinfo}}">
+       <paper-button on-click="FnEditInfo" no ink><img src="../../images/edit.jpg" height="180px" width="180px"></paper-button>
+     </div>
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -116,6 +119,7 @@
        // this.teach_obser=true;
         this.comparison=true;
         this.Approvalstatus=true;
+        this.editinfo=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -153,6 +157,11 @@
          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Approvalstatus") 
          {     
           this.$.assesmentservice.callTermService("Term");
+         }
+         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Editinfo") 
+         {          
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('scorecard','');
          }
       },
       FnSelectPreEntryType:function(){
@@ -231,6 +240,7 @@
           this.GenerateReport=false;
           this.Report=false;
           this.comparison=false;
+          this.editinfo=false;
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
           // this.BA=false;
@@ -288,6 +298,12 @@
       FnApprovalStatus:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Approvalstatus');
         localStorage.setItem('curr_sess_report','3');
+        this.$.scorecardservice.callGradeService();
+        this.$.cdialog.toggle(); 
+      },
+      FnEditInfo:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','Editinfo');
+        // this.$.scorecardservice.callFetchstudentnameService();
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle(); 
       }

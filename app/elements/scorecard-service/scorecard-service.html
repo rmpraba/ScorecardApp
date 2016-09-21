@@ -30,6 +30,7 @@
         method="post"
         id="fetchstudnameajax"
         url="{{fetchstudnameurl}}"
+
         params="{{fetchstudnameparam}}"
         handle-as="json"
         content-type="application/json"
@@ -153,6 +154,8 @@
           document.querySelector('beginner-term-analysis-card').gradearr=e.detail.response.returnval;
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Consolidatedreport')
           document.querySelector('consolidated-report-card').gradearr=e.detail.response.returnval;
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo')
+          document.querySelector('cce-generate-score-card').gradearr=e.detail.response.returnval;
       },
       callSectionService:function(gradename){        
          this.sectionurl=sessionStorage.getItem("addrinfo")+"/section-service";
@@ -173,6 +176,8 @@
           document.querySelector('beginner-term-analysis-card').sectionarr=e.detail.response.returnval; 
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Consolidatedreport')
           document.querySelector('consolidated-report-card').sectionarr=e.detail.response.returnval; 
+        if(localStorage.getItem('curr_sess_loggedassesmenttype')=='Editinfo')
+          document.querySelector('cce-generate-score-card').sectionarr=e.detail.response.returnval;
       },
       callscorecardreadynessService:function(){
          this.scorecardreadynessurl=sessionStorage.getItem("addrinfo")+"/scorecardreadyness-service";

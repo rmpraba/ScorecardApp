@@ -69,7 +69,7 @@
         this.callFetchGrade();        
         this.mark=this.score;
         this.convert=parseFloat((parseInt(this.score)/90)*100).toFixed(2);
-        this.reduce=parseInt(this.convert)/10;                 
+        this.reduce=parseFloat(parseFloat(this.convert)/10).toFixed(2);                 
       },
       FnSave:function(){           
         this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Activity",this.score,1,1);  

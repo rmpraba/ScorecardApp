@@ -1135,7 +1135,7 @@ app.post('/overalltermassesmentinsert-service',  urlencodedParser,function (req,
 var qur=" INSERT INTO tr_term_assesment_overall_assesmentmarks SELECT school_id,academic_year,"+
 "term_name,student_id,subject_id,category,sum(rtotal) as total,"+ 
 "sum(rtotal)/count(*) as average,"+
-"(SELECT grade from md_grade_rating where lower_limit<=round((sum(rtotal)/count(*)),2) && higher_limit>=round((sum(rtotal)/count(*)),2)) as term_cat_grade,grade,section from tr_term_assesment_overall_marks where "+
+"(SELECT grade from md_grade_rating where lower_limit<=round((sum(rtotal)/count(*)),1) && higher_limit>=round((sum(rtotal)/count(*)),1)) as term_cat_grade,grade,section from tr_term_assesment_overall_marks where "+
 "academic_year='"+req.query.academicyear+"' "+
 "and school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' "+
 "and grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"' "+
@@ -1410,7 +1410,7 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
   "(select grade_id from mp_grade_section where class_id=s.class_id )) grade,"+
   "(select section_name from md_section where section_id="+
   "(select section_id from mp_grade_section where class_id=s.class_id and school_id='"+req.query.schoolid+"')) section,"+
-  "s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1 "+
+  "s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1,p.alternate_mail "+
   "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
 
   console.log(qur);
@@ -3597,7 +3597,7 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
 app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
 {  
     var qur="select student_id,subject_id,term_name,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
-    "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
+    "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' "+
     " and  student_id='"+req.query.studid+"' group by term_name,subject_id,student_id";
@@ -3886,6 +3886,87 @@ app.post('/fetchapprovalstatus-service' ,  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'no rows'});
   });
 });
+
+
+
+
+app.post('/updatestudentinfo-service' ,  urlencodedParser,function (req, res)
+{    
+ var qur="update md_student set student_name='"+req.query.name+"' where school_id='"+req.query.schoolid+"' and "+
+ " id='"+req.query.enrno+"'";
+ var qur1="update parent set parent_name='"+req.query.pname+"',alternate_mail='"+req.query.pmail+"' where school_id='"+req.query.schoolid+"' and "+
+ " student_id='"+req.query.enrno+"'"; 
+ var qur2=" select * from parent where school_id='"+req.query.schoolid+"' and "+
+ " student_id='"+req.query.enrno+"'";
+ var qur3="insert into parent values('"+req.query.schoolid+"','"+req.query.enrno+"','"+req.query.pname+"','"+req.query.pmail+"','','','','','',0,'')";  
+ console.log('--------------updateinfo status------------------');
+ console.log(qur);
+ console.log(qur1);
+ console.log(qur2);
+ console.log(qur3);
+
+
+  connection.query(qur,function(err, rows){
+    if(!err){
+      connection.query(qur2,function(err, rows){
+        if(rows.length==0){
+          console.log('insert');
+          connection.query(qur3,function(err, rows){
+            if(!err)
+            res.status(200).json({'returnval': 'Parent detail not found added newly!!'});
+            else
+              console.log(err);
+          });
+        }
+        else{
+        connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+    }
+    else
+      res.status(200).json({'returnval': 'no rows'});
+  });
+});
+
+
+app.post('/studentinfo-service' ,  urlencodedParser,function (req, res)
+{    
+ var qur="select * from md_student where school_id='"+req.query.schoolid+"' and id='"+req.query.enrno+"'";
+  
+ console.log('--------------studinf status------------------');
+ console.log(qur);
+
+  connection.query(qur,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'invalid'});
+  });
+});
+
+app.post('/studentparentinfo-service' ,  urlencodedParser,function (req, res)
+{    
+ var qur="select * from parent where school_id='"+req.query.schoolid+"' and student_id='"+req.query.enrno+"'";
+  
+ console.log('--------------studparent status------------------');
+ console.log(qur);
+
+  connection.query(qur,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'invalid'});
+  });
+});
+
 
 var server = app.listen(5000, function () {
 var host = server.address().address

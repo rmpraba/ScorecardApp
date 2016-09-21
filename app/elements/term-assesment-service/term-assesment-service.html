@@ -392,6 +392,38 @@
         on-response="fetchapprovalstatusResponse"
         debounce-duration="300"
     > 
+
+    <iron-ajax
+        method="post"
+        id="updatestudentinfoajax"
+        url="{{updatestudentinfourl}}"
+        params="{{updatestudentinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatestudentinfoResponse"
+        debounce-duration="300"
+    > 
+
+    <iron-ajax
+        method="post"
+        id="studentinfoajax"
+        url="{{studentinfourl}}"
+        params="{{studentinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentinfoResponse"
+        debounce-duration="300"
+    > 
+    <iron-ajax
+        method="post"
+        id="studentparentinfoajax"
+        url="{{studentparentinfourl}}"
+        params="{{studentparentinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentparentinfoResponse"
+        debounce-duration="300"
+    > 
       
   </template>
   <script>
@@ -582,15 +614,15 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         var rtotal,fasum;
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
         {
-        obj.sum=parseFloat((parseInt(sum)/90)*100).toFixed(2);
-        fasum=(parseInt(sum)/90)*100;
-        rtotal=parseInt((parseInt(sum)/90)*100)/10;  
-        obj.reducetotal=parseInt((parseInt(sum)/90)*100)/10; 
+        obj.sum=parseFloat((parseFloat(sum)/90)*100).toFixed(2);
+        fasum=parseFloat((parseFloat(sum)/90)*100).toFixed(2);
+        rtotal=parseFloat(parseFloat((parseFloat(sum)/90)*100)/10).toFixed(2);  
+        obj.reducetotal=parseFloat(parseFloat((parseFloat(sum)/90)*100)/10).toFixed(2); 
         }
         else
         {
-          fasum=((parseInt(Math.max(parseInt(obj.mark1),parseInt(obj.mark2)))+parseInt(obj.mark3))/2)*10;
-        obj.sum=((parseInt(Math.max(parseInt(obj.mark1),parseInt(obj.mark2)))+parseInt(obj.mark3))/2)*10;
+          fasum=parseFloat(((parseFloat(Math.max(parseFloat(obj.mark1),parseFloat(obj.mark2)))+parseFloat(obj.mark3))/2)*10).toFixed(2);
+        obj.sum=parseFloat(((parseFloat(Math.max(parseFloat(obj.mark1),parseFloat(obj.mark2)))+parseFloat(obj.mark3))/2)*10).toFixed(2);
          rtotal=parseFloat(fasum/10).toFixed(2); 
         obj.reducetotal=parseFloat(fasum/10).toFixed(2);
          }
@@ -1935,7 +1967,58 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
           arr[i].flag="Approved";
       }
       document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
+    },
+    callUpdateStudentInfo:function(id,name,pname,pmail){
+      var obj={"schoolid":"","academicyear":"","enrno":"","name":"","pname":"","pmail":"","grade":"","section":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+        obj.grade=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section"); 
+         obj.enrno=id;
+         obj.name=name;    
+         obj.pname=pname;
+         obj.pmail=pmail;
+        // obj.termname=localStorage.getItem("curr_sess_termname");
+        this.updatestudentinfourl=sessionStorage.getItem("addrinfo")+"/updatestudentinfo-service";
+        this.updatestudentinfoparam=obj;
+        this.$.updatestudentinfoajax.generateRequest();
+
+    },
+    updatestudentinfoResponse:function(e){
+      alert(e.detail.response.returnval);
+    },
+    callstudentinfo:function(studid){
+      var obj={"schoolid":"","academicyear":"","enrno":"","name":"","pname":"","pmail":"","grade":"","section":""};
+      obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+ 
+         obj.enrno=studid;
+   
+        // obj.termname=localStorage.getItem("curr_sess_termname");
+        this.studentinfourl=sessionStorage.getItem("addrinfo")+"/studentinfo-service";
+        this.studentinfoparam=obj;
+        this.$.studentinfoajax.generateRequest();
+    },
+    studentinfoResponse:function(e){
+      document.querySelector('studentinfoedit-card').studentname=e.detail.response.returnval[0].student_name;
+    },
+    callstudentparentinfo:function(studid){
+      var obj={"schoolid":"","academicyear":"","enrno":"","name":"","pname":"","pmail":"","grade":"","section":""};
+      obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+
+         obj.enrno=studid;
+
+        // obj.termname=localStorage.getItem("curr_sess_termname");
+        this.studentparentinfourl=sessionStorage.getItem("addrinfo")+"/studentparentinfo-service";
+        this.studentparentinfoparam=obj;
+        this.$.studentparentinfoajax.generateRequest();
+    },
+    studentparentinfoResponse:function(e){
+      if(e.detail.response.returnval!="invalid"){
+      document.querySelector('studentinfoedit-card').parentname=e.detail.response.returnval[0].parent_name;
+      document.querySelector('studentinfoedit-card').parentmail=e.detail.response.returnval[0].email;
+      }
     }
+
     });
   })();
   </script>

@@ -153,7 +153,9 @@
       },      
       callFetchstudentinfoService:function(studid){
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
-        var obj={"schoolid":"","studid":""};
+        var obj={"schoolid":"","studid":"","grade":"","section":""};
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.studid=studid;
         this.fetchstudinfoparam=obj;
@@ -609,9 +611,11 @@
       },
       fetchoveralltermwisegradeService:function(studid){
         this.fetchoveralltermwisegradeurl=sessionStorage.getItem("addrinfo")+"/fetchoveralltermwisegrade-service";
-        var obj={"schoolid":"","studid":"","academicyear":""};
+        var obj={"schoolid":"","studid":"","academicyear":"","grade":"section","":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
         obj.studid=studid;
         this.fetchoveralltermwisegradeparam=obj;
         this.$.fetchoveralltermwisegradeajax.generateRequest(); 

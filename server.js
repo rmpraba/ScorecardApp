@@ -2,8 +2,9 @@
  var mysql      = require('mysql');
  var email   = require("emailjs/email");
  var htmlToPdf = require('html-to-pdf');
+ var fs = require('fs');
  // var pdf = require('html-pdf');
- var email   = require("emailjs/email");
+ // var email   = require("emailjs/email");
  var connection = mysql.createConnection({
    host     : 'localhost',
    user     : 'root',
@@ -12,13 +13,25 @@
  });
 var bodyParser = require('body-parser');
 var app = express();
+var logfile;
 
 app.use(express.static('app'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.get('/', function (req, res) {
+
    res.sendFile("app/index.html" );
 })
+
+// app.get('/', function (req, res)
+// {
+// logfile = fs.createWriteStream('./app/configfile/logfile.txt', {flags: 'a'});
+// console.log('logfile.........');
+// console.log(logfile);
+// app.get('/', function(req, res){
+//   fs.createReadStream('./app/configfile/logfile.txt').pipe(res);
+// });
+// });
 
 app.post('/checkschool-card',  urlencodedParser,function (req, res)
 {
@@ -46,6 +59,10 @@ app.post('/checkschool-card',  urlencodedParser,function (req, res)
 //check the role of user
 app.post('/rolecheck-service',  urlencodedParser,function (req, res)
 {
+  logfile = fs.createWriteStream('./app/configfile/logfile.txt', {flags: 'a'});
+console.log('logfile.........');
+console.log(logfile);
+
   var id={"id":req.query.username};
   var username={"id":req.query.username};
   var password={"password":req.query.password};
@@ -1406,11 +1423,7 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={id:req.query.studid};
-  var qur="select (select grade_name from md_grade where grade_id="+
-  "(select grade_id from mp_grade_section where class_id=s.class_id )) grade,"+
-  "(select section_name from md_section where section_id="+
-  "(select section_id from mp_grade_section where class_id=s.class_id and school_id='"+req.query.schoolid+"')) section,"+
-  "s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1,p.alternate_mail "+
+  var qur="select s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1,p.alternate_mail "+
   "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
 
   console.log(qur);
@@ -3558,7 +3571,10 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
        if (error) {
             console.log('Oh noes! Errorz!');
             console.log(error);
+            logfile.write('pdf write:'+error+"\n\n");
+            res.status(200).json({'returnval': 'error in conversion'}); 
         } else {
+          logfile.write('pdf write:success\n\n');
           console.log('Converted');
           res.status(200).json({'returnval': 'converted'});     
         }
@@ -3589,7 +3605,10 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
     path: './app/reportcard/reportcard.pdf',
     type: 'application/pdf'
    }]
-  },function(err, message) { console.log(err || message); });
+  },function(err, message) { 
+    console.log(err || message);
+    logfile.write('pdf write:'+err||message+"\n\n");
+     });
   res.status(200).json('mail sent');
 });
 
@@ -3599,7 +3618,7 @@ app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req,
     var qur="select student_id,subject_id,term_name,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
-    "academic_year='"+req.query.academicyear+"' "+
+    "academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
     " and  student_id='"+req.query.studid+"' group by term_name,subject_id,student_id";
     
     console.log('......................termwise..............................');

@@ -3220,8 +3220,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         adterm1=global.healthattendanceinfo[0].attendance;
         wdterm1=global.healthattendanceinfo[0].working_days;
         pterm1=parseFloat((global.healthattendanceinfo[0].attendance/global.healthattendanceinfo[0].working_days)*100).toFixed(2)+"%";
-        t1height=global.healthattendanceinfo[0].height;
-        t1weight=global.healthattendanceinfo[0].weight; 
+        t1height=global.healthattendanceinfo[0].height+"cm";
+        t1weight=global.healthattendanceinfo[0].weight+"kg"; 
         generic=global.healthattendanceinfo[0].generic; 
         specific=global.healthattendanceinfo[0].speccomment;        
         }
@@ -3229,8 +3229,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         adterm2=global.healthattendanceinfo[1].attendance;
         wdterm2=global.healthattendanceinfo[1].working_days;
         pterm2=parseFloat((global.healthattendanceinfo[1].attendance/global.healthattendanceinfo[1].working_days)*100).toFixed(2)+"%";
-        t2height=global.healthattendanceinfo[1].height;
-        t2weight=global.healthattendanceinfo[1].weight;
+        t2height=global.healthattendanceinfo[1].height+"cm";
+        t2weight=global.healthattendanceinfo[1].weight+"kg";
         generic=global.healthattendanceinfo[1].generic; 
         specific=global.healthattendanceinfo[1].speccomment; 
         }
@@ -3238,8 +3238,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         adterm3=global.healthattendanceinfo[2].attendance; 
         wdterm3=global.healthattendanceinfo[2].working_days;
         pterm3=parseFloat((global.healthattendanceinfo[2].attendance/global.healthattendanceinfo[2].working_days)*100).toFixed(2)+"%";
-        t3height=global.healthattendanceinfo[2].height;
-        t3weight=global.healthattendanceinfo[2].weight;
+        t3height=global.healthattendanceinfo[2].height+"cm";
+        t3weight=global.healthattendanceinfo[2].weight+"kg";
         generic=global.healthattendanceinfo[2].generic; 
         specific=global.healthattendanceinfo[2].speccomment; 
         }
@@ -3745,14 +3745,14 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
   console.log(req.query.parentmail+"  "+req.query.secmail);
   var secmail=req.query.secmail;
   var server  = email.server.connect({
-   user:    "samsidhgroupzeeschool@gmail.com",
-   password:"mlzsinstitutions",
+   user:    "samsidhschools@gmail.com",
+   password:"zeeschool",
    host:    "smtp.gmail.com",
    ssl:     true
   });
   server.send({
    text:    "Report Card",
-   from:    "samsidhgroupzeeschool@gmail.com",
+   from:    "samsidhschools@gmail.com",
    to:      req.query.parentmail,
    cc:      req.query.secmail,
    subject: "Term1 Report Card",

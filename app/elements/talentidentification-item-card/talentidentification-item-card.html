@@ -22,15 +22,15 @@
       paper-input{
         text-align: center;
       }
-      td{
-        width:10%;
+      #p2{
+        width:12%;
       }
     </style>
     <div> 
      <table border="1">
         <tr>
          <td><paper-item >{{serialno}}</paper-item></td>
-        <td ><paper-input hidden value="{{studid}}"></paper-input><paper-item >{{studname}}</paper-item></td>
+        <td id="p2"><paper-input hidden value="{{studid}}"></paper-input><paper-item >{{studname}}</paper-item></td>
         <td><paper-dropdown-menu id="generic"  label="Select Intrest Area" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" selected="{{interest}}"  on-iron-select="FnSelectinterest"  attr-for-selected="value" required>               
                 <paper-item value="Basket ball">Basket ball</paper-item>

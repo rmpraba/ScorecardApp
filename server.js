@@ -2552,7 +2552,7 @@ app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, re
     // "group by subject_id,term_name,assesment_id,student_id ";
 
     var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM md_grade_rating WHERE "+
-"lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade,"+
+"lower_limit<=round(avg(ta.rtotal),1) and higher_limit>=round(avg(ta.rtotal),1)) as term_grade,"+
 "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
 "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
 "where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
@@ -2585,7 +2585,7 @@ app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, re
 app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req, res)
 {  
     var qur="select ta.term_name,ta.assesment_id,(SELECT grade FROM md_grade_rating WHERE "+
-    "lower_limit<=round(avg(ta.rtotal),2) and higher_limit>=round(avg(ta.rtotal),2)) as term_grade, "+
+    "lower_limit<=round(avg(ta.rtotal),1) and higher_limit>=round(avg(ta.rtotal),1)) as term_grade, "+
     "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
     "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
     "group by ta.subject_id,ta.term_name,ta.assesment_id ";
@@ -2612,7 +2612,7 @@ app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req
 app.post('/assesmentwisereport-service' ,  urlencodedParser,function (req, res)
 {  
     var qur="select student_id,subject_id,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
-    "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
+    "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesment+"' "+
     "and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by subject_id,student_id";
@@ -2641,7 +2641,7 @@ app.post('/assesmentwisereport-service' ,  urlencodedParser,function (req, res)
 app.post('/termwisereport-service' ,  urlencodedParser,function (req, res)
 {  
     var qur="select assesment_id,student_id,subject_id,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
-    "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as grade "+
+    "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' "+
     "and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by assesment_id,subject_id,student_id";

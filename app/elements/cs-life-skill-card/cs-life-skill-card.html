@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
       table{
-        width: 70%;
+        width: 75%;
         border-collapse: collapse;
         margin-left: 1%;
       }
@@ -53,6 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <th id="tb1">Dealing with Stress</th>
       <th id="tb1">Total</th>
       <th id="tb1">Grade</th>
+      <th id="tb1"> </th>
       </tr>  
       </div>
 <template is="dom-repeat" items="{{markarr}}" as="m">
@@ -63,8 +64,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </tr>
 </template>
      <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="14">
-      <cs-life-skill-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cs-life-skill-item-card>
+      <tr><td colspan="15">
+      <cs-life-skill-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}" score2="{{item.mark2}}" score3="{{item.mark3}}" score4="{{item.mark4}}" score5="{{item.mark5}}" score6="{{item.mark6}}" score7="{{item.mark7}}" score8="{{item.mark8}}" score9="{{item.mark9}}" score10="{{item.mark10}}"></cs-life-skill-item-card>
       </td></tr>
       </template>
       </table>

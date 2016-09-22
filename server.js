@@ -587,6 +587,52 @@ app.post('/fetchstudentreportforattendance-service',  urlencodedParser,function 
   });
 });
 
+app.post('/fetchstudentreportforcoscholastic-service',  urlencodedParser,function (req, res)
+{
+  var qur="select * from tr_coscholastic_assesment_marks where academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' order by sub_seq";
+ console.log(qur);
+ connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+app.post('/fetchstudentforcoscholastic-service',  urlencodedParser,function (req, res)
+{
+  var qur="select school_id,id,student_name,class_id from md_student where  class_id="+
+"(select class_id from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
+"school_id='"+req.query.schoolid+"')";
+ console.log(qur);
+ connection.query(qur,
+  
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      // console.log(JSON.stringify(rows));   
+     res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
 
 app.post('/fetchstudentforphysical-service',  urlencodedParser,function (req, res)
 {
@@ -1173,7 +1219,8 @@ var qur=" INSERT INTO tr_term_assesment_overall_assesmentmarks SELECT school_id,
 });
 
 //storing mark for coscholastic assessment
-app.post('/insertcoassesmentmark-service',  urlencodedParser,function (req, res){
+app.post('/insertcoassesmentmark-service',  urlencodedParser,function (req, res)
+{
 
 var response={ 
  
@@ -1191,9 +1238,16 @@ var response={
          section:req.query.section,         
          sub_category:req.query.subcategory,
          mark:req.query.mark,         
-         category_grade:req.query.categorygrade
+         category_grade:req.query.categorygrade,
+         sub_seq:req.query.sequence
   }  
-  
+   var q="select * from tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studentid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"'";
+  console.log(q);  
+  connection.query(q,
+ function(err, rows)
+    {
+    if(rows.length==0)
+    {
   var subname={subject_name:req.query.subject};
   connection.query("SELECT subject_category FROM md_subject where ?",[subname],
   function(err, rows)
@@ -1202,8 +1256,10 @@ var response={
   connection.query("INSERT INTO tr_coscholastic_assesment_marks set ?",[response],
   function(err, rows)
     {
+      console.log('co-insert');
     if(!err)
     {    
+      console.log('co1-insert');
       res.status(200).json({'returnval': 'succ'});
     }
     else
@@ -1213,8 +1269,88 @@ var response={
     }
   });
   });
+}
+else
+{
+  connection.query("UPDATE tr_coscholastic_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"' ",[response],
+    function(err, rows)
+     {
+      console.log('co-update');
+    if(!err)
+    {
+      console.log('co1-update');
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'fail'});
+    }
+   }); 
+}
 });
 
+});
+
+app.post('/insertcosubcategorymark-service',  urlencodedParser,function (req, res){
+
+var response={ 
+ 
+         school_id:req.query.schoolid,
+         academic_year:req.query.academicyear,
+         assessment_id:req.query.assesmentid,
+         term_name:req.query.termname,
+         class_id:req.query.classid,
+         student_id:req.query.studid,
+         student_name:req.query.studname,         
+         grade:req.query.grade,
+         section:req.query.section,
+         subject_id:req.query.subject,
+         grade:req.query.grade,
+         section:req.query.section, 
+         category:req.query.category,        
+         sub_category:req.query.subcategory,
+         mark:req.query.mark,         
+         category_grade:req.query.categorygrade,
+         order_seq:req.query.order_seq
+
+  }  
+  var q="select * from tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and order_seq='"+req.query.order_seq+"'"
+  console.log(response);  
+  connection.query(q,
+ function(err, rows)
+    {
+    if(rows.length==0){
+  connection.query("INSERT INTO tr_coscholastic_sub_category_assesment_marks set ?",[response],
+  function(err, rows)
+    {
+    if(!err)
+    {    
+      console.log('insert');
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+  });
+}
+  else
+  {
+   connection.query("UPDATE tr_coscholastic_sub_category_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and order_seq='"+req.query.order_seq+"'",[response],
+    function(err, rows) {
+      console.log("update");
+    if(!err){
+      console.log("success");
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else{
+      res.status(200).json({'returnval': 'fail'});
+    }
+   }); 
+  }
+});
+});
 //storing overall coscholastic mark
 app.post('/overallinsertcoassesment-service',  urlencodedParser,function (req, res){
    var response={
@@ -1412,6 +1548,29 @@ app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
     {
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+app.post('/fetchstudentlifeskill',  urlencodedParser,function (req,res)
+{  
+  var type=req.query.termtype;
+ var qur= "SELECT sub_category,category_grade FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studid+"'and category='"+req.query.subcategory+"' order by order_seq";
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+       console.log(JSON.stringify(rows));   
+
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
     }  
 
   });
@@ -2014,7 +2173,7 @@ app.post('/fetchfastudentreport-service',  urlencodedParser,function (req, res)
   " and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmenttype+"' and subject='"+req.query.subject+"' and flag in('"+flag+"')";
   }
 
-  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"'";
+  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"'";
   console.log('----------------------------------------fetchreport222----------');
   console.log(qur);
    console.log(qurcheck);

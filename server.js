@@ -2173,7 +2173,7 @@ app.post('/fetchfastudentreport-service',  urlencodedParser,function (req, res)
   " and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmenttype+"' and subject='"+req.query.subject+"' and flag in('"+flag+"')";
   }
 
-  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"'";
+  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"'";
   console.log('----------------------------------------fetchreport222----------');
   console.log(qur);
    console.log(qurcheck);

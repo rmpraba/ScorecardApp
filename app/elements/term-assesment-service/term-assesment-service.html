@@ -674,15 +674,19 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        fetchfastudentResponse:function(e)
        { 
     var arr=e.detail.response.returnval;
-    //alert(JSON.stringify(arr));
-    //alert(JSON.stringify(arr.length));
-    for(var i=0;i<arr.length;i++)
+    //alert('e'+JSON.stringify(arr));
+    //alert('s'+JSON.stringify(sarr1));
+   // alert(JSON.stringify(arr.length));
+   // alert(JSON.stringify(sarr1.length));
+   for(var j=0;j<sarr1.length;j++)
     {
-      for(var j=0;j<sarr1.length;j++)
+     for(var i=0;i<arr.length;i++)
       {
+       // alert(arr[i].student_name+' '+sarr1[j].student_name);
         if(arr[i].student_name==sarr1[j].student_name)
         {
           arr.splice(i,1);
+           i--;
         }
       }
     }

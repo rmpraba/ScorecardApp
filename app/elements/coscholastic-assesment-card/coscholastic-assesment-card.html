@@ -114,10 +114,14 @@
         {
 
         } 
-        else
+        else if(subject=="Art&Craft"||subject=="music"||subject=="dance"||subject=="Personality Development"||subject=="Games")
         {
           this.$.termassesmentservice.callFetchStudentInfo(gradename,section);
         } 
+        else
+        {
+          this.$.assesmentservice.callFetchStudentInfo();
+        }
         if(subject=="Art Verticals"){  
          this.$.assesmentservice.callFetchStudentInfoforartverticals(); 
          document.querySelector('coscholastic-assesment-sheet-card').setPage('artverticals-card'); 
@@ -132,7 +136,7 @@
 
         if(subject=="Health"){        
         document.querySelector('cce-fivetoten-health-card').studarr=[]; 
-        this.$.assesmentservice.callFetchStudentInfo(gradename,section);          
+        this.$.assesmentservice.callFetchStudentInfoforhealth(gradename,section);          
 
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cce-fivetoten-health-card'); 
         document.querySelector('cce-fivetoten-health-card').setDefaultHeaders(); 

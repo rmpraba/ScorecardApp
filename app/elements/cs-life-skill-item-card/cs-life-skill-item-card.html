@@ -74,7 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <tr>
      <td id="td1">
           <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
+            <paper-menu class="dropdown-content" id="category1"  on-iron-select="FnSelectCategory1" selected="{{category1}}"  attr-for-selected="value" required >     
               <template is="dom-repeat" items="{{coarr}}">
                 <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
               </template>
@@ -83,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <td>
 
            <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
+            <paper-menu class="dropdown-content" id="gradetype1" selected="{{gradetype1}}" on-iron-select="FnSelectGrade1" attr-for-selected="value" required>   
               <!-- <template is="dom-repeat" items="{{typearr}}"> -->
                 <paper-item value="A">A</paper-item>
                 <paper-item value="B">B</paper-item>
@@ -95,8 +95,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </tr>
 <tr>
 <td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
+            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}">
+            <paper-menu class="dropdown-content" id="category2"  on-iron-select="FnSelectCategory2" selected="{{category2}}"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{coarr}}">
                 <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
               </template>
@@ -104,8 +104,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-dropdown-menu>
 </td>
 <td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
+           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}">
+            <paper-menu class="dropdown-content" id="gradetype2" selected="{{gradetype2}}"  on-iron-select="FnSelectGrade2"  attr-for-selected="value" required>   
               <!-- <template is="dom-repeat" items="{{typearr}}"> -->
                 <paper-item value="A">A</paper-item>
                 <paper-item value="B">B</paper-item>
@@ -118,7 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <tr>
           <td id="td1">
             <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
+            <paper-menu class="dropdown-content" id="category3"  on-iron-select="FnSelectCategory3" selected="{{category3}}"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{coarr}}">
                 <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
               </template>
@@ -127,7 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </td>
 <td>
            <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
+            <paper-menu class="dropdown-content" id="gradetype3" selected="{{gradetype3}}"  on-iron-select="FnSelectGrade3"  attr-for-selected="value" required>   
               <!-- <template is="dom-repeat" items="{{typearr}}"> -->
                 <paper-item value="A">A</paper-item>
                 <paper-item value="B">B</paper-item>
@@ -171,9 +171,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var higher=[];
     var grade=[];
     var name;
+    var subarr=[];
 var arr=[];
-var idd,sname,sum1,sum2,sum3,sum4,sum5,sum6,sum7,sum8,sum9,sum10,tot;
+var idd,sname,sum1=0,sum2=0,sum3=0,sum4=0,sum5=0,sum6=0,sum7=0,sum8=0,sum9=0,sum10=0,tot;
 var name1,name2,name3,name4,name5,name6,name7,name8,name9,name10;
+var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
     Polymer({
       is: 'cs-life-skill-item-card',
       FnActivity:function(e)
@@ -181,134 +183,248 @@ var name1,name2,name3,name4,name5,name6,name7,name8,name9,name10;
        idd=this.studid;
        sname=this.studname;
         name=e.target.name;
-        this.$.coscholasticservice.fetchlifeskilldata(name);
+        this.$.coscholasticservice.fetchlifeskilldata(name,idd);
          var id = 'lifeskill';
          sessionStorage.setItem("category",id);
         var dialog = document.getElementById(id);
         dialog.open();
 
       },
-       FnSelectCategory:function(e)
+      selectsubcategory:function(subcatarr)
+       {
+       this.category1=subcatarr[0].sub_category;
+       this.category2=subcatarr[1].sub_category;
+       this.category3=subcatarr[2].sub_category;
+       this.gradetype1=subcatarr[0].category_grade;
+       this.gradetype2=subcatarr[1].category_grade;
+       this.gradetype3=subcatarr[2].category_grade;
+       },
+
+       FnSelectCategory1:function(e)
+      {
+      cat1 = e.target.selectedItem.textContent.trim(); 
+      },
+      FnSelectGrade1:function(e)
+      {
+        grad1 = e.target.selectedItem.textContent.trim();
+       if(grad1=="A")
+       {
+        mark1=9;
+       }
+       else if(grad1=="B")
+       {
+        mark1=8;
+       }
+       else if(grad1=="C")
+       {
+        mark1=7;
+       }
+      },
+        FnSelectCategory2:function(e)
+      {
+      cat2 = e.target.selectedItem.textContent.trim(); 
+      },
+      FnSelectGrade2:function(e)
+      {
+        grad2 = e.target.selectedItem.textContent.trim();
+       if(grad2=="A")
+       {
+        mark2=9;
+       }
+       else if(grad2=="B")
+       {
+        mark2=8;
+       }
+       else if(grad2=="C")
+       {
+        mark2=7;
+       }
+      },
+        FnSelectCategory3:function(e)
+      {
+      cat3 = e.target.selectedItem.textContent.trim(); 
+      },
+      FnSelectGrade3:function(e)
       {
         
+        grad3 = e.target.selectedItem.textContent.trim();
+       if(grad3=="A")
+       {
+        mark3=9;
+       }
+       else if(grad3=="B")
+       {
+        mark3=8;
+       }
+       else if(grad3=="C")
+       {
+        mark3=7;
+       }
 
-       var cat = e.target.selectedItem.textContent.trim();
-        //document.querySelector('#gradetype').selected=-1;
-       
-      },
-      FnSelectGrade:function(e)
-      {
-        var mark;
-       var grad = e.target.selectedItem.textContent.trim();
-       if(grad=="A")
-       {
-        mark=9;
-       }
-       else if(grad=="B")
-       {
-        mark=8;
-       }
-       else if(grad=="C")
-       {
-        mark=7;
-       }
-       this.fnfindsum(mark);
-      },
-      fnfindsum(val)
-      {
-     arr.push(val);
-//alert(arr);
+
       },
       click:function(e)
       {
         var t=0;
         var sum=0;
-        for(var i=0;i<arr.length;i++)
+       var obj1={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
+       obj1.studid=idd;
+       obj1.studname=sname;
+       obj1.category=name;
+       obj1.subcategory=cat1;
+       obj1.mark=mark1;
+       obj1.grade=grad1;
+       obj1.order_seq=1;
+       var obj2={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
+       obj2.studid=idd;
+       obj2.studname=sname;
+       obj2.category=name;
+       obj2.subcategory=cat2;
+       obj2.mark=mark2;
+        obj2.grade=grad2;
+        obj2.order_seq=2;
+       var obj3={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
+       obj3.studid=idd;
+       obj3.studname=sname;
+       obj3.category=name;
+       obj3.subcategory=cat3;
+       obj3.mark=mark3;
+        obj3.grade=grad3;
+        obj3.order_seq=3;
+        for(var i=0;i<subarr.length;i++)
         {
-          t=t+parseInt(arr[i]);
+          if(subarr[i].subcategory==obj1.subcategory||subarr[i].subcategory==obj2.subcategory||subarr[i].subcategory==obj3.subcategory)
+          {
+            subarr.splice(i,1);
+            i--;
+          }
         }
-        sum=parseInt(t)/parseInt(arr.length);
+       subarr.push(obj1);
+       subarr.push(obj2);
+       subarr.push(obj3);
+      // alert(JSON.stringify(subarr));
         var id = 'lifeskill';
         var dialog = document.getElementById(id);
         dialog.opened=false;
         if(name=="Self Awareness")
         {           
-          sum1=sum;
-          document.getElementById('s1'+idd).value=sum;
+          sum1=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s1'+idd).value=sum1;
           name1=name;         
         }
         else  if(name=="Problem Solving")
         {
-          sum2=sum;
-          document.getElementById('s2'+idd).value=sum;
+          sum2=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s2'+idd).value=sum2;
           name2=name;
         }
         else  if(name=="Decision Making")
         {
-          sum3=sum;
-          document.getElementById('s3'+idd).value=sum;
+          sum3=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s3'+idd).value=sum3;
           name3=name;
         }
         else  if(name=="Critical Thinking")
         {
-          sum4=sum;
-          document.getElementById('s4'+idd).value=sum;
+          sum4=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s4'+idd).value=sum4;
           name4=name;       
         }
         else  if(name=="Creative Thinking")
         {
-          sum5=sum;
-          document.getElementById('s5'+idd).value=sum;
+          sum5=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s5'+idd).value=sum5;
           name5=name;
         }
         else  if(name=="Interpersonal Relationship")
         {
-          sum6=sum;
-          document.getElementById('s6'+idd).value=sum;
+          sum6=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s6'+idd).value=sum6;
           name6=name;     
         }
         else  if(name=="Effective Communication")
         {
-          sum7=sum;
-          document.getElementById('s7'+idd).value=sum;
+          sum7=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s7'+idd).value=sum7;
           name7=name;
         }
         else  if(name=="Empathy")
         {
-          sum8=sum;
-          document.getElementById('s8'+idd).value=sum;
+          sum8=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s8'+idd).value=sum8;
           name8=name;
         }
         else  if(name=="Managing Emotions")
         {
-          sum9=sum;
-          document.getElementById('s9'+idd).value=sum;
+          sum9=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s9'+idd).value=sum9;
           name9=name;    
         }
         else  if(name=="Dealing with Stress")
         {
-          sum10=sum;
-          document.getElementById('s10'+idd).value=sum;
+          sum10=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          document.getElementById('s10'+idd).value=sum10;
           name10=name;    
         }
-        arr=[];
+        this.$.gradetype1.selected=-1;
+        this.$.gradetype2.selected=-1;
+        this.$.gradetype3.selected=-1;
+        this.$.category1.selected=-1;
+        this.$.category2.selected=-1;
+        this.$.category3.selected=-1;
+          mark1=0;
+          mark2=0;
+          mark3=0;
+      
       },
       FnSave:function()
       {
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name1,sum1);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name2,sum2);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name3,sum3);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name4,sum4);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name5,sum5);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name6,sum6);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name7,sum7);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name8,sum8);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name9,sum9);
-        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name10,sum10);
-          tot=parseInt(sum1)+parseInt(sum2)+parseInt(sum3)+parseInt(sum4)+parseInt(sum5)+parseInt(sum6)+parseInt(sum7)+parseInt(sum8)+parseInt(sum9)+parseInt(sum10);
+        this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(subarr);
+        if(name1!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name1,sum1,1);
+        }
+        if(name2!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name2,sum2,2);
+        }
+        if(name3!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name3,sum3,3);
+        }
+         if(name4!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name4,sum4,4);
+        }
+         if(name5!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name5,sum5,5);
+        }
+         if(name6!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name6,sum6,6);
+        }
+         if(name7!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name7,sum7,7);
+        }
+         if(name8!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name8,sum8,8);
+        }
+         if(name9!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name9,sum9,9);
+        }
+         if(name10!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name10,sum10,10);
+        }
+          tot=parseFloat(sum1)+parseFloat(sum2)+parseFloat(sum3)+parseFloat(sum4)+parseFloat(sum5)+parseFloat(sum6)+parseFloat(sum7)+parseFloat(sum8)+parseFloat(sum9)+parseFloat(sum10);
           document.getElementById('t'+idd).value=tot;
           this.convert=(parseInt(tot)/10)*100;
           this.callFetchGrade();
+          subarr=[];
 
       },
        callFetchGrade:function()
@@ -330,7 +446,7 @@ var name1,name2,name3,name4,name5,name6,name7,name8,name9,name10;
         for(var i=0;i<lower.length;i++){          
           if(mark>=lower[i]&&mark<=higher[i]){            
             document.getElementById('g'+idd).value=grade[i];
-            this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"Life Skills",this.convert,this.reduce,grade[i]);
+            //this.$.coscholasticservice.callOverallcotermmarkinsertService(idd,sname,"Life Skills",this.convert,this.reduce,grade[i]);
           }
         }
         //this.callService();

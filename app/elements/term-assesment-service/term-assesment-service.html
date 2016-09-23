@@ -578,12 +578,18 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         
         overall=[];
          sarr1=e.detail.response.returnval;
+          
+          for(var i=0;i<sarr1.length;i++)
+          {
+           // alert(JSON.stringify(sarr1[i]));
+          }
          if(sarr1=="imported"){
         this.FnSpinnerDeactive();
+
         if(sessionStorage.getItem("curr_sess_loggedroleid")!='co-ordinator')
         alert('Marks already submitted!');
        }
-       //alert(JSON.stringify(sarr1));
+      
       else if(sarr1!='invalid')
        {      
        for(var i=0;i<sarr1.length;i++)
@@ -596,19 +602,21 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        obj.id=sarr1[i].student_id;
         obj.student_name=sarr1[i].student_name;
         obj.mark1=sarr1[i].mark;
-        sum=parseInt(sum)+parseInt(sarr1[i].mark);
+        sum=parseFloat(sum)+parseFloat(sarr1[i].mark);
        
         for(var j=i+1;j<sarr1.length;j++)
         {
            if(sarr1[i].student_id==sarr1[j].student_id)
            {      
-           sum=parseInt(sum)+parseInt(sarr1[j].mark);
+           sum=parseFloat(sum)+parseFloat(sarr1[j].mark);
           obj['mark'+(k+1)]=sarr1[j].mark;     
             //markarr.push(obj.mark1);
             sarr1.splice(j,1);
             j--;
+            k++;
            }
-           k++;
+           
+           //alert(JSON.stringify(obj));
 
         }
         var rtotal,fasum;

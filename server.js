@@ -851,13 +851,46 @@ res.status(200).json({'returnval': 'imported'});
 app.post('/fetchfastudent-service',  urlencodedParser,function (req, res)
 {
   console.log('sa');
+  var qur="select * from tr_student_to_subject "+
+"where  class_id="+
+"(select class_id from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
+"subject_id=(select subject_id from md_subject where subject_name='"+req.query.subject+"') and "+
+"school_id='"+req.query.schoolid+"')";
+var qur1="select school_id,student_id as id,student_name,class_id "+
+"from tr_student_to_subject "+
+"where  class_id="+
+"(select class_id from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
+"subject_id=(select subject_id from md_subject where subject_name='"+req.query.subject+"') and "+
+"school_id='"+req.query.schoolid+"')";
   var qur2="select school_id,id,student_name,class_id from md_student where  class_id="+
 "(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and "+
 "school_id='"+req.query.schoolid+"')";
 
-connection.query(qur2,function(err, rows){
+connection.query(qur,
+  function(err, rows)
+  {
+    if(!err)
+    {
+      if(rows.length>0)
+      {
+       connection.query(qur1,function(err, rows)
+       {
+       if(rows.length>0) 
+        res.status(200).json({'returnval': rows});
+       else
+        res.status(200).json({'returnval': 'invalid'});
+      });
+      }
+      else
+      {
+     connection.query(qur2,function(err, rows)
+     {
         console.log('............normal subject............'); 
         console.log(qur2);     
         console.log('............................................'); 
@@ -867,10 +900,17 @@ connection.query(qur2,function(err, rows){
         console.log(err);
         res.status(200).json({'returnval': 'invalid'});
       }
-
-  });
+       });
+    }
+  }
+    else
+      console.log(err);
+  
+}); 
 
 });
+
+
 // fetchmarkexiststudentinfo-service
 
 //Storing marks for assesment
@@ -1275,7 +1315,7 @@ else
   connection.query("UPDATE tr_coscholastic_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"' ",[response],
     function(err, rows)
      {
-      console.log('co-update');
+    
     if(!err)
     {
       console.log('co1-update');
@@ -1540,7 +1580,7 @@ app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
     {
     if(!err)
     { 
-       console.log(JSON.stringify(rows));   
+       //console.log(JSON.stringify(rows));   
 
       res.status(200).json({'returnval': rows});
     }
@@ -1563,7 +1603,7 @@ app.post('/fetchstudentlifeskill',  urlencodedParser,function (req,res)
     {
     if(!err)
     { 
-       console.log(JSON.stringify(rows));   
+       //console.log(JSON.stringify(rows));   
 
       res.status(200).json({'returnval': rows});
     }
@@ -2083,7 +2123,7 @@ app.post('/onetofourreport-service',  urlencodedParser,function (req,res)
     {
     if(!err)
     {      
-    console.log(rows); 
+    //console.log(rows); 
       res.status(200).json({'returnval': rows});
     }
     else
@@ -2126,7 +2166,7 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 
 app.post('/fetchfareport-service',  urlencodedParser,function (req, res)
 {
-  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"'";
+  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"' order by sub_cat_sequence";
   console.log('----------------------------------------fetchreport----------');
   console.log(qur);
   connection.query(qur,
@@ -2155,7 +2195,7 @@ app.post('/fetchfastudentreport-service',  urlencodedParser,function (req, res)
 {
   var flag="";
   var qurcheck="";
-  console.log('com');
+  //console.log('com');
   console.log(req.query.roleid);
   if(req.query.roleid=="subject-teacher"||req.query.roleid=="class-teacher"){
     console.log('c');
@@ -2173,7 +2213,7 @@ app.post('/fetchfastudentreport-service',  urlencodedParser,function (req, res)
   " and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesmenttype+"' and subject='"+req.query.subject+"' and flag in('"+flag+"')";
   }
 
-  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"'";
+  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"' order by CAST(sub_cat_sequence AS UNSIGNED) ";
   console.log('----------------------------------------fetchreport222----------');
   console.log(qur);
    console.log(qurcheck);
@@ -2188,7 +2228,7 @@ app.post('/fetchfastudentreport-service',  urlencodedParser,function (req, res)
     {
     if(rows.length>0)
     {
-      console.log('s');
+    //  console.log('s'+JSON.stringify(rows));
       res.status(200).json({'returnval': rows});
     }
     else

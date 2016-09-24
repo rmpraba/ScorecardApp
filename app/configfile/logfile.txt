@@ -1,7 +1,0 @@
-hipdf write:[object Object]
-
-pdf write:success
-
-pdf write:Error: authorization.failedpdf write:success
-
-pdf write:null

@@ -1168,12 +1168,12 @@ app.post('/insertfaassesmentmark-service',  urlencodedParser,function (req, res)
   console.log(response.subject_category);
 
   var q="SELECT * FROM tr_term_fa_assesment_marks WHERE grade='"+req.query.grade+"' and section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'"+
-  " and assesment_id='"+req.query.assesmentid+"' and term_name='"+req.query.termname+"' and class_id='"+req.query.classid+"'"+
+  " and term_name='"+req.query.termname+"' and class_id='"+req.query.classid+"'"+
   " and student_id='"+req.query.studentid+"' and subject_id='"+req.query.subject+"' and category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"' and sub_cat_sequence='"+req.query.subcatseq+"'";
   console.log('..................................');
   console.log(q);
   console.log('..................................');
-  connection.query("SELECT * FROM tr_term_fa_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ? and ?",[cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9,cond10,cond11,cond12],function(err, rows) {
+  connection.query("SELECT * FROM tr_term_fa_assesment_marks WHERE ? and ? and ? and ? and ? and ? and ? and ? and ? and ? ",[cond1,cond2,cond4,cond6,cond7,cond8,cond9,cond10,cond11,cond12],function(err, rows) {
   console.log("length..........."+rows.length);
   if(rows.length==0){
   connection.query("INSERT INTO tr_term_fa_assesment_marks set ?",[response],
@@ -1192,7 +1192,7 @@ app.post('/insertfaassesmentmark-service',  urlencodedParser,function (req, res)
   });
   }
   else{
-   connection.query("UPDATE tr_term_fa_assesment_marks SET ? WHERE ? and ? and ? and ? and ? and ? and ? and ? and ?",[mark,cond1,cond2,cond3,cond4,cond5,cond6,cond7,cond8,cond9],function(err, rows) {
+   connection.query("UPDATE tr_term_fa_assesment_marks SET ? WHERE ? and ? and ? and ? and ? and ? and ?",[mark,cond1,cond2,cond4,cond6,cond7,cond8,cond9],function(err, rows) {
     if(!err){
       res.status(200).json({'returnval': 'succ'});
     }

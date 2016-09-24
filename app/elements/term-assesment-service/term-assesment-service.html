@@ -483,6 +483,7 @@
          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          this.gradeparam= obj;
          this.$.gradeajax.generateRequest();
+         this.callFetchGrade();
       },
       gradeResponse:function(e){
          document.querySelector('term-assesment-card').gradearr=e.detail.response.returnval;
@@ -1195,7 +1196,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        fetchgradeforscoreResponse:function(e)
        {
         var returnval=e.detail.response.returnval; 
-        // alert(returnval);      
+       // alert('1to4'+JSON.stringify(returnval));      
         for(var i=0;i<returnval.length;i++)
         {
           lower.push(returnval[i].lower_limit);
@@ -1206,7 +1207,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       fetchfagradeforscoreResponse:function(e)
        {
         var returnval=e.detail.response.returnval; 
-        // alert(returnval);      
+        // alert('5 to 10'+JSON.stringify(returnval));      
         for(var i=0;i<returnval.length;i++)
         {
           fa_lower.push(returnval[i].lower_limit);

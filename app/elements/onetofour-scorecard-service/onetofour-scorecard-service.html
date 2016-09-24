@@ -919,6 +919,8 @@
         // alert(JSON.stringify(markarr));
         // var arr1=a;
         // alert(JSON.stringify(arr1.length));
+
+        var subflag=0;
         
         var subcat=[];
         var subcatmark=[];
@@ -930,7 +932,8 @@
             markarr.push(arr1[i]); 
 
         for(var i=0;i<arr1.length;i++){
-                       
+            if(arr1[i].subject_id=="Art&Craft"||arr1[i].subject_id=="music"||arr1[i].subject_id=="dance")
+                subflag=1;
             for(var j=i+1;j<arr1.length;j++){
                 if(arr1[i].sub_category==arr1[j].sub_category)
                     arr1.splice(j,1);
@@ -939,7 +942,10 @@
 
         var subcatlen=arr1.length;
 
+        if(subflag==0)
         arr1.splice(subcatlen-1,1);
+
+        // alert(JSON.stringify(arr1))
         
         
         // alert(JSON.stringify(markarr.length));      
@@ -1008,6 +1014,9 @@
                 }
             }
         }
+
+        // alert(JSON.stringify(ass3));
+
         document.querySelector('comparisonreport-card').subcatarr=arr1;
         document.querySelector('comparisonreport-card').ass1=ass1;
         document.querySelector('comparisonreport-card').ass2=ass2;

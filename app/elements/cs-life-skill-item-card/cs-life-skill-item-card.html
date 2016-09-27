@@ -69,80 +69,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </table>
     </div>
      <paper-dialog id="lifeskill" modal>
-      
-     <center> <table  id="sub">
+<table>
+   <!--  <template is="dom-repeat" items="{{coarr}}">
      <tr>
-     <td id="td1">
-          <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="category1"  on-iron-select="FnSelectCategory1" selected="{{category1}}"  attr-for-selected="value" required >     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu></td>
-<td>
-
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype1" selected="{{gradetype1}}" on-iron-select="FnSelectGrade1" attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-</tr>
-<tr>
-<td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}">
-            <paper-menu class="dropdown-content" id="category2"  on-iron-select="FnSelectCategory2" selected="{{category2}}"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-<td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}">
-            <paper-menu class="dropdown-content" id="gradetype2" selected="{{gradetype2}}"  on-iron-select="FnSelectGrade2"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-          </td>
-          </tr>
-          <tr>
-          <td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="category3"  on-iron-select="FnSelectCategory3" selected="{{category3}}"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-<td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype3" selected="{{gradetype3}}"  on-iron-select="FnSelectGrade3"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-          </td>
-          </tr>
-          </table>
-          </center>
-
- <!-- <template is="dom-repeat" items="{{coarr}}">
+                <td><paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item></td>
+                 <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{mark}}" on-change="FnSubcategory"></paper-input></td>
+              <tr>
+              </template>-->
+</table>
+ <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
-      </template>-->
+      </template>
     <center>  
     <div class="submitbutton">
       <paper-button class="button" on-click="click">Submit</paper-button></center>
@@ -190,79 +127,11 @@ var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
         dialog.open();
 
       },
-      selectsubcategory:function(subcatarr)
-       {
-       this.category1=subcatarr[0].sub_category;
-       this.category2=subcatarr[1].sub_category;
-       this.category3=subcatarr[2].sub_category;
-       this.gradetype1=subcatarr[0].category_grade;
-       this.gradetype2=subcatarr[1].category_grade;
-       this.gradetype3=subcatarr[2].category_grade;
-       },
-
-       FnSelectCategory1:function(e)
+      fnfindsum:function(mark,cat)
       {
-      cat1 = e.target.selectedItem.textContent.trim(); 
-      },
-      FnSelectGrade1:function(e)
-      {
-        grad1 = e.target.selectedItem.textContent.trim();
-       if(grad1=="A")
-       {
-        mark1=9;
-       }
-       else if(grad1=="B")
-       {
-        mark1=8;
-       }
-       else if(grad1=="C")
-       {
-        mark1=7;
-       }
-      },
-        FnSelectCategory2:function(e)
-      {
-      cat2 = e.target.selectedItem.textContent.trim(); 
-      },
-      FnSelectGrade2:function(e)
-      {
-        grad2 = e.target.selectedItem.textContent.trim();
-       if(grad2=="A")
-       {
-        mark2=9;
-       }
-       else if(grad2=="B")
-       {
-        mark2=8;
-       }
-       else if(grad2=="C")
-       {
-        mark2=7;
-       }
-      },
-        FnSelectCategory3:function(e)
-      {
-      cat3 = e.target.selectedItem.textContent.trim(); 
-      },
-      FnSelectGrade3:function(e)
-      {
-        
-        grad3 = e.target.selectedItem.textContent.trim();
-       if(grad3=="A")
-       {
-        mark3=9;
-       }
-       else if(grad3=="B")
-       {
-        mark3=8;
-       }
-       else if(grad3=="C")
-       {
-        mark3=7;
-       }
-
 
       },
+      
       click:function(e)
       {
         var t=0;

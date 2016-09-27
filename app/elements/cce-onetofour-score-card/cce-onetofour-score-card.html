@@ -433,6 +433,10 @@
         this.$.showpopup.toggle();
       },
       FnRefresh:function(){
+        localStorage.setItem("curr_sess_parentmail","");
+        localStorage.setItem("curr_sess_secmail","");
+        this.parentemail="";
+        this.secemail="";
         this.studentname="";
         this.grade="";
         this.section="";

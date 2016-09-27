@@ -3596,8 +3596,8 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     var studinfo= "<table class='studentinfo' style='border-collapse: collapse;width:95%;height: 10%;margin-left: 3%;margin-top: 5%;'><tr><th align='left'>Student Name: </th>"
     studinfo += "<th align='left' colspan='3' style='background-color: white;'>"+global.studentinfo[0].student_name+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr>"
-    studinfo += "<th align='left'>Parent Name: </th><th align='left' colspan='3' style='background-color: white;'>"+req.query.parentname+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr><th align='left'>Class: </th>";    
-    studinfo += "<th align='left' style='background-color: white;'>"+req.query.grade+"&nbsp;&nbsp;"+req.query.section+"</th><th align='left'>Admission No: </th><th align='left' style='background-color: white;'>"+global.studentinfo[0].student_id+"</th></tr></table> <br><br><br>";
+    studinfo += "<th align='left'>Parent Name: </th><th align='left' colspan='3' style='background-color: white;'>"+global.studentinfo[0].parent_name+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr><th align='left'>Class: </th>";    
+    studinfo += "<th align='left' style='background-color: white;'>"+global.healthattendanceinfo[0].grade+"&nbsp;&nbsp;"+global.healthattendanceinfo[0].section+"</th><th align='left'>Admission No: </th><th align='left' style='background-color: white;'>"+global.studentinfo[0].student_id+"</th></tr></table> <br><br><br>";
      
     var attendance= "<table style='border-collapse: collapse;width:95%;height: 15%; margin-left: 3%;margin-top: 5%;' class='attendance'><tr><th style='width: 25%;'>Attendance</th><th colspan='2' style='width: 25%;'>Term1</th><th colspan='2' style='width: 25%;'>Term2</th><th colspan='2' style='width: 25%;'>Term3</th></tr>"
     attendance += "<tr style='height: 10px;'><th colspan='7'></th></tr><tr><td style='width: 25%;'>Total Attended Days</td><td align='right' style='width: 13%;'>"+adterm1+"</td>"
@@ -3765,7 +3765,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     var finalpdf=header+studinfo+attendance+signature+subjecteng+subjectmath+subjectevs+subjecthindi+subjectcomputer+subjectgk+subjectartcraft+subjectmusic+subjectdance+subjectgames+subjectpersonality+health;
 
-    htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/reportcard.pdf',
+    htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
     function (error, success) {
        if (error) {
             console.log('Oh noes! Errorz!');
@@ -3801,14 +3801,15 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
    [{
     name: 'Reportcard- '+global.studentinfo[0].student_name,
     filename: 'reportcard.pdf',
-    path: './app/reportcard/reportcard.pdf',
+    path: './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
     type: 'application/pdf'
    }]
   },function(err, message) { 
     console.log(err || message);
-    logfile.write('pdf write:'+err||message+"\n\n");
+    logfile.write('\n\npdf mail sendin status:'+err||message+"\n\n");
+    res.status(200).json('mail sent');
      });
-  res.status(200).json('mail sent');
+  
 });
 
 

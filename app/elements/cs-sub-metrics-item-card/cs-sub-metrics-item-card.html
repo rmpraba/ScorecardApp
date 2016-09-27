@@ -43,20 +43,20 @@
       var cat=sessionStorage.getItem("category");
       if(cat=="lifeskill"){
       if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-      document.querySelector('cc-ntlife-skill-itemcard').fnfindsum(this.score1);
+      document.querySelector('cc-ntlife-skill-itemcard').fnfindsum(this.score1,this.submetric);
       else
-      document.querySelector('cs-life-skill-item-card').fnfindsum(this.score1);
+      document.querySelector('cs-life-skill-item-card').fnfindsum(this.score1,this.submetric);
       }
       else if(cat=="education")
-      document.querySelector('cs-education-item-card').fnfindsum(this.score1);
+      document.querySelector('cs-education-item-card').fnfindsum(this.score1,this.submetric);
       else if(cat=="visual")
-      document.querySelector('cs-visual-performing-item-card').fnfindsum(this.score1);
+      document.querySelector('cs-visual-performing-item-card').fnfindsum(this.score1,this.submetric);
       else if(cat=="cocurricular")
-      document.querySelector('cs-co-curricular-item-card').fnfindsum(this.score1);
+      document.querySelector('cs-co-curricular-item-card').fnfindsum(this.score1,this.submetric);
       else if(cat=="attitude")
-      document.querySelector('cs-attitudes-item-card').fnfindsum(this.score1);
+      document.querySelector('cs-attitudes-item-card').fnfindsum(this.score1,this.submetric);
       else if(cat=="healthandphysical")
-      document.querySelector('cs-health-physical-education-item-card').fnfindsum(this.score1);     
+      document.querySelector('cs-health-physical-education-item-card').fnfindsum(this.score1,this.submetric);     
     },
     clearinputdata:function()
     {

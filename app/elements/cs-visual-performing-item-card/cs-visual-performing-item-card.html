@@ -47,9 +47,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
         <td id="tb1"><paper-input on-focus="FnActivity" id="s1{{studid}}"  name="VISUAL ARTS" value="{{score1}}"></paper-input></td>
         <td id="tb1"><paper-input on-focus="FnActivity" id="s2{{studid}}"  name="PERFORMING ARTS" value="{{score2}}"></paper-input></td>
-        <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
-         <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>
-         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+       <!-- <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
+         <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>-->
+         <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
         <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
@@ -185,9 +185,9 @@ subcatarr=subcategoryarr;
         this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Visual & Performing Arts",name2,sum2,2);
         }
              tot=parseInt(sum1)+parseInt(sum2);
-            document.getElementById('t'+idd).value=tot;
-            this.convert=(parseInt(tot)/20)*100;
-           this.callFetchGrade();
+           // document.getElementById('t'+idd).value=tot;
+           // this.convert=(parseInt(tot)/20)*100;
+          // this.callFetchGrade();
            subarr=[];
 
         },

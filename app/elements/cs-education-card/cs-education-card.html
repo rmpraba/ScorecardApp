@@ -40,10 +40,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <tr>
       <th id="tb2">SNo</th>
       <th id="tb1">Name</th>
-      <th id="tb1">Work Education</th>
+      <th id="tb2">Work Education</th>
       
-      <th id="tb1">Total</th>
-      <th id="tb1">Grade</th>
+      <!--<th id="tb1">Total</th>
+      <th id="tb1">Grade</th>-->
+      <th id="tb2"> </th>
       </tr> 
       </div> 
 <template is="dom-repeat" items="{{markarr}}" as="m">
@@ -54,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </tr>
 </template>
      <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="14">
+      <tr><td colspan="4">
       <cs-education-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}"></cs-education-item-card>
       </td></tr>
       </template>

@@ -43,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
 #td1
 {
-  padding: 5px;
+ 
 }
     </style>
     <div class="card">
@@ -61,9 +61,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td id="tb1" ><paper-input on-focus="FnActivity" id="s8{{studid}}" name="Empathy" value="{{score8}}"></paper-input></td> 
         <td  id="tb1"><paper-input on-focus="FnActivity" id="s9{{studid}}" name="Managing Emotions" value="{{score9}}"></paper-input></td> 
         <td  id="tb1"><paper-input on-focus="FnActivity" id="s10{{studid}}" name="Dealing with Stress" value="{{score10}}"></paper-input></td> 
-        <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td>
-        <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>
-       <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+      <!--  <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td>
+        <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>-->
+       <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
         <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
@@ -283,9 +283,9 @@ subcatarr=subcategoryarr;
         this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name10,sum10,10);
         }
           tot=parseFloat(sum1)+parseFloat(sum2)+parseFloat(sum3)+parseFloat(sum4)+parseFloat(sum5)+parseFloat(sum6)+parseFloat(sum7)+parseFloat(sum8)+parseFloat(sum9)+parseFloat(sum10);
-          document.getElementById('t'+idd).value=tot;
-          this.convert=(parseInt(tot)/10)*100;
-          this.callFetchGrade();
+         // document.getElementById('t'+idd).value=tot;
+          //this.convert=(parseInt(tot)/10)*100;
+          //this.callFetchGrade();
           subarr=[];
 
       },

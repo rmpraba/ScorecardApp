@@ -50,9 +50,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td id="tb1"><paper-input on-focus="FnActivity" id=s2{{studid}} name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
         <td id="tb1"><paper-input on-focus="FnActivity" id=s3{{studid}} name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
         <td id="tb1"><paper-input on-focus="FnActivity" id=s4{{studid}} name="Value Systems" value="{{score4}}"></paper-input></td>  
-        <td id="tb1"><paper-input  name="total" id=t{{studid}} value="{{total}}"></paper-input></td> 
-         <td id="tb1"><paper-input name="grade" id=g{{studid}} value="{{grade}}"></paper-input></td>
-          <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <!--<td id="tb1"><paper-input  name="total" id=t{{studid}} value="{{total}}"></paper-input></td> 
+         <td id="tb1"><paper-input name="grade" id=g{{studid}} value="{{grade}}"></paper-input></td>-->
+          <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
         <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
@@ -210,9 +210,9 @@ subcatarr=subcategoryarr;
         this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Attitudes and values",name4,sum4,4);
         }
           tot=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
-          document.getElementById('t'+idd).value=tot; 
-          this.convert=(parseInt(tot)/40)*100;
-           this.callFetchGrade();
+          //document.getElementById('t'+idd).value=tot; 
+          //this.convert=(parseInt(tot)/40)*100;
+           //this.callFetchGrade();
            subarr=[];
       },
        callFetchGrade:function()

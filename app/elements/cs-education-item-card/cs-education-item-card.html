@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 2%;
       }
        #tb1{
-        width:25%
+        width:15%
       }
       #tb2{
         width: 5%
@@ -37,9 +37,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 {
   padding: 5px;
 }
+#subcat
+{
 
-
-
+}
+#education
+{
+  min-height: 300px;
+}
        .submitbutton paper-button{
     background-color: #363636 !important;
     color: #ffffff !important;
@@ -51,16 +56,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb2"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input on-focus="FnActivity" id="s{{studid}}"  name="Work Education" value="{{score1}}"></paper-input></td>   
-        <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
-         <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>
-         <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <td id="tb2"><paper-input on-focus="FnActivity" id="s{{studid}}"  name="Work Education" value="{{score1}}"></paper-input></td>   
+       <!-- <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
+         <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>-->
+         <td id="tb2"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
         <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
     </div>
      <paper-dialog id="education" modal width="600px">
-   
+  
  <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}" score1="{{item.mark}}"></cs-sub-metrics-item-card>
       </template>
@@ -68,6 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="submitbutton">
       <paper-button class="button" on-click="click">Submit</paper-button></center>
       </div>
+     
             </paper-dialog>
     
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
@@ -182,9 +188,9 @@ subcatarr=subcategoryarr;
         {
         this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Work Education",name1,sum1,1);
         }
-         document.getElementById('t'+idd).value=sum1; 
-          this.convert=(parseInt(sum1)/10)*100;
-          this.callFetchGrade();
+        // document.getElementById('t'+idd).value=sum1; 
+          //this.convert=(parseInt(sum1)/10)*100;
+          //this.callFetchGrade();
           subarr=[];
       },
        callFetchGrade:function()

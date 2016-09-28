@@ -468,7 +468,27 @@
        fetchstudentlifeskillResponse:function(e)
       {
          categoryarr=e.detail.response.returnval;
-        //alert(JSON.stringify(categoryarr));
+        var cat=sessionStorage.getItem("category");
+        // alert(cat);
+        if(cat=="lifeskill"){
+        // alert(localStorage.getItem("curr_sess_grade"));
+        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
+        document.querySelector('cc-ntlife-skill-itemcard').FnSubcategory(categoryarr);
+        else
+        document.querySelector('cs-life-skill-item-card').FnSubcategory(categoryarr);
+        } 
+        else  if(cat=="education")
+        document.querySelector('cs-education-item-card').FnSubcategory(categoryarr);
+        else  if(cat=="visual")
+        document.querySelector('cs-visual-performing-item-card').FnSubcategory(categoryarr);
+        else  if(cat=="cocurricular")
+        document.querySelector('cs-co-curricular-item-card').FnSubcategory(categoryarr);
+        else  if(cat=="healthandphysical")
+        document.querySelector('cs-health-physical-education-item-card').FnSubcategory(categoryarr);
+        else  if(cat=="attitude")
+        document.querySelector('cs-attitudes-item-card').FnSubcategory(categoryarr);
+        
+        
          this.fetchlifeskillurl=sessionStorage.getItem("addrinfo")+"/fetchlifeskill";
          var obj={"schoolid":"","termtype":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");

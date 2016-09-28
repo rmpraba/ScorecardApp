@@ -1376,7 +1376,7 @@ var response={
 }
   else
   {
-   connection.query("UPDATE tr_coscholastic_sub_category_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and order_seq='"+req.query.order_seq+"'",[response],
+   connection.query("UPDATE tr_coscholastic_sub_category_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"'and sub_category='"+req.query.subcategory+"'",[response],
     function(err, rows) {
       console.log("update");
     if(!err){

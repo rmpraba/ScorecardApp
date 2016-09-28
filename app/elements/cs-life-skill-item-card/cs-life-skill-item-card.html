@@ -110,6 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var name;
     var subarr=[];
 var arr=[];
+var subcatarr=[];
 var idd,sname,sum1=0,sum2=0,sum3=0,sum4=0,sum5=0,sum6=0,sum7=0,sum8=0,sum9=0,sum10=0,tot,sum=0,t=0;
 var name1,name2,name3,name4,name5,name6,name7,name8,name9,name10;
 var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
@@ -141,10 +142,35 @@ var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
         t++;
 
       },
+      FnSubcategory:function(subcategoryarr)
+      {
+subcatarr=subcategoryarr;
+      },
       
       click:function(e)
       {
-        alert(JSON.stringify(subarr)+'  '+t);
+        var flag=0;
+        
+        if(subcatarr.length>0)
+        {
+          for(var i=0;i<subcatarr.length;i++)
+          {
+            flag=0;
+            for(var j=0;j<subarr.length;j++)
+            {
+            if(subcatarr[i].sub_category==subarr[j].subcategory)
+            {
+               flag=1;
+            }
+          }
+          if(flag==0)
+          {
+            sum=parseFloat(sum)+parseFloat(subcatarr[i].mark);
+            t++;
+          }
+        }
+       }
+        //alert(JSON.stringify(subarr)+'  '+t);
         var id = 'lifeskill';
         var dialog = document.getElementById(id);
         dialog.opened=false;

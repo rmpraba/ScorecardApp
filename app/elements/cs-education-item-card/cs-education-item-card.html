@@ -96,6 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var idd;
     var sname;
     var subarr=[];
+    var subcatarr=[];
 var arr=[];
 var sum1,name1,sum,t=0;
 var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
@@ -128,10 +129,34 @@ var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
         t++;
 
       },
-       
+          FnSubcategory:function(subcategoryarr)
+      {
+subcatarr=subcategoryarr;
+      },
      
       click:function()
       {
+         var flag=0;
+        
+        if(subcatarr.length>0)
+        {
+          for(var i=0;i<subcatarr.length;i++)
+          {
+            flag=0;
+            for(var j=0;j<subarr.length;j++)
+            {
+            if(subcatarr[i].sub_category==subarr[j].subcategory)
+            {
+               flag=1;
+            }
+          }
+          if(flag==0)
+          {
+            sum=parseFloat(sum)+parseFloat(subcatarr[i].mark);
+            t++;
+          }
+        }
+       }
        
          var id = 'education';
         var dialog = document.getElementById(id);

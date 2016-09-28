@@ -49,7 +49,7 @@
      <paper-dialog id="ntlifeskill" modal>
    
  <template is="dom-repeat" items="{{coarr}}">
-      <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
+      <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}" score1="{{item.mark}}"></cs-sub-metrics-item-card>
       </template>
     <center>  
     <div class="submitbutton">
@@ -82,6 +82,7 @@
     var idd;
     var sname,name1,name2,name3,sum,sum1,sum2,sum3;
     var tot=0,t=0;
+    var subcatarr=[];
     Polymer({
       is: 'cc-ntlife-skill-itemcard',
       FnActivity:function(e)
@@ -110,8 +111,33 @@
 
       },
       
+      FnSubcategory:function(subcategoryarr)
+      {
+subcatarr=subcategoryarr;
+      }, 
       click:function(e)
       {
+        var flag=0;
+        
+        if(subcatarr.length>0)
+        {
+          for(var i=0;i<subcatarr.length;i++)
+          {
+            flag=0;
+            for(var j=0;j<subarr.length;j++)
+            {
+            if(subcatarr[i].sub_category==subarr[j].subcategory)
+            {
+               flag=1;
+            }
+          }
+          if(flag==0)
+          {
+            sum=parseFloat(sum)+parseFloat(subcatarr[i].mark);
+            t++;
+          }
+        }
+       }
        
         var id = 'ntlifeskill';
         var dialog = document.getElementById(id);

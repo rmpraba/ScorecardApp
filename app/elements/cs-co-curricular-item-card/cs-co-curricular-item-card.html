@@ -94,6 +94,7 @@ var arr=[];
 var idd,sname,sum1,sum2,sum3,sum4,tot,sum,t=0;
  var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
    var name1,name2,name3,name4;
+   var subcatarr=[];
     Polymer({
       is: 'cs-co-curricular-item-card',
 
@@ -123,9 +124,33 @@ var idd,sname,sum1,sum2,sum3,sum4,tot,sum,t=0;
         t++;
 
       },
-       
+         FnSubcategory:function(subcategoryarr)
+      {
+subcatarr=subcategoryarr;
+      },
       click:function()
       {
+         var flag=0;
+        
+        if(subcatarr.length>0)
+        {
+          for(var i=0;i<subcatarr.length;i++)
+          {
+            flag=0;
+            for(var j=0;j<subarr.length;j++)
+            {
+            if(subcatarr[i].sub_category==subarr[j].subcategory)
+            {
+               flag=1;
+            }
+          }
+          if(flag==0)
+          {
+            sum=parseFloat(sum)+parseFloat(subcatarr[i].mark);
+            t++;
+          }
+        }
+       }
        
          var id = 'cocurricular';
         var dialog = document.getElementById(id);

@@ -40,6 +40,8 @@
       is: 'cs-sub-metrics-item-card',
      Fnsubcategory:function()
      {      
+      if(this.score1!=null)
+      {
       var cat=sessionStorage.getItem("category");
       if(cat=="lifeskill"){
       if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
@@ -57,6 +59,7 @@
       document.querySelector('cs-attitudes-item-card').fnfindsum(this.score1,this.submetric);
       else if(cat=="healthandphysical")
       document.querySelector('cs-health-physical-education-item-card').fnfindsum(this.score1,this.submetric);     
+     }
     },
     clearinputdata:function()
     {

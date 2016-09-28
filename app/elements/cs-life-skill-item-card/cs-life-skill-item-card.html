@@ -110,7 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var name;
     var subarr=[];
 var arr=[];
-var idd,sname,sum1=0,sum2=0,sum3=0,sum4=0,sum5=0,sum6=0,sum7=0,sum8=0,sum9=0,sum10=0,tot;
+var idd,sname,sum1=0,sum2=0,sum3=0,sum4=0,sum5=0,sum6=0,sum7=0,sum8=0,sum9=0,sum10=0,tot,sum=0,t=0;
 var name1,name2,name3,name4,name5,name6,name7,name8,name9,name10;
 var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
     Polymer({
@@ -129,121 +129,88 @@ var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
       },
       fnfindsum:function(mark,cat)
       {
+ var obj1={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
+       obj1.studid=idd;
+       obj1.studname=sname;
+       obj1.category=name;
+       obj1.subcategory=cat;
+       obj1.mark=mark;
+       obj1.order_seq=1;
+        subarr.push(obj1);
+        sum=parseFloat(sum)+parseFloat(mark);
+        t++;
 
       },
       
       click:function(e)
       {
-        var t=0;
-        var sum=0;
-       var obj1={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
-       obj1.studid=idd;
-       obj1.studname=sname;
-       obj1.category=name;
-       obj1.subcategory=cat1;
-       obj1.mark=mark1;
-       obj1.grade=grad1;
-       obj1.order_seq=1;
-       var obj2={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
-       obj2.studid=idd;
-       obj2.studname=sname;
-       obj2.category=name;
-       obj2.subcategory=cat2;
-       obj2.mark=mark2;
-        obj2.grade=grad2;
-        obj2.order_seq=2;
-       var obj3={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
-       obj3.studid=idd;
-       obj3.studname=sname;
-       obj3.category=name;
-       obj3.subcategory=cat3;
-       obj3.mark=mark3;
-        obj3.grade=grad3;
-        obj3.order_seq=3;
-        for(var i=0;i<subarr.length;i++)
-        {
-          if(subarr[i].subcategory==obj1.subcategory||subarr[i].subcategory==obj2.subcategory||subarr[i].subcategory==obj3.subcategory)
-          {
-            subarr.splice(i,1);
-            i--;
-          }
-        }
-       subarr.push(obj1);
-       subarr.push(obj2);
-       subarr.push(obj3);
-      // alert(JSON.stringify(subarr));
+        alert(JSON.stringify(subarr)+'  '+t);
         var id = 'lifeskill';
         var dialog = document.getElementById(id);
         dialog.opened=false;
         if(name=="Self Awareness")
         {           
-          sum1=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum1=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s1'+idd).value=sum1;
           name1=name;         
         }
         else  if(name=="Problem Solving")
         {
-          sum2=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum2=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s2'+idd).value=sum2;
           name2=name;
         }
         else  if(name=="Decision Making")
         {
-          sum3=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum3=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s3'+idd).value=sum3;
           name3=name;
         }
         else  if(name=="Critical Thinking")
         {
-          sum4=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum4=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s4'+idd).value=sum4;
           name4=name;       
         }
         else  if(name=="Creative Thinking")
         {
-          sum5=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum5=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s5'+idd).value=sum5;
           name5=name;
         }
         else  if(name=="Interpersonal Relationship")
         {
-          sum6=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum6=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s6'+idd).value=sum6;
           name6=name;     
         }
         else  if(name=="Effective Communication")
         {
-          sum7=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum7=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s7'+idd).value=sum7;
           name7=name;
         }
         else  if(name=="Empathy")
         {
-          sum8=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum8=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s8'+idd).value=sum8;
           name8=name;
         }
         else  if(name=="Managing Emotions")
         {
-          sum9=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum9=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s9'+idd).value=sum9;
           name9=name;    
         }
         else  if(name=="Dealing with Stress")
         {
-          sum10=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum10=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s10'+idd).value=sum10;
           name10=name;    
         }
-        this.$.gradetype1.selected=-1;
-        this.$.gradetype2.selected=-1;
-        this.$.gradetype3.selected=-1;
-        this.$.category1.selected=-1;
-        this.$.category2.selected=-1;
-        this.$.category3.selected=-1;
-          mark1=0;
-          mark2=0;
-          mark3=0;
+        sum=0;
+        t=0;
+        document.querySelector('cs-sub-metrics-item-card').clearinputdata();
       
       },
       FnSave:function()

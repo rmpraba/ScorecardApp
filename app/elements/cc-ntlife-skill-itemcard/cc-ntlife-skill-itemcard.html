@@ -47,79 +47,10 @@
         </table>
     </div>
      <paper-dialog id="ntlifeskill" modal>
-     <center> <table  id="sub">
-     <tr>
-     <td id="td1">
-          <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu></td>
-<td>
-
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-</tr>
-<tr>
-<td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-<td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-          </td>
-          </tr>
-          <tr>
-          <td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-<td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-          </td>
-          </tr>
-          </table>
-          </center>
-
- <!-- <template is="dom-repeat" items="{{coarr}}">
+   
+ <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
-      </template>-->
+      </template>
     <center>  
     <div class="submitbutton">
       <paper-button class="button" on-click="click">Submit</paper-button></center>
@@ -147,10 +78,10 @@
     var higher=[];
     var grade=[];
     var name;
-    var arr=[];
+    var subarr=[];
     var idd;
-    var sname;
-    var sum1,sum2,sum3,tot;
+    var sname,name1,name2,name3,sum,sum1,sum2,sum3;
+    var tot=0,t=0;
     Polymer({
       is: 'cc-ntlife-skill-itemcard',
       FnActivity:function(e)
@@ -164,69 +95,76 @@
         var dialog = document.getElementById(id);
         dialog.open();
       },
-       FnSelectCategory:function(e)
+      fnfindsum:function(mark,cat)
       {
+ var obj1={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
+       obj1.studid=idd;
+       obj1.studname=sname;
+       obj1.category=name;
+       obj1.subcategory=cat;
+       obj1.mark=mark;
+       obj1.order_seq=1;
+        subarr.push(obj1);
+        sum=parseFloat(sum)+parseFloat(mark);
+        t++;
 
-       var cat = e.target.selectedItem.textContent.trim();
-        //document.querySelector('#gradetype').selected=-1;
-       
       },
-      FnSelectGrade:function(e)
-      {
-        var mark;
-       var grad = e.target.selectedItem.textContent.trim();
-       if(grad=="A")
-       {
-        mark=9;
-       }
-       else if(grad=="B")
-       {
-        mark=8;
-       }
-       else if(grad=="C")
-       {
-        mark=7;
-       }
-       this.fnfindsum(mark);
-      },
-      fnfindsum(val)
-      {
-        arr.push(val);
-      },
+      
       click:function(e)
       {
-        var sum=0;
-        for(var i=0;i<arr.length;i++)
-        {
-          sum=sum+parseInt(arr[i]);
-        }
+       
         var id = 'ntlifeskill';
         var dialog = document.getElementById(id);
         dialog.opened=false;
         if(name=="Thinking Skills")
         {    
-        sum1=sum; 
-          document.getElementById('s'+idd).value=sum;     
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
+          sum1=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
+          document.getElementById('s1'+idd).value=sum1;
+          name1=name;    
+         
         }
         else  if(name=="Social Skills")
         {
-           document.getElementById('s2'+idd).value=sum; 
-           sum2=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
+          sum2=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
+          document.getElementById('s2'+idd).value=sum2;
+          name2=name; 
+          
         }
         else  if(name=="Emotional Skills")
         {
-          document.getElementById('s3'+idd).value=sum; 
-           sum3=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name,sum);
-          tot=parseInt(sum1)+parseInt(sum2)+parseInt(sum3);
-           document.getElementById('t'+idd).value=tot;
-          this.convert=(parseInt(tot)/10)*100;
-          this.callFetchGrade();
-        }      
-        arr=[];
+         sum3=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
+          document.getElementById('s3'+idd).value=sum3;
+          name3=name; 
+         
+        } 
+          sum=0;
+        t=0;
+        document.querySelector('cs-sub-metrics-item-card').clearinputdata();     
+        
       },
+
+       FnSave:function()
+       {
+        this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(subarr);
+        if(name1!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name1,sum1,1);
+        }
+        if(name2!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name2,sum2,2);
+        }
+         if(name3!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Life Skills",name2,sum3,3);
+        }
+             tot=parseInt(sum1)+parseInt(sum2)+parseInt(sum3);
+            document.getElementById('t'+idd).value=tot;
+            this.convert=(parseInt(tot)/20)*100;
+           this.callFetchGrade();
+           subarr=[];
+
+        },
       callFetchGrade:function()
       {
         this.fetchgradeforcaturl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

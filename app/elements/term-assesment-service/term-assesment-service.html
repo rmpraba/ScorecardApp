@@ -717,13 +717,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       
  if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
     // alert('coming...');
-        // document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
-        // document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
+        document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
+        document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
         document.querySelector('cc-fa-fivetoten-card').studarr=overall;         
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
-        // document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
-        // document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+        document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
+        document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
         document.querySelector('cc-sa-fivetoten-card').studarr=overall;        
         }
        },

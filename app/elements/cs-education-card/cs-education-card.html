@@ -17,17 +17,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
       table{
-        width: 70%;
+        width: 60%;
         border-collapse: collapse;
         margin-left: 1%;
       }
       .studname{
       }
       #tb1{
-        width:15%
+        width:15%;
       }
       #tb2{
-        width: 5%
+        width: 5%;
       }
     </style>
     <div>
@@ -55,7 +55,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </tr>
 </template>
      <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="4">
+      <tr>
+      <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
+      <td colspan="2">
       <cs-education-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}"></cs-education-item-card>
       </td></tr>
       </template>

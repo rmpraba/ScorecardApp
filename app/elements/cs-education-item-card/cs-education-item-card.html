@@ -27,8 +27,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width:15%
       }
       #tb2{
-        width: 5%
+        width: 9%
       }
+     #tb3{
+      width: 5%;
+     }
       #sub
 {
   width: 70%;
@@ -54,12 +57,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td id="tb2"><paper-item>{{serialno}}</paper-item></td>
-        <td id="tb1"><paper-item>{{studname}}</paper-item></td>
+        <td id="tb2" hidden=""><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb1" hidden><paper-item>{{studname}}</paper-item></td>
         <td id="tb2"><paper-input on-focus="FnActivity" id="s{{studid}}"  name="Work Education" value="{{score1}}"></paper-input></td>   
        <!-- <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
          <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>-->
-         <td id="tb2"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+         <td id="tb3"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
         <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>

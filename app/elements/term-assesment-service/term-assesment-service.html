@@ -548,10 +548,16 @@
       },
       callFetchFaStudentInfo:function()
       {
+        // alert(localStorage.getItem('curr_sess_report'));
          if(localStorage.getItem('curr_sess_report')=="1")
          {
          this.fetchfareportService();
          }
+
+        if(localStorage.getItem('curr_sess_report')=='2')  { 
+            document.querySelector('home-page').setPage('termassesment','');
+        document.querySelector('term-assesment').hiddenpage();
+    }
 
 else
 {
@@ -579,6 +585,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         
         overall=[];
          sarr1=e.detail.response.returnval;
+         // alert(JSON.stringify(sarr1));
           
           for(var i=0;i<sarr1.length;i++)
           {
@@ -709,9 +716,14 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         //alert(JSON.stringify(overall));
       
  if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
+    // alert('coming...');
+        // document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
+        // document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
         document.querySelector('cc-fa-fivetoten-card').studarr=overall;         
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
+        // document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
+        // document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
         document.querySelector('cc-sa-fivetoten-card').studarr=overall;        
         }
        },
@@ -1544,6 +1556,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       {
         obj1.flag=1;
       }
+      
        this.approvemarkurl=sessionStorage.getItem("addrinfo")+"/approvemark-service";
         this.approvemarkparam=obj1;
         this.$.approvemarkajax.generateRequest();  
@@ -1552,6 +1565,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     approvemarkResponse:function(e)
     {
       var approvearr=e.detail.response.returnval;
+      // alert(JSON.stringify(approvearr));
       document.querySelector('approve-one-to-four-card').approvearr=approvearr;
 
     },

@@ -2631,16 +2631,56 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
 {
 
 //var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
-var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
+var checkqur="select grade_id from mp_teacher_grade where "+ 
+"id='"+req.query.loggedid+"' and role_id='co-ordinator'";
+
+var qur1="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
+"and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
+"id='"+req.query.loggedid+"' and role_id='co-ordinator'))";
+
+var qur2="select * from tr_term_fa_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
 "and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
 "id='"+req.query.loggedid+"' and role_id='co-ordinator'))";
 
 console.log('............................................');
-console.log(qur);
+console.log(checkqur);
 console.log('............................................');
-
-  connection.query(qur,
-    function(err, rows)
+var resp={
+  flag:""
+};
+connection.query(checkqur,function(err, rows){
+  if(rows.length>0){
+    for(var i=0;i<rows.length;i++){
+      if(rows[i].grade_id=='g1'||rows[i].grade_id=='g2'||rows[i].grade_id=='g3'||rows[i].grade_id=='g4')
+        resp.flag=1;
+      else
+        resp.flag=0;
+    }
+  }
+  console.log('response flag...........'+resp.flag);
+  if(resp.flag==1){
+  connection.query(qur1,function(err, rows)
+    {
+      console.log(qur1);
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+  }
+  if(resp.flag==0){
+    console.log(qur2);
+  connection.query(qur2,function(err, rows)
     {
     if(!err)
     {
@@ -2657,6 +2697,8 @@ console.log('............................................');
     else
       console.log(err);
   });
+  }
+});
 });
 
 
@@ -3765,7 +3807,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     var finalpdf=header+studinfo+attendance+signature+subjecteng+subjectmath+subjectevs+subjecthindi+subjectcomputer+subjectgk+subjectartcraft+subjectmusic+subjectdance+subjectgames+subjectpersonality+health;
 
-    htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
+    htmlToPdf.convertHTMLString(finalpdf, 'ftp://ftp.adrive.com/PDF/'+global.studentinfo[0].student_name+'.pdf',
     function (error, success) {
        if (error) {
             console.log('Oh noes! Errorz!');
@@ -3801,7 +3843,7 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
    [{
     name: 'Reportcard- '+global.studentinfo[0].student_name,
     filename: 'reportcard.pdf',
-    path: './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
+    path: 'ftp://ftp.adrive.com/PDF/'+global.studentinfo[0].student_name+'.pdf',
     type: 'application/pdf'
    }]
   },function(err, message) { 

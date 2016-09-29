@@ -176,4 +176,12 @@ pdf mail sendin status:nullpdf write:success
 
 
 
-pdf mail sendin status:null
+pdf mail sendin status:nullpdf write:success
+
+
+
+pdf mail sendin status:Error: ftp://ftp.adrive.com/PDF/Aarushi  Gandhi.pdf does not existpdf write:success
+
+
+
+pdf mail sendin status:Error: ftp://ftp.adrive.com/PDF/Aryan  Sirohi.pdf does not exist

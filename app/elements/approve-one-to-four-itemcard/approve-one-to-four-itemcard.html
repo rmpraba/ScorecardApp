@@ -89,6 +89,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
         // document.querySelector('attendance-card').setDefaultHeaders(); 
       }
+      else if(this.assesment=="FA1"||this.assesment=="FA2"||this.assesment=="SA1"){
+        // alert('yes');
+        // localStorage.setItem('curr_sess_report',1);
+        localStorage.setItem("curr_sess_assesment","");
+        this.$.assesmentservice.callFetchFaStudentInfo();  
+      }
       else
       this.$.assesmentservice.fetchimportmark(this.academic,this.term,this.assesment,this.grade,this.section,this.subject);
      }

@@ -548,19 +548,39 @@
       },
       callFetchFaStudentInfo:function()
       {
+       // alert("f");
         // alert(localStorage.getItem('curr_sess_report'));
          if(localStorage.getItem('curr_sess_report')=="1")
          {
+           // alert('1');
          this.fetchfareportService();
          }
 
         if(localStorage.getItem('curr_sess_report')=='2')  { 
+            //alert('2');
             document.querySelector('home-page').setPage('termassesment','');
         document.querySelector('term-assesment').hiddenpage();
+        this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudentreport-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","assesment":"","termname":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject= localStorage.getItem("curr_sess_subject");
+         obj.assesment= localStorage.getItem("curr_sess_assesment");
+         obj.assesmenttype=localStorage.getItem("curr_sess_assesmenttype");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+        // alert(JSON.stringify(obj));
+           this.fetchfastudentreportparam= obj;         
+           this.$.fetchfastudentreportajax.generateRequest();
+           document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
+
     }
 
 else
 {
+    //alert('3');
 this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudentreport-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":"","assesment":"","termname":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -713,17 +733,20 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         overall.push(arr[i]);
           
         }
-        //alert(JSON.stringify(overall));
+       // alert(JSON.stringify(overall));
       
  if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
-    // alert('coming...');
-        document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
-        document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
+
+         document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
+         document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
+
         document.querySelector('cc-fa-fivetoten-card').studarr=overall;         
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
         document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
-        document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+
+         document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+
         document.querySelector('cc-sa-fivetoten-card').studarr=overall;        
         }
        },
@@ -1661,9 +1684,11 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         overallfetchimportarr.push({"overall":markarr});
        }
        
+       //alert('c');
        // alert(JSON.stringify(overall));
        this.studarrlength=(overall.length);       
-        if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"||localStorage.getItem("curr_sess_importsubject")=="Personality Development"){
+        if(localStorage.getItem("curr_sess_importsubject")=="Art&Craft"||localStorage.getItem("curr_sess_importsubject")=="dance"||localStorage.getItem("curr_sess_importsubject")=="music"||localStorage.getItem("curr_sess_importsubject")=="Games"||localStorage.getItem("curr_sess_importsubject")=="Personality Development")
+        {
         document.querySelector('home-page').setPage('coscholasticassesment','');
         
         if(localStorage.getItem('curr_sess_report')=='2')  
@@ -1699,7 +1724,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
         }
         if(localStorage.getItem("curr_sess_importsubject")=="GK"){ 
-              
+             // alert("s");
         document.querySelector('term-assesment-sheet-card').setPage('cc-gk-onetofour-card');  
         document.querySelector('cc-gk-onetofour-card').setDefaultHeaders();    
         document.querySelector('cc-gk-onetofour-card').importarr=overall;

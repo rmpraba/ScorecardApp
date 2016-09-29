@@ -3806,7 +3806,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
 
     var finalpdf=header+studinfo+attendance+signature+subjecteng+subjectmath+subjectevs+subjecthindi+subjectcomputer+subjectgk+subjectartcraft+subjectmusic+subjectdance+subjectgames+subjectpersonality+health;
 
-    htmlToPdf.convertHTMLString(finalpdf, 'ftp://ftp.adrive.com/PDF/'+global.studentinfo[0].student_name+'.pdf',
+    htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
     function (error, success) {
        if (error) {
             console.log('Oh noes! Errorz!');
@@ -3842,7 +3842,7 @@ app.post('/sendmail-service', urlencodedParser,function (req, res) {
    [{
     name: 'Reportcard- '+global.studentinfo[0].student_name,
     filename: 'reportcard.pdf',
-    path: 'ftp://ftp.adrive.com/PDF/'+global.studentinfo[0].student_name+'.pdf',
+    path: './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
     type: 'application/pdf'
    }]
   },function(err, message) { 

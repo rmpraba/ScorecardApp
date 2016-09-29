@@ -293,6 +293,9 @@
     var categoryarr;
     Polymer({
       is: 'co-scholastic-service',
+      ready:function(){
+        this.temp=0;
+      },
       callWorkingdaysService:function(){
         this.fetchworkingdaysurl=sessionStorage.getItem("addrinfo")+"/fetchworkingdays-service";
         var obj={"academicyear":"","schoolid":"","termname":"","type":""};
@@ -557,8 +560,12 @@
          this.insertcoassesmentmarkparam= obj;        
          this.$.insertcoassesmentmarkajax.generateRequest();
       },
+      insertcoassesmentmarkResponse:function(e){
+        
+      },
        callinsertcoscholasticsubcategorymarkService:function(subcategoryarr){    
-       alert(''+JSON.stringify(subcategoryarr));    
+       // alert(''+JSON.stringify(subcategoryarr)); 
+       this.sublength=subcategoryarr.length;   
          this.insertcosubcategorymarkurl=sessionStorage.getItem("addrinfo")+"/insertcosubcategorymark-service";
          for(var i=0;i<subcategoryarr.length;i++)
          {
@@ -583,7 +590,14 @@
        }
       },
 
-
+insertcosubcategorymarkResponse:function(e){
+  this.temp++;
+  if(this.sublength==this.temp){
+  alert('Mark saved!');
+  this.sublength=0;
+  this.temp=0;
+  }
+},
 
       insertcoassesmentmarkResponse:function(e){
         tempcnt2++;

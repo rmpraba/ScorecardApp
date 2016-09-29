@@ -13,30 +13,35 @@
       table{
         border-collapse: collapse;
         width: 100%;
-      }
-      .card{
-        height: 2%;
-      }
+      } 
       #tb1{
-        width:10%
+        width: 24%;
+      } 
+      #tb2{
+        width: 20.5%;
+      } 
+      #tb6{
+        width: 18%;
+      }   
+      #tb3{
+        width: 12%;
       }
-        #tb2{
-         width:20%
-          }
-          #tb3
-          {
-            width:10%
-          }
+      #tb4{
+        width: 17%;
+      }
+      #tb5{
+        width: 13%;
+      }
     </style>
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
-        <td id="tb2"><paper-item>{{studname}}</paper-item></td>
+        <td id="tb1" hidden><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb2" hidden><paper-item>{{studname}}</paper-item></td>
         <td id="tb1" hidden$="{{hidepaperinput}}"><paper-input id="score1" required on-change="FnActivity1" value="{{score1}}"></paper-input></td>   
         <!-- <td id="tb1"><paper-input id="score2" required on-change="FnActivity2" value="{{score2}}"></paper-input></td>   -->
-        <td id="tb3" hidden$="{{hidepaperinput}}"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
-        <td id="tb1" hidden$="{{hidepaperinput}}"><paper-input id="score4" required on-change="FnActivity4" value="{{score4}}"></paper-input></td> 
+        <td id="tb2" hidden$="{{hidepaperinput}}"><paper-input id="score3" required on-change="FnActivity3" value="{{score3}}"></paper-input></td>  
+        <td id="tb6" hidden$="{{hidepaperinput}}"><paper-input id="score4" required on-change="FnActivity4" value="{{score4}}"></paper-input></td> 
 <!--
 
  <td id="tb1" hidden$="{{hidepaperitem}}"><paper-item>{{score1}}</paper-item></td>   
@@ -45,9 +50,9 @@
         <td id="tb1" hidden$="{{hidepaperitem}}"><paper-item>{{score4}}</paper-item></td> -->
          
         <!-- <td id="tb1"><paper-input id="score5" required on-change="FnActivity5" value="{{score5}}"></paper-input></td>  -->
-        <td id="tb1"><paper-item>{{total}}</paper-item></td>
-        <td id="tb1"><paper-item>{{reduction}}</paper-item></td>
-        <td id="tb1"><paper-item>{{grade}}</paper-item></td>
+        <td id="tb3"><paper-item>{{total}}</paper-item></td>
+        <td id="tb4"><paper-item>{{reduction}}</paper-item></td>
+        <td id="tb5"><paper-item>{{grade}}</paper-item></td>
          <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
         <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>

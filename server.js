@@ -1345,8 +1345,6 @@ var response={
          grade:req.query.grade,
          section:req.query.section,
          subject_id:req.query.subject,
-         grade:req.query.grade,
-         section:req.query.section, 
          category:req.query.category,        
          sub_category:req.query.subcategory,
          mark:req.query.mark,         
@@ -1354,11 +1352,12 @@ var response={
          order_seq:req.query.order_seq
 
   }  
-  var q="select * from tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and order_seq='"+req.query.order_seq+"'"
-  console.log(response);  
+  var q="select * from tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"'  order by order_seq";
+  console.log(q);  
   connection.query(q,
  function(err, rows)
     {
+  console.log(rows.length);
     if(rows.length==0){
   connection.query("INSERT INTO tr_coscholastic_sub_category_assesment_marks set ?",[response],
   function(err, rows)
@@ -1377,7 +1376,7 @@ var response={
 }
   else
   {
-   connection.query("UPDATE tr_coscholastic_sub_category_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and order_seq='"+req.query.order_seq+"'",[response],
+   connection.query("UPDATE tr_coscholastic_sub_category_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"'and sub_category='"+req.query.subcategory+"'",[response],
     function(err, rows) {
       console.log("update");
     if(!err){
@@ -1596,7 +1595,7 @@ app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
 app.post('/fetchstudentlifeskill',  urlencodedParser,function (req,res)
 {  
   var type=req.query.termtype;
- var qur= "SELECT sub_category,category_grade FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studid+"'and category='"+req.query.subcategory+"' order by order_seq";
+ var qur= "SELECT sub_category,mark FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studid+"'and category='"+req.query.subcategory+"' order by order_seq";
   console.log(qur);
   connection.query(qur,
     function(err, rows)

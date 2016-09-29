@@ -50,87 +50,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td id="tb1"><paper-input on-focus="FnActivity" id=s2{{studid}} name="Attitude towards School-mates" value="{{score2}}"></paper-input></td>  
         <td id="tb1"><paper-input on-focus="FnActivity" id=s3{{studid}} name="Attitude towards School Programmes and Environment" value="{{score3}}"></paper-input></td>  
         <td id="tb1"><paper-input on-focus="FnActivity" id=s4{{studid}} name="Value Systems" value="{{score4}}"></paper-input></td>  
-        <td id="tb1"><paper-input  name="total" id=t{{studid}} value="{{total}}"></paper-input></td> 
-         <td id="tb1"><paper-input name="grade" id=g{{studid}} value="{{grade}}"></paper-input></td>
-          <td><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <!--<td id="tb1"><paper-input  name="total" id=t{{studid}} value="{{total}}"></paper-input></td> 
+         <td id="tb1"><paper-input name="grade" id=g{{studid}} value="{{grade}}"></paper-input></td>-->
+          <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
         <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
     </div>
      <paper-dialog id="attitude" modal>
-     <center> <table  id="sub">
-     <tr>
-     <td id="td1">
-          <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="category1"  selected="{{category1}}"  on-iron-select="FnSelectCategory1"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu></td>
-<td>
-
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype1" selected="{{gradetype1}}"  on-iron-select="FnSelectGrade1"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-</tr>
-<tr>
-<td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="category2"  selected="{{category2}}"  on-iron-select="FnSelectCategory2"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-<td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype2" selected="{{gradetype2}}"  on-iron-select="FnSelectGrade2"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-          </td>
-          </tr>
-          <tr>
-          <td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="category3"  selected="{{category3}}"  on-iron-select="FnSelectCategory3"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-<td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype3" selected="{{gradetype3}}"  on-iron-select="FnSelectGrade3"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-          </td>
-          </tr>
-          </table>
-          </center>
-
- <!-- <template is="dom-repeat" items="{{coarr}}">
-      <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
-      </template>-->
+     
+ <template is="dom-repeat" items="{{coarr}}">
+      <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}" score1="{{item.mark}}"></cs-sub-metrics-item-card>
+      </template>
     <center>  
     <div class="submitbutton">
       <paper-button class="button" on-click="click">Submit</paper-button></center>
@@ -162,9 +93,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var name;
     var arr=[];
     var subarr=[];
-    var idd,sname,sum1,sum2,sum3,sum4,tot;
+    var idd,sname,sum1,sum2,sum3,sum4,tot,sum,t=0;
    var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
    var name1,name2,name3,name4;
+   var subcatarr=[];
     Polymer({
       is: 'cs-attitudes-item-card',
 
@@ -182,157 +114,81 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         dialog.open();
 
       },
-       selectsubcategory:function(subcatarr)
-       {
-       this.category1=subcatarr[0].sub_category;
-       this.category2=subcatarr[1].sub_category;
-       this.category3=subcatarr[2].sub_category;
-       this.gradetype1=subcatarr[0].category_grade;
-       this.gradetype2=subcatarr[1].category_grade;
-       this.gradetype3=subcatarr[2].category_grade;
-       },
-
-       FnSelectCategory1:function(e)
+       fnfindsum:function(mark,cat)
       {
-      cat1 = e.target.selectedItem.textContent.trim(); 
-      },
-      FnSelectGrade1:function(e)
-      {
-        grad1 = e.target.selectedItem.textContent.trim();
-       if(grad1=="A")
-       {
-        mark1=9;
-       }
-       else if(grad1=="B")
-       {
-        mark1=8;
-       }
-       else if(grad1=="C")
-       {
-        mark1=7;
-       }
-      },
-        FnSelectCategory2:function(e)
-      {
-      cat2 = e.target.selectedItem.textContent.trim(); 
-      },
-      FnSelectGrade2:function(e)
-      {
-        grad2 = e.target.selectedItem.textContent.trim();
-       if(grad2=="A")
-       {
-        mark2=9;
-       }
-       else if(grad2=="B")
-       {
-        mark2=8;
-       }
-       else if(grad2=="C")
-       {
-        mark2=7;
-       }
-      },
-        FnSelectCategory3:function(e)
-      {
-      cat3 = e.target.selectedItem.textContent.trim(); 
-      },
-      FnSelectGrade3:function(e)
-      {
-        
-        grad3 = e.target.selectedItem.textContent.trim();
-       if(grad3=="A")
-       {
-        mark3=9;
-       }
-       else if(grad3=="B")
-       {
-        mark3=8;
-       }
-       else if(grad3=="C")
-       {
-        mark3=7;
-       }
-
-
-      },
-      click:function()
-      {
-        var t=0;
-        var sum=0;
-       var obj1={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
+ var obj1={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
        obj1.studid=idd;
        obj1.studname=sname;
        obj1.category=name;
-       obj1.subcategory=cat1;
-       obj1.mark=mark1;
-       obj1.grade=grad1;
+       obj1.subcategory=cat;
+       obj1.mark=mark;
        obj1.order_seq=1;
-       var obj2={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
-       obj2.studid=idd;
-       obj2.studname=sname;
-       obj2.category=name;
-       obj2.subcategory=cat2;
-       obj2.mark=mark2;
-        obj2.grade=grad2;
-        obj2.order_seq=2;
-       var obj3={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
-       obj3.studid=idd;
-       obj3.studname=sname;
-       obj3.category=name;
-       obj3.subcategory=cat3;
-       obj3.mark=mark3;
-        obj3.grade=grad3;
-        obj3.order_seq=3;
-        for(var i=0;i<subarr.length;i++)
+        subarr.push(obj1);
+        sum=parseFloat(sum)+parseFloat(mark);
+        t++;
+
+      },
+       FnSubcategory:function(subcategoryarr)
+      {
+subcatarr=subcategoryarr;
+      },
+      click:function()
+      {
+         var flag=0;
+        
+        if(subcatarr.length>0)
         {
-          if(subarr[i].subcategory==obj1.subcategory||subarr[i].subcategory==obj2.subcategory||subarr[i].subcategory==obj3.subcategory)
+          for(var i=0;i<subcatarr.length;i++)
           {
-            subarr.splice(i,1);
-            i--;
+            flag=0;
+            for(var j=0;j<subarr.length;j++)
+            {
+            if(subcatarr[i].sub_category==subarr[j].subcategory)
+            {
+               flag=1;
+            }
+          }
+          if(flag==0)
+          {
+            sum=parseFloat(sum)+parseFloat(subcatarr[i].mark);
+            t++;
           }
         }
-       subarr.push(obj1);
-       subarr.push(obj2);
-       subarr.push(obj3);
-       //alert(JSON.stringify(subarr));
+       }
+       
+        
          var id = 'attitude';
         var dialog = document.getElementById(id);
         dialog.opened=false;
 
         if(name=="Attitude towards Teachers")
         {           
-          sum1=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum1=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s1'+idd).value=sum1;
           name1=name; 
         }
         else  if(name=="Attitude towards School-mates")
         {
-          sum2=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum2=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s2'+idd).value=sum2;
           name2=name; 
         }
         else  if(name=="Attitude towards School Programmes and Environment")
         {
-          sum3=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+          sum3=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s3'+idd).value=sum3;
           name3=name; 
         }
         else  if(name=="Value Systems")
         {
-           sum4=parseFloat((parseFloat(mark1)+parseFloat(mark2)+parseFloat(mark3))/3).toFixed(2);
+           sum4=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
           document.getElementById('s4'+idd).value=sum4;
           name4=name; 
         }
 
-         this.$.gradetype1.selected=-1;
-        this.$.gradetype2.selected=-1;
-        this.$.gradetype3.selected=-1;
-        this.$.category1.selected=-1;
-        this.$.category2.selected=-1;
-        this.$.category3.selected=-1;
-          mark1=0;
-          mark2=0;
-          mark3=0;
+         sum=0;
+        t=0;
+        document.querySelector('cs-sub-metrics-item-card').clearinputdata();
       },
        FnSave:function()
       {
@@ -354,9 +210,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Attitudes and values",name4,sum4,4);
         }
           tot=parseInt(this.score1)+parseInt(this.score2)+parseInt(this.score3)+parseInt(this.score4);
-          document.getElementById('t'+idd).value=tot; 
-          this.convert=(parseInt(tot)/40)*100;
-           this.callFetchGrade();
+          //document.getElementById('t'+idd).value=tot; 
+          //this.convert=(parseInt(tot)/40)*100;
+           //this.callFetchGrade();
            subarr=[];
       },
        callFetchGrade:function()

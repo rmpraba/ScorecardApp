@@ -1,0 +1,28 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch scorecardproduction
+# Your branch and 'origin/scorecardproduction' have diverged,
+# and have 1 and 6 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# You are currently rebasing branch 'scorecardproduction' on '42ca471'.
+#
+# Changes to be committed:
+#	deleted:    app/configfile/logfile.txt
+#	modified:   app/elements/cc-ntlife-skill-itemcard/cc-ntlife-skill-itemcard.html
+#	modified:   app/elements/co-scholastic-service/co-scholastic-service.html
+#	modified:   app/elements/cs-attitudes-card/cs-attitudes-card.html
+#	modified:   app/elements/cs-attitudes-item-card/cs-attitudes-item-card.html
+#	modified:   app/elements/cs-co-curricular-card/cs-co-curricular-card.html
+#	modified:   app/elements/cs-co-curricular-item-card/cs-co-curricular-item-card.html
+#	modified:   app/elements/cs-education-card/cs-education-card.html
+#	modified:   app/elements/cs-education-item-card/cs-education-item-card.html
+#	modified:   app/elements/cs-life-skill-card/cs-life-skill-card.html
+#	modified:   app/elements/cs-life-skill-item-card/cs-life-skill-item-card.html
+#	modified:   app/elements/cs-sub-metrics-item-card/cs-sub-metrics-item-card.html
+#	modified:   app/elements/cs-visual-performing-card/cs-visual-performing-card.html
+#	modified:   app/elements/cs-visual-performing-item-card/cs-visual-performing-item-card.html
+#	modified:   server.js
+#
+

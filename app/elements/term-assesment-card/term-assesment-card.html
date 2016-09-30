@@ -223,41 +223,33 @@
         }        
         }
         else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4")
-        {  
-          // alert('yes');
+        {           
           this.$.assesmentservice.callFetchFaStudentInfo();           
           if(assesmenttype=="FA1"||assesmenttype=="FA2"||assesmenttype=="FA3"||assesmenttype=="FA4")
-          {
-            // alert('in');
+          {            
+          document.querySelector('cc-fa-fivetoten-card').studarr=[]; 
           document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
           document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
-
+          document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(true); 
           }
           if(assesmenttype=="SA1"||assesmenttype=="SA2")
           {
+          document.querySelector('cc-fa-fivetoten-card').studarr=[]; 
           document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
           document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
+          document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(true); 
           }
         }
       },
       FnRefresh:function()
       {
-        // document.querySelector('#gradenam1').selected=-1;
-        // document.querySelector('#sectionnam1').selected=-1;
-        // document.querySelector('#assesmentcat1').selected=-1;
-        // document.querySelector('#assestype1').selected=-1;
-        // document.querySelector('#subjectnam1').selected=-1;
-        // this.flag=0;
-
         var subj=localStorage.getItem("curr_sess_subject");
         var assestype=localStorage.getItem("curr_sess_assesmenttype");
         if(subj=="Mathematics")
-        {       
-           // document.querySelector('#subjectnam1').selected=-1;
+        {  
            document.querySelector('cc-maths-onetofour-card').FnRefresh();
         }  
-        if(subj=="EVS"){        
-          // document.querySelector('#subjectnam1').selected=-1;
+        if(subj=="EVS"){  
           document.querySelector('cc-evs-onetofour-card').FnRefresh();
         }
          if(subj=="English"||subj=="Hindi"||subj=="Kannada"){      

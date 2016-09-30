@@ -826,24 +826,32 @@ insertcosubcategorymarkResponse:function(e){
         }
         
            if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
-        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
+        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10"){
         document.querySelector('cc-ntlife-skill-card').studarr=coscholasticoverall;
-        else
-        document.querySelector('cs-life-skill-card').studarr=coscholasticoverall;    
+        document.querySelector('cc-ntlife-skill-card').FnSpinnerrActive(false);  
+        }
+        else{
+        document.querySelector('cs-life-skill-card').studarr=coscholasticoverall; 
+        // document.querySelector('cs-life-skill-card').FnSpinnerrActive(true); 
+        }    
         }
         if(localStorage.getItem("curr_sess_subject")=="Work Education"){
 
-        document.querySelector('cs-education-card').studarr=coscholasticoverall;        
+        document.querySelector('cs-education-card').studarr=coscholasticoverall;  
+        document.querySelector('cs-education-card').FnSpinnerrActive(false);        
         }
         if(localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"){
-        document.querySelector('cs-visual-performing-card').studarr=coscholasticoverall;     
+        document.querySelector('cs-visual-performing-card').studarr=coscholasticoverall; 
+        document.querySelector('cs-visual-performing-card').FnSpinnerrActive(false);      
         // document.querySelector('cs-visualerforming-card').studarr=arr;   
         }
         if(localStorage.getItem("curr_sess_subject")=="Attitudes And values"){
-        document.querySelector('cs-attitudes-card').studarr=coscholasticoverall;        
+        document.querySelector('cs-attitudes-card').studarr=coscholasticoverall; 
+        document.querySelector('cs-attitudes-card').FnSpinnerrActive(false);         
         }
         if(localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"){
-        document.querySelector('cs-co-curricular-card').studarr=coscholasticoverall;       
+        document.querySelector('cs-co-curricular-card').studarr=coscholasticoverall; 
+        document.querySelector('cs-co-curricular-card').FnSpinnerrActive(false);        
         }
         if(localStorage.getItem("curr_sess_subject")=="Health and Physical Education"){
         document.querySelector('cs-health-physical-education-card').studarr=coscholasticoverall;        

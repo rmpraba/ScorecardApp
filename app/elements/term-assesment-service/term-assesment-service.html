@@ -727,27 +727,24 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       }
     }
 
-    for(var i=0;i<arr.length;i++)
-      {
+        for(var i=0;i<arr.length;i++)
+        {
         arr[i].serialno=parseInt(this.len)+(i+1);
-        overall.push(arr[i]);
-          
+        overall.push(arr[i]);  
         }
        // alert(JSON.stringify(overall));
       
- if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
-
+        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"){
          document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
          document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
-
-        document.querySelector('cc-fa-fivetoten-card').studarr=overall;         
+         document.querySelector('cc-fa-fivetoten-card').studarr=overall; 
+         document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(false); 
         } 
-        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
-        document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
-
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"){
+         document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
          document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
-
-        document.querySelector('cc-sa-fivetoten-card').studarr=overall;        
+         document.querySelector('cc-sa-fivetoten-card').studarr=overall;
+         document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(false);         
         }
        },
       fetchstudentService:function(){
@@ -1871,6 +1868,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         updatemarkarray.push(updatemarkarr);
     },
     FnSpinnerDeactive:function(){
+       // alert(localStorage.getItem("curr_sess_subject"));
        overallfetchimportarr=[];
        if(localStorage.getItem("curr_sess_subject")=="Mathematics"){
         // document.querySelector('cc-maths-onetofour-card').markarr=overall;  
@@ -1915,6 +1913,14 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(localStorage.getItem("curr_sess_subject")=="Personality Development"){        
         // document.querySelector('cs-personalitydevelopment-card').markarr=overall;
         document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(false); 
+        }
+        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"){
+        // document.querySelector('cc-maths-onetofour-card').markarr=overall;  
+        document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(false);       
+        }
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"){
+        // document.querySelector('cc-maths-onetofour-card').markarr=overall;  
+        document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(false);       
         }
     },
     Fnimportattendancemark:function()

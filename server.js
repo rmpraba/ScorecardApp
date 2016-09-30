@@ -271,6 +271,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
 {  
    if(req.query.roleid=='subject-teacher')
   {
+    //console.log('1');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
     "school_id='"+req.query.schoolid+"' and role_id='"+req.query.roleid+"' "+
@@ -279,6 +280,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
   }
   else if(req.query.roleid=='class-teacher')
   {
+    //console.log('2');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
     "school_id='"+req.query.schoolid+"' and role_id='"+req.query.roleid+"' "+
@@ -287,13 +289,15 @@ app.post('/section-service',  urlencodedParser,function (req, res)
   }
    else if(req.query.roleid=='co-ordinator')
   {
+    //console.log('3');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
-    "grade_id=(select grade_id from mp_teacher_grade where "+
-    "school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and school_id='"+req.query.schoolid+"'";
+    "grade_id=(select grade_id from md_grade where "+
+    "school_id='"+req.query.schoolid+"' and grade_name='"+req.query.gradename+"')) and school_id='"+req.query.schoolid+"'";
   }
   else if(req.query.roleid=='headmistress')
   {
+    //console.log('4');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
     "grade_id in(select grade_id from mp_teacher_grade where grade_id=(select grade_id from md_grade "+
@@ -302,6 +306,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
   }
    else if(req.query.roleid=='principal'||req.query.roleid=='headofedn')
   {
+    //console.log('5');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
     "grade_id in(select grade_id from mp_teacher_grade where grade_id=(select grade_id from md_grade "+
@@ -2165,7 +2170,7 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 
 app.post('/fetchfareport-service',  urlencodedParser,function (req, res)
 {
-  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"' order by sub_cat_sequence";
+  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"'  and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"' order by sub_cat_sequence";
   console.log('----------------------------------------fetchreport----------');
   console.log(qur);
   connection.query(qur,

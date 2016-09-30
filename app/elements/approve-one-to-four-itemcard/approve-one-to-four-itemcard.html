@@ -81,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       localStorage.setItem("curr_sess_subject",this.subject);
       localStorage.setItem("curr_sess_grade",this.grade);
       localStorage.setItem("curr_sess_section",this.section);
-      // alert(localStorage.getItem("curr_sess_grade"));
+      //alert(localStorage.getItem("curr_sess_assesment"));
       document.querySelector('approve-one-to-four-card').FnSpinnerrActive(true); 
       if(this.subject=="Attendance")
       {
@@ -93,7 +93,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       else if(this.assesment=="FA1"||this.assesment=="FA2"||this.assesment=="SA1"){
         // alert('yes');
         // localStorage.setItem('curr_sess_report',1);
-        localStorage.setItem("curr_sess_assesment","");
+        //localStorage.setItem("curr_sess_assesment","");
         this.$.assesmentservice.callFetchFaStudentInfo();  
       }
       else

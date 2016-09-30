@@ -552,11 +552,12 @@
         // alert(localStorage.getItem('curr_sess_report'));
          if(localStorage.getItem('curr_sess_report')=="1")
          {
-           // alert('1');
+          // alert('1');
          this.fetchfareportService();
          }
 
-        if(localStorage.getItem('curr_sess_report')=='2')  { 
+       else if(localStorage.getItem('curr_sess_report')=='2')  
+        { 
             //alert('2');
             document.querySelector('home-page').setPage('termassesment','');
         document.querySelector('term-assesment').hiddenpage();
@@ -825,10 +826,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
             //markarr.push(obj.mark1);
             faarr.splice(j,1);
             j--;
+            k++;
            }
-           k++;
+           
 
         }
+
+
         var rtotal;
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
         {
@@ -849,10 +853,12 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        
       }
        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")){
-        document.querySelector('cc-fa-fivetoten-card').markarr=faoverall;         
+        document.querySelector('cc-fa-fivetoten-card').markarr=faoverall;
+         document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(false);         
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"){
-        document.querySelector('cc-sa-fivetoten-card').markarr=faoverall;        
+        document.querySelector('cc-sa-fivetoten-card').markarr=faoverall; 
+         document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(false);       
         }
 
       },
@@ -1314,7 +1320,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          obj1.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj1.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj1.termname=localStorage.getItem("curr_sess_termname");
-         obj1.assesmentid=localStorage.getItem("curr_sess_assesmenttype");
+         obj1.assesmentid=localStorage.getItem("curr_sess_assesment");
          obj1.subject=localStorage.getItem("curr_sess_subject");
          obj1.gradename=localStorage.getItem("curr_sess_grade");
          obj1.sectionname=localStorage.getItem("curr_sess_section");

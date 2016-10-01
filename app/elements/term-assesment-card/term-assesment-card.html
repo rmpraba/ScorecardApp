@@ -225,19 +225,27 @@
         else if(gradename!="Grade-1"||gradename!="Grade-2"||gradename!="Grade-3"||gradename!="Grade-4")
         {           
           this.$.assesmentservice.callFetchFaStudentInfo();           
-          if(assesmenttype=="FA1"||assesmenttype=="FA2"||assesmenttype=="FA3"||assesmenttype=="FA4")
+          if(assesmenttype=="FA1"||assesmenttype=="FA2")
           {            
           document.querySelector('cc-fa-fivetoten-card').studarr=[]; 
           document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
           document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
           document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(true); 
           }
-          if(assesmenttype=="SA1"||assesmenttype=="SA2")
+          if(assesmenttype=="SA1")
           {
-          document.querySelector('cc-fa-fivetoten-card').studarr=[]; 
+          if((gradename=="Grade-9"||gradename=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
+          document.querySelector('cc-sa-ninetoten-english').studarr=[]; 
+          document.querySelector('term-assesment-sheet-card').setPage('cc-sa-ninetoten-english');
+          document.querySelector('cc-sa-ninetoten-english').setDefaultHeaders();
+          document.querySelector('cc-sa-ninetoten-english').FnSpinnerrActive(true); 
+          }
+          else{
+          document.querySelector('cc-sa-fivetoten-card').studarr=[]; 
           document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
           document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
-          document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(true); 
+          document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(true);  
+          }
           }
         }
       },

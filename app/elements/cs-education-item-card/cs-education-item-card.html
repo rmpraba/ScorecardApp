@@ -9,6 +9,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+  <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+
+  <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 
 <dom-module id="cs-education-item-card">
  <template>
@@ -44,10 +47,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 {
 
 }
-#education
-{
-  min-height: 300px;
-}
        .submitbutton paper-button{
     background-color: #363636 !important;
     color: #ffffff !important;
@@ -67,16 +66,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
         </table>
     </div>
-     <paper-dialog id="education" modal width="600px">
-  
+     <paper-dialog id="education" modal style="margin-left: -10%;margin-top: 5%;height:80%;width:50%;">
+  <paper-dialog-scrollable style="height: 80%;">
  <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}" score1="{{item.mark}}"></cs-sub-metrics-item-card>
       </template>
     <center>  
     <div class="submitbutton">
-      <paper-button class="button" on-click="click">Submit</paper-button></center>
+      <paper-button class="button" on-click="click">Submit</paper-button>
       </div>
-     
+      </center>
+     <paper-dialog-scrollable>
             </paper-dialog>
     
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>

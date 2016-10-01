@@ -9,9 +9,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="..\..\bower_components/p/polymer.html">
 <link rel="import" href="../co-scholastic-service/cs-scholastic-service.html">
 <link rel="import" href="../term-assesment-service/term-assesment-service.html">
+ <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+
+  <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 
 <dom-module id="cs-life-skill-item-card">
   <template>
@@ -68,7 +71,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
         </table>
     </div>
-     <paper-dialog id="lifeskill" modal>
+     <paper-dialog id="lifeskill" modal style="margin-left: -10%;margin-top: 5%;height:80%;width:50%;">
+     <paper-dialog-scrollable style="height: 80%;">
 <table>
    <!--  <template is="dom-repeat" items="{{coarr}}">
      <tr>
@@ -84,6 +88,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="submitbutton">
       <paper-button class="button" on-click="click">Submit</paper-button></center>
       </div>
+      </center>
+      </paper-dialog-scrollable>
             </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     

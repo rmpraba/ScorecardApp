@@ -606,7 +606,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         
         overall=[];
          sarr1=e.detail.response.returnval;
-         // alert(JSON.stringify(sarr1));
+         // alert("fetch fa student..............."+JSON.stringify(sarr1));
           
           for(var i=0;i<sarr1.length;i++)
           {
@@ -638,23 +638,30 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
            if(sarr1[i].student_id==sarr1[j].student_id)
            {      
            sum=parseFloat(sum)+parseFloat(sarr1[j].mark);
-          obj['mark'+(k+1)]=sarr1[j].mark;     
-            //markarr.push(obj.mark1);
+          obj['mark'+(k+1)]=sarr1[j].mark;             
             sarr1.splice(j,1);
             j--;
             k++;
            }
-           
-           //alert(JSON.stringify(obj));
-
         }
         var rtotal,fasum;
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
         {
+        if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
+            
+            // alert('hi in');
+         fasum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);
+        obj.sum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);
+         rtotal=parseFloat(fasum/10).toFixed(2); 
+        obj.reducetotal=parseFloat(fasum/10).toFixed(2); 
+        
+        }
+        else{
         obj.sum=parseFloat((parseFloat(sum)/90)*100).toFixed(2);
         fasum=parseFloat((parseFloat(sum)/90)*100).toFixed(2);
         rtotal=parseFloat(parseFloat((parseFloat(sum)/90)*100)/10).toFixed(2);  
         obj.reducetotal=parseFloat(parseFloat((parseFloat(sum)/90)*100)/10).toFixed(2); 
+        }
         }
         else
         {
@@ -711,7 +718,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        fetchfastudentResponse:function(e)
        { 
     var arr=e.detail.response.returnval;
-    //alert('e'+JSON.stringify(arr));
+    // alert('e'+JSON.stringify(arr));
     //alert('s'+JSON.stringify(sarr1));
    // alert(JSON.stringify(arr.length));
    // alert(JSON.stringify(sarr1.length));
@@ -742,10 +749,22 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(false); 
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"){
+         // alert(localStorage.getItem("curr_sess_grade"));
+           if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
+            // alert('nine ten eng');
+         document.querySelector('term-assesment-sheet-card').setPage('cc-sa-ninetoten-english');
+         document.querySelector('cc-sa-ninetoten-english').setDefaultHeaders();
+         document.querySelector('cc-sa-ninetoten-english').studarr=overall;
+         document.querySelector('cc-sa-ninetoten-english').FnSpinnerrActive(false);  
+         
+         }
+         else{
+            // alert('nine ten no eng');
          document.querySelector('term-assesment-sheet-card').setPage('cc-sa-fivetoten-card');
-         document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders();
-         document.querySelector('cc-sa-fivetoten-card').studarr=overall;
-         document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(false);         
+         document.querySelector('cc-sa-fivetoten-card').setDefaultHeaders(); 
+         document.querySelector('cc-sa-fivetoten-card').studarr=overall; 
+         document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(false); 
+         }       
         }
        },
       fetchstudentService:function(){
@@ -802,7 +821,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
 
           var faoverall=[];
         var faarr=e.detail.response.returnval;
-        //alert(JSON.stringify(faarr));
+        // alert("fetch fa report....."+JSON.stringify(faarr));
         if(faarr!='invalid')
        {      
        for(var i=0;i<faarr.length;i++)
@@ -836,9 +855,23 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         var rtotal;
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
         {
+        // obj.sum=parseFloat((parseInt(sum)/90)*100).toFixed(2);
+        // rtotal=parseInt((parseInt(sum)/90)*100)/10;  
+        // obj.reducetotal=parseInt((parseInt(sum)/90)*100)/10; 
+        if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
+            
+            // alert('hi in');
+         // fasum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);
+        obj.sum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);
+         rtotal=parseFloat(sum/10).toFixed(2); 
+        obj.reducetotal=parseFloat(sum/10).toFixed(2); 
+        
+        }
+        else{
         obj.sum=parseFloat((parseInt(sum)/90)*100).toFixed(2);
         rtotal=parseInt((parseInt(sum)/90)*100)/10;  
         obj.reducetotal=parseInt((parseInt(sum)/90)*100)/10; 
+        }
         }
         else
         {
@@ -857,8 +890,17 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(false);         
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"){
+          if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
+            
+                document.querySelector('cc-sa-ninetoten-english').markarr=faoverall; 
+         document.querySelector('cc-sa-ninetoten-english').FnSpinnerrActive(false); 
+            
+        }
+        else
+        {
         document.querySelector('cc-sa-fivetoten-card').markarr=faoverall; 
-         document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(false);       
+         document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(false); 
+         }      
         }
 
       },
@@ -941,7 +983,12 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         document.querySelector('cc-fa-fivetoten-card').markarr=overall; 
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
-        document.querySelector('cc-sa-fivetoten-card').markarr=overall;        
+              if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
+                document.querySelector('cc-sa-ninetoten-english').markarr=overall;  
+              }
+              else
+        document.querySelector('cc-sa-fivetoten-card').markarr=overall;  
+
         }
         
         }       
@@ -1104,7 +1151,12 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         document.querySelector('cc-fa-fivetoten-card').studarr=arr;         
         } 
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
-        document.querySelector('cc-sa-fivetoten-card').studarr=arr;        
+          if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
+
+        document.querySelector('cc-sa-ninetoten-english').studarr=arr;  
+        }
+        else
+            document.querySelector('cc-sa-fivetoten-card').studarr=arr;    
         }
         } 
         }
@@ -1925,7 +1977,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(false);       
         }
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"){
-        // document.querySelector('cc-maths-onetofour-card').markarr=overall;  
+        // document.querySelector('cc-maths-onetofour-card').markarr=overall;
+        if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
+        
+     
+        document.querySelector('cc-sa-ninetoten-english').FnSpinnerrActive(false); 
+        } 
+        else
         document.querySelector('cc-sa-fivetoten-card').FnSpinnerrActive(false);       
         }
     },

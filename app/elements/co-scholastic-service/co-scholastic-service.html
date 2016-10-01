@@ -298,10 +298,11 @@
       },
       callWorkingdaysService:function(){
         this.fetchworkingdaysurl=sessionStorage.getItem("addrinfo")+"/fetchworkingdays-service";
-        var obj={"academicyear":"","schoolid":"","termname":"","type":""};
+        var obj={"academicyear":"","schoolid":"","termname":"","grade":"","type":""};
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.grade=localStorage.getItem("curr_sess_grade");
         // alert(localStorage.getItem("curr_sess_grade"));
          if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
          obj.type='Pre-Primary';

@@ -2262,7 +2262,7 @@ app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
   var academicyear={academic_year:req.query.academicyear};
   var schoolid={school_id:req.query.schoolid};
   var termname={term_name:req.query.termname};
-  var type={type:req.query.type};
+  var type={type:req.query.grade};
   // console.log(req.query.academicyear+" "+req.query.schoolid+" "+req.query.termname+" "+req.query.type);
   connection.query(qur,[academicyear,schoolid,termname,type],
     function(err, rows)

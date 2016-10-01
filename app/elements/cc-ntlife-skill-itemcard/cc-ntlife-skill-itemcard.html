@@ -81,7 +81,7 @@
     var name;
     var subarr=[];
     var idd;
-    var sname,name1,name2,name3,sum,sum1,sum2,sum3;
+    var sname,name1,name2,name3,sum=0,sum1,sum2,sum3;
     var tot=0,t=0;
     var subcatarr=[];
     Polymer({
@@ -91,7 +91,7 @@
         idd=this.studid;
         sname=this.studname;
         name=e.target.name;
-        this.$.coscholasticservice.fetchlifeskilldata(name);
+        this.$.coscholasticservice.fetchlifeskilldata(name,idd);
         var id = 'ntlifeskill';
         sessionStorage.setItem("category","lifeskill");
         var dialog = document.getElementById(id);

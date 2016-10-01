@@ -107,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var subarr=[];
     var subcatarr=[];
 var arr=[];
-var sum1,name1,sum,t=0;
+var sum1,name1,sum=0,t=0;
 var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
     Polymer({
       is: 'cs-education-item-card',
@@ -116,7 +116,7 @@ var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
         idd=this.studid;
         sname=this.studname;
         name=e.target.name;
-        this.$.coscholasticservice.fetchlifeskilldata(name);
+        this.$.coscholasticservice.fetchlifeskilldata(name,idd);
          var id = 'education';
          sessionStorage.setItem("category",id);
 

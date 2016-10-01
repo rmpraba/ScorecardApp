@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var name;
     var arr=[];
     var subarr=[];
-    var idd,sname,sum1,sum2,sum3,sum4,tot,sum,t=0;
+    var idd,sname,sum1,sum2,sum3,sum4,tot,sum=0,t=0;
    var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
    var name1,name2,name3,name4;
    var subcatarr=[];
@@ -110,7 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          sname=this.studname;
         // alert(e.target.name);
         name=e.target.name;
-        this.$.coscholasticservice.fetchlifeskilldata(name);
+        this.$.coscholasticservice.fetchlifeskilldata(name,idd);
          var id = 'attitude';
          sessionStorage.setItem("category",id);
         var dialog = document.getElementById(id);
@@ -167,6 +167,7 @@ subcatarr=subcategoryarr;
         if(name=="Attitude towards Teachers")
         {           
           sum1=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
+          //alert('s'+sum1);
           document.getElementById('s1'+idd).value=sum1;
           name1=name; 
         }

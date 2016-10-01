@@ -756,7 +756,7 @@ insertcosubcategorymarkResponse:function(e){
       },
        fetchstudentreportforcoscholasticResponse:function(e)
        {
-        
+         coscholasticoverall=[];
         coscholasticarr=e.detail.response.returnval;
         //alert(JSON.stringify(coscholasticarr));
         if(coscholasticarr!='fail')
@@ -825,7 +825,7 @@ insertcosubcategorymarkResponse:function(e){
         coscholasticoverall.push(arr[i]);
           
         }
-        
+       // alert(JSON.stringify(coscholasticoverall));
            if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10"){
         document.querySelector('cc-ntlife-skill-card').studarr=coscholasticoverall;

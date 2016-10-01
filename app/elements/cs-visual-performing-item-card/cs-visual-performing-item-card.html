@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var name;
 var subarr=[];
 var subcatarr=[];
-var idd,sname,sum1,sum2,tot,name2,name1,sum,t=0;
+var idd,sname,sum1,sum2,tot,name2,name1,sum=0,t=0;
 var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
 
     Polymer({
@@ -107,7 +107,7 @@ var cat1,cat2,cat3,mark1,mark2,mark3,grad1,grad2,grad3;
         sname=this.studname;
         //alert(e.target.name);
         name=e.target.name;
-        this.$.coscholasticservice.fetchlifeskilldata(name);
+        this.$.coscholasticservice.fetchlifeskilldata(name,idd);
          var id = 'visual';
          sessionStorage.setItem("category",id);
 

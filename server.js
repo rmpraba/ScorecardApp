@@ -2791,21 +2791,59 @@ app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, res)
 {
   
-    // var qur="select term_name,assesment_id,student_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
-    // "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as term_grade,"+
-    // "subject_id from tr_term_assesment_overall_marks where subject_id='EVS' and school_id='SCH001' "+ 
-    // "and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
-    // "group by subject_id,term_name,assesment_id,student_id ";
+    var qur="select term_name,assesment_id,student_id,student_name,(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as term_grade,"+
+    "subject_id from tr_term_assesment_overall_marks where subject_id='"+req.query.subject+"' and school_id='"+req.query.schoolid+"' "+ 
+    "and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
+    "group by subject_id,term_name,assesment_id,student_id order by student_id";
 
-    var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM md_grade_rating WHERE "+
-"lower_limit<=round(avg(ta.rtotal),1) and higher_limit>=round(avg(ta.rtotal),1)) as term_grade,"+
-"ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
-"join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
-"where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
-"and ta.grade='"+req.query.grade+"' and ta.section='"+req.query.section+"' "+
-"group by ta.subject_id,ta.term_name,ta.assesment_id,ta.student_id ";
+//     var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM md_grade_rating WHERE "+
+// "lower_limit<=round(avg(ta.rtotal),1) and higher_limit>=round(avg(ta.rtotal),1)) as term_grade,"+
+// "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
+// "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
+// "where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
+// "and ta.grade='"+req.query.grade+"' and ta.section='"+req.query.section+"' "+
+// "group by ta.subject_id,ta.term_name,ta.assesment_id,ta.student_id ";
 
-// console.log(qur);
+console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log('yessssssssssssssssssssss');
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      // console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+app.post('/fetchbeginnermark-service' ,  urlencodedParser,function (req, res)
+{
+  
+    var qur="select distinct(student_id),grade,subject_id from tr_beginner_assesment_marks where subject_id='"+req.query.subject+"' and school_id='"+req.query.schoolid+"' "+ 
+    "and academic_year='"+req.query.academicyear+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"') and section_id='"+req.query.section+"') "+
+    " order by student_id";
+
+//     var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM md_grade_rating WHERE "+
+// "lower_limit<=round(avg(ta.rtotal),1) and higher_limit>=round(avg(ta.rtotal),1)) as term_grade,"+
+// "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
+// "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
+// "where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
+// "and ta.grade='"+req.query.grade+"' and ta.section='"+req.query.section+"' "+
+// "group by ta.subject_id,ta.term_name,ta.assesment_id,ta.student_id ";
+
+console.log(qur);
     connection.query(qur,
     function(err, rows)
     {

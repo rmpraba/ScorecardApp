@@ -158,7 +158,7 @@
    window.location.href="../index.html";   
   },
   FnHome:function(){    
-     // alert(localStorage.getItem("curr_sess_page"));
+     alert(localStorage.getItem("curr_sess_page"));
     if(localStorage.getItem("curr_sess_page")=="cc-eng-onetofour-card")
     {
       this.page="teacherhomecard";
@@ -393,6 +393,14 @@
       document.querySelector('term-assesment-card').FnRefreshcard();  
       document.querySelector('cc-sa-fivetoten-card').FnRefresh();    
     }
+     if(localStorage.getItem("curr_sess_page")=="cc-sa-ninetoten-english")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('term-assesment-card').FnRefreshcard();  
+      document.querySelector('cc-sa-ninetoten-english').FnRefresh();    
+    }
      if(localStorage.getItem("curr_sess_page")=="approvalstatus")
     {
       this.page="teacherhomecard";
@@ -409,6 +417,13 @@
       // document.querySelector('cce-generate-score-card').FnRefresh();   
       document.querySelector('studentinfoedit-card').FnRefresh(); 
 
+    }
+    if(localStorage.getItem("curr_sess_page")=="beginnertermanalysis")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       document.querySelector('language-enrichment-card').FnRefresh();
     }
   },
 

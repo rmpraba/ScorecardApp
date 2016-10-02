@@ -337,7 +337,7 @@
       <tbody>
         <template is="dom-repeat" items="{{scorearr1}}" as="view1">
           <tr>
-           <td id="tb5"  >{{view1.score}}</td>
+           <th id="tb5"  >{{view1.score}}</th>
           </tr>
         </template>
       </tbody>
@@ -351,7 +351,7 @@
       <tbody>
         <template is="dom-repeat" items="{{scorearr2}}" as="view1">
           <tr>
-           <td id="tb5">{{view1.score}}</td>
+           <th id="tb5">{{view1.score}}</th>
           </tr>
         </template>
       </tbody>  
@@ -458,7 +458,7 @@
          <iron-collapse id="collapse">
                   
              <div hidden$="{{hidescore11}}" id="rep1" class="content" ><h3>{{uname}}:</h3></br>
-               {{Strength}}
+               <p>{{Strength}}</p>
               </div>
              
                <div class="content"  hidden$="{{hidescorearrr1}}" ></br>
@@ -490,7 +490,7 @@
          <button on-click="toggle2" id="heading2" style="color:blue;" >Areas Of Improvement</button></br>
          <iron-collapse id="collapse2">
           <div class="content" hidden$="{{hidescore12}}"  id="rep2" > <h3>{{uname}}:</h3></br>
-               {{Areas}}
+               <p>{{Areas}}</p>
               </div>
                 <div class="content" hidden$="{{hidescorearrr11}}"><h3>{{scorearr11}}:</h3><br>
                <p>{{scorearr222}}<p>
@@ -515,7 +515,7 @@
          <iron-collapse id="collapse3">
                   
              <div hidden$="{{hidescore11}}" id="rep3" class="content" ><h3>{{uname}}:</h3></br>
-               {{Strength}}
+               <p>{{Innovation}}</p>
              </div>
              
               <div class="content"  hidden$="{{hidescorearrr111}}" ></br>
@@ -551,7 +551,7 @@
          <iron-collapse id="collapse4">
                   
              <div hidden$="{{hidescore11}}" id="rep4" class="content" ><h3>{{uname}}:</h3></br>
-               <p>{{Strength}}</p>
+               <p>{{comment}}</p>
               </div>
              
                <div class="content"  hidden$="{{hidescorearrr110}}" ></br>
@@ -953,7 +953,7 @@
     sumbitmark:function(e)
     {
     alert("submit successfully");
-           alert(this.Strength);
+           // alert(this.Strength);
      this.$.observerservice.fnstrength(this.staffid,this.grid,this.secid,this.sid,this.Strength,this.Areas,this.Innovation,this.comment);
     
     

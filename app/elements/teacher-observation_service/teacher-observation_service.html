@@ -614,7 +614,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 Fnobserverupdateflag:function(teacherid,gradeid,sectionid,subjectid)
      {
-      if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
       {
       this.observerinsertflagurl=sessionStorage.getItem("addrinfo")+"/observerinsertflag-service";
            var obj={"schoolid":"","id":"","gradeid":"","sectionid":"","subjectid":"","flag":""};
@@ -627,20 +627,6 @@ Fnobserverupdateflag:function(teacherid,gradeid,sectionid,subjectid)
            this.observerinsertflagparam=obj;
            this.$.observerinsertflagajax.generateRequest();
          }
-         else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
-         {
-
-           this.observerupdateflagurl=sessionStorage.getItem("addrinfo")+"/observerupdateflag-service";
-           var obj={"schoolid":"","id":"","gradeid":"","sectionid":"","subjectid":"","flag":""};
-           obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-           obj.id=teacherid;
-           obj.gradeid=gradeid;
-           obj.sectionid=sectionid;
-           obj.subjectid=subjectid;
-           obj.flag=0;
-           this.observerupdateflagparam=obj;
-           this.$.observerupdateflagajax.generateRequest();
-         }
          else if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal")
          {
 
@@ -652,6 +638,20 @@ Fnobserverupdateflag:function(teacherid,gradeid,sectionid,subjectid)
            obj.sectionid=sectionid;
            obj.subjectid=subjectid;
            obj.flag=1;
+           this.observerupdateflagparam=obj;
+           this.$.observerupdateflagajax.generateRequest();
+         }
+         else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn")
+         {
+
+           this.observerupdateflagurl=sessionStorage.getItem("addrinfo")+"/observerupdateflag-service";
+           var obj={"schoolid":"","id":"","gradeid":"","sectionid":"","subjectid":"","flag":""};
+           obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+           obj.id=teacherid;
+           obj.gradeid=gradeid;
+           obj.sectionid=sectionid;
+           obj.subjectid=subjectid;
+           obj.flag=2;
            this.observerupdateflagparam=obj;
            this.$.observerupdateflagajax.generateRequest();
          }

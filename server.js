@@ -2961,7 +2961,7 @@ app.post('/teacherid-service' ,  urlencodedParser,function (req, res)
  console.log(req.query.roleid);
  if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
-  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and school_id='"+req.query.schoolid+"' and role_id='subject-teacher' and id in (select id from mp_teacher_grade where grade_id=(select grade_id from mp_teacher_grade where id='"+req.query.id+"' and role_id='co-ordinator'))";
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and school_id='"+req.query.schoolid+"' and role_id='subject-teacher' and id in (select id from mp_teacher_grade where grade_id in (select grade_id from mp_teacher_grade where id='"+req.query.id+"' and role_id='"+req.query.roleid+"'))";
 
  }
  else  if(req.query.roleid=="headofedn")

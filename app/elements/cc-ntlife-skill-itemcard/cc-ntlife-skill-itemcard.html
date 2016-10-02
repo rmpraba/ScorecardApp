@@ -38,9 +38,9 @@
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td style="width: 5%;"><paper-item>{{serialno}}</paper-item></td>
         <td style="width: 45%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 10%;"><paper-input on-focus="FnActivity" id="s{{studid}}" name="Thinking Skills" value="{{score1}}"></paper-input></td>   
-        <td style="width: 10%;"><paper-input on-focus="FnActivity" id="s2{{studid}}" name="Social Skills" value="{{score2}}"></paper-input></td>  
-        <td style="width: 10%;"><paper-input on-focus="FnActivity"  id="s3{{studid}}" name="Emotional Skills" value="{{score3}}"></paper-input></td>  
+        <td style="width: 10%;"><paper-input on-focus="FnActivity" id="l1{{studid}}" name="Thinking Skills" value="{{score1}}"></paper-input></td>   
+        <td style="width: 10%;"><paper-input on-focus="FnActivity" id="l2{{studid}}" name="Social Skills" value="{{score2}}"></paper-input></td>  
+        <td style="width: 10%;"><paper-input on-focus="FnActivity"  id="l3{{studid}}" name="Emotional Skills" value="{{score3}}"></paper-input></td>  
        
         <!--<td style="width: 10%;"><paper-input id="t{{studid}}" name="total" value="{{total}}"></paper-input></td>
          <td style="width: 10%;"><paper-input id="g{{studid}}" name="grade" value="{{grade}}"></paper-input></td>-->
@@ -149,21 +149,21 @@ subcatarr=subcategoryarr;
         if(name=="Thinking Skills")
         {    
           sum1=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s1'+idd).value=sum1;
+          document.getElementById('l1'+idd).value=sum1;
           name1=name;    
          
         }
         else  if(name=="Social Skills")
         {
           sum2=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s2'+idd).value=sum2;
+          document.getElementById('l2'+idd).value=sum2;
           name2=name; 
           
         }
         else  if(name=="Emotional Skills")
         {
          sum3=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s3'+idd).value=sum3;
+          document.getElementById('l3'+idd).value=sum3;
           name3=name; 
          
         } 

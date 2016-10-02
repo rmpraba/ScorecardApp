@@ -2791,7 +2791,7 @@ app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, res)
 {
   
-    var qur="select term_name,assesment_id,student_id,student_name,(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    var qur="select term_name,assesment_id,student_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
     "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as term_grade,"+
     "subject_id from tr_term_assesment_overall_marks where subject_id='"+req.query.subject+"' and school_id='"+req.query.schoolid+"' "+ 
     "and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+

@@ -47,10 +47,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td  id="tb1" hidden><paper-item>{{serialno}}</paper-item></td>
         <td  id="tb1" hidden><paper-item>{{studname}}</paper-item></td>
-        <td  id="tb1"><paper-input on-focus="FnActivity" id="s1{{studid}}" name="Literary and Creative Skills" value="{{score1}}"></paper-input></td>   
-        <td  id="tb1"><paper-input on-focus="FnActivity" id="s2{{studid}}" name="Scientific Skills" value="{{score2}}"></paper-input></td>  
-        <td  id="tb1"><paper-input on-focus="FnActivity" id="s3{{studid}}" name="Information and Communication Technology (ICT) echnology (ICT)" value="{{score3}}"></paper-input></td>  
-        <td  id="tb1"><paper-input on-focus="FnActivity" id="s4{{studid}}" name="organisational and leadership skills" value="{{score4}}"></paper-input></td>  
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="c1{{studid}}" name="Literary and Creative Skills" value="{{score1}}"></paper-input></td>   
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="c2{{studid}}" name="Scientific Skills" value="{{score2}}"></paper-input></td>  
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="c3{{studid}}" name="Information and Communication Technology (ICT) echnology (ICT)" value="{{score3}}"></paper-input></td>  
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="c4{{studid}}" name="organisational and leadership skills" value="{{score4}}"></paper-input></td>  
         <!--<td  id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
          <td  id="tb1"><paper-input name="grade" id="g{{studid}}"  value="{{grade}}"></paper-input></td>-->
           <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
@@ -162,26 +162,26 @@ subcatarr=subcategoryarr;
         {
            
         sum1=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s1'+idd).value=sum1;
+          document.getElementById('c1'+idd).value=sum1;
           name1=name;         
         }
         else  if(name=="Scientific Skills")
         {
 
           sum2=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s2'+idd).value=sum2;
+          document.getElementById('c2'+idd).value=sum2;
           name2=name;         
         }
         else  if(name=="Information and Communication Technology (ICT) echnology (ICT)")
         {
          sum3=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s3'+idd).value=sum3;
+          document.getElementById('c3'+idd).value=sum3;
           name3=name;         
         }
         else  if(name=="organisational and leadership skills")
         {
          sum4=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s4'+idd).value=sum4;
+          document.getElementById('c4'+idd).value=sum4;
           name4=name;   
           }
             sum=0;

@@ -48,8 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td id="tb1"><paper-item>{{serialno}}</paper-item></td>
         <td id="tb1"><paper-item>{{studname}}</paper-item></td>
-        <td id="tb1"><paper-input on-focus="FnActivity" id="s1{{studid}}"  name="VISUAL ARTS" value="{{score1}}"></paper-input></td>
-        <td id="tb1"><paper-input on-focus="FnActivity" id="s2{{studid}}"  name="PERFORMING ARTS" value="{{score2}}"></paper-input></td>
+        <td id="tb1"><paper-input on-focus="FnActivity" id="v1{{studid}}"  name="VISUAL ARTS" value="{{score1}}"></paper-input></td>
+        <td id="tb1"><paper-input on-focus="FnActivity" id="v2{{studid}}"  name="PERFORMING ARTS" value="{{score2}}"></paper-input></td>
        <!-- <td id="tb1"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
          <td id="tb1"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>-->
          <td id="tb1"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
@@ -163,14 +163,14 @@ subcatarr=subcategoryarr;
          if(name=="VISUAL ARTS")
           {
           sum1=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s1'+idd).value=sum1;
+          document.getElementById('v1'+idd).value=sum1;
           name1=name; 
          
         }
         else if(name=="PERFORMING ARTS")
         {
            sum2=(parseFloat((parseFloat(sum))/parseFloat(t))*2).toFixed(2);
-          document.getElementById('s2'+idd).value=sum2;
+          document.getElementById('v2'+idd).value=sum2;
           name2=name; 
          }
           sum=0;

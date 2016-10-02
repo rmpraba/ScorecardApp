@@ -266,7 +266,7 @@
 <div>
     <div class="row">
       <span class="inputelements">
-        <paper-dropdown-menu label="Select TeacherName">
+        <paper-dropdown-menu label="Select Teacher Name">
           <paper-menu   id="techj" class="dropdown-content"  on-iron-select="teachersid">   
             <template is="dom-repeat" items="{{teacharr}}" as="view">
               <paper-item value="{{view.id}}">{{view.password}}</paper-item>
@@ -275,10 +275,10 @@
         </paper-dropdown-menu>
       </span>
       <span class="inputelements">
-        <paper-input label="Observername" id="Observername" value="{{uname}}"></paper-input>   
+        <paper-input label="Observer name" id="Observername" value="{{uname}}"></paper-input>   
       </span>
       <span class="inputelements">
-        <paper-dropdown-menu label="GradeName">
+        <paper-dropdown-menu label="Grade Name">
           <paper-menu  id="grdj" class="dropdown-content"  on-iron-select="gradeid">   
             <template is="dom-repeat" items="{{gradearrs}}" as="view">
               <paper-item value="{{view.gid}}">{{view.gradename}}</paper-item>
@@ -457,21 +457,21 @@
       <button on-click="toggle" id="heading" style="color:blue;">Strength</button></br>
          <iron-collapse id="collapse">
                   
-             <div hidden$="{{hidescore11}}" id="rep1" class="content" ><h3>{{uname}}:</h3></br>
+             <div hidden$="{{hidescore11}}" id="rep1" class="content" ><h3>{{uname}}:</h3>
                <p>{{Strength}}</p>
               </div>
              
-               <div class="content"  hidden$="{{hidescorearrr1}}" ></br>
+               <div class="content"  hidden$="{{hidescorearrr1}}" >
                <h3>{{scorearr11}}:</h3><p>{{scorearr111}}</p>
                
               </div>
              
-              <div class="content" hidden$="{{hidescorearrr2}}" ></br>
+              <div class="content" hidden$="{{hidescorearrr2}}" >
               <h3>{{scorearr12}}:</h3><p>{{scorearr110}}</p>
                
               </div>
              
-              <div class="content"  hidden$="{{hidescorearrr3}}" ></br>
+              <div class="content"  hidden$="{{hidescorearrr3}}" >
               <h3>{{scorearr13}}:</h3><p>{{scorearr221}} </p>
                 
               </div>
@@ -489,16 +489,16 @@
 
          <button on-click="toggle2" id="heading2" style="color:blue;" >Areas Of Improvement</button></br>
          <iron-collapse id="collapse2">
-          <div class="content" hidden$="{{hidescore12}}"  id="rep2" > <h3>{{uname}}:</h3></br>
+          <div class="content" hidden$="{{hidescore12}}"  id="rep2" > <h3>{{uname}}:</h3>
                <p>{{Areas}}</p>
               </div>
-                <div class="content" hidden$="{{hidescorearrr11}}"><h3>{{scorearr11}}:</h3><br>
+                <div class="content" hidden$="{{hidescorearrr11}}"><h3>{{scorearr11}}:</h3>
                <p>{{scorearr222}}<p>
               </div>
-                <div class="content"  hidden$="{{hidescorearrr12}}" ><h3>{{scorearr12}}:</h3><br>
+                <div class="content"  hidden$="{{hidescorearrr12}}" ><h3>{{scorearr12}}:</h3>
                <p>{{scorearr220}}</p>
               </div>
-                <div class="content"  hidden$="{{hidescorearrr13}}" ><h3>{{scorearr13}}:</h3><br>
+                <div class="content"  hidden$="{{hidescorearrr13}}" ><h3>{{scorearr13}}:</h3>
                <p>{{scorearr223}}</p>
               </div>
 
@@ -514,21 +514,21 @@
            <button on-click="toggle3" id="heading3" style="color:blue;">Innovation</button></br>
          <iron-collapse id="collapse3">
                   
-             <div hidden$="{{hidescore11}}" id="rep3" class="content" ><h3>{{uname}}:</h3></br>
+             <div hidden$="{{hidescore11}}" id="rep3" class="content" ><h3>{{uname}}:</h3>
                <p>{{Innovation}}</p>
              </div>
              
-              <div class="content"  hidden$="{{hidescorearrr111}}" ></br>
+              <div class="content"  hidden$="{{hidescorearrr111}}" >
                <h3>{{scorearr11}}:</h3><br><p>{{scorearr333}}</p>
                
               </div>
              
-              <div class="content" hidden$="{{hidescorearrr121}}" ></br>
+              <div class="content" hidden$="{{hidescorearrr121}}" >
               <h3>{{scorearr12}}:</h3><br><p>{{scorearr330}}</p>
                
               </div>
              
-              <div class="content"  hidden$="{{hidescorearrr131}}" ></br>
+              <div class="content"  hidden$="{{hidescorearrr131}}" >
               <h3>{{scorearr13}}:</h3><br><p>{{scorearr224}} </p>
                 
               </div>
@@ -550,22 +550,22 @@
         <button on-click="toggle4" id="heading4" style="color:blue;">Comments</button></br>
          <iron-collapse id="collapse4">
                   
-             <div hidden$="{{hidescore11}}" id="rep4" class="content" ><h3>{{uname}}:</h3></br>
+             <div hidden$="{{hidescore11}}" id="rep4" class="content" ><h3>{{uname}}:</h3>
                <p>{{comment}}</p>
               </div>
              
                <div class="content"  hidden$="{{hidescorearrr110}}" ></br>
-               <h3>{{scorearr11}}:</h3><br><p>{{scorearr444}}</p>
+               <h3>{{scorearr11}}:</h3><p>{{scorearr444}}</p>
                
               </div>
              
               <div class="content" hidden$="{{hidescorearrr120}}" ></br>
-              <h3>{{scorearr12}}:</h3><br><p>{{scorearr440}}</p>
+              <h3>{{scorearr12}}:</h3><p>{{scorearr440}}</p>
                
               </div>
              
               <div class="content"  hidden$="{{hidescorearrr130}}" ></br>
-              <h3>{{scorearr13}}:</h3><br><p>{{scorearr225}} </p>
+              <h3>{{scorearr13}}:</h3><p>{{scorearr225}} </p>
                 
               </div>
              
@@ -752,8 +752,15 @@
       },  
 
      toggle: function() {
+      if(this.$.collapse2.opened==true)
+        this.$.collapse2.opened=false;
+      if(this.$.collapse3.opened==true)
+        this.$.collapse3.opened=false;
+      if(this.$.collapse4.opened==true)
+        this.$.collapse4.opened=false;
         this.$.collapse.toggle();
         this.$.rep1.hidden=true;
+
      },
      toggle1: function(){
        this.$.collapse1.toggle();
@@ -763,6 +770,12 @@
         dialogr1.open();*/
       },
         toggle2: function() {
+      if(this.$.collapse4.opened==true)
+        this.$.collapse4.opened=false;
+      if(this.$.collapse.opened==true)
+        this.$.collapse.opened=false;
+      if(this.$.collapse3.opened==true)
+        this.$.collapse3.opened=false;
         this.$.collapse2.toggle();
          this.$.rep2.hidden=true;
      },
@@ -772,6 +785,12 @@
        },
      
      toggle3: function() {
+      if(this.$.collapse4.opened==true)
+        this.$.collapse4.opened=false;
+      if(this.$.collapse2.opened==true)
+        this.$.collapse2.opened=false;
+      if(this.$.collapse.opened==true)
+        this.$.collapse.opened=false;
         this.$.collapse3.toggle();
        this.$.rep3.hidden=true;
      },
@@ -782,6 +801,13 @@
       },
      
         toggle4: function() {
+      if(this.$.collapse.opened==true)
+        this.$.collapse.opened=false;
+      if(this.$.collapse2.opened==true)
+        this.$.collapse2.opened=false;
+      if(this.$.collapse3.opened==true)
+        this.$.collapse3.opened=false;
+
         this.$.collapse4.toggle();
          this.$.rep4.hidden=true;
      },

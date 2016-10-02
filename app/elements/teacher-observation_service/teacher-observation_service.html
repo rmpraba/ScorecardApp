@@ -238,7 +238,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      teachersectionResponse:function(e)
      {
-      var res=e.detail.response.returnval; 
+      var res=e.detail.response.returnval;
+      for(var i=0;i<res.length;i++){ 
+      var first=((res[i].section_id).substring(0,1)).toUpperCase();
+      var last=((res[i].section_id).substring(1)).toLowerCase();
+      res[i].section_id=first+last;
+      }
       document.querySelector('teacher-observation_card').sectionarr=res;
      },
      Fnteachersubject:function(teacherid,gradeid,sectionid)

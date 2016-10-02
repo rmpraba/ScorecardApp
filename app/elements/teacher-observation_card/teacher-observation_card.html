@@ -2,16 +2,18 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../term-assesment-service/term-assesment-service.html">
 <link rel="import" href="../cc-maths-onetofour-card/cc-maths-onetofour-card.html">
 <link rel="import" href="../cc-evs-onetofour-card/cc-evs-onetofour-card.html">
 
-
 <dom-module id="teacher-observation_card">
   <template>
-    <style>
+    <style is="custom-style">
       :host {
         display: block;
       }
@@ -28,35 +30,59 @@
               width: 50%;
               height: 10%;
               text-align: center;
-            top:100px;
-              left:350px
+            top:50px;
+              margin-left: 30%;
         }
      #tb2{
               width:20%;
          }
 
-    #tb3{
+     #tb3{
               position: relative;
               height: 100%;
               border: 1px solid black;
-              top:100px;
-              left: 350px;
+              top:70px;
+              left: 200px;
+              text-align: left;
+       }
+         #th1{
+              position: relative;
+              height: 50%;
+              border: 1px solid black;
+              top:70px;
+              left: 200px;
+              text-align: left;
+       }
+       #th2{
+              position: relative;
+              height: 100%;
+              border: 1px solid black;
+              top:70px;
+              left: 200px;
+              text-align: left;
+       }
+       #th3{
+              position: relative;
+              height: 100%;
+              border: 1px solid black;
+              top:70px;
+              left: 200px;
               text-align: left;
        }
     #tb6{
-                position: relative;
+            position: relative;
               width: 70%;
               height: 100%;
-              border: 1px solid black;
               top:150px;
               left: 200px
+
        }
        #tb10{
               position: relative;
               width: 70%;
               height: 100%;
           
-              top:200px;
+              top:30px;
               left: 200px
        }
 
@@ -65,163 +91,512 @@
              width:2%
        }
         #tb5{
-             height:80px;
+             height:50px;
        }
 
     #tb7{
              width:10%
        }
-     #tb8{
-             width:60%
-       }
+    
        #tc{
         color:#003399;
        } 
-        #tb9{
-        color:white;
-        background:#336699;
-       } 
+         
       .row{
-        margin: 5%auto;
+        margin:0 0 0 50px;
         text-align: center;
         @apply(--layout-horizontal);
+          top:20px;
+          left: 200px;
       }
       #div1
       {
         @apply(--layout-horizontal);
       }
-    </style>
+      #heading {
+        padding: 10px 15px;
+        margin-top:10px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 65%;
+        text-align: left;
+        top:200px;
+        left: 150px;
+        margin-left: 5%;
+        }
+       #heading2 {
+        padding: 10px 15px;
+        margin-top: 10px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 65%;
+        text-align: left;
+        top:200px;
+        left: 150px;
+        margin-left: 5%;
+        }
+         #heading3 {
+        padding: 10px 15px;
+        margin-top: 10px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 65%;
+        text-align: left;
+        top:200px;
+        left: 150px;
+        margin-left: 5%;
+        }
+         #heading4 {
+        padding: 10px 15px;
+        margin-top: 10px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 65%;
+        text-align: left;
+        top:200px;
+        left: 150px;
+        margin-left: 5%;
+        }
+        .heading1{
+          width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+            margin-left: 50%;
+            text-transform: none;
+        }
+       /*.heading1 {
+        padding: 10px 15px;
+        margin-top: 20px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 10%;
+        text-align: left;
+        left:250px;
+        color: white;
+        background-color:#087B94;
+      }*/
+
+      .content {
+       
+         width:70%;
+         margin-left: 10%;
+        }
+       
+    /*  #collapse3 {
+        max-height: 100px;
+      }*/
+
+#rt1,#rt2,#rt3,#rt4{
+  width:40%;
+  height: 40%;
+
+}
+ .removes{
+   display: none;
+  }
+  .inputelements{
+    display: inline-block;
+    padding: 0 7px;
+    margin: 2%;
+  }
+  table, tr, th, td{
+    border-collapse: collapse;
+  }
+  td{
+    text-align: center; 
+    border: 1;
+  }
+  paper-input{
+    margin-top: -5.5%;
+  }
+  paper-button{
+     width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+            /*margin-left: 45%;*/
+  }
+  h3,p{
+    text-align: left;
+  }
+  .buttons{
+    margin-left: 50%;
+  }
+  #Observername{
+    margin-top: 2%;
+  }
+  paper-dropdown-menu{
+    --paper-input-container-label: { color: red };
+      text-align:center;
+  }
+
+  </style>
 <div>
     <div class="row">
-      
-     <paper-dropdown-menu label="Select TeacherName">
-      <paper-menu class="dropdown-content"  on-iron-select="teachersid">   
-        <template is="dom-repeat" items="{{teacharr}}" as="view">
-                <paper-item value="{{view.id}}">{{view.password}}</paper-item>
-        </template>
-      </paper-menu>
-     </paper-dropdown-menu>
-           <paper-input label="Observername" id="Observername" value="{{uname}}"></paper-input>   
-
-     <paper-dropdown-menu label="GradeName">
-      <paper-menu  id="grdj" class="dropdown-content"  on-iron-select="gradeid">   
-        <template is="dom-repeat" items="{{gradearrs}}" as="view">
-                <paper-item value="{{view.gid}}">{{view.gradename}}</paper-item>
-        </template>
-      </paper-menu>
-     </paper-dropdown-menu>
-      <paper-dropdown-menu label="SectionName">
-      <paper-menu id="sucj"  class="dropdown-content"  on-iron-select="sectionid">   
+      <span class="inputelements">
+        <paper-dropdown-menu label="Select TeacherName">
+          <paper-menu   id="techj" class="dropdown-content"  on-iron-select="teachersid">   
+            <template is="dom-repeat" items="{{teacharr}}" as="view">
+              <paper-item value="{{view.id}}">{{view.password}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+      <span class="inputelements">
+        <paper-input label="Observername" id="Observername" value="{{uname}}"></paper-input>   
+      </span>
+      <span class="inputelements">
+        <paper-dropdown-menu label="GradeName">
+          <paper-menu  id="grdj" class="dropdown-content"  on-iron-select="gradeid">   
+            <template is="dom-repeat" items="{{gradearrs}}" as="view">
+              <paper-item value="{{view.gid}}">{{view.gradename}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+      <span class="inputelements">
+        <paper-dropdown-menu label="Section Name">
+          <paper-menu id="sucj"  class="dropdown-content"  on-iron-select="sectionid">   
             <template is="dom-repeat" items="{{sectionarr}}" as="view">
-                <paper-item value="{{view.section_id}}">{{view.section_id}}</paper-item>
+              <paper-item value="{{view.section_id}}">{{view.section_id}}</paper-item>
             </template>
-      </paper-menu>
-     </paper-dropdown-menu>
-    
-      <paper-dropdown-menu label=" Subject Name">
-      <paper-menu id="subj"  class="dropdown-content"  on-iron-select="subjectid">   
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+      <span class="inputelements">
+        <paper-dropdown-menu label=" Subject Name">
+          <paper-menu id="subj"  class="dropdown-content"  on-iron-select="subjectid">   
             <template is="dom-repeat" items="{{subarrs}}" as="view">
-                <paper-item value="{{view.sid}}">{{view.subjectname}}</paper-item>
+              <paper-item value="{{view.sid}}">{{view.subjectname}}</paper-item>
             </template>
-      </paper-menu>
-     </paper-dropdown-menu>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
     </div>
- <div>
-        <div id="tb0">
-              <h1>Teacher Observation Form</h1>
-        </div>
-      
-        <div id="div1">
-
-        <table border="1" width="50%" id="tb3">
-          <tr><th id="tb5" height="100px"><center>OBSERVATION TILTE</center></th></tr>
-         <template is="dom-repeat" items="{{descriptorarr}}" as="view">
+  <div>
+  <div id="tb0">
+  <center>
+    <h1>TEACHER OBSERVATION</h1>
+    </center>
+  </div>
+  <div id="div1">
+    <table  border="1" id="tb3" style="border-collapse: collapse;">
+      <thead>
+        <tr>
+        <th>Serial No</th>
+          <th id="tb5" ><center>Observation Title</center></th>
+        </tr>
+      </thead>
+      <tbody>
+        <template is="dom-repeat" items="{{descriptorarr}}" as="view">
           <tr>
-         <th id="tb5" height="100px">{{view.description}}</th>
-         </tr>
-         </template>
-         </table>
-         <table border="1" hidden$="{{hidescorearr1}}" id="tb3">
-        <tr><th id="tb5" height="100px">{{scorearr11}}</th></tr>
-          <template is="dom-repeat" items="{{scorearr1}}" as="view1">
-          <tr>
-         <th id="tb5" height="100px">{{view1.score}}</th>
-         </tr>
-          </template>
-          </table>
-           <table border="1" hidden$="{{hidescorearr2}}" id="tb3">
-           <tr><th id="tb5" height="100px">{{scorearr12}}</th></tr>
-        
-          <template is="dom-repeat" items="{{scorearr2}}" as="view1">
-          <tr>
-         <th id="tb5" height="100px">{{view1.score}}</th>
-         </tr>
-          </template>
-          </table>
-           <table border="1" hidden$="{{hidescorearr3}}" id="tb3">
-           <tr><th id="tb5" height="100px">{{scorearr13}}</th></tr>
-        
-          <template is="dom-repeat" items="{{scorearr3}}" as="view1">
-          <tr>
-         <th id="tb5" height="100px">{{view1.score}}</th>
-         </tr>
-          </template>
-          </table>
-           <table border="1" id="tb3" hidden$="{{hidescore1}}">
-           <tr>
-            <td  id="tb5" height="100px">{{uname}}</td>
-            </tr>
-          <template is="dom-repeat" items="{{descriptorarr}}" as="view">
-          <tr>
-         
-
-          <td id="tb5" height="100px"><paper-input  id="score{{index}}"  name="{{view.id}}" hidden$="{{hidescore1}}" auto-validate allowed-pattern="[0-9,.]$" char-counter maxlength="1" on-change="FnScore"></paper-input></td>
+          <td>{{view.serialno}}</td>
+           <td id="tb5">{{view.description}}</td>
           </tr>
-          </template>
-          </table>
+        </template>
+      </tbody>
+    </table>
+    <table  border="1" hidden$="{{hidescorearr1}}" id="th1">
+      <thead>
+        <tr id="th1">
+          <th   style=" height:50px;">{{scorearr11}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template is="dom-repeat" items="{{scorearr1}}" as="view1">
+          <tr>
+           <td id="tb5"  >{{view1.score}}</td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <table  border="1" hidden$="{{hidescorearr2}}" id="th2">
+      <thead>
+        <tr id="th2">
+          <th   style=" height:50px;">{{scorearr12}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template is="dom-repeat" items="{{scorearr2}}" as="view1">
+          <tr>
+           <td id="tb5">{{view1.score}}</td>
+          </tr>
+        </template>
+      </tbody>  
+    </table>
+    <table border="1" hidden$="{{hidescorearr3}}" id="th3">
+      <tr id="th3">
+       <th  style=" height:50px;" >{{scorearr13}}</th>
+      </tr>
+     <template is="dom-repeat" items="{{scorearr3}}" as="view1">
+       <tr>
+         <td id="tb5">{{view1.score}}</td>
+       </tr>
+     </template>
+    </table>
+
+    <table border="1" id="tb3" hidden$="{{hidescore1}}">
+      <tr>
+        <td id="tb5">{{uname}}</td>
+      </tr>
+    <template is="dom-repeat" items="{{descriptorarr}}" as="view">
+      <tr>
+         <td id="tb5" style="height: 40px;" border='1'><paper-input    id="score{{index}}" on-change="FnScore"  name="{{view.id}}" hidden$="{{hidescore1}}" auto-validate allowed-pattern="[0-9,.]$" ></paper-input>
+         </td>
+     </tr>
+     </template>
+    </table>
            </div>
-          <table border="1" id="tb6">
-         <tbody>
-              <tr>
-           <th id="tb7">Strength:</th><th id="tb8">
+      
+ 
+
+  <paper-dialog id="rt1" modal>
+
+
+<div hidden$="{{hidescore11}}" >
+           <center>
+           <h3>{{uname}}:</h3><br>
+           <iron-autogrow-textarea id="strengthvalue" placeholder="Leave your comments here..." value="{{Strength}}" rows="4" style="width:50%;"></iron-autogrow-textarea>
+           </center>
+     </div>
+       <div class="buttons">
+           <paper-button on-click="val1" dialog-confirm autofocus >Submit</paper-button>
+      </div>
+ </paper-dialog>
+
+
+
+   <paper-dialog id="rt2" modal>
+
+        <div hidden$="{{hidescore12}}">
+           <center>
+           <h3>{{uname}}:</h3><br>
+           <iron-autogrow-textarea   value="{{Areas}}" placeholder="Leave your comments here..." rows="4" style="width:50%;"></iron-autogrow-textarea>
+           </center>  
+
+        </div>
+
+       <div class="buttons">
+           <paper-button on-click="val2" dialog-confirm autofocus>Submit</paper-button>
+      </div>
+ </paper-dialog>
+
+
+
+ <paper-dialog id="rt3" modal>
+
+     <div hidden$="{{hidescore13}}">
+           <center>
+           <h3>{{uname}}:</h3><br>
+           <iron-autogrow-textarea value="{{Innovation}}" placeholder="Leave your comments here..." rows="4" style="width:50%;"></iron-autogrow-textarea>
+           </center>
+
+     </div>
+
+       <div class="buttons">
+           <paper-button  on-click="val3" dialog-confirm autofocus>Submit</paper-button>
+      </div></br>
+
+   </paper-dialog>
+
+   <paper-dialog id="rt4" modal>
+
+      <div hidden$="{{hidescore14}}" >
+           <center>
+           <h2>{{uname}}:</h2>
+           <iron-autogrow-textarea  placeholder="Leave your comments here..." rows="4" value="{{comment}}"  style="width:50%"></iron-autogrow-textarea>
+           </center>
+
+     </div>
+
+       <div class="buttons">
+           <paper-button  on-click="val4" dialog-confirm autofocus>Submit</paper-button>
+      </div></br>
+   </paper-dialog>
+ </br>
+</br>
+</br>
+</br>
+
+<center>
+
+    <table id="tb6">
+
+      <button on-click="toggle" id="heading" style="color:blue;">Strength</button></br>
+         <iron-collapse id="collapse">
+                  
+             <div hidden$="{{hidescore11}}" id="rep1" class="content" ><h3>{{uname}}:</h3></br>
+               {{Strength}}
+              </div>
+             
+               <div class="content"  hidden$="{{hidescorearrr1}}" ></br>
+               <h3>{{scorearr11}}:</h3><p>{{scorearr111}}</p>
+               
+              </div>
+             
+              <div class="content" hidden$="{{hidescorearrr2}}" ></br>
+              <h3>{{scorearr12}}:</h3><p>{{scorearr110}}</p>
+               
+              </div>
+             
+              <div class="content"  hidden$="{{hidescorearrr3}}" ></br>
+              <h3>{{scorearr13}}:</h3><p>{{scorearr221}} </p>
+                
+              </div>
+             
+                 <button on-click="toggle1" id="ad1" class="heading1">Add
+
+                </button></br>
+       
+            </div>
+              <iron-collapse id="collapse1">
             
-             <paper-textarea  value="{{Strength}}" style="width:60%"></paper-textarea>
-           </th>
-            </tr>
-            <tr>
-           <th id="tb7">Improvement Areas:</th> <th id="tb8">
-            <paper-input value="{{Areas}}" ></paper-input> 
-           </th>
-           
-           
+        </iron-collapse>
+        </div>
+        </iron-collapse>
+
+         <button on-click="toggle2" id="heading2" style="color:blue;" >Areas Of Improvement</button></br>
+         <iron-collapse id="collapse2">
+          <div class="content" hidden$="{{hidescore12}}"  id="rep2" > <h3>{{uname}}:</h3></br>
+               {{Areas}}
+              </div>
+                <div class="content" hidden$="{{hidescorearrr11}}"><h3>{{scorearr11}}:</h3><br>
+               <p>{{scorearr222}}<p>
+              </div>
+                <div class="content"  hidden$="{{hidescorearrr12}}" ><h3>{{scorearr12}}:</h3><br>
+               <p>{{scorearr220}}</p>
+              </div>
+                <div class="content"  hidden$="{{hidescorearrr13}}" ><h3>{{scorearr13}}:</h3><br>
+               <p>{{scorearr223}}</p>
+              </div>
+
+              <div>
+            <button on-click="toggle11" id="ad2" class="heading1">Add
+          </button></br>
+          <iron-collapse id="collapse11">
             
-          </tr>
-            <tr>
-           <th id="tb7">Innovation:</th> <th id="tb8">
-             <paper-input value="{{Innovation}}"></paper-input>
-           </th>
-           
-           
+        </iron-collapse>
+        </div>
+        </iron-collapse>
+
+           <button on-click="toggle3" id="heading3" style="color:blue;">Innovation</button></br>
+         <iron-collapse id="collapse3">
+                  
+             <div hidden$="{{hidescore11}}" id="rep3" class="content" ><h3>{{uname}}:</h3></br>
+               {{Strength}}
+             </div>
+             
+              <div class="content"  hidden$="{{hidescorearrr111}}" ></br>
+               <h3>{{scorearr11}}:</h3><br><p>{{scorearr333}}</p>
+               
+              </div>
+             
+              <div class="content" hidden$="{{hidescorearrr121}}" ></br>
+              <h3>{{scorearr12}}:</h3><br><p>{{scorearr330}}</p>
+               
+              </div>
+             
+              <div class="content"  hidden$="{{hidescorearrr131}}" ></br>
+              <h3>{{scorearr13}}:</h3><br><p>{{scorearr224}} </p>
+                
+              </div>
+             
+                 <button on-click="toggle111" id="ad3" class="heading1">Add
+                </button></br>
+       
+            </div>
+              <iron-collapse id="collapse111">
             
-          </tr>
-            <tr>
-              <th id="tb7">Any other comment:</th> <th id="tb8">
-                <paper-input value="{{comment}}"></paper-input>
-              </th> 
-           </tr>
-          
-     </tbody>
-       </table>
-         
-<table border="0" id="tb10">
+        </iron-collapse>
+        </div>
+        </iron-collapse>
+
+
+
+
+
+        <button on-click="toggle4" id="heading4" style="color:blue;">Comments</button></br>
+         <iron-collapse id="collapse4">
+                  
+             <div hidden$="{{hidescore11}}" id="rep4" class="content" ><h3>{{uname}}:</h3></br>
+               <p>{{Strength}}</p>
+              </div>
+             
+               <div class="content"  hidden$="{{hidescorearrr110}}" ></br>
+               <h3>{{scorearr11}}:</h3><br><p>{{scorearr444}}</p>
+               
+              </div>
+             
+              <div class="content" hidden$="{{hidescorearrr120}}" ></br>
+              <h3>{{scorearr12}}:</h3><br><p>{{scorearr440}}</p>
+               
+              </div>
+             
+              <div class="content"  hidden$="{{hidescorearrr130}}" ></br>
+              <h3>{{scorearr13}}:</h3><br><p>{{scorearr225}} </p>
+                
+              </div>
+             
+                 <button on-click="toggle1111" id="ad4" class="heading1">Add
+                </button></br>
+       
+            </div>
+              <iron-collapse id="collapse1111">
+            
+        </iron-collapse>
+        </div>
+        </iron-collapse>
+
+   </table>
+  </center>   
+
+   <table border="0" id="tb10">
              <tbody>
-             <tr >
+             <tr>
              <th ><paper-button on-click="sumbitmark" id="tb9">Submit</paper-button></th>
-              <th><paper-button on-click="tupdate" id="tb9">Update</paper-button></th>
-               <tr>
+             <tr>
              </tbody>
            </table>
 </div>
+<paper-dialog id="maxmarks" modal>
+  <h2>Please Enter marks below 10</h2>
+  <div style="text-align:center;">
+    <paper-button dialog-dismiss style="background:black;color:#fff;">Okay</paper-button>
+  </div>
+  
+</paper-dialog>
 <teacher-observation_service id="observerservice"></teacher-observation_service>
   </template>
   <script>
@@ -233,9 +608,15 @@
      ready:function(){
       this.$.tb3.hidden=true;
       this.$.div1.hidden=true;
+      this.$.heading.hidden=true;
+      this.$.heading2.hidden=true;
+       this.$.heading3.hidden=true;
+      this.$.heading4.hidden=true;
+      this.$.tb10.hidden=true;
+      this.$.tb0.hidden=true;
+     
       //this.$.tb6.hidden=true;
-      //this.$.tb10.hidden=true;
-      //this.$.tb0.hidden=true;
+     
      /* this.$.service.teachersids();
       this.$.service.observerids(); 
      */
@@ -246,6 +627,9 @@
       Fnobservername:function()
       {
         this.uname=sessionStorage.getItem("curr_sess_loggeduname");
+        var first=((this.uname).substring(0,1)).toUpperCase();
+         var last=((this.uname).substring(1)).toLowerCase();
+         this.uname=first+last;
       },
       observerid:function(e){
       //this.empty1();  
@@ -290,95 +674,327 @@
       this.$.observerservice.Fnteachersubject(this.staffid,this.grid,this.secid);
       },
        subjectid:function(e){
-     
        this.sid=e.target.selectedItem.value;
        this.$.observerservice.Fnobservermark(this.staffid,this.grid,this.secid,this.sid);
-       
        this.$.tb3.hidden=false;
        this.$.tb6.hidden=false;
        this.$.tb10.hidden=false;
        this.$.tb0.hidden=false;
        this.hidescore1=false;
-      this.hidescorearr1=false;
+       this.hidescore11=false;
+       this.hidescore12=false; 
+       this.$.div1.hidden=false;
+       this.hidescorearr1=false;
        this.hidescorearr2=false;
        this.hidescorearr3=false;
-       this.$.div1.hidden=false;
-      
-       for(var i=0;i<this.descriptorarr.length;i++)
-       document.querySelector('#score'+i).value="";
-      
- },
+       this.hidescorearrr1=false;
+       this.hidescorearrr11=false;
+       this.hidescorearrr111=false;
+       this.hidescorearrr110=false;
+       this.$.th1.hidden=false;
+       this.$.ad1.hidden=false;
+       this.$.ad2.hidden=false;
+       this.$.ad3.hidden=false;
+       this.$.ad4.hidden=false;
+       this.$.rep1.hidden=true;
+       this.$.rep2.hidden=true;
+       this.$.rep3.hidden=true;
+       this.$.rep4.hidden=true;
+       this.$.heading.hidden=false;
+       this.$.heading2.hidden=false;
+       this.$.heading3.hidden=false;
+       this.$.heading4.hidden=false;
 
-    fnentermark:function(f)
-    { 
-      if(f==0)
-      {
-      this.hidescorearr1=true;
-      this.hidescorearr2=true;
-      this.hidescorearr3=true;
-      }
-    else if(f==1)
-    {
-      if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
-      {
-        this.hidescore1=true;
+
+
+       if (sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+        {
+         this.hidescorearrr2=true;
+         this.hidescorearrr3=true;
+         this.hidescorearrr12=true;
+         this.hidescorearrr13=true;
+         this.hidescorearrr121=true;
+         this.hidescorearrr131=true;
+         this.hidescorearrr120=true;
+         this.hidescorearrr130=true;
+         document.querySelector("#th2").style.display = "none";
+         document.querySelector("#th3").style.display = "none";
+        }
+       else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress") {
+               //alert("hi11");
+         this.hidescorearrr2=false;
+         this.hidescorearrr3=true;
+         this.hidescorearrr12=false;
+         this.hidescorearrr13=true;
+         this.hidescorearrr121=false;
+         this.hidescorearrr131=true;
+         this.hidescorearrr120=false;
+         this.hidescorearrr130=true;
+         document.querySelector("#th2").style.display = "block";
+         document.querySelector("#th3").style.display = "none";
+
+
+       }
+       else{
+          this.hidescorearrr2=false;
+         this.hidescorearrr3=false;
+         this.hidescorearrr12=false;
+         this.hidescorearrr13=false;
+          this.hidescorearrr121=false;
+         this.hidescorearrr131=false;
+          this.hidescorearrr120=false;
+         this.hidescorearrr130=false;
+
+        }
+
+       this.$.observerservice.fnstn(this.staffid,this.grid,this.secid,this.sid);
+      
+      },  
+
+     toggle: function() {
+        this.$.collapse.toggle();
+        this.$.rep1.hidden=true;
+     },
+     toggle1: function(){
+       this.$.collapse1.toggle();
+       this.$.rt1.open();
+        /* var  id="rt1";
+         var dialogr1=document.getElementById(id);
+        dialogr1.open();*/
+      },
+        toggle2: function() {
+        this.$.collapse2.toggle();
+         this.$.rep2.hidden=true;
+     },
+      toggle11: function() {
+         this.$.collapse11.toggle();
+         this.$.rt2.open();
+       },
+     
+     toggle3: function() {
+        this.$.collapse3.toggle();
+       this.$.rep3.hidden=true;
+     },
+      toggle111: function() {
+         this.$.collapse111.toggle();
+         this.$.rt3.open();
+       
+      },
+     
+        toggle4: function() {
+        this.$.collapse4.toggle();
+         this.$.rep4.hidden=true;
+     },
+      toggle1111: function() {
+         this.$.collapse1111.toggle();
+         this.$.rt4.open();
+      },
+      val1:function(){
+     // alert(this.strength);
+      this.$.ad1.hidden=true;
+      this.$.rep1.hidden=false;
+      this.$.rep2.hidden=false;
+      this.$.rep3.hidden=false;
+      this.$.rep4.hidden=false;
+      document.getElementById('strengthvalue').value="";
+        },
+      val2:function(){
+     // alert(this.strength);
+      this.$.ad2.hidden=true;
+      this.$.rep1.hidden=false;
+      this.$.rep2.hidden=false;
+      this.$.rep3.hidden=false;
+      this.$.rep4.hidden=false;
+        },
+      val3:function(){
+     // alert(this.strength);
+      this.$.ad3.hidden=true;
+      this.$.rep1.hidden=false;
+      this.$.rep2.hidden=false;
+      this.$.rep3.hidden=false;
+      this.$.rep4.hidden=false;
+        },
+       val4:function(){
+     // alert(this.strength);
+      this.$.ad4.hidden=true;
+      this.$.rep1.hidden=false;
+      this.$.rep2.hidden=false;
+      this.$.rep3.hidden=false;
+      this.$.rep4.hidden=false;
+        },
+     
+     
+
+    fnentermark:function(f){ 
+      if(f==0){
+        this.hidescorearr1=true;
         this.hidescorearr2=true;
         this.hidescorearr3=true;
-
-      }
-      else
-      {
-        this.hidescore1=false;
-      }
-      
-    }
-    else if(f==2)
-    {
-      var role=sessionStorage.getItem("curr_sess_loggedroleid");
-       if(role=="co-ordinator"||role=="headmistress")
-       {
+        this.hidescorearrr1=true;
+        this.hidescorearrr2=true;
+        this.hidescorearrr3=true;
+        this.hidescorearrr11=true;
+        this.hidescorearrr12=true;
+        this.hidescorearrr13=true;
+        this.hidescorearrr110=true;
+        this.hidescorearrr120=true;
+        this.hidescorearrr130=true;
+        this.hidescorearrr111=true;
+        this.hidescorearrr121=true;
+        this.hidescorearrr131=true;
+      } else if(f==1) {
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
+        this.hidescore1=true;
+        this.hidescore11=true;
+        this.hidescore12=true;
+         this.hidescore13=true;
+        this.hidescore14=true;
+        this.hidescorearr2=true;
+        this.hidescorearr3=true;
+        this.hidescorearrr2=true;
+        this.hidescorearrr3=true;
+        this.hidescorearrr120=true;
+        this.hidescorearrr130=true;
+        this.hidescorearrr121=true;
+        this.hidescorearrr131=true;
+        this.hidescorearrr12=true;
+        this.hidescorearrr13=true;
+        this.$.ad1.hidden=true;
+        this.$.ad2.hidden=true;
+        this.$.ad3.hidden=true;
+        this.$.ad4.hidden=true;
+       
+        } else {
+          this.hidescore1=false;
+          this.hidescore11=false;
+          this.hidescore12=false;
+          this.hidescore13=false;
+          this.hidescore14=false;
+          this.hidescorearrr120=true;
+          this.hidescorearrr130=true;
+           this.hidescorearrr121=true;
+          this.hidescorearrr131=true;
+           this.hidescorearrr12=true;
+          this.hidescorearrr13=true;
+          this.hidescorearrr2=true;
+          this.hidescorearrr3=true;
+          document.querySelector("#th2").style.display = "none";
+        }
+      } else if(f==2) {
+        var role=sessionStorage.getItem("curr_sess_loggedroleid");
+        if(role=="co-ordinator"||role=="headmistress"){
         this.hidescore1=true;
         this.hidescorearr3=true;
-      }
-      else
-      {
-        this.hidescore1=false;
+        this.hidescorearrr3=true;
+        this.hidescorearrr13=true;
+        this.hidescorearrr131=true;
+        this.hidescorearrr130=true;
+        this.$.ad2.hidden=true;
+        this.$.ad1.hidden=true;
+        this.$.ad3.hidden=true;
+        this.$.ad4.hidden=true;
+
+      } else {
+         this.hidescore1=false;
          this.hidescorearr3=true;
-
+         this.hidescorearrr3=true;
+         this.hidescorearrr13=true;
+         this.hidescorearrr130=true;
+         this.hidescorearrr131=true;
       }
-    }
- else if(f==3)
-    {
+    } else if(f==3) {
       var role=sessionStorage.getItem("curr_sess_loggedroleid");
-     if(role=="principal"||role=="headmistress"||role=="co-ordinator")
-       {
+      if(role=="principal"||role=="headmistress"||role=="co-ordinator"){
         this.hidescore1=true;
-        
-      }
-      else
-      {
+        this.$.ad1.hidden=true;
+        this.$.ad2.hidden=true;
+        this.$.ad3.hidden=true;
+        this.$.ad4.hidden=true;
+      } else {
         this.hidescore1=false;
       }
     }
 
-    },
-    FnScore:function(e)
+  },
+  FnScore:function(e)
     {
     //alert(e.target.value+''+e.target.name);
-    var did=e.target.name;
-    var val=e.target.value;
-    var obid=sessionStorage.getItem("curr_sess_loggedid");
-    var rid=sessionStorage.getItem("curr_sess_loggedroleid");
-    this.$.observerservice.Fnobserverscore(did,val,this.staffid,obid,rid,this.grid,this.secid,this.sid);
-    //alert("submit successfully");
+    
+     
+    
+     this.val=e.target.value;
+    if(parseInt(this.val)<=10)
+    {
+            
+      this.val=e.target.value;
+      this.did=e.target.name;
+      this.obid=sessionStorage.getItem("curr_sess_loggedid");
+     this.rid=sessionStorage.getItem("curr_sess_loggedroleid");
+     this.$.observerservice.Fnobserverscore(this.did,this.val,this.staffid,this.obid,this.rid,this.grid,this.secid,this.sid);
+   
+     } 
+
+     else
+      {
+      this.$.maxmarks.open();
+      }
+     
+    
+  
     
 
     },
+
+
+
+
+   
+   
     sumbitmark:function(e)
     {
-      this.$.observerservice.Fnobserverupdateflag(this.staffid,this.grid,this.secid,this.sid);
-     
-    }
+    alert("submit successfully");
+           alert(this.Strength);
+     this.$.observerservice.fnstrength(this.staffid,this.grid,this.secid,this.sid,this.Strength,this.Areas,this.Innovation,this.comment);
+    
+    
+
+       this.$.observerservice.Fnobserverupdateflag(this.staffid,this.grid,this.secid,this.sid);
+       for(var i=0;i<this.descriptorarr.length;i++)
+         document.querySelector('#score'+i).value="";
+        this.Strength="";
+        this.Areas="";
+       
+ this.$.heading.hidden=true;
+         this.$.heading2.hidden=true;
+         this.$.heading3.hidden=true;
+        this.$.heading4.hidden=true;
+        this.$.rep2.hidden=true;
+        this.$.rep1.hidden=true;
+         this.$.rep3.hidden=true;
+        this.$.rep4.hidden=true;
+        this.$.div1.hidden=true;
+        this.$.tb10.hidden=true;
+        this.$.tb0.hidden=true;
+        this.hidescorearrr1=true;
+       this.hidescorearrr2=true;
+       this.hidescorearrr3=true;
+       this.hidescorearrr11=true;
+       this.hidescorearrr12=true;
+       this.hidescorearrr13=true
+        this.hidescorearrr111=true;
+       this.hidescorearrr121=true;
+       this.hidescorearrr131=true
+        this.hidescorearrr110=true;
+       this.hidescorearrr120=true;
+       this.hidescorearrr130=true
+      document.querySelector('#grdj').selected=-1;
+      document.querySelector('#subj').selected=-1;
+      document.querySelector('#sucj').selected=-1;
+    //  document.querySelector('#techj').selected=-1;
+    
+
+}
+
 
 
 

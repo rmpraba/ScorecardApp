@@ -62,9 +62,9 @@
       <div class="card" hidden$="{{Approvalstatus}}">
        <paper-button on-click="FnApprovalStatus" no ink><img src="../../images/approvalstatus.jpg" height="180px" width="180px"></paper-button>
       </div>
-       <!--<div class="card" hidden$="{{teach_obser}}">
+       <div class="card" hidden$="{{teach_obser}}">
        <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
-     </div>-->
+     </div>
      <div class="card" hidden$="{{comparison}}">
        <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
      </div>
@@ -250,7 +250,7 @@
           this.ConsolidatedReport=false;
           this.Report=false;
           this.GenerateReport=false;
-          //this.teach_obser=false;
+          this.teach_obser=false;
           this.comparison=false;
           this.Approvalstatus=false;
           this.Analysis=false;
@@ -260,7 +260,7 @@
           this.GenerateReport=false;
           this.Approve=false;
           this.Analysis=false;
-          //this.teach_obser=false;
+          this.teach_obser=false;
           this.Approvalstatus=false;
           }
         }

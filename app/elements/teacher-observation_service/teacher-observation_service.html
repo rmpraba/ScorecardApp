@@ -138,7 +138,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="observernameResponse"
         debounce-duration="300" 
-    >                  
+    >
+     <iron-ajax
+        
+        method="post"
+        id="fnstrengthajax"
+        url="{{fnstrengthurl}}"
+        params="{{fnstrengthparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fnstrengthResponse"
+        debounce-duration="300" 
+    >  
+     <iron-ajax
+        
+        method="post"
+        id="fnstnajax"
+        url="{{fnstnurl}}"
+        params="{{fnstnparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fnstnResponse"
+        debounce-duration="300" 
+    >                        
   </template>      
   <script>
   (function() {
@@ -149,17 +171,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       fetchteachersid:function (){
            this.teacherurl=sessionStorage.getItem("addrinfo")+"/teacherid-service";
-           var obj={"schoolid":"","id":"","roleid":""};
+           var obj={"schoolid":"","id":"","roleid":"","gradeid1":"" };
            obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
            obj.id=sessionStorage.getItem("curr_sess_loggedid");
            obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
-           //alert(JSON.stringify(obj));
+           obj.gradeid1=sessionStorage.getItem("curr_sess_loggedgradeid1");
+          // alert(JSON.stringify(obj));
            this.teacherparam=obj;
            this.$.teacherajax.generateRequest();
+           
 
        },
       teacherResponse:function(e){
-            var res=e.detail.response.returnval;      
+            var res=e.detail.response.returnval;   
+            for(var i=0;i<res.length;i++){
+              var first=((res[i].password).substring(0,1)).toUpperCase();
+              var last=((res[i].password).substring(1)).toLowerCase();
+              var name=first+last;
+              res[i].password=name;
+            }  
+
             document.querySelector('teacher-observation_card').teacharr=res;
 
      },
@@ -171,7 +202,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      observerdescriptorResponse:function(e)
      {
       var res=e.detail.response.returnval; 
-      //alert(res);     
+      //alert(res); 
+      for(var i=0;i<res.length;i++){
+        res[i].serialno=i+1;
+      }    
             document.querySelector('teacher-observation_card').descriptorarr=res;
      },
      Fnteachergrade:function(teacherid)
@@ -291,7 +325,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
   for(var i=0;i<res.length;i++)
       {
-        if(res[i].role=="co-ordinator")
+        if((res[i].role=="co-ordinator"||res[i].role=="headmistress"))
         {
 
        scorearr1.push(res[i]);
@@ -299,14 +333,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
         }
        //  scorearr1[0].role;
-        else if(res[i].role=="headmistress")
+        else if(res[i].role=="principal")
         {
           
           scorearr2.push(res[i]);
         var n=scorearr2[0].role;
 
         }
-        else if(res[i].role=="principal")
+        else if(res[i].role=="headofedn")
         {
           scorearr3.push(res[i]);
           var r=scorearr3[0].role;
@@ -315,22 +349,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
         
       }
-      alert(m);
-      alert(n);
-      alert(r);
-
-
-     
-      if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
       {
       document.querySelector('teacher-observation_card').scorearr1=scorearr1;
       }
-     else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
+     else if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal")
       {
       document.querySelector('teacher-observation_card').scorearr1=scorearr1;
       document.querySelector('teacher-observation_card').scorearr2=scorearr2;
       }
-     else if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal")
+     else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn")
       {
       document.querySelector('teacher-observation_card').scorearr1=scorearr1;
        document.querySelector('teacher-observation_card').scorearr2=scorearr2;
@@ -340,7 +369,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         /* alert(JSON.stringify(m));
          var n=scorearr2[0].role;
          var r=scorearr3[0]role;*/
-          if(m=="co-ordinator"&& n=="headmistress"&& r=="principal")
+          if((m=="co-ordinator"||m=="headmistress")&& n=="principal"&& r=="headofedn")
           {
             var observer1arr=scorearr1[0].observer_id;
            var observer2arr=scorearr2[0].observer_id;
@@ -352,12 +381,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            obj.id1=observer2arr;
             obj.id2=observer3arr;
          this.observernameparam=obj;
-           alert('hi'); 
-           alert(JSON.stringify(obj));
+            
+          
            this.$.observernameajax.generateRequest();
          }
 
-        else if (m=="co-ordinator"&& n=="headmistress") {
+        else if ((m=="co-ordinator"||m=="headmistress")&& n=="principal") {
           var observer1arr=scorearr1[0].observer_id;
           var observer2arr=scorearr2[0].observer_id;
          
@@ -366,95 +395,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            obj.id=observer1arr;
            obj.id1=observer2arr;
          this.observernameparam=obj;
-           alert('hi'); 
-           alert(JSON.stringify(obj));
+          
            this.$.observernameajax.generateRequest();
          }
-         else if(m=="co-ordinator"|| n=="headmistress"||r=="principal")
+         else if((m=="co-ordinator"||m=="headmistress"))
          {
            var observer1arr=scorearr1[0].observer_id;
            this.observernameurl=sessionStorage.getItem("addrinfo")+"/observername-service";
            var obj={"id":""};
            obj.id=observer1arr;
            this.observernameparam=obj;
-           alert('hi'); 
-           alert(JSON.stringify(obj));
+           
            this.$.observernameajax.generateRequest();
           
 
          }
         
 
-       /* 
-
-     /* if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
-        {
-           var observer1arr=scorearr1[0].observer_id;
-           this.observernameurl=sessionStorage.getItem("addrinfo")+"/observername-service";
-           var obj={"id":""};
-           obj.id=observer1arr;
-           this.observernameparam=obj;
-           alert('hi'); 
-           alert(JSON.stringify(obj));
-           this.$.observernameajax.generateRequest();
-          
-
-          }  
-
-
-          else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
-          {
-          alert("sdxfcg")
-          var observer1arr=scorearr1[0].observer_id;
-          var observer2arr=scorearr2[0].observer_id;
          
-         this.observernameurl=sessionStorage.getItem("addrinfo")+"/observername-service";
-          var obj={"id":"","id1":""};
-           obj.id=observer1arr;
-           obj.id1=observer2arr;
-         this.observernameparam=obj;
-           alert('hi'); 
-           alert(JSON.stringify(obj));
-           this.$.observernameajax.generateRequest();
-          }
-           else if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal")
-          {
-          alert("sdxfcg")
-        
-          }
-     */    
 
        },
       observernameResponse:function(e)
      {
-       
-
-       var res=e.detail.response.returnval  ; 
-        alert(JSON.stringify(res));
+        var res=e.detail.response.returnval  ; 
+       // alert(JSON.stringify(res));
        var scorearr11;
        var scorearr12;
        var scorearr13;
-        if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
         {
          scorearr11=res[0].name;
-         alert(scorearr11);
-         alert("sdxfcg");
+         var first=((scorearr11).substring(0,1)).toUpperCase();
+         var last=((scorearr11).substring(1)).toLowerCase();
+         scorearr11=first+last;
          document.querySelector('teacher-observation_card').scorearr11=scorearr11;
-      }
-     else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
-      {
-         scorearr11=res[0].name;
-         document.querySelector('teacher-observation_card').scorearr11=scorearr11;
-         scorearr12=res[1].name;
-         document.querySelector('teacher-observation_card').scorearr12=scorearr12;
       }
      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal")
       {
+         scorearr11=res[0].name;
+         var first=((scorearr11).substring(0,1)).toUpperCase();
+         var last=((scorearr11).substring(1)).toLowerCase();
+         scorearr11=first+last;
+         document.querySelector('teacher-observation_card').scorearr11=scorearr11;
+         scorearr12=res[1].name;
+         var first1=((scorearr12).substring(0,1)).toUpperCase();
+         var last1=((scorearr12).substring(1)).toLowerCase();
+         scorearr12=first1+last1;
+         document.querySelector('teacher-observation_card').scorearr12=scorearr12;
+      }
+     else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn")
+      {
+        // alert(res[0].name+" "+res[1].name+" "+res[2].name);
         scorearr11=res[0].name;
+        var first=((scorearr11).substring(0,1)).toUpperCase();
+         var last=((scorearr11).substring(1)).toLowerCase();
+         scorearr11=first+last;
          document.querySelector('teacher-observation_card').scorearr11=scorearr11;
         scorearr12=res[1].name;
+        var first1=((scorearr12).substring(0,1)).toUpperCase();
+         var last1=((scorearr12).substring(1)).toLowerCase();
+         scorearr12=first1+last1;
         document.querySelector('teacher-observation_card').scorearr12=scorearr12;
         scorearr13=res[2].name;
+        var first2=((scorearr13).substring(0,1)).toUpperCase();
+         var last2=((scorearr13).substring(1)).toLowerCase();
+         scorearr13=first2+last2;
      
        
        document.querySelector('teacher-observation_card').scorearr13=scorearr13;
@@ -478,7 +483,136 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            this.observerscoreparam=obj;
            this.$.observerscoreajax.generateRequest();
      },
-     Fnobserverupdateflag:function(teacherid,gradeid,sectionid,subjectid)
+     fnstrength:function(staffid,grid,secid,sid,Strength,Areas,Innovation,comment)
+     {
+
+          this.fnstrengthurl=sessionStorage.getItem("addrinfo")+"/fnstrength-service";
+           var obj={"obid":"","rid":"","staffid":"","grid":"","secid":"","sid":"","Strength":"","Areas":"","Innovation":"","comment":""};
+
+           obj.obid=sessionStorage.getItem("curr_sess_loggedid");
+           obj.rid=sessionStorage.getItem("curr_sess_loggedroleid");
+           obj.staffid=staffid;
+           obj.grid=grid;
+           obj.secid=secid;
+           obj.sid=sid;
+           obj.Strength=Strength;
+           obj.Areas=Areas;
+           obj.Innovation=Innovation;
+           obj.comment=comment;
+          this.fnstrengthparam=obj;
+          // alert(JSON.stringify(obj));           
+          this.$.fnstrengthajax.generateRequest();
+     },
+
+  fnstn:function(staffid,grid,secid,sid)
+     {
+
+    this.fnstnurl=sessionStorage.getItem("addrinfo")+"/fnstn-service";
+           var obj={"obid":"","rid":"","staffid":"","grid":"","secid":"","sid":""};
+
+           obj.obid=sessionStorage.getItem("curr_sess_loggedid");
+           obj.rid=sessionStorage.getItem("curr_sess_loggedroleid");
+           obj.staffid=staffid;
+           obj.grid=grid;
+           obj.secid=secid;
+           obj.sid=sid;
+           this.fnstnparam=obj;
+           //alert(JSON.stringify(obj));           
+          this.$.fnstnajax.generateRequest();
+     },
+
+     
+  fnstnResponse:function(e)
+     {
+      var res=e.detail.response.returnval; 
+       //alert(JSON.stringify(res));
+        
+          var scorearr111;
+          var scorearr222;
+          var scorearr333;
+          var scorearr444;
+
+          var scorearr110;
+          var scorearr220;
+          var scorearr330;
+          var scorearr440;
+          
+          var scorearr221;
+          var scorearr223;
+          var scorearr224;
+          var scorearr225;
+          
+
+
+          
+          if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress")
+          {
+            
+            scorearr111=res[0].Strength;
+            document.querySelector('teacher-observation_card').scorearr111=scorearr111;
+            scorearr222=res[0].Areas;
+            document.querySelector('teacher-observation_card').scorearr222=scorearr222;
+            scorearr333=res[0].Innovation;
+             document.querySelector('teacher-observation_card').scorearr333=scorearr333;
+            scorearr444=res[0].comment;
+            document.querySelector('teacher-observation_card').scorearr444=scorearr444;
+         }
+
+         else if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"){
+           
+                 scorearr111=res[0].Strength;
+                 document.querySelector('teacher-observation_card').scorearr111=scorearr111;
+                 scorearr222=res[0].Areas;
+                 document.querySelector('teacher-observation_card').scorearr222=scorearr222;
+                 scorearr333=res[0].Innovation;
+                 document.querySelector('teacher-observation_card').scorearr333=scorearr333;
+                 scorearr444=res[0].comment;
+                 document.querySelector('teacher-observation_card').scorearr444=scorearr444;
+                 scorearr110=res[1].Strength;
+                 document.querySelector('teacher-observation_card').scorearr110=scorearr110;
+                 scorearr220=res[1].Areas;
+                 document.querySelector('teacher-observation_card').scorearr220=scorearr220;
+                 scorearr330=res[1].Innovation;
+                 document.querySelector('teacher-observation_card').scorearr330=scorearr330;
+                 scorearr440=res[1].comment;
+                 document.querySelector('teacher-observation_card').scorearr440=scorearr440;
+       
+       }
+           else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"){
+               
+                
+               
+               
+                scorearr111=res[0].Strength;
+                 document.querySelector('teacher-observation_card').scorearr111=scorearr111;
+                 scorearr222=res[0].Areas;
+                 document.querySelector('teacher-observation_card').scorearr222=scorearr222;
+                 scorearr333=res[0].Innovation;
+                 document.querySelector('teacher-observation_card').scorearr333=scorearr333;
+                 scorearr444=res[0].comment;
+                 document.querySelector('teacher-observation_card').scorearr444=scorearr444;
+                 scorearr110=res[1].Strength;
+                 document.querySelector('teacher-observation_card').scorearr110=scorearr110;
+                 scorearr220=res[1].Areas;
+                 document.querySelector('teacher-observation_card').scorearr220=scorearr220;
+                 scorearr330=res[1].Innovation;
+                 document.querySelector('teacher-observation_card').scorearr330=scorearr330;
+                 scorearr440=res[1].comment;
+                 document.querySelector('teacher-observation_card').scorearr440=scorearr440;
+                scorearr221=res[2].Strength;
+                document.querySelector('teacher-observation_card').scorearr221=scorearr221;
+                scorearr223=res[2].Areas;
+                document.querySelector('teacher-observation_card').scorearr223=scorearr223;
+                 scorearr224=res[2].Innovation;
+                document.querySelector('teacher-observation_card').scorearr224=scorearr224;
+                scorearr225=res[2].comment;
+                document.querySelector('teacher-observation_card').scorearr225=scorearr225;
+     }
+          
+      
+     },
+
+Fnobserverupdateflag:function(teacherid,gradeid,sectionid,subjectid)
      {
       if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
       {
@@ -503,7 +637,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            obj.gradeid=gradeid;
            obj.sectionid=sectionid;
            obj.subjectid=subjectid;
-           obj.flag=1;
+           obj.flag=0;
            this.observerupdateflagparam=obj;
            this.$.observerupdateflagajax.generateRequest();
          }
@@ -517,7 +651,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            obj.gradeid=gradeid;
            obj.sectionid=sectionid;
            obj.subjectid=subjectid;
-           obj.flag=2;
+           obj.flag=1;
            this.observerupdateflagparam=obj;
            this.$.observerupdateflagajax.generateRequest();
          }

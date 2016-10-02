@@ -2957,18 +2957,22 @@ app.post('/teacherid-service' ,  urlencodedParser,function (req, res)
   var qur;
  var schol={school_id:req.query.schoolid};
  var teacherid=req.query.id;
- if(req.query.roleid=="co-ordinator")
+ var role={role_id:req.query.roleid};
+ console.log(req.query.roleid);
+ if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
-  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and school_id='"+req.query.schoolid+"' and role_id='subject-teacher' and id in (select id from mp_teacher_grade where grade_id=(select grade_id from mp_teacher_grade where id='"+req.query.id+"' and role_id='co-ordinator'))";
+
  }
- else  if(req.query.roleid=="headmistress")
+ else  if(req.query.roleid=="headofedn")
  {
-  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag>='0') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag='1') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
  }
-  else  if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
+  else  if(req.query.roleid=="principal")
  {
-  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag>='1') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag='0') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
  }
+ console.log(qur);
 connection.query(qur,
     function(err, rows)
     {
@@ -2997,14 +3001,17 @@ var observersid2={name:req.query.id2};
 console.log(observersid);
 console.log(observersid1);
 console.log(observersid2);
-connection.query("select name,role_id from md_employee where (id='"+req.query.id+"'or id='"+req.query.id1+"' or id='"+req.query.id2+"')and role_id not in('subject-teacher')",
+var qur="select name,role_id from md_employee where (id='"+req.query.id+"' or id='"+req.query.id1+"' or id='"+req.query.id2+"') and role_id not in('subject-teacher')";
+console.log('.................................................');
+console.log(qur);
+connection.query(qur,
     function(err, rows)
     {
     if(!err)
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3029,7 +3036,7 @@ connection.query("select * from md_observer_descriptor",
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3048,23 +3055,23 @@ connection.query("select * from md_observer_descriptor",
 
 app.post('/teachergrade-service' ,  urlencodedParser,function (req, res)
 { 
-  var qur;
+ var qur;
 
 var schol={school_id:req.query.schoolid};
  var teacherid={id:req.query.id};
- if(req.query.roleid=="co-ordinator")
+ if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
   qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
 
 }
-else  if(req.query.roleid=="headmistress")
+else  if(req.query.roleid=="headofedn")
  {
-  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag>='0' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
+  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag='1' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
 
 }
-else  if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
+else  if(req.query.roleid=="principal")
  {
-  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag>='1' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
+  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag='0' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
 
 }
 connection.query(qur,
@@ -3074,7 +3081,7 @@ connection.query(qur,
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3091,22 +3098,22 @@ connection.query(qur,
 
 app.post('/teachersection-service' ,  urlencodedParser,function (req, res)
 { 
-  var qur;
+ var qur;
 
 var schol={school_id:req.query.schoolid};
  var teacherid={id:req.query.id};
  var gradeid={grade_id:req.query.gradeid};
-  if(req.query.roleid=="co-ordinator")
+  if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
   qur="select  distinct section_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="headmistress")
+else if(req.query.roleid=="headofedn")
  {
-  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag>='0') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
+  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag='1') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
+else if(req.query.roleid=="principal")
  {
-  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag>='1') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
+  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag='0') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
 }
 connection.query(qur,
     function(err, rows)
@@ -3115,7 +3122,7 @@ connection.query(qur,
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3134,22 +3141,22 @@ connection.query(qur,
 
 app.post('/teachersubject-service' ,  urlencodedParser,function (req, res)
 { 
-  var qur;
+    var qur;
 var schol={school_id:req.query.schoolid};
  var teacherid={id:req.query.id};
  var gradeid={grade_id:req.query.gradeid};
  var sectionid={section_id:req.query.sectionid};
- if(req.query.roleid=="co-ordinator")
+ if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
-qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+qur= "select  DISTINCT subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="headmistress")
+else if(req.query.roleid=="headofedn")
  {
-qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in (select subject from tr_teacher_observation_flag where flag>='0' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+qur= "select DISTINCT subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in (select subject from tr_teacher_observation_flag where flag='1' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
+else if(req.query.roleid=="principal")
  {
-qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in(select subject from tr_teacher_observation_flag where flag>='1' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+qur= "select DISTINCT subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in(select subject from tr_teacher_observation_flag where flag='0' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
 }
 connection.query(qur,
     function(err, rows)
@@ -3158,7 +3165,7 @@ connection.query(qur,
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3188,7 +3195,7 @@ connection.query("select * from tr_teacher_observation_flag where ? and ? and ? 
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3214,7 +3221,8 @@ app.post('/observerscore-service',  urlencodedParser,function (req, res)
          role:req.query.roleid,
          grade:req.query.grade,
          section:req.query.section,
-         subject:req.query.subject                      
+         subject:req.query.subject,   
+                              
   }
   connection.query("INSERT INTO tr_teacher_observation_mark set ?",[response],
     function(err, rows)
@@ -3232,6 +3240,74 @@ app.post('/observerscore-service',  urlencodedParser,function (req, res)
   });
 });
 
+app.post('/fnstn-service' ,urlencodedParser,function (req, res)
+{ 
+ var teacherid={tracher_id:req.query.staffid};
+ var gradeid={grade:req.query.grid};
+ var sectionid={section:req.query.secid};
+ var subjectid={subject:req.query.sid};
+  // console.log(teacherid);
+  // console.log(gradeid);
+  // console.log(sectionid);
+  // console.log(subjectid);
+
+
+connection.query("select * from tr_teacher_observation_strength where ? and ? and ? and ?",[teacherid,gradeid,sectionid,subjectid],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      // console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+
+
+app.post('/fnstrength-service',  urlencodedParser,function (req, res){
+
+
+  var response={  
+     role:req.query.rid,
+     observer_id:req.query.obid,
+     tracher_id:req.query.staffid,
+     grade:req.query.grid,
+     section:req.query.secid,
+     subject:req.query.sid,
+     Strength:req.query.Strength, 
+     Areas:req.query.Areas,   
+     Innovation:req.query.Innovation,
+     comment:req.query.comment,              
+                   
+  }
+  console.log(response);
+  connection.query("INSERT INTO tr_teacher_observation_strength set ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
 
 app.post('/observerinsertflag-service',  urlencodedParser,function (req, res)
 {  
@@ -3262,8 +3338,7 @@ app.post('/observerinsertflag-service',  urlencodedParser,function (req, res)
 
 app.post('/observerupdateflag-service',  urlencodedParser,function (req, res)
 {  
-  
-         
+       
        var schol= {school_id:req.query.schoolid};
        var name={name:req.query.id};
        var grade={grade:req.query.gradeid};
@@ -3301,7 +3376,7 @@ connection.query("select * from tr_teacher_observation_mark where ? and ? and ? 
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else

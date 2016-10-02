@@ -425,6 +425,13 @@
        document.querySelector('beginner-assesment-card').FnRefresh();
        document.querySelector('language-enrichment-card').FnRefresh();
     }
+    if(localStorage.getItem("curr_sess_page")=="teacherobservation")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       // document.querySelector('language-enrichment-card').FnRefresh();
+    }
   },
 
   FnsetTitle:function(title){

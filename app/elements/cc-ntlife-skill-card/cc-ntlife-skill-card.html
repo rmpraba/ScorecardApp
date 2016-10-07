@@ -42,9 +42,13 @@
       <th style="width: 10%;">Thinking Skills</th>
       <th style="width: 10%;">Social Skills</th>
       <th style="width: 10%;">Emotional Skills</th>
+
       <!-- <th style="width: 10%;">Total</th> -->
       <!-- <th style="width: 10%;">Grade</th> -->
       <th></th>
+
+     
+
       </tr>  
       </div>
 <template is="dom-repeat" items="{{markarr}}" as="m">
@@ -56,7 +60,7 @@
 </template>
      <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="14">
-      <cc-ntlife-skill-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cc-ntlife-skill-itemcard>
+      <cc-ntlife-skill-itemcard serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}" score2="{{item.mark2}}" score3="{{item.mark3}}"></cc-ntlife-skill-itemcard>
       </td></tr>
       </template>
       </table>

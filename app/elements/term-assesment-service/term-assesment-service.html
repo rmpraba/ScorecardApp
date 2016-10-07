@@ -569,6 +569,7 @@
 
        else if(localStorage.getItem('curr_sess_report')=='2'||localStorage.getItem('curr_sess_report')=='4')  
         { 
+            this.callFetchGrade();
             //alert('2');
             document.querySelector('home-page').setPage('termassesment','');
         document.querySelector('term-assesment').hiddenpage();
@@ -584,6 +585,7 @@
          obj.assesmenttype=localStorage.getItem("curr_sess_assesmenttype");
          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
         // alert(JSON.stringify(obj));
+
            this.fetchfastudentreportparam= obj;         
            this.$.fetchfastudentreportajax.generateRequest();
            document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 

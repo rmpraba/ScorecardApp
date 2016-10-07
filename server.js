@@ -4347,6 +4347,35 @@ app.post('/studentparentinfo-service' ,  urlencodedParser,function (req, res)
 });
 
 
+app.post('/insertoverallfagrade-service' ,  urlencodedParser,function (req, res)
+{    
+ var response={
+            school_id:req.query.schoolid,
+            academic_year:req.query.academicyear,
+            term_name:req.query.termname,
+            grade:req.query.grade,
+            section:req.query.section,
+            subject_id:req.query.subject,
+            category:req.query.category,
+            student_id:req.query.studentid,
+            student_name:req.query.studentname,
+            total:req.query.total,
+            cat_grade:req.query.catgrade
+ }
+  
+ console.log('--------------insery status------------------');
+ // console.log(qur);
+
+  connection.query("INSERT INTO tr_term_overallfa_assesment_marks SET ?",[response],function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+      res.status(200).json({'returnval': 'invalid'});
+  });
+});
+
+
 var server = app.listen(5000, function () {
 var host = server.address().address
 var port = server.address().port

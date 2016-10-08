@@ -660,8 +660,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         var rtotal,fasum;
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
         {
-        if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
-            
+        if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){            
             // alert('hi in');
          fasum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);
         obj.sum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);

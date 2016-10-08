@@ -1018,6 +1018,30 @@ app.post('/fetchfagrade-service',  urlencodedParser,function (req,res)
 
   });
 });
+
+
+
+
+app.post('/fetchcoscholasticgrade-service',  urlencodedParser,function (req,res)
+{  
+  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+  var qur="SELECT * FROM md_coscholastic_grade_rating";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
 //Storing marks for assesment
 app.post('/insertassesmentmark-service',  urlencodedParser,function (req, res)
 { 

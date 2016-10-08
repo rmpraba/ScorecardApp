@@ -276,6 +276,18 @@
         on-response="overallinsertcoassesmentResponse"
         debounce-duration="300"
     >
+
+
+     <iron-ajax        
+        method="post"
+        id="fetchgradeforcoscholasticajax"
+        url="{{fetchgradeforcoscholasticurl}}"
+        params="{{fetchgradeforcoscholasticparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeforcoscholasticResponse"
+        debounce-duration="300"
+    >
     
   </template>
   <script>
@@ -291,6 +303,9 @@
     var coscholasticarr=[];
     var coscholasticoverall=[];
     var categoryarr;
+    var co_lower=[];
+    var co_higher=[];
+    var co_grade=[];
     Polymer({
       is: 'co-scholastic-service',
       ready:function(){
@@ -358,9 +373,41 @@
          this.sectionparam= obj;
          this.$.sectionajax.generateRequest();
       },
-      sectionResponse:function(e){        
+      sectionResponse:function(e){      
          document.querySelector('coscholastic-assesment-card').sectionarr=e.detail.response.returnval; 
+         this.callFetchCoscholasticGrade();
       },
+       callFetchCoscholasticGrade:function()
+       {
+        this.fetchgradeforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticgrade-service";
+        this.$.fetchgradeforcoscholasticajax.generateRequest(); 
+       
+      },
+
+       fetchgradeforcoscholasticResponse:function(e)
+       {
+        var returnval=e.detail.response.returnval; 
+       // alert('1to4'+JSON.stringify(returnval));      
+        for(var i=0;i<returnval.length;i++)
+        {
+          co_lower.push(returnval[i].lower_limit);
+          co_higher.push(returnval[i].higher_limit);
+          co_grade.push(returnval[i].grade);
+        } 
+      },
+
+
+       FnFindCoscholasticGrade:function(mark)
+      {        
+        for(var i=0;i<co_lower.length;i++)
+        {         
+          if(mark>=co_lower[i]&&mark<=co_higher[i])
+          {            
+            this.grade=co_grade[i];
+          }
+        }
+        return this.grade;        
+     },
       callFetchStudentInfoforhealth:function(grade,section){
         hgrade=grade;
         hsection=section;
@@ -556,7 +603,7 @@
          obj.category=category;
          obj.subcategory=subcategory;
          obj.mark=mark;         
-         obj.categorygrade=mark;  
+         obj.categorygrade=this.FnFindCoscholasticGrade((parseInt(mark)));
          obj.sequence=seq;     
          this.insertcoassesmentmarkparam= obj;        
          this.$.insertcoassesmentmarkajax.generateRequest();

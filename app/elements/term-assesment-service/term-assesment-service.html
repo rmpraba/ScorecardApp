@@ -1504,14 +1504,11 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
           alert("Please make sure all the students entry!");
     },
 
-
-
-
      updatefaimportmarkcheckService:function(){
       var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");    
         obj.assesmentid=localStorage.getItem("curr_sess_assesmenttype");
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.gradename= localStorage.getItem("curr_sess_grade"); 

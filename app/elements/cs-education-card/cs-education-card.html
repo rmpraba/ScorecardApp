@@ -41,6 +41,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             border: none;
             background-color: transparent;
           }
+          .button{
+            width: 15%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+          #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
     </style>
     <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
     <div>
@@ -80,6 +98,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    <!-- </template>     
     </div>
     <component-service id="componentservice" label="{{label}}"></component-service>-->
+<center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
+<input type="button" id="btn3" onclick="tableToExcel('MarkTable6', 'Mark Report')" value="Export to Excel"></center>
+    
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+
     </template>
      <script type="text/javascript">
 var tableToExcel = (function() {
@@ -109,6 +132,48 @@ var tableToExcel = (function() {
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      {
+        this.importlabel='Approve';
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
+        this.importlabel='Submit for approval';
+      }
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        this.$.submit.hidden=true;
+         if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        // this.$.save.hidden=true;
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false;        
+        if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        if(localStorage.getItem('curr_sess_report')=='0')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=false;
+        this.$.btn3.hidden=true;
+        }
+        if(localStorage.getItem('curr_sess_report')=='2')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=true;
+        }
+      }
+
       },
         FnRefresh:function()
       {
@@ -129,6 +194,11 @@ var tableToExcel = (function() {
         this.$.spinner.opened=true;
         if(flag==false)
         this.$.spinner.opened=false;
+      },
+       importmark:function()
+      {
+        localStorage.setItem("curr_sess_assesmenttype","");
+        this.$.assesmentservice.Fnfaimportmark();  
       }
     });
   })();

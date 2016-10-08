@@ -758,7 +758,7 @@ insertcosubcategorymarkResponse:function(e){
        {
          coscholasticoverall=[];
         coscholasticarr=e.detail.response.returnval;
-        //alert(JSON.stringify(coscholasticarr));
+        // alert(JSON.stringify(coscholasticarr));
         if(coscholasticarr!='fail')
        {      
        for(var i=0;i<coscholasticarr.length;i++)
@@ -807,10 +807,12 @@ insertcosubcategorymarkResponse:function(e){
        fetchstudentforcoscholasticResponse:function(e)
        {
         var arr=e.detail.response.returnval;
-        //alert(JSON.stringify(e.detail.response.returnval));
-          for(var i=0;i<arr.length;i++)
+        // alert(JSON.stringify(arr));
+        // alert(JSON.stringify(coscholasticarr));
+        for(var j=0;j<coscholasticarr.length;j++)
+          
     {
-      for(var j=0;j<coscholasticarr.length;j++)
+      for(var i=0;i<arr.length;i++)
       {
         if(arr[i].student_name==coscholasticarr[j].student_name)
         {

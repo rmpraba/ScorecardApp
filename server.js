@@ -2334,6 +2334,8 @@ console.log(qur);
 app.post('/updatefaimportmarkcheck-service' ,  urlencodedParser,function (req, res)
 {
 var qur;
+console.log(req.query.assesmentid);
+if(req.query.assesmentid=="FA1"||req.query.assesmentid=="FA2"||req.query.assesmentid=="SA1"){
 if(req.query.subject=='Hindi'||req.query.subject=='Kannada'){
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
 "(select count(distinct(student_id)) from tr_term_fa_assesment_marks "+
@@ -2352,6 +2354,29 @@ qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result
 "(select count(*) from md_student where school_id='"+req.query.schoolid+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.sectionname+"' and school_id='"+req.query.schoolid+"'))) AS count2)  AS counts";
+}
+}
+else
+{
+if(req.query.subject=='Hindi'||req.query.subject=='Kannada'){
+qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
+"(select count(distinct(student_id)) from tr_coscholastic_assesment_marks "+
+"where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' "+
+"and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmentid+"') AS count1, "+
+"(select count(*) from tr_student_to_subject where school_id='"+req.query.schoolid+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.sectionname+"') and subject_id="+
+"(SELECT subject_id from md_subject where subject_name='"+req.query.subject+"') and school_id='"+req.query.schoolid+"')) AS count2)  AS counts";
+}
+else{
+qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
+"(select count(distinct(student_id)) from tr_coscholastic_assesment_marks "+
+"where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' "+
+"and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmentid+"') AS count1, "+
+"(select count(*) from md_student where school_id='"+req.query.schoolid+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.sectionname+"' and school_id='"+req.query.schoolid+"'))) AS count2)  AS counts";
+} 
 }
 console.log('----------------------------------------------------------');
 console.log(qur);

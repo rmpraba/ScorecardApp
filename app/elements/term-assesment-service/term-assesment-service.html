@@ -584,10 +584,8 @@
          obj.assesment= localStorage.getItem("curr_sess_assesment");
          obj.assesmenttype=localStorage.getItem("curr_sess_assesmenttype");
          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
-        // alert(JSON.stringify(obj));
-
-           this.fetchfastudentreportparam= obj;         
-           this.$.fetchfastudentreportajax.generateRequest();
+        this.fetchfastudentreportparam= obj;         
+        this.$.fetchfastudentreportajax.generateRequest();
            document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
 
     }
@@ -1056,9 +1054,6 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(overallfetchimportarr.length==0)
          arr=e.detail.response.returnval; 
         overallfetchimportarr=[];
-        // alert(arr.length);
-        // alert(JSON.stringify(arr));
-        // alert(JSON.stringify(overallfetchimportarr));
         for(var i=0;i<arr.length;i++){
           arr[i].serialno=parseInt(this.studarrlength)+(i+1);
         }
@@ -2152,12 +2147,37 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       document.querySelector('studentinfoedit-card').parentmail=e.detail.response.returnval[0].email;
       }
     },
-    faapproveService:function(){        
-        localStorage.setItem('curr_sess_report',4);
+    faapproveService:function(){  
+     localStorage.setItem('curr_sess_report',4);
+    if(localStorage.getItem("curr_sess_subject")=="Work Education"||localStorage.getItem("curr_sess_subject")=="Life Skills"||localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"||localStorage.getItem("curr_sess_subject")=="Attitudes And values"||localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"||localStorage.getItem("curr_sess_subject")=="Health and Physical Education")
+     {
+       
+       var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
+         obj1.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj1.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj1.termname=localStorage.getItem("curr_sess_termname");
+         obj1.assesmentid=localStorage.getItem("curr_sess_assesment");
+         obj1.subject=localStorage.getItem("curr_sess_subject");
+         obj1.gradename=localStorage.getItem("curr_sess_grade");
+         obj1.sectionname=localStorage.getItem("curr_sess_section");
+       if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+       {
+        // this.faapproveService();
+        obj1.flag=1;
+        this.updatefaflagurl=sessionStorage.getItem("addrinfo")+"/updatefaflag-service";
+        this.updatefaflagparam=obj1;
+        this.$.updatefaflagajax.generateRequest();
+        }
+
+
+     }  
+     else
+     {  
         this.callFetchFaStudentInfo();
+     }
     },
     calloverallfainsertservice:function(){
-        alert(JSON.stringify(overall));
+        //alert(JSON.stringify(overall));
         for(var i=0;i<overall.length;i++){
             var obj={"schoolid":"","academicyear":"","termname":"","studentid":"","studentname":"","grade":"","section":"","subject":"","category":"","total":"","catgrade":""}
 

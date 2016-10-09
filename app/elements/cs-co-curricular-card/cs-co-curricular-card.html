@@ -79,12 +79,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <th id="tb1"> </th>
       </tr>  
       </div>
-<template is="dom-repeat" items="{{markarr}}" as="m">
-<tr><td></td>
-<template is="dom-repeat" items="{{m}}" as="mark">
-<td>{{mark}}</td>
-</template>
-</tr>
+<template is="dom-repeat" items="{{markarr}}">
+<tr>
+ <td id="tb1"><paper-item>{{item.serialno}}</paper-item></td>
+        <td id="tb2"><paper-item>{{item.student_name}}</paper-item></td>
+        <td id="tb1" ><paper-item>{{item.mark1}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark2}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark3}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark4}}</paper-item></td> 
+        </tr>
 </template>
      <template is="dom-repeat" items="{{studarr}}">
       <tr>

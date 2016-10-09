@@ -593,26 +593,84 @@ app.post('/fetchstudentreportforattendance-service',  urlencodedParser,function 
 });
 
 app.post('/fetchstudentreportforcoscholastic-service',  urlencodedParser,function (req, res)
-{
+{ 
+
+var qurcheck;
+  if(req.query.roleid=="subject-teacher"||req.query.roleid=="class-teacher"){
+    console.log('c');
+    flag="0";
+  qurcheck="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+  " and term_name='"+req.query.termname+"'  and subject='"+req.query.subject+"' and flag in('0','1')";
+  }
+  else if(req.query.roleid=="co-ordinator")
+  {
+    console.log('o');
+    flag="1";
+  qurcheck="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+  " and term_name='"+req.query.termname+"' and  subject='"+req.query.subject+"' and flag in('"+flag+"')";
+  }
+
+ 
+
   var qur="select * from tr_coscholastic_assesment_marks where academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' order by sub_seq";
  console.log(qur);
- connection.query(qur,
-    function(err, rows)
+ console.log(qurcheck);
+   connection.query(qurcheck,function(err, rows){
+    if(!err){
+      if(rows.length==0)
+      {
+        console.log('f');
+  connection.query(qur,function(err, rows)
     {
     if(!err)
-    { 
-      // console.log(JSON.stringify(rows));   
+    {
+    if(rows.length>0)
+    {
+    //  console.log('s'+JSON.stringify(rows));
       res.status(200).json({'returnval': rows});
     }
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': 'fail'});
-    }  
-
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+    }
+    else{
+      console.log('d');
+      res.status(200).json({'returnval': 'imported'});
+    }
+    }
   });
 });
+app.post('/fetchexcelreportforcoscholastic-service',  urlencodedParser,function (req, res)
+{ 
+  var qur="select * from tr_coscholastic_assesment_marks where academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' order by sub_seq";
+  connection.query(qur,function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+    //  console.log('s'+JSON.stringify(rows));
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
 
+});
 app.post('/fetchstudentforcoscholastic-service',  urlencodedParser,function (req, res)
 {
   var qur="select school_id,id,student_name,class_id from md_student where  class_id="+

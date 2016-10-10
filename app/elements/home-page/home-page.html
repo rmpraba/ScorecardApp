@@ -159,6 +159,7 @@
   },
   FnHome:function(){    
      // alert(localStorage.getItem("curr_sess_page"));
+
     if(localStorage.getItem("curr_sess_page")=="cc-eng-onetofour-card")
     {
       this.page="teacherhomecard";
@@ -274,6 +275,13 @@
       document.querySelector('teacherhome-card').FnRefresh();
       document.querySelector('cce-generate-score-card').FnRefresh();
       document.querySelector('cce-onetofour-score-card').FnRefresh();
+    }
+    if(localStorage.getItem("curr_sess_page")=="ccefivetotenscorecard")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('cce-generate-score-card').FnRefresh();
+      document.querySelector('cce-fivetoten-score-card').FnRefresh();      
     }
     if(localStorage.getItem("curr_sess_page")=="approveassesment")
     {

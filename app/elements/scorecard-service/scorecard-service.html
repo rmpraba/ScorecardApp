@@ -271,7 +271,8 @@
         this.$.fetchsubjectnameajax.generateRequest();
       },
       fetchsubjectnameResponse:function(e){        
-        subjectarr=e.detail.response.returnval;                
+        subjectarr=e.detail.response.returnval;
+        // alert(JSON.stringify(subjectarr));                
       },
       callFetchmarkService:function(studid){
         this.fetchmarkurl=sessionStorage.getItem("addrinfo")+"/fetchmark-service";
@@ -284,76 +285,150 @@
       fetchmarkResponse:function(e){         
         this.finalarr=[];       
         var arr=e.detail.response.returnval;
-        
+        // alert(JSON.stringify(arr));
         for(var i=0;i<subjectarr.length;i++){
-          var obj={"subject_name":"","FA1":"","FA2":"","SA1":"","tot1":"","FA3":"","FA4":"","SA2":"","tot2":"","FA":"","SA":"","Grade":"","Point":""};
+          var obj={"subject_name":"","FA1":"","FA2":"","SA1":"","tot1":"","FA3":"","FA4":"","SA2":"","tot2":"","FA":"","SA":"","grade":"","point":""};
           this.no=0;
+          var flag=0;
           for(var j=0;j<arr.length;j++){
             this.no=parseInt(this.no)+1;
+            // alert(subjectarr[i].subject_name+"   "+arr[j].subject_id);
             if(subjectarr[i].subject_name==arr[j].subject_id){
+              // alert('match');
+              flag=1;
               obj.subject_name=arr[j].subject_id;
               if(arr[j].category=='FA1'){                
-                obj.FA1=arr[j].grade;
-                this.m1=arr[j].rtotal;
+                obj.FA1=arr[j].cat_grade;                
+                this.m1=arr[j].total;
               }
               else if(arr[j].category=='FA2'){                
-                obj.FA2=arr[j].grade;
-                this.m2=arr[j].rtotal;
-              }
-              else if(arr[j].category=='FA3'){                
-                obj.FA3=arr[j].grade;
-                this.m3=arr[j].rtotal;
-              }
-              else if(arr[j].category=='FA4'){                
-                obj.FA4=arr[j].grade;
-                this.m4=arr[j].rtotal;
+                obj.FA2=arr[j].cat_grade;
+                this.m2=arr[j].total;
               }
               else if(arr[j].category=='SA1'){                
-                obj.SA1=arr[j].grade;
-                this.sm1=arr[j].rtotal;
+                obj.SA1=arr[j].cat_grade;
+                this.sm1=arr[j].total;
               }
+              else if(arr[j].category=='FA3'){                
+                obj.FA3=arr[j].cat_grade;
+                this.m3=arr[j].total;
+              }
+              else if(arr[j].category=='FA4'){                
+                obj.FA4=arr[j].cat_grade;
+                this.m4=arr[j].total;
+              }              
               else if(arr[j].category=='SA2'){                
-                obj.SA2=arr[j].grade;
-                this.sm2=arr[j].rtotal;
+                obj.SA2=arr[j].cat_grade;
+                this.sm2=arr[j].total;
               }
-            }                          
-            if(this.no==arr.length)
-            {
-              var tot11=(parseInt(this.m1)+parseInt(this.m2))/2;              
-              for(var n=0;n<lower.length;n++){          
-              if(tot11>=lower[n]&&tot11<=higher[n]){
-              obj.tot1=grade[n];              
-              }
-              }
-              var tot12=(parseInt(this.m3)+parseInt(this.m4))/2;
-              for(var n=0;n<lower.length;n++){          
-              if(tot12>=lower[n]&&tot12<=higher[n]){            
-              obj.tot2=grade[n];
-              }
-              }
-              var FA=(parseInt(this.m1)+parseInt(this.m2)+parseInt(this.m3)+parseInt(this.m4))/4;
-              for(var n=0;n<lower.length;n++){          
-              if(FA>=lower[n]&&FA<=higher[n]){            
-              obj.FA=grade[n];
-              }
-              }
-              var SA=(parseInt(this.sm1)+parseInt(this.sm2))/2;
-              for(var n=0;n<lower.length;n++){          
-              if(SA>=lower[n]&&SA<=higher[n]){            
-              obj.SA=grade[n];
-              }
-              }
-              var Grade=(((parseInt(this.m1)+parseInt(this.m2)+parseInt(this.m3)+parseInt(this.m4))/4)+(parseInt((parseInt(this.sm1)+parseInt(this.sm2))/2)))/2;
-              for(var n=0;n<lower.length;n++){          
-              if(Grade>=lower[n]&&Grade<=higher[n]){            
-              obj.Grade=grade[n];
-              }
-              }
-              obj.Point=(parseInt((parseInt(this.m1)+parseInt(this.m2)+parseInt(this.m3)+parseInt(this.m4))/4)+parseInt((parseInt(this.sm1)+parseInt(this.sm2))/2))/2;
-            }             
+            
+              
           }
-          this.finalarr.push(obj);                    
         }
+          if(flag==1){
+            var t1=parseFloat(((parseFloat(this.m1)+parseFloat(this.m2)+(3*parseFloat(this.sm1)))*2)/10).toFixed(1);
+             // alert(t1);
+              if(t1>=9.1&&t1<=10)
+                obj.tot1='A1';
+              if(t1>=8.1&&t1<=9)
+                obj.tot1='A2';
+              if(t1>=7.1&&t1<=8)
+                obj.tot1='B1';
+              if(t1>=6.1&&t1<=7)
+                obj.tot1='B2';
+              if(t1>=5.1&&t1<=6)
+                obj.tot1='C1';
+              if(t1>=4.1&&t1<=5)
+                obj.tot1='C2';
+              if(t1>=3.3&&t1<=4)
+                obj.tot1='D';
+              if(t1>=2.1&&t1<=3.2)
+                obj.tot1='E1';
+              if(t1>=0&&t1<=2)
+                obj.tot1='E2';
+              var fatot=parseFloat((parseFloat(this.m1)+parseFloat(this.m2))/2).toFixed(1);
+              // alert(fatot);
+              if(fatot>=9.1&&fatot<=10)
+                obj.FA='A1';
+              if(fatot>=8.1&&fatot<=9)
+                obj.FA='A2';
+              if(fatot>=7.1&&fatot<=8)
+                obj.FA='B1';
+              if(fatot>=6.1&&fatot<=7)
+                obj.FA='B2';
+              if(fatot>=5.1&&fatot<=6)
+                obj.FA='C1';
+              if(fatot>=4.1&&fatot<=5)
+                obj.FA='C2';
+              if(fatot>=3.3&&fatot<=4)
+                obj.FA='D';
+              if(fatot>=2.1&&fatot<=3.2)
+                obj.FA='E1';
+              if(fatot>=0&&fatot<=2)
+                obj.FA='E2';
+              var satot=parseFloat(this.sm1).toFixed(1);
+              if(satot>=9.1&&satot<=10)
+                obj.SA='A1';
+              if(satot>=8.1&&satot<=9)
+                obj.SA='A2';
+              if(satot>=7.1&&satot<=8)
+                obj.SA='B1';
+              if(satot>=6.1&&satot<=7)
+                obj.SA='B2';
+              if(satot>=5.1&&satot<=6)
+                obj.SA='C1';
+              if(satot>=4.1&&satot<=5)
+                obj.SA='C2';
+              if(satot>=3.3&&satot<=4)
+                obj.SA='D';
+              if(satot>=2.1&&satot<=3.2)
+                obj.SA='E1';
+              if(satot>=0&&satot<=2)
+                obj.SA='E2';
+              var grand=parseFloat(((parseFloat(this.m1)+parseFloat(this.m2)+(3*parseFloat(this.sm1)))*2)/10).toFixed(1);
+              if(grand>=9.1&&grand<=10){
+                obj.grade='A1';
+                obj.point='10.0';
+              }
+              if(grand>=8.1&&grand<=9){
+                obj.grade='A2';
+                obj.point='9.0';
+              }
+              if(grand>=7.1&&grand<=8){
+                obj.grade='B1';
+                obj.point='8.0';
+              }
+              if(grand>=6.1&&grand<=7){
+                obj.grade='B2';
+                obj.point='7.0';
+              }
+              if(grand>=5.1&&grand<=6){
+                obj.grade='C1';
+                obj.point='6.0';
+              }
+              if(grand>=4.1&&grand<=5){
+                obj.grade='C2';
+                obj.point='5.0';
+              }
+              if(grand>=3.3&&grand<=4){
+                obj.grade='D';
+                obj.point='4.0';
+              }
+              if(grand>=2.1&&grand<=3.2){
+                obj.grade='E1';
+                obj.point='3.0';
+              }
+              if(grand>=0&&grand<=2){
+                obj.grade='E2'; 
+                obj.point='2.0';                         
+              }
+              this.finalarr.push(obj); 
+            }
+            
+          
+                                       
+        }
+        // alert(JSON.stringify(this.finalarr));
         document.querySelector('cce-fivetoten-score-card').subjectArray=this.finalarr; 
       },
       callFetchGrade:function(){

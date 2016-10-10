@@ -2157,7 +2157,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         this.callFetchFaStudentInfo();
     },
     calloverallfainsertservice:function(){
-        alert(JSON.stringify(overall));
+        // alert(JSON.stringify(overall));
         for(var i=0;i<overall.length;i++){
             var obj={"schoolid":"","academicyear":"","termname":"","studentid":"","studentname":"","grade":"","section":"","subject":"","category":"","total":"","catgrade":""}
 
@@ -2195,6 +2195,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         this.updatefaflagurl=sessionStorage.getItem("addrinfo")+"/updatefaflag-service";
         this.updatefaflagparam=obj1;
         this.$.updatefaflagajax.generateRequest();
+        overallcount=0;
         }
         }
     }

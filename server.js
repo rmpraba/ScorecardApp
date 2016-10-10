@@ -1542,7 +1542,7 @@ app.post('/overallinsertcocurricularmark-service',  urlencodedParser,function (r
 //fetching student names
 app.post('/scorecardreadyness-service',  urlencodedParser,function (req,res)
 {   
-
+if(req.query.grade=="Grade-1"||req.query.grade=="Grade-2"||req.query.grade=="Grade-3"||req.query.grade=="Grade-4"){
 var qur="select * from md_grade_subject_count where no_of_subjects=(( "+
 "select count(distinct(subject_id)) from tr_term_assesment_overall_assesmentmarks where "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
@@ -1551,6 +1551,18 @@ var qur="select * from md_grade_subject_count where no_of_subjects=(( "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
 "grade='"+req.query.grade+"' and section='"+req.query.section+"')) and school_id='"+req.query.schoolid+"' and "+
 "academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+}
+else
+{
+var qur="select * from md_grade_subject_count where no_of_subjects=(( "+
+"select count(distinct(subject_id)) from tr_term_overallfa_assesment_marks where "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+"grade='"+req.query.grade+"' and section='"+req.query.section+"')/"+
+"(select count(distinct(term_name)) from tr_term_overallfa_assesment_marks where "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+"grade='"+req.query.grade+"' and section='"+req.query.section+"')) and school_id='"+req.query.schoolid+"' and "+
+"academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+}
 console.log('.........................score card-----------------------------------');
 console.log(qur);
 
@@ -1705,7 +1717,7 @@ app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
-  connection.query("SELECT * FROM tr_term_assesment_overall_marks WHERE ? AND ? order by subject_id",[studid,schoolid],
+  connection.query("SELECT * FROM tr_term_overallfa_assesment_marks WHERE ? AND ? order by subject_id",[studid,schoolid],
     function(err, rows)
     {
     if(!err)

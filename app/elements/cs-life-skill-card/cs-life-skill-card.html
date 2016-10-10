@@ -29,6 +29,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #tb2{
         width:13.4%
       }
+       .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
+          .button{
+            width: 15%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+          #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
      
     </style>
     <div>
@@ -56,12 +86,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <th id="tb1"> </th>
       </tr>  
       </div>
-<template is="dom-repeat" items="{{markarr}}" as="m">
-<tr><td></td>
-<template is="dom-repeat" items="{{m}}" as="mark">
-<td>{{mark}}</td>
-</template>
-</tr>
+<template is="dom-repeat" items="{{markarr}}">
+<tr>
+ <td id="tb1"><paper-item>{{item.serialno}}</paper-item></td>
+        <td id="tb2"><paper-item>{{item.student_name}}</paper-item></td>
+        <td id="tb1" ><paper-item>{{item.mark1}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark2}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark3}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark4}}</paper-item></td> 
+         <td id="tb1" ><paper-item>{{item.mark5}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark6}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark7}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark8}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark9}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark10}}</paper-item></td> 
+        </tr>
 </template>
      <template is="dom-repeat" items="{{studarr}}">
       <tr><td colspan="13">
@@ -70,9 +109,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
       </table>
       </center> 
-   <!-- </template>     
-    </div>
-    <component-service id="componentservice" label="{{label}}"></component-service>-->
+   <center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
+<input type="button" id="btn3" onclick="tableToExcel('MarkTable12', 'Mark Report')" value="Export to Excel"></center>
+ <term-assesment-service id="assesmentservice"></term-assesment-service>
     </template>
      <script type="text/javascript">
 var tableToExcel = (function() {
@@ -101,19 +140,67 @@ var tableToExcel = (function() {
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+
+
+           if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      {
+        this.importlabel='Approve';
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
+        this.importlabel='Submit for approval';
+      }
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        this.$.submit.hidden=true;
+         if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        // this.$.save.hidden=true;
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false;        
+        if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        if(localStorage.getItem('curr_sess_report')=='0')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=false;
+        this.$.btn3.hidden=true;
+        }
+        if(localStorage.getItem('curr_sess_report')=='2')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=true;
+        }
+      }
+
       },
         FnRefresh:function()
       {
- this.markarr=[];
- this.importarr=[];
- this.studarr=[];
- this.schoolname="";
+        this.markarr=[];
+        this.importarr=[];
+        this.studarr=[];
+        this.schoolname="";
         this.academicyear="";
         this.grade="";
         this.section="";
         this.subject="";
-         this.$.hidetop.hidden=true;
+        this.$.hidetop.hidden=true;
 
+      },
+        importmark:function()
+      {
+        localStorage.setItem("curr_sess_assesmenttype","");
+        this.$.assesmentservice.Fnfaimportmark();  
       }
     });
   })();

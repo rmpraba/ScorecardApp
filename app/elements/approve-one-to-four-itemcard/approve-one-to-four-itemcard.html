@@ -91,7 +91,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // document.querySelector('coscholastic-assesment-sheet-card').setPage('attendance-card'); 
         // document.querySelector('attendance-card').setDefaultHeaders(); 
       }
-      else if(this.assesment=="FA1"||this.assesment=="FA2"||this.assesment=="SA1"){
+      else if(localStorage.getItem("curr_sess_subject")=="Work Education"||localStorage.getItem("curr_sess_subject")=="Life Skills"||localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"||localStorage.getItem("curr_sess_subject")=="Attitudes And values"||localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"||localStorage.getItem("curr_sess_subject")=="Health and Physical Education")
+      {
+        document.querySelector('home-page').setPage('coscholasticassesment','');
+        document.querySelector('coscholastic-assesment').hiddenpage();
+        document.querySelector('co-scholastic-service').callFetchStudentInfo();
+      }
+      else if(this.assesment=="FA1"||this.assesment=="FA2"||this.assesment=="SA1")
+      {
         // alert('yes');
         // localStorage.setItem('curr_sess_report',1);
         //localStorage.setItem("curr_sess_assesment","");

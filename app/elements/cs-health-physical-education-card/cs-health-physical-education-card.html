@@ -41,6 +41,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             font-family: Calibri;
             font-size: 17px;
           }
+           #tb1{
+        width:15%
+      }
+      #tb2{
+        width: 9%
+      }
+     #tb3{
+      width: 5%;
+     }
+      #sub
+{
+  width: 70%;
+}
+#td1
+{
+  padding: 5px;
+}
+#subcat
+{
+
+}
+       .submitbutton paper-button{
+    background-color: #363636 !important;
+    color: #ffffff !important;
+    height: 33px !important;
+  }
     </style>
     <div>
     <!--<template is="dom-repeat" items="{{label}}">-->
@@ -49,14 +75,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="hidetop">
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Grade  &nbsp&nbsp&nbsp {{grade}} - Section &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
-      <table border="1" id="MarkTable13">    
+      <table border="1" id="physicalMarkTable">    
       <tr>
-      <th style="width: 1%;">SNo</th>
-      <th style="width: 15.2%;">Name</th>
-      <th style="width: 5%;">Health and Physical Education</th>
-      
-      <th style="width: 5.2%;">Total</th>
-      <th style="width: 5%;">Grade</th>
+      <th id="tb2">SNo</th>
+      <th id="tb1">Name</th>
+      <th id="tb2">Health and Physical Education</th>
+      <th  id="tb2"></th>
       </tr>  
       </div>
 <template is="dom-repeat" items="{{markarr}}">
@@ -78,7 +102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </table>
       </center> 
    <center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
-<input type="button" id="btn3" onclick="tableToExcel('MarkTable13', 'Mark Report')" value="Export to Excel"></center>
+<input type="button" id="btn3" onclick="tableToExcel('physicalMarkTable', 'Mark Report')" value="Export to Excel"></center>
     
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     </template>

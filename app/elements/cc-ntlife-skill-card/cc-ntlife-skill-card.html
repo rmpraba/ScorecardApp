@@ -54,7 +54,7 @@
       <div id="hidetop">
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Grade  &nbsp&nbsp&nbsp {{grade}} - Section&nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
-      <table border="1" id="MarkTable10">    
+      <table border="1" id="nlifeMarkTable">    
       <tr>
       <th style="width: 5%;">SNo</th>
       <th style="width: 45%;">Name</th>
@@ -87,7 +87,7 @@
       </table>
       </center> 
    <center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
-<input type="button" id="btn3" onclick="tableToExcel('MarkTable10', 'Mark Report')" value="Export to Excel"></center>
+<input type="button" id="btn3" onclick="tableToExcel('nlifeMarkTable', 'Mark Report')" value="Export to Excel"></center>
  <term-assesment-service id="assesmentservice"></term-assesment-service>
     </template>
      <script type="text/javascript">

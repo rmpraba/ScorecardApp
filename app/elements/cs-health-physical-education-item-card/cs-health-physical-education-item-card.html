@@ -42,9 +42,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
         <td  id="tb1" hidden><paper-item>{{serialno}}</paper-item></td>
         <td  id="tb1" hidden><paper-item>{{studname}}</paper-item></td>
-        <td  id="tb1"><paper-input on-focus="FnActivity" id="s1{{studid}}"   name="Health and Physical Education" value="{{score1}}"></paper-input></td>   
-        <!--<td style="width: 5%;"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
-         <td style="width: 5%;"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>-->
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="p1{{studid}}"   name="Health and Physical Education" value="{{score1}}"></paper-input></td>   
+         <td id="tb3"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
     </div>
@@ -156,7 +156,7 @@ subcatarr=subcategoryarr;
           {
            
            sum1=(parseFloat((parseFloat(sum))/parseFloat(t))).toFixed(2);
-            document.getElementById('s'+idd).value=sum1;
+            document.getElementById('p1'+idd).value=sum1;
             name1=name;  
           }
             sum=0;

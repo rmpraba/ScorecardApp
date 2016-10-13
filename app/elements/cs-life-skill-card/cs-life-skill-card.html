@@ -61,6 +61,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
      
     </style>
+    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>
     <div>
     <!--<template is="dom-repeat" items="{{label}}">-->
       <center><h1>{{schoolname}}</h1>
@@ -196,6 +198,12 @@ var tableToExcel = (function() {
         this.subject="";
         this.$.hidetop.hidden=true;
 
+      },
+      FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
       },
         importmark:function()
       {

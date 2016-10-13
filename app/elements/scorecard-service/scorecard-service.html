@@ -474,12 +474,17 @@
       },
       fetchgradeforcoscholasticResponse:function(e)
       {
-        returnval1=e.detail.response.returnval;       
+co_lower=[];
+co_higher=[];
+co_grade=[];
+        returnval1=e.detail.response.returnval; 
+        //alert(JSON.stringify(returnval1));      
           for(var i=0;i<returnval1.length;i++){
           co_lower.push(returnval1[i].lower_limit);
           co_higher.push(returnval1[i].higher_limit);
           co_grade.push(returnval1[i].grade);
         }
+        //alert(co_lower.length);
       },
       callfetchcoscholasticmetricsService:function(studid){
         //alert('co');
@@ -529,10 +534,7 @@
         {
           k=0;
           //alert(marks[i].sub_category);
-          var subcategoryarr=[];          
-          // for(var j=0;j<metrics.length;j++){
-            
-            // if(marks[i].subject_id==metrics[j].subject_id){
+          var subcategoryarr=[];       
              
             for(var j=0;j<submarks.length;j++)
             {
@@ -541,39 +543,16 @@
              {
                obj.metric=marks[i].sub_category;
               obj.mark=marks[i].mark;
-              for(var n=0;n<co_lower.length;n++)
+              obj.submetric="";
+              
+              for(var n1=0;n1<co_lower.length;n1++)
               {          
-              if(obj.mark>=co_lower[n]&&obj.mark<=co_higher[n])
-              {            
-                obj.grade=co_grade[n];
-              }
-              }
-
-             }
-             else
-             {
-              obj.metric="";
-              obj.mark="";
-              obj.grade="";
-             }
-          //alert(marks[i].sub_category+'   '+submarks[j].category);
-              if(submarks[j].category==marks[i].sub_category)
-              {
-               k=1;
-                obj.submetric=submarks[j].sub_category;
-                obj.submark=submarks[j].mark;
-                obj.rowcount=6;
                 
-                  for(var n=0;n<co_lower.length;n++)
-              {          
-              if(obj.submark>=co_lower[n]&&obj.submark<=co_higher[n])
-              {            
-                obj.subgrade=co_grade[n];
+              if(parseFloat(obj.mark).toFixed(1)>=co_lower[n1]&&parseFloat(obj.mark).toFixed(1)<=co_higher[n1])
+              {           
+                obj.subgrade=co_grade[n1];
               }
               }
- 
-                subcategoryarr.push(obj);
-              //alert(JSON.stringify(obj));
               if(marks[i].subject_id=="Life Skills"){
                 lsarr.push(obj);
               }
@@ -591,19 +570,57 @@
               }
               else if(marks[i].subject_id=="Health and Physical Education"){
                 hparr.push(obj);
-              } 
-            // }
-          // }          
+              }  
+              k=1;
+              j--;    
+
+
+             }
+             else
+             {
+              obj.metric="";
+              obj.mark="";
+              obj.grade="";
+             
+         
+              if(submarks[j].category==marks[i].sub_category)
+              {
+                obj.submetric=submarks[j].sub_category;
+                obj.submark=submarks[j].mark;
+                
+                  for(var n=0;n<co_lower.length;n++)
+              {          
+              if(parseFloat(obj.submark).toFixed(1)>=co_lower[n]&&parseFloat(obj.submark).toFixed(1)<=co_higher[n])
+              {            
+                obj.subgrade=co_grade[n];
+              }
+              }
+ 
+              subcategoryarr.push(obj);
+              if(marks[i].subject_id=="Life Skills"){
+                lsarr.push(obj);
+              }
+              else if(marks[i].subject_id=="Work Education"){
+                wkarr.push(obj);
+              }
+              else if(marks[i].subject_id=="Visual & Performing Arts"){              
+                vparr.push(obj);
+              }
+              else if(marks[i].subject_id=="Attitudes And values"){
+                avarr.push(obj);
+              }
+              else if(marks[i].subject_id=="CO-CURRICULAR ACTIVITIES"){
+                ccarr.push(obj);
+              }
+              else if(marks[i].subject_id=="Health and Physical Education"){
+                hparr.push(obj);
+              }         
           metricsarr.push(subcategoryarr);
         }
         }
         }
-       // alert(JSON.stringify(lsarr));
-        // alert(JSON.stringify(wkarr));
-         // alert(JSON.stringify(vparr));
-           //alert(JSON.stringify(avarr));
-           // alert(JSON.stringify(ccarr));
-            // alert(JSON.stringify(hparr));
+      }
+       
         document.querySelector('cce-fivetoten-score-card').lsArray=lsarr;
         document.querySelector('cce-fivetoten-score-card').wkArray=wkarr;
         document.querySelector('cce-fivetoten-score-card').vpArray=vparr;

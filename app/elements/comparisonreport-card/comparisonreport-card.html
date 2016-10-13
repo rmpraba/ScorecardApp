@@ -407,9 +407,8 @@
         <div>
         <template is="dom-repeat" items="{{healthArray}}" as="item">
           <table id="tab" width='80%'>
-            <tr style="background-color: #f3f3f3;height: 20px;"><th>Height</th><th>Weight</th><th>Blood Group</th><th>Vision Left</th><th>Vision Right</th><th>Denetal Hygeine</th></tr>
-            
-            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.blood_group}}</td><td>{{item.vision_left}}</td><td>{{item.vision_right}}</td><td>{{item.dental}}</td></tr>
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>Height</th><th>Weight</th><th>BMI</th><th>Remarks</th><th>Blood Group</th><th>Vision Left</th><th>Vision Right</th><th>Denetal Hygeine</th></tr>            
+            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.bmi}}</td><td>{{item.remark}}</td><td>{{item.blood_group}}</td><td>{{item.vision_left}}</td><td>{{item.vision_right}}</td><td>{{item.dental}}</td></tr>
             
           </table>
           </template>

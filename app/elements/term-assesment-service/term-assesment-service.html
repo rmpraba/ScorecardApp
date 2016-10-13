@@ -863,7 +863,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         }
 
 
-        var rtotal;
+        var rtotal,fsum;
         if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2")
         {
         // obj.sum=parseFloat((parseInt(sum)/90)*100).toFixed(2);
@@ -871,26 +871,29 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         // obj.reducetotal=parseInt((parseInt(sum)/90)*100)/10; 
         if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
             
-            // alert('hi in');
-         // fasum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);
+            fsum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);
+        
         obj.sum=parseFloat(((parseFloat(obj.mark1)+parseFloat(obj.mark2)+parseFloat(obj.mark3))/90)*100).toFixed(2);
-         rtotal=parseFloat(sum/10).toFixed(2); 
-        obj.reducetotal=parseFloat(sum/10).toFixed(2); 
+         rtotal=parseFloat(fsum/10).toFixed(2); 
+        obj.reducetotal=parseFloat(fsum/10).toFixed(2); 
         
         }
         else{
-        obj.sum=parseFloat((parseInt(sum)/90)*100).toFixed(2);
-        rtotal=parseInt((parseInt(sum)/90)*100)/10;  
-        obj.reducetotal=parseInt((parseInt(sum)/90)*100)/10; 
+
+        fsum=parseFloat((parseFloat(sum)/90)*100).toFixed(2);
+        obj.sum=parseFloat((parseFloat(sum)/90)*100).toFixed(2);
+        rtotal=parseFloat(parseFloat((parseFloat(sum)/90)*100)/10).toFixed(2);  
+        obj.reducetotal=parseFloat(parseFloat((parseFloat(sum)/90)*100)/10).toFixed(2);
         }
         }
         else
         {
-        obj.sum=parseInt(parseInt(sum)/3)*10;
-         rtotal=parseFloat((sum/3)*10/10).toFixed(2);
-        obj.reducetotal=parseFloat((sum/3)*10/10).toFixed(2);
+         fsum=parseFloat(((parseFloat(Math.max(parseFloat(obj.mark1),parseFloat(obj.mark2)))+parseFloat(obj.mark3))/2)*10).toFixed(2);
+        obj.sum=parseFloat(((parseFloat(Math.max(parseFloat(obj.mark1),parseFloat(obj.mark2)))+parseFloat(obj.mark3))/2)*10).toFixed(2);
+         rtotal=parseFloat(fsum/10).toFixed(2); 
+        obj.reducetotal=parseFloat(fsum/10).toFixed(2);
          }
-        obj.grade=this.FnFindGrade((parseInt(rtotal)));
+        obj.grade=this.FnFindFaGrade((parseInt(fsum)));
         obj.serialno=i+1;
         faoverall.push(obj);
        }

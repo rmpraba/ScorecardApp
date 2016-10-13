@@ -2192,7 +2192,31 @@ app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
   // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
-  var qur="SELECT subject_id,sub_category,round(mark/10) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' group by subject_id,sub_category";
+  var qur="SELECT subject_id,sub_category,mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'";
+  // console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {       
+
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+});
+});
+
+app.post('/fetchcoscholasticsubcategory-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var studid={student_id:req.query.studid};  
+  // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
+  var qur="SELECT * FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -2430,7 +2454,8 @@ app.post('/updatefaimportmarkcheck-service' ,  urlencodedParser,function (req, r
 var qur;
 console.log(req.query.assesmentid);
 if(req.query.assesmentid=="FA1"||req.query.assesmentid=="FA2"||req.query.assesmentid=="SA1"){
-if(req.query.subject=='Hindi'||req.query.subject=='Kannada'){
+if(req.query.subject=='Hindi'||req.query.subject=='Kannada'||req.query.subject=='French'||req.query.subject=='sanskrit'){
+  console.log("Language");
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
 "(select count(distinct(student_id)) from tr_term_fa_assesment_marks "+
 "where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' "+
@@ -2441,6 +2466,7 @@ qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result
 "(SELECT subject_id from md_subject where subject_name='"+req.query.subject+"') and school_id='"+req.query.schoolid+"')) AS count2)  AS counts";
 }
 else{
+  console.log("not Language");
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
 "(select count(distinct(student_id)) from tr_term_fa_assesment_marks "+
 "where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' "+

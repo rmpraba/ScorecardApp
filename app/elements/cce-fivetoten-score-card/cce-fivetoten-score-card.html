@@ -222,17 +222,20 @@ table{
         </th>
    </tr>
    <tr>
-      <th colspan="16">2(A)<br>
+      <th colspan="16"><br>
         <h2>part2- Co-Scholastic Areas</h2>
         
         </th>
    </tr>
+   <tr>
+      <th colspan="16">2(A) Life Skills</th>
+    </tr>
     <tr>
-      <th colspan="3"></th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
+      <th colspan="3">Life Skills</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
    </tr>
    <template is="dom-repeat" items="{{lsArray}}" as="item">
     <tr>   
-      <th colspan="3">Life Skills</th><th colspan="10">{{item.metric}}</th><th colspan="3">{{item.grade}}</th>   
+      <th colspan="3">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>   
     </tr>
    </template>
     <!--<tr>
@@ -245,29 +248,27 @@ table{
       <th colspan="3">LifeSkils</th><th colspan="10"></th><th colspan="3">Grade</th>
     </tr>-->
      <tr>
-      <th colspan="16">2(B)</th>
+      <th colspan="16">2(B) WorkingEducation</th>
     </tr>
 
      <tr>
-      <th colspan="3"></th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
+      <th colspan="3">WorkingEducation</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
     </tr>
     <template is="dom-repeat" items="{{wkArray}}" as="item">
     <tr>
-      <th colspan="3">WorkingEducation</th><th colspan="10">{{item.metric}}</th><th colspan="3">{{item.grade}}</th>
+      <th colspan="3"></th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
     </tr>
     </template>
-    <tr>
-      <th colspan="3"></th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
+   
+      <tr>
+      <th colspan="16">2(C)VisualAnd PerformingArt</th>
     </tr>
       <tr>
-      <th colspan="16">2(C)</th>
-    </tr>
-      <tr>
-    <th colspan="3"></th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
+    <th colspan="3">VisualAnd PerformingArt</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
     </tr>     
     <template is="dom-repeat" items="{{vpArray}}" as="item">
     <tr>
-      <th colspan="3">VisualAnd PerformingArt</th><th colspan="10">{{item.metric}}</th><th colspan="3">{{item.grade}}</th>
+      <th colspan="3">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
     </tr>
     </template>
     
@@ -275,26 +276,29 @@ table{
       <th colspan="16">2(D)Attitudes And Values</th>
     </tr>
         <tr>
-        <th colspan="3"> </th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
+        <th colspan="3"> Attitudes And Values</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
         </tr>
     <template is="dom-repeat" items="{{avArray}}" as="item">
     <tr>
-      <th colspan="3">Attitudes And Values</th><th colspan="10">{{item.metric}}</th><th colspan="3">{{item.grade}}</th>
+      <th colspan="3" rowspan="{{item.rowcount}}">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
     </tr>
     </template>
     
     <tr>
-        <th  colspan="16">3(A):
+        <th  colspan="16">
         <br>
         <h2>Part-3:co-Scolastics Activity</h2>        
         </th>
+    </tr>
+<tr>
+      <th colspan="16">3(A)Co-Curricular Activity</th>
     </tr>
     <tr>
         <th colspan="3"></th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
     </tr>
     <template is="dom-repeat" items="{{ccArray}}" as="item">
     <tr>
-      <th colspan="3">Activity</th><th colspan="10">{{item.metric}}</th><th colspan="3">{{item.grade}}</th>
+      <th colspan="3">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
     </tr>
     </template>
 
@@ -302,11 +306,11 @@ table{
            <th colspan="16"><h3>3(B)Health&PhysicalActivity</h3></th>
     </tr>
     <tr>
-           <th colspan="3"></th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
+           <th colspan="3">Health&PhysicalActivity</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
     </tr>
     <template is="dom-repeat" items="{{hpArray}}" as="item">
     <tr>
-      <th colspan="3">Activity</th><th colspan="10">{{item.metric}}</th><th colspan="3">{{item.grade}}</th>
+      <th colspan="3">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
     </tr>
     </template>
     <tr>

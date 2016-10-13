@@ -108,6 +108,16 @@
         debounce-duration="300"
     >
     
+     <iron-ajax        
+        method="post"
+        id="fetchcoscholasticsubcategoryajax"
+        url="{{fetchcoscholasticsubcategoryurl}}"
+        params="{{fetchcoscholasticsubcategoryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchcoscholasticsubcategoryResponse"
+        debounce-duration="300"
+    >
     <iron-ajax        
         method="post"
         id="scorecardreadynessajax"
@@ -119,6 +129,18 @@
         debounce-duration="300"
     >
 
+     <iron-ajax        
+        method="post"
+        id="fetchgradeforcoscholasticajax"
+        url="{{fetchgradeforcoscholasticurl}}"
+        params="{{fetchgradeforcoscholasticparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeforcoscholasticResponse"
+        debounce-duration="300"
+    >
+    
+
   </template>
   <script>
   (function() {
@@ -127,10 +149,15 @@
     var lower=[];
     var higher=[];
     var grade=[];
+    var co_lower=[];
+    var co_higher=[];
+    var co_grade=[];
     var metrics=[];
     var marks=[];
     var metricsarr=[];
     var returnval;
+    var submarks=[];
+    var returnval1;
     Polymer({
       is: 'scorecard-service',
       ready:function(){
@@ -428,12 +455,14 @@
           
                                        
         }
-        // alert(JSON.stringify(this.finalarr));
+         //alert(JSON.stringify(this.finalarr));
         document.querySelector('cce-fivetoten-score-card').subjectArray=this.finalarr; 
       },
       callFetchGrade:function(){
         this.fetchgradesurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 
         this.$.fetchgradesajax.generateRequest(); 
+        this.fetchgradeforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticgrade-service";
+        this.$.fetchgradeforcoscholasticajax.generateRequest(); 
       },
       fetchgradesResponse:function(e){
         returnval=e.detail.response.returnval;       
@@ -443,7 +472,17 @@
           grade.push(returnval[i].grade);
         }    
       },
+      fetchgradeforcoscholasticResponse:function(e)
+      {
+        returnval1=e.detail.response.returnval;       
+          for(var i=0;i<returnval1.length;i++){
+          co_lower.push(returnval1[i].lower_limit);
+          co_higher.push(returnval1[i].higher_limit);
+          co_grade.push(returnval1[i].grade);
+        }
+      },
       callfetchcoscholasticmetricsService:function(studid){
+        //alert('co');
         this.fetchcoscholasticmetricsurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticmetrics-service";
         var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -452,10 +491,11 @@
         this.$.fetchcoscholasticmetricsajax.generateRequest(); 
       },
       fetchcoscholasticmetricsResponse:function(e){
-        // alert(JSON.stringify(e.detail.response));
+         //alert(JSON.stringify(e.detail.response));
         metrics=e.detail.response.returnval;
       },
       callfetchcoscholasticinfoService:function(studid){
+        this.stid=studid;
         this.fetchcoscholasticinfourl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticinfo-service";
         var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -464,7 +504,17 @@
         this.$.fetchcoscholasticinfoajax.generateRequest(); 
       },
       fetchcoscholasticinfoResponse:function(e){
-        alert(JSON.stringify(e.detail.response));
+         marks=e.detail.response.returnval;
+         this.fetchcoscholasticsubcategoryurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticsubcategory-service";
+        var obj={"scoolid":"","studid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.studid=this.stid;
+        this.fetchcoscholasticsubcategoryparam=obj;
+        this.$.fetchcoscholasticsubcategoryajax.generateRequest(); 
+        //alert(JSON.stringify(e.detail.response));
+      },
+      fetchcoscholasticsubcategoryResponse:function(e)
+      {
         // alert(JSON.stringify(lower));
         var lsarr=[];
         var wkarr=[];
@@ -472,22 +522,58 @@
         var avarr=[];
         var ccarr=[];
         var hparr=[];
-        marks=e.detail.response.returnval;
-        for(var i=0;i<marks.length;i++){
+        var k;
+       submarks=e.detail.response.returnval;
+       //alert(JSON.stringify(submarks));
+        for(var i=0;i<marks.length;i++)
+        {
+          k=0;
+          //alert(marks[i].sub_category);
           var subcategoryarr=[];          
           // for(var j=0;j<metrics.length;j++){
-            var obj={"metric":"","mark":"","grade":""};
+            
             // if(marks[i].subject_id==metrics[j].subject_id){
-              obj.metric=marks[i].sub_category;
+             
+            for(var j=0;j<submarks.length;j++)
+            {
+               var obj={"metric":"","mark":"","grade":""};
+             if(k==0)
+             {
+               obj.metric=marks[i].sub_category;
               obj.mark=marks[i].mark;
-              for(var n=0;n<lower.length;n++){          
-              if(obj.mark>=lower[n]&&obj.mark<=higher[n]){            
-                obj.grade=grade[n];
+              for(var n=0;n<co_lower.length;n++)
+              {          
+              if(obj.mark>=co_lower[n]&&obj.mark<=co_higher[n])
+              {            
+                obj.grade=co_grade[n];
               }
               }
 
-              // this.FnFindGrade(marks[i].mark);
-              subcategoryarr.push(obj);
+             }
+             else
+             {
+              obj.metric="";
+              obj.mark="";
+              obj.grade="";
+             }
+          //alert(marks[i].sub_category+'   '+submarks[j].category);
+              if(submarks[j].category==marks[i].sub_category)
+              {
+               k=1;
+                obj.submetric=submarks[j].sub_category;
+                obj.submark=submarks[j].mark;
+                obj.rowcount=6;
+                
+                  for(var n=0;n<co_lower.length;n++)
+              {          
+              if(obj.submark>=co_lower[n]&&obj.submark<=co_higher[n])
+              {            
+                obj.subgrade=co_grade[n];
+              }
+              }
+ 
+                subcategoryarr.push(obj);
+              //alert(JSON.stringify(obj));
               if(marks[i].subject_id=="Life Skills"){
                 lsarr.push(obj);
               }
@@ -510,6 +596,14 @@
           // }          
           metricsarr.push(subcategoryarr);
         }
+        }
+        }
+       // alert(JSON.stringify(lsarr));
+        // alert(JSON.stringify(wkarr));
+         // alert(JSON.stringify(vparr));
+           //alert(JSON.stringify(avarr));
+           // alert(JSON.stringify(ccarr));
+            // alert(JSON.stringify(hparr));
         document.querySelector('cce-fivetoten-score-card').lsArray=lsarr;
         document.querySelector('cce-fivetoten-score-card').wkArray=wkarr;
         document.querySelector('cce-fivetoten-score-card').vpArray=vparr;

@@ -70,11 +70,10 @@
         this.$.scorecardservice.callFetchstudentinfoService(this.studentid);
         this.$.scorecardservice.callFetchsubjectinfoService(this.studentid);
 
-        // this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studentid);
+        //this.$.scorecardservice.callfetchhealthattendanceinfoService(this.studentid);
         this.$.scorecardservice.callFetchmarkService(this.studentid); 
-        // this.$.scorecardservice.callfetchcoscholasticmetricsService
-        // (this.studentid);  
-        // this.$.scorecardservice.callfetchcoscholasticinfoService(this.studentid);
+         this.$.scorecardservice.callfetchcoscholasticmetricsService(this.studentid);  
+         this.$.scorecardservice.callfetchcoscholasticinfoService(this.studentid);
         // this.$.scorecardservice.callFetchmarkService(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('ccefivetotenscorecard',''); 

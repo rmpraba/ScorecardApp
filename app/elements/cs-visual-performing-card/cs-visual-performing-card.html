@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="hidetop">
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Grade &nbsp&nbsp&nbsp {{grade}} - Section &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
-      <table border="1" id="MarkTable12" class="card">      
+      <table border="1" id="visualMarkTable" class="card">      
       <tr>
       <th id="tb1">SNo</th>
       <th id="tb1">Name</th>
@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </table>
       </center> 
        <center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
-<input type="button" id="btn3" onclick="tableToExcel('MarkTable12', 'Mark Report')" value="Export to Excel"></center>
+<input type="button" id="btn3" onclick="tableToExcel('visualMarkTable', 'Mark Report')" value="Export to Excel"></center>
  <term-assesment-service id="assesmentservice"></term-assesment-service>
  
     </template>

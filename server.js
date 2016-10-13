@@ -2120,7 +2120,7 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
   var academicyear={academic_year:req.query.academicyear}; 
-  var qur="select * from tr_term_attendance ta join tr_term_health th on(ta.student_id=th.student_id)"+
+  var qur="select * from tr_term_attendance ta join tr_term_health_copy th on(ta.student_id=th.student_id)"+
   " where ta.student_id='"+req.query.studid+"' "+
   "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"'";
   // console.log(qur);
@@ -4152,10 +4152,13 @@ app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req,
 
 app.post('/fetchhealthinfo-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select * from tr_term_health where school_id='"+req.query.schoolid+"' and "+
-    "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' "+
-    " and  student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
-    
+    // var qur="select * from tr_term_health where school_id='"+req.query.schoolid+"' and "+
+    // "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' "+
+    // " and  student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+    var qur="SELECT hc.student_id, hc.height, hc.weight, hc.bmi, hc.bmi_remark, hc.vison, hc.dental, hc.hearing, hc.overall_comment"+
+" FROM  tr_term_health_copy hc JOIN tr_term_health th ON ( hc.student_id = th.student_id ) WHERE hc.school_id =  '"+req.query.schoolid+"'"+
+" AND th.school_id =  '"+req.query.schoolid+"' AND th.academic_year='"+req.query.academicyear+"' and th.term_id='"+req.query.termname+"' "+
+     " and  th.student_id='"+req.query.studid+"' and th.grade='"+req.query.grade+"' and th.section='"+req.query.section+"'";
     console.log('......................healthinfo..............................');
     console.log(qur);
     connection.query(qur,

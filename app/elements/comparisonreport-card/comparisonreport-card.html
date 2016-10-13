@@ -406,9 +406,9 @@
       <div class="content">
         <div>
         <template is="dom-repeat" items="{{healthArray}}" as="item">
-          <table id="tab" width='80%'>
-            <tr style="background-color: #f3f3f3;height: 20px;"><th>Height</th><th>Weight</th><th>BMI</th><th>Remarks</th><th>Blood Group</th><th>Vision Left</th><th>Vision Right</th><th>Denetal Hygeine</th></tr>            
-            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.bmi}}</td><td>{{item.remark}}</td><td>{{item.blood_group}}</td><td>{{item.vision_left}}</td><td>{{item.vision_right}}</td><td>{{item.dental}}</td></tr>
+          <table id="tab" width='90%'>
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>&nbsp;&nbsp;Height&nbsp;&nbsp;</th><th>&nbsp;&nbsp;Weight&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI Remarks&nbsp;&nbsp;</th><th>Vision</th><th>Dental (To be checked by the dentist)</th><th>Hearing (Does the child require ENT specialist referral)</th><th>Overall Recommendations</th></tr>            
+            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.bmi}}</td><td>{{item.bmi_remark}}</td><td>{{item.vison}}</td><td>{{item.dental}}</td><td>{{item.hearing}}</td><td>{{item.overall_comment}}</td></tr>
             
           </table>
           </template>
@@ -416,7 +416,7 @@
       </div>
     </iron-collapse>
 
-    <div class="heading" on-click="FnExpandTalent">View talent info</div>
+    <div class="heading" on-click="FnExpandTalent" hidden>View talent info</div>
 
     <iron-collapse id="comparisoncollapse3">
       <!-- <div class="content"> -->

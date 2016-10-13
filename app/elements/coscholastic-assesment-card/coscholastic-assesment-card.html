@@ -195,10 +195,10 @@
         // this.$.termassesmentservice.callFetchStudentInfo(gradename,section);          
 
         if(gradename=="Grade-9"||gradename=="Grade-10"){
-          document.querySelector('cc-ntlife-skill-card').studarr=[]; 
-        document.querySelector('cc-ntlife-skill-card').setDefaultHeaders();  
-        document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-ntlife-skill-card'); 
-        document.querySelector('cc-ntlife-skill-card').FnSpinnerrActive(true);   
+          document.querySelector('cs-life-skill-card').studarr=[]; 
+        document.querySelector('cs-life-skill-card').setDefaultHeaders();  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card'); 
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(true);   
         }
         else{
           document.querySelector('cs-life-skill-card').studarr=[]; 
@@ -286,7 +286,7 @@
         }      
         else if(subj=="Life Skills"){
         if(grad=="Grade-9"||grad=="Grade-10"){
-        document.querySelector('cc-ntlife-skill-card').FnRefresh();  
+        document.querySelector('cs-life-skill-card').FnRefresh();  
         
         }
         else{

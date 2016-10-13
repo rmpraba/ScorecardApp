@@ -238,15 +238,6 @@ table{
       <th colspan="3">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>   
     </tr>
    </template>
-    <!--<tr>
-      <th colspan="3">SocialSkils</th><th colspan="10"></th><th colspan="3"></th>
-    </tr>
-    <tr>
-      <th colspan="3">EmotionalSkils</th><th colspan="10"></th><th colspan="3"></th>
-    </tr>
-    <tr>
-      <th colspan="3">LifeSkils</th><th colspan="10"></th><th colspan="3">Grade</th>
-    </tr>-->
      <tr>
       <th colspan="16">2(B) WorkingEducation</th>
     </tr>
@@ -256,7 +247,7 @@ table{
     </tr>
     <template is="dom-repeat" items="{{wkArray}}" as="item">
     <tr>
-      <th colspan="3"></th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
+      <th colspan="3">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
     </tr>
     </template>
    
@@ -280,7 +271,7 @@ table{
         </tr>
     <template is="dom-repeat" items="{{avArray}}" as="item">
     <tr>
-      <th colspan="3" rowspan="{{item.rowcount}}">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
+      <th colspan="3">{{item.metric}}</th><th colspan="10">{{item.submetric}}</th><th colspan="3">{{item.subgrade}}</th>
     </tr>
     </template>
     

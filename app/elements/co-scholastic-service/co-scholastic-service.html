@@ -491,7 +491,7 @@
         }     
         else if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-        document.querySelector('cc-ntlife-skill-card').studarr=arr;
+        document.querySelector('cs-life-skill-card').studarr=arr;
         else
         document.querySelector('cs-life-skill-card').studarr=arr;    
         }
@@ -537,7 +537,7 @@
         if(cat=="lifeskill"){
         // alert(localStorage.getItem("curr_sess_grade"));
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-        document.querySelector('cc-ntlife-skill-itemcard').FnSubcategory(categoryarr);
+        document.querySelector('cs-life-skill-item-card').FnSubcategory(categoryarr);
         else
         document.querySelector('cs-life-skill-item-card').FnSubcategory(categoryarr);
         } 
@@ -581,7 +581,7 @@
         if(cat=="lifeskill"){
         // alert(localStorage.getItem("curr_sess_grade"));
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-        document.querySelector('cc-ntlife-skill-itemcard').coarr=coarr;
+        document.querySelector('cs-life-skill-item-card').coarr=coarr;
         else
         document.querySelector('cs-life-skill-item-card').coarr=coarr;
         } 
@@ -965,10 +965,10 @@ insertcosubcategorymarkResponse:function(e){
              if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
         {
-        document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-ntlife-skill-card');
-        document.querySelector('cc-ntlife-skill-card').setDefaultHeaders(); 
-        document.querySelector('cc-ntlife-skill-card').markarr=excelcoscholasticoverall;
-        document.querySelector('cc-ntlife-skill-card').FnSpinnerrActive(false);  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card');
+        document.querySelector('cs-life-skill-card').setDefaultHeaders(); 
+        document.querySelector('cs-life-skill-card').markarr=excelcoscholasticoverall;
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(false);  
         }
         else
         {
@@ -1044,10 +1044,10 @@ insertcosubcategorymarkResponse:function(e){
            if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
         {
-        document.querySelector('coscholastic-assesment-sheet-card').setPage('cc-ntlife-skill-card');
-        document.querySelector('cc-ntlife-skill-card').setDefaultHeaders(); 
-        document.querySelector('cc-ntlife-skill-card').studarr=coscholasticoverall;
-        document.querySelector('cc-ntlife-skill-card').FnSpinnerrActive(false);  
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card');
+        document.querySelector('cs-life-skill-card').setDefaultHeaders(); 
+        document.querySelector('cs-life-skill-card').studarr=coscholasticoverall;
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(false);  
         }
         else
         {
@@ -1264,7 +1264,7 @@ insertcosubcategorymarkResponse:function(e){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
         {
        
-        document.querySelector('cc-ntlife-skill-card').FnSpinnerrActive(false);  
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(false);  
         }
         else
         {

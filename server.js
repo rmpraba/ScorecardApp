@@ -875,6 +875,7 @@ connection.query(qur,
     {
       if(rows.length>0)
       {
+        console.log('qur1...............................');
        connection.query(qur1,function(err, rows)
        {
        if(rows.length>0) 
@@ -2123,14 +2124,28 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   var qur="select * from tr_term_attendance ta join tr_term_health_copy th on(ta.student_id=th.student_id)"+
   " where ta.student_id='"+req.query.studid+"' "+
   "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"'";
-  // console.log(qur);
-  connection.query(qur,
-    function(err, rows)
+
+
+  var qur1="select * from tr_term_attendance ta join tr_term_health th on(ta.student_id=th.student_id)"+
+  " where ta.student_id='"+req.query.studid+"' "+
+  "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"'";
+  
+  connection.query(qur,function(err, rows)
     {
+      console.log(qur);
     if(!err)
     {  
+      if(rows.length>0){
       global.healthattendanceinfo=rows;     
       res.status(200).json({'returnval': rows});
+      }
+      else{
+        console.log(qur1);
+        connection.query(qur1,function(err, rows){
+          global.healthattendanceinfo=rows;     
+          res.status(200).json({'returnval': rows});
+        });
+      }
 
     }
     else
@@ -2936,7 +2951,7 @@ app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, res)
 {
   
-    var qur="select term_name,assesment_id,student_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
+    var qur="select term_name,assesment_id,student_id,(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as term_grade,"+
     "subject_id from tr_term_assesment_overall_marks where subject_id='"+req.query.subject+"' and school_id='"+req.query.schoolid+"' "+ 
     "and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+

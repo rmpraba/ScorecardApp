@@ -21,7 +21,7 @@ table{
     height: 150px;
     border: 3px solid black;
     top:60px;
-    left: 250px
+    left: 230px
 }
 }
 
@@ -73,28 +73,45 @@ table{
     width: 170px;
     height: 200px;
     border: 3px solid black;
-    left: 900px;
+    left: 800px;
 }
 .bbox{
     position: relative;
     width: 900px;
-    height: 800px;
+    height: 1000px;
     border: 20px solid green;
     top:90px;
-    left: 300px
+    left: 100px
 }
 .bbbox{
 
     position: relative;
     width: 900px;
-    height: 1690px;
+    height: auto;
     border: 20px solid green;
     top:90px;
-    left: 300px
+    left: 100px
 }
-}
+
+.buttoncard{
+  position: relative;
+  top:auto;
+    @apply(--layout-horizontal);
+    margin-left: 20%;
+  }
+   .button{
+    width: 10%;
+    background: #252626;
+    color: white;
+    margin-top: 2%;
+    text-transform: none;
+    margin-left: 2%;
+  }
+  @media print {
+    footer {page-break-after: always;}
+  }
 </style>
-  <div class="bbox">  
+  <div class="bbox" id="fivescorecard">  
  
    <div class="relative">
    
@@ -118,7 +135,7 @@ table{
      </table>
    </div>
    <div class="absolute" >
-      <!-- <h3>SchoolLogo</h3> -->
+      
       <img src="../../images/zeesouth.png" height="100px" width="90px"></img>
     </div>
    <div class="pr">
@@ -192,6 +209,7 @@ table{
   <tr>
     <td colspan="3">Dental Hyginene {{dental}}</td><td colspan="10"></td><td colspan="3"></td>
   </tr>
+  <br/>
     <tr>
     <th colspan="16"> <h2>PART1-ACADEMIC PERFOMANCE: Scholastic Areas</h2>
     <br>    
@@ -239,11 +257,11 @@ table{
     </tr>
    </template>
      <tr>
-      <th colspan="16">2(B) WorkingEducation</th>
+      <th colspan="16">2(B) Work Education</th>
     </tr>
 
      <tr>
-      <th colspan="3">WorkingEducation</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
+      <th colspan="3">Work Education</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
     </tr>
     <template is="dom-repeat" items="{{wkArray}}" as="item">
     <tr>
@@ -252,10 +270,10 @@ table{
     </template>
    
       <tr>
-      <th colspan="16">2(C)VisualAnd PerformingArt</th>
+      <th colspan="16">2(C)Visual And Performing Art</th>
     </tr>
       <tr>
-    <th colspan="3">VisualAnd PerformingArt</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
+    <th colspan="3">Visual And Performing Art</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
     </tr>     
     <template is="dom-repeat" items="{{vpArray}}" as="item">
     <tr>
@@ -264,7 +282,7 @@ table{
     </template>
     
     <tr>
-      <th colspan="16">2(D)Attitudes And Values</th>
+      <th colspan="16">2(D) Attitudes And Values</th>
     </tr>
         <tr>
         <th colspan="3"> Attitudes And Values</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
@@ -294,7 +312,7 @@ table{
     </template>
 
     <tr>
-           <th colspan="16"><h3>3(B)Health&PhysicalActivity</h3></th>
+           <th colspan="16"><h3>3(B) Health&PhysicalActivity</h3></th>
     </tr>
     <tr>
            <th colspan="3">Health&PhysicalActivity</th><th colspan="10">DiscriptiveIndicator</th><th colspan="3">Grade</th>
@@ -326,10 +344,24 @@ table{
  
 
  </table>
-   </div>
 
     
+   </div>
+
+</div>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+   <span class="buttoncard">
+<paper-button  id='print' class="button" on-click='print'>Print</paper-button>
+<paper-button  id='email' class="button" on-click='email'>Email</paper-button>
+</span> 
   </template>
+  
   <script>
   (function() {
     'use strict';
@@ -339,6 +371,24 @@ table{
       ready:function(){
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.address=sessionStorage.getItem("curr_sess_loggedschooladdress");
+      },
+      print:function(){
+
+              document.querySelector('home-page').FnHideView(true);
+              this.$.email.hidden=true;
+              this.$.print.hidden=true;
+
+
+            if (!window.print){
+            alert("You need NS4.x to use this print button!")
+            return
+            }
+            window.print()
+
+
+              document.querySelector('home-page').FnHideView(false);
+              this.$.email.hidden=false;
+              this.$.print.hidden=false;
       },
       FnRefresh:function(){
         this.studentid="";

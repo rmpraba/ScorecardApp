@@ -1355,7 +1355,6 @@ var response={
  
          school_id:req.query.schoolid,
          academic_year:req.query.academicyear,
-         assessment_id:req.query.assesmentid,
          term_name:req.query.termname,
          class_id:req.query.classid,
          student_id:req.query.studentid,
@@ -1370,7 +1369,7 @@ var response={
          category_grade:req.query.categorygrade,
          sub_seq:req.query.sequence
   }  
-   var q="select * from tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studentid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"' and assessment_id='"+req.query.assesmentid+"' ";
+   var q="select * from tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studentid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"'";
   console.log(q);  
   connection.query(q,
  function(err, rows)
@@ -1402,7 +1401,7 @@ var response={
 else
 {
   
-  connection.query("UPDATE tr_coscholastic_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studentid+"' and assessment_id='"+req.query.assesmentid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"'",[response],
+  connection.query("UPDATE tr_coscholastic_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studentid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"'",[response],
     function(err, rows)
      {
     
@@ -2470,9 +2469,9 @@ console.log(qur);
 app.post('/updatefaimportmarkcheck-service' ,  urlencodedParser,function (req, res)
 {
 var qur;
-console.log(req.query.assesmentid);
+console.log(req.query.assesmentid+'  '+req.query.subject);
 if(req.query.assesmentid=="FA1"||req.query.assesmentid=="FA2"||req.query.assesmentid=="SA1"){
-if(req.query.subject=='Hindi'||req.query.subject=='Kannada'||req.query.subject=='French'||req.query.subject=='sanskrit'){
+if(req.query.subject=='Hindi'||req.query.subject=='Kannada'||req.query.subject=='French'||req.query.subject=='sanskrit'||req.query.subject=='III Language Kannada'||req.query.subject=='III Language Hindi'){
   console.log("Language");
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
 "(select count(distinct(student_id)) from tr_term_fa_assesment_marks "+

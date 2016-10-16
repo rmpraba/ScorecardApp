@@ -139,6 +139,26 @@
         on-response="fetchgradeforcoscholasticResponse"
         debounce-duration="300"
     >
+     <iron-ajax
+        method="post"
+        id="mailreportcardajax"
+        url="{{mailreportcardurl}}"
+        params="{{mailreportcardparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="mailreportcardResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax
+        method="post"
+        id="sendmailajax"
+        url="{{sendmailurl}}"
+        params="{{sendmailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="sendmailResponse"
+        debounce-duration="300"
+    >
     
 
   </template>
@@ -242,7 +262,8 @@
         document.querySelector('student-list-card').studentarr=arr;  
         
       },
-      callFetchstudentinfoService:function(studid){
+      callFetchstudentinfoService:function(studid)
+      {
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
         var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -309,7 +330,8 @@
         this.fetchmarkparam=obj;
         this.$.fetchmarkajax.generateRequest();                
       },
-      fetchmarkResponse:function(e){         
+      fetchmarkResponse:function(e)
+      {         
         this.finalarr=[];       
         var arr=e.detail.response.returnval;
         // alert(JSON.stringify(arr));
@@ -528,11 +550,18 @@ co_grade=[];
         var ccarr=[];
         var hparr=[];
         var k;
+        var ls=1;
+        var wk=1;
+        var vp=1;
+        var av=1;
+        var cc=1;
+        var hp=1;
        submarks=e.detail.response.returnval;
        //alert(JSON.stringify(submarks));
         for(var i=0;i<marks.length;i++)
         {
           k=0;
+          
           //alert(marks[i].sub_category);
           var subcategoryarr=[];       
              
@@ -543,7 +572,9 @@ co_grade=[];
              {
                obj.metric=marks[i].sub_category;
               obj.mark=marks[i].mark;
-              obj.submetric="";
+              
+              
+              //obj.submetric="";
               
               for(var n1=0;n1<co_lower.length;n1++)
               {          
@@ -554,22 +585,34 @@ co_grade=[];
               }
               }
               if(marks[i].subject_id=="Life Skills"){
+                obj.seqno=ls;
                 lsarr.push(obj);
+                ls++;
               }
               else if(marks[i].subject_id=="Work Education"){
+                obj.seqno=wk;
                 wkarr.push(obj);
+                wk++;
               }
-              else if(marks[i].subject_id=="Visual & Performing Arts"){              
+              else if(marks[i].subject_id=="Visual & Performing Arts"){
+              obj.seqno=vp;              
                 vparr.push(obj);
+                vp++;
               }
               else if(marks[i].subject_id=="Attitudes And values"){
+                obj.seqno=av;
                 avarr.push(obj);
+                av++;
               }
               else if(marks[i].subject_id=="CO-CURRICULAR ACTIVITIES"){
+                obj.seqno=cc;
                 ccarr.push(obj);
+                obj.seqno=cc;
               }
               else if(marks[i].subject_id=="Health and Physical Education"){
+                obj.seqno=hp;
                 hparr.push(obj);
+                hp++;
               }  
               k=1;
               j--;    
@@ -627,7 +670,41 @@ co_grade=[];
         document.querySelector('cce-fivetoten-score-card').avArray=avarr;
         document.querySelector('cce-fivetoten-score-card').ccArray=ccarr;
         document.querySelector('cce-fivetoten-score-card').hpArray=hparr;        
-      }
+      },
+
+        mailReportcardService:function(parentname){
+        this.mailreportcardurl=sessionStorage.getItem("addrinfo")+"/fmailreportcard-service"; 
+        var obj={"schoolid":"","loggedid":"","schoolname":"","academicyear":"","grade":"","section":"","parentname":""}; 
+        obj.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+        obj.parentname=parentname;
+        this.mailreportcardparam=obj;
+        // alert(JSON.stringify(obj));      
+        this.$.mailreportcardajax.generateRequest();
+      },
+      mailreportcardResponse:function(e){
+        // alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=='converted'){
+          this.sendmailService();
+        }
+      },
+      sendmailService:function(){
+        var obj={"secmail":"","parentmail":""};
+        obj.secmail=localStorage.getItem("curr_sess_secmail");
+        obj.parentmail=localStorage.getItem("curr_sess_parentmail");
+        this.sendmailurl=sessionStorage.getItem("addrinfo")+"/fsendmail-service";
+        this.sendmailparam=obj;
+        this.$.sendmailajax.generateRequest();
+      },
+      sendmailResponse:function(e){
+        alert(e.detail.response);
+        if(e.detail.response=="mail sent")
+            document.querySelector('cce-onetofour-score-card').FnCloseSpinner();
+      },
     });
   })();
   </script>

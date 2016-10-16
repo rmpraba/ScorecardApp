@@ -2469,7 +2469,7 @@ app.post('/updatefaimportmarkcheck-service' ,  urlencodedParser,function (req, r
 var qur;
 console.log(req.query.assesmentid);
 if(req.query.assesmentid=="FA1"||req.query.assesmentid=="FA2"||req.query.assesmentid=="SA1"){
-if(req.query.subject=='Hindi'||req.query.subject=='Kannada'||req.query.subject=='French'||req.query.subject=='sanskrit'){
+if(req.query.subject=='Hindi'||req.query.subject=='Kannada'||req.query.subject=='French'||req.query.subject=='sanskrit'||req.query.subject=='III Language Hindi'||req.query.subject=='III Language Kannada'){
   console.log("Language");
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
 "(select count(distinct(student_id)) from tr_term_fa_assesment_marks "+

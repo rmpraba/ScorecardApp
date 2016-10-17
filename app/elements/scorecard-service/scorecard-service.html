@@ -280,7 +280,7 @@
         document.querySelector('cce-onetofour-score-card').pname=arr[0].parent_name;
         }
         else{
-        document.querySelector('cce-fivetoten-score-card').grade=arr[0].grade;
+        document.querySelector('cce-fivetoten-score-card').grade=localStorage.getItem("curr_sess_grade");
         document.querySelector('cce-fivetoten-score-card').studentid=arr[0].student_id;
         document.querySelector('cce-fivetoten-score-card').studentname=arr[0].student_name;
         document.querySelector('cce-fivetoten-score-card').dob=arr[0].dob;

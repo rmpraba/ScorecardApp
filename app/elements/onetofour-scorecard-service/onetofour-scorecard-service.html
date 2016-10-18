@@ -864,8 +864,14 @@
         this.$.fetchhealthinfoajax.generateRequest(); 
       },
       healthinfoResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+       // alert(JSON.stringify(e.detail.response.returnval));
+         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         document.querySelector('comparisonreport-card').healthArray=e.detail.response.returnval;
+    }
+    else
+    {
+          document.querySelector('fivetotencomparisonreport-card').healthArray=e.detail.response.returnval;
+    }
       },
       FnFetchArtinfo:function(studid){
         this.fetchartinfourl=sessionStorage.getItem("addrinfo")+"/fetchartinfo-service";
@@ -881,7 +887,14 @@
       },
       artinfoResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval));
+
+         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         document.querySelector('comparisonreport-card').artArray=e.detail.response.returnval;
+    }
+    else
+    {
+        document.querySelector('fivetotencomparisonreport-card').artArray=e.detail.response.returnval;
+    }
       },
       FnFetchPhysicalinfo:function(studid){
         this.fetchphysicalinfourl=sessionStorage.getItem("addrinfo")+"/fetchphysicalinfo-service";
@@ -897,7 +910,13 @@
       },
       physicalinfoResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval));
+         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         document.querySelector('comparisonreport-card').physicalArray=e.detail.response.returnval;
+    }
+    else
+    {
+        document.querySelector('fivetotencomparisonreport-card').physicalArray=e.detail.response.returnval;
+    }
       },
       fetchgradeseperationService:function(term,subject,category){
         this.fetchgradeseperationurl=sessionStorage.getItem("addrinfo")+"/fetchgradeseperation-service";

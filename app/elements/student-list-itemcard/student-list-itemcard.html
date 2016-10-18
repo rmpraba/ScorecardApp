@@ -107,9 +107,9 @@
         this.$.scorecardservice.callFetchmarkService(this.studentid); 
          this.$.scorecardservice.callfetchcoscholasticmetricsService(this.studentid);  
          this.$.scorecardservice.callfetchcoscholasticinfoService(this.studentid);
-         //this.$.scorecardservice.FnFetchHealthinfo(this.studentid); 
-        //this.$.scorecardservice.FnFetchArtinfo(this.studentid);
-        //this.$.scorecardservice.FnFetchPhysicalinfo(this.studentid);  
+         this.$.otfscorecardservice.FnFetchHealthinfo(this.studentid); 
+        this.$.otfscorecardservice.FnFetchArtinfo(this.studentid);
+        this.$.otfscorecardservice.FnFetchPhysicalinfo(this.studentid); 
         // this.$.scorecardservice.callFetchmarkService(this.studentid);
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('fivetotencomparisonreport',''); 

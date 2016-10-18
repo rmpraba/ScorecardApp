@@ -19,6 +19,7 @@
 <link rel="import" href="../consolidated-report-card/consolidated-report-card.html">
 <link rel="import" href="../teacher-observation_card/teacher-observation_card.html">
 <link rel="import" href="../comparisonreport-card/comparisonreport-card.html">
+<link rel="import" href="../fivetotencomparisonreport-card/fivetotencomparisonreport-card.html">
 <link rel="import" href="../approvalstatus-card/approvalstatus-card.html">
   <dom-module id="home-page">
   <template>
@@ -124,6 +125,9 @@
         </section>
         <section data-category="comparisonreport">
           <comparisonreport-card></comparisonreport-card>
+        </section>
+          <section data-category="fivetotencomparisonreport">
+          <fivetotencomparisonreport-card></fivetotencomparisonreport-card>
         </section>
         <section data-category="approvalstatus">
           <approvalstatus-card></approvalstatus-card>
@@ -325,6 +329,15 @@
       document.querySelector('teacherhome-card').FnRefresh();
       // document.querySelector('cce-generate-score-card').FnRefresh();   
       document.querySelector('comparisonreport-card').FnRefresh(); 
+
+    }
+     if(localStorage.getItem("curr_sess_page")=="fivetotencomparisonreport")
+    {
+      this.page="scorecard"; 
+      localStorage.setItem("curr_sess_page",this.page);     
+      document.querySelector('teacherhome-card').FnRefresh();
+      // document.querySelector('cce-generate-score-card').FnRefresh();   
+      //document.querySelector('fivetotencomparisonreport-card').FnRefresh(); 
 
     }
     if(localStorage.getItem("curr_sess_page")=="artverticals-card")

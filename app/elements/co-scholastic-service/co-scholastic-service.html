@@ -532,6 +532,7 @@
        fetchstudentlifeskillResponse:function(e)
       {
          categoryarr=e.detail.response.returnval;
+         //alert(JSON.stringify(categoryarr));
         var cat=sessionStorage.getItem("category");
         // alert(cat);
         if(cat=="lifeskill"){
@@ -881,7 +882,7 @@ insertcosubcategorymarkResponse:function(e){
            if(coscholasticarr[i].student_id==coscholasticarr[j].student_id)
            {      
            sum=parseInt(sum)+parseInt(coscholasticarr[j].mark);
-          obj['mark'+(k+1)]=coscholasticarr[j].mark;     
+          obj['mark'+(coscholasticarr[j].sub_seq)]=coscholasticarr[j].mark;     
             //markarr.push(obj.mark1);
             coscholasticarr.splice(j,1);
             j--;

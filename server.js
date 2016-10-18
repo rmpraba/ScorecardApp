@@ -1388,7 +1388,7 @@ var response={
     if(!err)
     {    
       console.log('co1-insert');
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'insert'});
     }
     else
     {
@@ -1408,7 +1408,7 @@ else
     if(!err)
     {
       console.log('co1-update');
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'update'});
     }
     else
     {

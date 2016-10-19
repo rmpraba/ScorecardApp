@@ -1723,7 +1723,7 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
   var schoolid={school_id:req.query.schoolid};
   var studid={id:req.query.studid};
   var qur="select s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1,p.alternate_mail "+
-  "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
+  "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"' and p.school_id='"+req.query.schoolid+"'";
 
   console.log(qur);
   connection.query(qur,

@@ -86,6 +86,8 @@
         document.querySelector('home-page').setPage('languageenrichment','');
       }
       if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport"){ 
+        if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4")
+        {
         this.$.otfscorecardservice.callFetchstudentinfoService(this.studentid);
         this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);
         this.$.otfscorecardservice.callFetchsubjectinfoService(this.studentid);
@@ -97,6 +99,22 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('comparisonreport','');
         document.querySelector('comparisonreport-card').setStudentId(this.studentid);
+      }
+      else
+      {
+          this.$.scorecardservice.callFetchstudentinfoService(this.studentid);
+        this.$.scorecardservice.callFetchsubjectinfoService(this.studentid);
+        this.$.scorecardservice.callFetchmarkService(this.studentid); 
+         this.$.scorecardservice.callfetchcoscholasticmetricsService(this.studentid);  
+         this.$.scorecardservice.callfetchcoscholasticinfoService(this.studentid);
+         this.$.otfscorecardservice.FnFetchHealthinfo(this.studentid); 
+        this.$.otfscorecardservice.FnFetchArtinfo(this.studentid);
+        this.$.otfscorecardservice.FnFetchPhysicalinfo(this.studentid); 
+        // this.$.scorecardservice.callFetchmarkService(this.studentid);
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('fivetotencomparisonreport',''); 
+       // document.querySelector('fivetotencomparisonreport-card').setStudentId(this.studentid);
+      }
       }
        if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Editinfo"){ 
        this.$.assesmentservice.callstudentinfo(this.studentid); 

@@ -1,20 +1,55 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="cce-fivetoten-score-card">
+<dom-module id="fivetotencomparisonreport-card">
   <template>
     <style>
       :host {
         display: block;
       }
-       
-table{
+      table{
    background-color: #e6ffb3;
    }
    div{
        background-color: #e6ffb3;
 
+
    }
+    paper-dialog{
+      margin-top: -10%;
+      background-color: #f3f3f3;
+      border: 1px solid #dedede;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 16px;
+      padding: 5px 5px;
+      font-family: verdana;
+      width: 55%;      
+    }
+      .heading {
+        padding: 10px 15px;
+        margin-top: 20px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 90%;
+        text-align: left;
+        font-family: verdana;
+      }
+      
   .relative {
     position: relative;
     width: 450px;
@@ -124,8 +159,11 @@ table{
   @media print {
     footer {page-break-after: always;}
   }
-</style>
-  <div class="bbox" id="fivescorecard">  
+    </style>
+    <div class="heading" on-click="FnExpandScorecard">View Reportcard</div>
+
+    <iron-collapse id="fcomparisoncollapse1">
+       <div class="bbox" id="fivescorecard">  
  
    <div class="relative">
    
@@ -364,94 +402,156 @@ table{
 
     
    </div>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-   <span class="buttoncard">
-<paper-button  id='print' class="button" on-click='print'>Print</paper-button>
-<paper-button  id='email' class="button" on-click='email'>Email</paper-button>
-</span> 
-
-<paper-dialog id="fshowpopup" modal>
-    <div>
-      <paper-input readonly label="Student Name" value="{{studentname}}"></paper-input>
-      <paper-input label="Parent Email" value="{{parentemail}}"></paper-input>
-      <paper-input label="Secondary Email" value="{{secemail}}"></paper-input>
-    </div>
-    <div class='dialogbtncard'>
-    <paper-button id="close" on-click="FnCancel">Cancel</paper-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <paper-button id="close" on-click="FnSendEmail">Send</paper-button>
-    </div>
-  </paper-dialog>
-  <scorecard-service id="ss"></scorecard-service>
-  </template>
   
+    </iron-collapse>
+    
+    <div class="heading" on-click="FnExpandHealth">View health info</div>
+
+    <iron-collapse id="fcomparisoncollapse2">
+      <div class="content">
+        <div>
+        <template is="dom-repeat" items="{{healthArray}}" as="item">
+          <table id="tab" width='90%'>
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>&nbsp;&nbsp;Height&nbsp;&nbsp;</th><th>&nbsp;&nbsp;Weight&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI Remarks&nbsp;&nbsp;</th><th>Vision</th><th>Dental (To be checked by the dentist)</th><th>Hearing (Does the child require ENT specialist referral)</th><th>Overall Recommendations</th></tr>            
+            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.bmi}}</td><td>{{item.bmi_remark}}</td><td>{{item.vison}}</td><td>{{item.dental}}</td><td>{{item.hearing}}</td><td>{{item.overall_comment}}</td></tr>
+            
+          </table>
+          </template>
+        </div>
+      </div>
+    </iron-collapse>
+
+    <div class="heading" on-click="FnExpandTalent" hidden>View talent info</div>
+
+    <iron-collapse id="fcomparisoncollapse3">
+      <!-- <div class="content"> -->
+      <div style="margin-left: 5%;width: 80%;" class="heading" on-click="FnExpandArt">Art Verticals</div>
+        <iron-collapse id="fcomparisoncollapse4">
+          <div class="content">
+          <template is="dom-repeat" items="{{artArray}}" as="item">
+            <table id="tab" width='80%' style="margin-left: 5%;">
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Outside Coaching</th><th>Competitions Attended</th><th>Prizes Won</th></tr>            
+            <tr style="text-align: center;height: 30px;"><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.coaching}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>            
+            </table>
+          </template> 
+          </div>
+        </iron-collapse>
+      <div style="margin-left: 5%;width: 80%;" class="heading" on-click="FnExpandPhysical">Physical Education</div>
+        <iron-collapse id="fcomparisoncollapse5">
+          <div class="content">
+          <template is="dom-repeat" items="{{physicalArray}}" as="item">
+            <table id="tab" width='80%' style="margin-left: 5%;">
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Competitions Attended</th><th>Prizes Won</th></tr>
+            
+            <tr style="text-align: center;height: 30px;"><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
+            
+            </table>
+          </template>
+          </div>
+        </iron-collapse>
+      <!-- </div> -->
+    </iron-collapse>
+    <div>
+      <paper-dialog id="showgrade" modal>
+        <div>
+        <div class="cat" id="title">
+        <template is="dom-repeat" items="{{subcatarr}}" as="item">
+        <p>{{item.sub_category}}</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment1</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass1}}" as="item1">
+        <p style="margin-left:14%;text-align: left;">{{item1}}</p>
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment2</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass2}}" as="item2">
+        <p style="margin-left:14%;text-align: left;">{{item2}}</p>
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment3</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass3}}" as="item3">
+        <p style="margin-left:14%;text-align: left;">{{item3}}</p>
+        </template>
+        </div>
+              
+        </div>
+        <paper-button id="close" on-click="FnCloseDialog">Close</paper-button>
+      </paper-dialog>
+    </div>
+    <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
+    <scorecard-service id="ss"></scorecard-service>
+  </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'cce-fivetoten-score-card',
-      ready:function(){
+      is: 'fivetotencomparisonreport-card',
+        ready:function(){
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.address=sessionStorage.getItem("curr_sess_loggedschooladdress");
       },
-      print:function(){
-
-              document.querySelector('home-page').FnHideView(true);
-              this.$.email.hidden=true;
-              this.$.print.hidden=true;
-
-
-            if (!window.print){
-            alert("You need NS4.x to use this print button!")
-            return
-            }
-            window.print()
-
-
-              document.querySelector('home-page').FnHideView(false);
-              this.$.email.hidden=false;
-              this.$.print.hidden=false;
+ FnExpandScorecard:function(){
+        // alert('expandcard');
+        document.querySelector('#fcomparisoncollapse1').toggle();
+        if(this.$.fcomparisoncollapse1.opened==true){
+        this.$.fcomparisoncollapse2.opened=false;
+        this.$.fcomparisoncollapse3.opened=false;
+        this.$.fcomparisoncollapse4.opened=false;
+        this.$.fcomparisoncollapse5.opened=false;
+        }
+     
       },
-        email:function(){
-        this.$.fshowpopup.toggle();
+      FnExpandHealth:function(){
+        document.querySelector('#fcomparisoncollapse2').toggle();
+        if(this.$.fcomparisoncollapse2.opened==true){
+        this.$.fcomparisoncollapse1.opened=false;
+        this.$.fcomparisoncollapse3.opened=false;
+        this.$.fcomparisoncollapse4.opened=false;
+        this.$.fcomparisoncollapse5.opened=false;
+        }
       },
-      FnSendEmail:function(){
-        this.$.fshowpopup.toggle();
-        localStorage.setItem("curr_sess_parentmail",this.parentemail);
-        localStorage.setItem("curr_sess_secmail",this.secemail);
-        this.$.ss.mailReportcardService(this.parentname);
+      FnExpandTalent:function(){
+        document.querySelector('#fcomparisoncollapse3').toggle();
+        if(this.$.fcomparisoncollapse3.opened==true){
+        this.$.fcomparisoncollapse1.opened=false;
+        this.$.fcomparisoncollapse2.opened=false;
+        this.$.fcomparisoncollapse4.opened=false;
+        this.$.fcomparisoncollapse5.opened=false;
+        }
       },
-      FnRefresh:function(){
-        this.studentid="";
-        this.studentname="";
-        this.dob="";
-        this.fathername="";
-        this.address="";
-        this.mobileno="";
-        this.term1attendance="";
-        this.term2attendance="";
-        this.term1wday="";
-        this.term2wday="";
-        this.height="";
-        this.weight="";
-        this.bloodgroup="";
-        this.leftvision="";
-        this.rightvision="";
-        this.dental="";
-        this.subjectArray="";
-        this.lsArray="";
-        this.wkArray="";
-        this.vpArray="";
-        this.avArray="";
-        this.ccArray="";
-        this.hpArray="";
+      FnExpandArt:function(){
+        document.querySelector('#fcomparisoncollapse4').toggle();
+        if(this.$.fcomparisoncollapse4.opened==true){
+        this.$.fcomparisoncollapse5.opened=false;
+        }
+      },
+      FnExpandPhysical:function(){
+        document.querySelector('#fcomparisoncollapse5').toggle();
+        if(this.$.fcomparisoncollapse5.opened==true){
+        this.$.fcomparisoncollapse4.opened=false;
+        }  
+      },
+      FnFetchGradeSeperation:function(e){
+        // alert(e.target.id+" "+e.target.title);
+        
+        var category=e.target.id;
+        var val=e.target.title;
+        var inx=val.indexOf("@");
+        var subject=val.substring(0,inx);
+        var term=val.substring(inx+1);
+        //document.querySelector('onetofour-scorecard-service').fetchgradeseperationService(term,subject,category);        
+      },
+      FnCloseDialog:function(){
+        // if(flag==true)
+        this.$.showgrade.toggle();
 
-      }
+      },
+     
     });
   })();
   </script>

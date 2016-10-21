@@ -2081,11 +2081,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         alert("Submitted!");
     },
     FnFetchApprovalStatus:function(){
-      var obj={"schoolid":"","academicyear":"","termname":""};
+      var obj={"schoolid":"","academicyear":"","termname":"","loggedid":"","roleid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");      
         obj.termname=localStorage.getItem("curr_sess_termname");
         this.fetchapprovalstatusurl=sessionStorage.getItem("addrinfo")+"/fetchapprovalstatus-service";
+        obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
         this.fetchapprovalstatusparam=obj;
         this.$.fetchapprovalstatusajax.generateRequest();
     },

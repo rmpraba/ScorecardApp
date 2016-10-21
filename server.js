@@ -4614,6 +4614,34 @@ app.post('/fetchhealthinfo-service' ,  urlencodedParser,function (req, res)
 });
 });
 
+app.post('/fetchfahealthinfo-service' ,  urlencodedParser,function (req, res)
+{  
+    // var qur="select * from tr_term_health where school_id='"+req.query.schoolid+"' and "+
+    // "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' "+
+    // " and  student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+    var qur="SELECT student_id, height, weight, bmi, bmi_remark, vison, dental, hearing, overall_comment"+
+" FROM  tr_term_health_copy  where student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+    console.log('......................healthinfo..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
 
 app.post('/fetchartinfo-service' ,  urlencodedParser,function (req, res)
 {  

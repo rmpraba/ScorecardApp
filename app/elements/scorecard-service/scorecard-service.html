@@ -283,10 +283,15 @@
         else{
            if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport")
            {
-        document.querySelector('fivetotencomparisonreport-card').enrno=arr[0].student_id;
-        document.querySelector('fivetotencomparisonreport-card').studentname=arr[0].student_name;        
-        document.querySelector('fivetotencomparisonreport-card').parentname=arr[0].parent_name;
-        document.querySelector('fivetotencomparisonreport-card').parentemail=arr[0].email;
+        // document.querySelector('fivetotencomparisonreport-card').enrno=arr[0].student_id;      
+        document.querySelector('fivetotencomparisonreport-card').grade=localStorage.getItem("curr_sess_grade");
+        document.querySelector('fivetotencomparisonreport-card').studentid=arr[0].student_id;
+        document.querySelector('fivetotencomparisonreport-card').studentname=arr[0].student_name;
+        document.querySelector('fivetotencomparisonreport-card').mothername=arr[0].mother_name;
+        document.querySelector('fivetotencomparisonreport-card').dob=arr[0].dob;
+        document.querySelector('fivetotencomparisonreport-card').fathername=arr[0].parent_name;
+        document.querySelector('fivetotencomparisonreport-card').address=arr[0].address1+" "+arr[0].address2+" "+arr[0].address3+" "+arr[0].city+" "+arr[0].pincode;
+        document.querySelector('fivetotencomparisonreport-card').mobileno=arr[0].mobile; 
         }
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard")
         {
@@ -593,13 +598,18 @@
         var cc=1;
         var hp=1;
        submarks=e.detail.response.returnval;
-       // alert(JSON.stringify(submarks));
+       alert(JSON.stringify(submarks));
        // alert(submarks[0].subject_id+" "+submarks[0].category+" "+submarks[0].description+" "+submarks[0].category_grade);
 
        for(var i=0;i<submarks.length;i++){
           // alert(scholasticarr[i].subject_name);
           var obj={"catcheck":"","subject":"","category":"","grade":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
           if(submarks[i].subject_name=="Life Skills"){
+            // for(var j=0;j<lsarr.length;j++){
+              
+            //   if(lsarr[i].category==submarks[i].category)
+            //     lsarr.splice(i,1);
+            // }
             // alert('yes');
             obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
             // obj.catcheck=submarks[i].category;
@@ -616,6 +626,11 @@
           }
            if(submarks[i].subject_name=="Work Education"){
             // alert('yes');
+            // for(var j=0;j<wkarr.length;j++){
+              
+            //   if(wkarr[i].category==submarks[i].category)
+            //     wkarr.splice(i,1);
+            // }
             obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
             // obj.catcheck=submarks[i].category;
             obj.category=submarks[i].category;

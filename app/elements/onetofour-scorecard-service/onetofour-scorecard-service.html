@@ -205,7 +205,13 @@
         document.querySelector('cce-fivetoten-score-card').term1wday=arr[0].working_days;
         // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
         document.querySelector('cce-fivetoten-score-card').height=arr[0].height+" cm";
-        document.querySelector('cce-fivetoten-score-card').weight=arr[0].weight+" Kg";    
+        document.querySelector('cce-fivetoten-score-card').weight=arr[0].weight+" Kg"; 
+
+        document.querySelector('fivetotencomparisonreport-card').term1attendance=arr[0].attendance;
+        document.querySelector('fivetotencomparisonreport-card').term1wday=arr[0].working_days;
+        // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        document.querySelector('fivetotencomparisonreport-card').height=arr[0].height+" cm";
+        document.querySelector('fivetotencomparisonreport-card').weight=arr[0].weight+" Kg";   
         }
         if(arr.length==2){
         document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;

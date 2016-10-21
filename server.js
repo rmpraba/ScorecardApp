@@ -102,7 +102,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
   var username={"id":req.query.username};
   var password={"password":req.query.password};
   var schoolid={school_id:req.query.schoolid};
-  connection.query('SELECT name as uname,  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr  from md_employee where ? and ? and ? and ?',[id,username,password,schoolid],
+  connection.query('SELECT name as uname,  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr,(select affiliation_no from md_school where id=school) as affno,(select email_id from md_school where id=school) as email,(select website from md_school where id=school) as website,(select telno from md_school where id=school) as telno  from md_employee where ? and ? and ? and ?',[id,username,password,schoolid],
     function(err, rows)
     {
     if(!err)

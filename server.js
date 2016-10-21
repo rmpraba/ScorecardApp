@@ -1722,7 +1722,7 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={id:req.query.studid};
-  var qur="select s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1,p.alternate_mail "+
+  var qur="select s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.mother_name,p.email,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode,p.alternate_mail "+
   "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"' and p.school_id='"+req.query.schoolid+"'";
 
   console.log(qur);
@@ -2205,18 +2205,22 @@ app.post('/nameforonetofourreport-service',  urlencodedParser,function (req,res)
 
 //fetchcoscholasticinfo
 app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
-{   
+{  
+
   var schoolid={school_id:req.query.schoolid};
-  var studid={student_id:req.query.studid};  
-  // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
-  var qur="SELECT subject_id,sub_category,mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'";
-  // console.log(qur);
+  var studid={student_id:req.query.studid}; 
+  var academicyear={academic_year:req.query.academicyear};  
+  var qur="SELECT * FROM tr_coscholastic_assesment_marks am join "+
+  "md_grade_coscholastic_descriptor gd on(am.sub_category=gd.category) WHERE school_id='"+req.query.schoolid+"' AND student_id='"+req.query.studid+"' and am.category_grade=gd.grade and "+
+  "am.subject_id=gd.subject_name";
+  console.log('.........................Score card....................................');
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
     if(!err)
     {       
-       global.coscholasticinfo=rows;
+      global.scholasticinfo=rows;
       res.status(200).json({'returnval': rows});
     }
     else
@@ -2224,8 +2228,28 @@ app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
     }  
+  });
 
-});
+//   var schoolid={school_id:req.query.schoolid};
+//   var studid={student_id:req.query.studid};  
+//   // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
+//   var qur="SELECT subject_id,sub_category,mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'";
+//   // console.log(qur);
+//   connection.query(qur,
+//     function(err, rows)
+//     {
+//     if(!err)
+//     {       
+//        global.coscholasticinfo=rows;
+//       res.status(200).json({'returnval': rows});
+//     }
+//     else
+//     {
+//       console.log(err);
+//       res.status(200).json({'returnval': 'fail'});
+//     }  
+
+// });
 });
 
 app.post('/fetchcoscholasticsubcategory-service',  urlencodedParser,function (req,res)
@@ -2472,7 +2496,7 @@ var qur;
 console.log(req.query.assesmentid+'  '+req.query.subject);
 if(req.query.assesmentid=="FA1"||req.query.assesmentid=="FA2"||req.query.assesmentid=="SA1"){
 
-if(req.query.subject=='Hindi'||req.query.subject=='Kannada'||req.query.subject=='French'||req.query.subject=='sanskrit'||req.query.subject=='III Language Kannada'||req.query.subject=='III Language Hindi'){
+if(req.query.subject=='Hindi'||req.query.subject=='Kannada'||req.query.subject=='French'||req.query.subject=='sanskrit'||req.query.subject=='III Language Kannada'||req.query.subject=='III Language Hindi'||req.query.subject=='II Language French'){
 
   console.log("Language");
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
@@ -4804,18 +4828,33 @@ app.post('/updateattendanceflag-service' ,  urlencodedParser,function (req, res)
 
 app.post('/fetchapprovalstatus-service' ,  urlencodedParser,function (req, res)
 {    
- var qur="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"'";
-  
- console.log('--------------approval status------------------');
- console.log(qur);
 
-  connection.query(qur,function(err, rows){
+ // var checkqur="SELECT grade_id FROM md_employee where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'" 
+ if(req.query.roleid=='co-ordinator'||req.query.roleid=='headmistress'){
+ var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject!='attendance'";
+ var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject!='attendance'";
+ }
+ else if(req.query.roleid=='principal'){
+ var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and subject!='attendance'";
+ var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and subject!='attendance'";
+ }
+ console.log('--------------approval status------------------');
+ console.log(qur1);
+ console.log(qur2);
+connection.query(qur1,function(err, rows){
+  if(rows.length>0){
+     res.status(200).json({'returnval': rows});
+  }
+  else{
+  connection.query(qur2,function(err, rows){
     if(!err){
       res.status(200).json({'returnval': rows});
     }
     else
       res.status(200).json({'returnval': 'no rows'});
   });
+  }
+});
 });
 
 

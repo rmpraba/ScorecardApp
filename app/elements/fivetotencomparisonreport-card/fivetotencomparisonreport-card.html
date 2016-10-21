@@ -181,7 +181,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="heading" on-click="FnExpandScorecard">View Reportcard</div>
 
     <iron-collapse id="fcomparisoncollapse1">
-       <div class="bbox" id="fivescorecard">  
+      <div class="bbox" id="fivescorecard">  
  
    <div class="relative">
    
@@ -189,17 +189,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        <tr>
         <th colspan="3"><h2><center>{{schoolname}}</center></h2></th>
        </tr>
-        <tr>
+       <tr>
         <th colspan="3"><center>{{schooladdress}}</center></th>
        </tr>
        <tr>
-      <th>Affiliation No:</th><th></th>
+      <th>Affiliation No:</th><th colspan="2">&nbsp;{{affno}}</th>
        </tr> 
        <tr>
-        <th> Email Id:</th><th></th><th></th>
+        <th> Email Id:</th><th colspan="2">{{email}}</th>
        </tr>
        <tr>
-        <th> Website:</th><th></th><th>Phone No : </th>
+        <th> Website:</th><th>{{website}}</th><th>Phone No : {{phno}}</th>
        </tr>
      </table>
    </div>
@@ -209,7 +209,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <center><h2>PERFORMANCE PROFILE</h2>
      Class: {{grade}} (Session: {{academicyear}})
      <h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>
-     <h4>(Issued by School as per directives of Central Board of Secondary Educational Delhi)</h4>
+     <h4>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4>
      </center>
    </div>
    <div class="stupr"><h3>Student Profile</h3></div> 
@@ -526,8 +526,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'fivetotencomparisonreport-card',
         ready:function(){
-        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
-        this.address=sessionStorage.getItem("curr_sess_loggedschooladdress");
+       this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.schooladdress=sessionStorage.getItem("curr_sess_loggedschooladdress");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+
+        this.affno=sessionStorage.getItem("curr_sess_loggedaffliationid");
+        this.email=sessionStorage.getItem("curr_sess_emailid");
+        this.website=sessionStorage.getItem("curr_sess_website");
+        this.phno=sessionStorage.getItem("curr_sess_telno");
       },
  FnExpandScorecard:function(){
         // alert('expandcard');

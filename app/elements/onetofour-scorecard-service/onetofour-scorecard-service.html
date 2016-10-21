@@ -105,6 +105,17 @@
         on-response="healthinfoResponse"
         debounce-duration="300"
     >
+
+    <iron-ajax
+        method="post"
+        id="fetchfahealthinfoajax"
+        url="{{fetchfahealthinfourl}}"
+        params="{{fetchfahealthinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="healthfainfoResponse"
+        debounce-duration="300"
+    >
     <iron-ajax
         method="post"
         id="fetchartinfoajax"
@@ -875,6 +886,18 @@
         this.fetchhealthinfoparam=obj;
         this.$.fetchhealthinfoajax.generateRequest(); 
       },
+       FnFetchfaHealthinfo:function(studid){
+        this.fetchfahealthinfourl=sessionStorage.getItem("addrinfo")+"/fetchfahealthinfo-service";
+        var obj={"termname":"","schoolid":"","studid":"","academicyear":"","grade":"","section":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.studid=studid;
+        this.fetchfahealthinfoparam=obj;
+        this.$.fetchfahealthinfoajax.generateRequest(); 
+      },
       healthinfoResponse:function(e){
        // alert(JSON.stringify(e.detail.response.returnval));
          if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
@@ -890,6 +913,9 @@
           // document.querySelector('fivetotencomparisonreport-card').bloodgroup="";
           document.querySelector('fivetotencomparisonreport-card').healthArray=e.detail.response.returnval;
     }
+      },
+      healthfainfoResponse:function(e){
+         document.querySelector('fivetotencomparisonreport-card').healthArray=e.detail.response.returnval;
       },
       FnFetchArtinfo:function(studid){
         this.fetchartinfourl=sessionStorage.getItem("addrinfo")+"/fetchartinfo-service";

@@ -1775,13 +1775,18 @@ app.post('/fetchsubjectname-service',  urlencodedParser,function (req,res)
 app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var studid={student_id:req.query.studid};  
-  connection.query("SELECT * FROM tr_term_overallfa_assesment_marks WHERE ? AND ? order by subject_id",[studid,schoolid],
+  var studid={student_id:req.query.studid}; 
+  var qur="SELECT * FROM tr_term_overallfa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND student_id='"+req.query.studid+"' order by subject_id"; 
+  console.log('----------------------fetch mark------------------------');
+  console.log(qur);
+  connection.query(qur,
     function(err, rows)
     {
     if(!err)
     {       
       global.fetchmark=rows;
+      // console.log('---------------------------');
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else

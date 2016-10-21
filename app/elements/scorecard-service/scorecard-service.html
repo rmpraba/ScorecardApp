@@ -376,7 +376,7 @@
           for(var j=0;j<arr.length;j++){
             this.no=parseInt(this.no)+1;
             // alert(subjectarr[i].subject_name+"   "+arr[j].subject_id);
-            if(subjectarr[i].subject_name==arr[j].subject_id){
+            if((subjectarr[i].subject_name).trim()==(arr[j].subject_id).trim()){
               // alert('match');
               flag=1;
               obj.subject_name=arr[j].subject_id;
@@ -598,7 +598,7 @@
         var cc=1;
         var hp=1;
        submarks=e.detail.response.returnval;
-       alert(JSON.stringify(submarks));
+       // alert(JSON.stringify(submarks));
        // alert(submarks[0].subject_id+" "+submarks[0].category+" "+submarks[0].description+" "+submarks[0].category_grade);
 
        for(var i=0;i<submarks.length;i++){

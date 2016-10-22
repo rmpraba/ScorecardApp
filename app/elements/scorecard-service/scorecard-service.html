@@ -316,6 +316,7 @@
       },
       fetchhealthattendanceinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
+        //alert('s'+JSON.stringify(arr));
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard")
         {
         document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
@@ -712,6 +713,7 @@
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
         obj.parentname=parentname;
+        obj.termname=localStorage.getItem("curr_sess_termname");
         obj.affno=sessionStorage.getItem("curr_sess_loggedaffliationid");
         obj.email=sessionStorage.getItem("curr_sess_emailid");
         obj.website=sessionStorage.getItem("curr_sess_website");

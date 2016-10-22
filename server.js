@@ -4232,6 +4232,7 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
               
           }
         }
+        console.log('come');
           if(flag==1){
             var t1=parseFloat(((parseFloat(this.m1)+parseFloat(this.m2)+(3*parseFloat(this.sm1)))*2)/10).toFixed(1);
               if(t1>=9.1&&t1<=10)
@@ -4344,13 +4345,13 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
         var hparr=[];
         var k;
         marks=global.coscholasticinfo;
-       submarks=global.coscholasticsubmark;
+       submarks=global.scholasticinfo;
 
          for(var i=0;i<submarks.length;i++){
           var obj={"catcheck":"","subject":"","category":"","grade":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
           if(submarks[i].subject_name=="Life Skills"){
             
-            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
@@ -4364,7 +4365,7 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
           }
            if(submarks[i].subject_name=="Work Education"){
            
-            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
@@ -4378,7 +4379,7 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
           }
            if(submarks[i].subject_name=="Visual & Performing Arts"){
             // alert('yes');
-            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
             // obj.catcheck=submarks[i].category;
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
@@ -4392,7 +4393,7 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
             vparr.push(obj);
           }
            if(submarks[i].subject_name=="Attitudes And values"){
-            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
             
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
@@ -4406,7 +4407,7 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
             avarr.push(obj);
           }
            if(submarks[i].subject_name=="Co-Curricular Activities"){
-            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
@@ -4420,7 +4421,7 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
           }
            if(submarks[i].subject_name=="Health and Physical Education"){
             // alert('yes');
-            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
             // obj.catcheck=submarks[i].category;
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
@@ -4453,12 +4454,12 @@ studentprofile+="<tr ><th>Name </th><th>:</th><th>"+global.studentinfo[0].studen
 studentprofile+="<tr ><th>Mother's Name</th><th>:</th><th>"+global.studentinfo[0].mother_name+"</th></tr><tr > <th>Father's Name </th><th>:</th><th>"+global.studentinfo[0].parent_name+"</th></tr>"
 studentprofile+="<tr rowspan='2'><th>Residential Address </th><th>:</th><th>"+global.studentinfo[0].address1+" "+global.studentinfo[0].address2+" "+global.studentinfo[0].address3+" "+global.studentinfo[0].city+" "+global.studentinfo[0].pincode+"</th></tr><tr><th>Telephone No </th><th>:</th><th>"+global.studentinfo[0].mobile+"</th></tr></table>"  
   studentprofile+="<table class='attable' style='position: relative;text-align: left;top:150px;width: 700px;left: 50px;'><tr height='25px'><th width='250px'>Attendance:</th><th colspan='3'>Term1</th><th colspan='3'>Term2</th></tr>"
-  studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+global.healthattendanceinfo[0].attendance+"</th><th colspan='3'>"+global.healthattendanceinfo[1].attendance+"</th></tr>"
-  studentprofile+="<tr height='25px'><th> Total Working Days</th><th colspan='7'>"+global.healthattendanceinfo[0].working_days+"</th><th colspan='3'>"+global.healthattendanceinfo[1].working_days+"</th></tr></table>"
+  studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+"global.healthattendanceinfo[0].attendance"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].attendance"+"</th></tr>"
+  studentprofile+="<tr height='25px'><th> Total Working Days</th><th colspan='7'>"+"global.healthattendanceinfo[0].working_days"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].working_days"+"</th></tr></table>"
  studentprofile+="<br><br><table class='health' style=' position: relative;text-align: left;top:150px;width: 750px;left: 50px;border: 1px solid black;'><tr height='20px'><th colspan='3'> Health Status</th><th colspan='3'></th><th colspan='3'></th></tr>"
-  studentprofile+="<tr></tr><tr height='22px'><th colspan='3'>Height </th><th>"+global.healthattendanceinfo[0].height+"</th><th colspan='7'>Weight </th><th>"+global.healthattendanceinfo[0].width+"</th><th colspan='3'></th></tr>"
-  studentprofile+="<tr height='25px'><th colspan='3'>Blood Group </th><th>"+global.healthattendanceinfo[0].blood_group+"</th><th colspan='7'>Vision(L) </th><th>"+global.healthattendanceinfo[0].left_vision+"</th><th colspan='3'>(R) </th><th>"+global.healthattendanceinfo[0].right_vision+"</th></tr>"
-studentprofile+="<tr height='25px'><th colspan='3'>Dental Hygiene </th><th>"+global.healthattendanceinfo[0].dental+"</th><td colspan='7'></td><td colspan='3'></td></tr></table><br><br><br><br><br><br><br><br><br>";
+  studentprofile+="<tr></tr><tr height='22px'><th colspan='3'>Height </th><th>"+"global.healthattendanceinfo[0].height"+"</th><th colspan='7'>Weight </th><th>"+"global.healthattendanceinfo[0].width"+"</th><th colspan='3'></th></tr>"
+  studentprofile+="<tr height='25px'><th colspan='3'>Blood Group </th><th>"+"global.healthattendanceinfo[0].blood_group"+"</th><th colspan='7'>Vision(L) </th><th>"+"global.healthattendanceinfo[0].left_vision"+"</th><th colspan='3'>(R) </th><th>"+"global.healthattendanceinfo[0].right_vision"+"</th></tr>"
+studentprofile+="<tr height='25px'><th colspan='3'>Dental Hygiene </th><th>"+"global.healthattendanceinfo[0].dental"+"</th><td colspan='7'></td><td colspan='3'></td></tr></table><br><br><br><br><br><br><br><br><br>";
 
  var signatures="<table  class='signature' style='margin-left: 20%;'><tr><th><img id='img1' width='100px;height:30px;''></th><th></th><th></th><th><img id='img2' width='130px;height:40px;'></th><th></th><th></th><th></th></tr>"
     signatures+="<tr><th>---------------------------------</th><th></th><th></th><th>---------------------------------</th><th></th><th></th>"

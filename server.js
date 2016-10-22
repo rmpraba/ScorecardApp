@@ -4346,110 +4346,124 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
         marks=global.coscholasticinfo;
        submarks=global.coscholasticsubmark;
 
-        for(var i=0;i<marks.length;i++)
-        {
-          k=0;
-          var subcategoryarr=[];       
-             
-            for(var j=0;j<submarks.length;j++)
-            {
-               var obj={"metric":"","mark":"","grade":""};
-             if(k==0)
-             {
-               obj.metric=marks[i].sub_category;
-              obj.mark=marks[i].mark;
-              obj.submetric="";
-              
-              for(var n1=0;n1<co_lower.length;n1++)
-              {          
-                
-              if(parseFloat(obj.mark).toFixed(1)>=co_lower[n1]&&parseFloat(obj.mark).toFixed(1)<=co_higher[n1])
-              {           
-                obj.subgrade=co_grade[n1];
-              }
-              }
-              if(marks[i].subject_id=="Life Skills"){
-                lsarr.push(obj);
-              }
-              else if(marks[i].subject_id=="Work Education"){
-                wkarr.push(obj);
-              }
-              else if(marks[i].subject_id=="Visual & Performing Arts"){              
-                vparr.push(obj);
-              }
-              else if(marks[i].subject_id=="Attitudes And values"){
-                avarr.push(obj);
-              }
-              else if(marks[i].subject_id=="CO-CURRICULAR ACTIVITIES"){
-                ccarr.push(obj);
-              }
-              else if(marks[i].subject_id=="Health and Physical Education"){
-                hparr.push(obj);
-              }  
-              k=1;
-              j--;    
-
-
-             }
-             else
-             {
-              obj.metric="";
-              obj.mark="";
-              obj.grade="";
-             
-         
-              if(submarks[j].category==marks[i].sub_category)
-              {
-                obj.submetric=submarks[j].sub_category;
-                obj.submark=submarks[j].mark;
-                
-                  for(var n=0;n<co_lower.length;n++)
-              {          
-              if(parseFloat(obj.submark).toFixed(1)>=co_lower[n]&&parseFloat(obj.submark).toFixed(1)<=co_higher[n])
-              {            
-                obj.subgrade=co_grade[n];
-              }
-              }
- 
-              subcategoryarr.push(obj);
-              if(marks[i].subject_id=="Life Skills"){
-                lsarr.push(obj);
-              }
-              else if(marks[i].subject_id=="Work Education"){
-                wkarr.push(obj);
-              }
-              else if(marks[i].subject_id=="Visual & Performing Arts"){              
-                vparr.push(obj);
-              }
-              else if(marks[i].subject_id=="Attitudes And values"){
-                avarr.push(obj);
-              }
-              else if(marks[i].subject_id=="CO-CURRICULAR ACTIVITIES"){
-                ccarr.push(obj);
-              }
-              else if(marks[i].subject_id=="Health and Physical Education"){
-                hparr.push(obj);
-              }         
+         for(var i=0;i<submarks.length;i++){
+          var obj={"catcheck":"","subject":"","category":"","grade":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
+          if(submarks[i].subject_name=="Life Skills"){
+            
+            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            lsarr.push(obj);
+          }
+           if(submarks[i].subject_name=="Work Education"){
+           
+            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            wkarr.push(obj);
+          }
+           if(submarks[i].subject_name=="Visual & Performing Arts"){
+            // alert('yes');
+            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            // obj.catcheck=submarks[i].category;
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            vparr.push(obj);
+          }
+           if(submarks[i].subject_name=="Attitudes And values"){
+            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            avarr.push(obj);
+          }
+           if(submarks[i].subject_name=="Co-Curricular Activities"){
+            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            ccarr.push(obj);
+          }
+           if(submarks[i].subject_name=="Health and Physical Education"){
+            // alert('yes');
+            obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
+            // obj.catcheck=submarks[i].category;
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            hparr.push(obj);
+          }
         }
-        }
-        }
-      }
        
     console.log('....................schoolname.........................');
     console.log(req.query.schoolname+"   "+req.query.academicyear); 
     console.log('.......................................................');
-  var header="<div class='bbox' style='position: relative;width: 900px;height: 1210px;border: 20px solid green;top:90px;left: 100px;' id='fivescorecard'><div class='relative' style='position: relative;width: 450px;height: 160px;border: 3px solid black;top:60px;left: 230px;'><table border='0' class='scoretbl' style='position: relative; width: 450px; height:160px; text-align: left;'><tr><th colspan='3'><h2><center>"+req.query.schoolname+"</center></h2></th>"
-       header+="</tr><tr><th colspan='3'><center>{{address}}</center></th></tr><tr><th>afflication no:</th><th></th></tr> <tr><th> EmailId:</th><th></th><th></th></tr><tr><th> Website:</th><th></th><th>phone No : </th></tr></table></div>"
-  var performanceprofile="<div class='absolute' style='position: absolute; top: 50px; width: 110px; height: 100px; left: 50px;'><img src='../../images/zeesouth.png' height='100px' width='90px'/></div><div class='pr' style='position: relative; width: 700px; height: 170px; left: 100px; top:100px;'><center><h2>PERFOMANCE PROFILE</h2>"
-    performanceprofile+= "class: {{grade}} (Session:"+req.query.academicyear+")<h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3><h4>(issued by School as per directives of Central Board of Secondary Educational Delhi)</h4></center></div>"
-   performanceprofile+= "<div class='stupr' style='position: relative; width: 700px; top:100px; left: 50px;'><h3>Student Profile</h3></div> <table class='tbl1' style='position: relative; text-align: left; top:100px; left: 50px' cellspacing='10'><tr ><th>Admission NO</th><th>:</th></tr><tr><td>(allotted by the school)</td></tr><tr ><th>RollNO</th><th>:</th><th>{{studentid}}</th></tr><tr ><th>Registration NO</th><th>:</th></tr><tr><td>(allottedby the school)</td></tr><tr ><th>Name </th><th>:</th><th>"+global.studentinfo[0].student_name+"</th></tr><tr><th>Data of Birth </th> <th>:</th><th>{{dob}}</th></tr><tr >"
-  performanceprofile+="<th>Mother's Name</th><th>:</th><th></th></tr><tr ><th>Father's Name </th><th>:</th><th>{{fathername}}</th></tr><tr rowspan='2'><th>Residential Address </th><th>:</th><th>{{address}}</th></tr><tr><th>TelephoneNo </th><th>:</th><th>{{mobileno}}</th></tr></table>" 
-  var attendance="<table border='1' class='attable' style='position: relative; text-align: left; top:140px; width: 900px;'><tr><th colspan='3' >Attendence:</th><th colspan='10'>Term1</th><th colspan='3'>Term2</th>"
-  attendance+="</tr><tr><td colspan='3'>Total attendence of the student</td><td colspan='10'>{{term1attendance}}</td><td colspan='3'>{{term2attendance}}</td></tr><tr><td colspan='3'> Total working day</td><td colspan='10'>{{term1wday}}</td><td colspan='3'>{{term2wday}}</td></tr>"
-  attendance+="<tr><th colspan='3'> Health status</th><th colspan='10'></th><th colspan='3'></th></tr><tr><td colspan='3'>Height {{height}}</td><td colspan='10'>Weight {{weight}}</td><td colspan='3'></td></tr><tr>"
-   attendance+="<td colspan='3'>BloodGroup {{bloodgroup}}</td><td colspan='10'>vision(L) {{leftvision}}</td><td colspan='3'>(R) {{rightvision}}</td></tr><tr><td colspan='3'>Dental Hyginene {{dental}}</td><td colspan='10'></td><td colspan='3'></td></tr></table>"
+  var header="<div class='bbox' style='position: relative;width: 900px;height: 1210px;border: 20px solid green;top:90px;left: 100px;' id='fivescorecard'><div class='relative' style='position: relative;width: 500px;height: 200px;border: 3px solid black;top:60px;left: 200px'><table border='0' class='scoretbl' style='position:relative;width: 500px;height: 200px;text-align: left;'>"
+      header+="<tr><th colspan='3'><h2><center>"+req.query.schoolname+"</center></h2></th></tr>"
+      header+="<tr><th colspan='3'><center>"+req.query.schooladdress+"</center></th></tr>"
+      header+="<tr><th>Affiliation No:</th><th colspan='2'>&nbsp;"+req.query.affno+"</th></tr>" 
+      header+="<tr><th> Email Id:</th><th colspan='2'>"+req.query.email+"</th></tr>"
+       header+="<tr><th> Website:</th><th>"+req.query.website+"</th><th>Phone No :"+req.query.phno+"</th></tr></table></div>";
+     var studentprofile="<div class='absolute' style='position: absolute;top: 50px;width: 110px; height: 100px;left: 50px;'><img src='../../images/zeesouth.png' height='100px' width='90px'/></div>"
+     studentprofile+="<div class='pr' style='position: relative;width: 700px;height: 170px;left: 100px;top:100px;'><center><h2>PERFORMANCE PROFILE</h2>Class:"+req.query.grade+" (Session: "+req.query.academicyear+")<h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>"
+     studentprofile+="<h4>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4> </center></div>"
+     studentprofile+="<div class='stupr' style='position: relative;width: 700px;top:150px;left: 50px;'><h3>Student Profile</h3></div> <table class='tbl1' style=' position: relative;text-align: left;top:80px;left: 50px' cellspacing='10'>"
+studentprofile+="<tr ><th>Admission No.</th><th>:</th><th>"+global.studentinfo[0].student_id+"</th></tr><tr><td>(allotted by the school)</td></tr>"
+studentprofile+="<tr ><th>Name </th><th>:</th><th>"+global.studentinfo[0].student_name+"</th></tr><tr><th>Date of Birth </th> <th>:</th><th>"+global.studentinfo[0].dob+"</th></tr>"
+studentprofile+="<tr ><th>Mother's Name</th><th>:</th><th>"+global.studentinfo[0].mother_name+"</th></tr><tr > <th>Father's Name </th><th>:</th><th>"+global.studentinfo[0].parent_name+"</th></tr>"
+studentprofile+="<tr rowspan='2'><th>Residential Address </th><th>:</th><th>"+global.studentinfo[0].address1+" "+global.studentinfo[0].address2+" "+global.studentinfo[0].address3+" "+global.studentinfo[0].city+" "+global.studentinfo[0].pincode+"</th></tr><tr><th>Telephone No </th><th>:</th><th>"+global.studentinfo[0].mobile+"</th></tr></table>"  
+  studentprofile+="<table class='attable' style='position: relative;text-align: left;top:150px;width: 700px;left: 50px;'><tr height='25px'><th width='250px'>Attendance:</th><th colspan='3'>Term1</th><th colspan='3'>Term2</th></tr>"
+  studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+global.healthattendanceinfo[0].attendance+"</th><th colspan='3'>"+global.healthattendanceinfo[1].attendance+"</th></tr>"
+  studentprofile+="<tr height='25px'><th> Total Working Days</th><th colspan='7'>"+global.healthattendanceinfo[0].working_days+"</th><th colspan='3'>"+global.healthattendanceinfo[1].working_days+"</th></tr></table>"
+ studentprofile+="<br><br><table class='health' style=' position: relative;text-align: left;top:150px;width: 750px;left: 50px;border: 1px solid black;'><tr height='20px'><th colspan='3'> Health Status</th><th colspan='3'></th><th colspan='3'></th></tr>"
+  studentprofile+="<tr></tr><tr height='22px'><th colspan='3'>Height </th><th>"+global.healthattendanceinfo[0].height+"</th><th colspan='7'>Weight </th><th>"+global.healthattendanceinfo[0].width+"</th><th colspan='3'></th></tr>"
+  studentprofile+="<tr height='25px'><th colspan='3'>Blood Group </th><th>"+global.healthattendanceinfo[0].blood_group+"</th><th colspan='7'>Vision(L) </th><th>"+global.healthattendanceinfo[0].left_vision+"</th><th colspan='3'>(R) </th><th>"+global.healthattendanceinfo[0].right_vision+"</th></tr>"
+studentprofile+="<tr height='25px'><th colspan='3'>Dental Hygiene </th><th>"+global.healthattendanceinfo[0].dental+"</th><td colspan='7'></td><td colspan='3'></td></tr></table><br><br><br><br><br><br><br><br><br>";
 
-var photo="<div class='pto' style='position: absolute; top: 600px; width: 170px; height: 200px; border: 3px solid black; left: 600px;'><h4>Student photo with signature</h4><br><p>(Attested by the Schoolprincipal along with school seal) </p></div></div>"
+ var signatures="<table  class='signature' style='margin-left: 20%;'><tr><th><img id='img1' width='100px;height:30px;''></th><th></th><th></th><th><img id='img2' width='130px;height:40px;'></th><th></th><th></th><th></th></tr>"
+    signatures+="<tr><th>---------------------------------</th><th></th><th></th><th>---------------------------------</th><th></th><th></th>"
+   signatures+=" <th>----------------------------------</th><th></th><th></th></tr>"
+    signatures+="<tr><th>Class Teacher</th><th></th><th></th><th>Principal</th><th></th><th></th><th>Parent</th><th></th><th></th></tr></table><br><br><br><br></div>";
 
 var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px; height: auto; border: 20px solid green; top:90px; left: 100px'><table border='1'><tr><th colspan='16'> <h2>PART1-ACADEMIC PERFOMANCE: Scholastic Areas</h2><br> "   
   scholasticvalue+= "</th></tr><tr><th colspan='4'>Subject Code and Name</th><th colspan='4'>Term1(grade)</th><th colspan='4'>Term2(grade)</th><th colspan='4'>Overall Term1+Term2</th></tr><tr><th colspan='4'></th><th>FA1</th><th>FA2</th><th>SA1</th><th>TOT1</th><th>FA3</th><th>FA4</th><th>SA2</th><th>TOT2</th><th>FA</th><th>SA</th><th>Overallgrade</th><th>GradePoint(Gp)</th></tr>"
@@ -4461,47 +4475,47 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
     scholasticvalue+= "<td>"+finalarr[i].FA+"</td><td>"+finalarr[i].SA+"</td><td>"+finalarr[i].grade+"</td><td>"+finalarr[i].point+"</td></tr>"
   }
     scholasticvalue+="<tr><th colspan='16'>CumlativeGradePointAverage<br>"
-     scholasticvalue+="<p>the CGPAis the average of grade point obtained in all the subjects excluding additional 6th subject as per Scheme of studies An indicative eqivalence of grade point and percentage of marks can be completed as-subject wise indicative percentage of markes=9.5*of the subject overallindicative percentage of mark=9.5*CGPA</p></th>"
-   scholasticvalue+="</tr><tr><th colspan='16'><br><h2>part2- Co-Scholastic Areas</h2> </th></tr><tr><th colspan='16'>2(A) Life Skills</th></tr><tr><th colspan='3'>Life Skills</th><th colspan='10'>DiscriptiveIndicator</th><th colspan='3'>Grade</th></tr>"
+     scholasticvalue+="<p>the CGPAis the average of grade point obtained in all the subjects excluding additional 6th subject as per Scheme of studies An indicative eqivalence of grade point and percentage of marks can be completed as-subject wise indicative percentage of markes=9.5*of the subject overallindicative percentage of mark=9.5*CGPA</p></th></tr>"
+   scholasticvalue+="<tr><th colspan='16'><br><h2>part2- Co-Scholastic Areas</h2> </th></tr><tr><th colspan='16'>2(A) Life Skills</th></tr><tr><th colspan='8'>Life Skills</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
     for(var i=0;i<lsarr.length;i++)
   {
-   scholasticvalue+=" <tr><th colspan='3'>"+lsarr[i].metric+"</th><th colspan='10'>"+lsarr[i].submetric+"</th><th colspan='3'>"+lsarr[i].subgrade+"</th>   </tr>"
+   scholasticvalue+="<tr><th colspan='8' style='text-align: left;'>"+lsarr[i].category+"</th><th colspan='3' style='text-align: center;'>"+lsarr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+lsarr[i].comment+"</th></tr>"
    }
-    scholasticvalue+=" <tr> <th colspan='16'>2(B) Work Education</th> </tr><tr> <th colspan='3'>Work Education</th><th colspan='10'>DiscriptiveIndicator</th><th colspan='3'>Grade</th></tr>"
+    scholasticvalue+=" <tr><th colspan='16'>2(B) Work Education</th></tr><tr><th colspan='8'>Work Education</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
     for(var i=0;i<wkarr.length;i++)
   {
-   scholasticvalue+=" <tr><th colspan='3'>"+wkarr[i].metric+"</th><th colspan='10'>"+wkarr[i].submetric+"</th><th colspan='3'>"+wkarr[i].subgrade+"</th></tr>"
+   scholasticvalue+=" <tr><th colspan='8' style='text-align: left;'>"+wkarr[i].category+"</th><th colspan='3' style='text-align: center;'>"+wkarr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+wkarr[i].comment+"</th></tr>"
   }
-  scholasticvalue+="  <tr><th colspan='16'>2(C)Visual And Performing Art</th></tr><tr><th colspan='3'>Visual And Performing Art</th><th colspan='10'>DiscriptiveIndicator</th><th colspan='3'>Grade</th> </tr>"   
+  scholasticvalue+="  <tr><th colspan='16'>2(C)Visual And Performing Art</th></tr><tr><th colspan='8'>Visual And Performing Art</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"   
      for(var i=0;i<vparr.length;i++)
   {
-  scholasticvalue+="  <tr><th colspan='3'>"+vparr[i].metric+"</th><th colspan='10'>"+vparr[i].submetric+"</th><th colspan='3'>"+vparr[i].subgrade+"</th></tr>"
+  scholasticvalue+="  <tr><th colspan='8' style='text-align: left;'>"+vparr[i].category+"</th><th colspan='3' style='text-align: center;'>"+vparr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+vparr[i].comment+"</th></tr>"
     }
     
-   scholasticvalue+=" <tr><th colspan='16'>2(D) Attitudes And Values</th></tr> <tr><th colspan='3'> Attitudes And Values</th><th colspan='10'>DiscriptiveIndicator</th><th colspan='3'>Grade</th></tr>"
+   scholasticvalue+=" <tr><th colspan='16'>2(D) Attitudes And Values</th></tr><tr><th colspan='8'>Attitudes And Values</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
     for(var i=0;i<avarr.length;i++)
   {
-   scholasticvalue+=" <tr><th colspan='3'>"+avarr[i].metric+"</th><th colspan='10'>"+avarr[i].submetric+"</th><th colspan='3'>"+avarr[i].subgrade+"</th></tr>"
+   scholasticvalue+=" <tr><th colspan='8' style='text-align: left;'>"+avarr[i].category+"</th><th colspan='3' style='text-align: center;'>"+avarr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+avarr[i].comment+"</th></tr>"
     }
     
-   scholasticvalue+=" <tr> <th  colspan='16'> <br><h2>Part-3:co-Scolastics Activity</h2> </th></tr><tr> <th colspan='16'>3(A)Co-Curricular Activity</th></tr><tr><th colspan='3'></th><th colspan='10'>DiscriptiveIndicator</th><th colspan='3'>Grade</th></tr>"
+   scholasticvalue+=" <tr><th  colspan='16'><br><h2>Part-3:Co-Scholastic Activities</h2></th></tr><tr><th colspan='16'>3(A)Co-Curricular Activity</th></tr><tr><th colspan='8'>Co-Curricular Activity</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
      for(var i=0;i<ccarr.length;i++)
   {
-   scholasticvalue+=" <tr><th colspan='3'>"+ccarr[i].metric+"</th><th colspan='10'>"+ccarr[i].submetric+"</th><th colspan='3'>"+ccarr[i].subgrade+"</th></tr>"
+   scholasticvalue+=" <tr><th colspan='8' style='text-align: left;'>"+ccarr[i].category+"</th><th colspan='3' style='text-align: center;'>"+ccarr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+ccarr[i].comment+"</th></tr>"
     }
 
-   scholasticvalue+=" <tr><th colspan='16'><h3>3(B) Health&PhysicalActivity</h3></th></tr><tr><th colspan='3'>Health&PhysicalActivity</th><th colspan='10'>DiscriptiveIndicator</th><th colspan='3'>Grade</th></tr>"
+   scholasticvalue+=" <tr><th colspan='16'>3(B) Health & Physical Activities</th></tr><tr><th colspan='8'>Health & Physical Activities</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
      for(var i=0;i<hparr.length;i++)
   {
-  scholasticvalue+="  <tr><th colspan='3'>"+hparr[i].metric+"</th><th colspan='10'>"+hparr[i].submetric+"</th><th colspan='3'>"+hparr[i].subgrade+"</th></tr>"
+  scholasticvalue+="<tr><th colspan='8' style='text-align: left;'>"+hparr[i].category+"</th><th colspan='3' style='text-align: center;'>"+hparr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+hparr[i].comment+"</th></tr>"
     }
-  scholasticvalue+="  <tr><th colspan='16'><h4>Result:Qualified/Eligiblefor Improvement of perfomance(EIOP)</h4></th> </tr><tr><th colspan='16'><h4>Self Awarness:</h4></th></tr><tr><th colspan='16'><br><h4>MyGoals:</h4></th></tr><tr><th colspan='16'><h4>MyStrengths:</h4></th></tr><tr><th colspan='16'><h4>MyInterest and Hobbies</h4></th></tr><tr><th colspan='16'><h4>ResposibilityDischarge/ExceptionalAchievements</h4></th></tr></table></div>"
+  scholasticvalue+="  <tr><th colspan='16'><h4>Result:Qualified/Eligiblefor Improvement of perfomance(EIOP)</h4></th> </tr><tr><th colspan='16'><h4>Self Awarness:</h4></th></tr><tr><th colspan='16'><br><h4>MyGoals:</h4></th></tr><tr><th colspan='16'><h4>MyStrengths:</h4></th></tr><tr><th colspan='16'><h4>MyInterest and Hobbies</h4></th></tr><tr><th colspan='16'><h4>ResposibilityDischarge/ExceptionalAchievements</h4></th></tr></table></div>";
 
 
     console.log('pd done....');
 
 
-    var finalpdf=header+performanceprofile+photo+attendance+scholasticvalue;
+    var finalpdf=header+studentprofile+signatures+scholasticvalue;
     console.log("....................................");
     console.log(finalpdf);
 

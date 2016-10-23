@@ -316,6 +316,7 @@
       },
       fetchhealthattendanceinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
+        //alert('s'+JSON.stringify(arr));
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard")
         {
         document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
@@ -572,18 +573,6 @@
         this.$.fetchcoscholasticinfoajax.generateRequest(); 
       },
       fetchcoscholasticinfoResponse:function(e){
-      //    marks=e.detail.response.returnval;
-      //    this.fetchcoscholasticsubcategoryurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticsubcategory-service";
-      //   var obj={"scoolid":"","studid":""};
-      //   obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-      //   obj.studid=this.stid;
-      //   this.fetchcoscholasticsubcategoryparam=obj;
-      //   this.$.fetchcoscholasticsubcategoryajax.generateRequest(); 
-      //   //alert(JSON.stringify(e.detail.response));
-      // },
-      // fetchcoscholasticsubcategoryResponse:function(e)
-      // {
-        // alert(JSON.stringify(lower));
         var lsarr=[];
         var wkarr=[];
         var vparr=[];
@@ -598,19 +587,12 @@
         var cc=1;
         var hp=1;
        submarks=e.detail.response.returnval;
-       // alert(JSON.stringify(submarks));
-       // alert(submarks[0].subject_id+" "+submarks[0].category+" "+submarks[0].description+" "+submarks[0].category_grade);
-
+      
        for(var i=0;i<submarks.length;i++){
           // alert(scholasticarr[i].subject_name);
           var obj={"catcheck":"","subject":"","category":"","grade":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
           if(submarks[i].subject_name=="Life Skills"){
-            // for(var j=0;j<lsarr.length;j++){
-              
-            //   if(lsarr[i].category==submarks[i].category)
-            //     lsarr.splice(i,1);
-            // }
-            // alert('yes');
+            
             obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
             // obj.catcheck=submarks[i].category;
             obj.category=submarks[i].category;
@@ -625,12 +607,7 @@
             lsarr.push(obj);
           }
            if(submarks[i].subject_name=="Work Education"){
-            // alert('yes');
-            // for(var j=0;j<wkarr.length;j++){
-              
-            //   if(wkarr[i].category==submarks[i].category)
-            //     wkarr.splice(i,1);
-            // }
+           
             obj.subject=submarks[i].subject_name+"@"+localStorage.getItem("curr_sess_termname");
             // obj.catcheck=submarks[i].category;
             obj.category=submarks[i].category;
@@ -705,113 +682,7 @@
             hparr.push(obj);
           }
         }
-        // alert(JSON.stringify(lsarr));
-
-      //   for(var i=0;i<marks.length;i++)
-      //   {
-      //     k=0;
-          
-      //     //alert(marks[i].sub_category);
-      //     var subcategoryarr=[];       
-             
-      //       for(var j=0;j<submarks.length;j++)
-      //       {
-      //          var obj={"metric":"","mark":"","grade":""};
-      //        if(k==0)
-      //        {
-      //          obj.metric=marks[i].sub_category;
-      //         obj.mark=marks[i].mark;
-              
-              
-      //         //obj.submetric="";
-              
-      //         for(var n1=0;n1<co_lower.length;n1++)
-      //         {          
-                
-      //         if(parseFloat(obj.mark).toFixed(1)>=co_lower[n1]&&parseFloat(obj.mark).toFixed(1)<=co_higher[n1])
-      //         {           
-      //           obj.subgrade=co_grade[n1];
-      //         }
-      //         }
-      //         if(marks[i].subject_id=="Life Skills"){
-      //           obj.seqno=ls;
-      //           lsarr.push(obj);
-      //           ls++;
-      //         }
-      //         else if(marks[i].subject_id=="Work Education"){
-      //           obj.seqno=wk;
-      //           wkarr.push(obj);
-      //           wk++;
-      //         }
-      //         else if(marks[i].subject_id=="Visual & Performing Arts"){
-      //         obj.seqno=vp;              
-      //           vparr.push(obj);
-      //           vp++;
-      //         }
-      //         else if(marks[i].subject_id=="Attitudes And values"){
-      //           obj.seqno=av;
-      //           avarr.push(obj);
-      //           av++;
-      //         }
-      //         else if(marks[i].subject_id=="CO-CURRICULAR ACTIVITIES"){
-      //           obj.seqno=cc;
-      //           ccarr.push(obj);
-      //           obj.seqno=cc;
-      //         }
-      //         else if(marks[i].subject_id=="Health and Physical Education"){
-      //           obj.seqno=hp;
-      //           hparr.push(obj);
-      //           hp++;
-      //         }  
-      //         k=1;
-      //         j--;    
-
-
-      //        }
-      //        /*else
-      //        {
-      //         obj.metric="";
-      //         obj.mark="";
-      //         obj.grade="";
-             
-         
-      //         if(submarks[j].category==marks[i].sub_category)
-      //         {
-      //           obj.submetric=submarks[j].sub_category;
-      //           obj.submark=submarks[j].mark;
-                
-      //             for(var n=0;n<co_lower.length;n++)
-      //         {          
-      //         if(parseFloat(obj.submark).toFixed(1)>=co_lower[n]&&parseFloat(obj.submark).toFixed(1)<=co_higher[n])
-      //         {            
-      //           obj.subgrade=co_grade[n];
-      //         }
-      //         }
- 
-      //         subcategoryarr.push(obj);
-      //         if(marks[i].subject_id=="Life Skills"){
-      //           lsarr.push(obj);
-      //         }
-      //         else if(marks[i].subject_id=="Work Education"){
-      //           wkarr.push(obj);
-      //         }
-      //         else if(marks[i].subject_id=="Visual & Performing Arts"){              
-      //           vparr.push(obj);
-      //         }
-      //         else if(marks[i].subject_id=="Attitudes And values"){
-      //           avarr.push(obj);
-      //         }
-      //         else if(marks[i].subject_id=="CO-CURRICULAR ACTIVITIES"){
-      //           ccarr.push(obj);
-      //         }
-      //         else if(marks[i].subject_id=="Health and Physical Education"){
-      //           hparr.push(obj);
-      //         }         
-      //     metricsarr.push(subcategoryarr);
-      //   }*/
-      //   }
-      //   }
-      // }
+       
          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Comparisonreport")
          {
         document.querySelector('fivetotencomparisonreport-card').lsArray=lsarr;
@@ -842,6 +713,12 @@
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
         obj.parentname=parentname;
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.affno=sessionStorage.getItem("curr_sess_loggedaffliationid");
+        obj.email=sessionStorage.getItem("curr_sess_emailid");
+        obj.website=sessionStorage.getItem("curr_sess_website");
+        obj.phno=sessionStorage.getItem("curr_sess_telno");
+        obj.schooladdress=sessionStorage.getItem("curr_sess_loggedschooladdress");
         this.mailreportcardparam=obj;
         // alert(JSON.stringify(obj));      
         this.$.mailreportcardajax.generateRequest();

@@ -177,15 +177,7 @@ table{
 <tr>
 <td>(allotted by the school)</td>
 </tr>
-<!-- <tr >
-  <th>Roll No.</th><th>:</th><th>{{studentid}}</th>
-</tr>
-<tr >
-  <th>Registration No.</th><th>:</th>
-</tr>
-<tr>
-<td>(allotted by the school)</td>
-</tr> -->
+
 <tr >
   <th>Name </th><th>:</th><th>{{studentname}}</th>
 </tr>
@@ -402,7 +394,7 @@ table{
 <br/>
    <span class="buttoncard">
 <paper-button  id='print' class="button" on-click='print'>Print</paper-button>
-<paper-button  id='email' class="button" on-click='email'>Email</paper-button>
+<paper-button  id='email' class="button" on-click='fnemail'>Email</paper-button>
 </span> 
 
 <paper-dialog id="fshowpopup" modal>
@@ -465,7 +457,7 @@ table{
               this.$.email.hidden=false;
               this.$.print.hidden=false;
       },
-        email:function(){
+        fnemail:function(){
         this.$.fshowpopup.toggle();
       },
       FnSendEmail:function(){

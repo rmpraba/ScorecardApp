@@ -58,11 +58,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    }
   .relative {
     position: relative;
-    width: 450px;
-    height: 160px;
+    width: 500px;
+    height: 200px;
     border: 3px solid black;
     top:60px;
-    left: 230px
+    left: 200px
 }
 
 .scoretbl {
@@ -74,10 +74,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
    .tbl1 {
     position: relative;
-    /*width: 200px;*/
+    width: 700px;
     /*height: 200px;*/
     text-align: left;
-     top:100px;
+    top:100px;
     left: 50px
    
   }
@@ -207,7 +207,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <img src="../../images/zeesouth.png" height="100px" width="90px"/></div>
    <div class="pr">
      <center><h2>PERFORMANCE PROFILE</h2>
-     Class: {{grade}} (Session: {{academicyear}})
+     Class: {{grade}} - {{section}} (Academic Session: {{academicyear}})
      <h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>
      <h4>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4>
      </center>
@@ -447,7 +447,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-repeat" items="{{healthArray}}" as="item">
           <table id="tab" width='90%'>
             <tr style="background-color: #f3f3f3;height: 20px;"><th>&nbsp;&nbsp;Height&nbsp;&nbsp;</th><th>&nbsp;&nbsp;Weight&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI Remarks&nbsp;&nbsp;</th><th>Vision</th><th>Dental (To be checked by the dentist)</th><th>Hearing (Does the child require ENT specialist referral)</th><th>Overall Recommendations</th></tr>            
-            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.bmi}}</td><td>{{item.bmi_remark}}</td><td>{{item.vison}}</td><td>{{item.dental}}</td><td>{{item.hearing}}</td><td>{{item.overall_comment}}</td></tr>
+            <tr style="background-color: #fff;text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.bmi}}</td><td>{{item.bmi_remark}}</td><td>{{item.vison}}</td><td>{{item.dental}}</td><td>{{item.hearing}}</td><td>{{item.overall_comment}}</td></tr>
             
           </table>
           </template>
@@ -477,7 +477,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <table id="tab" width='80%' style="margin-left: 5%;">
             <tr style="background-color: #f3f3f3;height: 20px;"><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Competitions Attended</th><th>Prizes Won</th></tr>
             
-            <tr style="text-align: center;height: 30px;"><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
+            <tr style="background-color: #fff;text-align: center;height: 30px;"><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
             
             </table>
           </template>
@@ -529,7 +529,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
         this.schooladdress=sessionStorage.getItem("curr_sess_loggedschooladdress");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
-
+        this.section=localStorage.getItem("curr_sess_section");
         this.affno=sessionStorage.getItem("curr_sess_loggedaffliationid");
         this.email=sessionStorage.getItem("curr_sess_emailid");
         this.website=sessionStorage.getItem("curr_sess_website");

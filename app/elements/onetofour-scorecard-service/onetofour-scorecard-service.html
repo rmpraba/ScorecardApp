@@ -105,6 +105,17 @@
         on-response="healthinfoResponse"
         debounce-duration="300"
     >
+
+    <iron-ajax
+        method="post"
+        id="fetchfahealthinfoajax"
+        url="{{fetchfahealthinfourl}}"
+        params="{{fetchfahealthinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="healthfainfoResponse"
+        debounce-duration="300"
+    >
     <iron-ajax
         method="post"
         id="fetchartinfoajax"
@@ -191,6 +202,7 @@
       },
       fetchhealthattendanceinfoResponse:function(e){        
         var arr=e.detail.response.returnval;  
+        // alert(JSON.stringify(arr));
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
         if(arr.length==1||arr.length==2||arr.length==3){
         document.querySelector('cce-onetofour-score-card').adterm1=arr[0].attendance;
@@ -199,7 +211,18 @@
         document.querySelector('cce-onetofour-score-card').t1height=arr[0].height+" cm";
         document.querySelector('cce-onetofour-score-card').t1weight=arr[0].weight+" Kg";  
         document.querySelector('cce-onetofour-score-card').generalfeedback=arr[0].generic; 
-        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[0].speccomment;     
+        document.querySelector('cce-onetofour-score-card').specificfeedback=arr[0].speccomment; 
+        document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
+        document.querySelector('cce-fivetoten-score-card').term1wday=arr[0].working_days;
+        // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        document.querySelector('cce-fivetoten-score-card').height=arr[0].height+" cm";
+        document.querySelector('cce-fivetoten-score-card').weight=arr[0].weight+" Kg"; 
+
+        document.querySelector('fivetotencomparisonreport-card').term1attendance=arr[0].attendance;
+        document.querySelector('fivetotencomparisonreport-card').term1wday=arr[0].working_days;
+        // document.querySelector('cce-fivetoten-score-card').pterm1=parseFloat((arr[0].attendance/arr[0].working_days)*100).toFixed(2)+"%";
+        document.querySelector('fivetotencomparisonreport-card').height=arr[0].height+" cm";
+        document.querySelector('fivetotencomparisonreport-card').weight=arr[0].weight+" Kg";   
         }
         if(arr.length==2){
         document.querySelector('cce-onetofour-score-card').adterm2=arr[1].attendance;
@@ -863,9 +886,36 @@
         this.fetchhealthinfoparam=obj;
         this.$.fetchhealthinfoajax.generateRequest(); 
       },
+       FnFetchfaHealthinfo:function(studid){
+        this.fetchfahealthinfourl=sessionStorage.getItem("addrinfo")+"/fetchfahealthinfo-service";
+        var obj={"termname":"","schoolid":"","studid":"","academicyear":"","grade":"","section":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.section=localStorage.getItem("curr_sess_section");
+        obj.studid=studid;
+        this.fetchfahealthinfoparam=obj;
+        this.$.fetchfahealthinfoajax.generateRequest(); 
+      },
       healthinfoResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+       // alert(JSON.stringify(e.detail.response.returnval));
+         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         document.querySelector('comparisonreport-card').healthArray=e.detail.response.returnval;
+    }
+    else
+    {     
+          // document.querySelector('fivetotencomparisonreport-card').height=e.detail.response.returnval[0].height+" "+"cm";
+          // document.querySelector('fivetotencomparisonreport-card').weight=e.detail.response.returnval[0].weight+" "+"kg";
+          // document.querySelector('fivetotencomparisonreport-card').leftvision=e.detail.response.returnval[0].height;
+          // document.querySelector('fivetotencomparisonreport-card').rightvision=e.detail.response.returnval[0].height;
+          // document.querySelector('fivetotencomparisonreport-card').dental=e.detail.response.returnval[0].dental;
+          // document.querySelector('fivetotencomparisonreport-card').bloodgroup="";
+          document.querySelector('fivetotencomparisonreport-card').healthArray=e.detail.response.returnval;
+    }
+      },
+      healthfainfoResponse:function(e){
+         document.querySelector('fivetotencomparisonreport-card').healthArray=e.detail.response.returnval;
       },
       FnFetchArtinfo:function(studid){
         this.fetchartinfourl=sessionStorage.getItem("addrinfo")+"/fetchartinfo-service";
@@ -881,7 +931,14 @@
       },
       artinfoResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval));
+
+         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         document.querySelector('comparisonreport-card').artArray=e.detail.response.returnval;
+    }
+    else
+    {
+        document.querySelector('fivetotencomparisonreport-card').artArray=e.detail.response.returnval;
+    }
       },
       FnFetchPhysicalinfo:function(studid){
         this.fetchphysicalinfourl=sessionStorage.getItem("addrinfo")+"/fetchphysicalinfo-service";
@@ -897,7 +954,13 @@
       },
       physicalinfoResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval));
+         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         document.querySelector('comparisonreport-card').physicalArray=e.detail.response.returnval;
+    }
+    else
+    {
+        document.querySelector('fivetotencomparisonreport-card').physicalArray=e.detail.response.returnval;
+    }
       },
       fetchgradeseperationService:function(term,subject,category){
         this.fetchgradeseperationurl=sessionStorage.getItem("addrinfo")+"/fetchgradeseperation-service";

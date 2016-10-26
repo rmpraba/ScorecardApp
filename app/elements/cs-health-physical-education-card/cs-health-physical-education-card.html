@@ -41,43 +41,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             font-family: Calibri;
             font-size: 17px;
           }
+           #tb1{
+        width:15%
+      }
+      #tb2{
+        width: 9%
+      }
+     #tb3{
+      width: 5%;
+     }
+      #sub
+{
+  width: 70%;
+}
+#td1
+{
+  padding: 5px;
+}
+#subcat
+{
+
+}
+       .submitbutton paper-button{
+    background-color: #363636 !important;
+    color: #ffffff !important;
+    height: 33px !important;
+  }
     </style>
     <div>
     <!--<template is="dom-repeat" items="{{label}}">-->
+    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
       <center><h1>{{schoolname}}</h1>
       <div id="hidetop">
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Grade  &nbsp&nbsp&nbsp {{grade}} - Section &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
-      <table border="1" id="MarkTable">    
+      <table border="1" id="physicalMarkTable">    
       <tr>
-      <th style="width: 1%;">SNo</th>
-      <th style="width: 15.2%;">Name</th>
-      <th style="width: 5%;">Health and Physical Education</th>
-      
-      <th style="width: 5.2%;">Total</th>
-      <th style="width: 5%;">Grade</th>
+      <th id="tb2">SNo</th>
+      <th id="tb1">Name</th>
+      <th id="tb2">Health and Physical Education</th>
+      <th  id="tb2"></th>
       </tr>  
       </div>
-<template is="dom-repeat" items="{{markarr}}" as="m">
-<tr><td></td>
-<template is="dom-repeat" items="{{m}}" as="mark">
-<td>{{mark}}</td>
+<template is="dom-repeat" items="{{markarr}}">
+<tr>
+ <td id="tb1"><paper-item>{{item.serialno}}</paper-item></td>
+        <td id="tb2"><paper-item>{{item.student_name}}</paper-item></td>
+        <td id="tb1" ><paper-item>{{item.mark1}}</paper-item></td> 
+        
+        </tr>
 </template>
-</tr>
-</template>
+
      <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="14">
-      <cs-health-physical-education-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}"></cs-health-physical-education-item-card>
+      <tr>
+      <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
+      <td colspan="2">
+      <cs-health-physical-education-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}"></cs-health-physical-education-item-card>
       </td></tr>
       </template>
       </table>
       </center> 
-   <!-- </template>     
-    </div>
-    <component-service id="componentservice" label="{{label}}"></component-service>-->
+   <center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
+<input type="button" id="btn3" onclick="tableToExcel('physicalMarkTable', 'Mark Report')" value="Export to Excel"></center>
+    
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
     </template>
-    <paper-button class="button" id="save" on-click="FnSave">Save</paper-button>  
-    <paper-button class="button" id="submit" on-click="FnSubmit">Submit</paper-button>  
+     
      <script type="text/javascript">
 var tableToExcel = (function() {
   var uri = 'data:application/vnd.ms-excel;base64,'
@@ -97,10 +126,7 @@ var tableToExcel = (function() {
 
     Polymer({
       is: 'cs-health-physical-education-card',
-      FnSave:function(){
-        alert('Health parameters for this section is complete!');
-      },
-      setDefaultHeaders:function(){
+    setDefaultHeaders:function(){
          this.$.hidetop.hidden=false;
 
         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
@@ -108,6 +134,48 @@ var tableToExcel = (function() {
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      {
+        this.importlabel='Approve';
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
+        this.importlabel='Submit for approval';
+      }
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        this.$.submit.hidden=true;
+         if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        // this.$.save.hidden=true;
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false;        
+        if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        if(localStorage.getItem('curr_sess_report')=='0')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=false;
+        this.$.btn3.hidden=true;
+        }
+        if(localStorage.getItem('curr_sess_report')=='2')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=true;
+        }
+      }
+
       },
         FnRefresh:function()
       {
@@ -120,6 +188,19 @@ var tableToExcel = (function() {
         this.section="";
         this.subject="";
          this.$.hidetop.hidden=true;
+
+      },
+      
+      FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
+      },
+       importmark:function()
+      {
+        localStorage.setItem("curr_sess_assesmenttype","");
+        this.$.assesmentservice.Fnfaimportmark();  
       }
     });
   })();

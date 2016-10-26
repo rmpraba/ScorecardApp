@@ -1,0 +1,134 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../term-assesment-service/term-assesment-service.html">
+<dom-module id="cc-sa-ninetoten-english-itemcard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .card{
+        height: 2%;
+      }
+      #tb1{
+        width:13%
+      }
+       #tb4{
+        width:15%
+      }
+       #tb2{
+        width: 22%
+        }
+        #tb3{
+         width:6%;  
+        }
+    </style>
+    <div class="card">
+        <table border="1"><tr>
+        <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
+        <td id="tb2" hidden><paper-item>{{serialno}}</paper-item></td>
+        <td id="tb3" hidden><paper-item>{{studname}}</paper-item></td>
+        <td id="tb1" hidden$="{{hidepaperinput}}"><paper-input on-change="FnWritten" value="{{written}}"></paper-input></td> 
+        <td id="tb4" hidden$="{{hidepaperinput}}"><paper-input on-change="FnSpeaking" value="{{speaking}}"></paper-input></td> 
+        <td id="tb4" hidden$="{{hidepaperinput}}"><paper-input on-change="FnListening" value="{{listening}}"></paper-input></td> 
+         <!-- <td id="tb1"><paper-item>{{asltotal}}</paper-item></td> -->
+        <td id="tb4"><paper-item>{{convert}}</paper-item></td>
+        <td id="tb2"><paper-item>{{reduce}}</paper-item></td>  
+        <td id="tb3"><paper-item>{{grade}}</paper-item></td>
+        <td id="tb3"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
+        </tr>
+        </table>
+    </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <iron-ajax        
+        method="post"
+        id="fetchfagradeajax"
+        url="{{fetchfagradeurl}}"
+        params="{{fetchfagradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfagradeResponse"
+        debounce-duration="300"
+    >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var lower=[];
+    var higher=[];
+    var grade=[];
+    Polymer({
+      is: 'cc-sa-ninetoten-english-itemcard',
+      ready:function(){
+
+      },
+      FnWritten:function(){
+      this.FnInsertService();
+      },
+      FnSpeaking:function(){
+        this.FnInsertService();
+      },
+      FnListening:function(){
+        this.FnInsertService();               
+      },
+      // },
+      // FnActivity:function(e){
+      //   this.callFetchGrade();        
+      //   this.mark=this.score;
+      //   this.convert=parseFloat((parseInt(this.score)/90)*100).toFixed(2);
+      //   this.reduce=parseFloat(parseFloat(this.convert)/10).toFixed(2);                 
+      // },
+      FnInsertService:function(){ 
+      if(this.written==""||this.speaking==""||this.listening==""||this.written==null||this.speaking==null||this.listening==null)
+        {
+
+        }
+        else{   
+          this.asltotal=parseFloat(this.listening)+parseFloat(this.speaking);
+        this.callFetchGrade();        
+        // this.mark=this.score;
+        this.total=parseFloat(this.written)+parseFloat(this.asltotal);
+        this.convert=parseFloat((parseFloat(this.total)/90)*100).toFixed(2);
+        this.reduce=parseFloat(parseFloat(this.convert)/10).toFixed(2);      
+        
+      }
+        // this.$.assesmentservice.callOveralltermmarkinsertService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),this.convert,this.reduce,this.grade);     
+      },
+      FnSave:function(){
+
+         this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Written Work",this.written,1,3); 
+        this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Speaking Skill",this.speaking,2,3); 
+        this.$.assesmentservice.callinsertfaassesmentmarkService(this.studid,this.studname,localStorage.getItem("curr_sess_assesmenttype"),"Listening Skill",this.listening,3,3); 
+      },
+      callFetchGrade:function(){
+        this.fetchfagradeurl=sessionStorage.getItem("addrinfo")+"/fetchfagrade-service"; 
+        this.$.fetchfagradeajax.generateRequest(); 
+      },
+      fetchfagradeResponse:function(e){
+        var returnval=e.detail.response.returnval;       
+        for(var i=0;i<returnval.length;i++){
+          lower.push(returnval[i].lower_limit);
+          higher.push(returnval[i].higher_limit);
+          grade.push(returnval[i].grade);
+        }
+        this.FnFindGrade(parseInt(this.convert));   
+      },
+      FnFindGrade:function(mark){        
+        for(var i=0;i<lower.length;i++){          
+          if(mark>=lower[i]&&mark<=higher[i]){            
+            this.grade=grade[i];
+          }
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

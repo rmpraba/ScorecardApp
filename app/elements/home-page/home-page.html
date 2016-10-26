@@ -19,6 +19,7 @@
 <link rel="import" href="../consolidated-report-card/consolidated-report-card.html">
 <link rel="import" href="../teacher-observation_card/teacher-observation_card.html">
 <link rel="import" href="../comparisonreport-card/comparisonreport-card.html">
+<link rel="import" href="../fivetotencomparisonreport-card/fivetotencomparisonreport-card.html">
 <link rel="import" href="../approvalstatus-card/approvalstatus-card.html">
   <dom-module id="home-page">
   <template>
@@ -110,9 +111,9 @@
         <section data-category="approveassesment">
           <approve-one-to-four-card></approve-one-to-four-card>
         </section>
-        <section data-category="languageenrichment">
+        <!-- <section data-category="languageenrichment">
           <language-enrichment-card></language-enrichment-card>
-        </section>
+        </section> -->
         <section data-category="beginnertermanalysis">
           <beginner-term-analysis-card></beginner-term-analysis-card>
         </section>
@@ -124,6 +125,9 @@
         </section>
         <section data-category="comparisonreport">
           <comparisonreport-card></comparisonreport-card>
+        </section>
+          <section data-category="fivetotencomparisonreport">
+          <fivetotencomparisonreport-card></fivetotencomparisonreport-card>
         </section>
         <section data-category="approvalstatus">
           <approvalstatus-card></approvalstatus-card>
@@ -159,6 +163,7 @@
   },
   FnHome:function(){    
      // alert(localStorage.getItem("curr_sess_page"));
+
     if(localStorage.getItem("curr_sess_page")=="cc-eng-onetofour-card")
     {
       this.page="teacherhomecard";
@@ -275,6 +280,13 @@
       document.querySelector('cce-generate-score-card').FnRefresh();
       document.querySelector('cce-onetofour-score-card').FnRefresh();
     }
+    if(localStorage.getItem("curr_sess_page")=="ccefivetotenscorecard")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('cce-generate-score-card').FnRefresh();
+      document.querySelector('cce-fivetoten-score-card').FnRefresh();      
+    }
     if(localStorage.getItem("curr_sess_page")=="approveassesment")
     {
       this.page="teacherhomecard";
@@ -317,6 +329,15 @@
       document.querySelector('teacherhome-card').FnRefresh();
       // document.querySelector('cce-generate-score-card').FnRefresh();   
       document.querySelector('comparisonreport-card').FnRefresh(); 
+
+    }
+     if(localStorage.getItem("curr_sess_page")=="fivetotencomparisonreport")
+    {
+      this.page="scorecard"; 
+      localStorage.setItem("curr_sess_page",this.page);     
+      document.querySelector('teacherhome-card').FnRefresh();
+      // document.querySelector('cce-generate-score-card').FnRefresh();   
+      //document.querySelector('fivetotencomparisonreport-card').FnRefresh(); 
 
     }
     if(localStorage.getItem("curr_sess_page")=="artverticals-card")
@@ -393,6 +414,14 @@
       document.querySelector('term-assesment-card').FnRefreshcard();  
       document.querySelector('cc-sa-fivetoten-card').FnRefresh();    
     }
+     if(localStorage.getItem("curr_sess_page")=="cc-sa-ninetoten-english")
+    {
+      this.page="teacherhomecard";
+      // this.page="termscholasticcategory";
+      document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('term-assesment-card').FnRefreshcard();  
+      document.querySelector('cc-sa-ninetoten-english').FnRefresh();    
+    }
      if(localStorage.getItem("curr_sess_page")=="approvalstatus")
     {
       this.page="teacherhomecard";
@@ -409,6 +438,20 @@
       // document.querySelector('cce-generate-score-card').FnRefresh();   
       document.querySelector('studentinfoedit-card').FnRefresh(); 
 
+    }
+    if(localStorage.getItem("curr_sess_page")=="beginnertermanalysis")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       // document.querySelector('language-enrichment-card').FnRefresh();
+    }
+    if(localStorage.getItem("curr_sess_page")=="teacherobservation")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       // document.querySelector('language-enrichment-card').FnRefresh();
     }
   },
 

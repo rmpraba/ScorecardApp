@@ -117,6 +117,18 @@
         on-response="fetchstudentreportforcoscholasticResponse"
         debounce-duration="300"
     >
+
+
+    <iron-ajax
+        method="post"
+        id="fetchexcelreportforcoscholasticajax"
+        url="{{fetchexcelreportforcoscholasticurl}}"
+        params="{{fetchexcelreportforcoscholasticparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchexcelreportforcoscholasticResponse"
+        debounce-duration="300"
+    >
     <iron-ajax
         method="post"
         id="fetchstudentforcoscholasticajax"
@@ -276,6 +288,18 @@
         on-response="overallinsertcoassesmentResponse"
         debounce-duration="300"
     >
+
+
+     <iron-ajax        
+        method="post"
+        id="fetchgradeforcoscholasticajax"
+        url="{{fetchgradeforcoscholasticurl}}"
+        params="{{fetchgradeforcoscholasticparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeforcoscholasticResponse"
+        debounce-duration="300"
+    >
     
   </template>
   <script>
@@ -288,16 +312,25 @@
     var attendancearr=[];
     var physicalarr=[];
     var artverticalsarr=[];
+    var coscholastic=[];
     var coscholasticarr=[];
     var coscholasticoverall=[];
+    var categoryarr;
+    var co_lower=[];
+    var co_higher=[];
+    var co_grade=[];
     Polymer({
       is: 'co-scholastic-service',
+      ready:function(){
+        this.temp=0;
+      },
       callWorkingdaysService:function(){
         this.fetchworkingdaysurl=sessionStorage.getItem("addrinfo")+"/fetchworkingdays-service";
-        var obj={"academicyear":"","schoolid":"","termname":"","type":""};
+        var obj={"academicyear":"","schoolid":"","termname":"","grade":"","type":""};
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.grade=localStorage.getItem("curr_sess_grade");
         // alert(localStorage.getItem("curr_sess_grade"));
          if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
          obj.type='Pre-Primary';
@@ -353,9 +386,41 @@
          this.sectionparam= obj;
          this.$.sectionajax.generateRequest();
       },
-      sectionResponse:function(e){        
+      sectionResponse:function(e){      
          document.querySelector('coscholastic-assesment-card').sectionarr=e.detail.response.returnval; 
+         this.callFetchCoscholasticGrade();
       },
+       callFetchCoscholasticGrade:function()
+       {
+        this.fetchgradeforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchcoscholasticgrade-service";
+        this.$.fetchgradeforcoscholasticajax.generateRequest(); 
+       
+      },
+
+       fetchgradeforcoscholasticResponse:function(e)
+       {
+        var returnval=e.detail.response.returnval; 
+       // alert('1to4'+JSON.stringify(returnval));      
+        for(var i=0;i<returnval.length;i++)
+        {
+          co_lower.push(returnval[i].lower_limit);
+          co_higher.push(returnval[i].higher_limit);
+          co_grade.push(returnval[i].grade);
+        } 
+      },
+
+
+       FnFindCoscholasticGrade:function(mark)
+      {        
+        for(var i=0;i<co_lower.length;i++)
+        {         
+          if(mark>=co_lower[i]&&mark<=co_higher[i])
+          {            
+            this.grade=co_grade[i];
+          }
+        }
+        return this.grade;        
+     },
       callFetchStudentInfoforhealth:function(grade,section){
         hgrade=grade;
         hsection=section;
@@ -426,7 +491,7 @@
         }     
         else if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-        document.querySelector('cc-ntlife-skill-card').studarr=arr;
+        document.querySelector('cs-life-skill-card').studarr=arr;
         else
         document.querySelector('cs-life-skill-card').studarr=arr;    
         }
@@ -451,23 +516,73 @@
       {
         this.stdid=idd;
         this.subcat=name;
-         this.fetchlifeskillurl=sessionStorage.getItem("addrinfo")+"/fetchlifeskill";
-         var obj={"schoolid":"","termtype":""};
+
+         this.fetchstudentlifeskillurl=sessionStorage.getItem("addrinfo")+"/fetchstudentlifeskill";
+         var obj={"schoolid":"","academicyear":"","studid":"","subcategory":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-         obj.termtype=name;        
-         this.fetchlifeskillparam= obj;
-         this.$.fetchlifeskillajax.generateRequest();
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.studid=this.stdid;
+         obj.subcategory=this.subcat;
+         this.fetchstudentlifeskillparam= obj;
+         this.$.fetchstudentlifeskillajax.generateRequest();
+
+        
       },
-      fetchlifeskillResponse:function(e)
+       fetchstudentlifeskillResponse:function(e)
       {
-        var coarr=e.detail.response.returnval;
-        // alert(JSON.stringify(coarr));
+         categoryarr=e.detail.response.returnval;
+         //alert(JSON.stringify(categoryarr));
         var cat=sessionStorage.getItem("category");
         // alert(cat);
         if(cat=="lifeskill"){
         // alert(localStorage.getItem("curr_sess_grade"));
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-        document.querySelector('cc-ntlife-skill-itemcard').coarr=coarr;
+        document.querySelector('cs-life-skill-item-card').FnSubcategory(categoryarr);
+        else
+        document.querySelector('cs-life-skill-item-card').FnSubcategory(categoryarr);
+        } 
+        else  if(cat=="education")
+        document.querySelector('cs-education-item-card').FnSubcategory(categoryarr);
+        else  if(cat=="visual")
+        document.querySelector('cs-visual-performing-item-card').FnSubcategory(categoryarr);
+        else  if(cat=="cocurricular")
+        document.querySelector('cs-co-curricular-item-card').FnSubcategory(categoryarr);
+        else  if(cat=="healthandphysical")
+        document.querySelector('cs-health-physical-education-item-card').FnSubcategory(categoryarr);
+        else  if(cat=="attitude")
+        document.querySelector('cs-attitudes-item-card').FnSubcategory(categoryarr);
+        
+        
+         this.fetchlifeskillurl=sessionStorage.getItem("addrinfo")+"/fetchlifeskill";
+         var obj={"schoolid":"","termtype":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termtype=this.subcat;        
+         this.fetchlifeskillparam= obj;
+         this.$.fetchlifeskillajax.generateRequest();
+      
+
+      },
+      fetchlifeskillResponse:function(e)
+      {
+        var coarr=e.detail.response.returnval;
+        for(var i=0;i<coarr.length;i++)
+        {
+          for(var j=0;j<categoryarr.length;j++)
+          {
+            if(coarr[i].sub_metrics==categoryarr[j].sub_category)
+            {
+              coarr[i].mark=categoryarr[j].mark;
+            }
+          }
+        }
+       // alert('za'+JSON.stringify(coarr));
+        var cat=sessionStorage.getItem("category");
+        // alert(cat);
+        if(cat=="lifeskill"){
+        // alert(localStorage.getItem("curr_sess_grade"));
+        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
+        document.querySelector('cs-life-skill-item-card').coarr=coarr;
         else
         document.querySelector('cs-life-skill-item-card').coarr=coarr;
         } 
@@ -481,44 +596,10 @@
         document.querySelector('cs-health-physical-education-item-card').coarr=coarr;
         else  if(cat=="attitude")
         document.querySelector('cs-attitudes-item-card').coarr=coarr;  
-         this.fetchstudentlifeskillurl=sessionStorage.getItem("addrinfo")+"/fetchstudentlifeskill";
-         var obj={"schoolid":"","academicyear":"","studid":"","subcategory":""};
-         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-        obj.termname=localStorage.getItem("curr_sess_termname");
-         obj.studid=this.stdid;
-         obj.subcategory=this.subcat;
-         this.fetchstudentlifeskillparam= obj;
-         this.$.fetchstudentlifeskillajax.generateRequest();
+        
 
       },
-      fetchstudentlifeskillResponse:function(e)
-      {
-        var categoryarr=e.detail.response.returnval;
-      if(categoryarr.length>0)
-       {  
-        var cat=sessionStorage.getItem("category");
-
-        if(cat=="lifeskill")
-        {  
-        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-        document.querySelector('cc-ntlife-skill-itemcard').selectsubcategory(categoryarr);
-        else
-        document.querySelector('cs-life-skill-item-card').selectsubcategory(categoryarr);
-        } 
-        else  if(cat=="education")
-        document.querySelector('cs-education-item-card').selectsubcategory(categoryarr);
-        else  if(cat=="visual")
-        document.querySelector('cs-visual-performing-item-card').selectsubcategory(categoryarr);
-        else  if(cat=="cocurricular")
-        document.querySelector('cs-co-curricular-item-card').selectsubcategory(categoryarr);
-        else  if(cat=="healthandphysical")
-        document.querySelector('cs-health-physical-education-item-card').selectsubcategory(categoryarr);
-        else  if(cat=="attitude")
-        document.querySelector('cs-attitudes-item-card').selectsubcategory(categoryarr); 
-       }
-
-      },
+     
       callinsertcoscholasticassesmentmarkService:function(studid,studname,category,subcategory,mark,seq){
          //tempcnt1=count;         
          this.insertcoassesmentmarkurl=sessionStorage.getItem("addrinfo")+"/insertcoassesmentmark-service";
@@ -536,12 +617,17 @@
          obj.category=category;
          obj.subcategory=subcategory;
          obj.mark=mark;         
-         obj.categorygrade=mark;  
+         obj.categorygrade=this.FnFindCoscholasticGrade((parseInt(mark)));
          obj.sequence=seq;     
          this.insertcoassesmentmarkparam= obj;        
          this.$.insertcoassesmentmarkajax.generateRequest();
       },
-       callinsertcoscholasticsubcategorymarkService:function(subcategoryarr){        
+      insertcoassesmentmarkResponse:function(e){
+        
+      },
+       callinsertcoscholasticsubcategorymarkService:function(subcategoryarr){    
+       // alert(''+JSON.stringify(subcategoryarr)); 
+       this.sublength=subcategoryarr.length;   
          this.insertcosubcategorymarkurl=sessionStorage.getItem("addrinfo")+"/insertcosubcategorymark-service";
          for(var i=0;i<subcategoryarr.length;i++)
          {
@@ -566,7 +652,14 @@
        }
       },
 
-
+insertcosubcategorymarkResponse:function(e){
+  this.temp++;
+  if(this.sublength==this.temp){
+  alert('Mark saved!');
+  this.sublength=0;
+  this.temp=0;
+  }
+},
 
       insertcoassesmentmarkResponse:function(e){
         tempcnt2++;
@@ -707,12 +800,29 @@
       } ,
 
 
-      callFetchStudentInfo:function(){
-       
+      callFetchStudentInfo:function()
+      {
+        if(localStorage.getItem('curr_sess_report')=='1')  
+        { 
+         this.fetchexcelreportforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchexcelreportforcoscholastic-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchexcelreportforcoscholasticparam= obj;
+         this.$.fetchexcelreportforcoscholasticajax.generateRequest(); 
+       }
+        else if(localStorage.getItem('curr_sess_report')=='2'||localStorage.getItem('curr_sess_report')=='4')  
+        { 
          this.fetchstudentreportforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforcoscholastic-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          obj.termname= localStorage.getItem("curr_sess_termname");
          obj.gradename=localStorage.getItem("curr_sess_grade");
          obj.section=localStorage.getItem("curr_sess_section");
@@ -720,15 +830,40 @@
          this.fetchstudentreportforcoscholasticparam= obj;
          // alert(JSON.stringify(obj));
          this.$.fetchstudentreportforcoscholasticajax.generateRequest();
+          document.querySelector('approve-one-to-four-card').FnSpinnerrActive(false); 
+       }
+       else
+       {
+        this.fetchstudentreportforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchstudentreportforcoscholastic-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":"","academicyear":"","termname":""};
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject=localStorage.getItem("curr_sess_subject");
+         this.fetchstudentreportforcoscholasticparam= obj;
+         // alert(JSON.stringify(obj));
+         this.$.fetchstudentreportforcoscholasticajax.generateRequest();
+       }
         
       },
        fetchstudentreportforcoscholasticResponse:function(e)
        {
-        
+         coscholasticoverall=[];
         coscholasticarr=e.detail.response.returnval;
         //alert(JSON.stringify(coscholasticarr));
-        if(coscholasticarr!='fail')
-       {      
+      if(coscholasticarr=="imported")
+      {
+           this.FnSpinnerDeactive();
+
+        if(sessionStorage.getItem("curr_sess_loggedroleid")!='co-ordinator')
+        alert('Marks already submitted!');
+       }
+      
+      else if(coscholasticarr!='invalid')
+       {       
        for(var i=0;i<coscholasticarr.length;i++)
        {
 
@@ -739,7 +874,7 @@
        // markarr.push(i+1);
        obj.id=coscholasticarr[i].student_id;
         obj.student_name=coscholasticarr[i].student_name;
-        obj.mark1=coscholasticarr[i].mark;
+        obj['mark'+(coscholasticarr[i].sub_seq)]=coscholasticarr[i].mark;
         sum=parseInt(sum)+parseInt(coscholasticarr[i].mark);
        
         for(var j=i+1;j<coscholasticarr.length;j++)
@@ -747,20 +882,20 @@
            if(coscholasticarr[i].student_id==coscholasticarr[j].student_id)
            {      
            sum=parseInt(sum)+parseInt(coscholasticarr[j].mark);
-          obj['mark'+(k+1)]=coscholasticarr[j].mark;     
+          obj['mark'+(coscholasticarr[j].sub_seq)]=coscholasticarr[j].mark;     
             //markarr.push(obj.mark1);
             coscholasticarr.splice(j,1);
             j--;
+            k++;
            }
-           k++;
+          
 
         }
          obj.serialno=i+1;
         coscholasticoverall.push(obj);
       }
       this.len=coscholasticoverall.length;
-    }
-         this.fetchstudentforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforcoscholastic-service";
+       this.fetchstudentforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforcoscholastic-service";
          var obj={"academicyear":"","schoolid":"","gradename":"","section":"","subject":"","termname":"","assesment":""};
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -771,14 +906,127 @@
          obj.subject= localStorage.getItem("curr_sess_subject");
          this.fetchstudentforcoscholasticparam= obj;         
          this.$.fetchstudentforcoscholasticajax.generateRequest();
+    }
+     else
+         {
+        this.len=0;
+         
+        this.fetchstudentforcoscholasticurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforcoscholastic-service";
+         var obj={"academicyear":"","schoolid":"","gradename":"","section":"","subject":"","termname":"","assesment":""};
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.termname= localStorage.getItem("curr_sess_termname");
+          obj.assesment= localStorage.getItem("curr_sess_assesment");
+         obj.gradename=localStorage.getItem("curr_sess_grade");
+         obj.section=localStorage.getItem("curr_sess_section");
+         obj.subject= localStorage.getItem("curr_sess_subject");
+         this.fetchstudentforcoscholasticparam= obj;         
+         this.$.fetchstudentforcoscholasticajax.generateRequest();
+       }
+     },
+     fetchexcelreportforcoscholasticResponse:function(e)
+     {
+      var excelcoscholasticoverall=[];
+      var excelcoscholastic=e.detail.response.returnval;
+      if(excelcoscholastic!='invalid')
+       {       
+       for(var i=0;i<excelcoscholastic.length;i++)
+       {
+
+        var obj={};
+        var k=1;
+        var sum=0
+        var markarr=[];
+       // markarr.push(i+1);
+       obj.id=excelcoscholastic[i].student_id;
+        obj.student_name=excelcoscholastic[i].student_name;
+        obj.mark1=excelcoscholastic[i].mark;
+        sum=parseInt(sum)+parseInt(excelcoscholastic[i].mark);
+       
+        for(var j=i+1;j<excelcoscholastic.length;j++)
+        {
+           if(excelcoscholastic[i].student_id==excelcoscholastic[j].student_id)
+           {      
+           sum=parseInt(sum)+parseInt(excelcoscholastic[j].mark);
+          obj['mark'+(k+1)]=excelcoscholastic[j].mark;     
+            //markarr.push(obj.mark1);
+            excelcoscholastic.splice(j,1);
+            j--;
+            k++;
+           }
+          
+
+        }
+         obj.serialno=i+1;
+        excelcoscholasticoverall.push(obj);
+      }
+    }
+    
+      
+             if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
+        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card');
+        document.querySelector('cs-life-skill-card').setDefaultHeaders(); 
+        document.querySelector('cs-life-skill-card').markarr=excelcoscholasticoverall;
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(false);  
+        }
+        else
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card');
+        document.querySelector('cs-life-skill-card').setDefaultHeaders(); 
+        document.querySelector('cs-life-skill-card').markarr=excelcoscholasticoverall; 
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(true); 
+        }    
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Work Education")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-education-card');
+        document.querySelector('cs-education-card').setDefaultHeaders(); 
+        document.querySelector('cs-education-card').markarr=excelcoscholasticoverall;  
+        document.querySelector('cs-education-card').FnSpinnerrActive(false);        
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-visual-performing-card');
+        document.querySelector('cs-visual-performing-card').setDefaultHeaders(); 
+        document.querySelector('cs-visual-performing-card').markarr=excelcoscholasticoverall; 
+        document.querySelector('cs-visual-performing-card').FnSpinnerrActive(false);      
+        // document.querySelector('cs-visualerforming-card').studarr=arr;   
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Attitudes And values")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-attitudes-card');
+        document.querySelector('cs-attitudes-card').setDefaultHeaders(); 
+        document.querySelector('cs-attitudes-card').markarr=excelcoscholasticoverall; 
+        document.querySelector('cs-attitudes-card').FnSpinnerrActive(false);         
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-co-curricular-card');
+        document.querySelector('cs-co-curricular-card').setDefaultHeaders(); 
+        document.querySelector('cs-co-curricular-card').markarr=excelcoscholasticoverall; 
+        document.querySelector('cs-co-curricular-card').FnSpinnerrActive(false);        
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Health and Physical Education")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-health-physical-education-card');
+        document.querySelector('cs-health-physical-education-card').setDefaultHeaders(); 
+        document.querySelector('cs-health-physical-education-card').markarr=excelcoscholasticoverall;        
+        }
+
+       
+        
        },
        fetchstudentforcoscholasticResponse:function(e)
        {
         var arr=e.detail.response.returnval;
-        //alert(JSON.stringify(e.detail.response.returnval));
-          for(var i=0;i<arr.length;i++)
+        // alert(JSON.stringify(arr));
+        //alert(JSON.stringify(coscholasticoverall));
+        for(var j=0;j<coscholasticarr.length;j++)
+          
     {
-      for(var j=0;j<coscholasticarr.length;j++)
+      for(var i=0;i<arr.length;i++)
       {
         if(arr[i].student_name==coscholasticarr[j].student_name)
         {
@@ -793,31 +1041,59 @@
         coscholasticoverall.push(arr[i]);
           
         }
-        
+
            if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
         if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-        document.querySelector('cc-ntlife-skill-card').studarr=coscholasticoverall;
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card');
+        document.querySelector('cs-life-skill-card').setDefaultHeaders(); 
+        document.querySelector('cs-life-skill-card').studarr=coscholasticoverall;
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(false);  
+        }
         else
-        document.querySelector('cs-life-skill-card').studarr=coscholasticoverall;    
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card');
+        document.querySelector('cs-life-skill-card').setDefaultHeaders(); 
+        document.querySelector('cs-life-skill-card').studarr=coscholasticoverall; 
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(false); 
+        }    
         }
-        if(localStorage.getItem("curr_sess_subject")=="Work Education"){
-
-        document.querySelector('cs-education-card').studarr=coscholasticoverall;        
+        if(localStorage.getItem("curr_sess_subject")=="Work Education")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-education-card');
+        document.querySelector('cs-education-card').setDefaultHeaders(); 
+        document.querySelector('cs-education-card').studarr=coscholasticoverall;  
+        document.querySelector('cs-education-card').FnSpinnerrActive(false);        
         }
-        if(localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"){
-        document.querySelector('cs-visual-performing-card').studarr=coscholasticoverall;     
+        if(localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-visual-performing-card');
+        document.querySelector('cs-visual-performing-card').setDefaultHeaders(); 
+        document.querySelector('cs-visual-performing-card').studarr=coscholasticoverall; 
+        document.querySelector('cs-visual-performing-card').FnSpinnerrActive(false);      
         // document.querySelector('cs-visualerforming-card').studarr=arr;   
         }
-        if(localStorage.getItem("curr_sess_subject")=="Attitudes And values"){
-        document.querySelector('cs-attitudes-card').studarr=coscholasticoverall;        
+        if(localStorage.getItem("curr_sess_subject")=="Attitudes And values")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-attitudes-card');
+        document.querySelector('cs-attitudes-card').setDefaultHeaders(); 
+        document.querySelector('cs-attitudes-card').studarr=coscholasticoverall; 
+        document.querySelector('cs-attitudes-card').FnSpinnerrActive(false);         
         }
-        if(localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"){
-        document.querySelector('cs-co-curricular-card').studarr=coscholasticoverall;       
+        if(localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-co-curricular-card');
+        document.querySelector('cs-co-curricular-card').setDefaultHeaders(); 
+        document.querySelector('cs-co-curricular-card').studarr=coscholasticoverall; 
+        document.querySelector('cs-co-curricular-card').FnSpinnerrActive(false);        
         }
-        if(localStorage.getItem("curr_sess_subject")=="Health and Physical Education"){
+        if(localStorage.getItem("curr_sess_subject")=="Health and Physical Education")
+        {
+        document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-health-physical-education-card');
+        document.querySelector('cs-health-physical-education-card').setDefaultHeaders(); 
         document.querySelector('cs-health-physical-education-card').studarr=coscholasticoverall;        
         }
-       
+      
         
        },
 
@@ -983,8 +1259,42 @@
         // alert(JSON.stringify(artverticalsarr));
            document.querySelector('art-verticals-card').studarr=artverticalsarr;
            //document.querySelector('attendance-card').FnSpinnerrActive(false);
-      }
-
+      },
+      FnSpinnerDeactive:function(){
+       if(localStorage.getItem("curr_sess_subject")=="Life Skills"){
+        if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
+        {
+       
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(false);  
+        }
+        else
+        {
+        
+        document.querySelector('cs-life-skill-card').FnSpinnerrActive(false); 
+        }    
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Work Education")
+        {
+        document.querySelector('cs-education-card').FnSpinnerrActive(false);        
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts")
+        {
+        document.querySelector('cs-visual-performing-card').FnSpinnerrActive(false);       
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Attitudes And values")
+        { 
+        document.querySelector('cs-attitudes-card').FnSpinnerrActive(false);         
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities")
+        { 
+        document.querySelector('cs-co-curricular-card').FnSpinnerrActive(false);        
+        }
+        if(localStorage.getItem("curr_sess_subject")=="Health and Physical Education")
+        {
+         document.querySelector('cs-health-physical-education-card').FnSpinnerrActive(false);          
+        }
+    },
+      
 
     });
   })();

@@ -1,0 +1,218 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../component-service/component-service.html">
+<link rel="import" href="../cc-sa-ninetoten-english-itemcard/cc-sa-ninetoten-english-itemcard.html">
+
+<dom-module id="cc-sa-ninetoten-english">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+        width: 80%;
+        border-collapse: collapse;
+        margin-left: 1%;
+      }
+      .studname{
+        width: 30%;
+      }
+     /* #tb1{
+        width:15.67%
+      }
+       #tb2{
+        width: 9.67%
+        }
+        #tb3{
+         width:23%  
+        }*/
+        .button{
+            width: 15%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+          #btn3{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
+           .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
+    </style>
+    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>
+    <div>
+    <!-- <template is="dom-repeat" items="{{label}}"> -->
+      <center><h1>{{schoolname}}</h1>
+      <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
+      <h4>Grade- &nbsp&nbsp&nbsp {{grade}}  &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
+      <table border="1" id="MarkTable11">    
+      <tr>
+      <th id="tb2">Serial No</th>
+      <th id="tb3">Student Name</th>
+      <th id="tb1">Written Work(70)</th>
+      <th id="tb1">Speaking Skill(10)</th>
+      <th id="tb1">Listening Skill(10)</th>
+      <!-- <th id="tb1">Total of ASL(20)</th> -->
+      <th id="tb1">Total of SA1(100)</th>
+      <th id="tb1">Reduced Total of SA1(10%)</th>
+      <th id="tb1">Grade</th>
+      <th style='width:4%;'></th>   
+      </tr>      
+      <template is="dom-repeat" items="{{markarr}}">
+<tr>
+<td id="tb1"><paper-item>{{item.serialno}}</paper-item></td>
+        <td id="tb2"><paper-item>{{item.serialno}}</paper-item></td>
+        <td id="tb1"><paper-item>{{item.student_name}}</paper-item></td>
+        <td id="tb1" ><paper-item>{{item.mark1}}</paper-item></td>   
+       
+        <td id="tb1" ><paper-item>{{item.mark2}}</paper-item></td>   
+        <td id="tb1" ><paper-item>{{item.mark3}}</paper-item></td> 
+         
+       
+        <td id="tb1"><paper-item>{{item.sum}}</paper-item></td>
+        <td id="tb1"><paper-item>{{item.reducetotal}}</paper-item></td>
+        <td id="tb1"><paper-item>{{item.grade}}</paper-item></td>
+</tr>
+</template>
+      <template is="dom-repeat" items="{{studarr}}">
+      <tr>
+      <td>{{item.serialno}}</td><td>{{item.student_name}}</td>
+      <td colspan="9">
+      <cc-sa-ninetoten-english-itemcard hidepaperitem="{{hidepaperitem}}" hidepaperinput="{{hidepaperinput}}" serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" written="{{item.mark1}}" speaking="{{item.mark2}}" listening="{{item.mark3}}" convert="{{item.sum}}" reduce="{{item.reducetotal}}" grade="{{item.grade}}"></cc-sa-ninetoten-english-itemcard>
+      </td></tr>
+      </template>
+      </table>
+      </center> 
+    <!-- </template>    -->
+     <center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
+<input type="button" id="btn3" onclick="tableToExcel('MarkTable11', 'Mark Report')" value="Export to Excel"></center>  
+    </div>
+    <term-assesment-service id="assesmentservice"></term-assesment-service>
+    <!-- <component-service id="componentservice" label="{{label}}"></component-service> -->
+  </template>
+   <script type="text/javascript">
+var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+})()
+</script>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'cc-sa-ninetoten-english',
+      ready:function(){
+         this.$.btn3.hidden=true;
+        this.$.submit.hidden=true;
+                
+      },
+      setDefaultHeaders:function(){
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.subject=localStorage.getItem("curr_sess_subject");
+
+
+         if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      {
+        this.importlabel='Approve';
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
+        this.importlabel='Submit for approval';
+      }
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        this.$.submit.hidden=true;
+         if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        // this.$.save.hidden=true;
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false;        
+        if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        if(localStorage.getItem('curr_sess_report')=='0')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=false;
+        this.$.btn3.hidden=true;
+        }
+        if(localStorage.getItem('curr_sess_report')=='2')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=true;
+        }
+      }
+
+      },
+       importmark:function()
+      {
+        // alert('import');
+        // this.$.assesmentservice.Fnimportmark();
+        this.$.assesmentservice.Fnfaimportmark();
+      },
+       hiddenbutton:function()
+      {
+        this.$.btn2.hidden=true;
+      },
+        FnRefresh:function()
+      {
+ this.markarr=[];
+ this.importarr=[];
+ this.studarr=[];
+ this.schoolname="";
+        this.academicyear="";
+        this.grade="";
+        this.section="";
+        this.subject="";
+        this.label=[];
+      },
+      FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
+      }
+    });
+  })();
+  </script>
+</dom-module>
+

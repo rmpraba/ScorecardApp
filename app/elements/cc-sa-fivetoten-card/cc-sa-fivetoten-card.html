@@ -25,10 +25,10 @@
         width: 9.67%
         }
         #tb3{
-         width:22.67%  
+         width:23%  
         }
         .button{
-            width: 10%;
+            width: 15%;
             background: #252626;
             color: white;
             margin-top: 2%;
@@ -45,7 +45,21 @@
             font-family: Calibri;
             font-size: 17px;
           }
+           .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
     </style>
+    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>
     <div>
     <template is="dom-repeat" items="{{label}}">
       <center><h1>{{schoolname}}</h1>
@@ -179,6 +193,12 @@ var tableToExcel = (function() {
         this.section="";
         this.subject="";
         this.label=[];
+      },
+      FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
       }
     });
   })();

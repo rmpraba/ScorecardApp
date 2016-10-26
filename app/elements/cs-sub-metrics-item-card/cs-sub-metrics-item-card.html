@@ -12,7 +12,7 @@
        /* @apply(--layout-horizontal);*/
       }
       .tb1{
-        width: 60%;
+        width:100%;
 
       }
     </style>
@@ -25,7 +25,7 @@
     <tbody>
     <tr>
      <center>
-        <td style="width:12%;"><paper-item>{{submetric}}</paper-item></td>
+        <td style="width:50%;"><paper-item>{{submetric}}</paper-item></td>
         <td style="width:20%;"><paper-input on-change="Fnsubcategory" id="mark" value="{{score1}}"></paper-input></td>
     </center>
    </tr>
@@ -40,10 +40,12 @@
       is: 'cs-sub-metrics-item-card',
      Fnsubcategory:function()
      {      
+      if(this.score1!=null)
+      {
       var cat=sessionStorage.getItem("category");
       if(cat=="lifeskill"){
       if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")
-      document.querySelector('cc-ntlife-skill-itemcard').fnfindsum(this.score1,this.submetric);
+      document.querySelector('cs-life-skill-item-card').fnfindsum(this.score1,this.submetric);
       else
       document.querySelector('cs-life-skill-item-card').fnfindsum(this.score1,this.submetric);
       }
@@ -57,10 +59,11 @@
       document.querySelector('cs-attitudes-item-card').fnfindsum(this.score1,this.submetric);
       else if(cat=="healthandphysical")
       document.querySelector('cs-health-physical-education-item-card').fnfindsum(this.score1,this.submetric);     
+     }
     },
     clearinputdata:function()
     {
-      alert('come');
+      //alert('come');
       var x;
      x= document.querySelectorAll("#mark");
      for(var i=0;i<x.length;i++)

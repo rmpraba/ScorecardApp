@@ -28,7 +28,7 @@
     ]},
     {"Page":[
       {"page":["cc-sa-fivetoten-card","cc-sa-fivetoten-card"]},
-      {"Label":[{"SNo":"S.No","Name":"NAME","Max":"Max 90","Convert":"Converted to 100","Reduce":"Reduced to 30","Grade":"GRADE"}]},
+      {"Label":[{"SNo":"S.No","Name":"NAME","Max":"Max 90","Convert":"Converted to 100","Reduce":"Reduced to 10","Grade":"GRADE"}]},
       {"title":["CCE Assesment"]}
     ]},
      {"Page":[

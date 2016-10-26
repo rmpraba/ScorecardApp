@@ -11,11 +11,11 @@
         display: block;
       }
       table{
-        width: 60%;
+        width: 80%;
         border-collapse: collapse;
         margin-left: 1%;
       }
-      .studname{
+      /*.studname{
         width: 30%;
       }
       #tb1{
@@ -23,9 +23,9 @@
            }
       #tb2{
          width:20%
-          }
+          }*/
            .button{
-            width: 10%;
+            width: 15%;
             background: #252626;
             color: white;
             margin-top: 2%;
@@ -42,7 +42,21 @@
             font-family: Calibri;
             font-size: 17px;
           }
+           .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
     </style>
+    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>
     <div>
     <template is="dom-repeat" items="{{label}}">
       <center><h1>{{schoolname}}</h1>
@@ -60,7 +74,7 @@
       <th id="tb1">{{item.Total}}</th>
       <th id="tb1">{{item.Reduction}}</th>
       <th id="tb1">{{item.Grade}}</th> 
-      <th  id="tb1"></th>  
+      <th  id="tb1" width="5%"></th>  
       </tr>  
 <template is="dom-repeat" items="{{markarr}}">
 <tr>
@@ -79,7 +93,10 @@
 </tr>
 </template>
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="9">
+      <tr>
+      <td id="tb1">{{item.serialno}}</td>
+      <td id="tb2">{{item.student_name}}</td>
+      <td colspan="7">
       <cc-fa-fivetoten-itemcard hidepaperitem="{{hidepaperitem}}" hidepaperinput="{{hidepaperinput}}" serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}" score3="{{item.mark2}}" score4="{{item.mark3}}" total="{{item.sum}}" reduction="{{item.reducetotal}}" grade="{{item.grade}}" ></cc-fa-fivetoten-itemcard>
       </td></tr>
       </template>
@@ -175,6 +192,7 @@ var tableToExcel = (function() {
         // alert('import');
         // this.$.assesmentservice.Fnimportmark();
         this.$.assesmentservice.Fnfaimportmark();
+        
       },
        hiddenbutton:function()
       {
@@ -182,15 +200,22 @@ var tableToExcel = (function() {
       },
         FnRefresh:function()
       {
- this.markarr=[];
- this.importarr=[];
- this.studarr=[];
- this.schoolname="";
+         this.markarr=[];
+         this.importarr=[];
+         this.studarr=[];
+         this.schoolname="";
         this.academicyear="";
         this.grade="";
         this.section="";
         this.subject="";
         this.label=[];
+      },
+
+      FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
       }
     });
   })();

@@ -219,7 +219,7 @@
     </style>
     <div class="heading" on-click="FnExpandScorecard">View Reportcard</div>
 
-    <iron-collapse id="collapse1">
+    <iron-collapse id="comparisoncollapse1">
       <div class="content">
         <!-- <div>halo scorecard</div> -->
         <!-- <cce-onetofour-score-card academicyear="{{academicyear}}" grade="{{grade}}" section="{{section}}" enrno="{{enrno}}" studentname="{{studentname}}" parentname="{{parentname}}" adterm1="{{adterm1}}" wdterm1="{{wdterm1}}" pterm1="{{pterm1}}" t1height="{{t1height}}" t1weight="{{t1weight}}" adterm2="{{adterm2}}" wdterm2="{{wdterm2}}" pterm2="{{pterm2}}" t2height="{{t2height}}" t2weight="{{t2weight}}" adterm3="{{adterm3}}" wdterm3="{{wdterm3}}" pterm3="{{pterm3}}" t3height="{{t3height}}" t3weight="{{t3weight}}" personalityArray="{{personalityArray}}" acArray="{{acArray}}" mdArray="{{mdArray}}" gamesArray="{{gamesArray}}" engArray="{{engArray}}" mathArray="{{mathArray}}" evsArray="{{evsArray}}" secArray="{{secArray}}" csArray="{{csArray}}" gkArray="{{gkArray}}"></cce-onetofour-score-card> -->
@@ -402,14 +402,13 @@
     
     <div class="heading" on-click="FnExpandHealth">View health info</div>
 
-    <iron-collapse id="collapse2">
+    <iron-collapse id="comparisoncollapse2">
       <div class="content">
         <div>
         <template is="dom-repeat" items="{{healthArray}}" as="item">
-          <table id="tab" width='80%'>
-            <tr style="background-color: #f3f3f3;height: 20px;"><th>Height</th><th>Weight</th><th>Blood Group</th><th>Vision Left</th><th>Vision Right</th><th>Denetal Hygeine</th></tr>
-            
-            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.blood_group}}</td><td>{{item.vision_left}}</td><td>{{item.vision_right}}</td><td>{{item.dental}}</td></tr>
+          <table id="tab" width='90%'>
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>&nbsp;&nbsp;Height&nbsp;&nbsp;</th><th>&nbsp;&nbsp;Weight&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI Remarks&nbsp;&nbsp;</th><th>Vision</th><th>Dental (To be checked by the dentist)</th><th>Hearing (Does the child require ENT specialist referral)</th><th>Overall Recommendations</th></tr>            
+            <tr style="text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.bmi}}</td><td>{{item.bmi_remark}}</td><td>{{item.vison}}</td><td>{{item.dental}}</td><td>{{item.hearing}}</td><td>{{item.overall_comment}}</td></tr>
             
           </table>
           </template>
@@ -417,12 +416,12 @@
       </div>
     </iron-collapse>
 
-    <div class="heading" on-click="FnExpandTalent">View talent info</div>
+    <div class="heading" on-click="FnExpandTalent" hidden>View talent info</div>
 
-    <iron-collapse id="collapse3">
+    <iron-collapse id="comparisoncollapse3">
       <!-- <div class="content"> -->
       <div style="margin-left: 5%;width: 80%;" class="heading" on-click="FnExpandArt">Art Verticals</div>
-        <iron-collapse id="collapse4">
+        <iron-collapse id="comparisoncollapse4">
           <div class="content">
           <template is="dom-repeat" items="{{artArray}}" as="item">
             <table id="tab" width='80%' style="margin-left: 5%;">
@@ -433,7 +432,7 @@
           </div>
         </iron-collapse>
       <div style="margin-left: 5%;width: 80%;" class="heading" on-click="FnExpandPhysical">Physical Education</div>
-        <iron-collapse id="collapse5">
+        <iron-collapse id="comparisoncollapse5">
           <div class="content">
           <template is="dom-repeat" items="{{physicalArray}}" as="item">
             <table id="tab" width='80%' style="margin-left: 5%;">
@@ -496,43 +495,44 @@
         
       },
       FnExpandScorecard:function(){
-        document.querySelector('#collapse1').toggle();
-        if(this.$.collapse1.opened==true){
-        this.$.collapse2.opened=false;
-        this.$.collapse3.opened=false;
-        this.$.collapse4.opened=false;
-        this.$.collapse5.opened=false;
+        // alert('expandcard');
+        document.querySelector('#comparisoncollapse1').toggle();
+        if(this.$.comparisoncollapse1.opened==true){
+        this.$.comparisoncollapse2.opened=false;
+        this.$.comparisoncollapse3.opened=false;
+        this.$.comparisoncollapse4.opened=false;
+        this.$.comparisoncollapse5.opened=false;
         }
      
       },
       FnExpandHealth:function(){
-        document.querySelector('#collapse2').toggle();
-        if(this.$.collapse2.opened==true){
-        this.$.collapse1.opened=false;
-        this.$.collapse3.opened=false;
-        this.$.collapse4.opened=false;
-        this.$.collapse5.opened=false;
+        document.querySelector('#comparisoncollapse2').toggle();
+        if(this.$.comparisoncollapse2.opened==true){
+        this.$.comparisoncollapse1.opened=false;
+        this.$.comparisoncollapse3.opened=false;
+        this.$.comparisoncollapse4.opened=false;
+        this.$.comparisoncollapse5.opened=false;
         }
       },
       FnExpandTalent:function(){
-        document.querySelector('#collapse3').toggle();
-        if(this.$.collapse3.opened==true){
-        this.$.collapse1.opened=false;
-        this.$.collapse2.opened=false;
-        this.$.collapse4.opened=false;
-        this.$.collapse5.opened=false;
+        document.querySelector('#comparisoncollapse3').toggle();
+        if(this.$.comparisoncollapse3.opened==true){
+        this.$.comparisoncollapse1.opened=false;
+        this.$.comparisoncollapse2.opened=false;
+        this.$.comparisoncollapse4.opened=false;
+        this.$.comparisoncollapse5.opened=false;
         }
       },
       FnExpandArt:function(){
-        document.querySelector('#collapse4').toggle();
-        if(this.$.collapse4.opened==true){
-        this.$.collapse5.opened=false;
+        document.querySelector('#comparisoncollapse4').toggle();
+        if(this.$.comparisoncollapse4.opened==true){
+        this.$.comparisoncollapse5.opened=false;
         }
       },
       FnExpandPhysical:function(){
-        document.querySelector('#collapse5').toggle();
-        if(this.$.collapse5.opened==true){
-        this.$.collapse4.opened=false;
+        document.querySelector('#comparisoncollapse5').toggle();
+        if(this.$.comparisoncollapse5.opened==true){
+        this.$.comparisoncollapse4.opened=false;
         }  
       },
       FnFetchGradeSeperation:function(e){

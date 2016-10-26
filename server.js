@@ -102,7 +102,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
   var username={"id":req.query.username};
   var password={"password":req.query.password};
   var schoolid={school_id:req.query.schoolid};
-  connection.query('SELECT name as uname,  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr  from md_employee where ? and ? and ? and ?',[id,username,password,schoolid],
+  connection.query('SELECT name as uname,  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr,(select affiliation_no from md_school where id=school) as affno,(select email_id from md_school where id=school) as email,(select website from md_school where id=school) as website,(select telno from md_school where id=school) as telno  from md_employee where ? and ? and ? and ?',[id,username,password,schoolid],
     function(err, rows)
     {
     if(!err)
@@ -271,6 +271,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
 {  
    if(req.query.roleid=='subject-teacher')
   {
+    //console.log('1');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
     "school_id='"+req.query.schoolid+"' and role_id='"+req.query.roleid+"' "+
@@ -279,6 +280,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
   }
   else if(req.query.roleid=='class-teacher')
   {
+    //console.log('2');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
     "school_id='"+req.query.schoolid+"' and role_id='"+req.query.roleid+"' "+
@@ -287,13 +289,15 @@ app.post('/section-service',  urlencodedParser,function (req, res)
   }
    else if(req.query.roleid=='co-ordinator')
   {
+    //console.log('3');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
-    "grade_id=(select grade_id from mp_teacher_grade where "+
-    "school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and school_id='"+req.query.schoolid+"'";
+    "grade_id=(select grade_id from md_grade where "+
+    "school_id='"+req.query.schoolid+"' and grade_name='"+req.query.gradename+"')) and school_id='"+req.query.schoolid+"'";
   }
   else if(req.query.roleid=='headmistress')
   {
+    //console.log('4');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
     "grade_id in(select grade_id from mp_teacher_grade where grade_id=(select grade_id from md_grade "+
@@ -302,6 +306,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
   }
    else if(req.query.roleid=='principal'||req.query.roleid=='headofedn')
   {
+    //console.log('5');
     var qur="select * from md_section where section_id in "+
     "(select section_id from mp_teacher_grade where "+
     "grade_id in(select grade_id from mp_teacher_grade where grade_id=(select grade_id from md_grade "+
@@ -588,26 +593,84 @@ app.post('/fetchstudentreportforattendance-service',  urlencodedParser,function 
 });
 
 app.post('/fetchstudentreportforcoscholastic-service',  urlencodedParser,function (req, res)
-{
+{ 
+
+var qurcheck;
+  if(req.query.roleid=="subject-teacher"||req.query.roleid=="class-teacher"){
+    console.log('c');
+    flag="0";
+  qurcheck="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+  " and term_name='"+req.query.termname+"'  and subject='"+req.query.subject+"' and flag in('0','1')";
+  }
+  else if(req.query.roleid=="co-ordinator")
+  {
+    console.log('o');
+    flag="1";
+  qurcheck="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and "+
+  "grade='"+req.query.gradename+"' and section='"+req.query.section+"' and academic_year='"+req.query.academicyear+"' "+
+  " and term_name='"+req.query.termname+"' and  subject='"+req.query.subject+"' and flag in('"+flag+"')";
+  }
+
+ 
+
   var qur="select * from tr_coscholastic_assesment_marks where academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' order by sub_seq";
  console.log(qur);
- connection.query(qur,
-    function(err, rows)
+ console.log(qurcheck);
+   connection.query(qurcheck,function(err, rows){
+    if(!err){
+      if(rows.length==0)
+      {
+        console.log('f');
+  connection.query(qur,function(err, rows)
     {
     if(!err)
-    { 
-      // console.log(JSON.stringify(rows));   
+    {
+    if(rows.length>0)
+    {
+    //  console.log('s'+JSON.stringify(rows));
       res.status(200).json({'returnval': rows});
     }
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': 'fail'});
-    }  
-
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+    }
+    else{
+      console.log('d');
+      res.status(200).json({'returnval': 'imported'});
+    }
+    }
   });
 });
+app.post('/fetchexcelreportforcoscholastic-service',  urlencodedParser,function (req, res)
+{ 
+  var qur="select * from tr_coscholastic_assesment_marks where academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and  grade='"+req.query.gradename+"' and  section='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' order by sub_seq";
+  connection.query(qur,function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+    //  console.log('s'+JSON.stringify(rows));
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
 
+});
 app.post('/fetchstudentforcoscholastic-service',  urlencodedParser,function (req, res)
 {
   var qur="select school_id,id,student_name,class_id from md_student where  class_id="+
@@ -812,6 +875,7 @@ connection.query(qur,
     {
       if(rows.length>0)
       {
+        console.log('qur1...............................');
        connection.query(qur1,function(err, rows)
        {
        if(rows.length>0) 
@@ -1003,6 +1067,31 @@ app.post('/fetchfagrade-service',  urlencodedParser,function (req,res)
     if(!err)
     { 
       //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+
+
+app.post('/fetchcoscholasticgrade-service',  urlencodedParser,function (req,res)
+{  
+  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+  var qur="SELECT * FROM md_coscholastic_grade_rating";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));  
+      global.coscholasticgrade=rows; 
       res.status(200).json({'returnval': rows});
     }
     else
@@ -1266,7 +1355,6 @@ var response={
  
          school_id:req.query.schoolid,
          academic_year:req.query.academicyear,
-         assessment_id:req.query.assesmentid,
          term_name:req.query.termname,
          class_id:req.query.classid,
          student_id:req.query.studentid,
@@ -1300,7 +1388,7 @@ var response={
     if(!err)
     {    
       console.log('co1-insert');
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'insert'});
     }
     else
     {
@@ -1312,14 +1400,15 @@ var response={
 }
 else
 {
-  connection.query("UPDATE tr_coscholastic_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"' ",[response],
+  
+  connection.query("UPDATE tr_coscholastic_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studentid+"' and  subject_id='"+req.query.subject+"' and  sub_category='"+req.query.subcategory+"'",[response],
     function(err, rows)
      {
     
     if(!err)
     {
       console.log('co1-update');
-      res.status(200).json({'returnval': 'succ'});
+      res.status(200).json({'returnval': 'update'});
     }
     else
     {
@@ -1345,8 +1434,6 @@ var response={
          grade:req.query.grade,
          section:req.query.section,
          subject_id:req.query.subject,
-         grade:req.query.grade,
-         section:req.query.section, 
          category:req.query.category,        
          sub_category:req.query.subcategory,
          mark:req.query.mark,         
@@ -1354,11 +1441,12 @@ var response={
          order_seq:req.query.order_seq
 
   }  
-  var q="select * from tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and order_seq='"+req.query.order_seq+"'"
-  console.log(response);  
+  var q="select * from tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and sub_category='"+req.query.subcategory+"'  order by order_seq";
+  console.log(q);  
   connection.query(q,
  function(err, rows)
     {
+  console.log(rows.length);
     if(rows.length==0){
   connection.query("INSERT INTO tr_coscholastic_sub_category_assesment_marks set ?",[response],
   function(err, rows)
@@ -1377,7 +1465,7 @@ var response={
 }
   else
   {
-   connection.query("UPDATE tr_coscholastic_sub_category_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"' and order_seq='"+req.query.order_seq+"'",[response],
+   connection.query("UPDATE tr_coscholastic_sub_category_assesment_marks SET ? where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and student_id='"+req.query.studid+"' and  subject_id='"+req.query.subject+"' and  category='"+req.query.category+"'and sub_category='"+req.query.subcategory+"'",[response],
     function(err, rows) {
       console.log("update");
     if(!err){
@@ -1513,7 +1601,7 @@ app.post('/overallinsertcocurricularmark-service',  urlencodedParser,function (r
 //fetching student names
 app.post('/scorecardreadyness-service',  urlencodedParser,function (req,res)
 {   
-
+if(req.query.grade=="Grade-1"||req.query.grade=="Grade-2"||req.query.grade=="Grade-3"||req.query.grade=="Grade-4"){
 var qur="select * from md_grade_subject_count where no_of_subjects=(( "+
 "select count(distinct(subject_id)) from tr_term_assesment_overall_assesmentmarks where "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
@@ -1522,6 +1610,18 @@ var qur="select * from md_grade_subject_count where no_of_subjects=(( "+
 "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
 "grade='"+req.query.grade+"' and section='"+req.query.section+"')) and school_id='"+req.query.schoolid+"' and "+
 "academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+}
+else
+{
+var qur="select * from md_grade_subject_count where no_of_subjects=(( "+
+"select count(distinct(subject_id)) from tr_term_overallfa_assesment_marks where "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+"grade='"+req.query.grade+"' and section='"+req.query.section+"')/"+
+"(select count(distinct(term_name)) from tr_term_overallfa_assesment_marks where "+
+"school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+"grade='"+req.query.grade+"' and section='"+req.query.section+"')) and school_id='"+req.query.schoolid+"' and "+
+"academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+}
 console.log('.........................score card-----------------------------------');
 console.log(qur);
 
@@ -1596,7 +1696,7 @@ app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
 app.post('/fetchstudentlifeskill',  urlencodedParser,function (req,res)
 {  
   var type=req.query.termtype;
- var qur= "SELECT sub_category,category_grade FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studid+"'and category='"+req.query.subcategory+"' order by order_seq";
+ var qur= "SELECT sub_category,mark FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and term_name='"+req.query.termname+"' and academic_year='"+req.query.academicyear+"' and student_id='"+req.query.studid+"'and category='"+req.query.subcategory+"' order by order_seq";
   console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -1622,8 +1722,8 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={id:req.query.studid};
-  var qur="select s.id,p.student_id,s.student_name,p.parent_name,p.email,p.mobile,p.address1,p.alternate_mail "+
-  "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"'";
+  var qur="select s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.mother_name,p.email,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode,p.alternate_mail "+
+  "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"' and p.school_id='"+req.query.schoolid+"'";
 
   console.log(qur);
   connection.query(qur,
@@ -1675,12 +1775,18 @@ app.post('/fetchsubjectname-service',  urlencodedParser,function (req,res)
 app.post('/fetchmark-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
-  var studid={student_id:req.query.studid};  
-  connection.query("SELECT * FROM tr_term_assesment_overall_marks WHERE ? AND ? order by subject_id",[studid,schoolid],
+  var studid={student_id:req.query.studid}; 
+  var qur="SELECT * FROM tr_term_overallfa_assesment_marks WHERE school_id='"+req.query.schoolid+"' AND student_id='"+req.query.studid+"' order by subject_id"; 
+  console.log('----------------------fetch mark------------------------');
+  console.log(qur);
+  connection.query(qur,
     function(err, rows)
     {
     if(!err)
     {       
+      global.fetchmark=rows;
+      // console.log('---------------------------');
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -2021,17 +2127,31 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
   var academicyear={academic_year:req.query.academicyear}; 
-  var qur="select * from tr_term_attendance ta join tr_term_health th on(ta.student_id=th.student_id)"+
+  var qur="select * from tr_term_attendance ta join tr_term_health_copy th on(ta.student_id=th.student_id)"+
   " where ta.student_id='"+req.query.studid+"' "+
   "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"'";
-  // console.log(qur);
-  connection.query(qur,
-    function(err, rows)
+
+
+  var qur1="select * from tr_term_attendance ta join tr_term_health th on(ta.student_id=th.student_id)"+
+  " where ta.student_id='"+req.query.studid+"' "+
+  "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"'";
+  
+  connection.query(qur,function(err, rows)
     {
+      console.log(qur);
     if(!err)
     {  
+      if(rows.length>0){
       global.healthattendanceinfo=rows;     
       res.status(200).json({'returnval': rows});
+      }
+      else{
+        console.log(qur1);
+        connection.query(qur1,function(err, rows){
+          global.healthattendanceinfo=rows;     
+          res.status(200).json({'returnval': rows});
+        });
+      }
 
     }
     else
@@ -2055,6 +2175,7 @@ app.post('/fetchcoscholasticmetrics-service',  urlencodedParser,function (req,re
     {
     if(!err)
     {       
+      global.coscholasticmark=rows;
       res.status(200).json({'returnval': rows});
     }
     else
@@ -2089,18 +2210,66 @@ app.post('/nameforonetofourreport-service',  urlencodedParser,function (req,res)
 
 //fetchcoscholasticinfo
 app.post('/fetchcoscholasticinfo-service',  urlencodedParser,function (req,res)
+{  
+
+  var schoolid={school_id:req.query.schoolid};
+  var studid={student_id:req.query.studid}; 
+  var academicyear={academic_year:req.query.academicyear};  
+  var qur="SELECT * FROM tr_coscholastic_assesment_marks am join "+
+  "md_grade_coscholastic_descriptor gd on(am.sub_category=gd.category) WHERE school_id='"+req.query.schoolid+"' AND student_id='"+req.query.studid+"' and am.category_grade=gd.grade and "+
+  "am.subject_id=gd.subject_name";
+  console.log('.........................Score card....................................');
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      global.scholasticinfo=rows;
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+  });
+
+//   var schoolid={school_id:req.query.schoolid};
+//   var studid={student_id:req.query.studid};  
+//   // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
+//   var qur="SELECT subject_id,sub_category,mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'";
+//   // console.log(qur);
+//   connection.query(qur,
+//     function(err, rows)
+//     {
+//     if(!err)
+//     {       
+//        global.coscholasticinfo=rows;
+//       res.status(200).json({'returnval': rows});
+//     }
+//     else
+//     {
+//       console.log(err);
+//       res.status(200).json({'returnval': 'fail'});
+//     }  
+
+// });
+});
+
+app.post('/fetchcoscholasticsubcategory-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
   // var qur="SELECT subject_id,round((sum(mark)/count(subject_id))/10,1) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_name='"+req.query.studname+"' group by subject_id ";
-  var qur="SELECT subject_id,sub_category,round(mark/10) as mark FROM tr_coscholastic_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' group by subject_id,sub_category";
+  var qur="SELECT * FROM tr_coscholastic_sub_category_assesment_marks where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'";
   // console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
     if(!err)
     {       
-
+global.coscholasticsubmark=rows;
       res.status(200).json({'returnval': rows});
     }
     else
@@ -2166,7 +2335,7 @@ app.post('/fetchstudentreport-service',  urlencodedParser,function (req, res)
 
 app.post('/fetchfareport-service',  urlencodedParser,function (req, res)
 {
-  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"' and assesment_id='"+req.query.assesment+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"' order by sub_cat_sequence";
+  var qur="select * from tr_term_fa_assesment_marks where  grade='"+req.query.gradename+"' and section ='"+req.query.section+"' and school_id='"+req.query.schoolid+"' and subject_id='"+req.query.subject+"'  and term_name='"+req.query.termname+"' and category='"+req.query.assesmenttype+"' order by sub_cat_sequence";
   console.log('----------------------------------------fetchreport----------');
   console.log(qur);
   connection.query(qur,
@@ -2258,7 +2427,7 @@ app.post('/fetchworkingdays-service',  urlencodedParser,function (req, res)
   var academicyear={academic_year:req.query.academicyear};
   var schoolid={school_id:req.query.schoolid};
   var termname={term_name:req.query.termname};
-  var type={type:req.query.type};
+  var type={type:req.query.grade};
   // console.log(req.query.academicyear+" "+req.query.schoolid+" "+req.query.termname+" "+req.query.type);
   connection.query(qur,[academicyear,schoolid,termname,type],
     function(err, rows)
@@ -2329,7 +2498,12 @@ console.log(qur);
 app.post('/updatefaimportmarkcheck-service' ,  urlencodedParser,function (req, res)
 {
 var qur;
-if(req.query.subject=='Hindi'||req.query.subject=='Kannada'){
+console.log(req.query.assesmentid+'  '+req.query.subject);
+if(req.query.assesmentid=="FA1"||req.query.assesmentid=="FA2"||req.query.assesmentid=="SA1"){
+
+if(req.query.subject=='Hindi'||req.query.subject=='Kannada'||req.query.subject=='French'||req.query.subject=='sanskrit'||req.query.subject=='III Language Kannada'||req.query.subject=='III Language Hindi'||req.query.subject=='II Language French'){
+
+  console.log("Language");
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
 "(select count(distinct(student_id)) from tr_term_fa_assesment_marks "+
 "where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' "+
@@ -2340,6 +2514,7 @@ qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result
 "(SELECT subject_id from md_subject where subject_name='"+req.query.subject+"') and school_id='"+req.query.schoolid+"')) AS count2)  AS counts";
 }
 else{
+  console.log("not Language");
 qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
 "(select count(distinct(student_id)) from tr_term_fa_assesment_marks "+
 "where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' "+
@@ -2347,6 +2522,29 @@ qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result
 "(select count(*) from md_student where school_id='"+req.query.schoolid+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id "+
 "from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
 "section_id from md_section where section_name='"+req.query.sectionname+"' and school_id='"+req.query.schoolid+"'))) AS count2)  AS counts";
+}
+}
+else
+{
+if(req.query.subject=='Hindi'||req.query.subject=='Kannada'){
+qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
+"(select count(distinct(student_id)) from tr_coscholastic_assesment_marks "+
+"where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' "+
+"and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"' and category='"+req.query.assesmentid+"') AS count1, "+
+"(select count(*) from tr_student_to_subject where school_id='"+req.query.schoolid+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.sectionname+"') and subject_id="+
+"(SELECT subject_id from md_subject where subject_name='"+req.query.subject+"') and school_id='"+req.query.schoolid+"')) AS count2)  AS counts";
+}
+else{
+qur="SELECT CASE WHEN count1 = count2 THEN 'match' ELSE 'mismatch' END as result FROM(SELECT "+
+"(select count(distinct(student_id)) from tr_coscholastic_assesment_marks "+
+"where school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' "+
+"and subject_id='"+req.query.subject+"' and term_name='"+req.query.termname+"') AS count1, "+
+"(select count(*) from md_student where school_id='"+req.query.schoolid+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id "+
+"from md_grade where grade_name='"+req.query.gradename+"') and section_id=(select "+
+"section_id from md_section where section_name='"+req.query.sectionname+"' and school_id='"+req.query.schoolid+"'))) AS count2)  AS counts";
+} 
 }
 console.log('----------------------------------------------------------');
 console.log(qur);
@@ -2631,16 +2829,56 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
 {
 
 //var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
-var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
+var checkqur="select grade_id from mp_teacher_grade where "+ 
+"id='"+req.query.loggedid+"' and role_id='co-ordinator'";
+
+var qur1="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
+"and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
+"id='"+req.query.loggedid+"' and role_id='co-ordinator'))";
+
+var qur2="select * from tr_term_fa_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' "+
 "and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
 "id='"+req.query.loggedid+"' and role_id='co-ordinator'))";
 
 console.log('............................................');
-console.log(qur);
+console.log(checkqur);
 console.log('............................................');
-
-  connection.query(qur,
-    function(err, rows)
+var resp={
+  flag:""
+};
+connection.query(checkqur,function(err, rows){
+  if(rows.length>0){
+    for(var i=0;i<rows.length;i++){
+      if(rows[i].grade_id=='g1'||rows[i].grade_id=='g2'||rows[i].grade_id=='g3'||rows[i].grade_id=='g4')
+        resp.flag=1;
+      else
+        resp.flag=0;
+    }
+  }
+  console.log('response flag...........'+resp.flag);
+  if(resp.flag==1){
+  connection.query(qur1,function(err, rows)
+    {
+      console.log(qur1);
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+  }
+  if(resp.flag==0){
+    console.log(qur2);
+  connection.query(qur2,function(err, rows)
     {
     if(!err)
     {
@@ -2657,6 +2895,8 @@ console.log('............................................');
     else
       console.log(err);
   });
+  }
+});
 });
 
 
@@ -2744,21 +2984,59 @@ app.post('/updatemark-service' ,  urlencodedParser,function (req, res)
 app.post('/fetchtermmarkforreport-service' ,  urlencodedParser,function (req, res)
 {
   
-    // var qur="select term_name,assesment_id,student_id,(SELECT grade FROM MD_GRADE_RATING WHERE "+
-    // "lower_limit<=round(avg(rtotal),2) and higher_limit>=round(avg(rtotal),2)) as term_grade,"+
-    // "subject_id from tr_term_assesment_overall_marks where subject_id='EVS' and school_id='SCH001' "+ 
-    // "and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
-    // "group by subject_id,term_name,assesment_id,student_id ";
+    var qur="select term_name,assesment_id,student_id,(SELECT grade FROM md_grade_rating WHERE "+
+    "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as term_grade,"+
+    "subject_id from tr_term_assesment_overall_marks where subject_id='"+req.query.subject+"' and school_id='"+req.query.schoolid+"' "+ 
+    "and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' "+
+    "group by subject_id,term_name,assesment_id,student_id order by student_id";
 
-    var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM md_grade_rating WHERE "+
-"lower_limit<=round(avg(ta.rtotal),1) and higher_limit>=round(avg(ta.rtotal),1)) as term_grade,"+
-"ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
-"join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
-"where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
-"and ta.grade='"+req.query.grade+"' and ta.section='"+req.query.section+"' "+
-"group by ta.subject_id,ta.term_name,ta.assesment_id,ta.student_id ";
+//     var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM md_grade_rating WHERE "+
+// "lower_limit<=round(avg(ta.rtotal),1) and higher_limit>=round(avg(ta.rtotal),1)) as term_grade,"+
+// "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
+// "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
+// "where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
+// "and ta.grade='"+req.query.grade+"' and ta.section='"+req.query.section+"' "+
+// "group by ta.subject_id,ta.term_name,ta.assesment_id,ta.student_id ";
 
-// console.log(qur);
+console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log('yessssssssssssssssssssss');
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      // console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+app.post('/fetchbeginnermark-service' ,  urlencodedParser,function (req, res)
+{
+  
+    var qur="select distinct(student_id),grade,subject_id from tr_beginner_assesment_marks where subject_id='"+req.query.subject+"' and school_id='"+req.query.schoolid+"' "+ 
+    "and academic_year='"+req.query.academicyear+"' and class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"') and section_id='"+req.query.section+"') "+
+    " order by student_id";
+
+//     var qur="select ta.term_name,ta.assesment_id,ta.student_id,(SELECT grade FROM md_grade_rating WHERE "+
+// "lower_limit<=round(avg(ta.rtotal),1) and higher_limit>=round(avg(ta.rtotal),1)) as term_grade,"+
+// "ta.subject_id,ba.grade as beginner_grade from tr_term_assesment_overall_marks ta "+
+// "join tr_beginner_assesment_marks ba on(ta.subject_id=ba.subject_id) "+
+// "where ta.subject_id='"+req.query.subject+"' and ta.school_id='"+req.query.schoolid+"' and ta.academic_year='"+req.query.academicyear+"' "+
+// "and ta.grade='"+req.query.grade+"' and ta.section='"+req.query.section+"' "+
+// "group by ta.subject_id,ta.term_name,ta.assesment_id,ta.student_id ";
+
+console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2872,18 +3150,22 @@ app.post('/teacherid-service' ,  urlencodedParser,function (req, res)
   var qur;
  var schol={school_id:req.query.schoolid};
  var teacherid=req.query.id;
- if(req.query.roleid=="co-ordinator")
+ var role={role_id:req.query.roleid};
+ console.log(req.query.roleid);
+ if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
-  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and school_id='"+req.query.schoolid+"' and role_id='subject-teacher' and id in (select id from mp_teacher_grade where grade_id in (select grade_id from mp_teacher_grade where id='"+req.query.id+"' and role_id='"+req.query.roleid+"'))";
+
  }
- else  if(req.query.roleid=="headmistress")
+ else  if(req.query.roleid=="headofedn")
  {
-  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag>='0') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag='1') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
  }
-  else  if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
+  else  if(req.query.roleid=="principal")
  {
-  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag>='1') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
+  qur="select DISTINCT id,name,password from md_employee where id!='"+req.query.id+"' and id in(select name from tr_teacher_observation_flag where flag='0') and school_id='"+req.query.schoolid+"'  and role_id='subject-teacher'";
  }
+ console.log(qur);
 connection.query(qur,
     function(err, rows)
     {
@@ -2912,14 +3194,17 @@ var observersid2={name:req.query.id2};
 console.log(observersid);
 console.log(observersid1);
 console.log(observersid2);
-connection.query("select name,role_id from md_employee where (id='"+req.query.id+"'or id='"+req.query.id1+"' or id='"+req.query.id2+"')and role_id not in('subject-teacher')",
+var qur="select name,role_id from md_employee where (id='"+req.query.id+"' or id='"+req.query.id1+"' or id='"+req.query.id2+"') and role_id not in('subject-teacher')";
+console.log('.................................................');
+console.log(qur);
+connection.query(qur,
     function(err, rows)
     {
     if(!err)
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -2944,7 +3229,7 @@ connection.query("select * from md_observer_descriptor",
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -2963,23 +3248,23 @@ connection.query("select * from md_observer_descriptor",
 
 app.post('/teachergrade-service' ,  urlencodedParser,function (req, res)
 { 
-  var qur;
+ var qur;
 
 var schol={school_id:req.query.schoolid};
  var teacherid={id:req.query.id};
- if(req.query.roleid=="co-ordinator")
+ if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
   qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
 
 }
-else  if(req.query.roleid=="headmistress")
+else  if(req.query.roleid=="headofedn")
  {
-  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag>='0' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
+  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag='1' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
 
 }
-else  if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
+else  if(req.query.roleid=="principal")
  {
-  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag>='1' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
+  qur="select  distinct grade_id as gid,(select grade_name from md_grade where grade_id=gid) as gradename from mp_teacher_grade where grade_id in(select grade from tr_teacher_observation_flag where flag='0' and name='"+req.query.id+"') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and role_id='subject-teacher'"
 
 }
 connection.query(qur,
@@ -2989,7 +3274,7 @@ connection.query(qur,
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3006,22 +3291,22 @@ connection.query(qur,
 
 app.post('/teachersection-service' ,  urlencodedParser,function (req, res)
 { 
-  var qur;
+ var qur;
 
 var schol={school_id:req.query.schoolid};
  var teacherid={id:req.query.id};
  var gradeid={grade_id:req.query.gradeid};
-  if(req.query.roleid=="co-ordinator")
+  if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
   qur="select  distinct section_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="headmistress")
+else if(req.query.roleid=="headofedn")
  {
-  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag>='0') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
+  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag='1') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
+else if(req.query.roleid=="principal")
  {
-  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag>='1') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
+  qur="select  distinct section_id from mp_teacher_grade where section_id in (select section from tr_teacher_observation_flag where name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and flag='0') and school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and role_id='subject-teacher'";
 }
 connection.query(qur,
     function(err, rows)
@@ -3030,7 +3315,7 @@ connection.query(qur,
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3049,22 +3334,22 @@ connection.query(qur,
 
 app.post('/teachersubject-service' ,  urlencodedParser,function (req, res)
 { 
-  var qur;
+    var qur;
 var schol={school_id:req.query.schoolid};
  var teacherid={id:req.query.id};
  var gradeid={grade_id:req.query.gradeid};
  var sectionid={section_id:req.query.sectionid};
- if(req.query.roleid=="co-ordinator")
+ if(req.query.roleid=="co-ordinator"||req.query.roleid=="headmistress")
  {
-qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+qur= "select  DISTINCT subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="headmistress")
+else if(req.query.roleid=="headofedn")
  {
-qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in (select subject from tr_teacher_observation_flag where flag>='0' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+qur= "select DISTINCT subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in (select subject from tr_teacher_observation_flag where flag='1' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
 }
-else if(req.query.roleid=="principal"||req.query.roleid=='headofedn')
+else if(req.query.roleid=="principal")
  {
-qur= "select subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in(select subject from tr_teacher_observation_flag where flag>='1' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
+qur= "select DISTINCT subject_id as sid,(select subject_name from md_subject where subject_id= sid) as subjectname from mp_teacher_grade where  subject_id in(select subject from tr_teacher_observation_flag where flag='0' and name='"+req.query.id+"' and grade='"+req.query.gradeid+"' and section='"+req.query.sectionid+"') and  school_id='"+req.query.schoolid+"' and id='"+req.query.id+"' and grade_id='"+req.query.gradeid+"' and section_id='"+req.query.sectionid+"' and role_id='subject-teacher'";
 }
 connection.query(qur,
     function(err, rows)
@@ -3073,7 +3358,7 @@ connection.query(qur,
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3103,7 +3388,7 @@ connection.query("select * from tr_teacher_observation_flag where ? and ? and ? 
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3129,7 +3414,8 @@ app.post('/observerscore-service',  urlencodedParser,function (req, res)
          role:req.query.roleid,
          grade:req.query.grade,
          section:req.query.section,
-         subject:req.query.subject                      
+         subject:req.query.subject,   
+                              
   }
   connection.query("INSERT INTO tr_teacher_observation_mark set ?",[response],
     function(err, rows)
@@ -3147,6 +3433,74 @@ app.post('/observerscore-service',  urlencodedParser,function (req, res)
   });
 });
 
+app.post('/fnstn-service' ,urlencodedParser,function (req, res)
+{ 
+ var teacherid={tracher_id:req.query.staffid};
+ var gradeid={grade:req.query.grid};
+ var sectionid={section:req.query.secid};
+ var subjectid={subject:req.query.sid};
+  // console.log(teacherid);
+  // console.log(gradeid);
+  // console.log(sectionid);
+  // console.log(subjectid);
+
+
+connection.query("select * from tr_teacher_observation_strength where ? and ? and ? and ?",[teacherid,gradeid,sectionid,subjectid],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      // console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+
+
+
+app.post('/fnstrength-service',  urlencodedParser,function (req, res){
+
+
+  var response={  
+     role:req.query.rid,
+     observer_id:req.query.obid,
+     tracher_id:req.query.staffid,
+     grade:req.query.grid,
+     section:req.query.secid,
+     subject:req.query.sid,
+     Strength:req.query.Strength, 
+     Areas:req.query.Areas,   
+     Innovation:req.query.Innovation,
+     comment:req.query.comment,              
+                   
+  }
+  console.log(response);
+  connection.query("INSERT INTO tr_teacher_observation_strength set ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
 
 app.post('/observerinsertflag-service',  urlencodedParser,function (req, res)
 {  
@@ -3177,8 +3531,7 @@ app.post('/observerinsertflag-service',  urlencodedParser,function (req, res)
 
 app.post('/observerupdateflag-service',  urlencodedParser,function (req, res)
 {  
-  
-         
+       
        var schol= {school_id:req.query.schoolid};
        var name={name:req.query.id};
        var grade={grade:req.query.gradeid};
@@ -3216,7 +3569,7 @@ connection.query("select * from tr_teacher_observation_mark where ? and ? and ? 
     {
     if(rows.length>0)
     {
-      console.log(rows);
+      // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3780,7 +4133,407 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     });
 });
 
+app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
+{
+        var adterm1="";
+        var adterm2="";
+        var adterm3="";
+        var wdterm1="";
+        var wdterm2="";
+        var wdterm3="";
+        var pterm1="";
+        var pterm2="";
+        var pterm3="";
+        var t1height="";
+        var t2height="";
+        var t3height="";
+        var t1weight="";
+        var t2weight="";
+        var t3weight="";
+        var generic="";
+        var specific="";
+        var subjectarr=[];
+        var finalarr=[];
+        var marks=[];
+        var submarks=[];
+        var co_lower=[];
+        var co_higher=[];
+        var co_grade=[];
+        var returnval1=global.coscholasticgrade; 
+              
+          for(var i=0;i<returnval1.length;i++){
+          co_lower.push(returnval1[i].lower_limit);
+          co_higher.push(returnval1[i].higher_limit);
+          co_grade.push(returnval1[i].grade);
+        }
 
+        var img1="./app/images/"+req.query.loggedid+req.query.schoolid+".jpg";
+        var img2="./app/images/principal"+req.query.schoolid+".jpg";
+        console.log('asa');
+
+        /*console.log('.........................healthattendanceinfo....................................');
+        console.log(global.healthattendanceinfo.length);
+        console.log('.................................................................................');
+
+        if(global.healthattendanceinfo.length==1||global.healthattendanceinfo.length==2||global.healthattendanceinfo.length==3){
+        adterm1=global.healthattendanceinfo[0].attendance;
+        wdterm1=global.healthattendanceinfo[0].working_days;
+        pterm1=parseFloat((global.healthattendanceinfo[0].attendance/global.healthattendanceinfo[0].working_days)*100).toFixed(2)+"%";
+        t1height=global.healthattendanceinfo[0].height+"cm";
+        t1weight=global.healthattendanceinfo[0].weight+"kg"; 
+        generic=global.healthattendanceinfo[0].generic; 
+        specific=global.healthattendanceinfo[0].speccomment;        
+        }
+        if(global.healthattendanceinfo.length==2){
+        adterm2=global.healthattendanceinfo[1].attendance;
+        wdterm2=global.healthattendanceinfo[1].working_days;
+        pterm2=parseFloat((global.healthattendanceinfo[1].attendance/global.healthattendanceinfo[1].working_days)*100).toFixed(2)+"%";
+        t2height=global.healthattendanceinfo[1].height+"cm";
+        t2weight=global.healthattendanceinfo[1].weight+"kg";
+        generic=global.healthattendanceinfo[1].generic; 
+        specific=global.healthattendanceinfo[1].speccomment; 
+        }*/
+       subjectarr=global.subjectinfo;
+      var arr=global.fetchmark;
+        for(var i=0;i<subjectarr.length;i++){
+          var obj={"subject_name":"","FA1":"","FA2":"","SA1":"","tot1":"","FA3":"","FA4":"","SA2":"","tot2":"","FA":"","SA":"","grade":"","point":""};
+          this.no=0;
+          var flag=0;
+          for(var j=0;j<arr.length;j++){
+            this.no=parseInt(this.no)+1;
+            if(subjectarr[i].subject_name==arr[j].subject_id){
+              flag=1;
+              obj.subject_name=arr[j].subject_id;
+              if(arr[j].category=='FA1'){                
+                obj.FA1=arr[j].cat_grade;                
+                this.m1=arr[j].total;
+              }
+              else if(arr[j].category=='FA2'){                
+                obj.FA2=arr[j].cat_grade;
+                this.m2=arr[j].total;
+              }
+              else if(arr[j].category=='SA1'){                
+                obj.SA1=arr[j].cat_grade;
+                this.sm1=arr[j].total;
+              }
+              else if(arr[j].category=='FA3'){                
+                obj.FA3=arr[j].cat_grade;
+                this.m3=arr[j].total;
+              }
+              else if(arr[j].category=='FA4'){                
+                obj.FA4=arr[j].cat_grade;
+                this.m4=arr[j].total;
+              }              
+              else if(arr[j].category=='SA2'){                
+                obj.SA2=arr[j].cat_grade;
+                this.sm2=arr[j].total;
+              }
+            
+              
+          }
+        }
+        console.log('come');
+          if(flag==1){
+            var t1=parseFloat(((parseFloat(this.m1)+parseFloat(this.m2)+(3*parseFloat(this.sm1)))*2)/10).toFixed(1);
+              if(t1>=9.1&&t1<=10)
+                obj.tot1='A1';
+              if(t1>=8.1&&t1<=9)
+                obj.tot1='A2';
+              if(t1>=7.1&&t1<=8)
+                obj.tot1='B1';
+              if(t1>=6.1&&t1<=7)
+                obj.tot1='B2';
+              if(t1>=5.1&&t1<=6)
+                obj.tot1='C1';
+              if(t1>=4.1&&t1<=5)
+                obj.tot1='C2';
+              if(t1>=3.3&&t1<=4)
+                obj.tot1='D';
+              if(t1>=2.1&&t1<=3.2)
+                obj.tot1='E1';
+              if(t1>=0&&t1<=2)
+                obj.tot1='E2';
+              var fatot=parseFloat((parseFloat(this.m1)+parseFloat(this.m2))/2).toFixed(1);
+              if(fatot>=9.1&&fatot<=10)
+                obj.FA='A1';
+              if(fatot>=8.1&&fatot<=9)
+                obj.FA='A2';
+              if(fatot>=7.1&&fatot<=8)
+                obj.FA='B1';
+              if(fatot>=6.1&&fatot<=7)
+                obj.FA='B2';
+              if(fatot>=5.1&&fatot<=6)
+                obj.FA='C1';
+              if(fatot>=4.1&&fatot<=5)
+                obj.FA='C2';
+              if(fatot>=3.3&&fatot<=4)
+                obj.FA='D';
+              if(fatot>=2.1&&fatot<=3.2)
+                obj.FA='E1';
+              if(fatot>=0&&fatot<=2)
+                obj.FA='E2';
+              var satot=parseFloat(this.sm1).toFixed(1);
+              if(satot>=9.1&&satot<=10)
+                obj.SA='A1';
+              if(satot>=8.1&&satot<=9)
+                obj.SA='A2';
+              if(satot>=7.1&&satot<=8)
+                obj.SA='B1';
+              if(satot>=6.1&&satot<=7)
+                obj.SA='B2';
+              if(satot>=5.1&&satot<=6)
+                obj.SA='C1';
+              if(satot>=4.1&&satot<=5)
+                obj.SA='C2';
+              if(satot>=3.3&&satot<=4)
+                obj.SA='D';
+              if(satot>=2.1&&satot<=3.2)
+                obj.SA='E1';
+              if(satot>=0&&satot<=2)
+                obj.SA='E2';
+              var grand=parseFloat(((parseFloat(this.m1)+parseFloat(this.m2)+(3*parseFloat(this.sm1)))*2)/10).toFixed(1);
+              if(grand>=9.1&&grand<=10){
+                obj.grade='A1';
+                obj.point='10.0';
+              }
+              if(grand>=8.1&&grand<=9){
+                obj.grade='A2';
+                obj.point='9.0';
+              }
+              if(grand>=7.1&&grand<=8){
+                obj.grade='B1';
+                obj.point='8.0';
+              }
+              if(grand>=6.1&&grand<=7){
+                obj.grade='B2';
+                obj.point='7.0';
+              }
+              if(grand>=5.1&&grand<=6){
+                obj.grade='C1';
+                obj.point='6.0';
+              }
+              if(grand>=4.1&&grand<=5){
+                obj.grade='C2';
+                obj.point='5.0';
+              }
+              if(grand>=3.3&&grand<=4){
+                obj.grade='D';
+                obj.point='4.0';
+              }
+              if(grand>=2.1&&grand<=3.2){
+                obj.grade='E1';
+                obj.point='3.0';
+              }
+              if(grand>=0&&grand<=2){
+                obj.grade='E2'; 
+                obj.point='2.0';                         
+              }
+              finalarr.push(obj); 
+            }
+            
+          
+                                       
+        }
+       
+
+
+       var lsarr=[];
+        var wkarr=[];
+        var vparr=[];
+        var avarr=[];
+        var ccarr=[];
+        var hparr=[];
+        var k;
+        marks=global.coscholasticinfo;
+       submarks=global.scholasticinfo;
+
+         for(var i=0;i<submarks.length;i++){
+          var obj={"catcheck":"","subject":"","category":"","grade":"","t1grade":"","t2grade":"","t3grade":"","comment":""};          
+          if(submarks[i].subject_name=="Life Skills"){
+            
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            lsarr.push(obj);
+          }
+           if(submarks[i].subject_name=="Work Education"){
+           
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            wkarr.push(obj);
+          }
+           if(submarks[i].subject_name=="Visual & Performing Arts"){
+            // alert('yes');
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
+            // obj.catcheck=submarks[i].category;
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            vparr.push(obj);
+          }
+           if(submarks[i].subject_name=="Attitudes And values"){
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
+            
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            avarr.push(obj);
+          }
+           if(submarks[i].subject_name=="Co-Curricular Activities"){
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            ccarr.push(obj);
+          }
+           if(submarks[i].subject_name=="Health and Physical Education"){
+            // alert('yes');
+            obj.subject=submarks[i].subject_name+"@"+req.query.termname;
+            // obj.catcheck=submarks[i].category;
+            obj.category=submarks[i].category;
+            obj.comment=submarks[i].description;
+            obj.grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term1")
+            obj.t1grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term2")
+            obj.t2grade=submarks[i].category_grade;
+            if(submarks[i].term_name=="term3")
+            obj.t3grade=submarks[i].category_grade;    
+            hparr.push(obj);
+          }
+        }
+       
+    console.log('....................schoolname.........................');
+    console.log(req.query.schoolname+"   "+req.query.academicyear); 
+    console.log('.......................................................');
+  var header="<div class='bbox' style='position: relative;width: 900px;height: 1210px;border: 20px solid green;top:90px;left: 100px;' id='fivescorecard'><div class='relative' style='position: relative;width: 500px;height: 200px;border: 3px solid black;top:60px;left: 200px'><table border='0' class='scoretbl' style='position:relative;width: 500px;height: 200px;text-align: left;'>"
+      header+="<tr><th colspan='3'><h2><center>"+req.query.schoolname+"</center></h2></th></tr>"
+      header+="<tr><th colspan='3'><center>"+req.query.schooladdress+"</center></th></tr>"
+      header+="<tr><th>Affiliation No:</th><th colspan='2'>&nbsp;"+req.query.affno+"</th></tr>" 
+      header+="<tr><th> Email Id:</th><th colspan='2'>"+req.query.email+"</th></tr>"
+       header+="<tr><th> Website:</th><th>"+req.query.website+"</th><th>Phone No :"+req.query.phno+"</th></tr></table></div>";
+     var studentprofile="<div class='absolute' style='position: absolute;top: 50px;width: 110px; height: 100px;left: 50px;'><img src='../../images/zeesouth.png' height='100px' width='90px'/></div>"
+     studentprofile+="<div class='pr' style='position: relative;width: 700px;height: 170px;left: 100px;top:100px;'><center><h2>PERFORMANCE PROFILE</h2>Class:"+req.query.grade+" (Session: "+req.query.academicyear+")<h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>"
+     studentprofile+="<h4>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4> </center></div>"
+     studentprofile+="<div class='stupr' style='position: relative;width: 700px;top:150px;left: 50px;'><h3>Student Profile</h3></div> <table class='tbl1' style=' position: relative;text-align: left;top:80px;left: 50px' cellspacing='10'>"
+studentprofile+="<tr ><th>Admission No.</th><th>:</th><th>"+global.studentinfo[0].student_id+"</th></tr><tr><td>(allotted by the school)</td></tr>"
+studentprofile+="<tr ><th>Name </th><th>:</th><th>"+global.studentinfo[0].student_name+"</th></tr><tr><th>Date of Birth </th> <th>:</th><th>"+global.studentinfo[0].dob+"</th></tr>"
+studentprofile+="<tr ><th>Mother's Name</th><th>:</th><th>"+global.studentinfo[0].mother_name+"</th></tr><tr > <th>Father's Name </th><th>:</th><th>"+global.studentinfo[0].parent_name+"</th></tr>"
+studentprofile+="<tr rowspan='2'><th>Residential Address </th><th>:</th><th>"+global.studentinfo[0].address1+" "+global.studentinfo[0].address2+" "+global.studentinfo[0].address3+" "+global.studentinfo[0].city+" "+global.studentinfo[0].pincode+"</th></tr><tr><th>Telephone No </th><th>:</th><th>"+global.studentinfo[0].mobile+"</th></tr></table>"  
+  studentprofile+="<table class='attable' style='position: relative;text-align: left;top:150px;width: 700px;left: 50px;'><tr height='25px'><th width='250px'>Attendance:</th><th colspan='3'>Term1</th><th colspan='3'>Term2</th></tr>"
+  studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+"global.healthattendanceinfo[0].attendance"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].attendance"+"</th></tr>"
+  studentprofile+="<tr height='25px'><th> Total Working Days</th><th colspan='7'>"+"global.healthattendanceinfo[0].working_days"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].working_days"+"</th></tr></table>"
+ studentprofile+="<br><br><table class='health' style=' position: relative;text-align: left;top:150px;width: 750px;left: 50px;border: 1px solid black;'><tr height='20px'><th colspan='3'> Health Status</th><th colspan='3'></th><th colspan='3'></th></tr>"
+  studentprofile+="<tr></tr><tr height='22px'><th colspan='3'>Height </th><th>"+"global.healthattendanceinfo[0].height"+"</th><th colspan='7'>Weight </th><th>"+"global.healthattendanceinfo[0].width"+"</th><th colspan='3'></th></tr>"
+  studentprofile+="<tr height='25px'><th colspan='3'>Blood Group </th><th>"+"global.healthattendanceinfo[0].blood_group"+"</th><th colspan='7'>Vision(L) </th><th>"+"global.healthattendanceinfo[0].left_vision"+"</th><th colspan='3'>(R) </th><th>"+"global.healthattendanceinfo[0].right_vision"+"</th></tr>"
+studentprofile+="<tr height='25px'><th colspan='3'>Dental Hygiene </th><th>"+"global.healthattendanceinfo[0].dental"+"</th><td colspan='7'></td><td colspan='3'></td></tr></table><br><br><br><br><br><br><br><br><br>";
+
+ var signatures="<table  class='signature' style='margin-left: 20%;'><tr><th><img id='img1' width='100px;height:30px;''></th><th></th><th></th><th><img id='img2' width='130px;height:40px;'></th><th></th><th></th><th></th></tr>"
+    signatures+="<tr><th>---------------------------------</th><th></th><th></th><th>---------------------------------</th><th></th><th></th>"
+   signatures+=" <th>----------------------------------</th><th></th><th></th></tr>"
+    signatures+="<tr><th>Class Teacher</th><th></th><th></th><th>Principal</th><th></th><th></th><th>Parent</th><th></th><th></th></tr></table><br><br><br><br></div>";
+
+var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px; height: auto; border: 20px solid green; top:90px; left: 100px'><table border='1'><tr><th colspan='16'> <h2>PART1-ACADEMIC PERFOMANCE: Scholastic Areas</h2><br> "   
+  scholasticvalue+= "</th></tr><tr><th colspan='4'>Subject Code and Name</th><th colspan='4'>Term1(grade)</th><th colspan='4'>Term2(grade)</th><th colspan='4'>Overall Term1+Term2</th></tr><tr><th colspan='4'></th><th>FA1</th><th>FA2</th><th>SA1</th><th>TOT1</th><th>FA3</th><th>FA4</th><th>SA2</th><th>TOT2</th><th>FA</th><th>SA</th><th>Overallgrade</th><th>GradePoint(Gp)</th></tr>"
+  for(var i=0;i<finalarr.length;i++)
+  {
+ scholasticvalue+= " <tr><td colspan='4'>"+finalarr[i].subject_name+"</td>"
+   scholasticvalue+=  "<td>"+finalarr[i].FA1+"</td><td>"+finalarr[i].FA2+"</td><td>"+finalarr[i].SA1+"</td><td>"+finalarr[i].tot1+"</td>"
+    scholasticvalue+= "<td>"+finalarr[i].FA3+"</td><td>"+finalarr[i].FA4+"</td><td>"+finalarr[i].SA2+"</td><td>"+finalarr[i].tot2+"</td>"
+    scholasticvalue+= "<td>"+finalarr[i].FA+"</td><td>"+finalarr[i].SA+"</td><td>"+finalarr[i].grade+"</td><td>"+finalarr[i].point+"</td></tr>"
+  }
+    scholasticvalue+="<tr><th colspan='16'>CumlativeGradePointAverage<br>"
+     scholasticvalue+="<p>the CGPAis the average of grade point obtained in all the subjects excluding additional 6th subject as per Scheme of studies An indicative eqivalence of grade point and percentage of marks can be completed as-subject wise indicative percentage of markes=9.5*of the subject overallindicative percentage of mark=9.5*CGPA</p></th></tr>"
+   scholasticvalue+="<tr><th colspan='16'><br><h2>part2- Co-Scholastic Areas</h2> </th></tr><tr><th colspan='16'>2(A) Life Skills</th></tr><tr><th colspan='8'>Life Skills</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
+    for(var i=0;i<lsarr.length;i++)
+  {
+   scholasticvalue+="<tr><th colspan='8' style='text-align: left;'>"+lsarr[i].category+"</th><th colspan='3' style='text-align: center;'>"+lsarr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+lsarr[i].comment+"</th></tr>"
+   }
+    scholasticvalue+=" <tr><th colspan='16'>2(B) Work Education</th></tr><tr><th colspan='8'>Work Education</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
+    for(var i=0;i<wkarr.length;i++)
+  {
+   scholasticvalue+=" <tr><th colspan='8' style='text-align: left;'>"+wkarr[i].category+"</th><th colspan='3' style='text-align: center;'>"+wkarr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+wkarr[i].comment+"</th></tr>"
+  }
+  scholasticvalue+="  <tr><th colspan='16'>2(C)Visual And Performing Art</th></tr><tr><th colspan='8'>Visual And Performing Art</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"   
+     for(var i=0;i<vparr.length;i++)
+  {
+  scholasticvalue+="  <tr><th colspan='8' style='text-align: left;'>"+vparr[i].category+"</th><th colspan='3' style='text-align: center;'>"+vparr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+vparr[i].comment+"</th></tr>"
+    }
+    
+   scholasticvalue+=" <tr><th colspan='16'>2(D) Attitudes And Values</th></tr><tr><th colspan='8'>Attitudes And Values</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
+    for(var i=0;i<avarr.length;i++)
+  {
+   scholasticvalue+=" <tr><th colspan='8' style='text-align: left;'>"+avarr[i].category+"</th><th colspan='3' style='text-align: center;'>"+avarr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+avarr[i].comment+"</th></tr>"
+    }
+    
+   scholasticvalue+=" <tr><th  colspan='16'><br><h2>Part-3:Co-Scholastic Activities</h2></th></tr><tr><th colspan='16'>3(A)Co-Curricular Activity</th></tr><tr><th colspan='8'>Co-Curricular Activity</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
+     for(var i=0;i<ccarr.length;i++)
+  {
+   scholasticvalue+=" <tr><th colspan='8' style='text-align: left;'>"+ccarr[i].category+"</th><th colspan='3' style='text-align: center;'>"+ccarr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+ccarr[i].comment+"</th></tr>"
+    }
+
+   scholasticvalue+=" <tr><th colspan='16'>3(B) Health & Physical Activities</th></tr><tr><th colspan='8'>Health & Physical Activities</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
+     for(var i=0;i<hparr.length;i++)
+  {
+  scholasticvalue+="<tr><th colspan='8' style='text-align: left;'>"+hparr[i].category+"</th><th colspan='3' style='text-align: center;'>"+hparr[i].grade+"</th><th colspan='5' style='text-align: left;'>"+hparr[i].comment+"</th></tr>"
+    }
+  scholasticvalue+="  <tr><th colspan='16'><h4>Result:Qualified/Eligiblefor Improvement of perfomance(EIOP)</h4></th> </tr><tr><th colspan='16'><h4>Self Awarness:</h4></th></tr><tr><th colspan='16'><br><h4>MyGoals:</h4></th></tr><tr><th colspan='16'><h4>MyStrengths:</h4></th></tr><tr><th colspan='16'><h4>MyInterest and Hobbies</h4></th></tr><tr><th colspan='16'><h4>ResposibilityDischarge/ExceptionalAchievements</h4></th></tr></table></div>";
+
+
+    console.log('pd done....');
+
+
+    var finalpdf=header+studentprofile+signatures+scholasticvalue;
+    console.log("....................................");
+    console.log(finalpdf);
+
+    htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
+    function (error, success) {
+       if (error) {
+            console.log('Oh noes! Errorz!');
+            console.log(error);
+            logfile.write('pdf write:'+error+"\n\n");
+            res.status(200).json({'returnval': 'error in conversion'}); 
+        } else {
+          logfile.write('pdf write:success\n\n');
+          console.log('Converted');
+          res.status(200).json({'returnval': 'converted'});     
+        }
+    });
+});
 app.post('/sendmail-service', urlencodedParser,function (req, res) {
   console.log(req.query.parentmail+"  "+req.query.secmail);
   var secmail=req.query.secmail;
@@ -3847,10 +4600,13 @@ app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req,
 
 app.post('/fetchhealthinfo-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select * from tr_term_health where school_id='"+req.query.schoolid+"' and "+
-    "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' "+
-    " and  student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
-    
+    // var qur="select * from tr_term_health where school_id='"+req.query.schoolid+"' and "+
+    // "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' "+
+    // " and  student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+    var qur="SELECT hc.student_id, hc.height, hc.weight, hc.bmi, hc.bmi_remark, hc.vison, hc.dental, hc.hearing, hc.overall_comment"+
+" FROM  tr_term_health_copy hc JOIN tr_term_health th ON ( hc.student_id = th.student_id ) WHERE hc.school_id =  '"+req.query.schoolid+"'"+
+" AND th.school_id =  '"+req.query.schoolid+"' AND th.academic_year='"+req.query.academicyear+"' and th.term_id='"+req.query.termname+"' "+
+     " and  th.student_id='"+req.query.studid+"' and th.grade='"+req.query.grade+"' and th.section='"+req.query.section+"'";
     console.log('......................healthinfo..............................');
     console.log(qur);
     connection.query(qur,
@@ -3873,6 +4629,34 @@ app.post('/fetchhealthinfo-service' ,  urlencodedParser,function (req, res)
 });
 });
 
+app.post('/fetchfahealthinfo-service' ,  urlencodedParser,function (req, res)
+{  
+    // var qur="select * from tr_term_health where school_id='"+req.query.schoolid+"' and "+
+    // "academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' "+
+    // " and  student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+    var qur="SELECT student_id, height, weight, bmi, bmi_remark, vison, dental, hearing, overall_comment"+
+" FROM  tr_term_health_copy  where student_id='"+req.query.studid+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"'";
+    console.log('......................healthinfo..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
 
 app.post('/fetchartinfo-service' ,  urlencodedParser,function (req, res)
 {  
@@ -4092,18 +4876,33 @@ app.post('/updateattendanceflag-service' ,  urlencodedParser,function (req, res)
 
 app.post('/fetchapprovalstatus-service' ,  urlencodedParser,function (req, res)
 {    
- var qur="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"'";
-  
- console.log('--------------approval status------------------');
- console.log(qur);
 
-  connection.query(qur,function(err, rows){
+ // var checkqur="SELECT grade_id FROM md_employee where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'" 
+ if(req.query.roleid=='co-ordinator'||req.query.roleid=='headmistress'){
+ var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject!='attendance'";
+ var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject!='attendance'";
+ }
+ else if(req.query.roleid=='principal'){
+ var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and subject!='attendance'";
+ var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and subject!='attendance'";
+ }
+ console.log('--------------approval status------------------');
+ console.log(qur1);
+ console.log(qur2);
+connection.query(qur1,function(err, rows){
+  if(rows.length>0){
+     res.status(200).json({'returnval': rows});
+  }
+  else{
+  connection.query(qur2,function(err, rows){
     if(!err){
       res.status(200).json({'returnval': rows});
     }
     else
       res.status(200).json({'returnval': 'no rows'});
   });
+  }
+});
 });
 
 
@@ -4180,6 +4979,35 @@ app.post('/studentparentinfo-service' ,  urlencodedParser,function (req, res)
   connection.query(qur,function(err, rows){
     if(!err){
       res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'invalid'});
+  });
+});
+
+
+app.post('/insertoverallfagrade-service' ,  urlencodedParser,function (req, res)
+{    
+ var response={
+            school_id:req.query.schoolid,
+            academic_year:req.query.academicyear,
+            term_name:req.query.termname,
+            grade:req.query.grade,
+            section:req.query.section,
+            subject_id:req.query.subject,
+            category:req.query.category,
+            student_id:req.query.studentid,
+            student_name:req.query.studentname,
+            total:req.query.total,
+            cat_grade:req.query.catgrade
+ }
+  
+ console.log('--------------insery status------------------');
+ // console.log(qur);
+
+  connection.query("INSERT INTO tr_term_overallfa_assesment_marks SET ?",[response],function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': 'succ'});
     }
     else
       res.status(200).json({'returnval': 'invalid'});

@@ -29,15 +29,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #tb2{
         width:13.4%
       }
+       .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
+          #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
+          .button{
+            width: 15%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+          }
+          #btn2{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+          }
      
     </style>
+    <div class="spinner"><paper-dialog modal id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+    <div>
     <div>
     <!--<template is="dom-repeat" items="{{label}}">-->
       <center><h1>{{schoolname}}</h1>
       <div id="hidetop">
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Grade  &nbsp&nbsp&nbsp {{grade}} - Section &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
-      <table border="1" id="MarkTable">    
+      <table border="1" id="lifeskillMarkTable">    
       <tr>
       <th id="tb1">SNo</th>
       <th id="tb2">Name</th>
@@ -51,28 +83,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <th id="tb1">Empathy</th> 
       <th id="tb1">Managing Emotions</th>  
       <th id="tb1">Dealing with Stress</th>
-      <th id="tb1">Total</th>
-      <th id="tb1">Grade</th>
+     <!-- <th id="tb1">Total</th>
+      <th id="tb1">Grade</th>-->
       <th id="tb1"> </th>
       </tr>  
       </div>
-<template is="dom-repeat" items="{{markarr}}" as="m">
-<tr><td></td>
-<template is="dom-repeat" items="{{m}}" as="mark">
-<td>{{mark}}</td>
-</template>
-</tr>
+<template is="dom-repeat" items="{{markarr}}">
+<tr>
+ <td id="tb1"><paper-item>{{item.serialno}}</paper-item></td>
+        <td id="tb2"><paper-item>{{item.student_name}}</paper-item></td>
+        <td id="tb1" ><paper-item>{{item.mark1}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark2}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark3}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark4}}</paper-item></td> 
+         <td id="tb1" ><paper-item>{{item.mark5}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark6}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark7}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark8}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark9}}</paper-item></td> 
+        <td id="tb1" ><paper-item>{{item.mark10}}</paper-item></td> 
+        </tr>
 </template>
      <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="15">
+      <tr><td colspan="13">
       <cs-life-skill-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" score1="{{item.mark1}}" score2="{{item.mark2}}" score3="{{item.mark3}}" score4="{{item.mark4}}" score5="{{item.mark5}}" score6="{{item.mark6}}" score7="{{item.mark7}}" score8="{{item.mark8}}" score9="{{item.mark9}}" score10="{{item.mark10}}"></cs-life-skill-item-card>
       </td></tr>
       </template>
       </table>
       </center> 
-   <!-- </template>     
-    </div>
-    <component-service id="componentservice" label="{{label}}"></component-service>-->
+   <center>  <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>
+<input type="button" id="btn3" onclick="tableToExcel('lifeskillMarkTable', 'Mark Report')" value="Export to Excel"></center>
+ <term-assesment-service id="assesmentservice"></term-assesment-service>
     </template>
      <script type="text/javascript">
 var tableToExcel = (function() {
@@ -101,19 +142,73 @@ var tableToExcel = (function() {
         this.grade=localStorage.getItem("curr_sess_grade");
         this.section=localStorage.getItem("curr_sess_section");
         this.subject=localStorage.getItem("curr_sess_subject");
+
+
+           if(sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator")
+      {
+        this.importlabel='Approve';
+      }
+      else if(sessionStorage.getItem("curr_sess_loggedroleid")=="class-teacher"||sessionStorage.getItem("curr_sess_loggedroleid")=="subject-teacher"){
+        this.importlabel='Submit for approval';
+      }
+      // alert(sessionStorage.getItem("curr_sess_loggedrole"));
+      if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"){        
+        this.hidepaperitem=false;
+        this.hidepaperinput=true; 
+        this.$.submit.hidden=true;
+         if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        // this.$.save.hidden=true;
+      }
+      else{
+        this.hidepaperitem=true;
+        this.hidepaperinput=false;        
+        if(localStorage.getItem('curr_sess_report')=='1'){
+        this.$.submit.hidden=true; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=false;
+        }
+        if(localStorage.getItem('curr_sess_report')=='0')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=false;
+        this.$.btn3.hidden=true;
+        }
+        if(localStorage.getItem('curr_sess_report')=='2')
+        {
+        this.$.submit.hidden=false; 
+        // this.$.save.hidden=true;
+        this.$.btn3.hidden=true;
+        }
+      }
+
       },
         FnRefresh:function()
       {
- this.markarr=[];
- this.importarr=[];
- this.studarr=[];
- this.schoolname="";
+        this.markarr=[];
+        this.importarr=[];
+        this.studarr=[];
+        this.schoolname="";
         this.academicyear="";
         this.grade="";
         this.section="";
         this.subject="";
-         this.$.hidetop.hidden=true;
+        this.$.hidetop.hidden=true;
 
+      },
+      FnSpinnerrActive:function(flag){
+        if(flag==true)
+        this.$.spinner.opened=true;
+        if(flag==false)
+        this.$.spinner.opened=false;
+      },
+        importmark:function()
+      {
+        localStorage.setItem("curr_sess_assesmenttype","");
+        this.$.assesmentservice.Fnfaimportmark();  
       }
     });
   })();

@@ -40,93 +40,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="card">
         <table border="1"><tr>
         <td hidden><paper-input hidden value="{{studid}}"></paper-input></td>
-        <td style="width: 0.5%;"><paper-item>{{serialno}}</paper-item></td>
-        <td style="width: 15%;"><paper-item>{{studname}}</paper-item></td>
-        <td style="width: 5%;"><paper-input on-focus="FnActivity" id="s1{{studid}}"   name="Health and Physical Education" value="{{score1}}"></paper-input></td>   
-        <td style="width: 5%;"><paper-input  name="total" id="t{{studid}}" value="{{total}}"></paper-input></td> 
-         <td style="width: 5%;"><paper-input name="grade" id="g{{studid}}" value="{{grade}}"></paper-input></td>
+        <td  id="tb1" hidden><paper-item>{{serialno}}</paper-item></td>
+        <td  id="tb1" hidden><paper-item>{{studname}}</paper-item></td>
+        <td  id="tb1"><paper-input on-focus="FnActivity" id="p1{{studid}}"   name="Health and Physical Education" value="{{score1}}"></paper-input></td>   
+         <td id="tb3"><paper-icon-button id="ps" icon="icons:save" on-click="FnSave"></paper-icon-button>
+        <paper-tooltip for="ps" offset="0">save</paper-tooltip></td>
         </tr>
         </table>
     </div>
-     <paper-dialog id="healthandphysical" modal>
+     <paper-dialog id="healthandphysical" modal style="margin-left: -10%;margin-top: 5%;height:80%;width:50%;">
       
-     <center> <table  id="sub">
-     <tr>
-     <td id="td1">
-          <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu></td>
-<td>
-
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-</tr>
-<tr>
-<td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-<td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-          </td>
-          </tr>
-          <tr>
-          <td id="td1">
-            <paper-dropdown-menu id="subcategory" label="Select the Category" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>     
-              <template is="dom-repeat" items="{{coarr}}">
-                <paper-item value="{{item.sub_metrics}}">{{item.sub_metrics}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-</td>
-<td>
-           <paper-dropdown-menu  label="Select Grade" disabled="{{read}}" required>
-            <paper-menu class="dropdown-content" id="gradetype"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>   
-              <!-- <template is="dom-repeat" items="{{typearr}}"> -->
-                <paper-item value="A">A</paper-item>
-                <paper-item value="B">B</paper-item>
-                <paper-item value="C">C</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-          </paper-dropdown-menu>
-          </td>
-          </tr>
-          </table>
-          </center>
-
- <!-- <template is="dom-repeat" items="{{coarr}}">
-      <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}"></cs-sub-metrics-item-card>
-      </template>-->
+     <paper-dialog-scrollable style="height: 80%;">
+ <template is="dom-repeat" items="{{coarr}}">
+      <cs-sub-metrics-item-card submetric="{{item.sub_metrics}}" score1="{{item.mark}}"></cs-sub-metrics-item-card>
+      </template>
     <center>  
     <div class="submitbutton">
-      <paper-button class="button" on-click="click">Submit</paper-button></center>
+      <paper-button class="button" on-click="click">Submit</paper-button>
       </div>
+      </center>
+     <paper-dialog-scrollable>
             </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     
@@ -146,23 +79,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </table>
   <script>
   (function() {
-     var lower=[];
+   var lower=[];
     var higher=[];
     var grade=[];
     var name;
+    var idd;
+    var sname;
+    var subarr=[];
+    var subcatarr=[];
 var arr=[];
-var idd,sname,sum1;
+var sum1,name1,sum=0,t=0;
 
     Polymer({
       is: 'cs-health-physical-education-item-card',
 
      FnActivity:function(e)
       {
-        idd=this.studid;
+       idd=this.studid;
         sname=this.studname;
-        //alert(e.target.name);
         name=e.target.name;
-        this.$.coscholasticservice.fetchlifeskilldata(name);
+        this.$.coscholasticservice.fetchlifeskilldata(name,idd);
          var id = 'healthandphysical';
          sessionStorage.setItem("category",id);
 
@@ -170,62 +106,75 @@ var idd,sname,sum1;
         dialog.open();
 
       },
-       FnSelectCategory:function(e)
+       fnfindsum:function(mark,cat)
       {
-        
+ var obj1={"studid":"","studname":"","category":"","subcategory":"","mark":"","grade":"","order_seq":""}
+       obj1.studid=idd;
+       obj1.studname=sname;
+       obj1.category=name;
+       obj1.subcategory=cat;
+       obj1.mark=mark;
+       obj1.order_seq=1;
+        subarr.push(obj1);
+        sum=parseFloat(sum)+parseFloat(mark);
+        t++;
 
-       var cat = e.target.selectedItem.textContent.trim();
-        //document.querySelector('#gradetype').selected=-1;
-       
       },
-      FnSelectGrade:function(e)
+          FnSubcategory:function(subcategoryarr)
       {
-        var mark;
-       var grad = e.target.selectedItem.textContent.trim();
-       if(grad=="A")
-       {
-        mark=9;
-       }
-       else if(grad=="B")
-       {
-        mark=8;
-       }
-       else if(grad=="C")
-       {
-        mark=7;
-       }
-       this.fnfindsum(mark);
+subcatarr=subcategoryarr;
       },
-      fnfindsum(val)
-      {
-      arr.push(val);
-//alert(arr);
-      },
+     
       click:function()
       {
-        var t=0;
-        var sum=0;
-        for(var i=0;i<arr.length;i++)
+         var flag=0;
+        
+        if(subcatarr.length>0)
         {
-          t=t+parseInt(arr[i]);
+          for(var i=0;i<subcatarr.length;i++)
+          {
+            flag=0;
+            for(var j=0;j<subarr.length;j++)
+            {
+            if(subcatarr[i].sub_category==subarr[j].subcategory)
+            {
+               flag=1;
+            }
+          }
+          if(flag==0)
+          {
+            sum=parseFloat(sum)+parseFloat(subcatarr[i].mark);
+            t++;
+          }
         }
-        sum=parseInt(t)/parseInt(arr.length);
-        alert(sum);
+       }
+       
          var id = 'healthandphysical';
         var dialog = document.getElementById(id);
         dialog.opened=false;
          if(name=="Health and Physical Education")
           {
            
-          sum1=sum;
-          document.getElementById('s1'+idd).value=sum;
-          this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Health and Physical Education",name,sum);
-          document.getElementById('t'+idd).value=sum;
-           this.convert=(parseInt(sum)/10)*100;
-         this.callFetchGrade();
+           sum1=(parseFloat((parseFloat(sum))/parseFloat(t))).toFixed(2);
+            document.getElementById('p1'+idd).value=sum1;
+            name1=name;  
           }
-        arr=[];
+            sum=0;
+        t=0;
+        document.querySelector('cs-sub-metrics-item-card').clearinputdata();
         },
+           FnSave:function()
+      {
+        this.$.coscholasticservice.callinsertcoscholasticsubcategorymarkService(subarr);
+        if(name1!=null)
+        {
+        this.$.coscholasticservice.callinsertcoscholasticassesmentmarkService(idd,sname,"Health and Physical Education",name1,sum1,1);
+        }
+        // document.getElementById('t'+idd).value=sum1; 
+          //this.convert=(parseInt(sum1)/10)*100;
+          //this.callFetchGrade();
+          subarr=[];
+      },
        callFetchGrade:function()
        {
         this.fetchgradeforhealthurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"; 

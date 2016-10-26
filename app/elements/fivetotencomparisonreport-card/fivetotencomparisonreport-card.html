@@ -1,0 +1,598 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="fivetotencomparisonreport-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      table{
+   background-color: #e6ffb3;
+   }
+   div{
+       background-color: #e6ffb3;
+
+
+   }
+    paper-dialog{
+      margin-top: -10%;
+      background-color: #f3f3f3;
+      border: 1px solid #dedede;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 16px;
+      padding: 5px 5px;
+      font-family: verdana;
+      width: 55%;      
+    }
+      .heading {
+        padding: 10px 15px;
+        margin-top: 20px;
+        background-color: #f3f3f3;
+        border: 1px solid #dedede;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        width: 90%;
+        text-align: left;
+        font-family: verdana;
+      }
+ table{
+   background-color: #e6ffb3;
+   }
+   div{
+       background-color: #e6ffb3;
+
+   }
+  .relative {
+    position: relative;
+    width: 500px;
+    height: 200px;
+    border: 3px solid black;
+    top:60px;
+    left: 200px
+}
+
+.scoretbl {
+  position: relative;
+    width: 450px;
+    height: 160px;
+    text-align: left;
+   
+  }
+   .tbl1 {
+    position: relative;
+    width: 700px;
+    /*height: 200px;*/
+    text-align: left;
+    top:100px;
+    left: 50px
+   
+  }
+  .attable
+  {
+     position: relative;
+    text-align: left;
+     top:170px;
+     width: 700px;
+     left: 50px;
+  }
+  
+  .tbl3{
+    position: relative;
+    width: 800px;
+    height: 800px;
+    top:90px;
+    left: 300px
+
+   
+  }
+  .pr {
+    position: relative;
+    width: 700px;
+    height: 170px;
+    left: 100px;
+    top:100px;
+   
+  }
+  .stupr
+  {
+    position: relative;
+    width: 700px;
+    top:150px;
+    left: 50px;
+  }
+
+.absolute {
+    position: absolute;
+    top: 50px;
+    width: 110px;
+    height: 100px;
+    /*border: 3px solid black;*/
+    left: 50px;
+}
+.pto{
+    position: absolute;
+    top: 500px;
+    width: 170px;
+    height: 180px;
+    border: 3px solid black;
+    left: 600px;
+}
+.bbox{
+    position: relative;
+    width: 900px;
+    height: 1210px;
+    border: 20px solid green;
+    top:90px;
+    left: 100px;
+}
+.bbbox{
+
+    position: relative;
+    width: 900px;
+    height: auto;
+    border: 20px solid green;
+    top:250px;
+    left: 100px
+}
+
+.buttoncard{
+  position: relative;
+  top:auto;
+    @apply(--layout-horizontal);
+    margin-left: 20%;
+  }
+   .button{
+    width: 10%;
+    background: #252626;
+    color: white;
+    margin-top: 15%;
+    text-transform: none;
+    margin-left: 2%;
+  }
+  @media print {
+    footer {page-break-after: always;}
+  }
+  .signature{
+    margin-left: 20%;
+  }
+  .health{
+    position: relative;
+    text-align: left;
+     top:150px;
+     width: 750px;
+     left: 50px;
+      border: 1px solid black;
+  }
+    </style>
+    <div class="heading" on-click="FnExpandScorecard">View Reportcard</div>
+
+    <iron-collapse id="fcomparisoncollapse1">
+      <div class="bbox" id="fivescorecard">  
+ 
+   <div class="relative">
+   
+     <table border="0" class="scoretbl">
+       <tr>
+        <th colspan="3"><h2><center>{{schoolname}}</center></h2></th>
+       </tr>
+       <tr>
+        <th colspan="3"><center>{{schooladdress}}</center></th>
+       </tr>
+       <tr>
+      <th>Affiliation No:</th><th colspan="2">&nbsp;{{affno}}</th>
+       </tr> 
+       <tr>
+        <th> Email Id:</th><th colspan="2">{{email}}</th>
+       </tr>
+       <tr>
+        <th> Website:</th><th>{{website}}</th><th>Phone No : {{phno}}</th>
+       </tr>
+     </table>
+   </div>
+   <div class="absolute">
+      <img src="../../images/zeesouth.png" height="100px" width="90px"/></div>
+   <div class="pr">
+     <center><h2>PERFORMANCE PROFILE</h2>
+     Class: {{grade}} - {{section}} (Academic Session: {{academicyear}})
+     <h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>
+     <h4>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4>
+     </center>
+   </div>
+   <div class="stupr"><h3>Student Profile</h3></div> 
+<table class="tbl1" cellspacing="10">
+<tr >
+  <th>Admission No.</th><th>:</th><th>{{studentid}}</th>
+</tr>
+<tr>
+<td>(allotted by the school)</td>
+</tr>
+<!-- <tr >
+  <th>Roll No.</th><th>:</th><th>{{studentid}}</th>
+</tr>
+<tr >
+  <th>Registration No.</th><th>:</th>
+</tr>
+<tr>
+<td>(allotted by the school)</td>
+</tr> -->
+<tr >
+  <th>Name </th><th>:</th><th>{{studentname}}</th>
+</tr>
+<tr>
+  <th>Date of Birth </th> <th>:</th><th>{{dob}}</th>
+</tr>
+<tr >
+  <th>Mother's Name</th><th>:</th><th>{{mothername}}</th>
+</tr>
+<tr >
+  <th>Father's Name </th><th>:</th><th>{{fathername}}</th>
+</tr>
+<tr rowspan="2">
+  <th>Residential Address </th><th>:</th><th>{{address}}</th>
+</tr>
+<tr>
+  <th>Telephone No </th><th>:</th><th>{{mobileno}}</th>
+</tr>
+</table>  
+  <table class="attable" >
+     <tr height="25px">
+    <th width="250px">Attendance:</th><th colspan="3">Term1</th><th colspan="3">Term2</th>
+  </tr>
+  <tr></tr>
+  <tr height="25px">
+    <th>Total attendance of the student</th><th colspan="7">{{term1attendance}}</th><th colspan="3">{{term2attendance}}</th>
+  </tr>
+  <tr height="25px">
+    <th> Total Working Days</th><th colspan="7">{{term1wday}}</th><th colspan="3">{{term2wday}}</th>
+  </tr>
+  </table>
+  <br><br>
+  <table class="health" >
+  <tr height="20px">
+    <th colspan="3"> Health Status</th><th colspan="3"></th><th colspan="3"></th>
+  </tr>
+  <tr></tr>
+  <tr height="22px">
+    <th colspan="3">Height </th><th>{{height}}</th><th colspan="7">Weight </th><th>{{weight}}</th><th colspan="3"></th>
+  </tr>
+  <tr height="25px">
+    <th colspan="3">Blood Group </th><th>{{bloodgroup}}</th><th colspan="7">Vision(L) </th><th>{{leftvision}}</th>
+    <th colspan="3">(R) </th><th>{{rightvision}}</th>
+  </tr>
+  <tr height="25px">
+    <th colspan="3">Dental Hygiene </th><th>{{dental}}</th>
+    <td colspan="7"></td><td colspan="3"></td>
+  </tr>
+  </table>
+
+<!-- <div class="pto">
+    <h4>Student photo with signature</h4>
+    <br>
+    <p>(Attested by the School principal along with school seal) </p>
+</div> -->
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+  <table  class="signature">
+    <tr><th><img id='img1' width="100px;height:30px;"></th><th></th><th></th><th><img id='img2' width="130px;height:40px;"></th><th></th><th></th><th></th></tr>
+    <tr><th>---------------------------------</th><th></th><th></th><th>---------------------------------</th><th></th><th></th>
+    <th>----------------------------------</th><th></th><th></th></tr>
+    <tr><th>Class Teacher</th><th></th><th></th><th>Principal</th><th></th><th></th><th>Parent</th><th></th><th></th></tr>
+  </table>
+<br><br><br><br>
+</div>
+
+
+
+<div class="bbbox">
+  <table border="1" style='border-collapse: collapse;'>  
+    <tr>
+    <th colspan="16"> <h2>PART1-ACADEMIC PERFORMANCE: Scholastic Areas</h2>
+    <br>    
+    </th>
+  </tr>
+  <tr>
+    <th colspan="4">Subject Code and Name</th>
+    <th colspan="4">Term1(Grade)</th>
+    <th colspan="4">Term2(Grade)</th>
+    <th colspan="4">Overall Term1+Term2</th>
+  </tr>
+  <tr><th colspan="4"></th>
+    <th>FA1</th><th>FA2</th><th>SA1</th><th>TOT1</th>
+    <th>FA3</th><th>FA4</th><th>SA2</th><th>TOT2</th>
+    <th>FA</th><th>SA</th><th>Overallgrade</th><th>GradePoint(Gp)</th>
+  </tr>
+  <template is="dom-repeat" items="{{subjectArray}}" as="item">
+  <tr><td colspan="4">{{item.subject_name}}</td>
+    <td>{{item.FA1}}</td><td>{{item.FA2}}</td><td>{{item.SA1}}</td><td>{{item.tot1}}</td>
+    <td>{{item.FA3}}</td><td>{{item.FA4}}</td><td>{{item.SA2}}</td><td>{{item.tot2}}</td>
+    <td>{{item.FA}}</td><td>{{item.SA}}</td><td>{{item.grade}}</td><td>{{item.point}}</td>
+  </tr>
+  </template>
+    <tr>
+        <th colspan="16">Cumulative Grade Point Average
+        <br>
+        <p>CGPA is the average of grade points obtained in all the subjects excluding the additional 6th subject as per Scheme of studies.  An indicative equivalence of Grade Point and Percentage of marks can be computed as subject wise indicative percentage of marks=9.5*GP of the subject. Overall indicative percentage of mark=9.5*CGPA</p>
+        </th>
+   </tr>
+   <tr>
+      <th colspan="16"><br>
+        <h2>Part-2:Co-Scholastic Areas</h2>
+        
+        </th>
+   </tr>
+   <tr>
+      <th colspan="16">2(A) Life Skills</th>
+    </tr>
+    <tr>
+      <th colspan="8">Life Skills</th><th colspan="3" style="text-align: center;">Term1</th><th colspan="5" style="text-align: center;">Descriptive Indicators</th>
+   </tr>
+   <template is="dom-repeat" items="{{lsArray}}" as="item">
+    <tr>   
+      <th colspan="8" style="text-align: left;">{{item.category}}</th><th colspan="3" style="text-align: center;">{{item.grade}}</th><th colspan="5" style="text-align: left;">{{item.comment}}</th>   
+    </tr>
+   </template>
+     <tr>
+      <th colspan="16">2(B) Work Education</th>
+    </tr>
+
+     <tr>
+      <th colspan="8">Work Education</th><th colspan="3" style="text-align: center;">Term1</th><th colspan="5" style="text-align: center;">Descriptive Indicators</th>
+   </tr>
+   <template is="dom-repeat" items="{{wkArray}}" as="item">
+    <tr>   
+      <th colspan="8" style="text-align: left;">{{item.category}}</th><th colspan="3" style="text-align: center;">{{item.grade}}</th><th colspan="5" style="text-align: left;">{{item.comment}}</th>   
+    </tr>
+   </template>
+   
+      <tr>
+      <th colspan="16">2(C)Visual And Performing Art</th>
+    </tr>
+      <tr>
+    <th colspan="8">Visual And Performing Art</th><th colspan="3" style="text-align: center;">Term1</th><th colspan="5" style="text-align: center;">Descriptive Indicators</th>
+   </tr>
+   <template is="dom-repeat" items="{{vpArray}}" as="item">
+    <tr>   
+      <th colspan="8" style="text-align: left;">{{item.category}}</th><th colspan="3" style="text-align: center;">{{item.grade}}</th><th colspan="5" style="text-align: left;">{{item.comment}}</th>   
+    </tr>
+   </template>
+    
+    <tr>
+      <th colspan="16">2(D) Attitudes And Values</th>
+    </tr>
+        <tr>
+        <th colspan="8"> Attitudes And Values</th><th colspan="3" style="text-align: center;">Term1</th><th colspan="5" style="text-align: center;">Descriptive Indicators</th>
+   </tr>
+   <template is="dom-repeat" items="{{avArray}}" as="item">
+    <tr>   
+      <th colspan="8" style="text-align: left;">{{item.category}}</th><th colspan="3" style="text-align: center;">{{item.grade}}</th><th colspan="5" style="text-align: left;">{{item.comment}}</th>   
+    </tr>
+   </template>
+    
+    <tr>
+        <th  colspan="16">
+        <br>
+        <h2>Part-3:Co-Scholastic Activities</h2>        
+        </th>
+    </tr>
+<tr>
+      <th colspan="16">3(A)Co-Curricular Activity</th>
+    </tr>
+    <tr>
+        <th colspan="8">Co-Curricular Activity</th><th colspan="3" style="text-align: center;">Term1</th><th colspan="5" style="text-align: center;">Descriptive Indicators</th>
+   </tr>
+   <template is="dom-repeat" items="{{ccArray}}" as="item">
+    <tr>   
+      <th colspan="8" style="text-align: left;">{{item.category}}</th><th colspan="3" style="text-align: center;">{{item.grade}}</th><th colspan="5" style="text-align: left;">{{item.comment}}</th>   
+    </tr>
+   </template>
+
+    <tr>
+           <th colspan="16"><h3>3(B) Health & Physical Activities</h3></th>
+    </tr>
+    <tr>
+           <th colspan="8">Health & Physical Activities</th><th colspan="3" style="text-align: center;">Term1</th><th colspan="5" style="text-align: center;">Descriptive Indicators</th>
+   </tr>
+   <template is="dom-repeat" items="{{hpArray}}" as="item">
+    <tr>   
+      <th colspan="8" style="text-align: left;">{{item.category}}</th><th colspan="3" style="text-align: center;">{{item.grade}}</th><th colspan="5" style="text-align: left;">{{item.comment}}</th>   
+    </tr>
+   </template>
+    <tr>
+         
+           <th colspan="16"><h4>Result: Qualified/Eligible For Improvement of performance(EIOP)</h4></th>
+     </tr>
+      <tr>
+           <th colspan="16"><h4>Self Awareness:</h4></th>
+     </tr>
+     <tr>
+           <th colspan="16"><h4>My Goals:</h4></th>
+     </tr>
+     <tr>
+           <th colspan="16"><h4>My Strengths:</h4></th>
+     </tr>
+     <tr>
+           <th colspan="16"><h4>My Interests and Hobbies</h4></th>
+     </tr>
+     <tr>
+           <th colspan="16"><h4>Responsibilities Discharged/Exceptional Achievements</h4></th>
+     </tr>
+ 
+
+ </table>
+
+    
+   </div>
+    </iron-collapse>
+    
+    <div class="heading" on-click="FnExpandHealth">View health info</div>
+
+    <iron-collapse id="fcomparisoncollapse2">
+      <div class="content">
+        <div>
+        <template is="dom-repeat" items="{{healthArray}}" as="item">
+          <table id="tab" width='90%'>
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>&nbsp;&nbsp;Height&nbsp;&nbsp;</th><th>&nbsp;&nbsp;Weight&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI&nbsp;&nbsp;</th><th>&nbsp;&nbsp;BMI Remarks&nbsp;&nbsp;</th><th>Vision</th><th>Dental (To be checked by the dentist)</th><th>Hearing (Does the child require ENT specialist referral)</th><th>Overall Recommendations</th></tr>            
+            <tr style="background-color: #fff;text-align: center;height: 30px;"><td>{{item.height}} cm</td><td>{{item.weight}} Kg</td><td>{{item.bmi}}</td><td>{{item.bmi_remark}}</td><td>{{item.vison}}</td><td>{{item.dental}}</td><td>{{item.hearing}}</td><td>{{item.overall_comment}}</td></tr>
+            
+          </table>
+          </template>
+        </div>
+      </div>
+    </iron-collapse>
+
+    <div class="heading" on-click="FnExpandTalent" hidden>View talent info</div>
+
+    <iron-collapse id="fcomparisoncollapse3">
+      <!-- <div class="content"> -->
+      <div style="margin-left: 5%;width: 80%;" class="heading" on-click="FnExpandArt">Art Verticals</div>
+        <iron-collapse id="fcomparisoncollapse4">
+          <div class="content">
+          <template is="dom-repeat" items="{{artArray}}" as="item">
+            <table id="tab" width='80%' style="margin-left: 5%;">
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Outside Coaching</th><th>Competitions Attended</th><th>Prizes Won</th></tr>            
+            <tr style="text-align: center;height: 30px;"><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.coaching}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>            
+            </table>
+          </template> 
+          </div>
+        </iron-collapse>
+      <div style="margin-left: 5%;width: 80%;" class="heading" on-click="FnExpandPhysical">Physical Education</div>
+        <iron-collapse id="fcomparisoncollapse5">
+          <div class="content">
+          <template is="dom-repeat" items="{{physicalArray}}" as="item">
+            <table id="tab" width='80%' style="margin-left: 5%;">
+            <tr style="background-color: #f3f3f3;height: 20px;"><th>Intrested Area</th><th>Identified Talent</th><th>Member Of School</th><th>Competitions Attended</th><th>Prizes Won</th></tr>
+            
+            <tr style="background-color: #fff;text-align: center;height: 30px;"><td>{{item.interest_area}}</td><td>{{item.identified_talent}}</td><td>{{item.member_of_school}}</td><td>{{item.competitions_attended}}</td><td>{{item.prize_won}}</td></tr>
+            
+            </table>
+          </template>
+          </div>
+        </iron-collapse>
+      <!-- </div> -->
+    </iron-collapse>
+    <div>
+      <paper-dialog id="showgrade" modal>
+        <div>
+        <div class="cat" id="title">
+        <template is="dom-repeat" items="{{subcatarr}}" as="item">
+        <p>{{item.sub_category}}</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment1</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass1}}" as="item1">
+        <p style="margin-left:14%;text-align: left;">{{item1}}</p>
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment2</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass2}}" as="item2">
+        <p style="margin-left:14%;text-align: left;">{{item2}}</p>
+        </template>
+        </div>
+        <div class="cat" id="ass">
+        <p>Assesment3</p>&nbsp;&nbsp;&nbsp;&nbsp;
+        <template is="dom-repeat" items="{{ass3}}" as="item3">
+        <p style="margin-left:14%;text-align: left;">{{item3}}</p>
+        </template>
+        </div>
+              
+        </div>
+        <paper-button id="close" on-click="FnCloseDialog">Close</paper-button>
+      </paper-dialog>
+    </div>
+    <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
+    <scorecard-service id="ss"></scorecard-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'fivetotencomparisonreport-card',
+        ready:function(){
+       this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.schooladdress=sessionStorage.getItem("curr_sess_loggedschooladdress");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.affno=sessionStorage.getItem("curr_sess_loggedaffliationid");
+        this.email=sessionStorage.getItem("curr_sess_emailid");
+        this.website=sessionStorage.getItem("curr_sess_website");
+        this.phno=sessionStorage.getItem("curr_sess_telno");
+      },
+ FnExpandScorecard:function(){
+        // alert('expandcard');
+        document.querySelector('#fcomparisoncollapse1').toggle();
+        if(this.$.fcomparisoncollapse1.opened==true){
+        this.$.fcomparisoncollapse2.opened=false;
+        this.$.fcomparisoncollapse3.opened=false;
+        this.$.fcomparisoncollapse4.opened=false;
+        this.$.fcomparisoncollapse5.opened=false;
+        }
+     
+      },
+      FnExpandHealth:function(){
+        document.querySelector('#fcomparisoncollapse2').toggle();
+        if(this.$.fcomparisoncollapse2.opened==true){
+        this.$.fcomparisoncollapse1.opened=false;
+        this.$.fcomparisoncollapse3.opened=false;
+        this.$.fcomparisoncollapse4.opened=false;
+        this.$.fcomparisoncollapse5.opened=false;
+        }
+      },
+      FnExpandTalent:function(){
+        document.querySelector('#fcomparisoncollapse3').toggle();
+        if(this.$.fcomparisoncollapse3.opened==true){
+        this.$.fcomparisoncollapse1.opened=false;
+        this.$.fcomparisoncollapse2.opened=false;
+        this.$.fcomparisoncollapse4.opened=false;
+        this.$.fcomparisoncollapse5.opened=false;
+        }
+      },
+      FnExpandArt:function(){
+        document.querySelector('#fcomparisoncollapse4').toggle();
+        if(this.$.fcomparisoncollapse4.opened==true){
+        this.$.fcomparisoncollapse5.opened=false;
+        }
+      },
+      FnExpandPhysical:function(){
+        document.querySelector('#fcomparisoncollapse5').toggle();
+        if(this.$.fcomparisoncollapse5.opened==true){
+        this.$.fcomparisoncollapse4.opened=false;
+        }  
+      },
+      FnFetchGradeSeperation:function(e){
+        // alert(e.target.id+" "+e.target.title);
+        
+        var category=e.target.id;
+        var val=e.target.title;
+        var inx=val.indexOf("@");
+        var subject=val.substring(0,inx);
+        var term=val.substring(inx+1);
+        //document.querySelector('onetofour-scorecard-service').fetchgradeseperationService(term,subject,category);        
+      },
+      FnCloseDialog:function(){
+        // if(flag==true)
+        this.$.showgrade.toggle();
+
+      },
+     
+    });
+  })();
+  </script>
+</dom-module>

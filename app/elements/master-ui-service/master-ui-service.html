@@ -1,0 +1,39 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="master-ui-service">
+  <template>
+    <iron-ajax        
+        id="rolecreationajax"
+        url="{{rolecreationurl}}"
+        params="{{rolecreationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="rolecreationResponse"
+        debounce-duration="300"
+    >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'master-ui-service',
+      FnSetRoleInfo:function(roleid,rolename){
+        this.rolecreationurl=sessionStorage.getItem("addrinfo")+"/rolecreation-service";
+        var obj={"roleid":"","rolename":""};
+        obj.roleid=roleid;
+        obj.rolename=rolename;
+        this.rolecreationparam=obj;
+        this.$.rolecreationajax.generateRequest();
+      },
+      rolecreationResponse:function(e){
+        alert(e.detail.response.returnval);
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

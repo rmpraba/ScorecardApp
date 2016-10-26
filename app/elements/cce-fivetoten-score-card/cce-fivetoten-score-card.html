@@ -466,6 +466,9 @@ table{
         localStorage.setItem("curr_sess_secmail",this.secemail);
         this.$.ss.mailReportcardService(this.parentname);
       },
+      FnCancel:function(){
+        this.$.fshowpopup.toggle();
+      },
       FnRefresh:function(){
         this.studentid="";
         this.studentname="";

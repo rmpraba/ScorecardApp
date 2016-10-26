@@ -71,6 +71,12 @@
      <div class="card" hidden$="{{editinfo}}">
        <paper-button on-click="FnEditInfo" no ink><img src="../../images/edit.jpg" height="180px" width="180px"></paper-button>
      </div>
+     <div class="card" hidden$="{{createemployee}}">
+       <paper-button on-click="FnCreateEmployee" no ink><img src="../../images/employee.png" height="180px" width="180px"></paper-button>
+     </div>
+     <div class="card" hidden$="{{createrole}}">
+       <paper-button on-click="FnCreateRole" no ink><img src="../../images/role.png" height="180px" width="180px"></paper-button>
+     </div>
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -120,6 +126,9 @@
         this.comparison=true;
         this.Approvalstatus=true;
         this.editinfo=true;
+        this.createrole=true;
+        this.createemployee=true;
+        this.teach_obser=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -229,6 +238,11 @@
         this.$.assesmentservice.callApproveService();   
       },
       FnHideView:function(){ 
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=='superadmin'){
+          this.createrole=false;
+          this.createemployee=false;  
+          this.teach_obser=false;        
+        }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;
           this.TA=false;
@@ -307,6 +321,10 @@
         // this.$.scorecardservice.callFetchstudentnameService();
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle(); 
+      },
+      FnCreateRole:function(e){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('rolecard','');
       }
     });
   })();

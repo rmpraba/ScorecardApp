@@ -1,0 +1,40 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+
+<dom-module id="subject-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card{
+        width: 35%;
+        margin-left: 30%;
+      }
+
+    </style>
+    
+    <div class="card">
+    <paper-input value="{{subjectid}}" label="Subject Id"></paper-input>
+    <paper-input value="{{subjectname}}" label="Subject Name"></paper-input>
+    <paper-input value="{{subjectcatagory}}" label="Subject catagory"></paper-input>
+    <paper-button on-click="FnSubmit">Submit</paper-button>
+    </div>
+
+    <master-ui-service id="uiservice"></master-ui-service>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'subject-card',
+      FnSubmit:function(){
+        this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,this.subjectcatagory);
+      }
+     
+    });
+  })();
+  </script>
+</dom-module>

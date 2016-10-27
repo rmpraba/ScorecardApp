@@ -5044,6 +5044,34 @@ app.post('/rolecreation-service' ,  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'Already exists!'});
   });
 });
+app.post('/subjectcreation-service' ,  urlencodedParser,function (req, res)
+{  
+    var response={subject_id:req.query.subjectid,
+    subject_name:req.query.subjectname,subject_category:req.query.subjectcategory}; 
+
+    console.log(JSON.stringify(response));
+
+   connection.query("SELECT * FROM md_subject WHERE subject_id='"+req.query.subjectid+"' and subject_name='"+req.query.subjectname+"'and subject_category='"+req.query.subjectcategory+"'",function(err, rows)
+    {
+    if(rows.length==0){
+    connection.query("INSERT INTO md_subject SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else
+      res.status(200).json({'returnval': 'Already exists!'});
+  });
+});
 
 
 var server = app.listen(5000, function () {

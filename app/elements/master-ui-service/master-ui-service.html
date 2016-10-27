@@ -26,10 +26,22 @@
         var obj={"roleid":"","rolename":""};
         obj.roleid=roleid;
         obj.rolename=rolename;
-        this.rolecreationparam=obj;
+        this.rolecreationparam=obj; 
         this.$.rolecreationajax.generateRequest();
       },
       rolecreationResponse:function(e){
+        alert(e.detail.response.returnval);
+      },      
+      FnSetSubjectInfo:function(subjectid,subjectname,subjectcatagory){
+        this.subjectcreationurl=sessionStorage.getItem("addrinfo")+"/subjectcreation-service";
+        var obj={"subjectid":"","subjectname":"","subjectcatagory":""};
+        obj.subjectid=subjectid;
+        obj.subjectname=subjectname;
+        obj.subjectcatagory=subjectcatagory;
+        this.subjectcreationparam=obj; 
+        this.$.subjectcreationajax.generateRequest();
+      },
+      subjectcreationResponse:function(e){
         alert(e.detail.response.returnval);
       }
 

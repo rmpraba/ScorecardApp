@@ -1,5 +1,4 @@
 
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="master-ui-service">
@@ -12,6 +11,16 @@
         content-type="application/json"
         method="post"
         on-response="rolecreationResponse"
+        debounce-duration="300"
+    >
+     <iron-ajax        
+        id="subjectcreationajax"
+        url="{{subjectcreationurl}}"
+        params="{{subjectcreationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="subjectcreationResponse"
         debounce-duration="300"
     >
   </template>
@@ -32,12 +41,12 @@
       rolecreationResponse:function(e){
         alert(e.detail.response.returnval);
       },      
-      FnSetSubjectInfo:function(subjectid,subjectname,subjectcatagory){
+      FnSetSubjectInfo:function(subjectid,subjectname,subjectcategory){
         this.subjectcreationurl=sessionStorage.getItem("addrinfo")+"/subjectcreation-service";
-        var obj={"subjectid":"","subjectname":"","subjectcatagory":""};
+        var obj={"subjectid":"","subjectname":"","subjectcategory":""};
         obj.subjectid=subjectid;
         obj.subjectname=subjectname;
-        obj.subjectcatagory=subjectcatagory;
+        obj.subjectcategory=subjectcategory;
         this.subjectcreationparam=obj; 
         this.$.subjectcreationajax.generateRequest();
       },
@@ -49,3 +58,4 @@
   })();
   </script>
 </dom-module>
+s

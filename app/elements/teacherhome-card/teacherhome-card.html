@@ -77,6 +77,10 @@
      <div class="card" hidden$="{{createrole}}">
        <paper-button on-click="FnCreateRole" no ink><img src="../../images/role.png" height="180px" width="180px"></paper-button>
      </div>
+      <div class="card" hidden$="{{createsubject}}">
+       <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px"></paper-button>
+     </div>
+    
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -325,6 +329,13 @@
       FnCreateRole:function(e){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('rolecard','');
+      },
+      FnCreatesubject:function(e)
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('subjectcard','');
+      
+
       }
     });
   })();

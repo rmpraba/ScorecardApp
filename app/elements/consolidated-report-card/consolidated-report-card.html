@@ -52,6 +52,7 @@
 
           <paper-dropdown-menu id="type" label="Choose Report Type" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" id="rpttype"  on-iron-select="FnSelectType"  attr-for-selected="value" required>
+                <paper-item value="Categorywise">Categorywise</paper-item>
                 <paper-item value="Subjectwise">Subjectwise</paper-item>
                 <paper-item value="Assesmentwise">Assesmentwise</paper-item>
                 <paper-item value="Termwise">Termwise</paper-item>
@@ -88,6 +89,9 @@
           </paper-dropdown-menu>
 
           </div>
+    <div class="list" hidden$="{{categorycard}}">
+    <categorywise-report id="categ" itemarr="{{itemarr}}"></categorywise-report>
+    </div>
     <div class="list" hidden$="{{subjectcard}}">
     <subjectwise-report-card id="subject" itemarr="{{itemarr}}"></subjectwise-report-card>
     </div>
@@ -117,10 +121,12 @@
         this.assesmentcard=true;  
         this.termcard=true;
         this.subjectcard=true;  
+        this.categorycard=true;  
         this.consolidatedtermcard=true;
         this.hideterm=true;
         this.hideassesment=true; 
         this.hidesubject=true; 
+        // this.hidecategory=true; 
       },
       FnSelectGrade:function(e){        
         gradename = e.target.selectedItem.textContent.trim();       
@@ -138,6 +144,13 @@
        FnSelectType:function(e){
         type = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_reporttype",type);
+        if(type=="Categorywise"){
+        this.$.reportservice.callfetchsubjectnameService(); 
+        this.hideterm=false;
+        this.hideassesment=false;
+        this.hidesubject=false;
+        this.$.categ.setDefaultHeaders();
+        }
         if(type=="Subjectwise"){
         this.$.reportservice.callfetchsubjectnameService(); 
         this.hideterm=false;
@@ -159,29 +172,38 @@
       FnSelectSubject:function(e){
         subject = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_subject",subject);
-        if(type=="Subjectwise"){          
+        if(type=="Subjectwise"||type=="Categorywise"){   
+          this.$.categ.setDefaultHeaders(); 
+          this.$.subject.setDefaultHeaders();      
           this.$.reportservice.callFetchstudentnameService(); 
         }
+        // this.callService();
       },
       FnSelectTerm:function(e){
         termname = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_termname",termname);
         if(type=="Termwise"){
+          this.$.term.setDefaultHeaders(); 
           this.$.reportservice.callFetchstudentnameService(); 
         }
+        // this.callService();
       },
       FnSelectAssesment:function(e){
         assesment = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_assesment",assesment);
+        // alert(assesment);
         if(type=="Assesmentwise"){
+          this.$.assesment.setDefaultHeaders();
           this.$.reportservice.callFetchstudentnameService(); 
         }
+        // this.callService();
       },
       callService:function(){
         this.flag="1";
         this.$.reportservice.callFetchstudentnameService();        
       } ,
       FnHide:function(){
+        // alert(localStorage.getItem("curr_sess_reporttype"));
         if(localStorage.getItem("curr_sess_reporttype")=="Assesmentwise"){
           this.assesmentcard=false;
         }
@@ -190,6 +212,11 @@
         }
          if(localStorage.getItem("curr_sess_reporttype")=="Subjectwise"){
           this.subjectcard=false;
+        }
+
+        if(localStorage.getItem("curr_sess_reporttype")=="Categorywise"){
+          // alert('hi');
+          this.categorycard=false;
         }
       },
       FnRefresh:function()
@@ -204,7 +231,8 @@
         document.querySelector('#subtyp').selected=-1;
          this.assesmentcard=true;  
          this.subjectcard=true;
-        this.termcard=true;  
+        this.termcard=true;
+          this.categorycard=true;
         this.consolidatedtermcard=true;
         this.hideterm=true;
         this.hideassesment=true;

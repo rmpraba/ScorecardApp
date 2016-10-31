@@ -79,7 +79,18 @@
             </paper-menu>
           </paper-dropdown-menu>
 
+          <paper-dropdown-menu hidden$="{{hidesubject}}" id="term" label="Select Subject" disabled="{{read}}" required>
+            <paper-menu class="dropdown-content" id="subtyp" on-iron-select="FnSelectSubject"  attr-for-selected="value" required>
+              <template is="dom-repeat" items="{{subjectarr}}">
+                <paper-item value="{{item.subject_name}}">{{item.subject_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
           </div>
+    <div class="list" hidden$="{{subjectcard}}">
+    <subjectwise-report-card id="subject" itemarr="{{itemarr}}"></subjectwise-report-card>
+    </div>
     <div class="list" hidden$="{{assesmentcard}}">
     <assesmentwise-report-card id="assesment" itemarr="{{itemarr}}"></assesmentwise-report-card>
     </div>
@@ -104,10 +115,12 @@
       is: 'consolidated-report-card',
       ready:function(){
         this.assesmentcard=true;  
-        this.termcard=true;  
+        this.termcard=true;
+        this.subjectcard=true;  
         this.consolidatedtermcard=true;
         this.hideterm=true;
         this.hideassesment=true; 
+        this.hidesubject=true; 
       },
       FnSelectGrade:function(e){        
         gradename = e.target.selectedItem.textContent.trim();       
@@ -122,9 +135,15 @@
         if(this.flag==1)                
         this.callService();
       },
-      FnSelectType:function(e){
+       FnSelectType:function(e){
         type = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_reporttype",type);
+        if(type=="Subjectwise"){
+        this.$.reportservice.callfetchsubjectnameService(); 
+        this.hideterm=false;
+        this.hidesubject=false;
+        this.$.subject.setDefaultHeaders();
+        } 
         if(type=="Assesmentwise"){
         this.hideterm=false;
         this.hideassesment=false;
@@ -136,6 +155,13 @@
         } 
         if(type=="ConsolidatedTerm")
         this.$.consolidated.setDefaultHeaders();        
+      },
+      FnSelectSubject:function(e){
+        subject = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_subject",subject);
+        if(type=="Subjectwise"){          
+          this.$.reportservice.callFetchstudentnameService(); 
+        }
       },
       FnSelectTerm:function(e){
         termname = e.target.selectedItem.textContent.trim();
@@ -162,6 +188,9 @@
         if(localStorage.getItem("curr_sess_reporttype")=="Termwise"){
           this.termcard=false;
         }
+         if(localStorage.getItem("curr_sess_reporttype")=="Subjectwise"){
+          this.subjectcard=false;
+        }
       },
       FnRefresh:function()
       {
@@ -172,11 +201,21 @@
         document.querySelector('#rpttype').selected=-1;
         document.querySelector('#termtyp').selected=-1;
         document.querySelector('#asstyp').selected=-1;
+        document.querySelector('#subtyp').selected=-1;
          this.assesmentcard=true;  
+         this.subjectcard=true;
         this.termcard=true;  
         this.consolidatedtermcard=true;
         this.hideterm=true;
         this.hideassesment=true;
+        this.hidesubject=true;
+         gradename="";
+     section="";
+     subject="";
+     type="";
+     termname="";
+     assesment="";
+    item=[];
       }
   });
   })();

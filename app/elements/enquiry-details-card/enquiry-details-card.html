@@ -1,0 +1,41 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="enquiry-details-card">
+  <template>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Student Name</th>
+        <th>Enquired On</th>
+        <th>Prospectus Status</th>
+        <th>Follow Up</th>
+        <th>Next Follow Up</th>
+      </tr>
+      </thead>
+      <tbody>
+      <template  is="dom-repeat" items="{{listdetails}}" as="view">
+        
+        <tr><th scope="row">{{view.enquiry_no}}</th>
+        <td>{{view.enquiry_name}}</td>
+        <td>{{view.created_on}}</td>
+        <td>>75%</td>
+        <td>3</td>
+        <td>22/09/2016</td>
+      </tr>
+      </template>
+      
+      </tbody>
+    </table>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'enquiry-details-card',
+
+    });
+  })();
+  </script>
+</dom-module>

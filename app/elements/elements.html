@@ -8,7 +8,28 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+<!-- Iron elements -->
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
+<!-- Paper elements -->
+<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+
+<!-- Uncomment next block to enable Service Worker Support (2/2) -->
+<!--
+<link rel="import" href="../bower_components/platinum-sw/platinum-sw-cache.html">
+<link rel="import" href="../bower_components/platinum-sw/platinum-sw-register.html">
+-->
 
 <!-- Configure your routes here -->
 <link rel="import" href="routing.html">
@@ -16,123 +37,73 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- Add your elements here -->
 <link rel="import" href="../styles/app-theme.html">
 <link rel="import" href="../styles/shared-styles.html">
-<link rel="import" href="my-greeting/my-greeting.html">
-<link rel="import" href="my-list/my-list.html">
-<link rel="import" href="app-card/app-card.html">
-<link rel="import" href="beginner-assesment-card/beginner-assesment-card.html">
-<link rel="import" href="beginner-assesment-lang-markentrysheet/beginner-assesment-lang-markentrysheet.html">
-<link rel="import" href="beginner-assesment-lang-markentrysheet-itemcard/beginner-assesment-lang-markentrysheet-itemcard.html">
-<link rel="import" href="beginner-assesment-markentrysheet/beginner-assesment-markentrysheet.html">
-<link rel="import" href="beginner-assesment-markentrysheet-itemcard/beginner-assesment-markentrysheet-itemcard.html">
-<link rel="import" href="beginner-assesment-service/beginner-assesment-service.html">
-<link rel="import" href="home-page/home-page.html">
+
+<link rel="import" href="dashboard-card/dashboard-card.html">
+<link rel="import" href="login-card/login-card.html">
+<link rel="import" href="newevent-card/newevent-card.html">
+<link rel="import" href="navigation-bar/navigation-bar.html">
+<link rel="import" href="event-card/event-card.html">
+<link rel="import" href="start-datepicker-card/start-datepicker-card.html">
+<link rel="import" href="end-datepicker-card/end-datepicker-card.html">
+<link rel="import" href="enquiry-card/enquiry-card.html">
+<link rel="import" href="newenquiry-card/newenquiry-card.html">
+<link rel="import" href="organization-page/organization-page.html">
+<link rel="import" href="classdetails-page/classdetails-page.html">
+<link rel="import" href="academicyear-page/academicyear-page.html">
+<link rel="import" href="feeheads-page/feeheads-page.html">
+<link rel="import" href="feestructure-page/feestructure-page.html">
+<link rel="import" href="event-service/event-service.html">
+
 <link rel="import" href="login-card/login-card.html">
 <link rel="import" href="login-service/login-service.html">
-<link rel="import" href="teacherhome-card/teacherhome-card.html">
-<link rel="import" href="component-service/component-service.html">
-<link rel="import" href="assesment-sheet-card/assesment-sheet-card.html">
-<link rel="import" href="beginner-assesment/beginner-assesment.html">
-<link rel="import" href="term-assesment-card/term-assesment-card.html">
-<link rel="import" href="term-assesment/term-assesment.html">
-<link rel="import" href="term-assesment-sheet-card/term-assesment-sheet-card.html">
-<link rel="import" href="term-assesment-service/term-assesment-service.html">
-<link rel="import" href="cc-evs-onetofour-card/cc-evs-onetofour-card.html">
-<link rel="import" href="cc-evs-onetofour-item-card/cc-evs-onetofour-item-card.html">
-<link rel="import" href="cc-maths-onetofour-card/cc-maths-onetofour-card.html">
-<link rel="import" href="cc-maths-onetofour-item-card/cc-maths-onetofour-item-card.html">
-<link rel="import" href="cc-computer-onetofour-card/cc-computer-onetofour-card.html">
-<link rel="import" href="cc-computer-onetofour-item-card/cc-computer-onetofour-item-card.html">
-<link rel="import" href="cc-dance-onetofour-card/cc-dance-onetofour-card.html">
-<link rel="import" href="cc-dance-onetofour-item-card/cc-dance-onetofour-item-card.html">
-<link rel="import" href="cc-gk-onetofour-card/cc-gk-onetofour-card.html">
-<link rel="import" href="cc-gk-onetofour-item-card/cc-gk-onetofour-item-card.html">
-<link rel="import" href="cc-music-onetofour-card/cc-music-onetofour-card.html">
-<link rel="import" href="cc-music-onetofour-item-card/cc-music-onetofour-item-card.html">
-<link rel="import" href="cc-art-craft-onetofour-card/cc-art-craft-onetofour-card.html">
-<link rel="import" href="cc-art-craft-onetofour-item-card/cc-art-craft-onetofour-item-card.html">
-<link rel="import" href="cc-fa-fivetoten-card/cc-fa-fivetoten-card.html">
-<link rel="import" href="cc-sa-fivetoten-card/cc-sa-fivetoten-card.html">
-<link rel="import" href="cc-fa-fivetoten-itemcard/cc-fa-fivetoten-itemcard.html">
-<link rel="import" href="cc-sa-fivetoten-itemcard/cc-sa-fivetoten-itemcard.html">
-<link rel="import" href="co-scholastic-service/co-scholastic-service.html">
-<link rel="import" href="cs-life-skill-card/cs-life-skill-card.html">
-<link rel="import" href="cs-life-skill-item-card/cs-life-skill-item-card.html">
-<link rel="import" href="cs-sub-metrics-item-card/cs-sub-metrics-item-card.html">
-<link rel="import" href="cs-education-card/cs-education-card.html">
-<link rel="import" href="cs-education-item-card/cs-education-item-card.html">
-<link rel="import" href="cs-visual-performing-card/cs-visual-performing-card.html">
-<link rel="import" href="cs-visual-performing-item-card/cs-visual-performing-item-card.html">
-<link rel="import" href="cs-attitudes-card/cs-attitudes-card.html">
-<link rel="import" href="cs-attitudes-item-card/cs-attitudes-item-card.html">
-<link rel="import" href="cs-co-curricular-card/cs-co-curricular-card.html">
-<link rel="import" href="cs-co-curricular-item-card/cs-co-curricular-item-card.html">
-<link rel="import" href="cs-health-physical-education-card/cs-health-physical-education-card.html">
-<link rel="import" href="cs-health-physical-education-item-card/cs-health-physical-education-item-card.html">
-<link rel="import" href="cce-fivetoten-attendance-card/cce-fivetoten-attendance-card.html">
-<link rel="import" href="cce-fivetoten-attendance-itemcard/cce-fivetoten-attendance-itemcard.html">
-<link rel="import" href="cce-fivetoten-health-card/cce-fivetoten-health-card.html">
-<link rel="import" href="cce-fivetoten-health-itemcard/cce-fivetoten-health-itemcard.html">
-<link rel="import" href="term-scholastic-category/term-scholastic-category.html">
-<link rel="import" href="term-coscholastic-category/term-coscholastic-category.html">
-<link rel="import" href="coscholastic-assesment-card/coscholastic-assesment-card.html">
-<link rel="import" href="coscholastic-assesment/coscholastic-assesment.html">
-<link rel="import" href="coscholastic-assesment-sheet-card/coscholastic-assesment-sheet-card.html">
-<link rel="import" href="cs-dialog-item-card/cs-dialog-item-card.html">
-<link rel="import" href="cce-performance-card/cce-performance-card.html">
-<link rel="import" href="attendance-card/attendance-card.html">
-<link rel="import" href="attendance-item-card/attendance-item-card.html">
-<link rel="import" href="cce-performance-name-card/cce-performance-name-card.html">
-<link rel="import" href="cc-eng-onetofour-card/cc-eng-onetofour-card.html">
-<link rel="import" href="cc-eng-onetofour-item-card/cc-eng-onetofour-item-card.html">
-<link rel="import" href="attendance-card/attendance-card.html">
-<link rel="import" href="attendance-item-card/attendance-item-card.html">
-<link rel="import" href="cc-ntlife-skill-card/cc-ntlife-skill-card.html">
-<link rel="import" href="cc-ntlife-skill-itemcard/cc-ntlife-skill-itemcard.html">
-<link rel="import" href="student-list-card/student-list-card.html">
-<link rel="import" href="student-list-itemcard/student-list-itemcard.html">
-<link rel="import" href="teacher-observation_card/teacher-observation_card.html">
-<link rel="import" href="cs-games-card/cs-games-card.html">
-<link rel="import" href="cs-games-itemcard/cs-games-itemcard.html">
-<link rel="import" href="cs-personalitydevelopment-card/cs-personalitydevelopment-card.html">
-<link rel="import" href="cs-personalitydevelopment-itemcard/cs-personalitydevelopment-itemcard.html">
-<link rel="import" href="approve-one-to-four-card/approve-one-to-four-card.html">
-<link rel="import" href="approve-one-to-four-itemcard/approve-one-to-four-itemcard.html">
+<link rel="import" href="CRM-app/CRM-app.html">
+<link rel="import" href="app-list/app-list.html">
+<link rel="import" href="dateofbirth-datepicker/dateofbirth-datepicker.html">
+<link rel="import" href="admission-form/admission-form.html">
+<link rel="import" href="enquiry-details-card/enquiry-details-card.html">
+<link rel="import" href="followup-card/followup-card.html">
+<link rel="import" href="nextfollowupdate-card/nextfollowupdate-card.html">
 
-<link rel="import" href="cocurricular-service/cocurricular-service.html">
-<link rel="import" href="onetofour-scorecard-service/onetofour-scorecard-service.html">
-<link rel="import" href="language-enrichment-card/language-enrichment-card.html">
-<link rel="import" href="report-service/report-service.html">
-<link rel="import" href="beginner-term-analysis-card/beginner-term-analysis-card.html">
-<link rel="import" href="validationdialog-card/validationdialog-card.html">
-<link rel="import" href="consolidated-report-card/consolidated-report-card.html">
-<link rel="import" href="assesmentwise-report-card/assesmentwise-report-card.html">
-<link rel="import" href="termwise-report-card/termwise-report-card.html">
-<link rel="import" href="consolidatedtermwise-report-card/consolidatedtermwise-report-card.html">
-<link rel="import" href="bindmarks-card/bindmarks-card.html">
-<link rel="import" href="forgotpassword-card/forgotpassword-card.html">
 
-<link rel="import" href="talentidentification-card/talentidentification-card.html">
-<link rel="import" href="talentidentification-item-card/talentidentification-item-card.html">
+<link rel="import" href="formpopup-card/formpopup-card.html">
+<link rel="import" href="admission-service/admission-service.html">
 
-<link rel="import" href="teacher-observation_card/teacher-observation_card.html">
-<link rel="import" href="teacher-observation_service/teacher-observation_service.html">
+<link rel="import" href="followup-item-card/followup-item-card.html">
+<link rel="import" href="fee-card/fee-card.html">
 
-<link rel="import" href="art-verticals-card/art-verticals-card.html">
-<link rel="import" href="art-verticals-item-card/art-verticals-item-card.html">
-<link rel="import" href="comparisonreport-card/comparisonreport-card.html">
-<link rel="import" href="approvalstatus-card/approvalstatus-card.html">
-<link rel="import" href="studentinfoedit-card/studentinfoedit-card.html">
+<link rel="import" href="installment-card/installment-card.html">
+<link rel="import" href="receiptdatepicker-card/receiptdatepicker-card.html">
+<link rel="import" href="installmentout-card/installmentout-card.html">
+<link rel="import" href="prospectousfee-card/prospectousfee-card.html">
+<link rel="import" href="annualfee-card/annualfee-card.html">
+<link rel="import" href="registerationfee-card/registerationfee-card.html">
+<link rel="import" href="cautionfee-card/cautionfee-card.html">
+<link rel="import" href="tuitionfee-card/tuitionfee-card.html">
+<link rel="import" href="kitfee-card/kitfee-card.html">
+<link rel="import" href="fees-service/fees-service.html">
 
-<link rel="import" href="cc-sa-ninetoten-english/cc-sa-ninetoten-english.html">
-<link rel="import" href="cc-sa-ninetoten-english-itemcard/cc-sa-ninetoten-english-itemcard.html">
-<link rel="import" href="fivetotencomparisonreport-card/fivetotencomparisonreport-card.html">
-<link rel="import" href="role-card/role-card.html">
-<link rel="import" href="master-ui-service/master-ui-service.html">
-<link rel="import" href="employe-card/employe-card.html">
-<link rel="import" href="workingdays-card/workingdays-card.html">
-<link rel="import" href="teacher-to-grade-card/teacher-to-grade-card.html">
-<link rel="import" href="grade-to-subject-card/grade-to-subject-card.html">
-<link rel="import" href="student-to-subject-mapping-card/student-to-subject-mapping-card.html">
-<link rel="import" href="student-list-mapping/student-list-mapping.html">
-<link rel="import" href="student-list-mapping-item/student-list-mapping-item.html">
-<link rel="import" href="master-student-mapping-card/master-student-mapping-card.html">
+<link rel="import" href="grade-count-itemcard/grade-count-itemcard.html">
+
+
+<link rel="import" href="schedulefee-card/schedulefee-card.html">
+
+<link rel="import" href="followup-dashboard/followup-dashboard.html">
+<link rel="import" href="follow-up-dashboard-item-card/follow-up-dashboard-item-card.html">
+<link rel="import" href="fees-card/fees-card.html">
+<link rel="import" href="installment-date-picker/installment-date-picker.html">
+<link rel="import" href="fee-schedule-service/fee-schedule-service.html">
+<link rel="import" href="fee_installment_item-card/fee_installment_item-card.html">
+<link rel="import" href="fee-installment-itemcard/fee-installment-itemcard.html">
+
+<link rel="import" href="followup-details/followup-details.html">
+<link rel="import" href="followup-details-items/followup-details-items.html">
+<link rel="import" href="followup-student-detail/followup-student-detail.html">
+
+
+<link rel="import" href="feereceipt-card/feereceipt-card.html">
+<link rel="import" href="feereceipt-outcard/feereceipt-outcard.html">
+<link rel="import" href="feereceipt-home/feereceipt-home.html">
+<link rel="import" href="admission-approval-card/admission-approval-card.html">
+
+<link rel="import" href="admission-datepicker/admission-datepicker.html">
+

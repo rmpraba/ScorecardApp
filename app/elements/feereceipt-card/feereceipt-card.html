@@ -1,0 +1,85 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+<script type="text/javascript" src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+
+<dom-module id="feereceipt-card">
+  <template>
+    <style>
+      .receiptcard{
+        width: 800px;
+        margin-left: 10px;
+        margin-top: 10px;
+      }
+      table{
+        width: 700px;
+        margin-top: -10px;
+        margin-bottom: -5px;
+      }
+      hr{
+        border: 1px solid grey;
+      }
+    </style>
+    
+    <div class="receiptcard">
+      <h4 style="margin-left: 200px;">FEE&nbsp;&nbsp;{{receipttype}}</h4><br>
+      <table >
+        <tr hidden$="{{hidereceipt}}"><td style="text-align: left;">Receipt No: {{receiptno}}</td><td style="text-align: left;"></td><td colspan="4"></td><td style="text-align: center;">Receipt Date: {{paiddate}}</td><td style="text-align: left;"></td></tr>
+
+        <tr hidden$="{{hideack}}"><td style="text-align: left;">Receipt No: {{ackno}}</td><td style="text-align: left;"></td><td colspan="4"></td>
+        <td style="text-align: center;" hidden$="{{hideack}}">Receipt Date: {{receiveddate}}</td><td style="text-align: left;"></td>
+        <td style="text-align: center;" hidden$="{{hidereceipt}}">Receipt Date: {{paiddate}}</td><td style="text-align: left;"></td></tr>
+      </table>
+      <hr></hr>
+      <table >
+        <tr><td style="text-align: left;">Student Name: {{studentname}}</td><td style="text-align: left;"></td><td colspan="3"></td><td style="text-align: center;">Grade: {{grade}}</td><td style="text-align: left;"></td></tr>
+        <tr><td></td><td></td><td colspan="3"></td><!-- <td style="text-align: left;">Academic Year: {{academicyear}}</td><td style="text-align: left;"></td> --></tr>
+      </table>
+      <hr></hr>
+      <table>
+        <tr style="text-align: center;"><th colspan="2" style="text-align: center;">Sl.No</th><th colspan="2" style="text-align: center;">Particulars</th><th colspan="2" style="text-align: center;">Amount</th></tr>
+      </table>
+      <hr></hr>
+      <table>
+        <tr><td colspan="2" width="50px" style="text-align: center;">1</td><td  colspan="2" width="150px" style="text-align: center;">{{feetype}}-({{installment}})</td><td colspan="2" width="100px" style="text-align: center;margin-left: 20px;">{{installmentamount}}</td></tr>
+      </table>
+      <hr></hr>
+      <table>
+        <tr style="text-align: left;" hidden$="{{chequeview}}"><td colspan="6">Bounce Charges: {{bounceamount}}</td></tr>
+      </table>
+      <hr hidden$="{{chequeview}}"></hr>
+      <table>
+        <tr style="text-align: left;"><td colspan="5" width="230px"></td><td style="margin-left: 10px;">Total Fee: {{totalfees}}</td></tr>
+      </table>
+      <hr></hr>
+      <table hidden$="{{chequeview}}">
+        <tr hidden$="{{chequeview}}" style="text-align: center;"><td>Mode Of Payment: {{modeofpayment}}</td><td>Cheque No: {{chequeno}}</td><td>Cheque Date: {{chequedate}}</td><td>Bank Name: {{bankname}}</td></tr>
+      </table>
+      <hr hidden$="{{chequeview}}"></hr>
+      <table hidden$="{{transferview}}">
+        <tr  hidden$="{{transferview}}" style="text-align: center;"><td>Mode Of Payment: {{modeofpayment}}</td><td>Reference No: {{referenceno}}</td><td>Paid Date: {{paiddate}}</td><td>Bank Name: {{bankname}}</td></tr>
+      </table>
+      <hr hidden$="{{transferview}}"></hr>
+    </div>
+   
+   
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'feereceipt-card',
+
+      ready:function(){        
+           
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

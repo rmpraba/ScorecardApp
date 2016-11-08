@@ -1,0 +1,47 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="followup-card">
+  <template>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Parent Name</th>
+            <th>Mobile No</th>
+            <th>Class</th>
+            <th>Enquired On</th>
+            <th>Last Follow Up</th>
+            <th>Confidence Level</th>
+            <th>Follow Up</th>
+            <th>Next Follow Up Date</th>
+            <th>Comments</th>
+          </tr>
+          </thead>
+          <tbody>
+           <template is="dom-repeat" items="{{followuparr}}" as="view">
+            <div class="students-atten">
+              <followup-item-card student="{{view.name}}" parentname="{{view.parentname}}" mobilenumber="{{view.mobilenumber}}" classreq="{{view.class}}" enquiredon="{{view.enquiredon}}" lastfollowup="{{view.lastfollowup}}" followup="{{view.followup}}" confidence="{{view.confidence_level}}" nextfollowup="{{view.nextfollowup}}" comments="{{view.comments}}"></followup-item-card>
+            </div>
+          </template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <crm-service id="service"></crm-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'followup-card',
+      ready:function(){
+        //this.$.service.getfollowup();
+      }
+    });
+  })();
+  </script>
+</dom-module>

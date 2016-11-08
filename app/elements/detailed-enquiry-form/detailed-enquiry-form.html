@@ -1,0 +1,1074 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
+<link rel="import" href="../admission-datepicker/admission-datepicker.html">
+<dom-module id="detailed-enquiry-form">
+  <template>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="input-group custom-search-form col-md-2 col-md-offset-5">
+          <button class="btn btn-default" on-click="newenquriy" type="button" id="newenquiry">New Enquriy</button>
+          <paper-dropdown-menu label="Academic Year" id="academicyear">
+            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
+              <paper-item>AY-2015-2016</paper-item>
+              <paper-item>AY-2016-2017</paper-item>
+              <paper-item>AY-2017-2018</paper-item>
+              <paper-item>AY-2018-2019</paper-item>
+              <paper-item>AY-2019-2020</paper-item>
+              <paper-item>AY-2020-2021</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+          <div class="input-group custom-search-form col-sm-6 col-sm-offset-3">
+            <input type="text" class="form-control" id="searchtext" value="{{enqno}}" placeholder="Enter Enquiry Number">
+            <span class="input-group-btn">
+              <button class="btn btn-default" on-click="search" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="input-group custom-search-form col-sm-4 col-sm-offset-4">
+          <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry">
+            <paper-listbox class="dropdown-content">
+              <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
+                <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Student Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+          <paper-input id="fname" required error-message="needs first name!" label="First Name" allowed-pattern="[a-zA-Z ]" value="{{firstname}}"></paper-input>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <paper-input id="mname" required error-message="needs middle name!" label="Middle Name" allowed-pattern="[a-zA-Z ]" value="{{middlename}}"></paper-input>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <paper-input id="lname" required error-message="needs last name!" label="Last Name" allowed-pattern="[a-zA-Z ]" value="{{lastname}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <label>Gender</label>
+          <div class="gender">
+            <span class="col-sm-6"><paper-checkbox id="dfmale" class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="dffemale" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
+          </div>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <!--<paper-input id="grade" required error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
+         <paper-dropdown-menu label="Select the Class" >
+            <paper-menu id="class" class="dropdown-content" required on-iron-select="classseeking" attr-for-selected="value" selected="{{grades}}">
+              <template  is="dom-repeat" items="{{itemarr}}" as="view">
+                <paper-item value="{{view.class}}">{{view.class}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+         </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+           <dateofbirth-datepicker></dateofbirth-datepicker>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Age as on 31st March 2016" value="{{ageofyr}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="Mother Tongue" >
+            <paper-menu id="language" class="dropdown-content" required on-iron-select="language" valueattr="value" >
+              <paper-item >Assamese</paper-item>
+              <paper-item >Bengali</paper-item>
+              <paper-item >Bodo</paper-item>
+              <paper-item >Dogri</paper-item>
+              <paper-item >Gujarati</paper-item>
+              <paper-item >Hindi</paper-item>
+              <paper-item >Kannada</paper-item>
+              <paper-item >Kashmiri</paper-item>
+              <paper-item >Konkani</paper-item>
+              <paper-item >Maithili</paper-item>
+              <paper-item >Malayalam</paper-item>
+              <paper-item >Manipuri</paper-item>
+              <paper-item >Marathi</paper-item>
+              <paper-item >Nepali</paper-item>
+              <paper-item >Odia</paper-item>
+              <paper-item >Punjabi</paper-item>
+              <paper-item >Sanskrit</paper-item>
+              <paper-item >Santali</paper-item>
+              <paper-item >Sindhi</paper-item>
+              <paper-item >Tamil</paper-item>
+              <paper-item >Telugu</paper-item>
+              <paper-item >Urdu</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Present Class" id="oldsclass" required error-message="needs currently studying grade!" value="{{oldclass}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Present School" id="oldschool" required error-message="needs old school details!" value="{{oldschool}}"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Admission Test Details</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+          <label>Admission Test</label>
+          <div class="gender">
+            <span class="col-sm-6"><paper-checkbox id="admissiontestyes" class="checkbox" on-change="admissiontestyesHandler">Yes</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="admissiontestno" class="checkbox" on-change="admissiontestnoHandler">No</paper-checkbox></span>
+          </div>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <label>Test Subjects</label>
+          <div class="gender">
+            <span class="col-sm-4"><paper-checkbox id="english" class="checkbox" on-change="englishHandler">English</paper-checkbox></span>
+            <span class="col-sm-4"><paper-checkbox  id="maths" class="checkbox" on-change="mathsHandler">Maths</paper-checkbox></span>
+            <span class="col-sm-4"><paper-checkbox  id="evs" class="checkbox" on-change="evsHandler">EVS</paper-checkbox></span>
+          </div>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <div class="gender">
+            <admission-datepicker></admission-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Parent Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="momname" required error-message="needs mother's name!" label="Mother's Name" allowed-pattern="[a-zA-Z ]" value="{{mothername}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input id="dadedu" required error-message="needs father's qualification!" allowed-pattern="[a-zA-Z ]" label="Father's Qualification" value="{{fatheredu}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="momedu" required error-message="needs mother's qualification!" allowed-pattern="[a-zA-Z ]" label="Mother's Qualification" value="{{motheredu}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input id="dadmob" required error-message="needs father's mobile no!" label="Father's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{fathermob}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="mommob" required error-message="needs mother's mobile no!" label="Mother's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{mothermob}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input id="dadmail" required error-message="needs father's email id!" label="Father's Email ID" value="{{fathermail}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="mommail" required error-message="needs mother's email id!" label="Mother's Email ID" value="{{mothermail}}"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Work Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Father's Occupation" >
+            <paper-menu id="dadoccupation" class="dropdown-content" required on-iron-select="dadoccupation" valueattr="value" >
+              <paper-item >Self Employed</paper-item>
+              <paper-item >Government Employee</paper-item>
+              <paper-item >Private Employee</paper-item>
+              <paper-item >Home Maker</paper-item>
+              <paper-item >Others</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Mother's Occupation" >
+            <paper-menu id="motheroccupation" class="dropdown-content" required on-iron-select="motheroccupation" valueattr="value" >
+              <paper-item >Self Employed</paper-item>
+              <paper-item >Government Employee</paper-item>
+              <paper-item >Private Employee</paper-item>
+              <paper-item >Home Maker</paper-item>
+              <paper-item >Others</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input id="dadoff" required error-message="needs father's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{fathercompany}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="momoff" required error-message="needs mother's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{mothercompany}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input id="dadjob" required error-message="needs father's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{fatherjob}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="momjob" required error-message="needs mother's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{motherjob}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div id="dadsal" class="col-sm-6">
+          <paper-dropdown-menu label="Father's Salary" >
+            <paper-menu id="dadsalary" class="dropdown-content" required on-iron-select="dadsalary" valueattr="value" >
+              <paper-item >Nil</paper-item>
+              <paper-item >< 1 Lakh</paper-item>
+              <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
+              <paper-item >2.5Lakhs to 5 Lakhs</paper-item>
+              <paper-item >> 5 Lakhs</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div id="momsal" class="col-sm-6">
+          <paper-dropdown-menu label="Mother's Salary" >
+            <paper-menu id="mothersalary" class="dropdown-content" required on-iron-select="mothersalary" valueattr="value" >
+              <paper-item >Nil</paper-item>
+              <paper-item >< 1 Lakh</paper-item>
+              <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
+              <paper-item >2.5Lakhs to 5 Lakhs</paper-item>
+              <paper-item >> 5 Lakhs</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Residential Address</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-input label="Flat/House No" id="flat" required error-message="needs flat/House No!" value="{{flat}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Building Name" id="add1" required error-message="needs building name!" value="{{address1}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Street/Road" id="add2" required error-message="needs street/road name!" value="{{address2}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-3">
+          <paper-input label="Village/Town" id="add3" required error-message="needs village/town!" value="{{address3}}"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input id="city" required allowed-pattern="[a-zA-Z ]" error-message="needs city name!" label="City" value="{{city}}"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input id="state" required allowed-pattern="[a-zA-Z ]" error-message="needs state name!" label="State" value="{{state}}"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input id="pin" required error-message="needs pincode!" allowed-pattern="[0-9]" maxlength="6" label="Pincode" value="{{pincode}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="Enquiry Source" >
+            <paper-menu id="source" class="dropdown-content" required on-iron-select="source" valueattr="value" >
+              <paper-item >Zee Television Ads</paper-item>
+              <paper-item >Newspaper</paper-item>
+              <paper-item >Print Media</paper-item>
+              <paper-item >Poll Board</paper-item>
+              <paper-item >Direction Boards</paper-item>
+              <paper-item >Bounties</paper-item>
+              <paper-item >FM/Radio</paper-item>
+              <paper-item >BTL Activities</paper-item>
+              <paper-item >Referrer</paper-item>
+              <paper-item >Weblinks</paper-item>
+              <paper-item >Website</paper-item>
+              <paper-item >Siblings</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-4" id="sibname">
+          <paper-input  label="Names of sibling" value="{{siblingname}}"></paper-input>
+        </div>
+        <div class="col-sm-4" id="sibdetail">
+          <paper-input  label="Grade of sibling" value="{{siblingdetails}}"></paper-input>
+        </div>
+        <div class="col-sm-4" id="referrer">
+          <paper-input  required error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
+            <template is="dom-repeat" items="{{itemArray}}" as="item">
+              <paper-item >{{item.itemdes}}</paper-item>
+            </template>
+          </paper-listbox>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Facility Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          Like to Avail Transport ?<span><paper-checkbox id="transportyes" class="checkbox" on-change="transportHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="transportno" class="checkbox" on-change="transportHandlerno">No</paper-checkbox></span>
+        </div>
+        <div class="col-sm-4">
+        Like to Avail Canteen Facility ?
+          <span><paper-checkbox id="canteenyes" class="checkbox" on-change="canteenHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="canteenno" class="checkbox" on-change="canteenHandlerno">No</paper-checkbox></span>
+        </div>
+        <div class="col-sm-4">
+        Prospectus sold or not ?
+          <span><paper-checkbox id="prosoldyes" class="checkbox" on-change="prosoldHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="prosoldno" class="checkbox" on-change="prosoldHandlerno">No</paper-checkbox></span>
+        </div>
+         <div class="col-sm-4">
+          <paper-input id="prospectno" label="Prospectus No" value="{{prospectusno}}"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Language Preferences</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+            <span class="col-sm-12"><h5>2nd Language</h5></span>
+          <span><paper-checkbox class="col-sm-6" id="secondhindi" class="checkbox" on-change="secondhindiHandler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="secondkannada" class="checkbox" on-change="secondkannadaHandler">Kannada</paper-checkbox></span>
+        </div>
+        <div class="col-sm-6" id="thirdlanguage">
+          <span class="col-sm-12"><h5>3rd Language</h5></span>
+          <span><paper-checkbox class="col-sm-3" id="thirdfrench" class="checkbox" on-change="thirdfrenchHandler">French</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="thirdsanskrit" class="checkbox" on-change="thirdsanskritHandler">Sanskrit</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="thirdkannada" class="checkbox" on-change="thirdkannadaHandler">Kannada</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="thirdhindi" class="checkbox" on-change="thirdhindiHandler">Hindi</paper-checkbox></span>
+        </div>
+      </div>
+      <div class="col-md-12 form-button">
+        <paper-button id="searchenq" class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
+        <paper-button id="newenq" class="btn btn-primary" on-click="register">REGISTER</paper-button>
+      </div>
+       <crm-service id="service"></crm-service>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+        var fngender;
+        var secondlanguage;
+        var thirdlanguage;
+        var transportreq;
+        var canteenreq;
+        var enquiysource;
+        var enqno;
+        var grade;
+        var propsold;
+        var mothertongue;
+        var dadoccup;
+        var momtheroccup;
+        var dadincome;
+        var momincome;
+        var namearr=[];
+        var academicyear;
+        var dobdate;
+        var admissiontestdate;
+        var admissiontest;
+        var admissiontestenglish;
+        var admissiontestmaths;
+        var admissiontestevs;
+    Polymer({
+      is: 'detailed-enquiry-form',
+      ready:function(){
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true;
+          this.$.dadoff.hidden=true;
+          this.$.dadjob.hidden=true;
+          this.$.dadsal.hidden=true;
+          this.$.momoff.hidden=true;
+          this.$.momjob.hidden=true;
+          this.$.momsal.hidden=true;
+          this.$.prospectno.hidden=true;
+          this.$.newenq.hidden=true;
+          this.$.academicyear.hidden=true;
+          this.$.newenquiry.hidden=false;
+          this.$.thirdlanguage.hidden=true;
+      },
+      Fnclear:function(){
+        this.ready();
+          document.getElementById('searchtext').value="";
+          this.prospectusno="";
+          this.firstname="";
+          this.middlename="";
+          this.lastname="";
+          fngender=null;
+          admissiontest = null;
+          this.grade="";
+          this.dob="";
+          this.oldclass="";
+          this.oldschool="";
+          mothertongue=null;
+          this.fathername="";
+          this.mothername="";
+          this.fatheredu="";
+          this.motheredu="";
+          this.fathermob="";
+          this.mothermob="";
+          this.fathermail="";
+          this.mothermail="";
+          this.fathercompany="";
+          this.mothercompany="";
+          dadoccup=null;
+          momtheroccup=null;
+          this.flat="";
+          this.address1="";
+          this.address2="";
+          this.address3="";
+          this.city="";
+          this.pincode="";
+          this.state="";
+          enquiysource=null;
+          this.siblingname="";
+          this.siblingdetails="";
+          transportreq=null;
+          canteenreq=null;
+          secondlanguage=null;
+          thirdlanguage=null;
+          propsold=null;
+          this.fatherjob="";
+          this.motherjob="";
+          dadincome=null;
+          momincome=null;
+          admissiontestenglish = null;
+          admissiontestmaths = null;
+          admissiontestevs = null;
+          this.$.language.selected=-1;
+          this.$.grade.selected=-1;
+          this.$.dadoccupation.selected=-1;
+          this.$.motheroccupation.selected=-1;
+          this.$.dadsalary.selected=-1;
+          this.$.mothersalary.selected=-1;
+          this.$.source.selected=-1;
+          this.$.dfmale.checked=false;
+          this.$.dffemale.checked=false;
+          this.$.transportyes.checked=false;
+          this.$.transportno.checked=false;
+          this.$.canteenyes.checked=false;
+          this.$.canteenno.checked=false;
+          this.$.prosoldyes.checked=false;
+          this.$.prosoldno.checked=false;
+          this.$.secondhindi.checked=false;
+          this.$.secondkannada.checked=false;
+          this.$.thirdfrench.checked=false;
+          this.$.thirdsanskrit.checked=false;
+          this.$.thirdkannada.checked=false;
+          this.$.thirdhindi.checked=false;
+          document.querySelector("#dfmale").checked=false;
+          document.querySelector("#dffemale").checked=false;
+          document.querySelector("#transportyes").checked=false;
+          document.querySelector("#transportno").checked=false;
+          document.querySelector("#canteenyes").checked=false;
+          document.querySelector("#canteenno").checked=false;
+          document.querySelector("#secondkannada").checked=false;
+          document.querySelector("#secondhindi").checked=false;
+          document.querySelector("#thirdhindi").checked=false;
+          document.querySelector("#thirdkannada").checked=false;
+          document.querySelector("#thirdsanskrit").checked=false;
+          document.querySelector("#thirdfrench").checked=false;
+          document.querySelector("#admissiontestyes").checked=false;
+          document.querySelector("#admissiontestno").checked=false;
+          document.querySelector("#english").checked=false;
+          document.querySelector("#maths").checked=false;
+          document.querySelector("#evs").checked=false;
+      },
+      search:function(){
+        enqno=document.getElementById('searchtext').value;
+        //alert(this.enqno+'    '+enqno);
+        this.$.service.getenqirydetails(enqno);
+      },
+      Fnresult:function(dob,gender){
+        var dt1=new Date(dob);
+
+          var dt=new Date();
+          var pr_year=dt.getFullYear();
+          var bt_year=dt1.getFullYear();
+          var diff=parseInt(pr_year - bt_year);
+          this.ageofyr=diff+" Years";
+
+          if(gender=='Male'){
+            fngender="Male";
+           document.querySelector("#dfmale").checked=true;
+           document.querySelector("#dffemale").checked=false;
+           }
+           else{
+            fngender="Female";
+            document.querySelector("#dfmale").checked=false;
+           document.querySelector("#dffemale").checked=true;
+           }
+    },
+    maleHandler:function(){
+      if(document.querySelector("#dfmale").checked==true)
+        {
+         document.querySelector("#dffemale").checked=false;
+         fngender="Male";
+         //alert(gender);
+       }
+       else{
+        fngender=null;
+       }
+    },
+    femaleHandler:function(){
+      if(document.querySelector("#female").checked==true)
+        {
+         document.querySelector("#male").checked=false;
+         fngender="Female";
+         //alert(gender);
+       }
+       else{
+        fngender=null;
+       }
+    },
+    admissiontestyesHandler:function(){
+      if(document.querySelector("#admissiontestyes").checked==true)
+      {
+        document.querySelector("#admissiontestno").checked=false;
+        admissiontest="Yes";
+      }
+      else{
+        admissiontest=null;
+      }
+    } ,
+      admissiontestnoHandler:function(){
+        if(document.querySelector("#admissiontestno").checked==true)
+        {
+          document.querySelector("#admissiontestyes").checked=false;
+          admissiontest="No";
+        }
+        else{
+          admissiontest=null;
+        }
+      } ,
+    transportHandleryes:function(){
+      if(document.querySelector("#transportyes").checked==true)
+      {
+        transportreq="yes";
+        document.querySelector("#transportno").checked=false;
+      }
+      else{
+        transportreq=null;
+      }
+    },
+    transportHandlerno:function(){
+        if(document.querySelector("#transportno").checked==true)
+      {
+        transportreq="no";
+        document.querySelector("#transportyes").checked=false;
+      }
+      else{
+        transportreq=null;
+      }
+
+    },
+    canteenHandleryes:function(){
+      if(document.querySelector("#canteenyes").checked==true)
+      {
+        canteenreq="yes";
+        document.querySelector("#canteenno").checked=false;
+      }
+      else{
+        canteenreq=null;
+      }
+
+    },
+    canteenHandlerno:function(){
+      if(document.querySelector("#canteenno").checked==true)
+      {
+        canteenreq="no";
+        document.querySelector("#canteenyes").checked=false;
+      }
+      else{
+        canteenreq=null;
+      }
+    },
+    prosoldHandleryes:function(){
+      if(document.querySelector("#prosoldyes").checked==true)
+      {
+        propsold="yes";
+        document.querySelector("#prosoldno").checked=false;
+        this.$.service.getprospectno();
+        this.$.prospectno.hidden=false;
+      }
+      else{
+        propsold=null;
+        this.$.prospectno.hidden=true;
+        this.prospectusno="";
+      }
+    },
+    prosoldHandlerno:function(){
+        if(document.querySelector("#prosoldno").checked==true)
+      {
+        propsold="no";
+        document.querySelector("#prosoldyes").checked=false;
+        this.$.prospectno.hidden=true;
+        this.prospectusno="";
+      }
+      else{
+        propsold=null;
+      }
+
+    },
+    secondhindiHandler:function(){
+      if(document.querySelector("#secondhindi").checked==true){
+        secondlanguage="Hindi";
+        document.querySelector("#secondkannada").checked=false;
+        if(thirdlanguage=='Hindi'){
+          alert("Kindly select different Second language");
+          document.querySelector("#secondhindi").checked=false;
+        }
+      }
+      else{
+        secondlanguage=null;
+      }
+    },
+    secondkannadaHandler:function(){
+      if(document.querySelector("#secondkannada").checked==true){
+        secondlanguage="Kannada";
+        document.querySelector("#secondhindi").checked=false;
+        if(thirdlanguage=='Kannada'){
+          alert("Kindly select different Second language");
+          document.querySelector("#secondkannada").checked=false;
+        }
+      }
+      else{
+        secondlanguage=null;
+      }
+    },
+    thirdfrenchHandler:function(){
+      if(document.querySelector("#thirdfrench").checked==true){
+        thirdlanguage="French";
+        document.querySelector("#thirdhindi").checked=false;
+        document.querySelector("#thirdkannada").checked=false;
+        document.querySelector("#thirdsanskrit").checked=false;
+      }
+      else{
+        thirdlanguage=null;
+      }
+    },
+    thirdhindiHandler:function(){
+      if(document.querySelector("#thirdhindi").checked==true){
+        if(secondlanguage=='Hindi'){
+            alert("Kindly select different third language");
+            document.querySelector("#thirdhindi").checked=false;
+        }
+        else{
+            thirdlanguage="Hindi";
+        }
+
+        document.querySelector("#thirdfrench").checked=false;
+        document.querySelector("#thirdkannada").checked=false;
+        document.querySelector("#thirdsanskrit").checked=false;
+      }
+      else{
+        thirdlanguage=null;
+      }
+    },
+    thirdkannadaHandler:function(){
+      if(document.querySelector("#thirdkannada").checked==true){
+        if(secondlanguage=='Kannada'){
+            alert("Kindly select different third language");
+            document.querySelector("#thirdhindi").checked=false;
+        }
+        else{
+            thirdlanguage="Kannada";
+        }
+        document.querySelector("#thirdfrench").checked=false;
+        document.querySelector("#thirdhindi").checked=false;
+        document.querySelector("#thirdsanskrit").checked=false;
+      }
+      else{
+        thirdlanguage=null;
+      }
+    },
+    thirdsanskritHandler:function(){
+      if(document.querySelector("#thirdsanskrit").checked==true){
+        thirdlanguage="Sanskrit";
+        document.querySelector("#thirdfrench").checked=false;
+        document.querySelector("#thirdhindi").checked=false;
+        document.querySelector("#thirdkannada").checked=false;
+      }
+      else{
+        thirdlanguage=null;
+      }
+    },
+    englishHandler:function(){
+      if(document.querySelector("#english").checked==true){
+        admissiontestenglish="English";
+      }
+      else{
+        admissiontestenglish=null;
+      }
+    },
+      mathsHandler:function(){
+        if(document.querySelector("#maths").checked==true){
+          admissiontestmaths="Maths";
+        } else {
+          admissiontestmaths=null;
+        }
+      },
+      evsHandler:function(){
+        if(document.querySelector("#evs").checked==true){
+          admissiontestevs="EVS";
+        } else {
+          admissiontestevs=null;
+        }
+      },
+    source:function(e){
+        enquiysource=(e.target.selectedItem.textContent).trim();
+
+        if(enquiysource=="Siblings"){
+          this.$.sibname.hidden=false;
+          this.$.sibdetail.hidden=false;
+          this.$.referrer.hidden=true;
+        }
+        else if(enquiysource=="Referrer"){
+          this.$.referrer.hidden=false;
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+           this.$.service.getreferrername();
+        }
+        else{
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true;
+        }
+
+    },
+      getadmissiondate:function(date){
+        admissiontestdate = localStorage.getItem("localsess_admission_date");
+        alert(admissiontestdate);
+      },
+    language:function(e){
+        mothertongue=(e.target.selectedItem.textContent).trim();
+    },
+      classseeking:function(e){
+        grade=(e.target.selectedItem.textContent).trim();
+        if((grade=="Nursery")||(grade=="LKG")||(grade=="UKG")||(grade=="Grade-1")||(grade=="Grade-2")||(grade=="Grade-3")||(grade=="Grade-4")){
+            this.$.thirdlanguage.hidden=true;
+        }
+
+        else{
+            this.$.thirdlanguage.hidden=false;
+        }
+      },
+    submit:function(){
+
+      if(this.firstname == "" || this.lastname == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.fathermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == ""){
+          this.$.fname.validate();
+          //this.$.mname.validate();
+          this.$.lname.validate();
+          //this.$.grade.validate();
+          //this.$.oldschool.validate();
+          //this.$.oldclass.validate();
+          this.$.dadname.validate();
+          this.$.momname.validate();
+          this.$.dadedu.validate();
+          // this.$.momedu.validate();
+          this.$.dadmob.validate();
+          this.$.dadmail.validate();
+          // this.$.mommob.validate();
+          this.$.flat.validate();
+          this.$.add1.validate();
+          //this.$.add2.validate();
+          //this.$.add3.validate();
+          this.$.city.validate();
+          this.$.pin.validate();
+          this.$.state.validate();
+      }
+      else if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
+        alert('Select at least any one subject ');
+      }
+      else if(admissiontest == null){
+        alert('Please select admission test required or not');
+      }
+      else if(fngender==null){
+          alert('Select the gender of the student');
+      }
+      else if(enquiysource==null){
+          alert('Select the enquiry source');
+      }
+      else if(grade==null){
+        alert('Select the Class seeking for admission');
+      }
+      else if(mothertongue==null){
+          alert('Select the mother tongue');
+      }
+      else if(transportreq==null){
+          alert('Select the transport requirment');
+      }
+      else if(canteenreq==null){
+          alert('Select the canteen requirment');
+      }
+      else if(secondlanguage==null){
+          alert('Select the second language');
+      }
+      /*else if(thirdlanguage==null){
+          alert('Select the third language');
+      }*/
+      else if(propsold==null){
+          alert('Prospectus sold status is not marked');
+      }
+      else if(dadoccup==null){
+          alert("Select Father's Occupation");
+      }
+      else if (momtheroccup==null) {
+          alert("Select Mother's Occupation");
+      }
+      else if(thirdlanguage==null){
+        // alert(grade);
+
+        if(grade == "Nursery"||"LKG"||"UKG"||"Grade-1"||"Grade-2"||"Grade-3"||"Grade-4"){
+          alert('coming');
+          this.$.service.updateenquiryform(this.enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,"",propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs);
+
+
+        } else {
+          alert('Select the third language');
+        }
+      }
+      else{
+        //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
+
+      this.$.service.updateenquiryform(this.enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs);
+
+    }
+   // this.Fnclear();
+},
+dadoccupation:function(e){
+  dadoccup=(e.target.selectedItem.textContent).trim();
+if(dadoccup=="Self Employed"||dadoccup=="Government Employee"||dadoccup=="Private Employee"){
+      this.$.dadoff.hidden=false;
+      this.$.dadjob.hidden=false;
+      this.$.dadsal.hidden=false;
+
+  }
+  else{
+      this.$.dadoff.hidden=true;
+      this.$.dadjob.hidden=true;
+      this.$.dadsal.hidden=true;
+
+  }
+},
+motheroccupation:function(e){
+momtheroccup=(e.target.selectedItem.textContent).trim();
+//alert(momtheroccup);
+if(momtheroccup=="Self Employed"||momtheroccup=="Government Employee"||momtheroccup=="Private Employee"){
+      this.$.momoff.hidden=false;
+      this.$.momjob.hidden=false;
+      this.$.momsal.hidden=false;
+}
+else{
+      this.$.momoff.hidden=true;
+      this.$.momjob.hidden=true;
+      this.$.momsal.hidden=true;
+}
+},
+dadsalary:function(e){
+  dadincome=(e.target.selectedItem.textContent).trim();
+},
+mothersalary:function(e){
+  momincome=(e.target.selectedItem.textContent).trim();
+},
+Fnlistbox:function(nameitem){
+          namearr=nameitem;
+          alert("kajshdkfdskj");
+          alert("sdlkjgfkjsaldf         "+JSON.stringify(namearr));
+        },
+        FnInputChanged:function(e){
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+          var arr=[];
+          arr.push({"itemdes":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflag="true";
+            this.itemval="";
+            //alert('yes');
+            var len=(this.textvalue).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArray="";
+              this.itemval="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.textvalue).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearr.length;i++)
+              {
+                var subval=((namearr[i].name).trim()).substring(0,backsubval.length);
+                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                {
+                  var obj={"itemdes":""};
+                  obj.itemdes=namearr[i].name;
+                  arr.push(obj);
+                }
+              }
+              this.itemArray=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflag=="true") {
+              this.itemval = (this.textvalue).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflag="false";
+            }
+            else
+            this.itemval = this.textvalue +String.fromCharCode((e.keyCode));
+            if(this.itemval.length>0)
+            {
+              for(var i=0;i<namearr.length;i++){
+                var subval=((namearr[i].name).trim()).substring(0,this.itemval.length);
+                if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                  var obj={"itemdes":""};
+                  obj.itemdes=namearr[i].name;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArray=arr;
+              else {
+                var obj={"itemdes":""};
+                  obj.itemdes=namearr[i].name;
+                  arr.push(obj);
+                this.itemArray=arr;
+              }
+            }
+          }
+
+        },
+        Fnselected:function(e)
+        {
+          //alert('s');
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.referrername = e.target.selectedItem.textContent.trim();
+          this.itemArray=[];
+          document.querySelector('#itemlist').selected=-1;
+        },
+      setenqno:function(enqno){
+        document.getElementById('searchtext').value=enqno;
+      },
+      newenquriy:function(){
+        this.$.service.getenqno();
+        this.$.searchenq.hidden=true;
+        this.$.newenq.hidden=false;
+        this.$.academicyear.hidden=false;
+        this.$.newenquiry.hidden=true;
+      },
+      Fnacademicyr:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
+      },
+      register:function() {
+        var enqnumber = document.getElementById('searchtext').value;
+        if (this.firstname == "" || this.lastname == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == "") {
+          this.$.fname.validate();
+          //this.$.mname.validate();
+          this.$.lname.validate();
+          //this.$.grade.validate();
+          //this.$.oldschool.validate();
+          //this.$.oldclass.validate();
+          this.$.dadname.validate();
+          this.$.momname.validate();
+          this.$.dadedu.validate();
+          this.$.momedu.validate();
+          this.$.dadmob.validate();
+          this.$.dadmail.validate();
+          this.$.mommob.validate();
+          this.$.flat.validate();
+          this.$.add1.validate();
+          //this.$.add2.validate();
+          //this.$.add3.validate();
+          this.$.city.validate();
+          this.$.pin.validate();
+          this.$.state.validate();
+        }
+        else if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
+          alert('Select at least any one subject ');
+        }
+        else if(admissiontest == null){
+          alert('Please select admission test required or not');
+        }
+        else if (fngender == null) {
+          alert('Select the gender of the student');
+        }
+        else if (enquiysource == null) {
+          alert('Select the enquiry source');
+        }
+        else if(grade==null){
+          alert('Select the Class seeking for admission');
+        }
+        else if (mothertongue == null) {
+          alert('Select the mother tongue');
+        }
+        else if (transportreq == null) {
+          alert('Select the transport requirment');
+        }
+        else if (canteenreq == null) {
+          alert('Select the canteen requirment');
+        }
+        else if (secondlanguage == null) {
+          alert('Select the second language');
+        }
+        /*else if (thirdlanguage == null) {
+          alert('Select the third language');
+        }*/
+        else if (propsold == null) {
+          alert('Prospectus sold status is not marked');
+        }
+        else if (dadoccup == null) {
+          alert("Select Father's Occupation");
+        }
+        else if (momtheroccup == null) {
+          alert("Select Mother's Occupation");
+        }
+        else if(thirdlanguage==null){
+          alert(grade);
+          if(grade == "Pre KG"||"LKG"||"UKG"||"Grade 1"||"Grade 2"||"Grade 3"){
+            this.$.service.registerenquiryform(enqnumber ,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs);
+          } else {
+            alert('Select the third language');
+          }
+        } else {
+          //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
+          this.$.service.registerenquiryform(enqnumber , this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno,academicyear,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs);
+        }
+      },
+      FnSelectEnquiry:function(e){
+        var enquiry=(e.target.selectedItem.textContent).trim();
+        var inx=enquiry.indexOf('-');
+        var enquiry_no=enquiry.substring(0,inx);
+        var enquiry_name=enquiry.substring(inx+1);
+        localStorage.setItem("curr_sess_enquiryno",enquiry_no);
+        localStorage.setItem("curr_sess_enquiryname",enquiry_name);
+        this.$.service.callFetchenquiryinfoService();
+      },
+      dateclear:function(){
+        alert("Select DOB properly, it cannot be future date");
+
+      },
+       getdate:function(dates){
+          var dt1=new Date(dates);
+          dobdate=dates;
+          var dt=new Date();
+          var pr_year=dt.getFullYear();
+          var bt_year=dt1.getFullYear();
+          var diff=parseInt(pr_year-bt_year);
+          //alert(diff);
+          this.ageofyr=diff+" Years";
+       },
+      Fngrade:function(grades){
+        this.grades = grades;
+      }
+    });
+  })();
+  </script>
+</dom-module>

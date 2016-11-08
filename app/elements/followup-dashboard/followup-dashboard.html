@@ -1,0 +1,66 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\followup-dashboard-item-card/followup-dashboard-item-card.html">
+
+
+<dom-module id="followup-dashboard">
+  <template>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Open</th>
+        <th>In Progress</th>
+        <th>Closed</th>
+        <th>Exhausted</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>
+          <template  is="dom-repeat" items="{{openarr}}" as="view">
+          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.followup_status}}"></follow-up-dashboard-item-card>
+        </template>
+      </td>
+        <td>
+          <template  is="dom-repeat" items="{{processarr}}" as="view">
+            <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.followup_status}}"></follow-up-dashboard-item-card>
+          </template>
+        </td>
+      <td>
+        <template  is="dom-repeat" items="{{closearr}}" as="view">
+          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.followup_status}}"></follow-up-dashboard-item-card>
+        </template>
+      </td>
+
+      <td>
+        <template  is="dom-repeat" items="{{exhaustedarr}}" as="view">
+          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.followup_status}}"></follow-up-dashboard-item-card>
+        </template>
+      </td>
+      </tr>
+      </tbody>
+    </table>
+    <crm-service id="service"></crm-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'followup-dashboard',
+      ready:function(){
+        this.$.service.getfollowupcount();
+      }
+    });
+  })();
+  </script>
+</dom-module>

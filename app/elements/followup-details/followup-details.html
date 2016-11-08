@@ -1,0 +1,40 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html" xmlns="http://www.w3.org/1999/html">
+<link rel="import" href="..\followup-details-items\followup-details-items.html">
+
+<dom-module id="followup-details">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+       <div class="row">
+        <table style="margin-left: 6%;">
+        <thead>
+          <tr>
+            <th style="width:5%">ID</th>
+            <th style="width:5%">Student Name</th>
+            <th style="width:6%">confidence Level</th>
+            <th style="width:7%">followup</th>
+            <th style="width:5%">view</th>
+          </tr>
+        </thead>
+        </table>
+      <template is="dom-repeat" items="{{followuparr}}" as="view">
+            <followup-details-items id="{{view.enquiry_id}}" student="{{view.enquiry_name}}" confidencelevel = "{{view.currentz_confidence_level}}" followupflag = "{{view.followup_flag}}"></followup-details-items>
+      </template>
+     </br>
+    </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'followup-details',
+    });
+  })();
+  </script>
+</dom-module>

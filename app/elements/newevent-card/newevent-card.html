@@ -1,0 +1,209 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html">
+<link rel="import" href="../../bower_components/paper-time-picker/paper-time-picker.html">
+<link rel="import" href="../start-datepicker-card/start-datepicker-card.html">
+<link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html">
+<link rel="import" href="../end-datepicker-card/end-datepicker-card.html">
+<dom-module id="newevent-card">
+  <template>
+    <div class="row event-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-12 event-input">
+          <paper-input label="Event Title" value="{{title}}" name="title"></paper-input>
+        </div>
+        <div class="col-sm-12 event-input">
+          <paper-textarea  placeholder="Event Description" name="description" value="{{description}}"></paper-textarea>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-5 event-input">
+          <paper-dropdown-menu label="Event Type">
+            <paper-menu id="type" class="dropdown-content" required on-iron-select="eventtype" valueattr="value" >
+              <paper-item value="competition">Competition</paper-item>
+              <paper-item value="activity">Activity</paper-item>
+              <paper-item value="seminar">Seminar</paper-item>
+              <paper-item value="conference">Conference</paper-item>
+              <paper-item value="holiday">Holiday</paper-item>
+              <paper-item value="celebration">Celebration</paper-item>
+              <paper-item value="celebration">Celebration</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6 event-checkbox event-checkbox-recurrence">
+          <paper-checkbox id="recurrence" on-change="recurrence" value="yes">Is Recurrence Event?</paper-checkbox>
+        </div>
+        <div class="col-sm-6 event-input">
+          <paper-input label="Event Location" value="{{location}}"></paper-input>
+        </div>
+      </div>
+      <iron-collapse id="occurrance">
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-6 event-input">
+            <paper-dropdown-menu label="Occurrence Frequency" >
+              <paper-menu id="frequency" class="dropdown-content" required on-iron-select="frequency" attr-for-selected="value">
+                <paper-item value="day">Day</paper-item>
+                <paper-item value="week">Week</paper-item>
+                <paper-item value="month">Month</paper-item>
+                <paper-item value="year">Year</paper-item>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+          <div class="col-sm-6 event-input">
+            <paper-input label="Occurrences" value="{{occurrance}}"></paper-input>
+          </div>
+        </div>
+      </iron-collapse>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-12 event-input">
+          <span class="col-sm-6"><start-datepicker-card></start-datepicker-card></span>
+          <span class="col-sm-6"><end-datepicker-card></end-datepicker-card></span>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-12">
+          <div class="col-sm-6">
+            <label><h4>Classes</h4></label>
+            <span class="event-checkbox event-checkbox-grade">
+              <paper-checkbox id="checkall" on-change="selectall">Check All</paper-checkbox>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade1" value="Grade - 1" on-change="garde1">Grade 1</paper-checkbox>
+          </div>
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade2" value="Grade - 2" on-change="garde2">Grade 2</paper-checkbox>
+          </div>
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade3" value="Grade - 3" on-change="garde3">Grade 3</paper-checkbox>
+          </div>
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade4" value="Grade - 4" on-change="garde4">Grade 4</paper-checkbox>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade5" value="Grade - 5" on-change="garde5">Grade 5</paper-checkbox>
+          </div>
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade6" value="Grade - 6" on-change="garde6">Grade 6</paper-checkbox>
+          </div>
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade7" value="Grade - 7" on-change="garde7">Grade 7</paper-checkbox>
+          </div>
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade8" value="Grade - 8" on-change="garde8">Grade 8</paper-checkbox>
+          </div>
+          <div class="col-sm-3 event-checkbox">
+            <paper-checkbox class="checkbox" id="grade9" value="Grade - 9" on-change="garde9">Grade 9</paper-checkbox>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 form-button">
+        <button type="button" class="btn btn-primary" on-click="newevent">Add Event</button>
+      </div>
+      <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="event_success" text="">Event Added</paper-toast>
+    </div>
+    <event-service id="event"></event-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var grade= [];
+    var eventtype ="";
+    var frequency = "";
+    var is_recurrence="";
+    Polymer({
+      is: 'newevent-card',
+      eventtype:function(e){
+        eventtype = (e.target.selectedItem.textContent).trim();
+      },
+      frequency:function(e){
+        frequency = (e.target.selectedItem.textContent).trim();
+      },
+      recurrence:function(){
+        is_recurrence = document.getElementById("recurrence").value;
+        document.querySelector("#occurrance").toggle();
+      },
+      selectall:function(){
+        var select_all = document.querySelector("#checkall");
+        var checkboxes = document.getElementsByClassName("checkbox");
+          for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = select_all.checked;
+            var grade = checkboxes[i].value;
+          };
+      },
+      garde1:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade1 = document.getElementById("grade1").value;
+      },
+      garde2:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade2 = document.getElementById("grade2").value;
+      },
+      garde3:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade3 = document.getElementById("grade3").value;
+      },
+      garde4:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade4 = document.getElementById("grade4").value;
+      },
+      garde5:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade5 = document.getElementById("grade5").value;
+      },
+      garde6:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade6 = document.getElementById("grade6").value;
+      },
+      garde7:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade7 = document.getElementById("grade7").value;
+      },
+      garde8:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade8 = document.getElementById("grade8").value;
+      },
+      garde9:function(){
+        var select_all = document.querySelector("#checkall");
+        select_all.checked = false;
+        var grade9 = document.getElementById("grade9").value;
+      },
+      newevent:function(){
+        var title= this.title;
+        var description=this.description ;
+        this.startdate=localStorage.getItem("localsess_start_date");
+        this.enddate=localStorage.getItem("localsess_end_date");
+        this.$.event.addevent(title,description, this.startdate,this.enddate,eventtype,frequency,this.occurrance,is_recurrence,this.location);
+      },
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,167 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\admission-service/admission-service.html">
+<link rel="import" href="..\installment-card/installment-card.html">
+<link rel="import" href="..\prospectousfee-card/prospectousfee-card.html">
+<link rel="import" href="..\annualfee-card/annualfee-card.html">
+<link rel="import" href="..\cautionfee-card/cautionfee-card.html">
+<link rel="import" href="..\registerationfee-card/registerationfee-card.html">
+<link rel="import" href="..\tuitionfee-card/tuitionfee-card.html">
+<link rel="import" href="..\kitfee-card/kitfee-card.html">
+
+<dom-module id="fee-card">
+<style>
+  .horizontalframe,.inshead{
+     @apply(--layout-horizontal);
+  }
+  .cb{
+    @apply(--layout-horizontal);
+  }
+</style>
+  <template>
+    <div class="row enquiry-form">
+      
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="custom-search-form col-sm-4">
+          <div id="search" show$="{{show}}" on-click="toggleSearch">
+            <span><paper-input label="Enter Enquiry No / Firstname " value="{{enquiryno}}"></paper-input></span>
+          </div>
+        </div>
+        <div class="custom-search-form col-sm-2 paper-search">
+          <span><paper-icon-button icon="search" on-click="FnSearchEnquiry"></paper-icon-button></span>
+        </div>
+        <div class="custom-search-form col-sm-4">
+          <div id="search" show$="{{show}}" on-click="toggleSearch">
+            <span><paper-input label="Enter Admission No / Firstname " value="{{admissionno}}"></paper-input></span>
+          </div>
+        </div>
+        <div class="custom-search-form col-sm-2 paper-search">
+          <span><paper-icon-button icon="search" on-click="FnSearchAdmission"></paper-icon-button></span>
+        </div>
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Academic Year" value="{{academicyear}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Class" value="{{class}}"></paper-input>
+        </div>
+      </div>
+
+      <div class="form-group-heading">
+        <h4>Student Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Student Name" value="{{studentname}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Date of Birth" value="{{dob}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Fees" value="{{fees}}"></paper-input>
+        </div>
+      </div>
+    
+      <div class="form-group-heading">
+        <h4>Payment</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button class="prospect"  on-click="FnToggleProspect">Prospectous Fee </paper-button>
+        <iron-collapse id="collapse1">
+          <div class="content"> 
+          <prospectousfee-card></prospectousfee-card>           
+          </div>
+        </iron-collapse>
+      </div>
+     
+      <div class="list-group col-sm-12 panel-body form-category">        
+        <paper-button class="registeration"  on-click="FnToggleRegisteration">Registeration Fee </paper-button>
+        
+        <iron-collapse id="collapse2">
+          <div class="content">
+          <registerationfee-card></registerationfee-card>    
+          </div>
+        </iron-collapse>
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button class="schoolkit"  on-click="FnToggleKit">School Kit Fee </paper-button>
+        <iron-collapse id="collapse5">
+          <div class="content">
+          <kitfee-card></kitfee-card>    
+          </div>
+        </iron-collapse>
+      </div>
+      
+      <div class="list-group col-sm-12 panel-body form-category">        
+        <paper-button class="annual"  on-click="FnToggleAnnual">Annual & Tuition Fee </paper-button>
+        <iron-collapse id="collapse4">
+          <div class="content">         
+          <annualfee-card></annualfee-card>   
+          </div>
+        </iron-collapse>
+      </div>
+      
+       <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button class="prospect"  on-click="FnToggleCaution">Miscellaneous Fee</paper-button>
+        <iron-collapse id="collapse6">
+          <div class="content"> 
+          <cautionfee-card></cautionfee-card>           
+          </div>
+        </iron-collapse>
+      </div>
+    </div>
+
+    <admission-service id="admissionservice"></admission-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'fee-card',
+      FnSearchEnquiry:function(){
+        this.$.admissionservice.callSearchadmnenquiryService(this.enquiryno);
+        
+      },
+      FnSearchAdmission:function(){z
+        this.$.admissionservice.callSearchadmissionService(this.admissionno);
+        
+      },
+      FnToggleProspect:function(){
+        localStorage.setItem("curr_sess_feecomponent",'pros_fee');
+        this.$.collapse1.toggle();
+      },
+      FnToggleRegisteration:function(){
+        localStorage.setItem("curr_sess_feecomponent",'reg_fee');
+        this.$.collapse2.toggle();
+      },
+      FnToggleTuition:function(){
+        localStorage.setItem("curr_sess_feecomponent",'tuition_fee');
+        this.$.collapse3.toggle();
+      },
+      FnToggleAnnual:function(){
+        localStorage.setItem("curr_sess_feecomponent",'annual_fee');
+        this.$.collapse4.toggle();
+      },
+      FnToggleKit:function(){
+        localStorage.setItem("curr_sess_feecomponent",'kit_fee');
+        this.$.collapse5.toggle();
+      },
+      FnToggleCaution:function(){
+        localStorage.setItem("curr_sess_feecomponent",'caution_fee');
+        this.$.collapse6.toggle();
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

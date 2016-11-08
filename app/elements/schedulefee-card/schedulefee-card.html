@@ -1,0 +1,167 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../installment-date-picker/installment-date-picker.html">
+<link rel="import" href="../fee-schedule-service/fee-schedule-service.html">
+<link rel="import" href="../fee-installment-itemcard/fee-installment-itemcard.html">
+
+<dom-module id="schedulefee-card">
+  <template>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+            <paper-input label="School Name" value="{{schoolname}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Grade" >
+            <paper-menu id="grade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+              <template  is="dom-repeat" items="{{gradearr}}" as="item">
+              <paper-item>{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Admission Year" on-iron-select="FnSelectAdmissionYear" attr-for-selected="value">
+            <paper-listbox class="dropdown-content">
+              <paper-item value="AY-2016-2017">AY-2011-2012</paper-item>
+              <paper-item value="AY-2016-2017">AY-2012-2013</paper-item>
+              <paper-item value="AY-2016-2017">AY-2013-2014</paper-item>
+              <paper-item value="AY-2016-2017">AY-2014-2015</paper-item>
+              <paper-item value="AY-2016-2017">AY-2015-2016</paper-item>
+              <paper-item value="AY-2016-2017">AY-2016-2017</paper-item>
+              <paper-item value="AY-2017-2018">AY-2017-2018</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Academic Year" on-iron-select="FnSelectAcademicYear" attr-for-selected="value">
+            <paper-listbox class="dropdown-content">
+              <paper-item value="AY-2016-2017">AY-2016-2017</paper-item>
+              <paper-item value="AY-2017-2018">AY-2017-2018</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        </div>
+
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeeshow}}">         
+          <div class="col-sm-6 enquiry-input">
+            <paper-input  label="Fee Code" value="{{feecode}}"></paper-input>
+          </div>
+          <div class="col-sm-4 enquiry-input">
+            <paper-input label="Fee Name" value="{{feename}}"></paper-input>
+          </div>
+        </div>
+        
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecard}}">
+          <div class="col-sm-4 enquiry-input">
+            <paper-input label="Fee Type" value="{{feetype}}"></paper-input>
+          </div>
+          <div class="col-sm-4 enquiry-input">
+            <paper-input label="Total Fee" value="{{totalfees}}"></paper-input>
+          </div>
+          <div class="col-sm-4 enquiry-input">
+            <paper-dropdown-menu label="No Of Installment" >
+              <paper-menu id="installment" class="dropdown-content" required on-iron-select="FnSelectInstallment" valueattr="value" >
+                <paper-item >1</paper-item>
+                <paper-item >2</paper-item>
+                <paper-item >3</paper-item>
+                <paper-item >4</paper-item>
+                <paper-item >5</paper-item>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+        </div>
+
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideinstallment}}">
+        <template  is="dom-repeat" items="{{installmentarr}}" as="item">
+        <fee-installment-itemcard installment="{{item.installment}}" installmentname="{{item.installmentname}}"></fee-installment-itemcard>
+        </template>
+         <!--  <div class="col-sm-4 enquiry-input">
+            <paper-input  label="Installment Amount" value="{{installmentamount}}"></paper-input>
+          </div>
+          <div class="col-sm-4 enquiry-input">
+            <installment-date-picker></installment-date-picker>
+          </div>  -->        
+        </div>        
+        
+        <div class="col-md-12 form-button">
+          <paper-button class="btn btn-primary" on-click="FnGenerate" hidden$="{{hidegenerate}}">Generate</paper-button>
+          <paper-button class="btn btn-primary" on-click="FnCreate" hidden$="{{hidesubmit}}">Submit</paper-button>
+        </div>
+
+      </div>
+      <fee-schedule-service id="schedulefee"></fee-schedule-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var grade,admissionyear,academicyear,installment;
+    var installmentarr=[];
+    Polymer({
+      is: 'schedulefee-card',
+      ready:function(){
+        this.schoolname=localStorage.getItem("schoolname");
+        this.$.schedulefee.fetchgradeService();
+        this.hideinstallment=true;
+        this.hidefeecard=true;
+        this.hidesubmit=true;
+        this.hidefeeshow=true;
+      },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectAdmissionYear:function(e){
+        admissionyear=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectAcademicYear:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectInstallment:function(e){
+        installment=(e.target.selectedItem.textContent).trim();
+        
+        var insarr=[];
+        for(var i=0;i<parseInt(installment);i++){
+          var obj={"installmentname":"","installment":"","installmentdate":""}
+          obj.installmentname="Installment"+(i+1);
+          obj.installment="Installment"+(i+1)+" amount";
+          insarr.push(obj);
+        }
+        this.installmentarr=insarr;
+        this.hideinstallment=false;
+      },
+      FnGenerate:function(){
+        this.feename=localStorage.getItem("shortname")+"-"+admissionyear+"-"+academicyear+"-"+grade;
+        this.$.schedulefee.generatefeecodeService();        
+        this.hidegenerate=true;
+        this.hidesubmit=false;
+        this.hidefeecard=false;
+        this.hidefeeshow=false;
+      },
+      FnCreateFeeCode:function(){
+        this.$.schedulefee.createfeecodeService(this.schoolname,grade,admissionyear,academicyear,this.totalfees,this.feecode,this.feename);
+      },
+      FnCreate:function(){        
+        if(installmentarr.length!=0){        
+        this.$.schedulefee.feecodesplitupService(this.schoolname,this.feetype,this.totalfees,installment,this.feecode,this.feename);
+        this.$.schedulefee.createinstallmentService(installmentarr,this.schoolname,this.feetype,this.totalfees,installment,this.feecode);
+        }
+        this.FnRefresh();
+        document.querySelector('fee-installment-itemcard').FnRefresh();
+      },
+      FnSetInstallment:function(arr){
+        installmentarr=arr;
+      },
+      FnRefresh:function(){
+        installmentarr=[];
+        this.feetype="";
+        this.totalfees="";
+        installment="";
+        this.installmentarr=[];
+        document.querySelector('#installment').selected=-1;
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

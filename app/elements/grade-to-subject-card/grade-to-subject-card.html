@@ -1,0 +1,102 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="grade-to-subject-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+     .inputelements{
+    display: inline-block;
+    padding: 0 7px;
+    margin: 3%;
+  }
+    </style>
+       <div><CENTER><h2 style="color:#162BA3;">GRADE TO SUBJECTMAPPING</h2></CENTER></div>
+    <center>
+      <span class="inputelements">
+        <paper-dropdown-menu label="Select Grade">
+          <paper-menu id="Gsubj1"  class="dropdown-content"  on-iron-select="TeachertoGradGradeName">   
+            <template is="dom-repeat" items="{{selectgradearr}}" as="view">
+              <paper-item value="{{view.grade_id}}">{{view.grade_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+       </span>
+      <span class="inputelements"> 
+        <paper-dropdown-menu label="Select Subject Name">
+          <paper-menu id="Gsubj2"  class="dropdown-content"  on-iron-select="GradetoSubjectName">   
+            <template is="dom-repeat" items="{{subjectsarr}}" as="view">
+              <paper-item value="{{view.subject_id}}">{{view.subject_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+       </span>
+      <span class="inputelements">
+        <paper-dropdown-menu label="Select Category  Name">
+          <paper-menu   id="Gsubj3" class="dropdown-content"  on-iron-select="GradetoSubjectCategory">   
+            <template is="dom-repeat" items="{{Categoryarr}}" as="view">
+              <paper-item value="{{view.subject_category_id}}">{{view.subject_category_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+       <div>
+        <center>
+        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
+        <paper-button on-click="FnDelete" style="background-color:#384485;color:white;" id="Delid">Delete</paper-button>
+       </center>
+       </div>
+    </center>      
+  <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'grade-to-subject-card',
+
+      ready:function(){
+        this.$.uiservice.GradetoSubjectName();
+      },
+      GradetoSubjectName:function(e){
+       this.gradetosubjectmappingid=e.target.selectedItem.value;
+       // this.$.uiservice.categoryset();
+       alert(this.gradetosubjectmappingid);
+      },
+      TeachertoGradGradeName:function(e){
+         this.teachertogradeid=e.target.selectedItem.value;
+         alert(this.teachertogradeid);
+      },
+      GradetoSubjectCategory:function(e){
+      this.gradetocategoryid=e.target.selectedItem.value;
+      alert(this.gradetocategoryid);
+      },
+      FnSubmit:function(e){
+        alert(this.gradetosubjectmappingid+this.teachertogradeid+this.gradetocategoryid);
+        this.$.uiservice.FnTeachertoGrademappoing(this.gradetosubjectmappingid,this.teachertogradeid,this.gradetocategoryid);
+        document.querySelector('#Gsubj2').selected=-1
+        document.querySelector('#Gsubj3').selected=-1
+
+      },
+      FnDelete:function(e){
+         this.$.uiservice.FnTeachertoGrademappoingdelete(this.gradetosubjectmappingid,this.teachertogradeid,this.gradetocategoryid);
+        document.querySelector('#Gsubj2').selected=-1
+        document.querySelector('#Gsubj3').selected=-1
+      }
+    });
+  })();
+  </script>
+</dom-module>

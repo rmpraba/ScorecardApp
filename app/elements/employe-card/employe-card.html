@@ -1,0 +1,114 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="employe-card">
+  <template>
+    <style>
+      :host {      
+        display: block;
+      }
+     .inputelements{
+      /* display: inline-block;*/
+      
+      
+  }
+   .card{
+        width:40%;
+        margin-left:30%;
+      }
+    </style>
+    <div class="card">
+     <div><CENTER><h2 style="color:#162BA3;">EMPLOYEE CREATION</h2></CENTER></div>
+       <span class="inputelements">
+        <paper-dropdown-menu label="School Name">
+          <paper-menu   class="dropdown-content"  on-iron-select="schoolid">   
+            <template is="dom-repeat" items="{{employeearr}}" as="view">
+              <paper-item value="{{view.id}}">{{view.name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+
+       <div>
+         <paper-input value="{{searchemployeeid}}" label="search for employeename"></paper-input>
+        <center>
+        <paper-button on-click="Search" style="background-color:black;color:white;">Search</paper-button>
+        <paper-button on-click="Reset" style="background-color:black;color:white;">Reset</paper-button>
+        </center>
+        <paper-input value="{{employeename}}" label="EmployeName"></paper-input>
+        <paper-input value="{{employeeid}}" hidden$="{{hidecard1}}" label="EmployeId"></paper-input>
+        <paper-input value="{{employeerole}}" label="EmployeRole"></paper-input>       
+        <paper-input value="{{employeepsw}}" label="PassWord"></paper-input>
+        <center>
+        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
+        <paper-button on-click="FnUpdate" style="background-color:#384485;color:white;" id="Upid">Update</paper-button>
+        <paper-button on-click="FnDelete" style="background-color:#384485;color:white ;" id="Delid">Delete</paper-button>
+        </center>
+      </div>
+      </span>
+     
+  </div>
+  <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+ (function() {
+    'use strict';
+    Polymer({
+      is: 'employe-card',
+      ready:function(){
+       //this.$.subid.hidden=true;
+        this.$.Upid.hidden=true;
+        this.$.Delid.hidden=true;
+        this.hidecard1=false; 
+      },
+      schoolid:function(e){
+        this.empid=e.target.selectedItem.value;
+        alert(this.empid);
+
+      },
+      fnclear:function(){
+             this.searchemployeeid="";
+             this.employeename="";
+             this.employeeid="";
+             this.employeepsw="";
+             this.employeerole="";
+      },
+      FnSubmit:function(){
+       // alert("hi2");
+      // alert(this.empid);
+    this.$.uiservice.EmployeeFullDetaild(this.empid,this.employeeid,this.employeename,this.employeerole,this.employeepsw);
+       },
+       FnUpdate:function(){
+        this.$.uiservice.FnUpdateDetaild(this.empid,this.employeeid,this.employeename,this.employeerole,this.employeepsw);
+       },
+       FnDelete:function(){
+         this.$.uiservice.FnDeleteDetaild(this.empid,this.employeeid,this.employeename,this.employeerole,this.employeepsw);
+  
+       },
+       Reset:function(){
+         this.$.subid.hidden=false;
+         this.$.Upid.hidden=true;
+         this.$.Delid.hidden=true;
+         this.hidecard1=false;
+         this.fnclear();
+       },
+       Search:function(){
+        this.$.uiservice.SearchEmployeedetails(this.empid,this.searchemployeeid);
+        this.$.Upid.hidden=false;
+        this.$.Delid.hidden=false;
+        this.$.subid.hidden=true;
+          this.hidecard1=true;
+       }
+
+    });
+  })();
+  </script>
+</dom-module>

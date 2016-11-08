@@ -257,11 +257,10 @@
       fetchstudnameResponse:function(e){
         var arr=e.detail.response.returnval;
         // alert(JSON.stringify(arr));
-        
         document.querySelector('cce-generate-score-card').FnHide();
         document.querySelector('student-list-card').studentarr=arr;  
-        
-      },
+        },
+
       callFetchstudentinfoService:function(studid)
       {
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";

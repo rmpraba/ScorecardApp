@@ -1,0 +1,147 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="teacher-to-grade-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+       .inputelements{
+    display: inline-block;
+    padding: 0 7px;
+    margin: 1%;
+  }
+    </style>
+    <div>
+         <div><CENTER><h2 style="color:#162BA3;">TEACHER TO GRADE MAPPING</h2></CENTER></div>
+      <span class="inputelements">
+        <paper-dropdown-menu label="Select School Name">
+          <paper-menu   id="techj" class="dropdown-content"  on-iron-select="TeachertoGradeSelectSchoolid">   
+            <template is="dom-repeat" items="{{selectschoolarr1}}" as="view">
+              <paper-item value="{{view.id}}">{{view.name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+       <span class="inputelements">
+        <paper-dropdown-menu label="Select Empoyee Id">
+          <paper-menu   id="techj" class="dropdown-content"  on-iron-select="TeachertoGradeEmployeId">   
+            <template is="dom-repeat" items="{{emparr}}" as="view">
+              <paper-item value="{{view.id}}">{{view.id}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+      <span class="inputelements">
+        <paper-dropdown-menu label="Select Empoyee  Name">
+          <paper-menu   id="techj" class="dropdown-content"  on-iron-select="TeachertoGradeEmployeName">   
+            <template is="dom-repeat" items="{{emparr}}" as="view">
+              <paper-item value="{{view.name}}">{{view.name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+       <span class="inputelements">
+        <paper-dropdown-menu label="Select Grade">
+          <paper-menu id="subj"  class="dropdown-content"  on-iron-select="TeachertoGradGradeName">   
+            <template is="dom-repeat" items="{{selectgradearr}}" as="view">
+              <paper-item value="{{view.grade_id}}">{{view.grade_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+       </span>
+        <span class="inputelements">
+        <paper-dropdown-menu label="Select Role Name">
+          <paper-menu id="subj"  class="dropdown-content"  on-iron-select="TeachertoGradeEmployeNameRole">   
+            <template is="dom-repeat" items="{{rolearr}}" as="view">
+              <paper-item value="{{view.id}}">{{view.role_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+       </span>
+       <span class="inputelements">
+        <paper-dropdown-menu label="Select Section Name">
+          <paper-menu id="subj"  class="dropdown-content"  on-iron-select="TeachertoGradeSectionName">   
+            <template is="dom-repeat" items="{{sectionsarr}}" as="view">
+              <paper-item value="{{view.section_id}}">{{view.section_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+       </span>
+         <span class="inputelements"> 
+        <paper-dropdown-menu label="Select Subject Name">
+          <paper-menu id="subj"  class="dropdown-content"  on-iron-select="TeachertoGradeSubject">   
+            <template is="dom-repeat" items="{{subjectsarr}}" as="view">
+              <paper-item value="{{view.subject_id}}">{{view.subject_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+       </span>
+     </div>
+       <div>
+        <center>
+        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
+        <paper-button on-click="FnDelete" style="background-color:#384485;color:white;" id="Delid">Delete</paper-button>
+       </center>
+       </div>   
+  
+    <master-ui-service id="uiservice"></master-ui-service>
+   </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'teacher-to-grade-card',
+     
+     TeachertoGradeSelectSchoolid:function(e)
+     {
+            this.TtoGempid=e.target.selectedItem.value;
+            this.$.uiservice.TeachertoGradeEmployeNames(this.TtoGempid);
+            alert("hi");
+            this.$.uiservice.TeachertoGraderole();
+      },
+      TeachertoGradeEmployeId:function(e){
+         this.TtoGemp=e.target.selectedItem.value;
+      },
+      TeachertoGradeEmployeName:function(e){
+      this.TtoGempname=e.target.selectedItem.value;
+      },
+      TeachertoGradGradeName:function(e){
+      this.TtoGempGradeName=e.target.selectedItem.value;
+      },
+      TeachertoGradeSectionName:function(e){
+      this.TtoGempsection=e.target.selectedItem.value;
+      },
+      TeachertoGradeSubject:function(e){
+      this.TtoGempsubject=e.target.selectedItem.value;
+      },
+      TeachertoGradeEmployeNameRole:function(e){
+      this.TtoGemprole=e.target.selectedItem.value;
+      this.$.uiservice.TeachertoGradeSectionNames(this.TtoGempid);
+     },
+      FnSubmit:function(e){
+   alert(this.TtoGempid+this.TtoGemp+ this.TtoGempGradeName+this.TtoGempname+this.TtoGempsection+this.TtoGempsubject+this.TtoGemprole);
+
+       this.$.uiservice.TtoGsubmit(this.TtoGempid,this.TtoGemp, this.TtoGempGradeName,this.TtoGempname,this.TtoGempsection,this.TtoGempsubject,this.TtoGemprole);
+      //this.$.uiservice.TtoGsubmit()
+    },
+      FnDelete:function(e){
+       this.$.uiservice.TtoGDelete(this.TtoGempid,this.TtoGemp,this.TtoGempGradeName,this.TtoGempname,this.TtoGempsection,this.TtoGempsubject,this.TtoGemprole);
+      }
+     
+
+    });
+  })();
+  </script>
+</dom-module>

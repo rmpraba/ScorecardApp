@@ -752,13 +752,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       }
       else
       {
-        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"){
+        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
          document.querySelector('term-assesment-sheet-card').setPage('cc-fa-fivetoten-card');
          document.querySelector('cc-fa-fivetoten-card').setDefaultHeaders(); 
          document.querySelector('cc-fa-fivetoten-card').studarr=overall; 
          document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(false); 
         } 
-        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"){
+        if(localStorage.getItem("curr_sess_assesmenttype")=="SA1"||localStorage.getItem("curr_sess_assesmenttype")=="SA2"){
          // alert(localStorage.getItem("curr_sess_grade"));
            if((localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")&&localStorage.getItem("curr_sess_subject")=="English"){
             // alert('nine ten eng');
@@ -1981,7 +1981,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         // document.querySelector('cs-personalitydevelopment-card').markarr=overall;
         document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(false); 
         }
-        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"){
+        if(localStorage.getItem("curr_sess_assesmenttype")=="FA1"||localStorage.getItem("curr_sess_assesmenttype")=="FA2"||localStorage.getItem("curr_sess_assesmenttype")=="FA3"||localStorage.getItem("curr_sess_assesmenttype")=="FA4"){
         // document.querySelector('cc-maths-onetofour-card').markarr=overall;  
         document.querySelector('cc-fa-fivetoten-card').FnSpinnerrActive(false);       
         }

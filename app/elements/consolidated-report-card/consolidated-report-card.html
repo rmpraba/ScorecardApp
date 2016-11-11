@@ -166,8 +166,10 @@
         this.hideterm=false;        
         this.$.term.setDefaultHeaders(); 
         } 
-        if(type=="ConsolidatedTerm")
-        this.$.consolidated.setDefaultHeaders();        
+        if(type=="ConsolidatedTerm"){
+        this.hideterm=false;
+        this.$.consolidated.setDefaultHeaders();
+        }        
       },
       FnSelectSubject:function(e){
         subject = e.target.selectedItem.textContent.trim();
@@ -186,6 +188,10 @@
           this.$.term.setDefaultHeaders(); 
           this.$.reportservice.callFetchstudentnameService(); 
         }
+        if(type=="ConsolidatedTerm"){        
+        this.$.consolidated.setDefaultHeaders();
+        this.$.reportservice.callFetchstudentnameService(); 
+        } 
         // this.callService();
       },
       FnSelectAssesment:function(e){
@@ -217,6 +223,10 @@
         if(localStorage.getItem("curr_sess_reporttype")=="Categorywise"){
           // alert('hi');
           this.categorycard=false;
+        }
+        if(localStorage.getItem("curr_sess_reporttype")=="ConsolidatedTerm"){
+          // alert('hi');
+          this.consolidatedtermcard=false;
         }
       },
       FnRefresh:function()

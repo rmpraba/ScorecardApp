@@ -99,6 +99,16 @@
         on-response="fetchreportsubjectnameResponse"
         debounce-duration="300"
     >
+    <iron-ajax
+        method="post"
+        id="fetchconsolidatedtermwiseajax"
+        url="{{fetchconsolidatedtermwiseurl}}"
+        params="{{fetchconsolidatedtermwiseparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchconsolidatedtermwiseResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -139,6 +149,10 @@
           document.querySelector('consolidated-report-card').FnHide();
           this.callcategorywisereportService();
         } 
+        else if(localStorage.getItem("curr_sess_reporttype")=="ConsolidatedTerm"){
+          document.querySelector('consolidated-report-card').FnHide();
+          this.callconsolidatedtermwisereportService();
+        }
         }
         else if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Analysis") {    
         document.querySelector('beginner-term-analysis-card').FnHide();        
@@ -577,6 +591,73 @@ var i;
         titlearr=[];
         itemarr=[];
         
+      }
+    },
+    callconsolidatedtermwisereportService:function(){
+        this.fetchconsolidatedtermwiseurl=sessionStorage.getItem("addrinfo")+"/fetchconsolidatedtermwise-service";
+        var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+        obj.grade=localStorage.getItem("curr_sess_grade");;
+        obj.section=localStorage.getItem("curr_sess_section");
+        this.fetchconsolidatedtermwiseparam=obj;
+        this.$.fetchconsolidatedtermwiseajax.generateRequest();
+    },
+    fetchconsolidatedtermwiseResponse:function(e){
+       var overall=[];
+      var assesmentarr=[];
+      var subarr=[];
+      var titlearr=[];
+
+       var arr1=e.detail.response.returnval;
+       // alert(JSON.stringify(arr1));
+       for(var x=0;x<studarr.length;x++){
+        for(var y=0;y<arr1.length;y++)
+        {
+          if(studarr[x].id==arr1[y].student_id)
+            arr1[y].student_name=studarr[x].student_name;          
+        }
+       }
+       if(arr1.length>0){      
+       for(var i=0;i<arr1.length;i++)
+       {
+        var markarr=[];
+
+        markarr.push(i+1);
+        markarr.push(arr1[i].student_name);
+        markarr.push(arr1[i].total);
+        markarr.push(arr1[i].grade);
+        subarr.push(arr1[i].subject_id);
+        for(var j=i+1;j<arr1.length;j++)
+        {
+           if(arr1[i].student_id==arr1[j].student_id)
+           {
+            markarr.push(arr1[j].total);
+            markarr.push(arr1[j].grade); 
+            subarr.push(arr1[j].subject_id);           
+            arr1.splice(j,1);
+            j--;
+           }
+        }
+       overall.push(markarr);
+       }
+       var subfinal=this.eliminateDuplicates(subarr);
+       subfinal.splice(0,2); 
+        for(var i=0;i<subfinal.length;i++){
+          if(subfinal[i]!="Sno"||subfinal[i]!="Student Name"){
+            titlearr.push("Total");
+            titlearr.push("Grade");
+          }
+        }    
+       // alert(JSON.stringify(subfinal));
+       // alert(JSON.stringify(overall));
+        document.querySelector("consolidatedtermwise-report-card").subjectarr=subfinal;
+        document.querySelector("consolidatedtermwise-report-card").titlearr=titlearr;
+        document.querySelector("consolidatedtermwise-report-card").itemarr=overall;
+        subarr=[];
+        overall=[];
+        titlearr=[];
       }
     }
     });

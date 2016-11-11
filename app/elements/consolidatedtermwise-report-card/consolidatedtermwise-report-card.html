@@ -1,12 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
@@ -16,23 +7,103 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+       #btn2{
+            width: 15%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            height: 45px;
+            border-radius: 2px;
+            /*font-weight: bold;*/
+            font-family: Calibri;
+            font-size: 17px;
+            margin-left: 40%;
+          }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="card">
+      <center><h1>{{schoolname}}</h1>
+      <div id="hidetop">
+      <h3>Consolidated Termwise Report -AY-{{academicyear}}</h3>  
+      <h4> Grade {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp</h4>
+      <table border="1" style="border-collapse: collapse;" id="consolidatedtermwisereport">
+      <!-- <tr><td></td><td></td><td></td>
+     
+      <td id="assesment1">Term1</td>
+      <td id="assesment2">Assesment2</td>
+      <td id="assesment3">Assesment3</td>
+      
+      </tr> -->
+      <tr><th>Sl No</th><th>Student Name</th>
+      <template is="dom-repeat" items="{{subjectarr}}" as="item">
+      <th colspan="2">{{item}}</th>
+      </template>
+      </tr>
+      <tr>
+        <th></th><th></th>
+        <template is="dom-repeat" items="{{titlearr}}" as="title"> 
+        <th>{{title}}</th>
+        </template>
+      </tr> 
+      <template is="dom-repeat" items="{{itemarr}}" as="i">
+      <tr>
+      <template is="dom-repeat" items="{{i}}" as="item">
+      <td>{{item}}</td>
+      </template>
+      </tr>
+      </template>
+      </table>
+      </div>
+    </div>
+    <input type="button" id="btn2" onclick="tableToExcel('consolidatedtermwisereport', 'Consolidatedtermwise Report')" value="Export to Excel">
   </template>
+  <script type="text/javascript">
+  var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+})()
+</script>
   <script>
   (function() {
     'use strict';
 
     Polymer({
       is: 'consolidatedtermwise-report-card',
+        setDefaultHeaders:function(){            
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.section=localStorage.getItem("curr_sess_section");
+        this.subject=localStorage.getItem("curr_sess_subject");
+      },
+      assesmentlen:function(asses1,asses2,asses3)
+      {
+        if(asses1==0)
+        {
+            this.$.assesment1.hidden=true;
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'consolidatedtermwise-report-card',
-          notify: true
         }
+         if(asses2==0)
+        {
+            this.$.assesment2.hidden=true;
+
+        }
+         if(asses3==0)
+        {
+            this.$.assesment3.hidden=true;
+
+        }
+        document.getElementById("assesment1").colSpan=asses1;
+        document.getElementById("assesment2").colSpan=asses2;
+        document.getElementById("assesment3").colSpan=asses3;
       }
+
     });
   })();
   </script>

@@ -3119,11 +3119,11 @@ app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req
 
 app.post('/categorywisereport-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select student_id,assesment_id,subject_id,category,sub_category,round(mark,1) as total,(SELECT grade FROM md_grade_rating WHERE "+
+    var qur="select student_id,subject_id,category,sub_category,round(mark,1) as total,(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(mark,1) and higher_limit>=round(mark,1)) as grade "+
     "from tr_term_assesment_marks  where school_id='"+req.query.schoolid+"' and "+
-    "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesment+"' "+
-    "and subject_id='"+req.query.subject+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by assesment_id,subject_id,category,sub_category,student_id order by CAST(sub_cat_sequence AS UNSIGNED)";
+    "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' "+
+    "and subject_id='"+req.query.subject+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by subject_id,category,sub_category,student_id order by CAST(sub_cat_sequence AS UNSIGNED)";
     console.log('...............................subjectwise..............................');
     console.log(qur);
     connection.query(qur,

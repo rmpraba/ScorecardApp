@@ -1652,7 +1652,11 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
   var gradeid={grade_id:req.query.grade};
   var sectionid={section_id:req.query.section};
 
-  var qur="SELECT * FROM md_student where class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"') and section_id=(select section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"')) and school_id='"+req.query.schoolid+"'";
+  var qur="SELECT * FROM md_student where class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.grade+"') and section_id=(select section_id from md_section where section_name='"+req.query.section+"' and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"'";
+  
+  console.log('----------------------------------------');
+  console.log(qur);
+  console.log('----------------------------------------');
   connection.query(qur,
     function(err, rows)
     {

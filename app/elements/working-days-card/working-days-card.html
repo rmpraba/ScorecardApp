@@ -1,0 +1,110 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+
+<dom-module id="working-days-card">
+  <template>
+    <style>
+      :host{
+         margin-left: 37%;
+        display: block;
+         @apply(--layout-center);
+        width: 30%;
+      }
+      }
+      .subjectmastercard
+      {
+         @apply(--layout-center);
+        width: 6%;
+        margin-left: 35%;
+      } 
+      .button paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;
+      width: 10%;
+      margin-left: 40%;
+      margin-top: 4%;
+      }
+
+    </style>
+
+    <div class="workingdayscard">
+
+         <paper-dropdown-menu id="school" label="Select School name" disabled="{{read}}" required>
+            <paper-menu id="sclname" class="dropdown-content"  on-iron-select="FnSelectacschoolname"  attr-for-selected="value" required>  
+              <template is="dom-repeat" items="{{}}">
+                <paper-item value="{{item.school_name}}">{{item.school_name}}</paper-item>                    
+                </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+       <paper-dropdown-menu label="Academic Year">
+       <paper-listbox class="dropdown-content"> 
+       <paper-item>2016-2017</paper-item>
+       <paper-item>2017-2018</paper-item>
+       <paper-item>2018-2019</paper-item>
+       <paper-item>2019-2020</paper-item>
+       <paper-item>2020-2021</paper-item>                
+       </paper-listbox>
+    </paper-dropdown-menu>
+     <paper-dropdown-menu label="Type">
+       <paper-listbox class="dropdown-content"> 
+       <paper-item>Grade 1</paper-item>
+       <paper-item>Grade 2</paper-item>
+       <paper-item>Grade 3</paper-item>
+       <paper-item>Grade 4</paper-item>
+       <paper-item>Grade 5</paper-item>
+       <paper-item>Grade 6</paper-item>
+       <paper-item>Grade 7</paper-item>
+       <paper-item>Grade 8</paper-item>
+       </paper-listbox>
+    </paper-dropdown-menu>
+
+   
+    <paper-input value="{{days}}" label="No of days"></paper-input>
+
+    </div>
+    <div class="button">
+    <paper-button on-click="FnSubmit">Submit </paper-button>
+    </div>
+    <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() 
+  {
+    'use strict';
+     var sname;
+    Polymer({
+      is: 'working-days-card',
+      ready:function()
+      {
+       
+        this.$.uiservice.schoolname1();
+      },        
+      fetchmasterschoolnameResponse:function(e)
+      {
+        var arr=e.detail.response.returnval;
+        //alert(JSON.stringify(arr));     
+      },
+
+       FnSubmit:function()
+      {
+        this.$.uiservice.FnSetWorkingdaysInfo(schoolname,this.academicyear,this.term,this.days);
+      },
+
+      FnSelectschoolname:function(e)
+      {
+        sname = e.target.selectedItem.value.trim();
+        //alert(snmae);
+       }
+      
+     
+    });
+  })();
+  </script>
+</sdom-module>
+

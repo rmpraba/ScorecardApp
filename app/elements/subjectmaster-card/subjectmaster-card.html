@@ -1,0 +1,94 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+
+<dom-module id="subjectmaster-card">
+  <template>
+    <style>
+      :host{
+         margin-left: 37%;
+        display: block;
+         @apply(--layout-center);
+        width: 30%;
+      }
+      }
+      .subjectmastercard
+      {
+         @apply(--layout-center);
+        width: 6%;
+        margin-left: 35%;
+      } 
+      .button paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;
+      width: 10%;
+      margin-left: 40%;
+      margin-top: 4%;
+      }
+
+    </style>
+    <div class="subjectmastercard">
+    <paper-input readonly value="{{subjectid}}" label="Subject Id"></paper-input>
+    <paper-input value="{{subjectname}}" label="Subject Name"></paper-input>
+     <paper-dropdown-menu id="category" label="Select Category" disabled="{{read}}" required style="width:100%;">
+            <paper-menu id="category" class="dropdown-content"  on-iron-select="FnSelectcategory"  attr-for-selected="value" required>  
+
+      <template is="dom-repeat" items="{{categoryarr}}" as="view">
+      <paper-item value="{{view.subject_category_id}}">{{view.subject_category_name}}</paper-item>                          
+      </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+    </div>
+    <div class="button">
+    <paper-button on-click="FnSubmit">Submit </paper-button>
+    </div>
+
+    <master-ui-service id="uiservice"></master-ui-service>
+     
+  </template>
+  <script>
+  (function() {
+    'use strict';
+     var category;
+    Polymer
+    ({
+      is: 'subjectmaster-card',
+      ready:function()
+      {
+       // alert("hi");
+        this.$.uiservice.category1();   
+        this.$.uiservice.FnFetchSubjectSeq();     
+      },
+      FnRefresh:function()
+      {
+        document.querySelector('#category').selected=-1;
+       this.subjectname="";
+       this.subjectid="";                  
+      }, 
+
+      fetchmastercategorynameResponse:function(e)
+      {
+        var arr=e.detail.response.returnval;
+        //alert(JSON.stringify(arr));     
+      },
+
+       FnSubmit:function()
+      {
+       this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,category);
+      },
+      
+
+      FnSelectcategory:function(e)
+      {
+        category = e.target.selectedItem.value.trim();
+        //alert(category);
+      }
+
+    });
+  })();  
+  </script>
+</dom-module>

@@ -1,0 +1,68 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+
+<dom-module id="languagecard">
+  <template>
+    <style>
+      :host{
+         margin-left: 37%;
+        display: block;
+         @apply(--layout-center);
+        width: 30%;
+      }
+      }
+      /*.languagecard
+      {
+         @apply(--layout-center);
+        width: 6%;
+        margin-left: 35%;
+      } */
+      .button paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;
+      width: 10%;
+      margin-left: 40%;
+          margin-top: 4%;
+      }
+
+    </style>
+    <div>
+    <div>vvvvvvvvvvvvvvvvvvvvvvv</div>
+
+           <paper-dropdown-menu id="subject_type" label="Select Subject_Type" disabled="{{read}}" required style="width:100%;">
+      <paper-menu id="subject_type" class="dropdown-content"  on-iron-select="FnSelectsubject_type"  attr-for-selected="value" required>  
+         <template is="dom-repeat" items="{{subject_typearr}}" as="view">
+         <paper-item value="{{view.subject_type_id}}">{{view.subject_type}}</paper-item> 
+         </template>                          
+         </paper-menu>
+       
+    </paper-dropdown-menu>
+
+           <paper-dropdown-menu id="subject_name" label="Select subject_name" disabled="{{read}}" required style="width:100%;">
+            <paper-menu id="subject_name" class="dropdown-content"  on-iron-select="FnSelectsubject_name"  attr-for-selected="value" required>  
+             <template is="dom-repeat" items="{{subject_namearr}}" as="view">
+                <paper-item value="{{view.subject_name_id}}">{{view.subject_name}}</paper-item>
+             </template>                             
+            </paper-menu>
+          </paper-dropdown-menu>
+    </div>
+
+    <div class="button">
+    <paper-button on-click="FnSubmit">Submit </paper-button>
+    <paper-button on-click="FnCancel">cancel </paper-button>
+    <paper-button on-click="FnDelete">delete </paper-button>
+    </div>
+  </template>
+
+  <script>
+  Polymer({
+      is: "languagecard",
+      
+    })();
+ </script>
+</dom-module>

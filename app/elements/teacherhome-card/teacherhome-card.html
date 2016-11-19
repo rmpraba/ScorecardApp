@@ -24,7 +24,7 @@
         margin-top: 10%;
       }
       .container{
-        width: 100%;
+        width: 90%;
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
       }
@@ -71,16 +71,46 @@
      <div class="card" hidden$="{{editinfo}}">
        <paper-button on-click="FnEditInfo" no ink><img src="../../images/edit.jpg" height="180px" width="180px"></paper-button>
      </div>
+     
      <div class="card" hidden$="{{createemployee}}">
        <paper-button on-click="FnCreateEmployee" no ink><img src="../../images/employee.png" height="180px" width="180px"></paper-button>
      </div>
      <div class="card" hidden$="{{createrole}}">
        <paper-button on-click="FnCreateRole" no ink><img src="../../images/role.png" height="180px" width="180px"></paper-button>
+    </div>
+
+     <div class="card" hidden$="{{createschooltype}}">
+      <paper-button on-click="FnCreateSchooltype" no ink><img src="../../images/schooltype.jpg" height="180px" width="180px"></paper-button>
      </div>
+
+     <div class="card" hidden$="{{createcategory}}">
+     <paper-button on-click="FnCreateCategory" no ink><img src="../../images/category.jpg" height="180px" width="180px">
+     </paper-button>
+     </div>
+
       <div class="card" hidden$="{{createsubject}}">
-       <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px"></paper-button>
+       <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px">
+       </paper-button>
+     </div>
+
+     <div class="card" hidden$="{{createworkingdays}}">
+    <paper-button on-click="FnCreateworkingdays" no ink><img src="../../images/workingdays.jpg" height="180px" width="180px"></paper-button>
+     </div>
+ 
+      <!--<div class="card" hidden$="{{createlanguagemaster}}">
+       <paper-button on-click="FnCreatelanguagemaster" no ink><img src="../../images/language.jpg" height="180px" width="180px"></paper-button>
+     </div>-->
+     <div class="card" hidden$="{{creategrade}}">
+     <paper-button on-click="Fncreategrade" no ink><img src="../../images/grade.jpg" height="180px" width="180px">
+     </paper-button>
+     </div>
+
+    <div class="card" hidden$="{{createsubjectgrademapping}}">
+       <paper-button on-click="FnCreatesubjectgrademapping" no ink><img src="../../images/subjectgrademap.jpg" height="180px" width="180px"></paper-button>
      </div>
     
+
+
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -144,6 +174,7 @@
          {
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('scorecard','');
+
          }  
          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="PreEntry") 
          {
@@ -244,8 +275,15 @@
       FnHideView:function(){ 
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='superadmin'){
           this.createrole=false;
-          this.createemployee=false;  
-          this.teach_obser=false;        
+          this.createemployee=true;  
+          this.teach_obser=true; 
+          this.creategrade=true;   
+          this.createworkingdays=true; 
+          this.createsubject=false; 
+          this.createschooltype=false;  
+          this.createsubjectgrademapping=false;
+          this.createcategory=false;
+          
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;
@@ -320,23 +358,69 @@
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle(); 
       },
-      FnEditInfo:function(){
+      FnEditInfo:function()
+      {
         localStorage.setItem('curr_sess_loggedassesmenttype','Editinfo');
         // this.$.scorecardservice.callFetchstudentnameService();
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle(); 
       },
-      FnCreateRole:function(e){
+      FnCreateRole:function(e)
+      {
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('rolecard','');
+        document.querySelector('role-card').ready();
       },
+      FnCreateSchooltype:function(e)
+      {
+
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('schooltypecard','');
+        document.querySelector('school-type-card').ready();
+      },
+
+      FnCreateCategory:function(e)
+      {
+        
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('categorycard','');
+        document.querySelector('category-card').ready();
+      },
+
+
+      FnCreateGraede:function(e)
+      {
+       document.querySelector('app-card').setPage('homepage','');
+       document.querySelector('home-page').setPage('gradecreationcard',''); 
+      },
+
       FnCreatesubject:function(e)
       {
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('subjectcard','');
-      
+        //document.querySelector('subject-card').ready();
+      },
+       FnCreateworkingdays:function(e)
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('workingdayscard','');
+        //document.querySelector('working-days-card').ready();
+      },
 
+      FnCreatelanguagemaster:function(e)
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('languagecard','');        
+      },
+
+       FnCreatesubjectgrademapping:function(e)
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('subjectgrademappingcard','');
+        //document.querySelector('subjectgrademapping-card').ready();
       }
+
+
     });
   })();
   </script>

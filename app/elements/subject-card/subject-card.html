@@ -42,6 +42,9 @@
     'use strict';
     Polymer({
       is: 'subject-card',
+      callService:function(){
+        alert('call..........');
+      },
       FnSubmit:function(){
         this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,this.subjectcategory);
       }

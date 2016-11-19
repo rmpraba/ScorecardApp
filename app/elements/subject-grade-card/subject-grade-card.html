@@ -1,0 +1,46 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<!-- <link rel="import" href="..\..\grade-to-subject-card/grade-to-subject-card.html"> -->
+
+
+<dom-module id="subject-category-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .innercard{
+        @apply(--layout-vertical);
+      }
+    </style>
+    <div class="innercard">      
+     <paper-checkbox id="{{subjectid}}" on-change="FnSelectSubject">{{subjectname}}</paper-checkbox>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var subarr=[];
+    Polymer({
+      is: 'subject-category-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'subject-category-card',
+          notify: true
+        }
+      },
+      FnSelectSubject:function(e){
+        alert(e.target.id);
+        alert(document.querySelector('#'+e.target.id));
+        if(document.querySelector('#'+e.target.id).checked==true){
+          subarr.push(this.subjectname);
+          document.querySelector('grade-to-subject-card').FnSetSubject(subarr);
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

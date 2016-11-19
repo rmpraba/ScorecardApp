@@ -1,0 +1,126 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+
+<dom-module id="school-type-card">
+  <template>
+    <style>
+      :host{
+         margin-left: 37%;
+        display: block;
+         @apply(--layout-center);
+        width: 30%;
+      }
+      
+      .schooltypecard
+      {
+         @apply(--layout-center);
+        width: 6%;
+        margin-left: 35%;
+      } 
+      .cbutton paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;
+      width: 10%;
+      margin-left: 40%;
+      margin-top: 4%;
+      }
+      
+      .button paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;
+      width: 10%;
+      margin-left: 40%;
+      margin-top: 4%;
+      }
+    </style>
+
+
+     <paper-input label="Search here.........." suffix>
+      <paper-icon-button suffix icon="search" on-click="FnSearch"></paper-icon-button>
+    </paper-input>
+    <div class="cbutton">
+    <paper-button on-click="Fncreate">Create </paper-button>
+    </div>
+
+    <div class="school">
+    <template is="dom-repeat" items="{{schoolarr}}" as="s">
+    <schooltype-display-card schoolname="{{s.school_name}}" schoolid="{{s.school_id}}" schooltypename="{{s.school_type_name}}" schooltypeid="{{s.school_type_id}}" hideschooltypenameinput="true" hideschooltypenameitem="false">      
+    </schooltype-display-card>
+    </div>
+    </template>
+
+     <paper-dialog id="schooldialog">
+     <div class="card">                                                 
+       <paper-input value="{{schoolname}}" label="School Name"></paper-input>   
+       <paper-input value="{{schoolid}}" label="School id"></paper-input>  
+       <paper-dropdown-menu id="schooltypename" label="Select Schooltype Name" disabled="{{read}}" required>
+            <paper-menu id="scltypename" class="dropdown-content"  on-iron-select="FnSelectSchooltypename"  
+            attr-for-selected="value" required> 
+       <paper-item value="Pre primary">Pre Primary</paper-item>
+       <paper-item value="Primary">Primary</paper-item>
+       <paper-item value="Secondary">Secondary</paper-item>
+       <paper-item value="Higher Secondary">Higher Secondary</paper-item>                
+       </paper-listbox>       
+    </paper-dropdown-menu>    
+    </div>
+    <div class="button">
+    <paper-button on-click="FnSubmit">Submit </paper-button>
+    </div>
+    </paper-dialog>
+    <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var schooltypes="";
+    Polymer({
+      is: 'school-type-card',
+      ready:function()
+      {
+       //alert("test");
+       this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+       this.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+       this.$.uiservice.FnFetchSchooltypename();
+       this.$.hidenewschooltypecard=true;
+      },
+       FnRefresh:function()
+      {
+         document.querySelector('#scltypename').selected=-1;
+         this.schoolname="";
+         this.schoolid="";    
+       },
+      FnSelectSchooltypename:function(e)
+      {
+        //alert("test");       
+        schooltypes = e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_school_type_name",schooltypes);               
+      },     
+      FnSubmit:function()
+      {
+
+        if(schooltypes==null || schooltypes=="")
+        {          
+          alert("Please enter schooltypename befor submit");
+        }
+        else
+        {
+        //alert("test");
+        var schooltypeid = schooltypes.toLowerCase();
+        this.$.uiservice.FnSetSchooltypeInfo(this.schoolname,this.schoolid,schooltypes,schooltypeid);                    
+        this.$.schooldialog.toggle();
+        }
+      },
+
+        Fncreate:function()
+        {
+          this.$.schooldialog.toggle();   
+      }  
+    });
+  })();
+  </script>
+</dom-module>

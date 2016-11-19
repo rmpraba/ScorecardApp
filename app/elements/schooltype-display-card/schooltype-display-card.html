@@ -1,0 +1,68 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="schooltype-display-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card{
+        @apply(--layout-horizontal);
+        border-bottom: 1px solid #dedede;
+      }
+    </style>
+
+     <table class="card" id="card{{schooltypeid}}">
+      <tr><td hidden>{{schooltypeid}}</td>
+      <td width="40%" hidden$="{{hideschooltypenameitem}}">{{schooltypename}}</td>
+      <td width="40%" hidden$="{{hideschooltypenameinput}}"><paper-input value="{{schooltypename}}"></paper-input></td>
+      <td width="7%" hidden$="{{hideschooltypenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'>       
+      </paper-icon-button></td>
+      <td width="7%" hidden$="{{hideschooltypenameinput}}"><paper-icon-button icon='save' on-click='FnSave'>       
+      </paper-icon-button></td>
+      <td width="7%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+    </table></tr>
+    <master-ui-service id="sclservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'schooltype-display-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'schooltype-display-card',
+          notify: true
+        }
+      },
+      ready:function()
+      {
+        //alert("test");   
+        this.hideschooltypenameinput=true;
+        this.hideschooltypenameitem=false;
+      },
+      FnDelete:function()
+      {
+        //alert("test");
+        this.$.sclservice.FnDeleteSchooltypename(this.schooltypeid);
+      },
+      FnEdit:function(){
+        //alert("test");
+        this.hideschooltypenameinput=false;
+        this.hideschooltypenameitem=true;
+      },
+      FnSave:function(){
+        //alert("test");
+        this.$.sclservice.FnUpdateSchooltypename(this.schoolname,this.schoolid,this.schooltypeid,this.schooltypename);
+        this.hideschooltypenameinput=true;
+        this.hideschooltypenameitem=false;
+      },
+      
+    });
+  })();
+  </script>
+</dom-module>

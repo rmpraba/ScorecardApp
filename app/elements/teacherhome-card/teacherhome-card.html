@@ -76,6 +76,15 @@
      </div>
      <div class="card" hidden$="{{createrole}}">
        <paper-button on-click="FnCreateRole" no ink><img src="../../images/role.png" height="180px" width="180px"></paper-button>
+    </div>
+
+     <div class="card" hidden$="{{createschooltype}}">
+      <paper-button on-click="FnCreateSchooltype" no ink><img src="../../images/schooltype.jpg" height="180px" width="180px"></paper-button>
+     </div>
+
+     <div class="card" hidden$="{{createcategory}}">
+     <paper-button on-click="FnCreateCategory" no ink><img src="../../images/category.jpg" height="180px" width="180px">
+     </paper-button>
      </div>
       <div class="card" hidden$="{{createsubject}}">
        <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px"></paper-button>
@@ -131,9 +140,12 @@
         this.Approvalstatus=true;
         this.editinfo=true;
         this.createrole=true;
+        this.createcategory=true;
+        this.createschooltype=true;
         this.createemployee=true;
         this.createsubject=true;
         this.teach_obser=true;
+
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -246,7 +258,9 @@
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='superadmin'){
           this.createrole=false;
           this.createemployee=false;  
-          this.teach_obser=false;        
+          this.teach_obser=false;  
+          this.createcategory=false;
+          this.createschooltype=false;      
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;
@@ -335,10 +349,20 @@
       FnCreatesubject:function(e)
       {
         document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('subjectcard','');
-      
-
-      }
+        document.querySelector('home-page').setPage('subjectcard','');    
+      },
+       FnCreateSchooltype:function(e)
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('schooltypecard','');
+        document.querySelector('schooltype-card').ready();
+      },
+      FnCreateCategory:function(e)
+      {        
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('categorycard','');
+        document.querySelector('category-card').ready();
+      },
     });
   })();
   </script>

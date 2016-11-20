@@ -1,0 +1,65 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="role-display-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card{
+        @apply(--layout-horizontal);
+        border-bottom: 1px solid #dedede;
+      }
+    </style>
+
+      <table class="card" id="card{{roleid}}">
+      <tr><td hidden>{{roleid}}</td>
+      <td width="40%" hidden$="{{hiderolenameitem}}">{{rolename}}</td>
+      <td width="40%" hidden$="{{hiderolenameinput}}"><paper-input value="{{rolename}}"></paper-input></td>
+      <td width="5%" hidden$="{{hiderolenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
+      </td>
+      <td width="5%" hidden$="{{hiderolenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
+      </td>
+      <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+    </table></tr>
+    <master-ui-service id="service"></master-ui-service>
+  </template>
+  <script>
+    (function() {
+    'use strict';
+
+      Polymer({
+      is: 'role-display-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'role-display-card',
+          notify: true
+        }
+      },
+      ready:function(){
+        // alert('coming!');
+        this.hiderolenameinput=true;
+        this.hiderolenameitem=false;
+      },
+      FnDelete:function(){
+        this.$.service.FnDeleteRole(this.roleid);
+      },
+      FnEdit:function(){
+        this.hiderolenameinput=false;
+        this.hiderolenameitem=true;
+      },
+      FnSave:function(){
+        this.$.service.FnUpdateRole(this.roleid,this.rolename);
+        this.hiderolenameinput=true;
+        this.hiderolenameitem=false;
+      },
+      setColor:function(roleid){
+        document.getElementById('card'+rolename).backgroundColor = "yellow";
+      }
+    });
+  })();
+  </script>
+</dom-module>

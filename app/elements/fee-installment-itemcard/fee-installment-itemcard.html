@@ -1,0 +1,45 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../installment-date-picker/installment-date-picker.html">
+
+<dom-module id="fee-installment-itemcard">
+  <template>
+    <style></style>
+    <div>
+
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-5 enquiry-input">
+            <paper-input  label="{{installmentname}}" hidden></paper-input>
+            <paper-input  label="{{installment}}" value="{{installmentamount}}" on-change="{{FnChangeAmount}}"></paper-input>
+          </div>
+          <div class="col-sm-5 enquiry-input">
+            <installment-date-picker></installment-date-picker>
+          </div>  
+          <div class="col-sm-2 enquiry-input">
+             <paper-icon-button  icon="save" on-click="FnSave"></paper-icon-button>
+          </div>       
+        </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var installmentarr=[];
+    Polymer({
+      is: 'fee-installment-itemcard',
+      FnSave:function(){
+        var obj={"name":"","amount":"","date":""};
+        obj.name=this.installmentname;
+        obj.amount=this.installmentamount;
+        obj.date=localStorage.getItem("localsess_start_date");
+        installmentarr.push(obj);
+        document.querySelector('schedulefee-card').FnSetInstallment(installmentarr);
+      },
+      FnRefresh:function(){
+        installmentarr=[];
+      }
+    });
+  })();
+  </script>
+</dom-module>

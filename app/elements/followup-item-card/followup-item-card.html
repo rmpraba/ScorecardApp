@@ -1,0 +1,45 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<dom-module id="followup-item-card">
+  <template>
+    <tr>
+      <td class="followup-field">{{student}}</td>
+      <td class="followup-field">{{parentname}}</td>
+      <td class="followup-field">{{mobilenumber}}</td>
+      <td class="followup-field">{{classreq}}</td>
+      <td class="followup-field">{{enquiredon}}</td>
+      <td class="followup-field">{{lastfollowup}}</td>
+      <td  class="followup-field">{{confidence}}</td>
+      <td  class="followup-field">{{followup}}</td>
+      <td  class="followup-field">{{nextfollowup}}</td>
+      <td  class="followup-field">{{comments}}</td>
+      <td>
+        <paper-dropdown-menu label="Prospectus Status">
+          <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+            <paper-item>90%</paper-item>
+            <paper-item>75%</paper-item>
+            <paper-item>50%</paper-item>
+            <paper-item>50%</paper-item>
+            <paper-item>35%</paper-item>
+            <paper-item>10%</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </td>
+      <td>
+        <nextfollowupdate-card></nextfollowupdate-card>
+      </td>
+      <td>
+        <paper-input label="Comments" value="{{comments}}"></paper-input>
+      </td>
+    </tr>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'followup-item-card',
+
+    });
+  })();
+  </script>
+</dom-module>

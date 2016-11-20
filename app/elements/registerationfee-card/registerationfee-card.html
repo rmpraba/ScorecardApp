@@ -1,0 +1,181 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\admission-service/admission-service.html">
+<link rel="import" href="..\installment-card/installment-card.html">
+<link rel="import" href="..\fees-service/fees-service.html">
+
+<dom-module id="registerationfee-card">
+<style>
+  .horizontalframe,.inshead{
+     @apply(--layout-horizontal);
+  }
+  .cb{
+    @apply(--layout-horizontal);
+  }
+  .inshead{
+    @apply(--layout-horizontal);
+  }
+    
+</style>
+  <template>
+    <div class="row enquiry-form">
+      
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="custom-search-form col-sm-4">
+          <div id="search" show$="{{show}}" on-click="toggleSearch">
+            <span><paper-input label="Enter Enquiry No / Firstname " value="{{enquiryno}}"></paper-input></span>
+          </div>
+        </div>
+        <div class="custom-search-form col-sm-2 paper-search">
+          <span><paper-icon-button icon="search" on-click="FnSearchEnquiry"></paper-icon-button></span>
+        </div>
+        <div class="custom-search-form col-sm-4">
+          <div id="search" show$="{{show}}" on-click="toggleSearch">
+            <span><paper-input label="Enter Admission No / Firstname " value="{{admissionno}}"></paper-input></span>
+          </div>
+        </div>
+        <div class="custom-search-form col-sm-2 paper-search">
+          <span><paper-icon-button icon="search" on-click="FnSearchAdmission"></paper-icon-button></span>
+        </div>
+     </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Academic Year" value="{{academicyear}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Class" value="{{enquiredclass}}"></paper-input>
+        </div>
+      </div>
+
+      <div class="form-group-heading">
+        <h4>Student Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Student Name" value="{{studentname}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Date of Birth" value="{{dob}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Fees" value="{{fees}}"></paper-input>
+        </div>
+      </div>
+    
+      <div class="form-group-heading">
+        <h4>Payment</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hiddenpayment}}">
+       
+    <paper-checkbox id="regwaiveoff" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox>
+     <div class="inshead">                        
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="margin-left:10%; width: 30%;">Mode of Payment</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;" hidden$="{{receiptdate}}">Receipt Date</div>                 
+      </div>
+      <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
+              <template  is="dom-repeat" items="{{regarr}}" as="view">
+                <installment-card installment="{{view.installment}}" amount="{{view.amount}}" installmentdate="{{view.date}}"></installment-card>
+              </template>
+            </div>
+            <div >
+              <paper-button  id="" on-click="FnPayfee"  style="width: 10%;margin-left:0%;position: absolute; left: 70%;margin-top: 1%;" hidden$="{{hiddenaddbtn}}">PAY</paper-button>
+            </div>
+      </div>
+     
+    
+    </div>
+    <br><br>
+
+    <!-- <paper-dialog id="waiveoffdialog" modal>
+      <div>Please confirm!!</div>
+      <paper-button on-click="FnConfirm">Confirm</paper-button>
+      <paper-button on-click="FnCancel">Cancel</paper-button>
+    </paper-dialog> -->
+
+    <admission-service id="admissionservice"></admission-service>
+    <fees-service id="feeservice"></fees-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+      var installment="";
+      var paymentmode="";
+    Polymer({
+      is: 'registerationfee-card',
+      ready:function(){
+        this.hiddenpayment=true;
+        this.receiptdate=true;
+        this.hiddeninstallment=false;
+        this.hiddenaddbtn=false;
+        localStorage.setItem("curr_sess_waiveofflag",0);
+        localStorage.setItem("curr_sess_waiveofamount",0);
+      },
+      FnSearchEnquiry:function(){
+        localStorage.setItem("curr_sess_feetype","reg_fee");
+        this.$.admissionservice.callSearchadmnenquiryService(this.enquiryno);
+      },
+      FnHiddenPayment:function(){
+        this.hiddenpayment=false;
+      },
+      waiveoffHandler:function(){
+        if(document.querySelector('#regwaiveoff').checked==true){      
+          localStorage.setItem("curr_sess_waiveofflag",1);
+          localStorage.setItem("curr_sess_waiveofamount",'20000');
+          this.fees='5000';
+          document.querySelector('installment-card').FnSetAmount(this.fees);
+        }
+        if(document.querySelector('#regwaiveoff').checked==false){          
+          localStorage.setItem("curr_sess_waiveofflag",0);
+          localStorage.setItem("curr_sess_waiveofamount",'0');
+          this.fees='25000';
+          document.querySelector('installment-card').FnSetAmount(this.fees);
+        }
+      },
+      FnSetfee:function(paymenttype,installmentarr){
+        installment=installmentarr;
+        paymentmode=paymenttype;        
+      },
+      FnPayfee:function(){  
+      // alert('calling....'+paymentmode);      
+      if(paymentmode=="Cash")
+        this.$.feeservice.callInsertCashfeesService(installment);
+      if(paymentmode=="Cheque")
+        this.$.feeservice.callInsertChequefeesService(installment);
+      if(paymentmode=="Transfer")
+        this.$.feeservice.callInsertTransferfeesService(installment);
+      },
+      FnConfirm:function(){
+        this.$.waiveoffdialog.toggle();
+      },
+      FnCancel:function(){
+        this.$.waiveoffdialog.toggle();
+        this.hiddeninstallment=false;
+        this.hiddenaddbtn=false;
+        document.querySelector('#waiveoff').checked=false;
+      },
+      FnRefresh:function(){
+        installment=[];
+        paymentmode="";
+        this.enquiryno="";
+        this.academicyear="";
+        this.enquiredclass="";
+        this.studentname="";
+        this.parentname="";
+        this.dob="";
+        this.fees="";
+        this.regarr=[];
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

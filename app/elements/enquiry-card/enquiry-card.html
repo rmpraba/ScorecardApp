@@ -1,0 +1,96 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/enquiry-details-card/enquiry-details-card.html">
+<dom-module id="enquiry-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-phone" aria-hidden="true"></i> Enquiries
+        <span class="pull-right">
+          <span class="panel-icon"><a href=""><i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry"></i></a></span>
+          <span class="panel-icon"><a href=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
+          <span class="panel-icon"><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></span>
+        </span>
+    </div>
+    <div class="panel-body">
+      <div class="list-group">
+        <div class="col-sm-6">Enquired</div>
+        <div class="col-sm-6">Applied</div>
+      </div>
+     
+     <template  is="dom-repeat" items="{{gradewisearr}}" as="view">
+        <grade-count-itemcard grade="{{view.class}}" enquirygrade="{{view.total}}" admissiongrade="{{view.noofadmitted}}"></grade-count-itemcard>
+      </template>
+      <template  is="dom-repeat" items="{{gradewiseadmissionarr}}" as="view">
+        <grade-count-itemcard grade="{{view.class}}" enquirygrade="{{view.total}}" admissiongrade="{{view.noofadmitted}}"></grade-count-itemcard>
+      </template>
+    </div>
+      <div class="modal fade bd-example-modal-lg" id="addEnquiry" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="center-block event-title" id="eventTitle">
+                New Enquiry
+              </h4>
+            </div>
+            <div class="modal-body">
+              <newenquiry-card></newenquiry-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade bd-example-modal-lg" id="grade1enquired" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div class="col-md-12">
+                <span class="col-md-8">
+                  <h4 class="center-block event-title" id="Enquiry Details">
+                    Grade 1
+                  </h4>
+                </span>
+                <span class="pull-right col-md-4">
+                  <paper-dropdown-menu label="Prospectus Status">
+                    <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                      <paper-item>>90%</paper-item>
+                      <paper-item>>75%</paper-item>
+                      <paper-item>>50%</paper-item>
+                      <paper-item><50%</paper-item>
+                      <paper-item><35%</paper-item>
+                      <paper-item><10%</paper-item>
+                    </paper-listbox>
+                  </paper-dropdown-menu>
+                </span>
+              </div>
+            </div>
+            <div class="modal-body">
+              <enquiry-details-card></enquiry-details-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <crm-service id="service"></crm-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'enquiry-card',
+      ready:function(){
+          this.$.service.getenquirycount();
+      }
+    });
+  })();
+  </script>
+</dom-module>

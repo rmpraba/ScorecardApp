@@ -1,0 +1,155 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="fee-schedule-service">
+  <template>
+     <!-- It would fetch the grade -->
+     <iron-ajax
+        method="post"
+        id="fetchgradeajax"
+        url="{{fetchgradeurl}}"
+        params="{{fetchgradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeResponse"
+        debounce-duration="300"
+        >
+     <!-- Generate Fee code -->
+     <iron-ajax
+        method="post"
+        id="generatefeecodeajax"
+        url="{{generatefeecodeurl}}"
+        params="{{generatefeecodeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="generatefeecodeResponse"
+        debounce-duration="300"
+        >
+     <!-- Generate Fee code -->
+     <iron-ajax
+        method="post"
+        id="createfeecodeajax"
+        url="{{createfeecodeurl}}"
+        params="{{createfeecodeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="createfeecodeResponse"
+        debounce-duration="300"
+        >
+     <!-- Generate Fee code splitup-->
+     <iron-ajax
+        method="post"
+        id="feecodesplitupajax"
+        url="{{feecodesplitupurl}}"
+        params="{{feecodesplitupparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="feecodesplitupResponse"
+        debounce-duration="300"
+        >
+     <!-- Generate Fee installment -->
+     <iron-ajax
+        method="post"
+        id="createinstallmentajax"
+        url="{{createinstallmenturl}}"
+        params="{{createinstallmentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="createinstallmentResponse"
+        debounce-duration="300"
+        >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'fee-schedule-service',
+      fetchgradeService:function(){
+        this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service";
+        this.$.fetchgradeajax.generateRequest();
+      },
+      fetchgradeResponse:function(e){
+        document.querySelector('schedulefee-card').gradearr=e.detail.response.returnval;
+      },
+      generatefeecodeService:function(){
+        this.generatefeecodeurl=sessionStorage.getItem("addrinfo")+"/generatefeecode-service";
+        var obj={"schoolid":"","prefixid":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.prefixid=1;
+        this.generatefeecodeparam=obj;
+        this.$.generatefeecodeajax.generateRequest();
+      },
+      generatefeecodeResponse:function(e){
+        if(e.detail.response.returnval=="seqfail"){
+          alert('Feecode creation fail!!');
+        }
+        else if(e.detail.response.returnval=="prefixfail"){
+          alert('Feecode creation fail!!');
+        }
+        else{
+          document.querySelector('schedulefee-card').feecode=e.detail.response.returnval;
+          document.querySelector('schedulefee-card').FnCreateFeeCode();
+        }
+      },
+      createfeecodeService:function(schoolname,grade,admissionyear,academicyear,totalfees,feecode,feename){
+        this.createfeecodeurl=sessionStorage.getItem("addrinfo")+"/createfeecode-service";
+        var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":"","feetype":"","totalfees":"","installment":"","installmentamount":"","installmentdate":"","feecode":"","feename":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=schoolname;
+        obj.grade=grade;
+        obj.admissionyear=admissionyear;
+        obj.academicyear=academicyear;        
+        obj.feecode=feecode;
+        obj.feename=feename;
+        this.createfeecodeparam=obj;
+        this.$.createfeecodeajax.generateRequest();
+      },
+      createfeecodeResponse:function(e){
+        alert(e.detail.response.returnval);
+      },
+      feecodesplitupService:function(schoolname,feetype,totalfees,installment,feecode,feename){
+        this.feecodesplitupurl=sessionStorage.getItem("addrinfo")+"/feecodesplitup-service";
+        var obj={"schoolid":"","schoolname":"","feetype":"","feetypecode":"","totalfees":"","installment":"","feecode":"","feename":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=schoolname;        
+        obj.feecode=feecode;
+        obj.feename=feename;
+        obj.feetype=feetype;
+        obj.feetypecode=feetype.substring(0,5)+"_fee";
+        obj.totalfees=totalfees;
+        obj.installment=installment;
+        this.feecodesplitupparam=obj;
+        this.$.feecodesplitupajax.generateRequest();
+      },
+      feecodesplitupResponse:function(e){
+        // alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=="succ")
+          this.createinstallmentService();
+      },
+      createinstallmentService:function(installarr,schoolname,feetype,totalfees,installment,feecode){
+        this.createinstallmenturl=sessionStorage.getItem("addrinfo")+"/createinstallment-service";
+        var obj={"schoolid":"","schoolname":"","feetype":"","feetypecode":"","totalfees":"","installment":"","feecode":"","feename":"","installmentname":"","installmentamount":"","installmentdate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=schoolname;        
+        obj.feecode=feecode;        
+        obj.feetype=feetype;
+        obj.feetypecode=feetype.substring(0,5)+"_fee";
+        obj.totalfees=totalfees;
+        obj.installment=installment;
+        for(var i=0;i<installarr.length;i++){
+          obj.installmentname=installarr[i].name;
+          obj.installmentamount=installarr[i].amount;
+          obj.installmentdate=installarr[i].date;
+          this.createinstallmentparam=obj;
+          this.$.createinstallmentajax.generateRequest();
+        }
+      },
+      createinstallmentResponse:function(e){
+        alert(e.detail.response.returnval);
+      }
+    });
+  })();
+  </script>
+</dom-module>

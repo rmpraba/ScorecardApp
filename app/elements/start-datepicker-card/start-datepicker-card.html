@@ -1,0 +1,66 @@
+<!--Component import-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html">
+<link rel="import" href="../../bower_components/paper-styles/demo-pages.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+
+<dom-module id="start-datepicker-card">  <template>
+  <!--component which invokes the predefined date picker control-->
+  <div class="datepicker">
+    <paper-input label="Start Date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+    <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
+      <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm>OK</paper-button>
+      </div>
+    </paper-dialog>
+  </div>
+  <dialog-page id="ID_Show_Dialog"></dialog-page>
+  <transport-service id="service"></transport-service>
+</template>
+  <!--Calling dialog control-->
+
+  <!--JS file import-->
+  <script>
+    Polymer({
+      is: 'start-datepicker-card',
+
+      ready:function()
+      {
+        this.showdate=moment(new Date()).format('L');
+        localStorage.setItem("localsess_curr_date",this.showdate);
+        //this.$.service.feereport(this.showdate);
+      },
+      FnShowDialog:function(){
+        this.date=new Date();
+        this.$.dialog.toggle();
+      },
+      FnDismissDialog:function(e)
+      {
+        if (e.detail.confirmed)
+        {
+          var pickdate=moment(this.$.picker.date).format('L');
+          var dd1=new Date();
+          var dd2=new Date(pickdate);
+          var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
+          this.showdate = moment(this.$.picker.date).format('L');
+          localStorage.setItem("localsess_start_date",this.showdate);
+          //this.$.service.datepickinsta1(this.date);
+          //this.$.service.datepickinsta2(this.date);
+          //this.$.service.datepickinsta1cheque(this.date);
+          //this.$.service.datepickinsta2cheque(this.date);
+          //this.$.service.feereport(this.showdate);
+        }
+      },
+      FnClear:function(){
+        this.showdate = moment(new Date()).format('L');
+      }
+    });
+  </script>
+</dom-module>

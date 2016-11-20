@@ -52,18 +52,17 @@
               </template>
             </paper-menu>
           </paper-dropdown-menu>
-
-          <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
+       <paper-dropdown-menu id="section" label="Select Section" disabled="{{read}}" required>
             <paper-menu class="dropdown-content" id="rsection"  on-iron-select="FnSelectSection"  attr-for-selected="value" required>
               <template is="dom-repeat" items="{{sectionarr}}">
                 <paper-item value="{{item.section_name}}">{{item.section_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
-          </div>
-    <div class="list" hidden$="{{hidecard}}">
-    <student-list-card></student-list-card>
-    </div>
+        </div>
+        <div class="list" hidden$="{{hidecard}}">
+         <student-list-card></student-list-card>
+        </div>
     </div>
     <scorecard-service id="scorecardservice"></scorecard-service>
   </template>

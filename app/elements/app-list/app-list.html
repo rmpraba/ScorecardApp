@@ -1,0 +1,98 @@
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../enquiry-card/enquiry-card.html">
+<link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+  <dom-module id="app-list">
+  <template>
+  <style>
+  .in
+  {
+  float:right;
+  font-size:12px;
+  }
+
+  .backbutton
+  {
+    float:left;
+    width: 4%;
+  }
+  </style>
+
+  <div class="head">
+      <navigation-bar></navigation-bar>
+    </div>
+
+      <div class="content">
+      <div id="page-wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">{{title}}</h1>
+        </div>
+      </div>
+      <!-- /.row -->
+      <div class="row">
+        <!-- <enquiry-card></enquiry-card> -->
+        <iron-pages selected="{{page}}" attr-for-selected="data-category">
+            <section data-category="loginpage">
+              <login-card></login-card>
+            </section>
+          <section data-category="enquiry">
+            <div class="col-md-6">
+              <enquiry-card></enquiry-card>
+            </div>
+          </section>
+          <section data-category="follow-up">
+            <div class="col-md-12">
+              <followup-dashboard></followup-dashboard>
+            </div>
+          </section>
+
+          <section data-category="followup-details">
+            <div class="col-md-12">
+              <followup-details></followup-details>
+            </div>
+          </section>
+
+        <!--   <section data-category="feereceipt-outcard">
+            <div class="col-md-12">
+              <feereceipt-outcard></feereceipt-outcard>
+            </div>
+          </section> -->
+
+          </iron-pages>
+          </div>
+          </div>
+       </div>
+       <div class="footer"></div>
+       <attendance-service id="service"></attendance-service>
+  </template>
+  <script>
+  Polymer({
+    is: "app-list",
+    ready: function() {
+
+    this.page="enquiry";
+    //this.title="Simple Enquiry Form";
+   var currpage=localStorage.getItem("curr_sess_page");
+  },
+  setPage:function(page,title){
+    //alert(page);
+    localStorage.setItem("curr_sess_homepage","0");
+    localStorage.setItem("curr_sess_page",page);
+    this.page=page;
+    this.title=title;
+ },
+ signout:function()
+ {
+  window.location.href="../index.html";
+  localStorage.setItem("userinfo",null);
+  localStorage.setItem("route",null);
+   //document.querySelector('app-card').setPage("loginpage");
+ },
+
+  });
+
+  </script>
+</dom-module>

@@ -82,8 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="observermarkflagResponse"
         debounce-duration="300" 
     >   
-
-     <iron-ajax
+    <iron-ajax
         
         method="post"
         id="observerscoreajax"
@@ -94,7 +93,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="observerscoreResponse"
         debounce-duration="300" 
     >  
-
     <iron-ajax
         
         method="post"
@@ -448,7 +446,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          scorearr12=first1+last1;
          document.querySelector('teacher-observation_card').scorearr12=scorearr12;
       }
-     else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn")
+    else if(sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn")
       {
         // alert(res[0].name+" "+res[1].name+" "+res[2].name);
         scorearr11=res[0].name;
@@ -465,8 +463,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var first2=((scorearr13).substring(0,1)).toUpperCase();
          var last2=((scorearr13).substring(1)).toLowerCase();
          scorearr13=first2+last2;
-     
-       
        document.querySelector('teacher-observation_card').scorearr13=scorearr13;
       }
 

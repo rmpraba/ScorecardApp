@@ -1,0 +1,55 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../installment-card/installment-card.html">
+
+<dom-module id="cautionfee-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .inshead{
+        @apply(--layout-horizontal);
+      }
+    </style>
+     <div class="inshead">                        
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="margin-left:10%; width: 30%;">Mode of Payment</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;">Receipt Date</div>                 
+            </div>
+            <div style="margin-left:12%;"> 
+              <template  is="dom-repeat" items="{{cautionarr}}" as="view">
+                <installment-card installment="{{view.installment}}" amount="{{view.amount}}"></installment-card>
+              </template>
+            </div>
+            <div >
+              <paper-button  id="" on-click="payfee"  style="width: 10%;margin-left:0%;position: absolute; left: 70%;margin-top: 2%;">PAY</paper-button>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    var installment=[];
+    var paymentmode="";
+    Polymer({
+      is: 'cautionfee-card',
+      FnSetfee:function(paymenttype,installmentarr){
+        installment=installmentarr;
+        paymentmode=paymenttype;
+        // alert(JSON.stringify(installment));
+      },
+      FnPayfee:function(){
+        // alert(paymentmode);
+      if(paymentmode=="Cash")
+        this.$.feeservice.callInsertCashfeesService(installment);
+      if(paymentmode=="Cheque")
+        this.$.feeservice.callInsertChequefeesService(installment);
+      if(paymentmode=="Transfer")
+        this.$.feeservice.callInsertTransferfeesService(installment);
+      }
+    });
+  })();
+  </script>
+</dom-module>

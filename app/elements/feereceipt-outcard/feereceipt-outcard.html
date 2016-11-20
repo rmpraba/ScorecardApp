@@ -1,0 +1,88 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\feereceipt-card/feereceipt-card.html">
+
+<dom-module id="feereceipt-outcard">
+  <template>
+    <style>
+      /*:host {
+        display: block;
+      }*/
+      /*.outcard{
+        @apply(--layout-vertical);
+      }*/
+      .home{
+        background-color: black;
+        color: white;
+      }
+    </style>
+    <!-- <div class="outcard"> -->
+      <div class="home">
+      <paper-button id="home" on-click="FnHome">Home</paper-button>
+      </div>
+
+      <table>
+        <tr>
+          <td><img style="width: 100px; height: 100px;" src="../../images/zeesouth.png"/></td>
+          <th colspan="5" style="text-align: left;"><h2 style="margin-left: 20px;">{{schoolname}}</h2>{{schooladdress}}</th>
+        </tr>
+      </table>
+      <hr></hr>
+      
+      <!-- <div class="card"> -->
+      <template  is="dom-repeat" items="{{paymentreceiptarr}}" as="pay">
+        <feereceipt-card receipttype="{{pay.receipttype}}" enquiryno="{{pay.enquiry_no}}" studentname="{{pay.student_name}}" grade="{{pay.grade}}" feetype="{{pay.fee_type}}" installment="{{pay.installment}}" installmentdate="{{pay.installment_date}}" installmentamount="{{pay.installment_amount}}" waiveoffamount="{{pay.waiveoff_amount}}" modeofpayment="{{pay.mode_of_payment}}" receiveddate="{{pay.received_date}}" chequeno="{{pay.cheque_no}}" bankname="{{pay.bank_name}}" chequedate="{{pay.cheque_date}}" ackno="{{pay.ack_no}}" receiptno="{{pay.receipt_no}}" referenceno="{{pay.reference_no}}" hidereceipt="{{pay.hidereceipt}}" hideack="{{pay.hideack}}" chequeview="{{pay.chequeview}}" transferview="{{pay.transferview}}" paiddate="{{pay.paid_date}}" totalfees="{{pay.installment_amount}}" bounceamount="0"></feereceipt-card>
+      </template>
+      <div class="row-buttons">
+      <paper-button id="pdf"   style="height: 34px  !important;" on-click="downloadpdf">PDF</paper-button>
+      <paper-button id="email" style="height: 34px  !important;" on-click="email">Email</paper-button>
+      <paper-button id="print" style="height: 34px  !important;" on-click="print">Print</paper-button>
+      </div>
+      <!-- </div> -->
+    <!-- </div> -->
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'feereceipt-outcard',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'feereceipt-outcard',
+          notify: true
+        }
+      },
+      ready:function(){
+        // alert(JSON.stringify(this.paymentreceiptarr));
+        this.schoolname=localStorage.getItem("schoolname");
+        this.schooladdr=sessionStorage.getItem("schooladdr");  
+      },
+      FnHome:function(){
+        // alert("hi");
+        document.querySelector('CRM-app').setPage('applist');
+      },
+
+      print:function(){
+
+              this.$.pdf.hidden=true;
+              this.$.email.hidden=true;
+              this.$.print.hidden=true;
+              this.$.print.home=true;
+
+            if (!window.print){
+            alert("You need NS4.x to use this print button!")
+            return
+            }
+            window.print()
+              this.$.pdf.hidden=false;
+              this.$.email.hidden=false;
+              this.$.print.hidden=false;
+      }
+    });
+  })();
+  </script>
+</dom-module>

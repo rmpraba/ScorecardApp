@@ -1,0 +1,104 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="event-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-calendar fa-fw"></i> Events
+        <span class="pull-right">
+          <span class="panel-icon"><a href=""><i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#addEvent"></i></a></span>
+          <span class="panel-icon"><a href=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
+          <span class="panel-icon"><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></span>
+        </span>
+      </div>
+      <div class="panel-body">
+        <div class="list-group">
+          <a href="#" class="list-group-item col-lg-12" data-toggle="modal" data-target="#myModal">
+            Lorem ipsum dolor sit
+            <span class="pull-right text-muted small"><em>20, Aug 2016</em><p><i class="fa fa-map-marker"></i> Bangalore West</p></span>
+          </a>
+        </div>
+        <div class="list-group">
+          <a href="#" class="list-group-item col-lg-12" data-toggle="modal" data-target="#myModal">
+            Lorem ipsum dolor sit
+            <span class="pull-right text-muted small"><em>20, Aug 2016</em><p><i class="fa fa-map-marker"></i> Bangalore West</p></span>
+          </a>
+        </div>
+        <div class="list-group">
+          <a href="#" class="list-group-item col-lg-12" data-toggle="modal" data-target="#myModal">
+            <span class="event-title">Lorem ipsum dolor sit</span>
+            <span class="pull-right text-muted small"><em>20, Aug 2016</em><p><i class="fa fa-map-marker"></i> Bangalore West</p></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block" id="myModalLabel">
+              Lorem ipsum dolor sit
+            </h4>
+            <em>20, Aug 2016</em>
+            <p><i class="fa fa-map-marker"></i> Bangalore West</p>
+          </div>
+          <div class="modal-body">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit risus id lacus gravida vestibulum. Curabitur nec facilisis arcu. Praesent ut ante bibendum, facilisis sapien lobortis, lobortis tellus. Suspendisse dictum sodales auctor. In lacinia varius ante, sit amet vehicula eros egestas et. Maecenas consequat vitae augue eget gravida. In vel imperdiet justo, ac rutrum urna. Praesent non justo tincidunt, rutrum lectus eu, varius massa. Donec tempus arcu non condimentum consectetur. Sed maximus arcu scelerisque, gravida est sed, pellentesque eros. In hac habitasse platea dictumst. Nullam tincidunt elementum auctor.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="eventTitle">
+              New Event
+            </h4>
+          </div>
+          <div class="modal-body">
+            <newevent-card></newevent-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'event-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'event-card',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

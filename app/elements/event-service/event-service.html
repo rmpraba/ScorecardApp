@@ -1,0 +1,51 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+
+<dom-module id="event-service">
+  <template>
+    <iron-ajax
+      auto
+      method="post"
+      id="addeventajax"
+      url="{{addeventurl}}"
+      params="{{addeventparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="addeventResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'event-service',
+      //Function for creating new events
+      addevent:function(title, description,startdate, enddate, eventtype,frequency,occurrance,is_recurrence, event_location){
+        this.addeventurl = sessionStorage.getItem("addrinfo")+"/add-event";
+        var obj={"title":"","description":"","startdate":"","enddate":"","event_type":"","frequency":"","is_recurrence":"","occurrance":"","event_location":""};
+        obj.title=title;
+        obj.description=description;
+        obj.startdate=startdate;
+        obj.enddate=enddate;
+        obj.frequency=frequency;
+        obj.event_type=eventtype;
+        obj.occurrance=occurrance;
+        obj.is_recurrence=is_recurrence;
+        obj.event_location=event_location;
+        this.addeventparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.addeventajax.generateRequest();
+      },
+      //getting the response of addevent function
+      addeventResponse:function(e){
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+      },
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,128 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="workingdays-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+
+    .inputelements{
+    display: inline-block;
+    padding: 0 7px;
+    margin: 1%;
+  }
+
+    </style>
+    <div>
+         <div><CENTER><h2 style="color:#162BA3;">STUDENTS WORKING DAYS</h2></CENTER></div>
+      <span class="inputelements">
+        <paper-dropdown-menu label="Select School Name">
+          <paper-menu   id="wstudentid" class="dropdown-content"  on-iron-select="SelectSchoolid">   
+            <template is="dom-repeat" items="{{selectschoolarr1}}" as="view">
+              <paper-item value="{{view.id}}">{{view.name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+     
+      <span class="inputelements">
+        <paper-dropdown-menu label="Academic Year">
+          <paper-menu  id="wacadamicid" class="dropdown-content"  on-iron-select="acadamicid">   
+           <paper-item>2016-2017</paper-item>
+           <paper-item>2017-2018</paper-item>
+           <paper-item>2018-2019</paper-item>
+           <paper-item>2019-2020</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+      <span class="inputelements">
+        <paper-dropdown-menu label="Tearm Name">
+          <paper-menu id="wteamid"  class="dropdown-content"  on-iron-select="Teamid">   
+            <template is="dom-repeat" items="{{Tearmarr}}" as="view">
+              <paper-item value="{{view.term_name}}">{{view.term_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+      <span class="inputelements">
+        <paper-dropdown-menu label="Select Grade">
+          <paper-menu id="wgradeid"  class="dropdown-content"  on-iron-select="SelectGradeid">   
+            <template is="dom-repeat" items="{{selectgradearr}}" as="view">
+              <paper-item value="{{view.grade_name}}">{{view.grade_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+       </span>    
+          <span class="inputelements">
+          <paper-input value="{{noofdays}}" label="Student Working Days"></paper-input>
+         </span>
+       </div>
+       </br>
+       <div id="btn1">
+       <center>
+        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
+        <paper-button on-click="FnUpdate" style="background-color:#384485;color:white;" id="Upid">Delete</paper-button>
+        </center>
+      </div>
+  
+    <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'workingdays-card',
+      ready:function(){
+        this.$.uiservice.SelectSchoolName();
+         this.$.uiservice.SelectTearmName();
+       },
+    SelectSchoolid:function(e){
+    this.scid=e.target.selectedItem.value;
+   
+    },
+    fnclear1:function(){
+       document.querySelector('#wstudentid').selected=-1;
+       document.querySelector('#wacadamicid').selected=-1;
+       document.querySelector('#wteamid').selected=-1;
+       document.querySelector('#wgradeid').selected=-1;
+       this.noofdays="";
+     },
+     acadamicid:function(e){
+
+        this.acaid=(e.target.selectedItem.textContent).trim();
+      },
+     Teamid:function(e){
+       this.temid=e.target.selectedItem.value;
+    },
+     
+    SelectGradeid:function(e){
+   this.secgradeid=e.target.selectedItem.value;
+    },
+    FnSubmit:function(e){
+      //alert(this.scid+this.acaid+this.temid+this.secgradeid);
+      this.$.uiservice.workingdayssub(this.scid,this.acaid,this.temid,this.secgradeid,this.noofdays);
+      this.fnclear1();
+    },
+    FnUpdate:function(e){
+      //alert(this.scid+this.acaid+this.temid+this.secgradeid);
+      this.$.uiservice.workingdayupdate(this.scid,this.acaid,this.temid,this.secgradeid,this.noofdays);
+      this.fnclear1();
+    }
+    
+    });
+  })();
+  </script>
+</dom-module>

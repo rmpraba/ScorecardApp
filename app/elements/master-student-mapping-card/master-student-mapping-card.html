@@ -1,0 +1,79 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="master-student-mapping-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+   .inputelements{
+    display: inline-block;
+    padding: 0 7px;
+    margin: 3%;
+  }
+    </style>
+       <div><CENTER><h2 style="color:#162BA3;">SUBJECTMAPPING</h2></CENTER></div>
+    <center>
+     
+      <span class="inputelements">
+        <paper-dropdown-menu label="Select Category Name">
+          <paper-menu   id="Gsubj3" class="dropdown-content"  on-iron-select="MasterCategory">   
+            <template is="dom-repeat" items="{{masterarr}}" as="view">
+              <paper-item value="{{view.subject_type}}">{{view.subject_type}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+     <span class="inputelements"> 
+        <paper-dropdown-menu label="Select Subject Name">
+          <paper-menu id="Gsubj2"  class="dropdown-content"  on-iron-select="GradetoSubjectName">   
+            <template is="dom-repeat" items="{{mastersubjectsarr}}" as="view">
+              <paper-item value="{{view.subject_id}}">{{view.subject_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+       <div>
+        <center>
+        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
+        <paper-button on-click="FnDelete" style="background-color:#384485;color:white;" id="Delid">Delete</paper-button>
+       </center>
+       </div>
+    </center>      
+   <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'master-student-mapping-card',
+
+        MasterCategory:function(e){
+            this.subjecttypeid=e.target.selectedItem.value;
+            this.$.uiservice.mastersubjectSelection(this.subjecttypeid);
+            alert(this.subjecttypeid);
+        },
+        GradetoSubjectName:function(e){
+           this.mastergradeid=e.target.selectedItem.value;
+           this.subjecttypevalue=e.target.selectedItem.textContent.trim();
+           alert(this.mastergradeid+ this.subjecttypevalue);
+           // alert(this.mastergradeid);
+        },
+        FnSubmit:function(){
+          alert(this.subjecttypeid+this.mastergradeid+this.subjecttypevalue);
+           }
+    });
+  })();
+  </script>
+</dom-module>

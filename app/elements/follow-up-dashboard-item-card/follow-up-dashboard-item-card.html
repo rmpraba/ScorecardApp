@@ -1,0 +1,61 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="follow-up-dashboard-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="list-group list-group-item enquiry-list-item">
+        <h5>{{grade}}</h5>
+        <div class="col-sm-3">
+          <a href="" class="enquired" on-click="getfollowupdetails" aria-hidden="true" data-toggle="modal" data-target="#followupdet">{{enquirygrade}}</a>
+        </div>
+      </div>
+<!--
+    <div class="modal fade bd-example-modal-lg" id="followupdet" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Follow Up Detail
+            </h4>
+          </div>
+          <div class="modal-body">
+            <followup-details></followup-details>
+          </div>
+        </div>
+      </div>
+    </div>-->
+
+        <crm-service id="service"></crm-service>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'follow-up-dashboard-item-card',
+      getfollowupdetails:function(){
+        this.$.service.getfollowupstudents(this.grade,this.status);
+        document.querySelector('app-list').setPage("followup-details");
+      },
+    });
+  })();
+  </script>
+</dom-module>

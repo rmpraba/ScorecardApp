@@ -1,0 +1,48 @@
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../app-list/app-list.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../login-card/login-card.html">
+<link rel="import" href="../feereceipt-outcard/feereceipt-outcard.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+
+
+<dom-module id="CRM-app">
+<template>
+  <span id="browser-sync-binding"></span>
+    <iron-pages selected="{{page}}" attr-for-selected="data-category">
+      <section data-category="loginpage">
+        <login-card></login-card>
+      </section>
+      <section data-category="applist">
+        <app-list></app-list>
+      </section>
+      <section data-category="feereceipt-outcard">
+        <!-- <div class="col-md-12"> -->
+        <feereceipt-outcard></feereceipt-outcard>
+        <!-- </div> -->
+      </section>
+    </iron-pages>
+</template>
+
+<script>
+  Polymer({
+    is: "CRM-app",
+    ready: function()
+    {
+
+
+      this.page="loginpage";
+
+
+  },
+  setPage:function(page)
+    {
+     this.page=page;
+    }
+  });
+  </script>
+</dom-module>

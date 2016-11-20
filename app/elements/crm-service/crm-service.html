@@ -1,0 +1,1300 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="crm-service">
+  <template>
+  <!-- This ajax is used to submit the simple enquiry details of the student for the first time -->
+     <iron-ajax
+        method="post"
+        id="submitenquiryajax"
+        url="{{submitenquiryurl}}"
+        params="{{submitenquiryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="submitenquiryResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- It update the already entered student details with more information after the counselling using student name or enquiry number -->
+  <iron-ajax
+        method="post"
+        id="updateenquiryajax"
+        url="{{updateenquiryurl}}"
+        params="{{updateenquiryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updateenquiryResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="registerenquiryformajax"
+      url="{{registerenquiryformurl}}"
+      params="{{registerenquiryformparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="registerenquiryformResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+<!-- this ajax is to get the total sequence number that has been created depending on the enquiry -->
+ <iron-ajax
+        method="post"
+        id="getenquirynoajax"
+        url="{{getenquirynourl}}"
+        params="{{getenquirynoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getenquirynoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getenquiryno1ajax"
+      url="{{getenquiryno1url}}"
+      params="{{getenquiryno1param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getenqno1Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+<!-- this ajax is to fetch the available classes with repect to the school -->
+   <iron-ajax
+        method="post"
+        id="getclassesajax"
+        url="{{getclassesurl}}"
+        params="{{getclassesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getclassesResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax fetched the list of locations available with respect to school -->
+  <iron-ajax
+        method="post"
+        id="getlocationajax"
+        url="{{getlocationurl}}"
+        params="{{getlocationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getlocationResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax is to fetch the name of student those who filled simple enquiry form and ready to fill the detailed enquiry form after counselling -->
+  <iron-ajax
+        method="post"
+        id="getstudentnameajax"
+        url="{{getstudentnameurl}}"
+        params="{{getstudentnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstudentnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this below ajax is to update the sequence number only when the enquiry form is submitted -->
+  <iron-ajax
+        method="post"
+        id="updateseqajax"
+        url="{{updatesequrl}}"
+        params="{{updateseqparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updateseqResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax is used to get the details of the particular enquiry using enquiry no -->
+  <iron-ajax
+        method="post"
+        id="getenqirydetailsajax"
+        url="{{getenqirydetailsurl}}"
+        params="{{getenqirydetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getenqirydetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+<!-- this ajax is to verify with the database whether the specific number is existing in database or not -->
+  <iron-ajax
+        method="post"
+        id="verifymobilenoajax"
+        url="{{verifymobilenourl}}"
+        params="{{verifymobilenoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="verifymobilenoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this below ajax gives the total number of enquiry appeared categorized based on the grade -->
+  <iron-ajax
+        method="post"
+        id="getenquirycountajax"
+        url="{{getenquirycounturl}}"
+        params="{{getenquirycountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getenquirycountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax gets the student list who all are enquired for admission and not yet been admitted -->
+  <iron-ajax
+        method="post"
+        id="getlistdetailsajax"
+        url="{{getlistdetailsurl}}"
+        params="{{getlistdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getlistdetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this below ajax is used to get the sequence value of prospectus from the table -->
+  <iron-ajax
+        method="post"
+        id="getprospectnoajax"
+        url="{{getprospectnourl}}"
+        params="{{getprospectnoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getprospectnoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax is used to update the prospectus number in the sequence table -->
+  <iron-ajax
+        method="post"
+        id="updateprospectnoajax"
+        url="{{updateprospectnourl}}"
+        params="{{updateprospectnoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updateprospectnoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <!-- this below ajax gets the day counts for follow up from the config file -->
+   <iron-ajax
+        auto
+        id="followupajax"
+        url="../../configfile/followups.json"
+        handle-as="json"
+        content-type="application/json"
+        on-response="followupResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <!-- this ajax is used to update the follow up info in followup table -->
+  <iron-ajax
+        method="post"
+        id="updatefollowajax"
+        url="{{updatefollowurl}}"
+        params="{{updatefollowparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatefollowResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <!-- this below ajax is used to insert data in the follow up detail table
+  -->
+  <iron-ajax
+        method="post"
+        id="updatefollowdetailajax"
+        url="{{updatefollowdetailurl}}"
+        params="{{updatefollowdetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatefollowdetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <!-- this ajax is to get the referrer name from parent table -->
+  <iron-ajax
+        method="post"
+        id="getparentnameajax"
+        url="{{getparentnameurl}}"
+        params="{{getparentnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getparentnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax is used to fetch the referrer name from student detail table -->
+  <iron-ajax
+        method="post"
+        id="getstudentnameajax"
+        url="{{getstudentnameurl}}"
+        params="{{getstudentnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstudentnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax is to fetch the detail of student who have been enquired newly and yet done a single follow up-->
+    <iron-ajax
+        method="post"
+        id="getopenfollowupcountajax"
+        url="{{getopenfollowupcounturl}}"
+        params="{{getopenfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getopenfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="followupdetailsajax"
+        url="{{followupdetailsurl}}"
+        params="{{followupdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="followupdetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and been in process for follow up -->
+  <iron-ajax
+        method="post"
+        id="getprocessfollowupcountajax"
+        url="{{getprocessfollowupcounturl}}"
+        params="{{getprocessfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getprocessfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and status have been in closed for follow up -->
+  <iron-ajax
+        method="post"
+        id="getclosedfollowupcountajax"
+        url="{{getclosedfollowupcounturl}}"
+        params="{{getclosedfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getclosedfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and status have been in exhausted for follow up -->
+  <iron-ajax
+        method="post"
+        id="getexhaustfollowupcountajax"
+        url="{{getexhaustfollowupcounturl}}"
+        params="{{getexhaustfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getexhaustfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+    <iron-ajax
+      method="post"
+      id="followup1ajax"
+      url="{{followup1url}}"
+      params="{{followup1param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="FollowUp1Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="followup2ajax"
+      url="{{followup2url}}"
+      params="{{followup2param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="FollowUp2Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+    method="post"
+    id="followup3ajax"
+    url="{{followup3url}}"
+    params="{{followup3param}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="FollowUp3Response"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+    method="post"
+    id="followup4ajax"
+    url="{{followup4url}}"
+    params="{{followup4param}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="FollowUp4Response"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+    method="post"
+    id="followup5ajax"
+    url="{{followup5url}}"
+    params="{{followup5param}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="FollowUp5Response"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getfollowupstudentsajax"
+      url="{{getfollowupstudentsurl}}"
+      params="{{getfollowupstudentsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getfollowupstudentsResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="viewdetailajax"
+      url="{{viewdetailurl}}"
+      params="{{viewdetailparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="viewdetailResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="submitstatusajax"
+      url="{{submitstatusurl}}"
+      params="{{submitstatusparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="SubmitStatusResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <!-- this below ajax is used to change the status in folloupdetail table as rescheduled -->
+    <iron-ajax
+      method="post"
+      id="changestatusajax"
+      url="{{changestatusurl}}"
+      params="{{changestatusparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="changeStatusResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <!-- this ajax is to generate the followup id then update id and reschedule no in the followup table -->
+    <iron-ajax
+      method="post"
+      id="updatescheduleajax"
+      url="{{updatescheduleurl}}"
+      params="{{updatescheduleparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="updatescheduleResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <!-- this is to insert new follow up detail in the followup detail table -->
+    <iron-ajax
+      method="post"
+      id="insertrescheduleajax"
+      url="{{insertrescheduleurl}}"
+      params="{{insertrescheduleparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="insertrescheduleResponse"
+      >
+      </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="fetchenquiryinfoajax"
+      url="{{fetchenquiryinfourl}}"
+      params="{{fetchenquiryinfoparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="fetchenquiryinfoResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+   var seqno;
+   var seqno1;
+   var proseq;
+   var firstfollowup;
+   var secondfollowup;
+   var thirdfollowup;
+   var fourthfollowup;
+   var fifthfollowup;
+   var firstfollowupdate;
+   var secondfollowupdate;
+   var thirdfollowupdate;
+   var fourthfollowupdate;
+   var fifthfollowupdate;
+   var parentarr=[];
+   var studentarr=[];
+   var namelistarr=[];
+   var reschedule;
+   var xenquiryidd;
+
+    Polymer({
+      is: 'crm-service',
+      followupResponse:function(e){
+         firstfollowup=e.detail.response.firstfollowup;
+         secondfollowup=e.detail.response.secondfollowup;
+         thirdfollowup=e.detail.response.thirdfollowup;
+         fourthfollowup=e.detail.response.fourthfollowup;
+         fifthfollowup=e.detail.response.fifthfollowup;
+
+         firstfollowupdate=new Date();
+         secondfollowupdate=new Date();
+         thirdfollowupdate=new Date();
+         fourthfollowupdate=new Date();
+         fifthfollowupdate=new Date();
+
+    firstfollowupdate.setDate(firstfollowupdate.getDate()+firstfollowup);
+    secondfollowupdate.setDate(secondfollowupdate.getDate()+secondfollowup);
+    thirdfollowupdate.setDate(thirdfollowupdate.getDate()+thirdfollowup);
+    fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
+    fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
+     },
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga){
+      //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
+      var generateid=Math.floor(100000 + Math.random() * 900000);
+        this.submitenquiryurl="http://localhost:8086/submitenquiry";
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":""}
+        obj.id=enqno;
+        obj.schol=localStorage.getItem("schoolid");
+        obj.acadeyr=academicyear;
+        obj.grade=grade;
+        obj.contact=mob;
+        obj.gender=gender;
+        obj.firstname=Fnfirstname;
+        obj.middlename=Fnmiddlename;
+        obj.lastname=Fnlastname;
+        obj.dobs=dob;
+        obj.father=fathername;
+        obj.mother=mothername;
+        obj.email=email;
+        obj.location=textvalue;
+        obj.createdby=localStorage.getItem("employeeid");
+        obj.createdate=todate;
+        obj.givenname=Fnfirstname+' '+Fnmiddlename+' '+Fnlastname;
+        obj.status="Enquired";
+        obj.gemail=gemail;
+        obj.gmob=gmob;
+        obj.Guardianname=Guardianname;
+        obj.paga=paga;
+        this.submitenquiryparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.submitenquiryajax.generateRequest();
+      this.updatefollowurl="http://localhost:8086/updatefollow";
+        var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=generateid;
+        obj.enquiryno=enqno;
+        obj.schedule=1;
+        obj.createdby=localStorage.getItem("employeeid");
+        obj.createdon=todate;
+        this.updatefollowparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowajax.generateRequest();
+
+      this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
+        var obj={"schol":"","id":"","enquiryid":"","folowup1":"","folowup2":"","folowup3":"","folowup4":"","folowup5":"","nextfolowup":"","schedule":"","flag":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=generateid;
+        obj.enquiryid=enqno;
+        obj.folowup1=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
+        obj.folowup2=secondfollowupdate.getDate()+"/"+(secondfollowupdate.getMonth()+1)+"/"+secondfollowupdate.getFullYear();
+        obj.folowup3=thirdfollowupdate.getDate()+"/"+(thirdfollowupdate.getMonth()+1)+"/"+thirdfollowupdate.getFullYear();
+        obj.folowup4=fourthfollowupdate.getDate()+"/"+(fourthfollowupdate.getMonth()+1)+"/"+fourthfollowupdate.getFullYear();
+        obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
+        obj.nextfolowup=todate;
+        obj.flag=1;
+        obj.schedule=1;
+        obj.status="Open";
+        this.updatefollowdetailparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowdetailajax.generateRequest();
+     },
+     submitenquiryResponse:function(e){
+      var result=e.detail.response.returnval;
+      // alert(JSON.stringify(result));
+      if(result=="success"){
+        alert("Submited Successfully");
+
+        this.updatesequrl="http://localhost:8086/updateseq";
+        var obj={"id":"","schol":""};
+        obj.id=seqno;
+        obj.schol=localStorage.getItem("schoolid");
+        this.updateseqparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updateseqajax.generateRequest();
+
+
+        document.querySelector('newenquiry-card').Fnclear();
+
+        this.getenquirycount();
+      }
+      else{
+        alert('Form submit interrupted');
+      }
+
+
+     },
+     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs){
+
+      //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
+      this.updateenquiryurl="http://localhost:8086/updateenquiry";
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enq=enqno;
+        obj.firstname=firstname;
+        obj.middlename=middlename;
+        obj.lastname=lastname;
+        obj.gender=gender;
+        obj.grade=grade;
+        obj.dob=dob;
+        obj.oldclass=oldclass;
+        obj.oldschool=oldschool;
+        obj.mothertongue=mothertongue;
+        obj.fathername=fathername;
+        obj.mothername=mothername;
+        obj.fatheredu=fatheredu;
+        obj.motheredu=motheredu;
+        obj.fathermob=fathermob;
+        obj.mothermob=mothermob;
+        obj.fathermail=fathermail;
+        obj.mothermail=mothermail;
+        obj.fathercompany=fathercompany;
+        obj.mothercompany=mothercompany;
+        obj.fatherjob=fatherjob;
+        obj.motherjobfn=motherjob;
+        obj.flatno=flat;
+        obj.address1=address1;
+        obj.address2=address2;
+        obj.address3=address3;
+        obj.city=city;
+        obj.pincode=pincode;
+        obj.statename=state;
+        obj.enquiysource=enquiysource;
+        obj.siblingname=siblingname;
+        obj.siblingdetails=siblingdetail;
+        obj.transportreq=transportreq;
+        obj.canteenreq=canteenreq;
+        obj.secondlanguage=secondlanguage;
+        obj.thirdlanguage=thirdlanguage;
+        obj.modified=localStorage.getItem("employeeid");
+        obj.prospectstatus=propspectus;
+        obj.daddesignation=dadpost;
+        obj.momdesignation=mompost;
+        obj.dadincome=dadsalary;
+        obj.momincome=momsalary;
+        obj.prospectusno=prospect;
+        obj.admissiontest=admissiontest;
+        obj.admissiondate=admissiondate;
+        obj.admissiontestenglish=admissiontestenglish;
+        obj.admissiontestmaths=admissiontestmaths;
+        obj.admissiontestevs=admissiontestevs;
+        this.updateenquiryparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.updateenquiryajax.generateRequest();
+
+
+        if((prospect!="")||(prospect!=null)){
+          this.updateprospectnourl="http://localhost:8086/updateprospectno";
+        var obj={"schol":"","id":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=proseq;
+        this.updateprospectnoparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updateprospectnoajax.generateRequest();
+        }
+     },
+     updateenquiryResponse:function(e){
+      var result=e.detail.response.returnval;
+      // alert(result);
+      if(result="success"){
+        alert("Submited Successfully");
+        document.querySelector('detailed-enquiry-form').Fnclear();
+      }
+
+     },
+
+      registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs){
+         var generateid=Math.floor(100000 + Math.random() * 900000);
+         var dat=new Date();
+        //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
+        this.registerenquiryformurl="http://localhost:8086/registerenquiryform";
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enq=enqno;
+        obj.firstname=firstname;
+        obj.middlename=middlename;
+        obj.lastname=lastname;
+        obj.gender=gender;
+        obj.grade=grade;
+        obj.dob=dob;
+        obj.oldclass=oldclass;
+        obj.oldschool=oldschool;
+        obj.mothertongue=mothertongue;
+        obj.fathername=fathername;
+        obj.mothername=mothername;
+        obj.fatheredu=fatheredu;
+        obj.motheredu=motheredu;
+        obj.fathermob=fathermob;
+        obj.mothermob=mothermob;
+        obj.fathermail=fathermail;
+        obj.mothermail=mothermail;
+        obj.fathercompany=fathercompany;
+        obj.mothercompany=mothercompany;
+        obj.fatherjob=fatherjob;
+        obj.motherjobfn=motherjob;
+        obj.flatno=flat;
+        obj.address1=address1;
+        obj.address2=address2;
+        obj.address3=address3;
+        obj.city=city;
+        obj.pincode=pincode;
+        obj.statename=state;
+        obj.enquiysource=enquiysource;
+        obj.siblingname=siblingname;
+        obj.siblingdetails=siblingdetail;
+        obj.transportreq=transportreq;
+        obj.canteenreq=canteenreq;
+        obj.secondlanguage=secondlanguage;
+        obj.thirdlanguage=thirdlanguage;
+        obj.modified=localStorage.getItem("employeeid");
+        obj.prospectstatus=propspectus;
+        obj.daddesignation=dadpost;
+        obj.momdesignation=mompost;
+        obj.dadincome=dadsalary;
+        obj.momincome=momsalary;
+        obj.prospectusno=prospect;
+        obj.academicyear=academicyear;
+        obj.givenname=firstname + middlename + lastname;
+        obj.status="Open";
+        obj.admissiontest=admissiontest;
+        obj.admissiondate=admissiondate;
+        obj.admissiontestenglish=admissiontestenglish;
+        obj.admissiontestmaths=admissiontestmaths;
+        obj.admissiontestevs=admissiontestevs;
+        this.registerenquiryformparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.registerenquiryformajax.generateRequest();
+
+
+          this.updatefollowurl="http://localhost:8086/updatefollow";
+        var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=generateid;
+        obj.enquiryno=enqno;
+        obj.schedule=1;
+        obj.createdby=localStorage.getItem("employeeid");
+        obj.createdon=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        this.updatefollowparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowajax.generateRequest();
+
+      this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
+        var obj={"schol":"","id":"","enquiryid":"","folowup1":"","folowup2":"","folowup3":"","folowup4":"","folowup5":"","nextfolowup":"","schedule":"","flag":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=generateid;
+        obj.enquiryid=enqno;
+        obj.folowup1=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
+        obj.folowup2=secondfollowupdate.getDate()+"/"+(secondfollowupdate.getMonth()+1)+"/"+secondfollowupdate.getFullYear();
+        obj.folowup3=thirdfollowupdate.getDate()+"/"+(thirdfollowupdate.getMonth()+1)+"/"+thirdfollowupdate.getFullYear();
+        obj.folowup4=fourthfollowupdate.getDate()+"/"+(fourthfollowupdate.getMonth()+1)+"/"+fourthfollowupdate.getFullYear();
+        obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
+        obj.nextfolowup=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        obj.flag=1;
+        obj.schedule=1;
+        obj.status="Open";
+        this.updatefollowdetailparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowdetailajax.generateRequest();
+
+
+        if((prospect!="")||(prospect!=null)){
+          this.updateprospectnourl="http://localhost:8086/updateprospectno";
+          var obj={"schol":"","id":""}
+          obj.schol=localStorage.getItem("schoolid");
+          obj.id=proseq;
+          this.updateprospectnoparam=obj;
+          //alert(JSON.stringify(obj));
+          this.$.updateprospectnoajax.generateRequest();
+        }
+      },
+      registerenquiryformResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result="success"){
+          alert("Submited Successfully");
+          document.querySelector('detailed-enquiry-form').Fnclear();
+        }
+      },
+     getenquiryno:function(){
+      this.getenquirynourl="http://localhost:8086/getenquiryno";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.getenquirynoparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getenquirynoajax.generateRequest();
+     },
+     getenquirynoResponse:function(e){
+      seqno=e.detail.response.returnval[0].enquiry_no;
+      //alert(seqno);
+      seqno=seqno+1;
+      var enquiryif="ENQ1718"+seqno;
+      document.querySelector('newenquiry-card').enqno=enquiryif;
+      var today = new Date(); var yyyy = today.getFullYear();
+      var academicyr=yyyy+'-'+(yyyy+1);
+      document.querySelector('newenquiry-card').academicyr=academicyr;
+
+     },
+      getenqno:function(){
+        this.getenquiryno1url="http://localhost:8086/getenquiryno";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.getenquiryno1param=obj;
+        //alert(JSON.stringify(obj));
+        this.$.getenquiryno1ajax.generateRequest();
+      },
+      getenqno1Response:function(e){
+        seqno1=e.detail.response.returnval[0].enquiry_no;
+        //alert(seqno);
+        seqno1=seqno1+1;
+        var enquiryif="ENQ1718"+seqno;
+        document.querySelector('detailed-enquiry-form').setenqno(enquiryif);
+      },
+      getclasses:function(){
+      this.getclassesurl="http://localhost:8086/getclasses";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.getclassesparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getclassesajax.generateRequest();
+     },
+     getclassesResponse:function(e){
+        var result=e.detail.response.returnval;
+      document.querySelector('newenquiry-card').itemarr=result;
+       document.querySelector('detailed-enquiry-form').itemarr=result;
+     },
+     getlocation:function(){
+      this.getlocationurl="http://localhost:8086/getlocation";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.getlocationparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getlocationajax.generateRequest();
+     },
+      folloudetails:function(){
+      this.followupdetailsurl="http://localhost:8086/followup-service";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.followupdetailsparamll=obj;
+        this.$.followupdetailsajax.generateRequest();
+     },
+     getlocationResponse:function(e){
+        var result=e.detail.response.returnval;
+        //alert(JSON.stringify(result));
+      document.querySelector('newenquiry-card').autocompletename(result);
+     },
+/*     getstudentname:function(){
+        this.getstudentnameurl="http://localhost:8086/getstudentname";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.getstudentnameparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getstudentnameajax.generateRequest();
+     },
+     getstudentnameResponse:function(e){
+      var result=e.detail.response.returnval;
+      document.querySelector('detail-enquiry-card').autocompletename(result);
+     },*/
+     getenqirydetails:function(enq){
+       this.getenqirydetailsurl="http://localhost:8086/getenqirydetails";
+        var obj={"schol":"","enqno":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enq;
+        this.getenqirydetailsparam=obj;
+       //alert('hello   '+JSON.stringify(obj));
+        this.$.getenqirydetailsajax.generateRequest();
+     },
+
+     getenqirydetailsResponse:function(e){
+       document.querySelector('detailed-enquiry-form').enquiryarr=e.detail.response.returnval;
+      /*alert(JSON.stringify(result));
+      alert(document.querySelector('detail-enquiry-form'));
+      alert(result[0].first_name);*/
+      /*if(result.length>=0){
+      document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
+      document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
+      document.querySelector('detailed-enquiry-form').lastname=result[0].last_name;
+      document.querySelector('detailed-enquiry-form').dob=result[0].dob;
+      document.querySelector('detailed-enquiry-form').fathermob=result[0].father_mob;
+      document.querySelector('detailed-enquiry-form').fathername=result[0].father_name;
+      document.querySelector('detailed-enquiry-form').mothername=result[0].mother_name;
+      document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
+      document.querySelector('detailed-enquiry-form').Fngrade(result[0].class);
+      document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
+    }
+    else{
+      alert('Invalid Enquiry number');
+    }*/
+     },
+     checkmobileno:function(mobile){
+          this.verifymobilenourl="http://localhost:8086/verifymobileno";
+        var obj={"mobileno":"","schol":""}
+        obj.mobileno=mobile;
+        obj.schol=localStorage.getItem("schoolid");
+        this.verifymobilenoparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.verifymobilenoajax.generateRequest();
+     },
+     verifymobilenoResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result.length>0){
+          document.querySelector('newenquiry-card').showdialog(result[0].enquiry_no,result[0].first_name,result[0].middle_name,result[0].last_name);
+        }
+     },
+     getenquirycount:function(){
+        this.getenquirycounturl="http://localhost:8086/getenquirycount";
+        var obj={"schol":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.status="Enquired";
+        this.getenquirycountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getenquirycountajax.generateRequest();
+     },
+     getenquirycountResponse:function(e){
+      var result=e.detail.response.returnval;
+      document.querySelector('enquiry-card').gradewisearr=result;
+     },
+     getlistdetails:function(classes){
+           this.getlistdetailsurl="http://localhost:8086/getlistdetails";
+        var obj={"schol":"","grade":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.grade=classes;
+        obj.status="Enquired";
+        this.getlistdetailsparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getlistdetailsajax.generateRequest();
+     },
+     getlistdetailsResponse:function(e){
+          var result=e.detail.response.returnval;
+          //alert(JSON.stringify(result));
+          document.querySelector('enquiry-details-card').listdetails=result;
+     },
+     getprospectno:function(){
+        this.getprospectnourl="http://localhost:8086/getprospectno";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.getprospectnoparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getprospectnoajax.generateRequest();
+     },
+     getprospectnoResponse:function(e){
+      var result=e.detail.response.returnval[0].prospectus_no;
+      //alert(result);
+      var dt=new Date();
+      var year=dt.getFullYear();
+      var mnth=dt.getMonth()+1;
+      proseq=result+1;
+      if(mnth>=9){
+        year=year+1;
+      }
+      var prospectus="PROS"+year+(year+1)+proseq;
+      document.querySelector('detailed-enquiry-form').prospectusno=prospectus;
+     },
+     getreferrername:function(){
+      this.getparentnameurl="http://localhost:8086/getparentname";
+      var obj={"schol":""}
+      obj.schol=localStorage.getItem("schoolid");
+      this.getparentnameparam=obj;
+      this.$.getparentnameajax.generateRequest();
+
+
+     },
+     getparentnameResponse:function(e){
+      parentarr=e.detail.response.returnval;
+      //alert(JSON.stringify(parentarr));
+
+
+      for(var i=0;i<parentarr.length;i++){
+        //alert(parentarr[i].parent_name);
+        var obj={"listname":""}
+        obj.listname=parentarr[i].parent_name;
+        namelistarr.push(obj);
+      }
+
+      this.getstudentnameurl="http://localhost:8086/getstudentnamelist";
+      var obj={"schol":""}
+      obj.schol=localStorage.getItem("schoolid");
+      this.getstudentnameparam=obj;
+      //alert(JSON.stringify(obj));
+      this.$.getstudentnameajax.generateRequest();
+
+     },
+     getstudentnameResponse:function(e){
+        studentarr=e.detail.response.returnval;
+        //alert(JSON.stringify(studentarr));
+
+        for(var i=0;i<studentarr.length;i++){
+        var obj={"listname":""}
+        obj.listname=studentarr[i].student_name;
+        namelistarr.push(obj);
+         }
+
+      //alert(JSON.stringify(namelistarr));
+      //alert(document.querySelector('detailed-enquiry-form').Fnautocompletename(namelistarr));
+     document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
+     },
+     getfollowupcount:function(){
+      var dt=new Date();
+        this.getopenfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Open";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getopenfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getopenfollowupcountajax.generateRequest();
+
+        this.getclosedfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Closed";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getclosedfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getclosedfollowupcountajax.generateRequest();
+
+
+        this.getprocessfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Process";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getprocessfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getprocessfollowupcountajax.generateRequest();
+
+
+        this.getexhaustfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Exhausted";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getexhaustfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getexhaustfollowupcountajax.generateRequest();
+     },
+     getopenfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').openarr=res;
+     },
+     getclosedfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').closearr=res;
+     },
+     getprocessfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').processarr=res;
+     },
+     getexhaustfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').exhaustedarr=res;
+     },
+      FollowUp1:function(enqno,followupid,followupdate1,confidencelevel,comments){
+        this.followup1url="http://localhost:8086/followup1";
+        var obj={"schol":"","enqno":"","followupdate1":"","confidencelevel":"","comments":"","followupid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate1 = followupdate1;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.followupid=followupid;
+        this.followup1param=obj;
+        this.$.followup1ajax.generateRequest();
+      },
+      FollowUp1Response:function(e){
+        var res=e.detail.response.returnval;
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
+      },
+      FollowUp2:function(enqno,followupid,followupdate2,confidencelevel,comments){
+        this.followup2url="http://localhost:8086/followup2";
+        var obj={"schol":"","enqno":"","followupdate2":"","confidencelevel":"","comments":"","followupid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate2 = followupdate2;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.followupid=followupid;
+        this.followup2param=obj;
+        //alert(JSON.stringify(obj));
+        this.$.followup2ajax.generateRequest();
+      },
+      FollowUp2Response:function(e){
+        var res=e.detail.response.returnval;
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
+      },
+      FollowUp3:function(enqno,followupid,followupdate3,confidencelevel,comments){
+        this.followup3url="http://localhost:8086/followup3";
+        var obj={"schol":"","enqno":"","followupdate3":"","confidencelevel":"","comments":"","followupid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate3 = followupdate3;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.followupid=followupid;
+        this.followup3param=obj;
+        //alert(JSON.stringify(obj));
+        this.$.followup3ajax.generateRequest();
+      },
+      FollowUp3Response:function(e){
+        var res=e.detail.response.returnval;
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
+      },
+      FollowUp4:function(enqno,followupid,followupdate4,confidencelevel,comments){
+        this.followup4url="http://localhost:8086/followup4";
+        var obj={"schol":"","enqno":"","followupdate4":"","confidencelevel":"","comments":"","followupid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate4 = followupdate4;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.followupid=followupid;
+        this.followup4param=obj;
+        //alert(JSON.stringify(obj));
+        this.$.followup4ajax.generateRequest();
+      },
+      FollowUp4Response:function(e){
+        var res=e.detail.response.returnval;
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
+      },
+      FollowUp5:function(enqno,followupid,followupdate5,confidencelevel,comments){
+        this.followup5url="http://localhost:8086/followup5";
+        var obj={"schol":"","enqno":"","followupdate5":"","confidencelevel":"","comments":"","followupid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate5 = followupdate5;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.followupid=followupid;
+        this.followup5param=obj;
+        //alert(JSON.stringify(obj));
+        this.$.followup5ajax.generateRequest();
+      },
+      FollowUp5Response:function(e){
+        var res=e.detail.response.returnval;
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
+      },
+      getfollowupstudents:function(grade, status){
+        this.getfollowupstudentsurl="http://localhost:8086/getfollowupstudents";
+        var obj={"schol":"","grade":"","status":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.grade=grade;
+        obj.status = status;
+        this.getfollowupstudentsparam=obj;
+        this.$.getfollowupstudentsajax.generateRequest();
+
+      },
+      getfollowupstudentsResponse:function(e){
+        var res=e.detail.response.returnval;
+        document.querySelector('followup-details').followuparr=res;
+      },
+      viewdetail:function(id){
+        this.viewdetailurl="http://localhost:8086/viewdetail";
+        var obj={"schol":"","id":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=id;
+        this.viewdetailparam=obj;
+        this.$.viewdetailajax.generateRequest();
+      },
+      viewdetailResponse:function(e){
+        var res=e.detail.response.returnval;
+        document.querySelector('followup-student-detail').enqno=res[0].enquiry_no;
+        document.querySelector('followup-student-detail').followupid=res[0].followup_id;
+        document.querySelector('followup-student-detail').name=res[0].enquiry_name;
+        document.querySelector('followup-student-detail').grade=res[0].class;
+        document.querySelector('followup-student-detail').enquiredon=res[0].created_on;
+        document.querySelector('followup-student-detail').parentname=res[0].father_name;
+        document.querySelector('followup-student-detail').mobileno=res[0].father_mob;
+        document.querySelector('followup-student-detail').confidencelvl1(res[0].confidence_level_1);
+        document.querySelector('followup-student-detail').confidencelvl2(res[0].confidence_level_2);
+        document.querySelector('followup-student-detail').confidencelvl3(res[0].confidence_level_3);
+        document.querySelector('followup-student-detail').confidencelvl4(res[0].confidence_level_4);
+        document.querySelector('followup-student-detail').confidencelvl5(res[0].confidence_level_5);
+        document.querySelector('followup-student-detail').followupdate1=res[0].followup_1;
+        document.querySelector('followup-student-detail').followupdate2=res[0].followup_2;
+        document.querySelector('followup-student-detail').followupdate3=res[0].followup_3;
+        document.querySelector('followup-student-detail').followupdate4=res[0].followup_4;
+        document.querySelector('followup-student-detail').followupdate5=res[0].followup_5;
+        document.querySelector('followup-student-detail').comments1=res[0].followup1_remarks;
+        document.querySelector('followup-student-detail').comments2=res[0].followup2_remarks;
+        document.querySelector('followup-student-detail').comments3=res[0].followup3_remarks;
+        document.querySelector('followup-student-detail').comments4=res[0].followup4_remarks;
+        document.querySelector('followup-student-detail').comments5=res[0].followup5_remarks;
+
+        document.querySelector('followup-student-detail').check();
+      },
+      SubmitStatus:function(id,status){
+        this.submitstatusurl="http://localhost:8086/submitstatus";
+        var obj={"schol":"","id":"","status":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=id;
+        obj.status=status;
+        this.submitstatusparam=obj;
+        this.$.submitstatusajax.generateRequest();
+      },
+      SubmitStatusResponse:function(e){
+        var res=e.detail.response.returnval;
+        if(res == "success"){
+          document.querySelector('followup-student-detail').closedialog();
+        }
+      },
+      changestatus:function(folowupid,enquiryidd){
+        xenquiryidd=enquiryidd;
+        this.changestatusurl="http://localhost:8086/changestatus";
+        var obj={"schol":"","id":"","fid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=enquiryidd;
+        obj.fid=folowupid;
+        this.changestatusparam=obj;
+        this.$.changestatusajax.generateRequest();
+      },
+      changeStatusResponse:function(e){
+        var res=e.detail.response.returnval;
+        if(res=='success'){
+        var dat=new Date();
+        reschedule=Math.floor(100000 + Math.random() * 900000);
+        this.updatescheduleurl="http://localhost:8086/updateschedule";
+        var obj={"schol":"","id":"","fid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=xenquiryidd;
+        obj.followid=reschedule;
+        obj.schedule=2;
+        obj.rescheduledon=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        this.updatescheduleparam=obj;
+        this.$.updatescheduleajax.generateRequest();
+        document.querySelector('followup-student-detail').closedialog();
+        document.querySelector('followup-student-detail').check();
+      }
+      },
+      updatescheduleResponse:function(e){
+          var res=e.detail.response.returnval;
+          if(res=='success'){
+
+            var firstdate=new Date();
+           var seconddate=new Date();
+           var thirddate=new Date();
+           var fourthdate=new Date();
+           var fifthdate=new Date();
+
+    firstdate.setDate(firstfollowupdate.getDate()+firstfollowup);
+    seconddate.setDate(secondfollowupdate.getDate()+secondfollowup);
+    thirddate.setDate(thirdfollowupdate.getDate()+thirdfollowup);
+    fourthdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
+    fifthdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
+
+
+var dat=new Date();
+
+
+
+               this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
+        var obj={"schol":"","id":"","enquiryid":"","folowup1":"","folowup2":"","folowup3":"","folowup4":"","folowup5":"","nextfolowup":"","schedule":"","flag":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=reschedule;
+        obj.enquiryid=xenquiryidd;
+        obj.folowup1=firstdate.getDate()+"/"+(firstdate.getMonth()+1)+"/"+firstdate.getFullYear();
+        obj.folowup2=seconddate.getDate()+"/"+(seconddate.getMonth()+1)+"/"+seconddate.getFullYear();
+        obj.folowup3=thirddate.getDate()+"/"+(thirddate.getMonth()+1)+"/"+thirddate.getFullYear();
+        obj.folowup4=fourthdate.getDate()+"/"+(fourthdate.getMonth()+1)+"/"+fourthdate.getFullYear();
+        obj.folowup5=fifthdate.getDate()+"/"+(fifthdate.getMonth()+1)+"/"+fifthdate.getFullYear();
+        obj.nextfolowup=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        obj.flag=1;
+        obj.schedule=2;
+        obj.status="Open";
+        this.updatefollowdetailparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowdetailajax.generateRequest();
+
+        alert('Re-Schedule is done Successfully');
+          }
+          alert('Re-Schedule is not done');
+      },
+      callFetchenquiryinfoService:function(){
+        this.fetchenquiryinfourl=sessionStorage.getItem("addrinfo")+"/fetchdetailedenquiryinfo";
+        var obj={"enquiryno":"","schoolid":""};
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchenquiryinfoparam=obj;
+        this.$.fetchenquiryinfoajax.generateRequest();
+      },
+      fetchenquiryinfoResponse:function(e){
+        var result =e.detail.response.returnval;
+        if(result.length>=0){
+          document.querySelector('detailed-enquiry-form').enqno=result[0].enquiry_no;
+         document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
+         document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
+         document.querySelector('detailed-enquiry-form').lastname=result[0].last_name;
+         document.querySelector('detailed-enquiry-form').dob=result[0].dob;
+         document.querySelector('detailed-enquiry-form').fathermob=result[0].father_mob;
+         document.querySelector('detailed-enquiry-form').fathername=result[0].father_name;
+         document.querySelector('detailed-enquiry-form').mothername=result[0].mother_name;
+         document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
+         document.querySelector('detailed-enquiry-form').Fngrade(result[0].class);
+         document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
+        } else {
+          alert('Invalid Enquiry number');
+        }
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

@@ -21,6 +21,7 @@
 <link rel="import" href="../comparisonreport-card/comparisonreport-card.html">
 <link rel="import" href="../fivetotencomparisonreport-card/fivetotencomparisonreport-card.html">
 <link rel="import" href="../approvalstatus-card/approvalstatus-card.html">
+<link rel="import" href="../workingdays-card/workingdays-card.html">
   <dom-module id="home-page">
   <template>
   <style>
@@ -138,6 +139,7 @@
         <section data-category="rolecard">
           <role-card></role-card>
         </section>
+<<<<<<< HEAD
         <section data-category="schooltypecard">
           <school-type-card></school-type-card>
         </section>
@@ -165,9 +167,33 @@
         
         <section data-category="subjectgrademappingcard">
           <subjectgrademapping-card></subjectgrademapping-card>
+=======
+        <section data-category="employe-card">
+          <employe-card></employe-card>
+>>>>>>> origin/scorecardproduction
         </section>
+         <section data-category="workingdays-card">
+          <workingdays-card></workingdays-card>
+        </section>
+         <section data-category="teacher-to-grade-card">
+          <teacher-to-grade-card></teacher-to-grade-card>
+        </section>
+        <section data-category="grade-to-subject-card">
+          <grade-to-subject-card></grade-to-subject-card>
+        </section>
+         <section data-category="student-to-subject-mapping-card">
+          <student-to-subject-mapping-card></student-to-subject-mapping-card>
+        </section>
+         <section data-category="master-student-mapping-card">
+          <master-student-mapping-card></master-student-mapping-card>
+        </section>
+       
       </iron-pages>
     </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/scorecardproduction
     <div class="footer"></div>
   </div>
 
@@ -192,8 +218,57 @@
    window.location.href="../index.html";   
   },
   FnHome:function(){    
-     // alert(localStorage.getItem("curr_sess_page"));
+    // alert(localStorage.getItem("curr_sess_page"));
 
+    if(localStorage.getItem("curr_sess_page")=="student-to-subject-mapping-card")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="master-student-mapping-card")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="rolecard")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="grade-to-subject-card")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="employe-card")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="workingdays-card")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').fnclear1();
+       document.querySelector('workingdays-card').fnclear1();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="teacher-to-grade-card")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').FnRefresh();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
     if(localStorage.getItem("curr_sess_page")=="cc-eng-onetofour-card")
     {
       this.page="teacherhomecard";

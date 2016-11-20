@@ -1,0 +1,223 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\admission-service/admission-service.html">
+<link rel="import" href="..\installment-card/installment-card.html">
+<link rel="import" href="..\fees-service/fees-service.html">
+
+<dom-module id="fees-card">
+<style>
+  .horizontalframe,.inshead{
+     @apply(--layout-horizontal);
+  }
+  .cb{
+    @apply(--layout-horizontal);
+  }
+  .inshead{
+    @apply(--layout-horizontal);
+  }
+    
+</style>
+  <template>
+    <div class="row enquiry-form">
+      
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="custom-search-form col-sm-5">
+          <div id="search" show$="{{show}}" on-click="toggleSearch">
+            <span><paper-input label="Enter Enquiry No / Admission No / Firstname " value="{{enquiryno}}"></paper-input></span>
+          </div>
+        </div>
+        <div class="custom-search-form col-sm-2 paper-search">
+          <span><paper-icon-button icon="search" on-click="FnSearchEnquiry"></paper-icon-button></span>
+        </div>
+        <div class="col-sm-5 ">            
+            <span class="input-group-btn">
+              <paper-dropdown-menu label="Select Fee Type" on-iron-select="FnSelectFeeType">
+                <paper-listbox class="dropdown-content">
+                  <!-- <template  is="dom-repeat" items="{{enquiryarr}}" as="item"> -->
+                  <paper-item>Application fee</paper-item> 
+                  <paper-item>Registration fee</paper-item> 
+                  <paper-item>Kit fee</paper-item> 
+                  <paper-item>Annual fee</paper-item> 
+                  <paper-item>Miscellaneous fee</paper-item> 
+                  <!-- </template>                  -->
+                </paper-listbox>
+              </paper-dropdown-menu>
+            </span>
+        </div>
+         
+     </div>
+     <div class="list-group col-sm-12 panel-body form-category">
+      <div class="col-sm-4 ">            
+            <span class="input-group-btn">
+              <paper-dropdown-menu label="Select Fee Type" on-iron-select="FnSelectFeeType">
+                <paper-listbox id="feetype" class="dropdown-content">
+                  <!-- <template  is="dom-repeat" items="{{enquiryarr}}" as="item"> -->
+                  <paper-item>Application fee</paper-item> 
+                  <paper-item>Registration fee</paper-item> 
+                  <paper-item>Kit fee</paper-item> 
+                  <paper-item>Annual fee</paper-item> 
+                  <paper-item>Miscellaneous fee</paper-item> 
+                  <!-- </template>                  -->
+                </paper-listbox>
+              </paper-dropdown-menu>
+            </span>
+      </div>
+       <div class="col-sm-4 enquiry-input">
+          <paper-input label="Academic Year" value="{{academicyear}}"></paper-input>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <paper-input label="Class" value="{{enquiredclass}}"></paper-input>
+        </div>
+     </div>
+
+      <div class="form-group-heading">
+        <h4>Student Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Student Name" value="{{studentname}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Date of Birth" value="{{dob}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Fees" value="{{fees}}"></paper-input>
+        </div>
+      </div>
+    
+      <div class="form-group-heading">
+        <h4>Payment</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hiddenpayment}}">
+       
+            <div><paper-checkbox id="waiveoff" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox></div>
+            <div class="inshead" hidden$="{{hiddeninstallment}}">                        
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="margin-left:10%; width: 30%;">Mode of Payment</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;" hidden$="{{receiptdate}}">Receipt Date</div>                 
+            </div>
+            <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
+              <template  is="dom-repeat" items="{{feearr}}" as="view">
+                <installment-card installment="{{view.installment}}" amount="{{view.amount}}" installmentdate="{{view.date}}"></installment-card>
+              </template>
+            </div>
+            <div >
+              <paper-button  id="" on-click="FnPayfee"  style="width: 10%;margin-left:0%;position: absolute; left: 45%;margin-top: 1%;" hidden$="{{hiddenaddbtn}}" data-dismiss="modal">PAY</paper-button>
+            </div>
+      </div>     
+    
+    </div>
+    <br><br>
+
+    <paper-dialog id="waiveoffdialog" modal>
+      <div><paper-input label="Amount to waiveoff" value="{{waiveoff}}"></paper-input></div>
+      <paper-button on-click="FnConfirm">Ok</paper-button>
+      <paper-button on-click="FnCancel">Cancel</paper-button>
+    </paper-dialog>
+
+    <admission-service id="admissionservice"></admission-service>
+    <fees-service id="feeservice"></fees-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+      var installment="";
+      var paymentmode="";
+    Polymer({
+      is: 'fees-card',
+      ready:function(){
+        this.hiddenpayment=true;
+        this.receiptdate=true;
+        this.hiddeninstallment=false;
+        this.hiddenaddbtn=false;
+        localStorage.setItem("curr_sess_waiveoff",0);
+        localStorage.setItem("curr_sess_fees",0);  
+      },  
+      FnSelectFeeType:function(e){
+        var feetype=(e.target.selectedItem.textContent).trim();
+        localStorage.setItem("curr_sess_feetype",feetype);
+        this.FnSearchEnquiry();
+      },   
+      FnSearchEnquiry:function(){
+        this.$.admissionservice.callSearchfeeenquiryService(this.enquiryno);
+      },
+      FnSearchAdmission:function(){
+
+      },
+      FnHiddenPayment:function(){
+        this.hiddenpayment=false;
+      },
+      waiveoffHandler:function(){
+        if(document.querySelector('#waiveoff').checked==true){          
+          this.$.waiveoffdialog.toggle();          
+          localStorage.setItem("curr_sess_fees",this.fees);
+          this.hiddeninstallment=true;
+          this.hiddenaddbtn=true;          
+        }
+        if(document.querySelector('#waiveoff').checked==false){          
+          this.fees=localStorage.getItem("curr_sess_fees");
+          this.hiddeninstallment=false;
+          this.hiddenaddbtn=false;          
+        }
+      },
+      FnSetfee:function(installmentarr){
+        installment=installmentarr;
+        // alert(JSON.stringify(installment));
+        // paymentmode=paymenttype;        
+      },
+      FnPayfee:function(){        
+      for(var i=0;i<installment.length;i++){ 
+      // alert(installment[i].paymenttype); 
+      if(installment[i].paymenttype=="Cash")
+        this.$.feeservice.callInsertCashfeesService(installment[i],installment.length);
+      if(installment[i].paymenttype=="Cheque")
+        this.$.feeservice.callInsertChequefeesService(installment[i],installment.length);
+      if(installment[i].paymenttype=="Transfer")
+        this.$.feeservice.callInsertTransferfeesService(installment[i],installment.length);
+      }
+      installment=[];
+      document.querySelector('installment-card').FnRefresh();
+      },
+      FnConfirm:function(){
+        localStorage.setItem("curr_sess_waiveoff",this.waiveoff);
+        this.fees=parseFloat(parseFloat(this.fees)-parseFloat(this.waiveoff)).toFixed(2);
+        this.$.waiveoffdialog.toggle();
+        if(this.fees>0)
+        {
+        this.hiddeninstallment=false;
+        this.hiddenaddbtn=false;
+        document.querySelector('installment-card').FnSetAmount(this.fees);
+        }
+      },
+      FnCancel:function(){
+        this.$.waiveoffdialog.toggle();
+        this.fees=localStorage.getItem("curr_sess_fees");
+        this.hiddeninstallment=false;
+        this.hiddenaddbtn=false;
+        document.querySelector('#waiveoff').checked=false;
+      },
+      FnRefresh:function(){
+        installment=[];
+        paymentmode="";
+        this.enquiryno="";
+        this.academicyear="";
+        this.enquiredclass="";
+        this.studentname="";
+        this.parentname="";
+        this.dob="";
+        this.fees="";
+        this.prosarr=[];
+        document.querySelector('#feetype').selected=-1;
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

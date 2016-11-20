@@ -1,0 +1,553 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../followup1datapicker-card/followup1datapicker-card.html">
+<link rel="import" href="../followup2datapicker-card/followup2datapicker-card.html">
+
+<dom-module id="followup-student-detail">
+  <template>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="list-group col-sm-12 panel-body form-category">
+          <paper-input hidden value="{{followupid}}"></paper-input>
+          <div class="col-sm-6">
+            <paper-input label="Enquiry No" value="{{enqno}}"></paper-input>
+          </div>
+          <div class="col-sm-6">
+            <paper-input label="Name" value="{{name}}"></paper-input>
+          </div>
+        </div>
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-6">
+            <paper-input label="Grade" value="{{grade}}"></paper-input>
+          </div>
+          <div class="col-sm-6">
+            <paper-input label="Enquired On" value="{{enquiredon}}"></paper-input>
+          </div>
+        </div>        <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mobile No" value="{{mobileno}}"></paper-input>
+        </div>
+      </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Date</th>
+          <th>Confidence Level</th>
+          <th>Comments</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>
+            <span class="col-sm-8"><paper-input id="date1" disabled label="Date" value="{{followupdate1}}"></paper-input></span>
+
+            <span class="col-sm-4 glyph-button"><button on-click="dialogfollowup1" id="followedit1" class="btn glyphicon glyphicon-pencil"></span>
+          </td>
+          <td>
+
+            <paper-dropdown-menu  id="followdrop1" label="Confidence Level">
+              <paper-listbox id="confidencelevel1" class="dropdown-content" on-iron-select="FnConfidenceLevel">
+                <paper-item value=1>>90%</paper-item>
+                <paper-item value=2>>75%</paper-item>
+                <paper-item value=3>>50%</paper-item>
+                <paper-item value=4><50%</paper-item>
+                <paper-item value=5><35%</paper-item>
+                <paper-item value=6><10%</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input id="followbox1" label="Comments" value="{{comments1}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" id="followdisk1" on-click="FollowUp1"></button></span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>
+            <span class="col-sm-8"><paper-input id="date2" disabled label="Date" value="{{followupdate2}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button on-click="dialogfollowup2" id="followedit2" class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+
+            <paper-dropdown-menu id="followdrop2" label="Confidence Level">
+              <paper-menu id="confidencelevel2" class="dropdown-content" required on-iron-select="FnConfidenceLevel" valueattr="value" >
+                <paper-item value=1>>90%</paper-item>
+                <paper-item value=2>>75%</paper-item>
+                <paper-item value=3>>50%</paper-item>
+                <paper-item value=4><50%</paper-item>
+                <paper-item value=5><35%</paper-item>
+                <paper-item value=6><10%</paper-item>
+              </paper-menu>>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input id="followbox2" label="Comments" value="{{comments2}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followdisk2" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp2"></button></span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>
+            <span class="col-sm-8"><paper-input id="date3" disabled label="Date" value="{{followupdate3}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followedit3" on-click="dialogfollowup3" class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+
+            <paper-dropdown-menu  id="followdrop3" label="Confidence Level">
+              <paper-listbox id="confidencelevel3" class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                <paper-item value=1>>90%</paper-item>
+                <paper-item value=2>>75%</paper-item>
+                <paper-item value=3>>50%</paper-item>
+                <paper-item value=4><50%</paper-item>
+                <paper-item value=5><35%</paper-item>
+                <paper-item value=6><10%</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Comments" id="followbox3" value="{{comments3}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followdisk3" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp3"></button></span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>
+            <span class="col-sm-8"><paper-input id="date4" disabled label="Date" value="{{followupdate4}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followedit4" on-click="dialogfollowup4" class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+
+            <paper-dropdown-menu id="followdrop4" label="Confidence Level">
+              <paper-listbox id="confidencelevel4" class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                <paper-item value=1>>90%</paper-item>
+                <paper-item value=2>>75%</paper-item>
+                <paper-item value=3>>50%</paper-item>
+                <paper-item value=4><50%</paper-item>
+                <paper-item value=5><35%</paper-item>
+                <paper-item value=6><10%</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Comments" id="followbox4" value="{{comments4}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followdisk4" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp4"></button></span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">5</th>
+          <td>
+            <span class="col-sm-8"><paper-input id="date5" disabled label="Date" value="{{followupdate5}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followedit5" on-click="dialogfollowup5" class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+
+            <paper-dropdown-menu id="followdrop5" label="Confidence Level">
+              <paper-listbox id="confidencelevel5" class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                <paper-item value=1>>90%</paper-item>
+                <paper-item value=2>>75%</paper-item>
+                <paper-item value=3>>50%</paper-item>
+                <paper-item value=4><50%</paper-item>
+                <paper-item value=5><35%</paper-item>
+                <paper-item value=6><10%</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input id="followbox5" label="Comments" value="{{comments5}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followdisk5" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp5"></button></span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Modal -->
+    <paper-dialog modal id="myModal">
+            <h4 class="modal-title">Set status for Follow-up</h4>
+          <div class="modal-body col-sm-6 col-sm-offset-3" style="height: 100px;">
+            <paper-dropdown-menu label="Status">
+              <paper-listbox class="dropdown-content" on-iron-select="FnStatus">
+                <paper-item>Process</paper-item>
+                <paper-item>Closed</paper-item>
+                <paper-item>Exhausted</paper-item>
+                <paper-item>Ready For Admission</paper-item>
+                <paper-item>Schedule New Followup</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+            <button type="button" class="btn btn-primary col-sm-6 col-sm-offset-3" on-click="submitstatus">Submit</button>
+          </div>
+
+</paper-dialog>
+
+
+
+      <paper-dialog id="dialog1" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close1">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog1">OK</paper-button>
+        </div>
+      </paper-dialog>
+
+      <paper-dialog id="dialog2" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close2">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog2">OK</paper-button>
+        </div>
+      </paper-dialog>
+
+      <paper-dialog id="dialog3" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close3">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog3">OK</paper-button>
+        </div>
+      </paper-dialog>
+
+      <paper-dialog id="dialog4" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close4">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog4">OK</paper-button>
+        </div>
+      </paper-dialog>
+
+      <paper-dialog id="dialog5" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close5">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog5">OK</paper-button>
+        </div>
+      </paper-dialog>
+        <crm-service id="service"></crm-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var confidencelevel;
+    var follupupstatus;
+    Polymer({
+      is: 'followup-student-detail',
+      check:function(){
+        if(this.comments1==null){
+            this.$.followedit1.disabled=false;
+              this.$.followdrop1.disabled=false;
+              this.$.followbox1.disabled=false;
+              this.$.followdisk1.disabled=false;
+        }
+        else{
+          this.$.followedit1.disabled=true;
+              this.$.followdrop1.disabled=true;
+              this.$.followbox1.disabled=true;
+              this.$.followdisk1.disabled=true;
+        }
+        if(this.comments2==null){
+            this.$.followedit2.disabled=false;
+              this.$.followdrop2.disabled=false;
+              this.$.followbox2.disabled=false;
+              this.$.followdisk2.disabled=false;
+        }
+        else{
+           this.$.followedit2.disabled=true;
+              this.$.followdrop2.disabled=true;
+              this.$.followbox2.disabled=true;
+              this.$.followdisk2.disabled=true;
+        }
+        if(this.comments3==null){
+            this.$.followedit3.disabled=false;
+              this.$.followdrop3.disabled=false;
+              this.$.followbox3.disabled=false;
+              this.$.followdisk3.disabled=false;
+        }
+        else{
+
+            this.$.followedit3.disabled=true;
+              this.$.followdrop3.disabled=true;
+              this.$.followbox3.disabled=true;
+              this.$.followdisk3.disabled=true;
+        }
+        if(this.comments4==null){
+            this.$.followedit4.disabled=false;
+              this.$.followdrop4.disabled=false;
+              this.$.followbox4.disabled=false;
+              this.$.followdisk4.disabled=false;
+        }
+        else{
+            this.$.followedit4.disabled=true;
+              this.$.followdrop4.disabled=true;
+              this.$.followbox4.disabled=true;
+              this.$.followdisk4.disabled=true;}
+        if(this.comments5==null){
+            this.$.followedit5.disabled=false;
+              this.$.followdrop5.disabled=false;
+              this.$.followbox5.disabled=false;
+              this.$.followdisk5.disabled=false;
+        }
+        else{
+            this.$.followedit5.disabled=true;
+              this.$.followdrop5.disabled=true;
+              this.$.followbox5.disabled=true;
+              this.$.followdisk5.disabled=true;}
+
+      },
+      FnConfidenceLevel:function(e){
+        confidencelevel=(e.target.selectedItem.textContent).trim();
+      },
+      FollowUp1:function(){
+        alert(this.followupid);
+        this.$.service.FollowUp1(this.enqno,this.followupid,this.followupdate1,confidencelevel,this.comments1);
+      },
+      FollowUp2:function(){
+        this.$.service.FollowUp2(this.enqno,this.followupid,this.followupdate2,confidencelevel,this.comments2);
+      },
+      FollowUp3:function(){
+        this.$.service.FollowUp3(this.enqno,this.followupid,this.followupdate3,confidencelevel,this.comments3);
+      },
+      FollowUp4:function(){
+        this.$.service.FollowUp4(this.enqno,this.followupid,this.followupdate4,confidencelevel,this.comments4);
+      },
+      FollowUp5:function(){
+        this.$.service.FollowUp5(this.enqno,this.followupid,this.followupdate5,confidencelevel,this.comments5);
+      },
+      confidencelvl1:function(confidencelevel1){
+        if( confidencelevel1 == ">90%" ){
+          document.querySelector('#confidencelevel1').selected=0;
+        } else if ( confidencelevel1 == ">75%" ){
+          document.querySelector('#confidencelevel1').selected=1;
+        } else if ( confidencelevel1 == ">50%" ){
+          document.querySelector('#confidencelevel1').selected=2;
+        } else if ( confidencelevel1 == "<50%" ){
+          document.querySelector('#confidencelevel1').selected=3;
+        } else if ( confidencelevel1 == "<35%" ){
+          document.querySelector('#confidencelevel1').selected=4;
+        } else if ( confidencelevel1 == "<10%" ){
+          document.querySelector('#confidencelevel1').selected=5;
+        } else {
+          document.querySelector('#confidencelevel1').selected=-1;
+        }
+      },
+      confidencelvl2:function(confidencelevel2){
+        if( confidencelevel1 == ">90%" ){
+          document.querySelector('#confidencelevel2').selected=0;
+        } else if ( confidencelevel2 == ">75%" ){
+          document.querySelector('#confidencelevel2').selected=1;
+        } else if ( confidencelevel2 == ">50%" ){
+          document.querySelector('#confidencelevel2').selected=2;
+        } else if ( confidencelevel2 == "<50%" ){
+          document.querySelector('#confidencelevel2').selected=3;
+        } else if ( confidencelevel2 == "<35%" ){
+          document.querySelector('#confidencelevel2').selected=4;
+        } else if ( confidencelevel2 == "<10%" ){
+          document.querySelector('#confidencelevel2').selected=5;
+        } else {
+          document.querySelector('#confidencelevel2').selected=-1;
+        }
+      },
+      confidencelvl3:function(confidencelevel3){
+        if( confidencelevel3 == ">90%" ){
+          document.querySelector('#confidencelevel3').selected=0;
+        } else if ( confidencelevel3 == ">75%" ){
+          document.querySelector('#confidencelevel3').selected=1;
+        } else if ( confidencelevel3 == ">50%" ){
+          document.querySelector('#confidencelevel3').selected=2;
+        } else if ( confidencelevel3 == "<50%" ){
+          document.querySelector('#confidencelevel3').selected=3;
+        } else if ( confidencelevel3 == "<35%" ){
+          document.querySelector('#confidencelevel3').selected=4;
+        }  else if ( confidencelevel3 == "<10%" ){
+          document.querySelector('#confidencelevel3').selected=5;
+        } else {
+          document.querySelector('#confidencelevel3').selected=-1;
+        }
+      },
+      confidencelvl4:function(confidencelevel4){
+        if( confidencelevel4 == ">90%" ){
+          document.querySelector('#confidencelevel4').selected=0;
+        } else if ( confidencelevel4 == ">75%" ){
+          document.querySelector('#confidencelevel4').selected=1;
+        } else if ( confidencelevel4 == ">50%" ){
+          document.querySelector('#confidencelevel4').selected=2;
+        } else if ( confidencelevel4 == "<50%" ){
+          document.querySelector('#confidencelevel4').selected=3;
+        } else if ( confidencelevel4 == "<35%" ){
+          document.querySelector('#confidencelevel4').selected=4;
+        } else if ( confidencelevel4 == "<10%" ){
+          document.querySelector('#confidencelevel4').selected=5;
+        } else {
+          document.querySelector('#confidencelevel4').selected=-1;
+        }
+      },
+      confidencelvl5:function(confidencelevel5){
+        if( confidencelevel5 == ">90%" ){
+          document.querySelector('#confidencelevel5').selected=0;
+        } else if ( confidencelevel5 == ">75%" ){
+          document.querySelector('#confidencelevel5').selected=1;
+        } else if ( confidencelevel5 == ">50%" ){
+          document.querySelector('#confidencelevel5').selected=2;
+        } else if ( confidencelevel5 == "<50%" ){
+          document.querySelector('#confidencelevel5').selected=3;
+        } else if ( confidencelevel5 == "<35%" ){
+          document.querySelector('#confidencelevel5').selected=4;
+        }  else if ( confidencelevel5 == "<10%" ){
+          document.querySelector('#confidencelevel5').selected=5;
+        } else {
+          document.querySelector('#confidencelevel5').selected=-1;
+        }
+      },
+      mydialog:function(){
+        document.querySelector('#myModal').open();
+      },
+      closedialog:function(){
+        document.querySelector('#myModal').close();
+      },
+      FnStatus:function(e){
+        follupupstatus=(e.target.selectedItem.textContent).trim();
+      },
+      callingfunc:function(no){
+        this.enqno=no;
+        alert('come'+no);
+      },
+      dialogfollowup1:function(){
+        this.date=new Date();
+    var id = 'dialog1';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      this.$.date1.disabled=false;
+      this.$.date1.readonly=true;
+      },
+      FnDismissDialog1:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+      var dt=new Date(pickdate);
+      this.followupdate1 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog1';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+      dialogfollowup2:function(){
+        this.date=new Date();
+    var id = 'dialog2';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      this.$.date2.disabled=false;
+      this.$.date2.readonly=true;
+      },
+      FnDismissDialog2:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+       var dt=new Date(pickdate);
+      this.followupdate2 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog2';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+      dialogfollowup3:function(){
+        this.date=new Date();
+    var id = 'dialog3';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      this.$.date3.disabled=false;
+      this.$.date3.readonly=true;
+      },
+      FnDismissDialog3:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+       var dt=new Date(pickdate);
+      this.followupdate3 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog3';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+      dialogfollowup4:function(){
+        this.date=new Date();
+    var id = 'dialog4';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      this.$.date4.disabled=false;
+      this.$.date4.readonly=true;
+      },
+      FnDismissDialog4:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+       var dt=new Date(pickdate);
+      this.followupdate4 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog4';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+      dialogfollowup5:function(){
+        this.date=new Date();
+    var id = 'dialog5';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      this.$.date5.disabled=false;
+      this.$.date5.readonly=true;
+      },
+      FnDismissDialog5:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+       var dt=new Date(pickdate);
+      this.followupdate5 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog5';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+    close1:function(){
+         var id = 'dialog1';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date1.disabled=true;
+    },
+    close2:function(){
+         var id = 'dialog2';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date2.disabled=true;
+    },
+    close3:function(){
+         var id = 'dialog3';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date3.disabled=true;
+    },
+    close4:function(){
+         var id = 'dialog4';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date4.disabled=true;
+    },
+    close5:function(){
+         var id = 'dialog5';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date5.disabled=true;
+    },
+      submitstatus:function(){
+        //alert(this.enqno);
+        //alert(follupupstatus);
+        if(follupupstatus=='Schedule New Followup'){
+          this.$.service.changestatus(this.followupid,this.enqno);
+        }
+        else{
+        this.$.service.SubmitStatus(this.enqno,follupupstatus);
+      }
+      }
+    });
+  })();
+  </script>
+</dom-module>

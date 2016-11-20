@@ -87,6 +87,7 @@
      <paper-button on-click="FnCreateCategory" no ink><img src="../../images/category.jpg" height="180px" width="180px">
      </paper-button>
      </div>
+<<<<<<< HEAD
 
       <div class="card" hidden$="{{createsubject}}">
        <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px">
@@ -111,6 +112,28 @@
     
 
 
+=======
+      <div class="card" hidden$="{{workingdays}}">
+       <paper-button on-click="WorkingDays" no ink><img src="../../images/working.jpg" height="180px" width="180px"></paper-button>
+     </div>
+      <div class="card" hidden$="{{teachertograde}}">
+     <paper-button on-click="TeacherToGrade" no ink><img src="../../images/teachertograde.png" height="180px" width="180px">
+       </div>
+       </paper-button>
+        <div class="card" hidden$="{{gradetosubject}}">
+       <paper-button on-click="GradeToSubject" no ink><img src="../../images/gradetosubject.jpg" height="180px" width="180px"></paper-button>
+      </div>
+
+        <div class="card" hidden$="{{subjecttostudent}}">
+       <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px"></paper-button>
+      </div>
+
+        <div class="card" hidden$="{{MasterStudent}}">
+       <paper-button on-click="StudentMastar" no ink><img src="../../images/studentmastar.jpg" height="180px" width="180px"></paper-button>
+      </div>
+         
+     
+>>>>>>> origin/scorecardproduction
     <!-- </center>   -->
     </div>
     <div class="cdialog">      
@@ -141,6 +164,7 @@
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
     <teacher-observation_service id="observerservice"></teacher-observation_service>
+     <master-ui-service id="uiservice"></master-ui-service>
   </template>
   <script>
   (function() {
@@ -163,6 +187,11 @@
         this.createrole=true;
         this.createemployee=true;
         this.teach_obser=true;
+        this.workingdays=true;
+        this.teachertograde=true;
+        this.gradetosubject=true;
+        this.subjecttostudent=true;
+        this.MasterStudent=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -275,6 +304,7 @@
       FnHideView:function(){ 
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='superadmin'){
           this.createrole=false;
+<<<<<<< HEAD
           this.createemployee=true;  
           this.teach_obser=true; 
           this.creategrade=true;   
@@ -285,6 +315,15 @@
           this.createcategory=false;
           
         }
+=======
+          this.createemployee=false; 
+          this.workingdays=false;
+          this.teachertograde=false; 
+          this.gradetosubject=false;
+          this.subjecttostudent=false;
+          this.MasterStudent=false;
+         }
+>>>>>>> origin/scorecardproduction
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;
           this.TA=false;
@@ -365,8 +404,24 @@
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle(); 
       },
+<<<<<<< HEAD
       FnCreateRole:function(e)
       {
+=======
+      TeacherToGrade:function(e){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('teacher-to-grade-card','');
+      },
+      GradeToSubject:function(e){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('grade-to-subject-card','');
+      },
+       WorkingDays:function(e){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('workingdays-card','');
+      },
+       FnCreateRole:function(e){
+>>>>>>> origin/scorecardproduction
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('rolecard','');
         document.querySelector('role-card').ready();
@@ -378,6 +433,7 @@
         document.querySelector('home-page').setPage('schooltypecard','');
         document.querySelector('school-type-card').ready();
       },
+<<<<<<< HEAD
 
       FnCreateCategory:function(e)
       {
@@ -418,6 +474,23 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('subjectgrademappingcard','');
         //document.querySelector('subjectgrademapping-card').ready();
+=======
+      SubjectToStudent:function(e){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('student-to-subject-mapping-card','');
+        
+      },
+      StudentMastar:function(e){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('master-student-mapping-card','');
+        alert("hi1");
+         this.$.uiservice.MasterCategorylanguage();
+      },
+      FnCreateEmployee:function(e){
+         document.querySelector('app-card').setPage('homepage','');
+         document.querySelector('home-page').setPage('employe-card','');
+         this.$.uiservice.schoolid3();
+>>>>>>> origin/scorecardproduction
       }
 
 

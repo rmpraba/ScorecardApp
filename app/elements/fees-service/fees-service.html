@@ -1,0 +1,226 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="fees-service">
+  <template>
+    <!-- It would insert the cash fee -->
+     <iron-ajax
+        method="post"
+        id="insertcashfeesajax"
+        url="{{insertcashfeesurl}}"
+        params="{{insertcashfeesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertcashfeesResponse"
+        debounce-duration="300"
+        >
+      <!-- It would insert the cheque fee -->
+     <iron-ajax
+        method="post"
+        id="insertchequefeesajax"
+        url="{{insertchequefeesurl}}"
+        params="{{insertchequefeesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertchequefeesResponse"
+        debounce-duration="300"
+        >
+    <!-- It would insert the transfer fee -->
+     <iron-ajax
+        method="post"
+        id="inserttransferfeesajax"
+        url="{{inserttransferfeesurl}}"
+        params="{{inserttransferfeesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="inserttransferfeesResponse"
+        debounce-duration="300"
+        >
+       
+    
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var paymentarr=[];
+    var paymentlength=0;
+    var paymentcount=0;
+    var cash=[];
+    var cheque=[];
+    var transfer=[];
+    Polymer({
+      is: 'fees-service',
+
+      callInsertCashfeesService:function(arr,len){
+        paymentlength=len;
+        cash.push(arr);
+        this.insertcashfeesurl=sessionStorage.getItem("addrinfo")+"/insertcashfees";
+        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}        
+        // alert(JSON.stringify(arr));        
+
+        obj.schoolid=localStorage.getItem("schoolid"); 
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno"); 
+        obj.admissionno=localStorage.getItem("curr_sess_admissionno"); 
+        obj.studentname=localStorage.getItem("curr_sess_studentname"); 
+        obj.garde=localStorage.getItem("curr_sess_grade"); 
+        obj.feetype=localStorage.getItem("curr_sess_feetype"); 
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+
+        for(var i=0;i<cash.length;i++){
+        obj.installmenttype=cash[i].installmenttype; 
+        obj.installment=cash[i].installment; 
+        obj.installmentdate=cash[i].installmentdate; 
+        obj.installmentamount=cash[i].amount; 
+        obj.waiveoffamount=cash[i].waiveoff; 
+        obj.modeofpayment=cash[i].paymentmode; 
+        obj.receiptdate=cash[i].receiptdate; 
+        obj.paiddate=cash[i].paiddate; 
+        obj.paidstatus=cash[i].paidstatus;        
+        obj.createdby=localStorage.getItem("employeeid");     
+        this.insertcashfeesparam=obj;   
+        // paymentarr.push(obj);            
+        this.$.insertcashfeesajax.generateRequest();
+        cash=[];
+        }
+        
+        
+      },
+      insertcashfeesResponse:function(e){
+          alert(e.detail.response.returnval);
+          if(e.detail.response.returnval=="Fee paid!"){
+            e.detail.response.info.receipt_no=e.detail.response.receiptno;
+            e.detail.response.info.receipttype="RECEIPT";
+            e.detail.response.info.hidereceipt=false;
+            e.detail.response.info.hideack=true;
+            e.detail.response.info.chequeview=true;
+            e.detail.response.info.transferview=true;
+            paymentarr.push(e.detail.response.info);
+            paymentcount++;            
+            if(paymentlength==paymentcount)
+                this.callFeeReceipt();
+            // document.querySelector('feereceipt-card').setValue(paymentarr,e.detail.response.receiptno);
+          }
+
+      },
+      callInsertChequefeesService:function(arr,len){
+        paymentlength=len;
+        cheque.push(arr);
+        this.insertchequefeesurl=sessionStorage.getItem("addrinfo")+"/insertchequefees";
+        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}
+
+        obj.schoolid=localStorage.getItem("schoolid"); 
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno"); 
+        obj.admissionno=localStorage.getItem("curr_sess_admissionno"); 
+        obj.studentname=localStorage.getItem("curr_sess_studentname"); 
+        obj.garde=localStorage.getItem("curr_sess_grade"); 
+        obj.feetype=localStorage.getItem("curr_sess_feetype"); 
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+ 
+        for(var i=0;i<cheque.length;i++){ 
+        obj.installmenttype=cheque[i].installmenttype; 
+        obj.installment=cheque[i].installment; 
+        obj.installmentdate=cheque[i].installmentdate; 
+        obj.installmentamount=cheque[i].amount; 
+        obj.waiveoffamount=cheque[i].waiveoff; 
+        obj.modeofpayment=cheque[i].paymentmode; 
+        obj.receiveddate=cheque[i].receiveddate;       
+        obj.paidstatus=cheque[i].paidstatus; 
+        obj.chequeno=cheque[i].chequeno;        
+        obj.bankname=cheque[i].bankname; 
+        obj.chequedate=cheque[i].chequedate; 
+        obj.chequestatus=cheque[i].chequestatus; 
+        obj.createdby=localStorage.getItem("employeeid");     
+        this.insertchequefeesparam=obj; 
+        // alert(JSON.stringify(obj)); 
+        // paymentarr.push(obj);     
+        this.$.insertchequefeesajax.generateRequest();
+        cheque=[];
+        }
+        
+      },
+      insertchequefeesResponse:function(e){
+          alert(e.detail.response.returnval);
+          if(e.detail.response.returnval=="Fee paid!"){
+            e.detail.response.info.ack_no=e.detail.response.receiptno;
+            e.detail.response.info.receipttype="ACKNOWLEDGEMENT";
+            e.detail.response.info.hidereceipt=true;
+            e.detail.response.info.hideack=false;
+            e.detail.response.info.chequeview=false;
+            e.detail.response.info.transferview=true;
+            paymentarr.push(e.detail.response.info);
+            paymentcount++;
+            if(paymentlength==paymentcount)
+                this.callFeeReceipt();
+            // document.querySelector('feereceipt-card').setValue(paymentarr,e.detail.response.receiptno);
+          }
+      },
+      callInsertTransferfeesService:function(arr,len){
+        paymentlength=len;
+        transfer.push(arr);
+        this.inserttransferfeesurl=sessionStorage.getItem("addrinfo")+"/inserttransferfees";
+        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}
+
+        obj.schoolid=localStorage.getItem("schoolid"); 
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno"); 
+        obj.admissionno=localStorage.getItem("curr_sess_admissionno"); 
+        obj.studentname=localStorage.getItem("curr_sess_studentname"); 
+        obj.garde=localStorage.getItem("curr_sess_grade"); 
+        obj.feetype=localStorage.getItem("curr_sess_feetype"); 
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        for(var i=0;i<transfer.length;i++){ 
+        obj.installmenttype=transfer[i].installmenttype; 
+        obj.installment=transfer[i].installment; 
+        obj.installmentdate=transfer[i].installmentdate; 
+        obj.installmentamount=transfer[i].amount; 
+        obj.waiveoffamount=transfer[i].waiveoff; 
+        obj.modeofpayment=transfer[i].paymentmode; 
+        obj.receiveddate=transfer[i].receiveddate; 
+        obj.paiddate=transfer[i].paiddate; 
+        obj.paidstatus=transfer[i].paidstatus; 
+        obj.referenceno=transfer[i].referenceno;        
+        obj.bankname=transfer[i].bankname; 
+        obj.chequedate=transfer[i].chequedate;       
+        obj.createdby=localStorage.getItem("employeeid");     
+        this.inserttransferfeesparam=obj; 
+        // paymentarr.push(obj);   
+        this.$.inserttransferfeesajax.generateRequest();
+        transfer=[];
+        }
+        
+      },
+      inserttransferfeesResponse:function(e){
+          // alert(e.detail.response.returnval);
+          if(e.detail.response.returnval=="Fee paid!"){
+            e.detail.response.info.receipt_no=e.detail.response.receiptno;
+            e.detail.response.info.receipttype="ACKNOWLEDGEMENT";
+            e.detail.response.info.hidereceipt=false;
+            e.detail.response.info.hideack=true;
+            e.detail.response.info.chequeview=true;
+            e.detail.response.info.transferview=false;
+            paymentarr.push(e.detail.response.info);
+            paymentcount++;
+            if(paymentlength==paymentcount)
+                this.callFeeReceipt();
+            // document.querySelector('feereceipt-card').setValue(paymentarr,e.detail.response.receiptno);
+          }
+      },
+      callFeeReceipt:function(){
+        // alert('calling receipt');
+        alert(JSON.stringify(paymentarr));
+        document.querySelector('feereceipt-outcard').paymentreceiptarr=paymentarr;
+        // document.querySelector('CRM-app').setPage('feereceipt-outcard');
+        document.querySelector('CRM-app').setPage('feereceipt-outcard');
+        // window.open('../elements/receiptindex.html', '_blank');
+        paymentarr=[];
+        paymentlength=0;
+        paymentcount=0;
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

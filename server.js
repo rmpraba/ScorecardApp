@@ -180,6 +180,50 @@ app.post('/assesmenttype-service',  urlencodedParser,function (req, res)
   });
 });
 
+app.post('/FnSubjecttostudentlanguage-service',  urlencodedParser,function (req, res)
+{
+    
+  connection.query('SELECT * from md_language_type_master where subject_type="II Language"',
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
+
+app.post('/FnSubjecttostudentthirdlanguage-service',  urlencodedParser,function (req, res)
+{
+  connection.query('SELECT * from md_language_type_master where subject_type="IIILanguage"',
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
+
+
 
 //fetching grade info
 app.post('/term-service',  urlencodedParser,function (req, res)
@@ -1669,7 +1713,30 @@ app.post('/fetchstudname-service',  urlencodedParser,function (req,res)
     }  
 
   });
-});     
+}); 
+
+app.post('/SbjecttoStudentmapping-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.TtoGempid};
+  var gradeid={grade_id:req.query.FnStosGradeid};
+  var sectionid={section_id:req.query.FnStoSSectionid};
+
+ var qur="SELECT * FROM md_student where class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.FnStosGradeid+"') and section_id=(select section_id from md_section where section_name='"+req.query.FnStoSSectionid+"' and school_id='"+req.query.TtoGempid+"')) and school_id='"+req.query.TtoGempid+"'";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {  
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});    
 
 //fetch the Life SKill SUb category
 app.post('/fetchlifeskill',  urlencodedParser,function (req,res)
@@ -1757,6 +1824,36 @@ app.post('/fetchsubjectname-service',  urlencodedParser,function (req,res)
   "(select class_id from md_student where id='"+req.query.studid+"' "+
   "and school_id='"+req.query.schoolid+"') and school_id='"+req.query.schoolid+"')) order by subject_category";
 
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {       
+      global.subjectinfo=rows;
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+//fetching subject info
+app.post('/fetchreportsubjectname-service',  urlencodedParser,function (req,res)
+{   
+  var schoolid={school_id:req.query.schoolid};
+  var grade={grade:req.query.grade};
+  var section={section:req.query.section};
+  var qur="select subject_id,subject_name,subject_category from md_subject where subject_id in "+
+  "(select subject_id from mp_grade_subject where grade_id=(select grade_id from "+
+  "md_grade where grade_name='"+req.query.grade+"')) "+
+  " order by subject_category";
+  console.log('-----------------------fetchreportsubjectname----------------------------');
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -3089,9 +3186,67 @@ app.post('/fetchbeginnermarkforreport-service' ,  urlencodedParser,function (req
 });
 });
 
+app.post('/categorywisereport-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select student_id,assesment_id,subject_id,category,sub_category,round(mark,1) as total,(SELECT grade FROM md_grade_rating WHERE "+
+    "lower_limit<=round(mark,1) and higher_limit>=round(mark,1)) as grade "+
+    "from tr_term_assesment_marks  where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesment+"' "+
+    "and subject_id='"+req.query.subject+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by assesment_id,subject_id,category,sub_category,student_id order by CAST(sub_cat_sequence AS UNSIGNED)";
+    console.log('...............................subjectwise..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
+app.post('/subjectwisereport-service' ,  urlencodedParser,function (req, res)
+{  
+    var qur="select student_id,assesment_id,round(avg(rtotal),1) as total,(SELECT grade FROM md_grade_rating WHERE "+
+    "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as grade "+
+    "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
+    "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' "+
+    "and subject_id='"+req.query.subject+"' and grade='"+req.query.grade+"' and section='"+req.query.section+"' group by assesment_id,student_id";
+    console.log('...............................subjectwise..............................');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+});
+});
+
 app.post('/assesmentwisereport-service' ,  urlencodedParser,function (req, res)
 {  
-    var qur="select student_id,subject_id,avg(rtotal),(SELECT grade FROM md_grade_rating WHERE "+
+    var qur="select student_id,subject_id,round(avg(rtotal),1) as mark,(SELECT grade FROM md_grade_rating WHERE "+
     "lower_limit<=round(avg(rtotal),1) and higher_limit>=round(avg(rtotal),1)) as grade "+
     "from tr_term_assesment_overall_marks  where school_id='"+req.query.schoolid+"' and "+
     "academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and assesment_id='"+req.query.assesment+"' "+
@@ -5384,6 +5539,7 @@ app.post('/workingdayscreation-service' ,  urlencodedParser,function (req, res)
 });
 
 
+<<<<<<< HEAD
 app.post('/fetchmastersubjectname-service',  urlencodedParser,function (req,res)
 {  
   // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
@@ -5395,10 +5551,47 @@ app.post('/fetchmastersubjectname-service',  urlencodedParser,function (req,res)
     { 
       //console.log(JSON.stringify(rows));   
       res.status(200).json({'returnval': rows});
+=======
+app.post('/FnSecondLangSubjectToStudent-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+     
+      school_id:req.query.schoolnames,
+      student_id:req.query.studentid,
+      academic_year:req.query.termsname,
+      grade:req.query.gradenamesssss,
+      section:req.query.Sectionnames,
+      subject_id:req.query.seclang11,
+      student_name:req.query.studentname,
+      class_id:req.query.Sectionnameseeee
+      //studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang,thirdlang,Sectionnameseeee
+    }; 
+
+    console.log(JSON.stringify(response));
+   var qur= "SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoolnames+"' and student_id='"+req.query.studentid+"' and academic_year='"+req.query.termsname+"' and grade='"+req.query.gradenamesssss+"' and section='"+req.query.Sectionnames+"' and  student_name='"+req.query.studentname+"'";
+
+    
+    var qur1="update tr_student_to_subject set subject_id='"+req.query.seclang11+"' where student_id='"+req.query.studentid+"' and school_id='"+req.query.schoolnames+"' and academic_year='"+req.query.termsname+"' and grade='"+req.query.gradenamesssss+"' and student_name='"+req.query.studentname+"' and class_id='"+req.query.Sectionnameseeee+"'";
+
+   /* console.log(qur);
+    console.log(qur1)*/
+   connection.query(qur,
+    function(err, rows)
+    {
+     if(rows.length==0){
+     connection.query("INSERT INTO tr_student_to_subject SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+>>>>>>> origin/scorecardproduction
     }
     else
     {
       console.log(err);
+<<<<<<< HEAD
       res.status(200).json({'returnval': 'fail'});
     }  
 
@@ -5416,10 +5609,64 @@ app.post('/fetchmastercategoryname-service',  urlencodedParser,function (req,res
     { 
       //console.log(JSON.stringify(rows));   
       res.status(200).json({'returnval': rows});
+=======
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+});
+
+
+app.post('/FnSecondLangSubjectToStudentsets-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+     
+      school_id:req.query.schoolnames,
+      student_id:req.query.studentid,
+      academic_year:req.query.termsname,
+      grade:req.query.gradenamesssss,
+      section:req.query.Sectionnames,
+      subject_id:req.query.seclang11,
+      student_name:req.query.studentname,
+      class_id:req.query.Sectionnameseeee
+      //studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang,thirdlang,Sectionnameseeee
+    }; 
+
+    console.log(JSON.stringify(response));
+    var qur="SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoolnames+"' and student_id='"+req.query.studentid+"' and academic_year='"+req.query.termsname+"' and grade='"+req.query.gradenamesssss+"' and section='"+req.query.Sectionnames+"' and  student_name='"+req.query.studentname+"' and subject_type='II Language'";
+    var qurr="SELECT subject_type FROM md_language_type_master where subject_id='"+req.query.seclang11+"'";
+    
+    var qur1="update tr_student_to_subject set subject_id='"+req.query.seclang11+"' where student_id='"+req.query.studentid+"' and school_id='"+req.query.schoolnames+"' and academic_year='"+req.query.termsname+"' and grade='"+req.query.gradenamesssss+"' and student_name='"+req.query.studentname+"' and class_id='"+req.query.Sectionnameseeee+"' and subject_type='II Language'";
+
+  
+   connection.query(qurr,function(err, rows){
+    response.subject_type=rows[0].subject_type;
+   connection.query(qur,function(err, rows)
+    {
+     if(rows.length==0){
+     connection.query("INSERT INTO tr_student_to_subject SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+>>>>>>> origin/scorecardproduction
     }
     else
     {
       console.log(err);
+<<<<<<< HEAD
       res.status(200).json({'returnval': 'fail'});
     }  
 
@@ -5438,10 +5685,131 @@ app.post('/fetchmasterschoolname-service',  urlencodedParser,function (req,res)
     { 
       //console.log(JSON.stringify(rows));   
       res.status(200).json({'returnval': rows});
+=======
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+ });
+});
+
+
+
+
+
+
+
+app.post('/FnThirdLangSubjectToStudent-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+     
+      school_id:req.query.schoolnames,
+      student_id:req.query.studentid,
+      academic_year:req.query.termsname,
+      grade:req.query.gradenamesssss,
+      section:req.query.Sectionnames,
+      subject_id:req.query.thirdlang11,
+      student_name:req.query.studentname,
+      class_id:req.query.Sectionnameseeee
+      //studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang,thirdlang,Sectionnameseeee
+    }; 
+
+    console.log(JSON.stringify(response));
+    var qur="SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoolnames+"' and student_id='"+req.query.studentid+"' and academic_year='"+req.query.termsname+"' and grade='"+req.query.gradenamesssss+"' and section='"+req.query.Sectionnames+"' and  student_name='"+req.query.studentname+"'and subject_type='IIILanguage'";
+
+    var qurr="SELECT subject_type FROM md_language_type_master where subject_id='"+req.query.thirdlang11+"'";
+
+   
+    var qur1="update tr_student_to_subject set subject_id='"+req.query.thirdlang11+"' where student_id='"+req.query.studentid+"' and school_id='"+req.query.schoolnames+"' and academic_year='"+req.query.termsname+"' and grade='"+req.query.gradenamesssss+"' and student_name='"+req.query.studentname+"' and class_id='"+req.query.Sectionnameseeee+"'and subject_type='IIILanguage'";
+
+    console.log(qur);
+    console.log(qur1);
+    console.log(qurr);
+
+   connection.query(qurr,function(err, rows){
+    response.subject_type=rows[0].subject_type;
+   connection.query(qur,function(err, rows)
+    {
+     if(rows.length==0){
+     connection.query("INSERT INTO tr_student_to_subject SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
     }
     else
     {
       console.log(err);
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+ });
+});
+
+
+
+
+
+
+
+
+
+
+/*app.post('/FnSecondLangSubjectToStudentsets-service' ,  urlencodedParser,function (req, res)
+{  
+    var response={
+
+     
+      school_id:req.query.schoolnames,
+      student_id:req.query.studentid,
+      academic_year:req.query.termsname,
+      grade:req.query.gradenamesssss,
+      section:req.query.Sectionnames,
+      subject_id:req.query.seclang11,
+      student_name:req.query.studentname,
+      class_id:req.query.Sectionnameseeee
+      //studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang,thirdlang,Sectionnameseeee
+    }; 
+
+   console.log(response);
+   connection.query("SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoolnames+"' and student_id='"+req.query.studentid+"' and academic_year='"+req.query.termsname+"' and grade='"+req.query.gradenamesssss+"' and section='"+req.query.Sectionnames+"' and  student_name='"+req.query.studentname+"'" ,function(err, rows)
+    {
+    if(rows.length==0){
+    connection.query("INSERT INTO tr_student_to_subject SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+>>>>>>> origin/scorecardproduction
+    }
+    else
+    {
+      console.log(err);
+<<<<<<< HEAD
       res.status(200).json({'returnval': 'fail'});
     }  
 
@@ -5460,17 +5828,183 @@ app.post('/fetchlanguagetype-service',  urlencodedParser,function (req,res)
     { 
       //console.log(JSON.stringify(rows));   
       res.status(200).json({'returnval': rows});
+=======
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else
+      res.status(200).json({'returnval': 'Already exists!'});
+  });
+});
+
+app.post('/FnThirdLangSubjectToStudent-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+     
+      school_id:req.query.schoolnames,
+      student_id:req.query.studentid,
+      academic_year:req.query.termsname,
+      grade:req.query.gradenamesssss,
+      section:req.query.Sectionnames,
+      subject_id:req.query.thirdlang11,
+      student_name:req.query.studentname,
+      class_id:req.query.Sectionnameseeee
+      //studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang,thirdlang,Sectionnameseeee
+    }; 
+
+    console.log(response);
+   connection.query("SELECT * FROM  tr_student_to_subject WHERE school_id='"+req.query.schoolnames+"' and student_id='"+req.query.studentid+"' and academic_year='"+req.query.termsname+"' and grade='"+req.query.gradenamesssss+"' and section='"+req.query.Sectionnames+"' and  student_name='"+req.query.studentname+"'" ,function(err, rows)
+    {
+    if(rows.length==1){
+    connection.query("INSERT INTO tr_student_to_subject SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
     }
     else
     {
       console.log(err);
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else
+      res.status(200).json({'returnval': 'Already exists!'});
+  });
+});
+*/
+app.post('/workingdayssub-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+      school_id:req.query.scid,
+      academic_year:req.query.acaid,
+      term_name:req.query.temid,
+      type:req.query.secgradeid,
+      no_of_days:req.query.noofdays
+    }; 
+
+    console.log(JSON.stringify(response));
+    var qur="SELECT * FROM md_workingdays WHERE school_id='"+req.query.scid+"' and academic_year='"+req.query.acaid+"' and term_name='"+req.query.temid+"' and type='"+req.query.secgradeid+"'";
+
+    var qur1="update md_workingdays set no_of_days='"+req.query.noofdays+"' where school_id='"+req.query.scid+"' and academic_year='"+req.query.acaid+"' and  term_name='"+req.query.temid+"' and type='"+req.query.secgradeid+"'";
+
+   /* console.log(qur);
+    console.log(qur1)*/
+   connection.query(qur,
+    function(err, rows)
+    {
+     if(rows.length==0){
+     connection.query("INSERT INTO md_workingdays SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+});
+
+app.post('/FnTeachertoGrademappoing-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+      grade_id:req.query.teachertogradeid,
+      subject_id:req.query.gradetosubjectid,
+      subject_category:req.query.gradetocategoryid,
+     
+    }; 
+
+    console.log(JSON.stringify(response));
+    var qur="SELECT * FROM mp_grade_subject WHERE grade_id='"+req.query.teachertogradeid+"' and subject_id='"+req.query.gradetosubjectid+"' and subject_category='"+req.query.gradetocategoryid+"'";
+
+    var qur1="update mp_grade_subject set subject_id='"+req.query.gradetosubjectid+"' where grade_id='"+req.query.teachertogradeid+"' and subject_category='"+req.query.gradetocategoryid+"'";
+
+   /* console.log(qur);
+    console.log(qur1)*/
+   connection.query(qur,
+    function(err, rows)
+    {
+     if(rows.length==0){
+     connection.query("INSERT INTO mp_grade_subject SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+>>>>>>> origin/scorecardproduction
+    }
+    else
+    {
+      console.log(err);
+<<<<<<< HEAD
       res.status(200).json({'returnval': 'fail'});
     }  
 
+=======
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+});
+
+app.post('/FnTeachertoGrademappoingdelete-service',  urlencodedParser,function (req, res)
+{
+      
+  connection.query("DELETE FROM mp_grade_subject  where  grade_id='"+req.query.teachertogradeid+"' and subject_id='"+req.query.gradetosubjectid+"' and subject_category='"+req.query.gradetocategoryid+"'",
+    function(err,result)
+    {
+     
+    if(!err)
+    {  
+      if(result.affectedRows>0)  
+      res.status(200).json({'returnval': 'delete successfully'});
+    
+    else
+    {
+      console.log(err);     
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+    
+>>>>>>> origin/scorecardproduction
   });
 });
 
 
+<<<<<<< HEAD
 app.post('/fetchrole-service',  urlencodedParser,function (req,res)
 {  
   // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
@@ -5482,10 +6016,45 @@ app.post('/fetchrole-service',  urlencodedParser,function (req,res)
     { 
       //console.log(JSON.stringify(rows));   
       res.status(200).json({'returnval': rows});
+=======
+
+app.post('/TtoGsubmit-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+      school_id:req.query.TtoGempid,
+      id:req.query.TtoGemp,
+      grade_id:req.query.TtoGempGradeName,
+      subject_id:req.query.TtoGempsubject,
+      role_id:req.query.TtoGemprole,
+     section_id:req.query.TtoGempsection
+
+    
+    }; 
+
+    console.log(JSON.stringify(response));
+    var qur="SELECT * FROM mp_teacher_grade WHERE school_id='"+req.query.TtoGempid+"' and id='"+req.query.TtoGemp+"' and grade_id='"+req.query.TtoGempGradeName+"' and subject_id='"+req.query.TtoGempsubject+"'and role_id='"+req.query.TtoGemprole+"'and section_id='"+req.query.TtoGempsection+"'";
+
+    var qur1="update mp_teacher_grade set id='"+req.query.TtoGemp+"',grade_id='"+req.query.TtoGempGradeName+"' where school_id='"+req.query.scid+"' and subject_id='"+req.query.TtoGempsubject+"' and  role_id='"+req.query.TtoGemprole+"' and section_id='"+req.query.TtoGempsection+"'";
+
+   /* console.log(qur);
+    console.log(qur1)*/
+   connection.query(qur,
+    function(err, rows)
+    {
+     if(rows.length==0){
+     connection.query("INSERT INTO mp_teacher_grade SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+>>>>>>> origin/scorecardproduction
     }
     else
     {
       console.log(err);
+<<<<<<< HEAD
       res.status(200).json({'returnval': 'fail'});
     }  
 
@@ -5504,10 +6073,100 @@ app.post('/fetchschooltypename-service',  urlencodedParser,function (req,res)
     { 
       console.log(JSON.stringify(rows));   
       res.status(200).json({'returnval': rows});
+=======
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+});
+
+app.post('/TtoGDelete-service',  urlencodedParser,function (req, res)
+{
+      
+  connection.query("DELETE FROM mp_teacher_grade  where school_id='"+req.query.TtoGempid+"' and id='"+req.query.TtoGemp+"'and grade_id='"+req.query.TtoGempGradeName+"'and subject_id='"+req.query.TtoGempsubject+"'and role_id='"+req.query.TtoGemprole+"'and section_id='"+req.query.TtoGempsection+"'",
+    function(err,result)
+    {
+     
+    if(!err)
+    {  
+      if(result.affectedRows>0)  
+      res.status(200).json({'returnval': 'delete successfully'});
+    
+    else
+    {
+      console.log(err);     
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+    
+  });
+});
+
+
+
+
+app.post('/workingdayupdate-service',  urlencodedParser,function (req, res)
+{
+  
+  connection.query("DELETE FROM md_workingdays  where type='"+req.query.secgradeid+"' and academic_year='"+req.query.acaid+"'and school_id='"+req.query.scid+"'and term_name='"+req.query.temid+"'",
+    function(err,result)
+    {
+     
+    if(!err)
+    {  
+      if(result.affectedRows>0)  
+      res.status(200).json({'returnval': 'delete successfully'});
+    
+    else
+    {
+      console.log(err);     
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+    
+  });
+});
+
+
+
+app.post('/EmployeeFullDetaild-service' ,  urlencodedParser,function (req, res)
+{  
+    var response={school_id:req.query.empid,
+        role_id:req.query.employeerole,
+        password:req.query.employeepsw,
+        name:req.query.employeename,
+        id:req.query.employeeid
+  }; 
+   console.log(response);
+   connection.query("SELECT * FROM md_employee WHERE id ='"+req.query.employeeid+"' and password='"+req.query.employeepsw+"'",function(err, rows)
+    {
+    if(rows.length==0){
+    connection.query("INSERT INTO md_employee SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+>>>>>>> origin/scorecardproduction
     }
     else
     {
       console.log(err);
+<<<<<<< HEAD
       res.status(200).json({'returnval': 'fail'});
     }  
 
@@ -5532,10 +6191,350 @@ app.post('/fetchcategoryname-service',  urlencodedParser,function (req,res)
       console.log(err);
       res.status(200).json({'returnval': 'fail'});
     }  
+=======
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else
+      res.status(200).json({'returnval': 'Already exists!'});
+  });
+});
+app.post('/schoolvalus-service' ,  urlencodedParser,
+  function (req, res)
+{    
+ var qur="select distinct id,name from md_school";
+  connection.query(qur,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'invalid'});
+  });
+});
+
+app.post('/MasterCategorylanguage-service' ,  urlencodedParser,
+  function (req, res)
+{    
+ var qur="select distinct subject_type from md_language_type_master";
+  connection.query(qur,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'invalid'});
+  });
+});
+app.post('/mastersubjectSelection-service' ,  urlencodedParser,
+  function (req, res)
+{    
+ var qur="select subject_id,subject_name from md_language_type_master where subject_type='"+req.query.subjecttypeid+"'";
+  connection.query(qur,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'invalid'});
+  });
+});
+
+
+app.post('/CategorySet-service' ,  urlencodedParser,
+  function (req, res)
+{    
+ var qur="select distinct * from md_subject_category";
+  connection.query(qur,function(err, rows){
+    if(!err){
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': 'invalid'});
+  });
+})
+
+app.post('/SearchEmployeedetails-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+ var response={school_id:req.query.empid,id:req.query.searchemployeeid};
+console.log(response);
+ var qur="select * from md_employee where id='"+req.query.searchemployeeid+"'and school_id='"+req.query.empid+"'";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
 
   });
 });
 
+
+
+
+
+app.post('/FnUpdateDetaild-service',  urlencodedParser,function (req, res)
+{
+   var response={school_id:req.query.empid};
+   console.log(response);
+   var id={id:req.query.employeeid};
+   var roleid={role_id:req.query.employeerole};
+   var password={password:req.query.employeepsw};
+   var name={name:req.query.employeename};
+   console.log(id);
+   console.log(roleid);
+   console.log(password);
+   console.log(name);
+
+
+  connection.query('UPDATE md_employee SET ?,?,? where ? and ? ',[roleid,password,name,response,id],
+    function(err,result)
+    {
+     
+    if(!err)
+    {  
+      if(result.affectedRows>0)  
+      res.status(200).json({'returnval': 'succ'});
+    
+    else
+    {
+      console.log(err);     
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+    
+  });
+});
+app.post('/FnDeleteDetaild-service',  urlencodedParser,function (req, res)
+{
+  var response={school_id:req.query.empid};
+   console.log(response);
+   var id={id:req.query.employeeid};
+   var roleid={role_id:req.query.employeerole};
+   var password={password:req.query.employeepsw};
+   var name={name:req.query.employeename};
+   var qur="DELETE FROM md_employee  where school_id='"+req.query.empid+"' and id='"+req.query.employeeid+"'and role_id='"+req.query.employeerole+"'and password='"+req.query.employeepsw+"'and name='"+req.query.employeename+"'";
+
+   console.log(qur);
+  connection.query(qur,
+    function(err,result)
+    {
+     
+    if(!err)
+    {  
+      if(result.affectedRows>0)  
+      res.status(200).json({'returnval': 'delete successfully'});
+    
+    else
+    {
+      console.log(err);     
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+    
+  });
+});
+app.post('/SelectSchoolName-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select id,name from md_school";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});
+app.post('/FnselecttoSection-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select * from md_class_section where school_id='"+req.query.TtoGempid+"' and class='"+req.query.FnStosGradeid+"'";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});
+app.post('/StoSmapping-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select * from md_section ";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+>>>>>>> origin/scorecardproduction
+
+  });
+});
+
+<<<<<<< HEAD
+=======
+app.post('/SelectTearmName-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select term_id,term_name from md_term";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});
+
+app.post('/SelectSchoolgrades-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select grade_id,grade_name from md_grade";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});
+
+app.post('/TeachertoGraderole-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select id,role_name from md_role";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});
+/*app.post('/TeachertoGradeSectionNames-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select section_id,section_name,school_id from md_section where school_id='"+req,query.TtoGempid+"'";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});*/
+
+app.post('/TeachertoGradeSubject-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select subject_id,subject_name from md_subject";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});
+
+
+
+app.post('/TeachertoGradeSectionNames-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select section_id,section_name,school_id from md_section where school_id ='"+req.query.TtoGempid+"'";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});
+
+
+app.post('/TeachertoGradeEmployeNames-service' ,urlencodedParser,
+  function (req, res)
+
+{  
+  var qur="select  id,name,school_id from md_employee where school_id ='"+req.query.TtoGempid+"'";
+  connection.query(qur,function(err, rows){
+    if(!err){
+
+      res.status(200).json({'returnval': rows});
+       console.log(rows);
+    }
+
+    else
+      //console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+
+  });
+});
+>>>>>>> origin/scorecardproduction
 
 
 

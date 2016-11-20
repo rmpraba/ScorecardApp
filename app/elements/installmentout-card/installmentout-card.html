@@ -1,0 +1,180 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-collapse/iron-collapse.html">
+
+<dom-module id="installmentout-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .horizontalframe,.inshead{
+     @apply(--layout-horizontal);
+  }
+    </style>
+    <div>
+     
+
+      <div class="form-group-heading">
+        <h4>Payment</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button class="prospect"  on-click="FnToggleProspect">ProspectOus Fee - {{prosfee}}</paper-button>
+        <iron-collapse id="collapse1">
+          <div class="content"> 
+           <div class="content"> 
+            <div class="inshead">                        
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="margin-left:15%; width: 30%;">Mode of Payment</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 85%;">Receipt Date</div>                 
+            </div>
+            <div style="margin-left:12%;"> 
+              <template  is="dom-repeat" items="{{arr}}" as="view">
+                <installment-card installment="{{view.installment}}" amount="{{view.amount}}"></installment-card>
+              </template>
+            </div>
+            <div >
+              <paper-button  id="" on-click="payfee"  style="width: 10%;margin-left:0%;position: absolute; left: 70%;margin-top: 2%;">PAY</paper-button>
+            </div>
+           </div>          
+          </div>
+        </iron-collapse>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button class="registeration"  on-click="FnToggleRegisteration">Registeration Fee - {{regfee}}</paper-button>
+        <iron-collapse id="collapse2">
+          <div class="content">
+           <div class="content"> 
+            <div class="inshead">                        
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="margin-left:15%; width: 30%;">Mode of Payment</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 85%;">Receipt Date</div>                 
+            </div>
+            <div style="margin-left:12%;"> 
+              <template  is="dom-repeat" items="{{arr}}" as="view">
+                <installment-card installment="{{view.installment}}" amount="{{view.amount}}"></installment-card>
+              </template>
+            </div>
+            <div >
+              <paper-button  id="" on-click="payfee"  style="width: 10%;margin-left:0%;position: absolute; left: 70%;margin-top: 2%;">PAY</paper-button>
+            </div>
+          </div>   
+          </div>
+        </iron-collapse>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button class="tuition"  on-click="FnToggleTuition">Tuition Fee - {{tutfee}}</paper-button>
+        <iron-collapse id="collapse3">
+          <div class="content">
+           <div class="content"> 
+            <div class="inshead">                        
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="margin-left:15%; width: 30%;">Mode of Payment</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 85%;">Receipt Date</div>                 
+            </div>
+            <div style="margin-left:12%;"> 
+              <template  is="dom-repeat" items="{{arr}}" as="view">
+                <installment-card installment="{{view.installment}}" amount="{{view.amount}}"></installment-card>
+              </template>
+            </div>
+            <div >
+              <paper-button  id="" on-click="payfee"  style="width: 10%;margin-left:0%;position: absolute; left: 70%;margin-top: 2%;">PAY</paper-button>
+            </div>
+           </div>
+          </div>
+        </iron-collapse>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button class="annual"  on-click="FnToggleAnnual">Annual Fee - {{annfee}}</paper-button>
+        <iron-collapse id="collapse4">
+          <div class="content">
+           <div class="content"> 
+            <div class="inshead">                        
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="margin-left:15%; width: 30%;">Mode of Payment</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 85%;">Receipt Date</div>                 
+            </div>
+            <div style="margin-left:12%;"> 
+              <template  is="dom-repeat" items="{{arr}}" as="view">
+                <installment-card installment="{{view.installment}}" amount="{{view.amount}}"></installment-card>
+              </template>
+            </div>
+            <div >
+              <paper-button  id="" on-click="payfee"  style="width: 10%;margin-left:0%;position: absolute; left: 70%;margin-top: 2%;">PAY</paper-button>
+            </div>
+           </div>
+          </div>
+        </iron-collapse>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button class="schoolkit"  on-click="FnToggleKit">School Kit Fee - {{kitfee}}</paper-button>
+        <iron-collapse id="collapse5">
+          <div class="content">
+           <div class="content"> 
+            <div class="inshead">                        
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="margin-left:15%; width: 30%;">Mode of Payment</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 85%;">Receipt Date</div>                 
+            </div>
+            <div style="margin-left:12%;"> 
+              <template  is="dom-repeat" items="{{arr}}" as="view">
+                <installment-card installment="{{view.installment}}" amount="{{view.amount}}"></installment-card>
+              </template>
+            </div>
+            <div >
+              <paper-button  id="" on-click="payfee"  style="width: 10%;margin-left:0%;position: absolute; left: 70%;margin-top: 2%;">PAY</paper-button>
+            </div>
+           </div>  
+          </div>
+        </iron-collapse>
+      </div>
+
+
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'installmentout-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'installmentout-card',
+          notify: true
+        }
+      },
+      FnToggleProspect:function(){
+        localStorage.setItem("curr_sess_feecomponent",'pros_fee');
+        this.$.collapse1.toggle();
+      },
+      FnToggleRegisteration:function(){
+        localStorage.setItem("curr_sess_feecomponent",'reg_fee');
+        this.$.collapse2.toggle();
+      },
+      FnToggleTuition:function(){
+        localStorage.setItem("curr_sess_feecomponent",'tuition_fee');
+        this.$.collapse3.toggle();
+      },
+      FnToggleAnnual:function(){
+        localStorage.setItem("curr_sess_feecomponent",'annual_fee');
+        this.$.collapse4.toggle();
+      },
+      FnToggleKit:function(){
+        localStorage.setItem("curr_sess_feecomponent",'kit_fee');
+        this.$.collapse5.toggle();
+      },
+      FnSetArray:function(kitarr){
+        this.kitarr=kitarr;
+      }
+    });
+  })();
+  </script>
+</dom-module>

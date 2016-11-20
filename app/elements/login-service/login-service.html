@@ -1,8 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../beginner-assesment-service/beginner-assesment-service.html">
+<link rel="import" href="../crm-service/crm-service.html">
 <dom-module id="login-service">
   <template>
+  <!-- this ajax takes the value for the address from configuration file -->
    <iron-ajax
         auto
         id="addressajax"
@@ -13,64 +14,26 @@
         debounce-duration="300"
         >
   </iron-ajax>
-
-   <iron-ajax
-        method="post"
-        id="checkschoolajax"
-        url="{{checkschoolurl}}"
-        params="{{checkschoolparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="checkschoolResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-  <!--pass the user name and password for signin-->
+  <!-- this below function is to do verify the login information from the database -->
   <iron-ajax
         method="post"
-        id="loginajax"
-        url="{{loginurl}}"
-        params="{{loginparam}}"
+        id="loginpageajax"
+        url="{{loginpageurl}}"
+        params="{{loginpageparam}}"
         handle-as="json"
         content-type="application/json"
-        on-response="loginResponse"
+        on-response="loginpageResponse"
         debounce-duration="300"
         >
-
   </iron-ajax>
-
-  <iron-ajax
-        method="post"
-        id="rolecheckajax"
-        url="{{rolecheckurl}}"
-        params="{{rolecheckparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="rolecheckResponse"
-        debounce-duration="300"
-        >
-
-  </iron-ajax>
-  <iron-ajax
-        method="post"
-        id="changepasswordajax"
-        url="{{changepasswordurl}}"
-        params="{{changepasswordparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="changepasswordResponse"
-        debounce-duration="300"
-        >
-
-  </iron-ajax>
-  <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
+ <crm-service id="service"></crm-service>
   </template>
 
   <script>
   (function() {
-   
     Polymer({
       is: "login-service",
+<<<<<<< HEAD
      changepassword:function(username,oldpassword,newpassword){
       this.changepasswordurl=sessionStorage.getItem("addrinfo")+"/changepassword-service";
       var obj={"username":"","oldpassword":"","newpassword":""}
@@ -84,103 +47,75 @@
      {
       alert(e.detail.response.returnval);
      },
+=======
+
+>>>>>>> origin/scorecardproduction
      addressResponse:function(e)
       {
         var addr=e.detail.response.address;
+        //alert(addr);
         sessionStorage.setItem("addrinfo",addr);
+        //alert(JSON.stringify(e.detail.response.address));
       },
-      checkschool:function(uname)
-      {
-        username=uname;
-        this.checkschoolurl=sessionStorage.getItem("addrinfo")+"/checkschool-card";
-        var obj={"username":""}
-        obj.username=uname;
-        this.checkschoolparam=obj;
-        this.$.checkschoolajax.generateRequest();
+      Fn_login_userlogin:function(username,password){ 
+         this.loginpageurl="http://localhost:8086/loginpage";
+        var obj={"username":"","password":""}
+        obj.username=username;
+        obj.password=password;
+        this.loginpageparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.loginpageajax.generateRequest();
       },
-      checkschoolResponse:function(e)
-      {
-        var schol=e.detail.response.returnval[0].name;
-        document.querySelector('login-card').schname=schol;
-        // document.querySelector('home-page').FnsetTitle(schname); 
-      },
-     //fetch the username and password from logincard and pass to the loginajax
-      logincheck:function(uname,pass)
-      {
-        username=uname;
-        this.loginurl=sessionStorage.getItem("addrinfo")+"/login-card";
-        var obj={"username":"","password":"","schoolid":""};
-        obj.username=uname;
-        obj.password=pass;
-        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        this.loginparam=obj;
-        this.$.loginajax.generateRequest();
-      },
-      rolecheck:function(uname,pass)
-      {
+      loginpageResponse:function(e){
 
-      this.rolecheckurl=sessionStorage.getItem("addrinfo")+"/rolecheck-service";
-        var obj={"username":"","password":""};
-        obj.username=uname;
-        obj.password=pass;
-        this.rolecheckparam=obj;
-        this.$.rolecheckajax.generateRequest();
-      },
-
-      rolecheckResponse:function(e)
-      {
-      // alert(JSON.stringify(e.detail.response.returnval));
-      var rolearr=e.detail.response.returnval;
-      document.querySelector('login-card').rolearr=rolearr;
-      document.querySelector('login-card').schname=rolearr[0].name;
-      sessionStorage.setItem("curr_sess_loggedschoolid",rolearr[0].school_id);
-      },
-      roletype:function(rolename,roleid)
-      {
-      sessionStorage.setItem("curr_sess_loggedrole",rolename);
-      sessionStorage.setItem("curr_sess_loggedroleid",roleid);
-      },
-     //loginResponse from the loginajax
-      loginResponse:function(e)
-      {
-        var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
-        if(arr!="invalid"){
-        //var role=e.detail.response.returnval[0].role_name;
-        var school=e.detail.response.returnval[0].school;
-        var name=e.detail.response.returnval[0].name;
-        var address=e.detail.response.returnval[0].addr;
-        var uname=e.detail.response.returnval[0].uname;
-
-       // alert(name);
-       //var roleid=e.detail.response.retur
-        sessionStorage.setItem("curr_sess_loggedid",username);
-        
-        sessionStorage.setItem("curr_sess_loggedschoolid",school);
-        sessionStorage.setItem("curr_sess_loggedschoolname",name);
-        sessionStorage.setItem("curr_sess_loggeduname",uname);
-        sessionStorage.setItem("curr_sess_loggedschooladdress",address);
-
-        sessionStorage.setItem("curr_sess_loggedaffliationid",e.detail.response.returnval[0].affno);
-        sessionStorage.setItem("curr_sess_emailid",e.detail.response.returnval[0].email);
-        sessionStorage.setItem("curr_sess_website",e.detail.response.returnval[0].website);
-        sessionStorage.setItem("curr_sess_telno",e.detail.response.returnval[0].telno);
-
-        this.$.bassesmentservice.callAcademicService(); 
-        localStorage.setItem('curr_sess_report','0');        
-        document.querySelector('app-card').setPage('homepage','Assesment Screen'); 
-        document.querySelector('home-page').setPage('teacherhomecard',''); 
-        document.querySelector('home-page').FnsetTitle(name);
-        document.querySelector('home-page').setUsername(uname);
-        document.querySelector('teacherhome-card').FnHideView();
-        }           
-        else 
-        {
-        alert('Invalid UserName or Password');
+        var result=e.detail.response.returnval;
+        //alert(JSON.stringify(result));
+        if(result.length<=0){
+          alert("Username and Password is incorrect..!");
         }
+        else{
+          var shortname= result[0].shortname;
+          var school= result[0].schoolname;
+          var role=result[0].role_name;
+          var employeename=result[0].employee_name;
+          var roleid=result[0].role_id;
+          var schoolid=result[0].school_id;
+          var employeeid=result[0].employee_id;
+
+          var pr_dashboear=result[0].rt_dashboard;
+          var pr_enquiry=result[0].rt_enquiry;
+          var pr_admission_form=result[0].rt_admission_form;
+          var pr_adm_approval=result[0].rt_adm_approval;
+          var pr_followup=result[0].rt_followup;
+          var pr_collectionentry=result[0].rt_collectionentry;
+
+
+          localStorage.setItem("dashboard",pr_dashboear);
+          localStorage.setItem("enquiry",pr_enquiry);
+          localStorage.setItem("admissionform",pr_admission_form);
+          localStorage.setItem("admapproval",pr_adm_approval);
+          localStorage.setItem("followup",pr_followup);
+          localStorage.setItem("collectionentry",pr_collectionentry);
+
+/*document.querySelector('navigation-bar').Fn_access_rights(pr_enquiry,pr_followup,pr_dashboear,pr_admission_form,pr_adm_approval,pr_collectionentry)*/
+            
+          document.querySelector('navigation-bar').Fncheck();
+
+          localStorage.setItem("shortname",shortname);
+          localStorage.setItem("schoolname",school);
+          localStorage.setItem("employeename",employeename);
+          localStorage.setItem("schoolid",schoolid);
+          localStorage.setItem("roleid",roleid);
+          localStorage.setItem("employeeid",employeeid);
+
+          //alert(school+'   '+role+'    '+employeename+'    '+roleid);
+          document.querySelector('CRM-app').setPage("applist");
+        document.querySelector('app-list').setPage("enquiry","Enquiry");
         }
-      });     
-      
+      }
+
+     
+      });
       })();
   </script>
 

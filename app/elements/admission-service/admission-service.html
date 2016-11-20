@@ -1,0 +1,1085 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="admission-service">
+  <template>
+   <!-- It would fetch the enquiry no's -->
+     <iron-ajax
+        method="post"
+        id="searchenquiryajax"
+        url="{{searchenquiryurl}}"
+        params="{{searchenquiryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="searchenquiryResponse"
+        debounce-duration="300"
+        >
+    <!-- this ajax is to fetch the available classes with repect to the school -->
+   <iron-ajax
+        method="post"
+        id="getclassesajax"
+        url="{{getclassesurl}}"
+        params="{{getclassesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getclassesResponse"
+        debounce-duration="300"
+        >
+    <!-- Component will fetch the selected enquiry info -->
+   <iron-ajax
+        method="post"
+        id="fetchenquiryinfoajax"
+        url="{{fetchenquiryinfourl}}"
+        params="{{fetchenquiryinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchenquiryinfoResponse"
+        debounce-duration="300"
+        >
+        <!-- Component will insert Admission info-->
+   <iron-ajax
+        method="post"
+        id="insertadmissionajax"
+        url="{{insertadmissionurl}}"
+        params="{{insertadmissionparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertadmissionResponse"
+        debounce-duration="300"
+        >
+        <!-- Component will insert student info-->
+   <iron-ajax
+        method="post"
+        id="insertstudentajax"
+        url="{{insertstudenturl}}"
+        params="{{insertstudentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertstudentResponse"
+        debounce-duration="300"
+        >
+       <!-- Component will insert school history -->
+   <iron-ajax
+        method="post"
+        id="insertstudenthistoryajax"
+        url="{{insertstudenthistoryurl}}"
+        params="{{insertstudenthistoryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertstudenthistoryResponse"
+        debounce-duration="300"
+        >
+        <!-- Component will insert student disability info -->
+   <iron-ajax
+        method="post"
+        id="insertdisabilityinfoajax"
+        url="{{insertdisabilityinfourl}}"
+        params="{{insertdisabilityinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertdisabilityinfoResponse"
+        debounce-duration="300"
+        >
+        <!-- Component will insert student co curricular info-->
+   <iron-ajax
+        method="post"
+        id="insertcocurricularinfoajax"
+        url="{{insertcocurricularinfourl}}"
+        params="{{insertcocurricularinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertcocurricularinfoResponse"
+        debounce-duration="300"
+        >
+
+
+            <!-- Component will insert student co curricular info-->
+   <iron-ajax
+        method="post"
+        id="searchfeeenquiryajax"
+        url="{{searchfeeenquiryurl}}"
+        params="{{searchfeeenquiryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="searchfeeenquiryResponse"
+        debounce-duration="300"
+        >
+
+
+            <!-- Component will insert student co curricular info-->
+   <iron-ajax
+        method="post"
+        id="fetchfeeajax"
+        url="{{fetchfeeurl}}"
+        params="{{fetchfeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfeeResponse"
+        debounce-duration="300"
+        >
+        
+
+            <!-- Component will insert student co curricular info-->
+   <iron-ajax
+        method="post"
+        id="searchadmnenquiryajax"
+        url="{{searchadmnenquiryurl}}"
+        params="{{searchadmnenquiryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="searchadmnenquiryResponse"
+        debounce-duration="300"
+        >
+                <!-- Component will insert student co curricular info-->
+   <iron-ajax
+        method="post"
+        id="searchadmissionajax"
+        url="{{searchadmissionurl}}"
+        params="{{searchadmissionparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="searchadmissionResponse"
+        debounce-duration="300"
+        >
+        <!-- Component will fetch the fee component-->
+   <iron-ajax
+        method="post"
+        id="fetchfeesajax"
+        url="{{fetchfeesurl}}"
+        params="{{fetchfeesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfeesResponse"
+        debounce-duration="300"
+        >
+        <!-- Component will fetch the fee split up component-->
+   <iron-ajax
+        method="post"
+        id="fetchfeesplitupajax"
+        url="{{fetchfeesplitupurl}}"
+        params="{{fetchfeesplitupparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfeesplitupResponse"
+        debounce-duration="300"
+        >
+        <!-- Component will fetch the no of installment-->
+   <iron-ajax
+        method="post"
+        id="fetchnoofinstallmentajax"
+        url="{{fetchnoofinstallmenturl}}"
+        params="{{fetchnoofinstallmentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchnoofinstallmentResponse"
+        debounce-duration="300"
+        >
+    <!-- this below ajax gives the total number of enquiry appeared categorized based on the grade -->
+    <iron-ajax
+        method="post"
+        id="getadmissioncountajax"
+        url="{{getadmissioncounturl}}"
+        params="{{getadmissioncountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getadmissioncountResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax
+        method="post"
+        id="studentfulldetailsajax"
+        url="{{studentfulldetailsurl}}"
+        params="{{studentfulldetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentfulldetailsResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax
+        method="post"
+        id="studentcocurricularajax"
+        url="{{studentcocurricularurl}}"
+        params="{{studentcocurricularparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentcocurricularResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax
+        method="post"
+        id="studenthistoryajax"
+        url="{{studenthistoryurl}}"
+        params="{{studenthistoryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studenthistoryResponse"
+        debounce-duration="300"
+        >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'admission-service',
+      callSearchenquiryService:function(enquiryno){        
+        this.searchenquiryurl=sessionStorage.getItem("addrinfo")+"/searchenquiry";
+        var obj={"enquiryno":"","schoolid":""};
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchenquiryparam=obj;
+        this.$.searchenquiryajax.generateRequest();
+      },
+      searchenquiryResponse:function(e){
+        document.querySelector('admission-form').enquiryarr=e.detail.response.returnval;
+      },
+      callFetchenquiryinfoService:function(){
+        this.fetchenquiryinfourl=sessionStorage.getItem("addrinfo")+"/fetchenquiryinfo";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchenquiryinfoparam=obj;
+        this.$.fetchenquiryinfoajax.generateRequest();
+      },
+      fetchenquiryinfoResponse:function(e){
+        var arr=e.detail.response.returnval;
+         //alert(JSON.stringify(arr));
+        // alert(document.querySelector('admission-form').schoolname);
+        document.querySelector('admission-form').schoolname=localStorage.getItem("schoolname");
+        document.querySelector('admission-form').applicationno=arr[0].prospectus_no;
+        document.querySelector('admission-form').enquiredyear=arr[0].academic_year;
+        document.querySelector('admission-form').firstname=arr[0].first_name;
+        document.querySelector('admission-form').middlename=arr[0].middle_name;
+        document.querySelector('admission-form').lastname=arr[0].last_name;
+        document.querySelector('admission-form').gradeselection=arr[0].class;
+        document.querySelector('admission-form').FnSetSecLanguage(arr[0].second_language);
+        if(arr[0].class=="Nursery"||arr[0].class=="Junior KG"||arr[0].class=="Senior KG"||arr[0].class=="Grade-1"||arr[0].class=="Grade-2"||arr[0].class=="Grade-3"||arr[0].class=="Grade-4"){}
+        else
+        document.querySelector('admission-form').FnSetThirdLanguage(arr[0].third_language);
+        document.querySelector('dateofbirth-datepicker').FnSetDate(arr[0].dob);
+        document.querySelector('admission-form').FnFindAge(arr[0].dob);
+        document.querySelector('admission-form').FnSetGender(arr[0].gender);
+
+        document.querySelector('admission-form').flatno=arr[0].flat_no;
+        document.querySelector('admission-form').bulidingname=arr[0].address1;
+        document.querySelector('admission-form').street=arr[0].address2;
+        document.querySelector('admission-form').town=arr[0].address3;
+        document.querySelector('admission-form').city=arr[0].city;
+        document.querySelector('admission-form').state=arr[0].state;
+        document.querySelector('admission-form').pincode=arr[0].pincode;
+
+        document.querySelector('admission-form').mothertongue=arr[0].mother_tongue;
+
+        document.querySelector('admission-form').siblingname=arr[0].sibiling_name;
+        document.querySelector('admission-form').siblingclass=arr[0].sibling_detail;
+
+        document.querySelector('admission-form').prevschoolname=arr[0].old_school;
+
+        document.querySelector('admission-form').fathername=arr[0].father_name;
+        document.querySelector('admission-form').mothername=arr[0].mother_name;
+        document.querySelector('admission-form').fatheroccupation=arr[0].father_occupation;
+        document.querySelector('admission-form').motheroccupation=arr[0].mother_occupation;
+        document.querySelector('admission-form').fatherqualification=arr[0].father_qualification;
+        document.querySelector('admission-form').motherqualification=arr[0].mother_qualification;
+        document.querySelector('admission-form').fathermobile=arr[0].father_mob;
+        document.querySelector('admission-form').mothermobile=arr[0].mother_mob;
+        document.querySelector('admission-form').fatheremail=arr[0].father_email;
+        document.querySelector('admission-form').motheremail=arr[0].mother_email;
+        document.querySelector('admission-form').fatherincome=arr[0].father_income;
+        document.querySelector('admission-form').motherincome=arr[0].mother_income;
+        document.querySelector('admission-form').FnSetTransport(arr[0].transport_requirment);
+        document.querySelector('admission-form').FnSetCanteen(arr[0].canteen_requirment);
+
+      },
+      callInsertAdmissionService:function(applicationno,schoolname,admissionyear,firstname,middlename,lastname,gradeselection,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,fathername,mothername,flatno,bulidingname,street,town,city,state,pincode,height,weight,relegion,nationality,mothertongue,siblingname,siblingclass,prevschoolname,classfrom,classto,yearfrom,yearto,medium,lastclassmark,reasonforleaving,physicdetail,physicstatus,mentaldetail,mentalstatus,illnessdetail,illnessstatus,allergydetail,allergystatus,chronicdetail,chronicstatus,sno1,field1,year1,event1,prizedetail1,sno2,field2,year2,event2,prizedetail2,sno3,field3,year3,event3,prizedetail3,fatherdob,motherdob,fatherqualification,motherqualification,fatheroccupation,motheroccupation,fatherincome,motherincome,fathertelno,mothertelno,fathermobile,mothermobile,fatheremail,motheremail,ptown,pdistrict,pstate,ppincode,relationship1,guardianname1,relationship2,guardianname2,guardianname,gbuildingname,gstreet,gtown,gcity,gstate,gpincode,gresidentialcontact,gofficecontact,gmobileno,gfax,date,fsign,place,admissionclass,gradeadmin,authorizsign,FnBlood,relegions,FnBo){
+
+
+        this.insertadmissionurl=sessionStorage.getItem("addrinfo")+"/insertadmission";
+        var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","admissiondisabled":"","admissioncanteen":"","admissiontransport":"","createdby":"","academicyear":"","fathername":"","mothername":"","flatno":"","bulidingname":"","street":"","town":"","city":"","state":"","pincode":"","height":"","weight":"","relegion":"","nationality":"","mothertongue":"","siblingname":"","siblingclass":"","prevschoolname":"","classfrom":"","classto":"","yearfrom":"","yearto":"","medium":"","lastclassmark":"","reasonforleaving":"","physicdetail":"","physicstatus":"","mentaldetail":"","mentalstatus":"","illnessdetail":"","illnessstatus":"","allergydetail":"","allergystatus":"","chronicdetail":"","chronicstatus":"","sno1":"","field1":"","year1":"","event1":"","prizedetail1":"","sno2":"","field2":"","year2":"","event2":"","prizedetail2":"","sno3":"","field3":"","year3":"","event3":"","prizedetail3":"","fatherdob":"","motherdob":"","fatherqualification":"","motherqualification":"","fatheroccupation":"","motheroccupation":"","fatherincome":"","motherincome":"","fathertelno":"","mothertelno":"","fathermobile":"","mothermobile":"","fatheremail":"","motheremail":"","ptown":"","pdistrict":"","pstate":"","ppincode":"","relationship1":"","guardianname1":"","relationship2":"","guardianname2":"","guardianname":"","gbuildingname":"","gstreet":"","gtown":"","gcity":"","gstate":"","gpincode":"","gresidentialcontact":"","gofficecontact":"","gmobileno":"","gfax":"","date":"","fsign":"","place":"","admissionclass":"","gradeadmin":"","authorizsign":"","FnBlood":"","relegions":"","FnBo":""}
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
+        obj.applicationno=applicationno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=schoolname;
+        obj.admissionyear=admissionyear;
+        obj.firstname=firstname;
+        obj.middlename=middlename;
+        obj.lastname=lastname;
+        obj.studentname=firstname+' '+middlename+' '+lastname;
+        obj.gradeselection=gradeselection;
+        obj.admissiondob=admissiondob;
+        obj.admissiongender=admissiongender;
+        obj.admissiondisabled=admissiondisabled;
+        obj.admissioncanteen=admissioncanteen;
+        obj.admissiontransport=admissiontransport;
+        obj.createdby=localStorage.getItem("employeename");
+        obj.academicyear=admissionyear;
+        obj.fathername=fathername;
+        obj.mothername=mothername;
+        obj.flatno=flatno;
+        obj.bulidingname=bulidingname;
+        obj.street=street;
+        obj.town=town;
+        obj.city=city;
+        obj.state=state;
+        obj.pincode=pincode;
+        obj.height=height;
+        obj.weight=weight;
+        obj.relegions=relegions;
+        obj.nationality=nationality;
+obj.mothertongue=mothertongue;
+obj.siblingname=siblingname;
+obj.siblingclass=siblingclass;
+obj.prevschoolname=prevschoolname;
+obj.classfrom=classfrom;
+obj.classto=classto;
+obj.yearfrom=yearfrom;
+obj.yearto=yearto;
+obj.medium=medium;
+obj.lastclassmark=lastclassmark;
+obj.reasonforleaving=reasonforleaving;
+obj.physicdetail=physicdetail;
+obj.physicstatus=physicstatus;
+obj.mentaldetail=mentaldetail;
+obj.mentalstatus=mentalstatus;
+obj.illnessdetail=illnessdetail;
+obj.illnessstatus=illnessstatus;
+obj.allergydetail=allergydetail;
+obj.allergystatus=allergystatus;
+obj.chronicdetail=chronicdetail;
+obj.chronicstatus=chronicstatus;
+obj.sno1=sno1;
+obj.field1=field1;
+obj.year1=year1;
+obj.event1=event1;
+obj.prizedetail1=prizedetail1;
+obj.sno2=sno2;
+obj.field2=field2;
+obj.year2=year2;
+obj.event2=event2;
+obj.prizedetail2=prizedetail2;
+obj.sno3=sno3;
+obj.field3=field3;
+obj.year3=year3;
+obj.event3=event3;
+obj.prizedetail3=prizedetail3;
+obj.fatherdob=fatherdob;
+obj.motherdob=motherdob;
+obj.fatherqualification=fatherqualification;
+obj.motherqualification=motherqualification;
+obj.fatheroccupation=fatheroccupation;
+obj.motheroccupation=motheroccupation;
+obj.fatherincome=fatherincome;
+obj.motherincome=motherincome;
+obj.fathertelno=fathertelno;
+obj.mothertelno=mothertelno;
+obj.fathermobile=fathermobile;
+obj.mothermobile=mothermobile;
+obj.fatheremail=fatheremail;
+obj.motheremail=motheremail;
+obj.ptown=ptown;
+obj.pdistrict=pdistrict;
+obj.pstate=pstate;
+obj.ppincode=ppincode;
+obj.relationship1=relationship1;
+obj.guardianname1=guardianname1;
+obj.relationship2=relationship2;
+obj.guardianname2=guardianname2;
+obj.guardianname=guardianname;
+obj.gbuildingname=gbuildingname;
+obj.gstreet=gstreet;
+obj.gtown=gtown;
+obj.gcity=gcity;
+obj.gstate=gstate;
+obj.gpincode=gpincode;
+obj.gresidentialcontact=gresidentialcontact;
+obj.gofficecontact=gofficecontact;
+obj.gmobileno=gmobileno;gfax
+obj.gfax=gfax;
+obj.date=date;
+obj.fsign=fsign;
+obj.admissionclass=admissionclass;
+obj.gradeadmin=gradeadmin;
+obj.authorizsign=authorizsign;
+obj.FnBlood=FnBlood;
+obj.relegion=relegion;
+obj.FnBo=FnBo;
+        this.insertadmissionparam=obj;
+    alert(JSON.stringify(obj));
+         this.$.insertadmissionajax.generateRequest();
+        this.studentfulldetailsurl=sessionStorage.getItem("addrinfo")+"/studentfulldetailsurl";
+        {
+       var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","admissiondisabled":"","admissioncanteen":"","admissiontransport":"","createdby":"","academicyear":"","fathername":"","mothername":"","flatno":"","bulidingname":"","street":"","town":"","city":"","state":"","pincode":"","height":"","weight":"","relegion":"","nationality":"","mothertongue":"","siblingname":"","siblingclass":"","prevschoolname":"","classfrom":"","classto":"","yearfrom":"","yearto":"","medium":"","lastclassmark":"","reasonforleaving":"","physicdetail":"","physicstatus":"","mentaldetail":"","mentalstatus":"","illnessdetail":"","illnessstatus":"","allergydetail":"","allergystatus":"","chronicdetail":"","chronicstatus":"","sno1":"","field1":"","year1":"","event1":"","prizedetail1":"","sno2":"","field2":"","year2":"","event2":"","prizedetail2":"","sno3":"","field3":"","year3":"","event3":"","prizedetail3":"","fatherdob":"","motherdob":"","fatherqualification":"","motherqualification":"","fatheroccupation":"","motheroccupation":"","fatherincome":"","motherincome":"","fathertelno":"","mothertelno":"","fathermobile":"","mothermobile":"","fatheremail":"","motheremail":"","ptown":"","pdistrict":"","pstate":"","ppincode":"","relationship1":"","guardianname1":"","relationship2":"","guardianname2":"","guardianname":"","gbuildingname":"","gstreet":"","gtown":"","gcity":"","gstate":"","gpincode":"","gresidentialcontact":"","gofficecontact":"","gmobileno":"","gfax":"","date":"","fsign":"","place":"","admissionclass":"","gradeadmin":"","authorizsign":"","FnBlood":"","relegions":"","FnBo":""}
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
+        obj.applicationno=applicationno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=schoolname;
+        obj.admissionyear=admissionyear;
+        obj.firstname=firstname;
+        obj.middlename=middlename;
+        obj.lastname=lastname;
+        obj.studentname=firstname+' '+middlename+' '+lastname;
+        obj.gradeselection=gradeselection;
+        obj.admissiondob=admissiondob;
+        obj.admissiongender=admissiongender;
+        obj.admissiondisabled=admissiondisabled;
+        obj.admissioncanteen=admissioncanteen;
+        obj.admissiontransport=admissiontransport;
+        obj.createdby=localStorage.getItem("employeename");
+        obj.academicyear=admissionyear;
+        obj.fathername=fathername;
+        obj.mothername=mothername;
+        obj.flatno=flatno;
+        obj.bulidingname=bulidingname;
+        obj.street=street;
+        obj.town=town;
+        obj.city=city;
+        obj.state=state;
+        obj.pincode=pincode;
+        obj.height=height;
+        obj.weight=weight;
+        obj.relegions=relegions;
+        obj.nationality=nationality;
+obj.mothertongue=mothertongue;
+obj.siblingname=siblingname;
+obj.siblingclass=siblingclass;
+obj.prevschoolname=prevschoolname;
+obj.classfrom=classfrom;
+obj.classto=classto;
+obj.yearfrom=yearfrom;
+obj.yearto=yearto;
+obj.medium=medium;
+obj.lastclassmark=lastclassmark;
+obj.reasonforleaving=reasonforleaving;
+obj.physicdetail=physicdetail;
+obj.physicstatus=physicstatus;
+obj.mentaldetail=mentaldetail;
+obj.mentalstatus=mentalstatus;
+obj.illnessdetail=illnessdetail;
+obj.illnessstatus=illnessstatus;
+obj.allergydetail=allergydetail;
+obj.allergystatus=allergystatus;
+obj.chronicdetail=chronicdetail;
+obj.chronicstatus=chronicstatus;
+obj.sno1=sno1;
+obj.field1=field1;
+obj.year1=year1;
+obj.event1=event1;
+obj.prizedetail1=prizedetail1;
+obj.sno2=sno2;
+obj.field2=field2;
+obj.year2=year2;
+obj.event2=event2;
+obj.prizedetail2=prizedetail2;
+obj.sno3=sno3;
+obj.field3=field3;
+obj.year3=year3;
+obj.event3=event3;
+obj.prizedetail3=prizedetail3;
+obj.fatherdob=fatherdob;
+obj.motherdob=motherdob;
+obj.fatherqualification=fatherqualification;
+obj.motherqualification=motherqualification;
+obj.fatheroccupation=fatheroccupation;
+obj.motheroccupation=motheroccupation;
+obj.fatherincome=fatherincome;
+obj.motherincome=motherincome;
+obj.fathertelno=fathertelno;
+obj.mothertelno=mothertelno;
+obj.fathermobile=fathermobile;
+obj.mothermobile=mothermobile;
+obj.fatheremail=fatheremail;
+obj.motheremail=motheremail;
+obj.ptown=ptown;
+obj.pdistrict=pdistrict;
+obj.pstate=pstate;
+obj.ppincode=ppincode;
+obj.relationship1=relationship1;
+obj.guardianname1=guardianname1;
+obj.relationship2=relationship2;
+obj.guardianname2=guardianname2;
+obj.guardianname=guardianname;
+obj.gbuildingname=gbuildingname;
+obj.gstreet=gstreet;
+obj.gtown=gtown;
+obj.gcity=gcity;
+obj.gstate=gstate;
+obj.gpincode=gpincode;
+obj.gresidentialcontact=gresidentialcontact;
+obj.gofficecontact=gofficecontact;
+obj.gmobileno=gmobileno;gfax
+obj.gfax=gfax;
+obj.date=date;
+obj.fsign=fsign;
+obj.admissionclass=admissionclass;
+obj.gradeadmin=gradeadmin;
+obj.authorizsign=authorizsign;
+obj.FnBlood=FnBlood;
+obj.relegion=relegion;
+obj.FnBo=FnBo;
+        }
+        this.studentcocurricularurl=sessionStorage.getItem("addrinfo")+"/insertadmission";
+        {
+        var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","admissiondisabled":"","admissioncanteen":"","admissiontransport":"","createdby":"","academicyear":"","fathername":"","mothername":"","flatno":"","bulidingname":"","street":"","town":"","city":"","state":"","pincode":"","height":"","weight":"","relegion":"","nationality":"","mothertongue":"","siblingname":"","siblingclass":"","prevschoolname":"","classfrom":"","classto":"","yearfrom":"","yearto":"","medium":"","lastclassmark":"","reasonforleaving":"","physicdetail":"","physicstatus":"","mentaldetail":"","mentalstatus":"","illnessdetail":"","illnessstatus":"","allergydetail":"","allergystatus":"","chronicdetail":"","chronicstatus":"","sno1":"","field1":"","year1":"","event1":"","prizedetail1":"","sno2":"","field2":"","year2":"","event2":"","prizedetail2":"","sno3":"","field3":"","year3":"","event3":"","prizedetail3":"","fatherdob":"","motherdob":"","fatherqualification":"","motherqualification":"","fatheroccupation":"","motheroccupation":"","fatherincome":"","motherincome":"","fathertelno":"","mothertelno":"","fathermobile":"","mothermobile":"","fatheremail":"","motheremail":"","ptown":"","pdistrict":"","pstate":"","ppincode":"","relationship1":"","guardianname1":"","relationship2":"","guardianname2":"","guardianname":"","gbuildingname":"","gstreet":"","gtown":"","gcity":"","gstate":"","gpincode":"","gresidentialcontact":"","gofficecontact":"","gmobileno":"","gfax":"","date":"","fsign":"","place":"","admissionclass":"","gradeadmin":"","authorizsign":"","FnBlood":"","relegions":"","FnBo":""}
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
+        obj.applicationno=applicationno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=schoolname;
+        obj.admissionyear=admissionyear;
+        obj.firstname=firstname;
+        obj.middlename=middlename;
+        obj.lastname=lastname;
+        obj.studentname=firstname+' '+middlename+' '+lastname;
+        obj.gradeselection=gradeselection;
+        obj.admissiondob=admissiondob;
+        obj.admissiongender=admissiongender;
+        obj.admissiondisabled=admissiondisabled;
+        obj.admissioncanteen=admissioncanteen;
+        obj.admissiontransport=admissiontransport;
+        obj.createdby=localStorage.getItem("employeename");
+        obj.academicyear=admissionyear;
+        obj.fathername=fathername;
+        obj.mothername=mothername;
+        obj.flatno=flatno;
+        obj.bulidingname=bulidingname;
+        obj.street=street;
+        obj.town=town;
+        obj.city=city;
+        obj.state=state;
+        obj.pincode=pincode;
+        obj.height=height;
+        obj.weight=weight;
+        obj.relegions=relegions;
+        obj.nationality=nationality;
+obj.mothertongue=mothertongue;
+obj.siblingname=siblingname;
+obj.siblingclass=siblingclass;
+obj.prevschoolname=prevschoolname;
+obj.classfrom=classfrom;
+obj.classto=classto;
+obj.yearfrom=yearfrom;
+obj.yearto=yearto;
+obj.medium=medium;
+obj.lastclassmark=lastclassmark;
+obj.reasonforleaving=reasonforleaving;
+obj.physicdetail=physicdetail;
+obj.physicstatus=physicstatus;
+obj.mentaldetail=mentaldetail;
+obj.mentalstatus=mentalstatus;
+obj.illnessdetail=illnessdetail;
+obj.illnessstatus=illnessstatus;
+obj.allergydetail=allergydetail;
+obj.allergystatus=allergystatus;
+obj.chronicdetail=chronicdetail;
+obj.chronicstatus=chronicstatus;
+obj.sno1=sno1;
+obj.field1=field1;
+obj.year1=year1;
+obj.event1=event1;
+obj.prizedetail1=prizedetail1;
+obj.sno2=sno2;
+obj.field2=field2;
+obj.year2=year2;
+obj.event2=event2;
+obj.prizedetail2=prizedetail2;
+obj.sno3=sno3;
+obj.field3=field3;
+obj.year3=year3;
+obj.event3=event3;
+obj.prizedetail3=prizedetail3;
+obj.fatherdob=fatherdob;
+obj.motherdob=motherdob;
+obj.fatherqualification=fatherqualification;
+obj.motherqualification=motherqualification;
+obj.fatheroccupation=fatheroccupation;
+obj.motheroccupation=motheroccupation;
+obj.fatherincome=fatherincome;
+obj.motherincome=motherincome;
+obj.fathertelno=fathertelno;
+obj.mothertelno=mothertelno;
+obj.fathermobile=fathermobile;
+obj.mothermobile=mothermobile;
+obj.fatheremail=fatheremail;
+obj.motheremail=motheremail;
+obj.ptown=ptown;
+obj.pdistrict=pdistrict;
+obj.pstate=pstate;
+obj.ppincode=ppincode;
+obj.relationship1=relationship1;
+obj.guardianname1=guardianname1;
+obj.relationship2=relationship2;
+obj.guardianname2=guardianname2;
+obj.guardianname=guardianname;
+obj.gbuildingname=gbuildingname;
+obj.gstreet=gstreet;
+obj.gtown=gtown;
+obj.gcity=gcity;
+obj.gstate=gstate;
+obj.gpincode=gpincode;
+obj.gresidentialcontact=gresidentialcontact;
+obj.gofficecontact=gofficecontact;
+obj.gmobileno=gmobileno;gfax
+obj.gfax=gfax;
+obj.date=date;
+obj.fsign=fsign;
+obj.admissionclass=admissionclass;
+obj.gradeadmin=gradeadmin;
+obj.authorizsign=authorizsign;
+obj.FnBlood=FnBlood;
+obj.relegion=relegion;
+obj.FnBo=FnBo;
+       
+        }
+        this.studenthistoryurl=sessionStorage.getItem("addrinfo")+"/insertadmission";
+        {
+         var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","admissiondisabled":"","admissioncanteen":"","admissiontransport":"","createdby":"","academicyear":"","fathername":"","mothername":"","flatno":"","bulidingname":"","street":"","town":"","city":"","state":"","pincode":"","height":"","weight":"","relegion":"","nationality":"","mothertongue":"","siblingname":"","siblingclass":"","prevschoolname":"","classfrom":"","classto":"","yearfrom":"","yearto":"","medium":"","lastclassmark":"","reasonforleaving":"","physicdetail":"","physicstatus":"","mentaldetail":"","mentalstatus":"","illnessdetail":"","illnessstatus":"","allergydetail":"","allergystatus":"","chronicdetail":"","chronicstatus":"","sno1":"","field1":"","year1":"","event1":"","prizedetail1":"","sno2":"","field2":"","year2":"","event2":"","prizedetail2":"","sno3":"","field3":"","year3":"","event3":"","prizedetail3":"","fatherdob":"","motherdob":"","fatherqualification":"","motherqualification":"","fatheroccupation":"","motheroccupation":"","fatherincome":"","motherincome":"","fathertelno":"","mothertelno":"","fathermobile":"","mothermobile":"","fatheremail":"","motheremail":"","ptown":"","pdistrict":"","pstate":"","ppincode":"","relationship1":"","guardianname1":"","relationship2":"","guardianname2":"","guardianname":"","gbuildingname":"","gstreet":"","gtown":"","gcity":"","gstate":"","gpincode":"","gresidentialcontact":"","gofficecontact":"","gmobileno":"","gfax":"","date":"","fsign":"","place":"","admissionclass":"","gradeadmin":"","authorizsign":"","FnBlood":"","relegions":"","FnBo":""}
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
+        obj.applicationno=applicationno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=schoolname;
+        obj.admissionyear=admissionyear;
+        obj.firstname=firstname;
+        obj.middlename=middlename;
+        obj.lastname=lastname;
+        obj.studentname=firstname+' '+middlename+' '+lastname;
+        obj.gradeselection=gradeselection;
+        obj.admissiondob=admissiondob;
+        obj.admissiongender=admissiongender;
+        obj.admissiondisabled=admissiondisabled;
+        obj.admissioncanteen=admissioncanteen;
+        obj.admissiontransport=admissiontransport;
+        obj.createdby=localStorage.getItem("employeename");
+        obj.academicyear=admissionyear;
+        obj.fathername=fathername;
+        obj.mothername=mothername;
+        obj.flatno=flatno;
+        obj.bulidingname=bulidingname;
+        obj.street=street;
+        obj.town=town;
+        obj.city=city;
+        obj.state=state;
+        obj.pincode=pincode;
+        obj.height=height;
+        obj.weight=weight;
+        obj.relegions=relegions;
+        obj.nationality=nationality;
+obj.mothertongue=mothertongue;
+obj.siblingname=siblingname;
+obj.siblingclass=siblingclass;
+obj.prevschoolname=prevschoolname;
+obj.classfrom=classfrom;
+obj.classto=classto;
+obj.yearfrom=yearfrom;
+obj.yearto=yearto;
+obj.medium=medium;
+obj.lastclassmark=lastclassmark;
+obj.reasonforleaving=reasonforleaving;
+obj.physicdetail=physicdetail;
+obj.physicstatus=physicstatus;
+obj.mentaldetail=mentaldetail;
+obj.mentalstatus=mentalstatus;
+obj.illnessdetail=illnessdetail;
+obj.illnessstatus=illnessstatus;
+obj.allergydetail=allergydetail;
+obj.allergystatus=allergystatus;
+obj.chronicdetail=chronicdetail;
+obj.chronicstatus=chronicstatus;
+obj.sno1=sno1;
+obj.field1=field1;
+obj.year1=year1;
+obj.event1=event1;
+obj.prizedetail1=prizedetail1;
+obj.sno2=sno2;
+obj.field2=field2;
+obj.year2=year2;
+obj.event2=event2;
+obj.prizedetail2=prizedetail2;
+obj.sno3=sno3;
+obj.field3=field3;
+obj.year3=year3;
+obj.event3=event3;
+obj.prizedetail3=prizedetail3;
+obj.fatherdob=fatherdob;
+obj.motherdob=motherdob;
+obj.fatherqualification=fatherqualification;
+obj.motherqualification=motherqualification;
+obj.fatheroccupation=fatheroccupation;
+obj.motheroccupation=motheroccupation;
+obj.fatherincome=fatherincome;
+obj.motherincome=motherincome;
+obj.fathertelno=fathertelno;
+obj.mothertelno=mothertelno;
+obj.fathermobile=fathermobile;
+obj.mothermobile=mothermobile;
+obj.fatheremail=fatheremail;
+obj.motheremail=motheremail;
+obj.ptown=ptown;
+obj.pdistrict=pdistrict;
+obj.pstate=pstate;
+obj.ppincode=ppincode;
+obj.relationship1=relationship1;
+obj.guardianname1=guardianname1;
+obj.relationship2=relationship2;
+obj.guardianname2=guardianname2;
+obj.guardianname=guardianname;
+obj.gbuildingname=gbuildingname;
+obj.gstreet=gstreet;
+obj.gtown=gtown;
+obj.gcity=gcity;
+obj.gstate=gstate;
+obj.gpincode=gpincode;
+obj.gresidentialcontact=gresidentialcontact;
+obj.gofficecontact=gofficecontact;
+obj.gmobileno=gmobileno;gfax
+obj.gfax=gfax;
+obj.date=date;
+obj.fsign=fsign;
+obj.admissionclass=admissionclass;
+obj.gradeadmin=gradeadmin;
+obj.authorizsign=authorizsign;
+obj.FnBlood=FnBlood;
+obj.relegion=relegion;
+obj.FnBo=FnBo;
+       
+        }
+        
+
+
+      },
+
+
+      insertadmissionResponse:function(e){
+        alert("Enrollment No genererated!!!"+e.detail.response.returnval);
+        if(e.detail.response.returnval!='admissionfail')
+        this.callfetchadmissioncountService();
+      },
+      callInsertStudentService:function(){
+        this.insertstudenturl=sessionStorage.getItem("addrinfo")+"/insertstudent";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertstudentparam=obj;
+        this.$.insertstudentajax.generateRequest();
+      },
+      insertstudentResponse:function(e){
+
+      },
+      callInsertStudentHistoryService:function(){
+        this.insertstudenthistoryurl=sessionStorage.getItem("addrinfo")+"/insertstudenthistory";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertstudenthistoryparam=obj;
+        this.$.insertstudenthistoryajax.generateRequest();
+      },
+      insertstudenthistoryResponse:function(e){
+
+      },
+      callInsertDisabilityInfoService:function(){
+        this.insertdisabilityinfourl=sessionStorage.getItem("addrinfo")+"/insertdisabilityinfo";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertdisabilityinfoparam=obj;
+        this.$.insertdisabilityinfoajax.generateRequest();
+      },
+      insertdisabilityinfoResponse:function(e){
+
+      },
+      callInsertCocurricularInfoService:function(){
+        this.insertcocurricularinfourl=sessionStorage.getItem("addrinfo")+"/insertcocurricularinfo";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertcocurricularinfoparam=obj;
+        this.$.insertcocurricularinfoajax.generateRequest();
+      },
+      insertcocurricularinfoResponse:function(e){
+
+      },
+      callSearchfeeenquiryService:function(enquiryno){
+        this.searchfeeenquiryurl=sessionStorage.getItem("addrinfo")+"/searchfeeenquiry";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchfeeenquiryparam=obj;
+        this.$.searchfeeenquiryajax.generateRequest();
+      },
+      searchfeeenquiryResponse:function(e){
+
+        var arr=e.detail.response.returnval;       
+        document.querySelector('fees-card').academicyear=arr[0].academic_year;
+        document.querySelector('fees-card').enquiredclass=arr[0].class;
+        document.querySelector('fees-card').studentname=arr[0].enquiry_name;
+        document.querySelector('fees-card').parentname=arr[0].father_name;
+        document.querySelector('fees-card').dob=arr[0].dob;
+        localStorage.setItem("curr_sess_academicyear",arr[0].academic_year); 
+        localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no); 
+        // localStorage.setItem("curr_sess_admissionno"); 
+        localStorage.setItem("curr_sess_studentname",arr[0].enquiry_name); 
+        localStorage.setItem("curr_sess_grade",arr[0].class);   
+        this.academicyear=arr[0].academic_year;
+        this.admissionyear=arr[0].academic_year;        
+        this.grade=arr[0].class;
+        this.callfetchfeesService();      
+      },
+      callfetchfeesService:function(){
+        this.fetchfeesurl=sessionStorage.getItem("addrinfo")+"/fetchfees";
+        var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}        
+        obj.admissionyear=this.admissionyear; 
+        obj.academicyear=this.academicyear; 
+        obj.grade=this.grade; 
+        obj.schoolid=localStorage.getItem("schoolid");     
+        this.fetchfeesparam=obj;       
+        this.$.fetchfeesajax.generateRequest();
+      },
+      fetchfeesResponse:function(e){        
+        var arr=e.detail.response.returnval;        
+        if(arr.length>0){
+            localStorage.setItem("curr_sess_feecode",arr[0].fee_code); 
+            this.fetchfeesplitup();
+        }           
+      },
+      fetchfeesplitup:function(){
+        this.fetchfeesplitupurl=sessionStorage.getItem("addrinfo")+"/fetchfeesplitup";
+        var obj={"schoolid":"","feecode":"","feetype":""}        
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        obj.schoolid=localStorage.getItem("schoolid");  
+        obj.feetype=localStorage.getItem("curr_sess_feetype");    
+        this.fetchfeesplitupparam=obj;       
+        this.$.fetchfeesplitupajax.generateRequest();
+      },
+      fetchfeesplitupResponse:function(e){
+        var arr=e.detail.response.returnval;                  
+          document.querySelector('fees-card').fees=arr[0].total_fee;
+          localStorage.setItem("curr_sess_fee",arr[0].total_fee);
+          this.callfetchnoofinstallmentService();    
+      },
+      callfetchnoofinstallmentService:function(){
+        this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment";
+        var obj={"schoolid":"","feecode":"","feetype":""}         
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        obj.schoolid=localStorage.getItem("schoolid");  
+        obj.feetype=localStorage.getItem("curr_sess_feetype");       
+        this.fetchnoofinstallmentparam=obj;       
+
+        var arr=e.detail.response.returnval;
+        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
+        document.querySelector('prospectousfee-card').academicyear=arr[0].academic_year;
+        document.querySelector('prospectousfee-card').enquiredclass=arr[0].class;
+        document.querySelector('prospectousfee-card').studentname=arr[0].enquiry_name;
+        document.querySelector('prospectousfee-card').parentname=arr[0].father_name;
+        document.querySelector('prospectousfee-card').dob=arr[0].dob;
+        }
+        localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);
+        localStorage.setItem("curr_sess_academicyear",arr[0].academic_year);
+        localStorage.setItem("curr_sess_grade",arr[0].class);
+        localStorage.setItem("curr_sess_studentname",arr[0].enquiry_name);
+        this.academicyear=(arr[0].academic_year).substring(3);
+        this.admissionyear=(arr[0].academic_year).substring(3);
+        this.grade=arr[0].class;
+        this.callfetchfeesService();
+        this.fetchfeesplitup();
+        this.callfetchnoofinstallmentService();
+      },
+      callSearchadmnenquiryService:function(enquiryno){
+        this.searchadmnenquiryurl=sessionStorage.getItem("addrinfo")+"/searchadmnenquiry";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchadmnenquiryparam=obj;
+        this.$.searchadmnenquiryajax.generateRequest();
+      },
+      searchadmnenquiryResponse:function(e){
+        var arr=e.detail.response.returnval;
+        alert(JSON.stringify(arr));
+        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){
+        document.querySelector('registerationfee-card').admissionno=arr[0].admission_no;
+        document.querySelector('registerationfee-card').academicyear=arr[0].academic_year;
+        document.querySelector('registerationfee-card').enquiredclass=arr[0].class_for_admission;
+        document.querySelector('registerationfee-card').studentname=arr[0].student_name;
+        document.querySelector('registerationfee-card').parentname=arr[0].father_name;
+        document.querySelector('registerationfee-card').dob=arr[0].dob;
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
+        alert(document.querySelector('annualfee-card').admissionno);
+        document.querySelector('annualfee-card').admissionno=arr[0].admission_no;
+        document.querySelector('annualfee-card').academicyear=arr[0].academic_year;
+        document.querySelector('annualfee-card').enquiredclass=arr[0].class_for_admission;
+        document.querySelector('annualfee-card').studentname=arr[0].student_name;
+        document.querySelector('annualfee-card').parentname=arr[0].father_name;
+        document.querySelector('annualfee-card').dob=arr[0].dob;
+        }
+        localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);
+        localStorage.setItem("curr_sess_admissionno",arr[0].admission_no);
+        localStorage.setItem("curr_sess_academicyear",arr[0].academic_year);
+        localStorage.setItem("curr_sess_grade",arr[0].class_for_admission);
+        localStorage.setItem("curr_sess_studentname",arr[0].student_name);
+        this.academicyear=(arr[0].academic_year).substring(3);
+        this.admissionyear=(arr[0].admission_year).substring(3);
+        this.grade=arr[0].class_for_admission;
+        this.callfetchfeesService();
+        this.fetchfeesplitup();
+        this.callfetchnoofinstallmentService();
+      },
+      callSearchadmissionService:function(admissionno){
+        this.searchadmissionurl=sessionStorage.getItem("addrinfo")+"/searchadmission";
+        var obj={"admissionno":"","schoolid":""}
+        obj.admissionno=admissionno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchadmissionparam=obj;
+        this.$.searchadmissionajax.generateRequest();
+      },
+      searchadmissionResponse:function(e){
+        var arr=e.detail.response.returnval;
+        // alert(JSON.stringify(arr));
+        document.querySelector('fee-card').admissionno=arr[0].admission_no;
+        document.querySelector('fee-card').academicyear=arr[0].academic_year;
+        document.querySelector('fee-card').class=arr[0].class_for_admission;
+        document.querySelector('fee-card').studentname=arr[0].student_name;
+        document.querySelector('fee-card').parentname=arr[0].father_name;
+        document.querySelector('fee-card').dob=arr[0].dob;
+        localStorage.setItem("curr_sess_admissionno",arr[0].admission_no);
+        localStorage.setItem("curr_sess_academicyear",arr[0].academic_year);
+        localStorage.setItem("curr_sess_grade",arr[0].class_for_admission);
+        localStorage.setItem("curr_sess_studentname",arr[0].student_name);
+
+        this.academicyear=(arr[0].academic_year).substring(3);
+        this.admissionyear=(arr[0].admission_year).substring(3);
+        this.grade=arr[0].class_for_admission;
+        this.callfetchfeesService();
+        this.fetchfeesplitup();
+        this.callfetchnoofinstallmentService();
+      },
+      callfetchfeesService:function(){
+        this.fetchfeesurl=sessionStorage.getItem("addrinfo")+"/fetchfees";
+        var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}
+        obj.admissionyear=this.admissionyear;
+        obj.academicyear=this.academicyear;
+        obj.grade=this.grade;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchfeesparam=obj;
+        this.$.fetchfeesajax.generateRequest();
+      },
+      fetchfeesResponse:function(e){
+        var arr=e.detail.response.returnval;
+        alert(JSON.stringify(arr));
+        localStorage.setItem("curr_sess_feecode",arr[0].fee_code);
+
+      },
+      fetchfeesplitup:function(){
+        this.fetchfeesplitupurl=sessionStorage.getItem("addrinfo")+"/fetchfeesplitup";
+        var obj={"schoolid":"","feecode":""}
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchfeesplitupparam=obj;
+        this.$.fetchfeesplitupajax.generateRequest();
+      },
+      fetchfeesplitupResponse:function(e){
+        var arr=e.detail.response.returnval;
+        alert(JSON.stringify(arr));
+        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
+          document.querySelector('prospectousfee-card').fees=arr[0].prospectous_fee;
+          localStorage.setItem("curr_sess_prospectousfee",arr[0].prospectous_fee);
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){
+          document.querySelector('registerationfee-card').fees=arr[0].registeration_fee;
+          localStorage.setItem("curr_sess_registerationfee",arr[0].registeration_fee);
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
+          document.querySelector('annualfee-card').fees=arr[0].annual_fee;
+          localStorage.setItem("curr_sess_annualfee",arr[0].annual_fee);
+        }
+
+      },
+      callfetchnoofinstallmentService:function(){
+        this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment";
+        var obj={"schoolid":""}
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchnoofinstallmentparam=obj;
+
+        this.$.fetchnoofinstallmentajax.generateRequest();
+      },
+      fetchnoofinstallmentResponse:function(e){
+        var arr=e.detail.response.returnval;        
+        var feeinstallmentarr=[];
+        for(var i=0;i<arr.length;i++){
+          var obj={"installment":"","amount":"","date":""};
+          obj.installment=arr[i].installment_name;
+          obj.date=arr[i].installment_date;
+
+          obj.amount=arr[i].installment_amount;
+          feeinstallmentarr.push(obj);
+
+        if(arr[i].feetype_code=="ann_fee"){
+          var percent=arr[i].installment_percentage;
+          var annualfee=localStorage.getItem("curr_sess_annualfee")+localStorage.getItem("curr_sess_tutionfee");
+          obj.amount=parseFloat(annualfee)*(parseFloat(percent)/100);
+          annual.push(obj);
+        }
+        if(arr[i].feetype_code=="pros_fee"){
+          var percent=arr[i].installment_percentage;
+          var prosfee=localStorage.getItem("curr_sess_prospectousfee");
+          obj.amount=parseFloat(prosfee)*(parseFloat(percent)/100);
+          pros.push(obj);
+        }
+        if(arr[i].feetype_code=="reg_fee"){
+          var percent=arr[i].installment_percentage;
+          var regfee=localStorage.getItem("curr_sess_registerationfee");
+          obj.amount=parseFloat(regfee)*(parseFloat(percent)/100);
+          reg.push(obj);
+        }
+        if(arr[i].feetype_code=="kit_fee"){
+          var percent=arr[i].installment_percentage;
+          var kitfee=localStorage.getItem("curr_sess_kitfee");
+          obj.amount=parseFloat(kitfee)*(parseFloat(percent)/100);
+          kit.push(obj);
+        }
+        if(arr[i].feetype_code=="cau_fee"){
+          var percent=arr[i].installment_percentage;
+          var cautionfee=localStorage.getItem("curr_sess_cautionfee");
+          obj.amount=parseFloat(cautionfee)*(parseFloat(percent)/100);
+          caution.push(obj);
+        }
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
+        document.querySelector('prospectousfee-card').prosarr=pros;
+        document.querySelector('prospectousfee-card').FnHiddenPayment();
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){
+        document.querySelector('registerationfee-card').regarr=reg;
+        document.querySelector('registerationfee-card').FnHiddenPayment();
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
+        document.querySelector('annualfee-card').annarr=annual;
+        document.querySelector('annualfee-card').FnHiddenPayment();
+
+
+        }
+        document.querySelector('fees-card').feearr=feeinstallmentarr;
+        document.querySelector('fees-card').FnHiddenPayment();
+      },
+      FnRefresh:function(){
+        localStorage.setItem("curr_sess_enquiryno","");
+        localStorage.setItem("curr_sess_admissionno","");
+        localStorage.setItem("curr_sess_academicyear","");
+        localStorage.setItem("curr_sess_grade","");
+        localStorage.setItem("curr_sess_studentname","");
+      },
+      callfetchadmissioncountService:function(){
+        this.getadmissioncounturl=sessionStorage.getItem("addrinfo")+"/getadmissioncount";
+        var obj={"schol":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.status="Admitted";
+        this.getadmissioncountparam=obj;
+        this.$.getadmissioncountajax.generateRequest();
+     },
+     getadmissioncountResponse:function(){
+        var result=e.detail.response.returnval;
+        document.querySelector('enquiry-card').gradewiseadmissionarr=result;
+     }
+
+    });
+  })();
+  </script>
+</dom-module>

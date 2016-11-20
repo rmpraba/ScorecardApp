@@ -1,0 +1,104 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="School-Creation-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+            <paper-input value="{{schooltyp}}" hidden></paper-input>
+          <paper-checkbox on-change="Fnhighsecondryset" id="{{gradeid}}">{{gradename}}</paper-checkbox>
+            
+  </template>
+  <script>
+  (function() {
+    'use strict';
+ var fngradearrr=[];
+ var bigarrr=[];
+    Polymer({
+      is: 'School-Creation-item-card',
+
+        Fnhighsecondryset:function(e){  
+                  // alert("hi");
+                //   alert(e.target.id);
+              //alert(document.querySelector('#'+e.target.id));
+
+        if(document.querySelector('#'+e.target.id).checked==true){
+
+               var obj={"gra_id":"","gra_name":"","sch_typ":""};
+                   obj.gra_id=this.gradeid;
+                   obj.gra_name=this.gradename;
+                   obj.sch_typ=this.schooltyp;
+                   fngradearrr.push(obj);
+                  alert(JSON.stringify(fngradearrr));
+                  
+                               
+           }
+
+        else if(document.querySelector('#'+e.target.id).checked==false)
+        {
+                   
+                   for(var i=0;i<fngradearrr.length;i++){
+                     if(fngradearrr[i].gra_id==e.target.id){
+                        fngradearrr.splice(i,1);
+
+                    }
+                   }
+                  // alert(JSON.stringify(fngradearrr));
+           }
+         document.querySelector('Create-School-card').FnSetGrademapp(fngradearrr);
+         },
+         fnSchooltogradeset:function(arr){
+                 bigarrr=arr;
+                alert(JSON.stringify(bigarrr));
+                  for(var i=0;i<bigarrr.length;i++)
+           {
+            
+           var gradeid=bigarrr[i].grade_id;
+              this.gradeid;
+              alert(gradeid);
+           document.querySelector('#'+gradeid).checked=true;
+              var getid=bigarrr[i].grade_id;
+              var getname=bigarrr[i].grade_name;
+              var gettype=bigarrr[i].school_type;
+              alert(JSON.stringify(bigarrr));
+               
+
+               if(document.querySelector('#'+gradeid).checked==true){
+                  var obj={"gra_id":"","gra_name":"","sch_typ":""};
+                   obj.gra_id=getid
+                   obj.gra_name=getname;
+                   obj.sch_typ=gettype;
+                   fngradearrr.push(obj);
+                  alert(JSON.stringify(fngradearrr));
+                }
+              else if(document.querySelector('#'+gradeid).checked==false){
+
+                    for(var i=0;i<fngradearrr.length;i++){
+
+                     if(fngradearrr[i].gra_id==gradeid){
+                        fngradearrr.splice(i,1);
+                      }
+                    }
+                    }
+                
+               }
+               document.querySelector('Create-School-card').FnSetGrademapp(fngradearrr)
+       }
+
+
+    });
+  })();
+  </script>
+</dom-module>

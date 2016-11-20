@@ -9,7 +9,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
 
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- Jquery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <dom-module id="employe-card">
   <template>
     <style>
@@ -25,9 +31,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width:40%;
         margin-left:30%;
       }
+      .innercard{
+                @apply(--layout-vertical);
+          }
     </style>
     <div class="card">
-     <div><CENTER><h2 style="color:#162BA3;">EMPLOYEE CREATION</h2></CENTER></div>
+     <!-- <div><CENTER><h2 style="color:#162BA3;">EMPLOYEE CREATION</h2></CENTER></div>
        <span class="inputelements">
         <paper-dropdown-menu label="School Name">
           <paper-menu   class="dropdown-content"  on-iron-select="schoolid">   
@@ -47,6 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-input value="{{employeeid}}" hidden$="{{hidecard1}}" label="EmployeId"></paper-input>
         <paper-input value="{{employeerole}}" label="EmployeRole"></paper-input>       
         <paper-input value="{{employeepsw}}" label="PassWord"></paper-input>
+
         <center>
         <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
         <paper-button on-click="FnUpdate" style="background-color:#384485;color:white;" id="Upid">Update</paper-button>
@@ -55,38 +65,168 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       </span>
      
-  </div>
+  </div> -->
+             <div>
+                 <paper-input label="Enter the EmployeeName" value="{{gradename}}">
+                     <paper-icon-button suffix on-click="FnSearchGrade" icon="search"  title="search">
+                      </paper-icon-button>
+                 </paper-input>
+                 <paper-button on-click="Fncreateemp">create</paper-button>
+                 <paper-dialog id="empdetaiils" model>
+                   <paper-dialog-scrollable>
+                     <div class="form-group-heading">
+                             <h4>Employee personal Details</h4>
+                     </div>
+                      <div class="list-group col-sm-12 panel-body form-category">
+
+                          <div class="col-sm-6">
+                         <paper-input label="Firstname" id="ptown" required error-message="needs Village/Town!" value="{{ptown}}"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                         <paper-input label="lastname" id="ptown" required error-message="needs Village/Town!" value="{{ptown}}"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                         <paper-input label="Mobileno" id="ptown" required error-message="needs Village/Town!" value="{{ptown}}"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                         <gold-email-input label="EmployeeMailid" id="ptown" required error-message="needs Village/Town!" value="{{ptown}}"></gold-email-input>
+                        </div>
+                    </div>
+                     <div class="form-group-heading">
+                             <h4>Address Details</h4>
+                     </div>
+
+                    <div class="list-group col-sm-12 panel-body form-category">
+                        <div class="col-sm-6">
+                         <paper-input label="Village/Town" id="ptown" required error-message="needs Village/Town!" value="{{ptown}}"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                        <paper-input label="District" id="pdistrict" value="{{pdistrict}}"  required error-message="needs District!"></paper-input>
+                        </div>
+                       <div class="col-sm-6">
+                         <paper-input label="State" id="pstate" value="{{pstate}}"  required error-message="needs state!"></paper-input>
+                       </div>
+                      <div class="col-sm-6">
+                       <paper-input label="Pincode" id="ppincode" value="{{ppincode}}"  required error-message="needs Pincode!"></paper-input>
+                      </div>
+                       <div class="col-md-12 form-button">
+                            <paper-button class="btn btn-primary" on-click="FnSubmitAdmission">Submit</paper-button>
+                       </div>
+                      </div>
+                   </div>
+                 </paper-dialog-scrollable>
+                 </paper-dialog>
+         </div>
+         </div>
+
+                <div class="list-group col-sm-12 panel-body form-category">
+                  <div class="col-sm-4">
+                  </div>
+                  <div class="col-sm-4">
+                     <paper-input label="employename" id="ptown" required error-message="needs Village/Town!" value="{{ptown}}"></paper-input>
+                  </div>
+                </div>
+              <div class="list-group col-sm-12 panel-body form-category">
+                  <div class="col-sm-4"> 
+                     <div class="innercard">
+                        <h4>RoleMapping</h4>
+                      <template is="dom-repeat" items="{{roleselectarr}}" as="view">
+                              <paper-checkbox value="{{view.id}}">{{view.role_name}}</paper-checkbox></br>
+                               
+                      </template>
+                   </div> 
+                  </div>
+                    <div class="col-sm-4"> 
+                     <div class="innercard">
+                        <h4>SchoolType</h4>
+                           <template is="dom-repeat" items="{{employeearr}}" as="view">
+                        <!--    <paper-checkbox value="{{view.school_type_id}}">{{view.school_type_name}}</paper-checkbox>
+                         --> 
+                         <teacher-grade-item-card schooltypes="{{view.school_type_id}}" schooltypname="{{view.school_type_name}}"></teacher-grade-item-card></br>
+                      </template>
+
+                     </div> 
+                    </div>
+                   <div class="col-sm-4"> 
+                     <div class="innercard">
+                        <h4>Catagory type</h4>
+                           <template is="dom-repeat" items="{{setcategoryarr}}" as="view">
+                          <!--     <paper-checkbox value="{{view.caegory_type}}">{{view.category_name}}</paper-checkbox>
+                           -->  
+             <teacher-grade-section-item-card categroysz="{{view.category_name}}" categortypesz="{{view.category_type}}"></teacher-grade-section-item-card></br>
+                 
+                          </template>
+                     </div>      
+                  </div>    
+              </div>
+                <paper-dialog id="fngenerate" model>
+                 <paper-dialog-scrollable>
+              
+                    <template is="dom-repeat" items="{{schoolgradearr}}" as="view">
+                      <p>{{view.class}}</p><p>{{view.section}}</p>
+                    </template>
+                     <template is="dom-repeat" items="{{schoolgradesubjectarr}}" as="view">
+                      <paper-checkbox>{{view.subject_name}}</paper-checkbox>
+                    </template>
+                       </paper-dialog-scrollable>
+                  </paper-dialog>
+                
+              <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Generate</paper-button>
+       
+   
   <master-ui-service id="uiservice"></master-ui-service>
   </template>
   <script>
  (function() {
     'use strict';
+  var getcategoryarrs=[];
+  var getschooltypearrs=[];
     Polymer({
       is: 'employe-card',
-      ready:function(){
-       //this.$.subid.hidden=true;
+     /* ready:function(){
+       this.$.subid.hidden=true;
         this.$.Upid.hidden=true;
         this.$.Delid.hidden=true;
         this.hidecard1=false; 
+      this.$.uiservice.schoolid2();
       },
+      
       schoolid:function(e){
         this.empid=e.target.selectedItem.value;
         alert(this.empid);
 
       },
-      fnclear:function(){
+       fnclear:function(){
              this.searchemployeeid="";
              this.employeename="";
              this.employeeid="";
              this.employeepsw="";
              this.employeerole="";
       },
+      */
+      Fncreateemp:function(e){
+         this.$.empdetaiils.open();
+      },
+      getcatfun:function(arr){
+          getcategoryarrs=arr;    
+      },
+      getschoolfun:function(arr1){
+          getschooltypearrs=arr1;
+      },
+     
       FnSubmit:function(){
+        //   alert(JSON.stringify(getcategoryarrs));
+          alert(JSON.stringify(getschooltypearrs));
        // alert("hi2");
       // alert(this.empid);
-    this.$.uiservice.EmployeeFullDetaild(this.empid,this.employeeid,this.employeename,this.employeerole,this.employeepsw);
+      //this.c=e.target.selectedItem.value;
+      
+    this.$.uiservice.EmployeeFullDetaild(getcategoryarrs,getschooltypearrs);
+       this.$.fngenerate.open();
+      
+   
        },
-       FnUpdate:function(){
+      /* FnUpdate:function(){
         this.$.uiservice.FnUpdateDetaild(this.empid,this.employeeid,this.employeename,this.employeerole,this.employeepsw);
        },
        FnDelete:function(){
@@ -107,7 +247,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.subid.hidden=true;
           this.hidecard1=true;
        }
-
+*/
     });
   })();
   </script>

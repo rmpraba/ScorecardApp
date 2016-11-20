@@ -1,0 +1,133 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<!-- <link rel="import" href="..\..\grade-to-subject-card/grade-to-subject-card.html"> -->
+
+
+<dom-module id="subject-category-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .innercard{
+        @apply(--layout-vertical);
+      }
+    </style>
+    <div class="innercard">   
+     <paper-input value="{{categoryz}}" hidden></paper-input>
+     <paper-checkbox id="{{subjectidz}}" on-change="FnSelectSubject">{{subjectnamez}}</paper-checkbox>
+    
+     </div>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var subarr=[];
+    var sub2arr=[];
+    var subarrvariable=[];
+    var bigarr=[];
+
+    Polymer({
+      is: 'subject-category-card',
+ 
+      properties: {
+        foo: {
+          type: String,
+          value: 'subject-category-card',
+          notify: true
+        }
+      },
+      FnSelectSubject:function(e){
+        // this.subjectid=e.target.id;
+         //alert(this.subjectid);
+         
+
+
+       alert(e.target.id)
+         //alert(document.querySelector('#'+e.target.id));
+        if(document.querySelector('#'+e.target.id).checked==true){
+             // alert("hi");
+          var obj={"sub_id":"","sub_name":"","category":""};
+          obj.sub_id=this.subjectidz;
+          obj.sub_name=this.subjectnamez;
+          obj.category=this.categoryz;
+          alert(JSON.stringify(obj));
+          subarr.push(obj);
+          document.querySelector('grade-to-subject-card').FnSetSubject(subarr);
+        }
+        else if(document.querySelector('#'+e.target.id).checked==false){
+                 
+           var obj={"sub_id":"","sub_name":"","category":""};
+          obj.sub_id=this.subjectidz;
+          obj.sub_name=this.subjectnamez;
+          obj.category=this.categoryz;
+         // alert(JSON.stringify(obj));
+          bigarr.push(obj);
+          for(var i=0 ;i<subarr.length;i++)
+          {
+            alert('1');
+             for(var j=0 ;j<bigarr.length;j++)
+             {
+                  alert('2');
+                if(subarr[i]==bigarr[j])
+                {
+                  alert('3');
+                  alert(JSON.stringify(subarr[i]));
+                   }
+               }    
+          }
+
+        }
+       
+      },
+
+      FnsetsubjectIngrade(arr){
+        sub2arr=arr;
+      //  alert("hi");
+       alert(JSON.stringify(arr));
+           for (var i=0; i<sub2arr.length;i++){
+                 var subjectidz=sub2arr[i].subject_id;
+                 alert(subjectidz);
+                 var subjectnamez=sub2arr[i].subject_name;
+                 var categoryz=sub2arr[i].subject_category;
+                 var subjectidz=subjectidz;
+                 this.subjectidz;
+                 document.querySelector('#'+subjectidz).checked=true;
+          if(document.querySelector('#'+subjectidz).checked==true)
+           {
+               var obj={"sub_id":"","sub_name":"","category":""};
+                   obj.sub_id=subjectidz;
+                   obj.sub_name=subjectnamez;
+                   obj.category=categoryz;
+                   subarr.push(obj);
+                   alert(subarr);
+                 document.querySelector('grade-to-subject-card').FnSetSubject(subarr);
+            }
+
+          else if(document.querySelector('#'+subjectidz).checked==false){
+
+                   var obj={"sub_id":"","sub_name":"","category":""};
+                   obj.sub_id=subjectidz;
+                   obj.sub_name=subjectnamez;
+                   obj.category=categoryz;
+                   subarr.splice(obj); 
+              }
+
+
+              }
+         }
+
+
+
+
+
+
+      
+    
+
+     
+    });
+  })();
+  </script>
+</dom-module>

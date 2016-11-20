@@ -35,6 +35,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
           </paper-menu>
         </paper-dropdown-menu>
+
+         <paper-input value="{{sectionSchoolid}}" hidden></paper-input>
+              <paper-input value="{{sectionSchoolname}}"></paper-input>
+             
       </span>
      
       <span class="inputelements">
@@ -86,9 +90,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'workingdays-card',
       ready:function(){
-        this.$.uiservice.SelectSchoolName();
+       /* this.$.uiservice.SelectSchoolName();
          this.$.uiservice.SelectTearmName();
-       },
+       */},
     SelectSchoolid:function(e){
     this.scid=e.target.selectedItem.value;
    

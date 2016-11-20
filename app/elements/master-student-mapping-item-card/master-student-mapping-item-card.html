@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="master-student-mapping-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+    </style>
+    <div>
+
+    <paper-input value="{{sectionGradetype}}"></paper-input>
+      <paper-checkbox id="{{sectiongradeid}}" on-change="Fnsectionmapping">{{sectiongradename}}</paper-checkbox>
+
+   </div>
+         <paper-dialog id="Sectiongetid" modal>
+                   <paper-input label="No of section"  value="{{mappingsection}}"></paper-input>
+                      <template  is="dom-repeat" items="{{secarres}}" >
+                        <section-mapping-item-card passgrdeid="{{sectiongradeid}}" passgrdename="{{sectiongradename}}"></section-mapping-item-card>
+                      </template>
+                      <paper-button on-click="FnNoofsection" style="background-color:#384485;color:white;">Submit</paper-button></br>
+                   <paper-button dialog-confirm autofocus on-click="Fncleanset">Tap me to close</paper-button>
+         </paper-dialog>
+
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var secarr=[];
+ 
+    var obj={"sec_tion":""};
+    Polymer({
+      is: 'master-student-mapping-item-card',
+
+      Fnsectionmapping:function(e){
+            this.sectiongradeid;
+            this.sectiongradename;
+            alert(this.sectiongradeid+this.sectiongradename);
+            this.$.Sectiongetid.open();
+            secarr.splice(obj);   
+
+        },
+        FnNoofsection:function(e){
+              
+            for(var i=0;i<this.mappingsection;i++)
+              { 
+                   obj.sec_tion=i;
+                   secarr.push(obj);
+                   alert(JSON.stringify(secarr));
+                   this.secarres=secarr;
+              }
+ },
+Fncleanset:function(e){
+           //  alert("hi");
+               this.secarres=secarr;
+              secarr.splice(obj);
+  }        
+
+       });
+  })();
+  </script>
+</dom-module>

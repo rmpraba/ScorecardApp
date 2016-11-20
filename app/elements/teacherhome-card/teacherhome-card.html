@@ -91,11 +91,14 @@
         <div class="card" hidden$="{{subjecttostudent}}">
        <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px"></paper-button>
       </div>
-
-        <div class="card" hidden$="{{MasterStudent}}">
+       <div class="card" hidden$="{{MasterStudent}}">
        <paper-button on-click="StudentMastar" no ink><img src="../../images/studentmastar.jpg" height="180px" width="180px"></paper-button>
       </div>
-         
+     
+        <div class="card" hidden$="{{schoolcreation}}">
+       <paper-button on-click="SchoolCreation" no ink><img src="../../images/School.jpg" height="180px" width="180px"></paper-button>
+      </div>
+             
      
     <!-- </center>   -->
     </div>
@@ -155,6 +158,7 @@
         this.gradetosubject=true;
         this.subjecttostudent=true;
         this.MasterStudent=true;
+        this.schoolcreation=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -265,13 +269,14 @@
       },
       FnHideView:function(){ 
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='superadmin'){
-          this.createrole=false;
+          //this.createrole=false;
           this.createemployee=false; 
           this.workingdays=false;
           this.teachertograde=false; 
           this.gradetosubject=false;
           this.subjecttostudent=false;
           this.MasterStudent=false;
+          this.schoolcreation=false;
          }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;
@@ -355,10 +360,16 @@
       TeacherToGrade:function(e){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('teacher-to-grade-card','');
-      },
+        this.$.uiservice.Fnteachertogradeseclectschool();
+      //  this.$.uiservice.SelectSchoolgrades();
+        this.$.uiservice.fetchallsubjectService();
+
+       },
       GradeToSubject:function(e){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('grade-to-subject-card','');
+        this.$.uiservice.fetchallsubjectService();
+        this.$.uiservice.Fngradetosubjectcreation();
       },
        WorkingDays:function(e){
         document.querySelector('app-card').setPage('homepage','');
@@ -371,19 +382,30 @@
       SubjectToStudent:function(e){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('student-to-subject-mapping-card','');
+      },
+      SchoolCreation:function(e){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('Create-School-card','');
+        this.$.uiservice.SchoolidGeneration();
+      //  alert("hi");
         
       },
       StudentMastar:function(e){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('master-student-mapping-card','');
-        alert("hi1");
-         this.$.uiservice.MasterCategorylanguage();
+         this.$.uiservice.Fnteachertogradeseclectschool();
+         this.$.uiservice.Fnteachergradetosectionmapping();
+      
       },
       FnCreateEmployee:function(e){
-         document.querySelector('app-card').setPage('homepage','');
+         document.querySelector('app-card').setPage('homepage','');   
          document.querySelector('home-page').setPage('employe-card','');
+        this.$.uiservice.employeeroleselection();
          this.$.uiservice.schoolid3();
+         this.$.uiservice.schoolid2();
+
       }
+
     });
   })();
   </script>

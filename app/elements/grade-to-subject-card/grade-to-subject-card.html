@@ -1,101 +1,94 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../subject-category-card/subject-category-card.html">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <dom-module id="grade-to-subject-card">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-
-     .inputelements{
-    display: inline-block;
-    padding: 0 7px;
-    margin: 3%;
-  }
-    </style>
-       <div><CENTER><h2 style="color:#162BA3;">GRADE TO SUBJECTMAPPING</h2></CENTER></div>
-    <center>
-      <span class="inputelements">
-        <paper-dropdown-menu label="Select Grade">
-          <paper-menu id="Gsubj1"  class="dropdown-content"  on-iron-select="TeachertoGradGradeName">   
-            <template is="dom-repeat" items="{{selectgradearr}}" as="view">
-              <paper-item value="{{view.grade_id}}">{{view.grade_name}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-       </span>
-      <span class="inputelements"> 
-        <paper-dropdown-menu label="Select Subject Name">
-          <paper-menu id="Gsubj2"  class="dropdown-content"  on-iron-select="GradetoSubjectName">   
-            <template is="dom-repeat" items="{{subjectsarr}}" as="view">
-              <paper-item value="{{view.subject_id}}">{{view.subject_name}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-       </span>
-      <span class="inputelements">
-        <paper-dropdown-menu label="Select Category  Name">
-          <paper-menu   id="Gsubj3" class="dropdown-content"  on-iron-select="GradetoSubjectCategory">   
-            <template is="dom-repeat" items="{{Categoryarr}}" as="view">
-              <paper-item value="{{view.subject_category_id}}">{{view.subject_category_name}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </span>
-       <div>
-        <center>
-        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
-        <paper-button on-click="FnDelete" style="background-color:#384485;color:white;" id="Delid">Delete</paper-button>
-       </center>
-       </div>
-    </center>      
-  <master-ui-service id="uiservice"></master-ui-service>
+   <style>
+     .card{
+      @apply(--layout-vertical);
+      width: 25%;
+      @apply(--layout-center-justified);
+      text-align: center;
+      margin-left: 30%;
+     }
+     .innercard{
+      @apply(--layout-vertical);
+     }
+     .outcard{
+      @apply(--layout-horizontal);
+      margin-left: 5%;
+     }
+   </style>
+  <div class='card'>
+    <paper-input label="Enter Grade Name" value="{{gradename}}">
+    <paper-icon-button suffix on-click="FnSearchGrade" icon="search"  title="search">
+    </paper-icon-button>
+    </paper-input>
+    <paper-input label="Grade Id" readonly value="{{gradeid}}"></paper-input>
+    
+  </div>
+  <div class="outcard">
+  <template is="dom-repeat" items="{{arr}}" as="category">
+  <div class='innercard'>
+   <h3>{{category.categoryname}}</h3>
+     <!-- <subject-category-card categrorys="{{category.categoryname}}"></subject-category-card> -->
+       <template is="dom-repeat" items="{{category.categoryarr}}">
+          <subject-category-card subjectnamez="{{item.subjectname}}" subjectidz="{{item.subjectid}}" categoryz="{{category.categoryname}}"></subject-category-card>
+      </template>
+  </div>
+  </template>
+  </div>
+   <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="submit">Submit</paper-button>
+   <paper-button on-click="FnReset" style="background-color:#384485;color:white;" id="Reset">Reset</paper-button>
+   <paper-button on-click="FnDelete" style="background-color:#384485;color:white;" id="Delete">Delete</paper-button>
+   <master-ui-service id="uiservice"></master-ui-service>
   </template>
   <script>
   (function() {
     'use strict';
-
+    var subjectarr=[];
+    var bigarr1=[]
     Polymer({
       is: 'grade-to-subject-card',
 
       ready:function(){
-        this.$.uiservice.GradetoSubjectName();
-      },
-      GradetoSubjectName:function(e){
-       this.gradetosubjectmappingid=e.target.selectedItem.value;
-       // this.$.uiservice.categoryset();
-       alert(this.gradetosubjectmappingid);
-      },
-      TeachertoGradGradeName:function(e){
-         this.teachertogradeid=e.target.selectedItem.value;
-         alert(this.teachertogradeid);
-      },
-      GradetoSubjectCategory:function(e){
-      this.gradetocategoryid=e.target.selectedItem.value;
-      alert(this.gradetocategoryid);
-      },
-      FnSubmit:function(e){
-        alert(this.gradetosubjectmappingid+this.teachertogradeid+this.gradetocategoryid);
-        this.$.uiservice.FnTeachertoGrademappoing(this.gradetosubjectmappingid,this.teachertogradeid,this.gradetocategoryid);
-        document.querySelector('#Gsubj2').selected=-1
-        document.querySelector('#Gsubj3').selected=-1
+        this.gradename='Grade-';
 
       },
-      FnDelete:function(e){
-         this.$.uiservice.FnTeachertoGrademappoingdelete(this.gradetosubjectmappingid,this.teachertogradeid,this.gradetocategoryid);
-        document.querySelector('#Gsubj2').selected=-1
-        document.querySelector('#Gsubj3').selected=-1
-      }
+      FnSearchGrade:function(){
+        this.$.uiservice.fetchallsubjectSearchService(this.gradename);
+      },
+      FnSetSubject:function(arr){
+        subjectarr=arr;
+       // alert("rr");
+       alert(JSON.stringify(subjectarr));
+       
+      },
+      FnSubmit:function(){
+        alert(JSON.stringify(subjectarr));
+        alert(this.gradename+this.gradeid);
+         this.$.uiservice.FnGradetoSubjectsubmit(subjectarr,this.gradeid);
+        this.$.uiservice.FnTeachertoGrademappoing(this.gradename,this.gradeid);
+
+         },
+      FnReset:function(){
+     this.$.uiservice.Fngradetosubjectcreation();
+     },
+     FnDelete:function(rr){
+        bigarr1=rr;
+        alert(JSON.stringify(bigarr1));
+     
+     }
+    
     });
   })();
   </script>

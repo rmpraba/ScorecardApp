@@ -21,23 +21,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     padding: 0 7px;
     margin: 1%;
   }
+
+  .card{
+      @apply(--layout-vertical);
+      width: 25%;
+      @apply(--layout-center-justified);
+      text-align: center;
+      margin-left: 30%;
+     }
+     .innercard{
+      @apply(--layout-vertical);
+     }
+     .outcard{
+      @apply(--layout-horizontal);
+      margin-left: 5%;
     </style>
     <div>
          <div><CENTER><h2 style="color:#162BA3;">TEACHER TO GRADE MAPPING</h2></CENTER></div>
+
+       <span class="inputelements">
+        <paper-input  value="{{Schoolid}}" hidden></paper-input>
+        <paper-input label="School Name" id="SectSchoolname" readonly value="{{Schoolname}}" ></paper-input>   
+      </span>
       <span class="inputelements">
-        <paper-dropdown-menu label="Select School Name">
+        <paper-dropdown-menu label="Select School Name" hidden>
           <paper-menu   id="techj" class="dropdown-content"  on-iron-select="TeachertoGradeSelectSchoolid">   
             <template is="dom-repeat" items="{{selectschoolarr1}}" as="view">
               <paper-item value="{{view.id}}">{{view.name}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </span>
-       <span class="inputelements">
-        <paper-dropdown-menu label="Select Empoyee Id">
-          <paper-menu   id="techj" class="dropdown-content"  on-iron-select="TeachertoGradeEmployeId">   
-            <template is="dom-repeat" items="{{emparr}}" as="view">
-              <paper-item value="{{view.id}}">{{view.id}}</paper-item>
             </template>
           </paper-menu>
         </paper-dropdown-menu>
@@ -46,11 +56,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-dropdown-menu label="Select Empoyee  Name">
           <paper-menu   id="techj" class="dropdown-content"  on-iron-select="TeachertoGradeEmployeName">   
             <template is="dom-repeat" items="{{emparr}}" as="view">
-              <paper-item value="{{view.name}}">{{view.name}}</paper-item>
+              <paper-item value="{{view.id}}">{{view.name}}</paper-item>
             </template>
           </paper-menu>
         </paper-dropdown-menu>
       </span>
+      <!--  <span class="inputelements">
+        <paper-dropdown-menu label="Select Empoyee Id" hidden>
+          <paper-menu   id="techj" class="dropdown-content"  on-iron-select="TeachertoGradeEmployeId">   
+            <template is="dom-repeat" items="{{emparr}}" as="view">
+              <paper-item value="{{view.id}}">{{view.id}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+       -->
+       <span class="inputelements">
+        <paper-input   label="Select Grade Name" readonly id="gradename" value="{{id}}"></paper-input>
+       </span>
        <span class="inputelements">
         <paper-dropdown-menu label="Select Grade">
           <paper-menu id="subj"  class="dropdown-content"  on-iron-select="TeachertoGradGradeName">   
@@ -60,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-menu>
         </paper-dropdown-menu>
        </span>
-        <span class="inputelements">
+       <!--  <span class="inputelements">
         <paper-dropdown-menu label="Select Role Name">
           <paper-menu id="subj"  class="dropdown-content"  on-iron-select="TeachertoGradeEmployeNameRole">   
             <template is="dom-repeat" items="{{rolearr}}" as="view">
@@ -68,17 +91,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
           </paper-menu>
         </paper-dropdown-menu>
-       </span>
+       </span> -->
        <span class="inputelements">
         <paper-dropdown-menu label="Select Section Name">
           <paper-menu id="subj"  class="dropdown-content"  on-iron-select="TeachertoGradeSectionName">   
-            <template is="dom-repeat" items="{{sectionsarr}}" as="view">
-              <paper-item value="{{view.section_id}}">{{view.section_name}}</paper-item>
+            <template is="dom-repeat" items="{{subjectarr11}}" as="view">
+              <paper-item value="{{view.id}}">{{view.section}}</paper-item>
             </template>
           </paper-menu>
         </paper-dropdown-menu>
        </span>
-         <span class="inputelements"> 
+        <!--  <span class="inputelements"> 
         <paper-dropdown-menu label="Select Subject Name">
           <paper-menu id="subj"  class="dropdown-content"  on-iron-select="TeachertoGradeSubject">   
             <template is="dom-repeat" items="{{subjectsarr}}" as="view">
@@ -86,8 +109,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
           </paper-menu>
         </paper-dropdown-menu>
-       </span>
-     </div>
+       </span> -->
+      </div>
+        <div class="outcard">
+               <template is="dom-repeat" items="{{arr}}" as="category">
+                <div class='innercard'>
+                     <h3>{{category.categoryname}}</h3>
+                <template is="dom-repeat" items="{{category.categoryarr}}">
+                   <subject-category-grade-card subjectname="{{item.subjectname}}" subjectidz="{{item.subjectid}}" category="{{category.categoryname}}"></subject-category-grade-card>
+                      </template>
+               </div>
+              </template>
+          </div>
        <div>
         <center>
         <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
@@ -100,14 +133,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+ var biggradearr=[];
     Polymer({
       is: 'teacher-to-grade-card',
-     
+          
+
+
      TeachertoGradeSelectSchoolid:function(e)
      {
-            this.TtoGempid=e.target.selectedItem.value;
-            this.$.uiservice.TeachertoGradeEmployeNames(this.TtoGempid);
+           // this.TtoGempid=e.target.selectedItem.value;
+       // this.$.uiservice.TeachertoGradeEmployeNames(this.Schoolid);
             alert("hi");
             this.$.uiservice.TeachertoGraderole();
       },
@@ -115,26 +150,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          this.TtoGemp=e.target.selectedItem.value;
       },
       TeachertoGradeEmployeName:function(e){
-      this.TtoGempname=e.target.selectedItem.value;
+      this.id=e.target.selectedItem.value;
+      this.id;
+      alert(this.id);
       },
       TeachertoGradGradeName:function(e){
-      this.TtoGempGradeName=e.target.selectedItem.value;
+        this.TtoGempGradeName=e.target.selectedItem.value;
+        this.TtoGempGradeName1=e.target.selectedItem.textContent.trim();
+        this.$.uiservice.TeachertoGradeSectionnameselection(this.TtoGempGradeName1);
+        
       },
       TeachertoGradeSectionName:function(e){
       this.TtoGempsection=e.target.selectedItem.value;
+      this.TtoGempsection1=e.target.selectedItem.textContent.trim();
+
       },
       TeachertoGradeSubject:function(e){
       this.TtoGempsubject=e.target.selectedItem.value;
       },
       TeachertoGradeEmployeNameRole:function(e){
       this.TtoGemprole=e.target.selectedItem.value;
-      this.$.uiservice.TeachertoGradeSectionNames(this.TtoGempid);
+      this.$.uiservice.TeachertoGradeSectionNames(this.TtoGempid,this.TtoGempGradeName);
      },
-      FnSubmit:function(e){
-   alert(this.TtoGempid+this.TtoGemp+ this.TtoGempGradeName+this.TtoGempname+this.TtoGempsection+this.TtoGempsubject+this.TtoGemprole);
+      FnBjgsubset:function(arr){
+        //alert(this.Schoolid)
+      
+         biggradearr=arr;
+        
 
-       this.$.uiservice.TtoGsubmit(this.TtoGempid,this.TtoGemp, this.TtoGempGradeName,this.TtoGempname,this.TtoGempsection,this.TtoGempsubject,this.TtoGemprole);
+    //  alert(this.TtoGempid+this.TtoGemp+ this.TtoGempGradeName+this.TtoGempname+this.TtoGempsection+this.TtoGempsubject+this.TtoGemprole);
+
+       //this.$.uiservice.TtoGsubmit(this.TtoGempid,this.TtoGemp, this.TtoGempGradeName,this.TtoGempname,this.TtoGempsection,this.TtoGempsubject,this.TtoGemprole);
       //this.$.uiservice.TtoGsubmit()
+    },
+    FnSubmit:function(e){
+        
+         alert(JSON.stringify(biggradearr));
+        // alert(this.Schoolid+this.id+this.TtoGempGradeName+this.TtoGempsection1);
+        this.$.uiservice.FngradetoteacherSubmit(biggradearr,this.Schoolid,this.id,this.TtoGempGradeName,this.TtoGempsection1);
     },
       FnDelete:function(e){
        this.$.uiservice.TtoGDelete(this.TtoGempid,this.TtoGemp,this.TtoGempGradeName,this.TtoGempname,this.TtoGempsection,this.TtoGempsubject,this.TtoGemprole);

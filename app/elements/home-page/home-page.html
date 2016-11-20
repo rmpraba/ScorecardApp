@@ -157,7 +157,13 @@
          <section data-category="master-student-mapping-card">
           <master-student-mapping-card></master-student-mapping-card>
         </section>
-       
+         <section data-category="Create-School-card">
+          <Create-School-card></Create-School-card>
+        </section>
+        
+        
+        
+      
       </iron-pages>
     </div>
 
@@ -188,6 +194,13 @@
     // alert(localStorage.getItem("curr_sess_page"));
 
     if(localStorage.getItem("curr_sess_page")=="student-to-subject-mapping-card")
+    {
+      this.page="teacherhomecard";
+      document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+    if(localStorage.getItem("curr_sess_page")=="Create-School-card")
     {
       this.page="teacherhomecard";
       document.querySelector('teacherhome-card').fnclear();

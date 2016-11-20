@@ -1,0 +1,212 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/paper-icon-button/paper-icon-button.html">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<dom-module id="Create-School-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+  .inputelements{
+       /* display: inline-block;*/
+     }
+   .card{
+        width:40%;
+        margin-left:30%;
+      }
+    </style>
+<div>
+     <div class="card">
+     <div><CENTER><h2 style="color:#162BA3;">SCHOOL CREATION</h2></CENTER></div>
+       <span class="inputelements">
+       <div>
+
+
+        <paper-input value="{{searchschoolcreationid}}" label="Search for SchoolName/Id">
+                    <paper-icon-button suffix on-click="search" icon="search"  title="search">
+                        </paper-icon-button>
+         </paper-input>
+           <paper-input value="{{schoolcreationid}}" hidden$="{{schoolhidecard11}}" label="SchoolId"></paper-input>
+          <paper-input value="{{Schoolcreationname}}" label="SchoolName">
+          
+        </paper-input>
+            <paper-input value="{{Schoolcreationadrs}}" label="SchoolAddress"></paper-input>
+
+            <paper-checkbox value="{{prime}}" on-change="Fnsetpre">Pre-primary</paper-checkbox>
+            <paper-checkbox  value="{{prime}}" on-change="FnSetprmary">Primary</paper-checkbox>
+            <paper-checkbox value="{{prime}}" on-change="Fnsetsecondry">Secondry</paper-checkbox>
+            <paper-checkbox value="{{prime}}" on-change="FnserHighsecondry">High-Secondry</paper-checkbox>
+
+
+          <paper-input value="{{Schoolcreationphoneno}}" label="Telephone Number/Phone Number"></paper-input>      
+          <paper-input value="{{affiliationno}}" label="Affiliation No"></paper-input>
+          <paper-input value="{{emailid}}" label="EmailId"></paper-input>
+          <paper-input value="{{website}}" label="Website"></paper-input>
+         <center>
+         <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="schoolubid">Submit</paper-button>
+         <paper-button on-click="FnDelete" style="background-color:#384485;color:white ;" id="schoolDelid">Delete</paper-button>
+         <paper-button on-click="FnReset" style="background-color:#384485;color:white;">Reset</paper-button>
+
+           <!-- <paper-dialog id="modal1" modal>
+                   <template is="dom-repeat" items="{{graarr}}" as="view">
+                      <paper-checkbox on-change="Fnsetchangeclear" value="{{view.id}}">{{view.grade_name}}</paper-checkbox>
+                  </template></br>
+                  <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="schoolubid">Submit</paper-button>
+                     <div class="buttons">
+                       <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                    </div>
+
+          </paper-dialog> -->
+
+           <paper-dialog id="preprimary" modal>
+                  <template is="dom-repeat" items="{{preprimearr}}" as="view">
+                <School-Creation-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                                 </School-Creation-item-card> 
+                 </template>
+                    <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                
+           </paper-dialog>
+
+           <paper-dialog id="primary" modal>
+               <template is="dom-repeat" items="{{Primaryarr}}" as="view">
+                <School-Creation-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                                 </School-Creation-item-card> 
+                 </template>
+                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                  
+          </paper-dialog>
+           <paper-dialog id="secondry" modal>
+                    <template is="dom-repeat" items="{{secondarr}}" as="view">
+                  
+                <School-Creation-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                                 </School-Creation-item-card> 
+                     </template>
+                    <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                  
+          </paper-dialog>
+           <paper-dialog id="highsecondry" modal>
+                         <template is="dom-repeat" items="{{highsecondarr}}" as="view">
+            <School-Creation-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                                 </School-Creation-item-card> 
+                       </template>
+                   <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+         </paper-dialog>
+       </center>
+       </div>
+     </span>
+     
+  </div> 
+ </div>
+
+ -->  <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+ var gradearrr=[];
+ var headarr=[];
+    Polymer({
+      is: 'Create-School-card',
+
+    ready:function(){
+       //this.$.subid.hidden=true;
+        this.$.schoolubid.hidden=false;
+        this.$.schoolDelid.hidden=false;
+       // this.schoolhidecard11=true; 
+      },
+      schoolid:function(e){
+        this.empid=e.target.selectedItem.value;  
+        alert(this.empid);
+
+      },
+      FnSetGrademapp:function(arr){
+       gradearrr=arr;
+
+      },
+       Fnsetchangeclear(e){
+             this.$.uiservice.Fnsetchangeclear();
+      },
+     
+      FnaddGradeinfo:function(e){
+          this.$.modal1.open();
+      },
+      Fnsetpre:function(e){
+         this.$.preprimary.open();
+      },
+      FnSetprmary:function(e){
+        this.$.primary.open();
+      },
+     Fnsetsecondry:function(e){
+        this.$.secondry.open();
+      },
+      FnserHighsecondry:function(e){
+        this.$.highsecondry.open();
+      },
+      selectset:function(valuearr){
+          headarr=valuearr;
+        alert("lll");
+      
+      },
+      fnclear11:function(){
+             this.schoolcreationid="";
+             this.Schoolcreationname="";
+             this.Schoolcreationadrs="";
+             this.Schoolcreationphoneno="";
+             this.affiliationno="";
+             this.emailid="";
+             this.website="";
+     
+      },
+      FnSubmit:function(){
+      //  alert(JSON.stringify(gradearrr));
+       this.$.uiservice.FnSchoolToGrademapping(this.schoolcreationid,gradearrr);
+
+       // alert("hi2");
+      // alert(this.empid);
+        this.$.uiservice.FnSchoolSubmitMapping(this.schoolcreationid,this.Schoolcreationname,this.Schoolcreationadrs,this.Schoolcreationphoneno,this.affiliationno,this.emailid,this.website);
+        },
+      /* FnUpdate:function(){
+        this.$.uiservice.FnSchoolUpdateMapping(this.schoolcreationid,this.Schoolcreationname,this.Schoolcreationadrs,this.Schoolcreationphoneno,this.affiliationno,this.emailid,this.website);
+       },*/
+       FnDelete:function(){
+         this.$.uiservice.FnSchoolDeleteMapping(this.schoolcreationid,this.Schoolcreationname,this.Schoolcreationadrs,this.Schoolcreationphoneno,this.affiliationno,this.emailid,this.website);
+  
+       },
+       FnReset:function(){
+         this.$.schoolubid.hidden=false;
+         this.$.schoolDelid.hidden=false;
+         this.schoolhidecard11=false;
+         this.fnclear11();
+        this.$.uiservice.SchoolidGeneration();
+      
+       },
+       search:function(){
+        alert("hi");
+        alert(this.searchschoolcreationid);
+        this.schoolhidecard11=true;   
+        this.$.uiservice.FnSearchSchooldetailsdetails(this.searchschoolcreationid);
+       
+        this.fnclear11();
+       }
+
+    });
+  })();
+  </script>
+</dom-module>

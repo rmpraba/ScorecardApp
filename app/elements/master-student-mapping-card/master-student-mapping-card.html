@@ -19,60 +19,96 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    .inputelements{
     display: inline-block;
     padding: 0 7px;
-    margin: 3%;
-  }
+    margin: 3%;   
+  }   
     </style>
-       <div><CENTER><h2 style="color:#162BA3;">SUBJECTMAPPING</h2></CENTER></div>
-    <center>
-     
+       <div><CENTER><h2 style="color:#162BA3;">GRADETOSECTIONMAPPING</h2></CENTER></div>
+
+              <paper-input value="{{sectionSchoolid}}" hidden></paper-input>
+              <paper-input value="{{sectionSchoolname}}"></paper-input>
+             
+           <paper-checkbox on-change="gradecolapse1" style="color:blue;">Pre-Primary</paper-checkbox>
+             <iron-collapse id="collapse1id">
+               <template is="dom-repeat" items="{{sectionpre}}">
+
+                  <master-student-mapping-item-card sectionGradetype="{{item.school_type}}" sectiongradeid="{{item.grade_id}}" sectiongradename="{{item.grade_name}}"> </master-student-mapping-item-card>
+
+               </template>
+           </iron-collapse>
+               <paper-checkbox on-change="gradecolapse2"  style="color:blue;">Primary</paper-checkbox>
+             <iron-collapse id="collapse2id">
+
+                <template is="dom-repeat" items="{{sectionprimary}}">
+                     <master-student-mapping-item-card sectionGradetype="{{item.school_type}}" sectiongradeid="{{item.grade_id}}" sectiongradename="{{item.grade_name}}">     </master-student-mapping-item-card>
+            </template>
+             </iron-collapse>
+
+               <paper-checkbox on-change="gradecolapse3"  style="color:blue;">secondry</paper-checkbox>
+             <iron-collapse id="collapse3id">
+
+              <template is="dom-repeat" items="{{sectionsecondry}}">
+                     <master-student-mapping-item-card sectionGradetype="{{item.school_type}}" sectiongradeid="{{item.grade_id}}" sectiongradename="{{item.grade_name}}">     </master-student-mapping-item-card>
+            </template>
+
+             </iron-collapse>
+               <paper-checkbox on-change="gradecolapse4" style="color:blue;">High-secondry</paper-checkbox>
+             <iron-collapse id="collapse4id">
+            <template is="dom-repeat" items="{{sectionhigh}}">
+            <master-student-mapping-item-card sectionGradetype="{{item.school_type}}" sectiongradeid="{{item.grade_id}}" sectiongradename="{{item.grade_name}}"> </master-student-mapping-item-card>
+
+            </template>
+            </iron-collapse>
+             <paper-button on-click="fnsubmit" style="background-color:#384485;color:white;">Submit</paper-button></br>
+                
       <span class="inputelements">
-        <paper-dropdown-menu label="Select Category Name">
-          <paper-menu   id="Gsubj3" class="dropdown-content"  on-iron-select="MasterCategory">   
-            <template is="dom-repeat" items="{{masterarr}}" as="view">
-              <paper-item value="{{view.subject_type}}">{{view.subject_type}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </span>
-     <span class="inputelements"> 
-        <paper-dropdown-menu label="Select Subject Name">
-          <paper-menu id="Gsubj2"  class="dropdown-content"  on-iron-select="GradetoSubjectName">   
-            <template is="dom-repeat" items="{{mastersubjectsarr}}" as="view">
-              <paper-item value="{{view.subject_id}}">{{view.subject_name}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </span>
-       <div>
-        <center>
-        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
-        <paper-button on-click="FnDelete" style="background-color:#384485;color:white;" id="Delid">Delete</paper-button>
-       </center>
-       </div>
-    </center>      
+      <div></div>
+
+       </span>      
    <master-ui-service id="uiservice"></master-ui-service>
   </template>
   <script>
   (function() {
     'use strict';
-
+   var setallarr=[];
     Polymer({
       is: 'master-student-mapping-card',
-
+        
         MasterCategory:function(e){
             this.subjecttypeid=e.target.selectedItem.value;
             this.$.uiservice.mastersubjectSelection(this.subjecttypeid);
-            alert(this.subjecttypeid);
+          //  alert(this.subjecttypeid);
         },
         GradetoSubjectName:function(e){
            this.mastergradeid=e.target.selectedItem.value;
            this.subjecttypevalue=e.target.selectedItem.textContent.trim();
-           alert(this.mastergradeid+ this.subjecttypevalue);
-           // alert(this.mastergradeid);
+           //alert(this.mastergradeid+ this.subjecttypevalue);
+         //alert(this.mastergradeid);
         },
-        FnSubmit:function(){
-          alert(this.subjecttypeid+this.mastergradeid+this.subjecttypevalue);
-           }
+       gradecolapse1:function(e){
+         this.$.collapse1id.toggle();
+        },
+          gradecolapse2:function(e){
+         this.$.collapse2id.toggle();
+        },
+       gradecolapse3:function(e){
+         this.$.collapse3id.toggle();
+        },
+       gradecolapse4:function(e){
+         this.$.collapse4id.toggle();
+        },
+      FngetGradedetails:function(arr){
+        setallarr=arr;
+       },
+       fnsubmit:function(){ 
+        alert("hi");
+    /*       alert(this.subjecttypeid+this.mastergradeid+this.subjecttypevalue);
+           this.$.uiservice.FnmasterSubjectTomapping(this.subjecttypeid+this.mastergradeid+this.subjecttypevalue);
+    */ 
+      alert(JSON.stringify(setallarr));
+     this.$.uiservice.FnmasterSubjectTomapping(setallarr)   
+  }
+
+
     });
   })();
   </script>

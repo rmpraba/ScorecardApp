@@ -1,0 +1,57 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="section-mapping-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+    <paper-input id="{{passgrdeid}}" hidden>{{passgrdename}}</paper-input>
+    <paper-input on-change="Fnstoresectionmapping" value="{{getsectionvalus}}"></paper-input>
+
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+ //var getsecarr=[];
+ var biggetarr=[];
+    Polymer({
+      is: 'section-mapping-item-card',
+
+     Fnstoresectionmapping:function(e){
+     //  alert("fdfgfddfdvkjnp");      
+       alert(this.passgrdeid+this.passgrdename);
+       var fnuppercase=this.getsectionvalus.toUpperCase();
+       var Fnsectionid="ClS-0"+fnuppercase.charAt(0);
+       alert(fnuppercase+Fnsectionid+this.getsectionvalus+this.passgrdeid+this.passgrdename);
+       //alert(JSON.stringify(getsecarr));
+
+       var obj={"grade_id":"","grade_name":"","caps_value":"","section_id":"","section_values":""};
+        obj.grade_id=this.passgrdeid;
+        obj.grade_name=this.passgrdename;
+        obj.caps_value=fnuppercase;
+        obj.section_id=Fnsectionid;
+        obj.section_values=this.getsectionvalus;
+        biggetarr.push(obj);
+        alert(JSON.stringify(biggetarr));
+      document.querySelector('master-student-mapping-card').FngetGradedetails(biggetarr);
+},
+
+
+    });
+  })();
+  </script>
+</dom-module>

@@ -89,6 +89,9 @@
       <div class="card" hidden$="{{createsubject}}">
        <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px"></paper-button>
      </div>
+      <div class="card" hidden$="{{createschool}}">
+       <paper-button on-click="FnCreateschool" no ink><img src="../../images/school.jpg" height="180px" width="180px"></paper-button>
+     </div><!-- school-creation-card -->
     
     <!-- </center>   -->
     </div>
@@ -120,6 +123,8 @@
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
     <teacher-observation_service id="observerservice"></teacher-observation_service>
+    <master-ui-service id="uiservice"></master-ui-service>
+
   </template>
   <script>
   (function() {
@@ -145,6 +150,7 @@
         this.createemployee=true;
         this.createsubject=true;
         this.teach_obser=true;
+        this.createschool=true;
 
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
@@ -258,9 +264,10 @@
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='superadmin'){
           this.createrole=false;
           this.createemployee=false;  
-          this.teach_obser=false;  
           this.createcategory=false;
-          this.createschooltype=false;      
+          this.createschooltype=false;
+          this.createschool=false;
+
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;
@@ -356,6 +363,14 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('schooltypecard','');
         document.querySelector('schooltype-card').ready();
+      },
+       FnCreateschool:function(e)
+      {        
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('school-creation-card','');
+       // document.querySelector('category-card').ready();
+       alert("hi");
+       this.$.uiservice.fnschoolidgrnerate();
       },
       FnCreateCategory:function(e)
       {        

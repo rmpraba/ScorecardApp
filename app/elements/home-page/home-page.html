@@ -145,8 +145,12 @@
           <schooltype-card></schooltype-card>
         </section>
         <section data-category="categorycard">
-          <category-card></category-card>
+          <category-card></category-card>school-creation-card
         </section>
+        <section data-category="school-creation-card">
+          <school-creation-card></school-creation-card>
+        </section>
+     
       </iron-pages>
     </div>
     
@@ -184,6 +188,13 @@
       document.querySelector('term-assesment-card').FnRefreshcard();
       document.querySelector('cc-eng-onetofour-card').FnRefresh();      
     }
+    if(localStorage.getItem("curr_sess_page")=="school-creation-card")
+    {
+      this.page="teacherhomecard";
+     /* document.querySelector('teacherhome-card').FnRefresh();
+      document.querySelector('term-assesment-card').FnRefreshcard();
+      document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+   */ }
     if(localStorage.getItem("curr_sess_page")=="cc-maths-onetofour-card")
     {
       this.page="teacherhomecard";

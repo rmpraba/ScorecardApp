@@ -136,6 +136,55 @@
         method="post"
         on-response="categorycreationResponse"
         debounce-duration="300"
+    >
+     <iron-ajax        
+        id="fnschoolcreationajax"
+        url="{{fnschoolcreationurl}}"
+        params="{{fnschoolcreationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="fnschoolcreationResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax        
+        id="FnSetschoolInfoajax"
+        url="{{FnSetschoolInfourl}}"
+        params="{{FnSetschoolInfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnSetschoolInfoResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax        
+        id="fnschoolidgrnerateajax"
+        url="{{fnschoolidgrnerateurl}}"
+        params="{{fnschoolidgrnerateparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="fnschoolidgrnerateResponse"
+        debounce-duration="300"
+    ><iron-ajax        
+        id="Fnsaveschoolinfoajax"
+        url="{{Fnsaveschoolinfourl}}"
+        params="{{Fnsaveschoolinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnsaveschoolinfoResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax        
+        id="Fndeleteinfoajax"
+        url="{{Fndeleteinfourl}}"
+        params="{{Fndeleteinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FndeleteinfoResponse"
+        debounce-duration="300"
     >  
   </template>
   <script>
@@ -150,7 +199,6 @@
         obj.roleid=roleid;
         obj.rolename=rolename;
         this.rolecreationparam=obj;
-
         this.$.rolecreationajax.generateRequest();
       },
       rolecreationResponse:function(e)
@@ -159,7 +207,86 @@
           this.FnFetchRole();
         }
       },
-      FnFetchRole:function()
+      FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation){
+       
+        this.FnSetschoolInfourl=sessionStorage.getItem("addrinfo")+"/FnSetschoolInfo-service";
+     var obj={"school":"","Telephone":"","MobileNumber":"","Emailid":"","Website":"","address":"","address1":"","address2":"","address3":"","schoolid1":"","affiliation":""};
+        obj.school=school;
+        obj.Telephone=Telephone;
+        obj.MobileNumber=MobileNumber;
+        obj.Emailid=Emailid;
+        obj.Website=Website;
+        obj.address=address;
+        obj.address1=address1;
+        obj.address2=address2;
+        obj.address3=address3;
+        obj.schoolid1=schoolid1;
+        obj.affiliation=affiliation;
+        this.FnSetschoolInfoparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.FnSetschoolInfoajax.generateRequest();
+      },
+      FnSetschoolInfoResponse(e){
+          var res=e.detail.response.returnval;
+          alert(JSON.stringify(res)); 
+          if(res=="Inserted!"){
+          this.fnschoolcreation();
+        }
+      },
+      Fnsaveschoolinfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation){
+       ;
+        this.Fnsaveschoolinfourl=sessionStorage.getItem("addrinfo")+"/Fnsaveschoolinfo-service";
+     var obj={"school":"","Telephone":"","MobileNumber":"","Emailid":"","Website":"","address":"","address1":"","address2":"","address3":"","schoolid1":"","affiliation":""};
+        obj.school=school;
+        obj.Telephone=Telephone;
+        obj.MobileNumber=MobileNumber;
+        obj.Emailid=Emailid;
+        obj.Website=Website;
+        obj.address=address;
+        obj.address1=address1;
+        obj.address2=address2;
+        obj.address3=address3;
+        obj.schoolid1=schoolid1;
+        obj.affiliation=affiliation;
+        this.Fnsaveschoolinfoparam=obj;
+       // alert(JSON.stringify(obj));
+        this.$.Fnsaveschoolinfoajax.generateRequest();
+      },
+       Fndeleteinfo:function(schoolid1){
+       
+        this.Fndeleteinfourl=sessionStorage.getItem("addrinfo")+"/Fndeleteinfo-service";
+        var obj={"schoolid1":""};
+        obj.schoolid1=schoolid1;
+       this.Fndeleteinfoparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.Fndeleteinfoajax.generateRequest();
+      },
+      FndeleteinfoResponse:function(e){
+           var res=e.detail.response.returnval;
+             //  alert(JSON.stringify(res));
+              if(res=="Deleted!"){
+          this.fnschoolcreation();
+        }
+      },
+    FnsaveschoolinfoResponse:function(e){
+ 
+      var res=e.detail.response.returnval;
+        //  alert(JSON.stringify(res)); 
+          if(res=="Updated!"){
+          this.fnschoolcreation();
+        }
+      },
+     fnschoolidgrnerate:function(){
+        this.fnschoolidgrnerateurl=sessionStorage.getItem("addrinfo")+"/fnschoolidgrnerate-service";
+         this.$.fnschoolidgrnerateajax.generateRequest();
+       },
+     fnschoolidgrnerateResponse:function(e){
+         var res=e.detail.response.returnval;
+          alert(JSON.stringify(res)); 
+            document.querySelector('school-creation-card').schoolid1=res[0].school_prefix+res[0].school_seq;
+           
+        },
+      FnFetchRole:function()   
       {        
         this.fetchroleurl=sessionStorage.getItem("addrinfo")+"/fetchrole-service";
         this.$.fetchroleajax.generateRequest();
@@ -196,6 +323,16 @@
         this.fetchschooltypenameurl=sessionStorage.getItem("addrinfo")+"/fetchschooltypename-service";
         this.$.fetchschooltypenameajax.generateRequest();
       },
+      fnschoolcreation:function(){
+        this.fnschoolcreationurl=sessionStorage.getItem("addrinfo")+"/fnschoolcreation-service";
+        this.$.fnschoolcreationajax.generateRequest();
+      },
+     fnschoolcreationResponse:function(e){
+          var res=e.detail.response.returnval;
+         //  alert(JSON.stringify(res));
+        document.querySelector('school-creation-card').schoolcreatarr=res;
+     },
+
       fetchschooltypenameResponse:function(e)
       {
         document.querySelector('schooltype-card').schoolarr=e.detail.response.returnval;              

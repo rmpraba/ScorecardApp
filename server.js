@@ -5260,7 +5260,7 @@ app.post('/fetchconsolidatedtermwise-service' ,  urlencodedParser,function (req,
     }
     else
       console.log(err);
-});
+});   
 });
 
 app.post('/fetchrole-service',  urlencodedParser,function (req,res)
@@ -5279,6 +5279,111 @@ app.post('/fetchrole-service',  urlencodedParser,function (req,res)
       res.status(200).json({'returnval': ''});
   });
 });
+app.post('/fnschoolidgrnerate-service',  urlencodedParser,function (req,res)
+{  
+  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+  var qur="SELECT * FROM sequence";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': ''});
+  });
+});
+app.post('/fnschoolcreation-service',  urlencodedParser,function (req,res)
+{  
+  // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
+  var qur="SELECT * FROM md_school";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': ''});
+  });
+});
+
+
+
+
+
+app.post('/FnSetschoolInfo-service' , urlencodedParser,function (req, res)
+{  
+    var response={ 
+      id:req.query.schoolid1,     
+      name:req.query.school,
+      mobile_no:req.query.MobileNumber,
+      telno:req.query.Telephone,
+      email_id:req.query.Emailid,
+      address:req.query.address,
+      address1:req.query.address1,
+      address2:req.query.address2,
+      address3:req.query.address3,
+      affiliation_no:req.query.affiliation,
+      website:req.query.Website
+    };   
+   
+        console.log(JSON.stringify(response));
+    var qur="SELECT * FROM  md_school WHERE id='"+req.query.schoolid1+"'";
+   // var qurr="SELECT subject_type FROM md_language_type_master where subject_id='"+req.query.seclang11+"'";
+var qur1="update md_school set name='"+req.query.school+"',address='"+req.query.address+"',address1='"+req.query.address1+"',address2='"+req.query.address2+"',address3='"+req.query.address3+"',telno='"+req.query.Telephone+"',mobile_no='"+req.query.MobileNumber+"',affiliation_no='"+req.query.affiliation+"',email_id='"+req.query.Emailid+"',website='"+req.query.website+"'where id='"+req.query.schoolid1+"'";
+
+  connection.query(qur,function(err, rows)
+    {
+     if(rows.length==0){
+      console.log(qur);
+     connection.query("INSERT INTO md_school SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+     
+    var tempseq1=parseInt((req.query.schoolid1).substring(4))+1;
+      connection.query("UPDATE sequence SET school_seq='"+tempseq1+"'", function (err,result)
+      {
+        if(result.affectedRows>0)
+         res.status(200).json({'returnval': 'Inserted!'});
+      });
+
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       console.log(qur1);
+        connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+     
+ });
+});
+
+
+
+
+
+
+
+
+
 
 app.post('/fetchschooltypename-service',  urlencodedParser,function (req,res)
 { 
@@ -5371,6 +5476,27 @@ console.log(qur);
     
 });
 
+
+app.post('/Fndeleteinfo-service' ,  urlencodedParser,function (req, res)
+{  
+   
+var qur="DELETE FROM  md_school where  id='"+req.query.schoolid1+"'";
+console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Deleted!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Deleted!'});
+    }
+    });
+    
+});
 app.post('/deleteschooltypename-service' ,  urlencodedParser,function (req, res)
 {  
    
@@ -5435,6 +5561,28 @@ console.log(qur);
     
 });
 
+  
+
+app.post('/Fnsaveschoolinfo-service' ,  urlencodedParser,function (req, res)
+{  
+   
+var qur="UPDATE  md_school SET name='"+req.query.school+"',telno='"+req.query.telno+"',mobile_no='"+req.query.MobileNumber+"',email_id='"+req.query.Emailid+"',website='"+req.query.Website+"',affiliation_no='"+req.query.affiliation+"',address='"+req.query.address+"',address1='"+req.query.address1+"',address2='"+req.query.address2+"',address3='"+req.query.address3+"' where  id='"+req.query.schoolid1+"'";
+console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Updated!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Updated!'});
+    }
+    });
+    
+});
 
 app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
 {  

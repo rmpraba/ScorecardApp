@@ -4,10 +4,12 @@
 <dom-module id="schooltype-display-card">
   <template>
     <style>
-      :host {
+      :host 
+      {
         display: block;
       }
-      .card{
+      .card
+      {
         @apply(--layout-horizontal);
         border-bottom: 1px solid #dedede;
       }
@@ -22,9 +24,9 @@
       <td width="7%" hidden$="{{hideschooltypenameinput}}"><paper-icon-button icon='save' on-click='FnSave'>       
       </paper-icon-button></td>
       <td width="7%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
-    </table></tr>
-    <master-ui-service id="sclservice"></master-ui-service>
-  </template>
+      </table></tr>
+      <master-ui-service id="sclservice"></master-ui-service>
+      </template>
   <script>
   (function() {
     'use strict';
@@ -55,12 +57,13 @@
         this.hideschooltypenameinput=false;
         this.hideschooltypenameitem=true;
       },
-      FnSave:function(){
+      FnSave:function()
+      {
         //alert("test");
-        this.$.sclservice.FnUpdateSchooltypename(this.schoolname,this.schoolid,this.schooltypeid,this.schooltypename);
+        this.$.sclservice.FnUpdateSchooltypename(this.schoolname,this.schoolid,this.schooltypename,this.schooltypeid);
         this.hideschooltypenameinput=true;
         this.hideschooltypenameitem=false;
-      },
+      }
       
     });
   })();

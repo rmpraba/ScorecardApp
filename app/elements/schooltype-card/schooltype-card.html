@@ -1,3 +1,4 @@
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
@@ -7,11 +8,12 @@
 <dom-module id="schooltype-card">
   <template>
     <style>
-      :host{
+      :host
+      {
          margin-left: 37%;
-        display: block;
+         display: block;
          @apply(--layout-center);
-        width: 30%;
+         width: 30%;
       }
       
       .schooltypecard
@@ -47,9 +49,9 @@
     <paper-button on-click="Fncreate">Create </paper-button>
     </div>
 
-    <div class="school">
-    <template is="dom-repeat" items="{{schoolarr}}" as="s">
-    <schooltype-display-card schoolname="{{s.school_name}}" schoolid="{{s.school_id}}" schooltypename="{{s.school_type_name}}" schooltypeid="{{s.school_type_id}}" hideschooltypenameinput="true" hideschooltypenameitem="false">      
+   <div class="school">
+   <template is="dom-repeat" items="{{schoolarr}}" as="s">
+   <schooltype-display-card schoolname="{{s.school_name}}" schoolid="{{s.school_id}}" schooltypename="{{s.school_type_name}}" schooltypeid="{{s.school_type_id}}" hideschooltypenameinput="true" hideschooltypenameitem="false">      
     </schooltype-display-card>
     </div>
     </template>
@@ -57,61 +59,59 @@
      <paper-dialog id="schooldialog">
      <div class="card">                                                 
        <paper-input value="{{schoolname}}" label="School Name"></paper-input>   
-       <paper-input value="{{schoolid}}" label="School id"></paper-input>  
-       <paper-dropdown-menu id="schooltypename" label="Select Schooltype Name" disabled="{{read}}" required>
-            <paper-menu id="scltypename" class="dropdown-content"  on-iron-select="FnSelectSchooltypename"  
-            attr-for-selected="value" required> 
-       <paper-item value="Pre primary">Pre Primary</paper-item>
-       <paper-item value="Primary">Primary</paper-item>
-       <paper-item value="Secondary">Secondary</paper-item>
-       <paper-item value="Higher Secondary">Higher Secondary</paper-item>                
-       </paper-listbox>       
-    </paper-dropdown-menu>    
+       <paper-input value="{{schoolid}}" label="School id"></paper-input>
+       <paper-input value="{{schooltypename}}" label="Schooltype name"></paper-input>           
     </div>
     <div class="button">
     <paper-button on-click="FnSubmit">Submit </paper-button>
     </div>
     </paper-dialog>
-    <master-ui-service id="uiservice"></master-ui-service>
+    <master-ui-service id="service"></master-ui-service>
   </template>
   <script>
-  (function() {
+  (function() 
+  {
     'use strict';
-    var schooltypes="";
+    //var schooltypes="";
     Polymer({
       is: 'schooltype-card',
       ready:function()
       {
-       //alert("test");
-       this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
-       this.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-       this.$.uiservice.FnFetchSchooltypename();
-       this.$.hidenewschooltypecard=true;
-      },
+        //alert("test");
+        this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+        this.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        this.$.service.FnFetchSchooltypename();
+        this.$.hidenewschooltypecard=true;
+      }, 
+     
        FnRefresh:function()
       {
-         document.querySelector('#scltypename').selected=-1;
+         this.schooltypename="";
          this.schoolname="";
          this.schoolid="";    
        },
-      FnSelectSchooltypename:function(e)
+      /*FnSelectSchooltypename:function(e)
       {
         //alert("test");       
         schooltypes = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_school_type_name",schooltypes);               
-      },     
+      },*/  
+     
       FnSubmit:function()
       {
 
-        if(schooltypes==null || schooltypes=="")
+        if(this.schooltypename==null || this.schooltypename=="")
         {          
           alert("Please enter schooltypename befor submit");
         }
         else
-        {
-        //alert("test");
-        var schooltypeid = schooltypes.toLowerCase();
-        this.$.uiservice.FnSetSchooltypeInfo(this.schoolname,this.schoolid,schooltypes,schooltypeid);                    
+        { 
+        var schooltypeid = (this.schooltypename).toLowerCase();
+        //alert(this.schoolname);
+        //alert(this.schoolid);
+        //alert(this.schooltypename);
+        //alert(schooltypeid);
+        this.$.service.FnSetSchooltypeInfo(this.schoolname,this.schoolid,this.schooltypename,schooltypeid);        
         this.$.schooldialog.toggle();
         }
       },

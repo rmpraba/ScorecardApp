@@ -174,7 +174,8 @@
   {
    window.location.href="../index.html";   
   },
-  FnHome:function(){    
+  FnHome:function()
+  {    
      // alert(localStorage.getItem("curr_sess_page"));
 
     if(localStorage.getItem("curr_sess_page")=="cc-eng-onetofour-card")
@@ -465,6 +466,34 @@
     {      
        this.page="teacherhomecard";
        document.querySelector('teacherhome-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       // document.querySelector('language-enrichment-card').FnRefresh();
+    }
+    if(localStorage.getItem("curr_sess_page")=="rolecard")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('role-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       
+    }
+    if(localStorage.getItem("curr_sess_page")=="schooltypecard")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('schooltype-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       // document.querySelector('language-enrichment-card').FnRefresh();
+    }
+    if(localStorage.getItem("curr_sess_page")=="categorycard")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('category-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       // document.querySelector('language-enrichment-card').FnRefresh();
+    }
+    if(localStorage.getItem("curr_sess_page")=="subjectcard")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('subject-card').FnRefresh();
        document.querySelector('beginner-assesment-card').FnRefresh();
        // document.querySelector('language-enrichment-card').FnRefresh();
     }

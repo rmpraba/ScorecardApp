@@ -1,4 +1,5 @@
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="master-ui-service">
@@ -14,6 +15,17 @@
         on-response="subjectcreationResponse"
         debounce-duration="300"
     >
+     <iron-ajax        
+        id="rolecreationajax"
+        url="{{rolecreationurl}}"
+        params="{{rolecreationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="rolecreationResponse"
+        debounce-duration="300"
+    >
+   
     <iron-ajax        
         id="fetchroleajax"
         url="{{fetchroleurl}}"
@@ -88,13 +100,23 @@
         debounce-duration="300"
     >
     <iron-ajax        
-        id="rolecreationajax"
-        url="{{rolecreationurl}}"
-        params="{{rolecreationparam}}"
+        id="deletecategorynameajax"
+        url="{{deletecategorynameurl}}"
+        params="{{deletecategorynameparam}}"
         handle-as="json"
         content-type="application/json"
         method="post"
-        on-response="rolecreationResponse"
+        on-response="deletecategorynameResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax        
+        id="updatecategorynameajax"
+        url="{{updatecategorynameurl}}"
+        params="{{updatecategorynameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="updatecategorynameResponse"
         debounce-duration="300"
     >
      <iron-ajax        
@@ -137,6 +159,56 @@
         on-response="categorycreationResponse"
         debounce-duration="300"
     >  
+    <iron-ajax        
+        id="fetchsubjectseqajax"
+        url="{{fetchsubjectsequrl}}"
+        params="{{fetchsubjectseqparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="fetchsubjectseqResponse"
+        debounce-duration="300"
+    >
+     <iron-ajax                               
+        id="fetchsubjectnameajax"
+        url="{{fetchsubjectcnameurl}}"
+        params="{{fetchsubjectnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="fetchsubjectnameResponse"
+        debounce-duration="300"
+    >
+     <iron-ajax        
+        id="deletesubjectnameajax"
+        url="{{deletesubjectnameurl}}"
+        params="{{deletesubjectnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="deletesubjectnameResponse"
+        debounce-duration="300"
+    >
+    <iron-ajax        
+        id="updatesubjectnameajax"
+        url="{{updatesubjectnameurl}}"
+        params="{{updatesubjectnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="updatesubjectnameResponse"
+        debounce-duration="300"
+    >
+     <iron-ajax        
+        id="fetchmastercategorynameajax"
+        url="{{fetchmastercategorynameurl}}"
+        params="{{fetchmastercategorynameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="fetchmastercategorynameResponse"
+        debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -144,18 +216,19 @@
 
     Polymer({
       is: 'master-ui-service',
-       FnSetRoleInfo:function(roleid,rolename){
+       FnSetRoleInfo:function(rolename,roleid)
+       {
         this.rolecreationurl=sessionStorage.getItem("addrinfo")+"/rolecreation-service";
-        var obj={"roleid":"","rolename":""};
+        var obj={"rolename":"","roleid":""};
         obj.roleid=roleid;
         obj.rolename=rolename;
         this.rolecreationparam=obj;
-
         this.$.rolecreationajax.generateRequest();
       },
       rolecreationResponse:function(e)
       {
-        if(e.detail.response.returnval=="Inserted!"){
+        if(e.detail.response.returnval=="Inserted!")
+        {
           this.FnFetchRole();
         }
       },
@@ -164,30 +237,36 @@
         this.fetchroleurl=sessionStorage.getItem("addrinfo")+"/fetchrole-service";
         this.$.fetchroleajax.generateRequest();
       },
-      fetchroleResponse:function(e){
+      fetchroleResponse:function(e)
+      {
         document.querySelector('role-card').rolearr=e.detail.response.returnval;
       },
-      FnDeleteRole:function(roleid){
+      FnDeleteRole:function(roleid)
+      {
         var obj={"roleid":""};
         obj.roleid=roleid;
         this.deleteroleurl=sessionStorage.getItem("addrinfo")+"/deleterole-service";
         this.deleteroleparam=obj;
         this.$.deleteroleajax.generateRequest();
       },
-      deleteroleResponse:function(e){
+      deleteroleResponse:function(e)
+      {
         if(e.detail.response.returnval=="Deleted!")
-          this.FnFetchRole();
+        this.FnFetchRole();
       },
-      FnUpdateRole:function(roleid,rolename){
-        var obj={"roleid":"","rolename":""};
+      FnUpdateRole:function(rolename,roleid)
+      {
+        var obj={"rolename":"","rolenid":""};
         obj.roleid=roleid;
         obj.rolename=rolename;
         this.updateroleurl=sessionStorage.getItem("addrinfo")+"/updaterole-service";
         this.updateroleparam=obj;
         this.$.updateroleajax.generateRequest();
       },
-      updateroleResponse:function(e){
-        if(e.detail.response.returnval=="Updated!"){
+      updateroleResponse:function(e)
+      {
+        if(e.detail.response.returnval=="Updated!")
+        {
           this.FnFetchRole();
         }
       },
@@ -213,9 +292,9 @@
         if(e.detail.response.returnval=="Deleted!")
           this.FnFetchSchooltypename();
       },
-      FnUpdateSchooltypename:function(schoolname,schoolid,schooltypeid,schooltypename)
+      FnUpdateSchooltypename:function(schoolname,schoolid,schooltypename,schooltypeid)
       {
-        var obj={"schoolname":"","schoolid":"","schooltypeid":"","schooltypename":""};
+        var obj={"schoolname":"","schoolid":"","schooltypename":"","schooltypeid":""};
         obj.schoolname=schoolname;
         obj.schoolid=schoolid;
         obj.schooltypeid=schooltypeid;
@@ -245,8 +324,9 @@
       },
       schooltypecreationResponse:function(e)
       {
-        alert(e.detail.response.returnval);
-        if(e.detail.response.returnval=="Inserted!"){
+        //alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=="Inserted!")
+        {
           this.FnFetchSchooltypename();
         }
       },
@@ -266,23 +346,40 @@
         this.$.categorycreationajax.generateRequest();
       },
       
+      
       categorycreationResponse:function(e)
       {
-        alert(e.detail.response.returnval);
-        if(e.detail.response.returnval=="Inserted!"){
+        //alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=="Inserted!")
+        {
           this.FnFetchCategoryname();
         }
         
       },
+     
+      FnFetchCategorySeq:function()
+      {        
+        this.fetchcategorysequrl=sessionStorage.getItem("addrinfo")+"/fetchcategoryseq-service";
+        this.$.fetchcategoryseqajax.generateRequest();
+      },
+      fetchcategoryseqResponse:function(e)
+      {
+       var arr= e.detail.response.returnval;
+       //alert(JSON.stringify(arr));       
+       document.querySelector('category-card').categorytype="category"+arr[0].category_seq;
+       document.querySelector('category-card').temphidden=arr[0].category_seq;
+
+      },
 
       FnFetchCategoryname:function()
       {        
-        this.fetchcategorynameurl=sessionStorage.getItem("addrinfo")+"/fetchcategoryname-service";
+        this.fetchcategorynameurl=sessionStorage.getItem("addrinfo")+"/fetchmastercategory-service";
         this.$.fetchcategorynameajax.generateRequest();
       },
       fetchcategorynameResponse:function(e)
       {
-        document.querySelector('category-card').catarr=e.detail.response.returnval;       
+        //alert(JSON.stringify(e.detail.response.returnval));
+        document.querySelector('category-card').catarr=e.detail.response.returnval;          
       },      
       FnDeleteCategoryname:function(categoryid)
       {
@@ -317,40 +414,91 @@
           this.FnFetchCategoryname();
         }
       },     
-      FnSetSubjectInfo:function(subjectid,subjectname,subjectcategory){
+      FnSetSubjectInfo:function(subjectid,subjectname,category)
+      {
         this.subjectcreationurl=sessionStorage.getItem("addrinfo")+"/subjectcreation-service";
-        var obj={"subjectid":"","subjectname":"","subjectcategory":""};
+        var obj={"subjectid":"","subjectname":"","category":""};
         obj.subjectid=subjectid;
         obj.subjectname=subjectname;
-        obj.subjectcategory=subjectcategory;
+        obj.category=category;
         this.subjectcreationparam=obj; 
         this.$.subjectcreationajax.generateRequest();
       },
-      subjectcreationResponse:function(e){
-        alert(e.detail.response.returnval);
-      },
       category1:function()
       {
-           this.category1url=sessionStorage.getItem("addrinfo")+"/fetchmastercategoryname-service";
+           this.category1url=sessionStorage.getItem("addrinfo")+"/fetchmastersubjectname-service";
            this.$.category1ajax.generateRequest();
       },
       category1Response:function(e)
       {
-          document.querySelector('category-card').categoryarr=e.detail.response.returnval;
-
+          //alert(JSON.stringify(e.detail.response.returnval));
+          document.querySelector('subject-card').categoryarr=e.detail.response.returnval;          
+          document.querySelector('category-card').catnamearr=e.detail.response.returnval;          
       },
-      FnFetchCategorySeq:function()
+      subjectcreationResponse:function(e)
+      {
+        //alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=="Inserted!")
+        this.FnFetchSubjectname();
+      },
+
+      FnFetchSubjectSeq:function()
       {        
-        this.fetchcategorysequrl=sessionStorage.getItem("addrinfo")+"/fetchcategoryseq-service";
-        this.$.fetchcategoryseqajax.generateRequest();
+        this.fetchsubjectsequrl=sessionStorage.getItem("addrinfo")+"/fetchsubjectseq-service";
+        this.$.fetchsubjectseqajax.generateRequest();
       },
-      fetchcategoryseqResponse:function(e){
+      fetchsubjectseqResponse:function(e)
+      {
        var arr= e.detail.response.returnval;
-       //alert(JSON.stringify(arr));       
-       document.querySelector('category-card').categorytype="category"+arr[0].category_seq;
-       document.querySelector('category-card').temphidden=arr[0].category_seq;
-
+      // alert(JSON.stringify(arr));
+       document.querySelector('subject-card').subjectid="s"+arr[0].subject_seq;
+       
       },
+
+       FnFetchSubjectname:function()
+      {        
+        this.fetchsubjectcnameurl=sessionStorage.getItem("addrinfo")+"/fetchmastersubject-service";
+        this.$.fetchsubjectnameajax.generateRequest();
+      },
+      fetchsubjectnameResponse:function(e)
+      {
+        //alert(JSON.stringify(e.detail.response.returnval));
+        document.querySelector('subject-card').subarr=e.detail.response.returnval;       
+      }, 
+      FnDeleteSubjectname:function(subjectid)
+      {
+        var obj={"subjectid":""};
+        obj.subjectid=subjectid;
+        //alert("test");
+        this.deletesubjectnameurl=sessionStorage.getItem("addrinfo")+"/deletesubjectname-service";
+        this.deletesubjectnameparam=obj;
+        this.$.deletesubjectnameajax.generateRequest();
+      },
+      deletesubjectnameResponse:function(e)
+      {
+        if(e.detail.response.returnval=="Deleted!")
+          this.FnFetchSubjectname();
+      },
+
+      FnUpdateSubjectname:function(subjectid,subjectname,subjectcategory)
+      {
+        var obj={"subjectid":"","subjectname":"","subjectcategory":""};
+        obj.subjectid=subjectid;
+        obj.subjectname=subjectname;
+        obj.subjectcategory=subjectcategory;
+        this.updatesubjectnameurl=sessionStorage.getItem("addrinfo")+"/updatesubjectname-service";
+        this.updatesubjectnameparam=obj;
+        this.$.updatesubjectnameajax.generateRequest();
+      },
+      
+      updatesubjectnameResponse:function(e)
+      {
+        if(e.detail.response.returnval=="Updated!")
+        {
+          this.FnFetchSubjectname();
+        }
+      }      
+      
 
     });
   })();

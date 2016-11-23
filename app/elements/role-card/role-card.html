@@ -7,7 +7,7 @@
     <style>
       :host{
          margin-left: 10%;
-        display: block;
+         display: block;
          @apply(--layout-left);
         /*width: 50%;*/
       }
@@ -34,27 +34,23 @@
       margin-left: 40%;
       margin-top: 4%;
       }
-      .role{
+      .role
+      {
         width: 50%;
-      }
-      paper-button{
-        margin-left: 50%;
-        margin-top: 5%;
-      }
-
+      }  
     </style>
     
-
-    <paper-input label="Search here.........." prefix>
-      <paper-icon-button prefix icon="search" on-click="FnSearch"></paper-icon-button>
+    <paper-input label="Search here.........." suffix>
+      <paper-icon-button suffix icon="search" on-click="FnSearch"></paper-icon-button>
     </paper-input>
     <div class="rbutton">
     <paper-button on-click="Fncreate">Create</paper-button>
-     </div>
+    </div>
 
     <div class="role">
     <template is="dom-repeat" items="{{rolearr}}" as="r">
-    <role-display-card rolename="{{r.role_name}}" roleid="{{r.id}}" hiderolenameinput="true" hiderolenameitem="false"></role-display-card>
+    <role-display-card rolename="{{r.role_name}}" roleid="{{r.id}}" hiderolenameinput="true" hiderolenameitem="false">
+    </role-display-card>
     </div>
     </template>
 
@@ -62,7 +58,7 @@
     <div class="card">
     <paper-input value="{{rolename}}" label="Role Name"></paper-input>
     </div>
-     <div class="button">
+    <div class="button">
     <paper-button on-click="FnSubmit">Submit </paper-button>
     </div>
     </paper-dialog>
@@ -77,6 +73,7 @@
       is: 'role-card',
       ready:function()
       {
+        //alert("test");
         this.$.uiservice.FnFetchRole();
         this.$.hidenewrolecard=true;
       },  
@@ -85,9 +82,7 @@
        this.rolename="";
          
       },  
-      FnSearch:function(){
-        
-      },
+      
       FnSubmit:function()
       {                      
          if(this.rolename==null||this.rolename=="")
@@ -102,8 +97,9 @@
          this.$.roledialog.toggle();
        }    
       },     
-     Fncreate:function(){
-      this.$.roledialog.toggle();
+      Fncreate:function()
+      {
+         this.$.roledialog.toggle();
      }
     });
   })();

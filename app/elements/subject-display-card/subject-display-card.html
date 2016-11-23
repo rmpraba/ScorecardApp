@@ -1,0 +1,72 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="subject-display-card">
+  <template>
+    <style>
+      :host 
+      {
+        display: block;
+      }
+      .card
+      {
+        @apply(--layout-horizontal);
+        border-bottom: 1px solid #dedede;
+      }
+    </style>
+
+    <table class="card" id="card{{subjectid}}"> 
+      <tr><td hidden>{{subjectid}}</td>  
+      <td width="40%" hidden$="{{hidesubjectitem}}">{{subjectname}}</td>
+      <td width="40%" hidden$="{{hidesubjectinput}}"><paper-input value="{{subjectname}}"></paper-input></td>
+      <td width="7%" hidden$="{{hidesubjectitem}}"><paper-icon-button icon='create' on-click='FnEdit'>       
+      </paper-icon-button></td>
+      <td width="7%" hidden$="{{hidesubjectinput}}"><paper-icon-button icon='save' on-click='FnSave'>       
+      </paper-icon-button></td>
+      <td width="7%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+    </table></tr>
+    <master-ui-service id="subservice"></master-ui-service>
+  </template>
+  <script>
+  (function() 
+  {
+    'use strict';
+
+    Polymer({
+      is: 'subject-display-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'subject-display-card',
+          notify: true
+        }
+      },
+      ready:function()
+      {
+        //alert("test");   
+        this.hidesubjectinput=true;     
+        this.hidesubjectitem=false;
+      },
+      FnDelete:function()
+      {
+        //alert("test");
+        this.$.subservice.FnDeleteSubjectname(this.subjectid);
+      },
+      FnEdit:function()
+      {
+        //alert("test");
+        this.hidesubjectinput=false;
+        this.hidesubjectitem=true;
+      },
+      FnSave:function()
+      {
+        //alert("test");
+        this.$.subservice.FnUpdateSubjectname(this.subjectid,this.subjectname,this.subjectcategory);
+        this.hidesubjectinput=true;
+        this.hidesubjectitem=false;
+      }      
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,3 +1,4 @@
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
 <link rel="import" href="..\..\bower_components/neon-animation/animations/scale-up-animation.html">
@@ -11,7 +12,6 @@
 <link rel="import" href="../beginner-assesment-service/beginner-assesment-service.html">
 <link rel="import" href="../term-assesment-service/term-assesment-service.html">
 <link rel="import" href="../scorecard-service/scorecard-service.html">
-
 
 <dom-module id="teacherhome-card">
   <template>
@@ -76,7 +76,7 @@
      </div>
      <div class="card" hidden$="{{createrole}}">
        <paper-button on-click="FnCreateRole" no ink><img src="../../images/role.png" height="180px" width="180px"></paper-button>
-    </div>
+     </div>
 
      <div class="card" hidden$="{{createschooltype}}">
       <paper-button on-click="FnCreateSchooltype" no ink><img src="../../images/schooltype.jpg" height="180px" width="180px"></paper-button>
@@ -120,7 +120,6 @@
           </paper-dropdown-menu>
       </paper-dialog>
     </div>
-   
     </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
@@ -267,12 +266,17 @@
       FnHideView:function(){ 
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='superadmin'){
           this.createrole=false;
+
+          this.createemployee=true;  
+          this.teach_obser=true;  
+          this.createcategory=false;
+          this.createschooltype=false;
+          this.createsubject=false;      
           this.createemployee=false;  
           this.createcategory=false;
           this.createschooltype=false;
           this.createschool=false;
           this.subjecttostudent=false;
-
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;
@@ -348,20 +352,24 @@
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle(); 
       },
-      FnEditInfo:function(){
+      FnEditInfo:function()
+      {
         localStorage.setItem('curr_sess_loggedassesmenttype','Editinfo');
         // this.$.scorecardservice.callFetchstudentnameService();
         this.$.scorecardservice.callGradeService();
         this.$.cdialog.toggle(); 
       },
-      FnCreateRole:function(e){
+      FnCreateRole:function(e)
+      {
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('rolecard','');
+        document.querySelector('role-card').ready();
       },
       FnCreatesubject:function(e)
       {
         document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('subjectcard','');    
+        document.querySelector('home-page').setPage('subjectcard','');  
+        document.querySelector('subject-card').ready();  
       },
        FnCreateSchooltype:function(e)
       {
@@ -393,7 +401,7 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('categorycard','');
         document.querySelector('category-card').ready();
-      },
+      }
     });
   })();
   </script>

@@ -2,51 +2,130 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
 
 <dom-module id="subject-card">
   <template>
     <style>
-      :host 
+      :host
       {
+         margin-left: 10%;
         display: block;
+         @apply(--layout-center);
+        /*width: 40%;*/
       }
-      .subjectcard
+      .card
       {
-        width: 30%;
-        margin-left: 35%;
-      } 
-      .button paper-button
+         @apply(--layout-center);
+        width: 45%;
+        margin-left: 10%;
+      }
+      .sbbutton paper-button
       {
-       background-color: #363636;
+      background-color: #363636;
       color: #ffffff;
       width: 10%;
       margin-left: 40%;
+      margin-top: 4%;
+      }
+
+      .button paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;
+      width: 10%;
+      margin-left: 40%;
+      margin-top: 6%;
+      }
+      .subject
+      {
+        width: 50%;
       }
 
     </style>
-    
-    <div class="subjectcard">
-    <paper-input value="{{subjectid}}" label="Subject Id"></paper-input>
+
+    <paper-input label="Search here.........." suffix>
+      <paper-icon-button suffix icon="search" on-click="FnSearch"></paper-icon-button>
+    </paper-input>
+    <div class="sbbutton">
+    <paper-button on-click="Fncreate">Create </paper-button>
+    </div>
+
+    <div class="subject">
+    <template is="dom-repeat" items="{{subarr}}" as="sb">
+    <subject-display-card subjectid="{{sb.subject_id}}" subjectname="{{sb.subject_name}}" subjectcategory="{{sb.subject_category}}" hidesubjectinput="true" hidesubjectitem="false"></subject-display-card>
+    </div>
+    </template>
+
+    <paper-dialog id="subjectdialog">
+    <div class="card">
+    <paper-input readonly value="{{subjectid}}" label="Subject Id"></paper-input>
     <paper-input value="{{subjectname}}" label="Subject Name"></paper-input>
-    <paper-input value="{{subjectcategory}}" label="Subject category"></paper-input>
+    
+     <paper-dropdown-menu id="subjectcategory" label="Select Category" disabled="{{read}}" required style="width:100%;">
+            <paper-menu id="category" class="dropdown-content"  on-iron-select="FnSelectcategory"  attr-for-selected="value" required>  
+
+      <template is="dom-repeat" items="{{categoryarr}}" as="view">
+      <paper-item value="{{view.subject_category_id}}">{{view.subject_category_name}}</paper-item>                          
+      </template>
+            </paper-menu>
+          </paper-dropdown-menu>
     </div>
     <div class="button">
     <paper-button on-click="FnSubmit">Submit </paper-button>
     </div>
+    </paper-dialog>
 
     <master-ui-service id="uiservice"></master-ui-service>
-    </template>
-
+     
+  </template>
   <script>
   (function() {
     'use strict';
-    Polymer({
+     var category;
+    Polymer
+    ({
       is: 'subject-card',
-      FnSubmit:function(){
-        this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,this.subjectcategory);
-      }
-     
+      ready:function()
+      {
+       // alert("hi");
+        this.$.uiservice.category1();   
+        this.$.uiservice.FnFetchSubjectSeq();
+        this.$.uiservice.FnFetchSubjectname();
+        this.$.hidenewssubjectcard=true;     
+      },
+      FnRefresh:function()
+      {
+       document.querySelector('#subjectcategory').selected=-1;
+       this.subjectname="";
+       this.subjectid="";                  
+      }, 
+
+      fetchmastercategorynameResponse:function(e)
+      {
+        var arr=e.detail.response.returnval;
+        //alert(JSON.stringify(arr));     
+      },
+
+       FnSubmit:function()
+      {
+       this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,category);
+       this.$.subjectdialog.toggle();
+      },
+      
+
+      FnSelectcategory:function(e)
+      {
+        category = e.target.selectedItem.value.trim();
+        //alert(category);
+      },
+       Fncreate:function()
+      {
+          this.$.subjectdialog.toggle();   
+      }  
+
     });
-  })();
+  })();  
   </script>
 </dom-module>

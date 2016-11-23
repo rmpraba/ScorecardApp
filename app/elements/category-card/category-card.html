@@ -8,16 +8,18 @@
 <dom-module id="category-card">
   <template>
     <style>
-      :host{
-         margin-left: 30%;
+      :host
+      {
+         margin-left: 10%;
         display: block;
          @apply(--layout-center);
-        width: 40%;
+        /*width: 40%;*/
       }
       .card
       {
          @apply(--layout-center);
-        width: 70%;
+        width: 60%;
+        margin-left: 10%;
       }
       .cnbutton paper-button
       {
@@ -36,6 +38,10 @@
       margin-left: 40%;
       margin-top: 6%;
       }
+      .category
+      {
+        width: 50%;
+      }  
     </style>
 
      <paper-input label="Search here.........." suffix>
@@ -45,7 +51,7 @@
     <paper-button on-click="Fncreate">Create </paper-button>
     </div>
 
-     <div class="category">
+    <div class="category">
     <template is="dom-repeat" items="{{catarr}}" as="ca">
     <category-display-card schoolname="{{ca.school_name}}" schoolid="{{ca.school_id}}" categoryname="{{ca.category_name}}" categoryid="{{ca.category_id}}"  categorytype="{{ca.category_type}}" hidecategoryinput="true" hidecategoryitem="false">  </category-display-card>
     </div>
@@ -60,18 +66,13 @@
 
     <paper-input readonly  hidden value="{{categorytype}}" label="Categorytype"></paper-input>
 
-    <paper-dropdown-menu id="categoryname" label="Select Category Name" disabled="{{read}}" required>
-       <paper-menu id="catname" class="dropdown-content"  on-iron-select="FnSelectCategoryname"  
-            attr-for-selected="value" required> 
-       <paper-item value="Scholastic">Scholastic</paper-item>
-       <paper-item value="Co-Scholastic">Co-Scholastic</paper-item>
-       <paper-item value="Co-Curricular">Co-Curricular</paper-item>
-       <paper-item value="General">General</paper-item>  
-       <paper-item value="Talent">Talent</paper-item>  
-       </paper-listbox> 
-       <template is="dom-repeat" items="{{categoryarr}}" as="c">
-      <paper-item value="{{c.category_type}}">{{c.category_name}}</paper-item>                          
-      </template>                        
+    <paper-dropdown-menu id="categoryname" label="Select Categoryname" disabled="{{read}}" required style="width:100%;">
+            <paper-menu id="category" class="dropdown-content"  on-iron-select="FnSelectcategoryname"  attr-for-selected="value" required>  
+
+      <template is="dom-repeat" items="{{catnamearr}}" as="view">
+      <paper-item value="{{view.subject_category_id}}">{{view.subject_category_name}}</paper-item>                          
+      </template>
+      </paper-menu>
     </paper-dropdown-menu>
     </div>
 
@@ -80,11 +81,12 @@
     </div>
     </paper-dialog>
     <master-ui-service id="uiservice"></master-ui-service>
-  </template>
-  <script>
-  (function() {
+    </template>
+    <script>
+    (function() {
     'use strict';
      var catnames;
+     var catid;
     Polymer({
       is: 'category-card',
 
@@ -100,27 +102,26 @@
       },
       FnRefresh:function()
       {
-         document.querySelector('#catname').selected=-1;
-         this.schoolname="";
-         //this.schoolid="";
-         this.categorytype="";
+        document.querySelector('#categoryname').selected=-1;
+        this.schoolname="";
       },
-      FnSelectCategoryname:function(e)
-      {
-        //alert("test");       
-        catnames = e.target.selectedItem.textContent.trim();
-        localStorage.setItem("curr_sess_school_type_name",catnames);               
-      },
-
+      
       fetchmastercategorynameResponse:function(e)
       {
         var arr=e.detail.response.returnval;
         //alert(JSON.stringify(arr));     
       },
 
-       FnSubmit:function()
+       FnSelectcategoryname:function(e)
       {
-        if(catnames==null || catnames=="")
+        catnames = (e.target.selectedItem.textContent).trim();
+        catid= e.target.selectedItem.value.trim();
+        alert(catnames);
+      },
+
+      FnSubmit:function()
+      {
+        if(catnames==null || this.catnames=="")
         {          
           alert("Please enter categoryname befor submit");
         }
@@ -132,17 +133,15 @@
         //alert(this.schoolid);
         //alert(catnames);
         //alert(categoryid);
-        this.$.uiservice.FnSetCategoryInfo(this.schoolname,this.schoolid,this.categorytype,catnames,categoryid,
-          this.temphidden);  
-        this.$.categorydialog.toggle();                   
-        
+        this.$.uiservice.FnSetCategoryInfo(this.schoolname,this.schoolid,this.categorytype,catnames,categoryid,this.temphidden);  
+        this.$.categorydialog.toggle();                          
         }
       },
       Fncreate:function()
-        {
+      {
           this.$.categorydialog.toggle();   
-      }  
-
+      },
+      
     });
   })();
   </script>

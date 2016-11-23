@@ -151,8 +151,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            <paper-dialog id="preprimary">
 
                   <template is="dom-repeat" items="{{preprimearr}}" as="view">
-                <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
-                                 </school-creation-mapping-item-card> 
+                <school-creation-mapping-item-card  gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                </school-creation-mapping-item-card> 
                  </template>
                     <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
                 
@@ -160,8 +160,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
            <paper-dialog id="primary" >
                <template is="dom-repeat" items="{{Primaryarr}}" as="view">
-                <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
-                                 </school-creation-mapping-item-card> 
+                <school-creation-mapping-item-card  gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                </school-creation-mapping-item-card> 
                  </template>
                         <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
                   
@@ -187,12 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-                        
-
-
-   
-
-    </div>
+          </div>
      <master-ui-service id="uiservice"></master-ui-service>
 
   </template>
@@ -206,8 +201,9 @@ var gradearrr=[];
  ready:function()
       {
         this.$.uiservice.fnschoolcreation();
-        //  this.$.hidenewrolecard=true;
-        this.FnRefresh();
+        //this.$.hidenewrolecard=true;
+      this.FnRefresh();
+///     this.Fnsetsecondry();
       },  
       FnRefresh:function()
       {
@@ -250,19 +246,20 @@ var gradearrr=[];
           this.$.highsecondry.open();
       }
       },
-         FnSetGrademapp:function(arr){
+       FnSetGrademapp:function(arr){
        gradearrr=arr;
 
       },
       FnSubmit:function()
       {    
-
+         //alert(JSON.stringify(gradearrr));
+           
            if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""||this.affiliation==""||this.address==""||this.address1==""||this.address2==""||this.address3==""||this.Emailid=="")
               {
                 this.$.School.validate();
                 this.$.Telephone.validate();
                 this.$.Mobile.validate();
-              //  this.$.Emailid.validate();
+                //this.$.Emailid.validate();
                 this.$.Website.validate();
                 this.$.affiliation.validate();
                 this.$.Village.validate();
@@ -274,14 +271,19 @@ var gradearrr=[];
              else{
           this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation);
           this.$.uiservice.FnSchoolToGrademapping(this.schoolcreationid,gradearrr);
-          this.FnRefresh();
+         
+
        }    
       },     
      Fncreate:function(){
       this.FnRefresh();
       this.$.roledialog.toggle();
       this.$.uiservice.fnschoolidgrnerate();  
-     }  
+      document.querySelector('school-creation-mapping-item-card').fnsetclears1();
+        document.querySelector('school-creation-mapping-item-card').fnsetclears2();
+    
+      }  
+
 
       });
   })();

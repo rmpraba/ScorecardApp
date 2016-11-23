@@ -5205,6 +5205,26 @@ console.log(qur);
     });
     
 });
+app.post('/Fndeleteinfo-service' ,  urlencodedParser,function (req, res)
+{  
+   
+var qur="DELETE FROM  md_school where  id='"+req.query.schoolid1+"'";
+console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Deleted!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Deleted!'});
+    }
+    });
+    
+});
 
 
 app.post('/updaterole-service' ,  urlencodedParser,function (req, res)

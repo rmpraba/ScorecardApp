@@ -35,7 +35,7 @@
         debounce-duration="300"
     >
     <iron-ajax        
-        id="updateroleajax"
+        id="updateroleajax"      
         url="{{updateroleurl}}"
         params="{{updateroleparam}}"
         handle-as="json"
@@ -175,8 +175,16 @@
         method="post"
         on-response="FnsaveschoolinfoResponse"
         debounce-duration="300"
-    >
-    <iron-ajax        
+    ><iron-ajax        
+        id="FnSchoolToGrademappingajax"
+        url="{{FnSchoolToGrademappingurl}}"
+        params="{{FnSchoolToGrademappingparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnSchoolToGrademappingResponse"
+        debounce-duration="300"
+        ><iron-ajax        
         id="Fndeleteinfoajax"
         url="{{Fndeleteinfourl}}"
         params="{{Fndeleteinfoparam}}"
@@ -185,7 +193,98 @@
         method="post"
         on-response="FndeleteinfoResponse"
         debounce-duration="300"
-    >  
+    ><iron-ajax        
+        id="fnsetgrademappingajax"
+        url="{{fnsetgrademappingurl}}"
+        params="{{fnsetgrademappingparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="fnsetgrademappingResponse"
+        debounce-duration="300"
+    ><iron-ajax        
+        id="fnschoolgradesetajax"
+        url="{{fnschoolgradeseturl}}"
+        params="{{fnschoolgradesetparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="fnschoolgradesetResponse"
+        debounce-duration="300"
+    ><iron-ajax        
+        id="FnSecondLangSubjectToStudentajax"
+        url="{{FnSecondLangSubjectToStudenturl}}"
+        params="{{FnSecondLangSubjectToStudentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnSecondLangSubjectToStudentResponse"
+        debounce-duration="300"
+        > <iron-ajax        
+        id="FnSecondLangSubjectToStudentsetsajax"
+        url="{{FnSecondLangSubjectToStudentsetsurl}}"
+        params="{{FnSecondLangSubjectToStudentsetsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnSecondLangSubjectToStudentsetsResponse"
+        debounce-duration="300"
+        ><iron-ajax        
+        id="FnThirdLangSubjectToStudentajax"
+        url="{{FnThirdLangSubjectToStudenturl}}"
+        params="{{FnThirdLangSubjectToStudentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnThirdLangSubjectToStudentResponse"
+        debounce-duration="300"
+        ><iron-ajax        
+        id="FnselecttoSectionajax"
+        url="{{FnselecttoSectionurl}}"
+        params="{{FnselecttoSectionparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnselecttoSectionResponse"
+        debounce-duration="300"
+        ><iron-ajax        
+        id="SbjecttoStudentmappingajax"
+        url="{{SbjecttoStudentmappingurl}}"
+        params="{{SbjecttoStudentmappingparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="SbjecttoStudentmappingResponse"
+        debounce-duration="300"
+        ><iron-ajax        
+        id="SbjecttoStudentmappingajax"
+        url="{{SbjecttoStudentmappingurl}}"
+        params="{{SbjecttoStudentmappingparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="SbjecttoStudentmappingResponse"
+        debounce-duration="300"
+        ><iron-ajax        
+        id="SelectSchoolNameajax"
+        url="{{SelectSchoolNameurl}}"
+        params="{{SelectSchoolNameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="SelectSchoolNameResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax        
+        id="SelectSchoolgradesajax"
+        url="{{SelectSchoolgradesurl}}"
+        params="{{SelectSchoolgradesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="SelectSchoolgradesResponse"
+        debounce-duration="300"
+        > 
   </template>
   <script>
   (function() {
@@ -228,7 +327,7 @@
       },
       FnSetschoolInfoResponse(e){
           var res=e.detail.response.returnval;
-          alert(JSON.stringify(res)); 
+        //  alert(JSON.stringify(res)); 
           if(res=="Inserted!"){
           this.fnschoolcreation();
         }
@@ -282,7 +381,7 @@
        },
      fnschoolidgrnerateResponse:function(e){
          var res=e.detail.response.returnval;
-          alert(JSON.stringify(res)); 
+        //  alert(JSON.stringify(res)); 
             document.querySelector('school-creation-card').schoolid1=res[0].school_prefix+res[0].school_seq;
            
         },
@@ -323,6 +422,93 @@
         this.fetchschooltypenameurl=sessionStorage.getItem("addrinfo")+"/fetchschooltypename-service";
         this.$.fetchschooltypenameajax.generateRequest();
       },
+      fnsetgrademapping:function(){
+         this.fnsetgrademappingurl=sessionStorage.getItem("addrinfo")+"/fnsetgrademapping-service";
+         var obj={"schoolid":""};
+          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         // alert(JSON.stringify(obj));
+          this.fnsetgrademappingparam=obj;
+         this.$.fnsetgrademappingajax.generateRequest();
+
+          this.fnschoolgradeseturl=sessionStorage.getItem("addrinfo")+"/fnschoolgradeset-service";
+         var obj={"schoolid":""};
+          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         // alert(JSON.stringify(obj));
+          this.fnschoolgradesetparam=obj;
+         this.$.fnschoolgradesetajax.generateRequest();
+    
+     },
+     fnschoolgradesetResponse:function(e){
+      var arr=e.detail.response.returnval;
+     // alert(JSON.stringify(arr));
+
+
+        var Primaryarr=[];
+        var preprimearr=[];
+        var secondarr=[];
+        var highsecondarr=[];
+
+                var arr=e.detail.response.returnval;
+                //alert(JSON.stringify(arr));
+                for(var i=0; i< arr.length;i++){
+
+                    if(arr[i].school_type=='Primary'){
+                             Primaryarr.push(arr[i]);
+                            // alert(JSON.stringify(Primaryarr));
+                        }
+                    else if(arr[i].school_type =='Pre-primary'){
+                                    preprimearr.push(arr[i]);
+                     //alert(JSON.stringify(preprimearr));
+                 
+                        }
+                    else if(arr[i].school_type =='Secondry'){
+                                     secondarr.push(arr[i]);
+                                       // alert(JSON.stringify(secondarr));
+                 
+                             
+                    }
+                     else if(arr[i].school_type =='High-Secondry'){
+                               highsecondarr.push(arr[i]);
+                               // alert(JSON.stringify(highsecond));
+                   }
+                 }
+                  
+                     document.querySelector('school-creation-card').Primaryarr=Primaryarr;
+                     document.querySelector('school-creation-card').preprimearr=preprimearr;
+                     document.querySelector('school-creation-card').secondarr=secondarr;
+                     document.querySelector('school-creation-card').highsecondarr=highsecondarr;
+
+     },
+     fnsetgrademappingResponse(e){
+           var res=e.detail.response.returnval;
+         //  alert(JSON.stringify(res));
+           document.querySelector('school-creation-card').schoolidarrwww=res;
+      },
+     FnSchoolToGrademapping:function(schoolid1,gradearrr){
+        
+                  for(var i=0;i<gradearrr.length;i++){
+
+                          var gubid=gradearrr[i].gra_id;
+                          var gunamename=gradearrr[i].gra_name;
+                          var scholtype=gradearrr[i].sch_typ;
+                      this.FnSchoolToGrademappingurl=sessionStorage.getItem("addrinfo")+"/FnSchoolToGrademapping-service";
+
+                          var obj={"schoolid1":"","gubid":"","gunamename":"","scholtype":""};
+                            obj.schoolid1=schoolid1;
+                            obj.gubid=gubid;
+                            obj.gunamename=gunamename;
+                            obj.scholtype=scholtype;
+                         //   alert(JSON.stringify(obj));
+                         this.FnSchoolToGrademappingparam=obj;
+                          this.$.FnSchoolToGrademappingajax.generateRequest();
+                      }
+      },
+          FnSchoolToGrademappingResponse:function(e){
+              var arr= e.detail.response.returnval;
+             // alert(JSON.stringify(arr));
+       },
+
+
       fnschoolcreation:function(){
         this.fnschoolcreationurl=sessionStorage.getItem("addrinfo")+"/fnschoolcreation-service";
         this.$.fnschoolcreationajax.generateRequest();
@@ -488,6 +674,127 @@
        document.querySelector('category-card').temphidden=arr[0].category_seq;
 
       },
+       FnSecondLangSubjectToStudent:function(studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,Sectionnameseeee){
+        this.FnSecondLangSubjectToStudenturl=sessionStorage.getItem("addrinfo")+"/FnSecondLangSubjectToStudent-service";
+        var obj={"studentid":"","studentname":"","schoolnames":"","termsname":"","gradenamesssss":"","Sectionnames":"","seclang11":"","Sectionnameseeee":""};
+        obj.studentid=studentid;
+        obj.studentname=studentname;
+        obj.schoolnames=schoolnames;
+        obj.termsname=termsname;
+        obj.gradenamesssss=gradenamesssss;
+        obj.Sectionnames=Sectionnames;
+        obj.seclang11=seclang11;
+        obj.Sectionnameseeee=Sectionnameseeee;
+        this.FnSecondLangSubjectToStudentparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.FnSecondLangSubjectToStudentajax.generateRequest();
+      },
+      FnSecondLangSubjectToStudentResponse:function(e){
+             alert(JSON.stringify(e.detail.response.returnval));
+      },
+      FnSecondLangSubjectToStudentsets:function(studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,Sectionnameseeee){
+        this.FnSecondLangSubjectToStudentsetsurl=sessionStorage.getItem("addrinfo")+"/FnSecondLangSubjectToStudentsets-service";
+        var obj={"studentid":"","studentname":"","schoolnames":"","termsname":"","gradenamesssss":"","Sectionnames":"","seclang11":"","Sectionnameseeee":""};
+        obj.studentid=studentid;
+        obj.studentname=studentname;
+        obj.schoolnames=schoolnames;
+        obj.termsname=termsname;
+        obj.gradenamesssss=gradenamesssss;
+        obj.Sectionnames=Sectionnames;
+        obj.seclang11=seclang11;
+        obj.Sectionnameseeee=Sectionnameseeee;
+        this.FnSecondLangSubjectToStudentsetsparam=obj;
+       // alert(JSON.stringify(obj));
+        this.$.FnSecondLangSubjectToStudentsetsajax.generateRequest();
+      },
+      FnSecondLangSubjectToStudentsetsResponse:function(e){
+             alert(JSON.stringify(e.detail.response.returnval));
+      },
+       FnThirdLangSubjectToStudent:function(studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,thirdlang11,Sectionnameseeee){
+        this.FnThirdLangSubjectToStudenturl=sessionStorage.getItem("addrinfo")+"/FnThirdLangSubjectToStudent-service";
+        var obj={"studentid":"","studentname":"","schoolnames":"","termsname":"","gradenamesssss":"","Sectionnames":"","seclang11":"","thirdlang11":"","Sectionnameseeee":""};
+        obj.studentid=studentid;
+        obj.studentname=studentname;
+        obj.schoolnames=schoolnames;
+        obj.termsname=termsname;
+        obj.gradenamesssss=gradenamesssss;
+        obj.Sectionnames=Sectionnames;
+        obj.seclang11=seclang11;
+        obj.thirdlang11=thirdlang11;
+        obj.Sectionnameseeee=Sectionnameseeee; 
+        this.FnThirdLangSubjectToStudentparam=obj;
+      //  alert(JSON.stringify(obj));
+        this.$.FnThirdLangSubjectToStudentajax.generateRequest();
+      },
+      FnThirdLangSubjectToStudentResponse:function(e){
+        alert(JSON.stringify(e.detail.response.returnval));
+      },
+      //teacher-home
+       SelectSchoolgrades:function(){
+       
+        this.SelectSchoolgradesurl=sessionStorage.getItem("addrinfo")+"/SelectSchoolgrades-service";
+        this.$.SelectSchoolgradesajax.generateRequest();
+      }, 
+       SelectSchoolgradesResponse:function(e){
+     //  alert(JSON.stringify(e.detail.response.returnval));
+        document.querySelector('student-to-subject-mapping-card').selectgradearr=e.detail.response.returnval;
+      },
+
+      FnselecttoSection:function(subjectselectid,FnStosGradeid){
+        this.FnselecttoSectionurl=sessionStorage.getItem("addrinfo")+"/FnselecttoSection-service";
+        var obj={"subjectselectid":"","FnStosGradeid":""};
+       obj.subjectselectid=subjectselectid;
+       obj.FnStosGradeid=FnStosGradeid;
+        this.FnselecttoSectionparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.FnselecttoSectionajax.generateRequest();
+      },
+      FnselecttoSectionResponse:function(e){
+        var arr=e.detail.response.returnval;
+        // alert(JSON.stringify(arr));
+        document.querySelector('student-to-subject-mapping-card').selectsectionarrr=arr;
+       },
+
+       SbjecttoStudentmapping:function(FnStoSSectionid,subjectselectid,FnStoStermid,FnStosGradeid){
+        this.SbjecttoStudentmappingurl=sessionStorage.getItem("addrinfo")+"/SbjecttoStudentmapping-service";
+        var obj={"FnStoSSectionid":"","subjectselectid":"","FnStoStermid":"","FnStosGradeid":""};
+        obj.FnStoSSectionid=FnStoSSectionid;
+        obj.subjectselectid=subjectselectid;
+        obj.FnStoStermid=FnStoStermid;
+        obj.FnStosGradeid=FnStosGradeid;
+        this.SbjecttoStudentmappingparam=obj;
+       // alert(JSON.stringify(obj));
+        this.$.SbjecttoStudentmappingajax.generateRequest();
+      },
+       SbjecttoStudentmappingResponse:function(e){
+        var arr=e.detail.response.returnval;
+       //  alert(JSON.stringify(arr));
+      //  document.querySelector('cce-generate-score-card').FnHide();
+        document.querySelector('student-list-mapping').studentarr=arr;  
+        },
+
+         SelectSchoolName:function(){
+         this.SelectSchoolNameurl=sessionStorage.getItem("addrinfo")+"/SelectSchoolName-service";
+     
+            var obj={"school_id":""};
+            obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+            this.SelectSchoolNameparam=obj;
+           // alert(JSON.stringify(obj));
+            this.$.SelectSchoolNameajax.generateRequest();
+     },
+    
+       SelectSchoolNameResponse:function(e){
+       
+   
+        
+        var res=e.detail.response.returnval;
+
+
+         document.querySelector('student-to-subject-mapping-card').subjectselectid=res[0].id;
+         document.querySelector('student-to-subject-mapping-card').subjectselectname=res[0].name;
+
+      }
+
 
     });
   })();

@@ -23,9 +23,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host{
          margin-left: 10%;
-        display: block;
+        display: block;     
          @apply(--layout-left);
-        /*width: 50%;*/
+        /*width: 50%;*/   
       }
       }
       .rolecard
@@ -57,6 +57,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 50%;
         margin-top: 5%;
       }
+      .card{
+        @apply(--layout-horizontal);
+              margin-left:30%;
+        
+        
+      } 
 
     </style>
     <div>
@@ -96,14 +102,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <div class="col-sm-6">
                          <paper-input label="Website" id="Website" required error-message="needs wevbsite!" value="{{Website}}"></paper-input>
                         </div>
-                         <div class="col-sm-6">
-                         <paper-input label="affiliation No" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input>
+                        <div class="col-sm-6">
+                         <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input>
+                        </div>
+                         <div class="col-sm-3">
+                                             <paper-checkbox  id="Pre" on-change="Fnsetpre">Pre-primary</paper-checkbox>
+                             
+                        </div>
+                      
+                      <div class="col-sm-3">
+                         <paper-checkbox  id="Primary" on-change="FnSetprmary">Primary</paper-checkbox>
+            
+                        </div>
+                      <div class="col-sm-3">
+                        <paper-checkbox id="Secondry" on-change="Fnsetsecondry">Secondry</paper-checkbox>
+            
+                        </div>
+                      <div class="col-sm-3">
+                         <paper-checkbox id="High" on-change="FnserHighsecondry">High-Secondry</paper-checkbox>
+
                         </div>
                         </div>
                      <div class="form-group-heading">
                              <h4> School Address Details</h4>
                      </div>
-
+                  
                     <div class="list-group col-sm-12 panel-body form-category">
                         <div class="col-sm-6">
                          <paper-input label="Village/Town" id="Village" required error-message="needs Village/Town!" value="{{address}}"></paper-input>
@@ -119,10 +142,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       </div>
                      <div class="button">
                           <paper-button on-click="FnSubmit" dialog-confirm autofocus >Submit </paper-button>
-                      </div>
+                     </div>
                       </div>
                    </div>
          </paper-dialog>
+
+
+           <paper-dialog id="preprimary">
+
+                  <template is="dom-repeat" items="{{preprimearr}}" as="view">
+                <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                                 </school-creation-mapping-item-card> 
+                 </template>
+                    <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                
+           </paper-dialog>
+
+           <paper-dialog id="primary" >
+               <template is="dom-repeat" items="{{Primaryarr}}" as="view">
+                <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                                 </school-creation-mapping-item-card> 
+                 </template>
+                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                  
+          </paper-dialog>
+           <paper-dialog id="secondry">
+                    <template is="dom-repeat" items="{{secondarr}}" as="view">
+                  
+                <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                                 </school-creation-mapping-item-card> 
+                     </template>
+                    <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                  
+          </paper-dialog>
+           <paper-dialog id="highsecondry" modal>
+                         <template is="dom-repeat" items="{{highsecondarr}}" as="view">
+            <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                                 </school-creation-mapping-item-card> 
+                       </template>
+                   <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+         </paper-dialog>
+ 
+
+
+
+
+                        
+
 
    
 
@@ -133,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+var gradearrr=[];
     Polymer({
       is: 'school-creation-card',
 
@@ -155,12 +221,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        this.address1="";
        this.address2=""; 
        this.address3="";
+       this.$.Pre.checked=false;
+       this.$.Primary.checked=false;
+       this.$.High.checked=false;
+       this.$.Secondry.checked=false;
+     
       },  
       FnSearch:function(){
         
       },
+        Fnsetpre:function(e){
+         if(document.querySelector("#Pre").checked==true){
+         this.$.preprimary.open();
+       }
+      },
+      FnSetprmary:function(e){
+        if(document.querySelector("#Primary").checked==true){
+        this.$.primary.open();
+      }
+      },
+     Fnsetsecondry:function(e){
+      if(document.querySelector("#Secondry").checked==true){
+        this.$.secondry.open();
+      }
+      },
+      FnserHighsecondry:function(e){
+        if(document.querySelector("#High").checked==true){
+          this.$.highsecondry.open();
+      }
+      },
+         FnSetGrademapp:function(arr){
+       gradearrr=arr;
+
+      },
       FnSubmit:function()
-      {      
+      {    
+
            if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""||this.affiliation==""||this.address==""||this.address1==""||this.address2==""||this.address3==""||this.Emailid=="")
               {
                 this.$.School.validate();
@@ -176,8 +272,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                }
 
              else{
-         this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation);
-        this.FnRefresh();
+          this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation);
+          this.$.uiservice.FnSchoolToGrademapping(this.schoolcreationid,gradearrr);
+          this.FnRefresh();
        }    
       },     
      Fncreate:function(){

@@ -91,7 +91,10 @@
      </div>
       <div class="card" hidden$="{{createschool}}">
        <paper-button on-click="FnCreateschool" no ink><img src="../../images/school.jpg" height="180px" width="180px"></paper-button>
-     </div><!-- school-creation-card -->
+     </div>
+       <div class="card" hidden$="{{subjecttostudent}}">
+       <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px"></paper-button>
+      </div><!-- school-creation-card -->
     
     <!-- </center>   -->
     </div>
@@ -142,6 +145,7 @@
         this.ConsolidatedReport=true;
        // this.teach_obser=true;
         this.comparison=true;
+        this.subjecttostudent=true;
         this.Approvalstatus=true;
         this.editinfo=true;
         this.createrole=true;
@@ -267,6 +271,7 @@
           this.createcategory=false;
           this.createschooltype=false;
           this.createschool=false;
+          this.subjecttostudent=false;
 
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
@@ -369,8 +374,19 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('school-creation-card','');
        // document.querySelector('category-card').ready();
-       alert("hi");
+       //alert("hi");
        this.$.uiservice.fnschoolidgrnerate();
+       this.$.uiservice.fnsetgrademapping();
+      },
+       SubjectToStudent:function(e){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('student-to-subject-mapping-card','');
+       document.querySelector('student-to-subject-mapping-card').fnsetreclear();
+      
+        //this.$.uiservice.fnreclear();
+        this.$.uiservice.SelectSchoolName();
+        //this.$.uiservice.TeachertoGradeSectionNames();
+        this.$.uiservice.SelectSchoolgrades();
       },
       FnCreateCategory:function(e)
       {        

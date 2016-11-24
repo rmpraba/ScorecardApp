@@ -20,7 +20,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
         border-bottom: 1px solid #dedede;
       }
-    </style>     
+
+    </style>       
     <div> 
     <table class="card" id="card{{schoolid}}">
       <tr><td hidden>{{schoolid}}</td>
@@ -36,20 +37,75 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-input label="Village/Town" value="{{address}}"></paper-input>
           <paper-input label="District" value="{{address1}}"></paper-input>
           <paper-input label="State" value="{{address2}}"></paper-input>
-          <paper-input  label="Pincode" value="{{address3}}"></paper-input>    
-     </td>
+          <paper-input  label="Pincode" value="{{address3}}"></paper-input></br>
+          <div class="card">
+          <paper-checkbox id="fnedtpre" on-change="FnSetedtPre">pre-primary</paper-checkbox>
+          <paper-checkbox id="fnedtPrimary" on-change="FnSetedtprmary">primary</paper-checkbox>
+          <paper-checkbox id="fnedtsecondry" on-change="FnSetedtsecondry">secondry</paper-checkbox>
+          <paper-checkbox id="fnedthigh" on-change="FnSetedthigh">High-secodary</paper-checkbox>    
+         </div></br>
+
+       
+        <paper-dialog id="fnedtpre" modal>
+               <center>
+                  <h4 style="color:#2874A6" >SELECT THE GRADE</h4>
+              <template is="dom-repeat" items="{{grapreprimearr}}" as="view">
+             <school-grade-mapping-card graschoolid="{{schoolid}}" gragradeid={{view.grade_id}} gragradename="{{view.grade_name}}" graschooltyp="{{view.school_type}}">
+              </school-grade-mapping-card></br> 
+                 </template>
+                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                </center>        
+                </paper-dialog>
+
+           <paper-dialog id="fnedtPrimary" modal >
+                <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
+               <template is="dom-repeat" items="{{graPrimaryarr}}" as="view">
+               <school-grade-mapping-card graschoolid="{{schoolid}}"  gragradeid={{view.grade_id}} gragradename="{{view.grade_name}}" graschooltyp="{{view.school_type}}">
+                </school-grade-mapping-card></br> 
+              </template>
+                 <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                 </center>
+          </paper-dialog>
+           <paper-dialog id="fnedtsecondry" modal>
+                 <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
+                    <template is="dom-repeat" items="{{grasecondarr}}" as="view">
+                     <school-grade-mapping-card graschoolid="{{schoolid}}" gragradeid={{view.grade_id}} gragradename="{{view.grade_name}}" graschooltyp="{{view.school_type}}">
+                        </school-grade-mapping-card></br>
+                     </template>
+                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                       
+              </center>        
+          </paper-dialog>
+           <paper-dialog id="fnedthigh" modal>
+                 <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
+             <template is="dom-repeat" items="{{grahighsecondarr}}" as="view">
+                 <school-grade-mapping-card graschoolid="{{schoolid}}" gragradeid={{view.grade_id}} gragradename="{{view.grade_name}}" graschooltyp="{{view.school_type}}">
+                </school-grade-mapping-card></br> 
+          </template>
+                   <div >               
+                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                   </div>
+             </center>
+         </paper-dialog>
+ 
+
+
+     </td> 
       <td width="5%" hidden$="{{hiderolenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
       </td>
       <td width="5%" hidden$="{{hiderolenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
       </td>
       <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
-    </table></tr>
+    </table>
+      <div>
+        
+      </div>
     <master-ui-service id="uiservice"></master-ui-service></div>
   </template>
   <script>
   (function() {
     'use strict';
-
+       var getinsertarr=[];
     Polymer({
       is: 'school-creation-item-card',
 
@@ -64,11 +120,69 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FnEdit:function(){
         this.hiderolenameinput=false;
         this.hiderolenameitem=true;
+        this.$.uiservice.schooltypecheck(this.schoolid);
+    
+      },
+      Fnschoolinsetgrade:function(arr){
+              getinsertarr=arr;     
       },
       FnSave:function(){
         this.$.uiservice.Fnsaveschoolinfo(this.schoolname,this.schoolid,this.telno,this.mobile,this.mailid,this.wesite,this.address,this.address1,this.address2,this.address3,this.affiliationno);
+        this.$.uiservice.Fnschoolinsetgrademap(getinsertarr);
         this.hiderolenameinput=true;
         this.hiderolenameitem=false;
+      },
+      setgradearrr1:function(arr){
+
+        var getbigarr=[];
+           getbigarr=arr;
+           alert(JSON.stringify(getbigarr));
+              alert('1');
+            for(var i=0;i<getbigarr.length;i++){
+
+                      var getbigid=getbigarr[i].school_type;
+                      alert(getbigid)
+                      if(getbigid=='Primary'){
+                          alert('1');
+                        document.querySelector("#fnedtPrimary").checked=true;
+                      }
+                     else if(getbigid=='Pre-primary'){
+                        alert('2');
+                      document.querySelector("#fnedtpre").checked=true;
+                     }
+                      else if(getbigid=='Secondry'){
+                          alert('3');
+                        document.querySelector("#fnedtsecondry").checked=true;
+                      }
+                      else if(getbigid=='High-Secondry'){
+                          alert('4');
+                        document.querySelector("#fnedthigh").checked=true;
+                      }
+              
+             }
+          
+      },
+      FnSetedtprmary:function(e){
+        if(document.querySelector("#fnedtPrimary").checked==true){
+           this.$.fnedtPrimary.open();
+     
+        }
+      },
+      FnSetedtPre:function(e){
+          if(document.querySelector("#fnedtpre").checked==true){
+         this.$.fnedtpre.open();
+
+        }
+      },
+      FnSetedtsecondry:function(e){
+         if(document.querySelector("#fnedtsecondry").checked==true){
+        this.$.fnedtsecondry.open();
+      }
+      },
+      FnSetedthigh:function(e){
+             if(document.querySelector("#fnedthigh").checked==true){
+          this.$.fnedthigh.open();
+        }
       },
       setColor:function(roleid){
         document.getElementById('card'+schoolname).backgroundColor = "yellow";

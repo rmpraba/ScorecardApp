@@ -5,7 +5,7 @@
 <dom-module id="master-ui-service">
   <template>
     
-     <iron-ajax        
+     <iron-ajax         
         id="subjectcreationajax"
         url="{{subjectcreationurl}}"
         params="{{subjectcreationparam}}"
@@ -349,15 +349,34 @@
         debounce-duration="300"
     >
      <iron-ajax        
-        id="fetchmastercategorynameajax"
-        url="{{fetchmastercategorynameurl}}"
-        params="{{fetchmastercategorynameparam}}"
+        id="schooltypecheckajax"
+        url="{{schooltypecheckurl}}"
+        params="{{schooltypecheckparam}}"
         handle-as="json"
         content-type="application/json"
         method="post"
-        on-response="fetchmastercategorynameResponse"
+        on-response="schooltypecheckResponse"
+        debounce-duration="300"
+    ><iron-ajax        
+        id="schooltypecheckgradeajax"
+        url="{{schooltypecheckgradeurl}}"
+        params="{{schooltypecheckgradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="schooltypecheckgradeResponse"
+        debounce-duration="300"
+    ><iron-ajax        
+        id="Fnschoolinsetgrademapajax"
+        url="{{Fnschoolinsetgrademapurl}}"
+        params="{{Fnschoolinsetgrademapparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnschoolinsetgrademapResponse"
         debounce-duration="300"
     >
+
 
   </template>
   <script>
@@ -461,6 +480,32 @@
             document.querySelector('school-creation-card').schoolid1=res[0].school_prefix+res[0].school_seq;
            
         },
+        Fnschoolinsetgrademap:function(getinsertarr){
+          for(var i=0;i<getinsertarr.length;i++){
+
+                 var getinsertid=getinsertarr[i].grade_id;
+                 var getinsertname=getinsertarr[i].grade_name;
+                 var getinsertgrattype=getinsertarr[i].grade_type;
+                 var getinsertschool=getinsertarr[i].school_id;
+
+              this.Fnschoolinsetgrademapurl=sessionStorage.getItem("addrinfo")+"/Fnschoolinsetgrademap-service";
+                 var obj={"getinsertid":"","getinsertname":"","getinsertgrattype":"","getinsertschool":""};
+                 obj.getinsertid=getinsertid;
+                 obj.getinsertname=getinsertname;
+                 obj.getinsertgrattype=getinsertgrattype;
+                 obj.getinsertschool=getinsertschool;
+              this.Fnschoolinsetgrademapparam=obj;
+              this.$.Fnschoolinsetgrademapajax.generateRequest();
+      
+                
+         }
+        },
+        FnschoolinsetgrademapResponse(e){
+      var res=e.detail.response.returnval;
+          alert(JSON.stringify(res)); 
+        
+        },
+      
       FnFetchRole:function()   
       {        
         this.fetchroleurl=sessionStorage.getItem("addrinfo")+"/fetchrole-service";
@@ -554,18 +599,87 @@
                                // alert(JSON.stringify(highsecond));
                    }
                  }
-                  
                      document.querySelector('school-creation-card').Primaryarr=Primaryarr;
-                     document.querySelector('school-creation-card').preprimearr=preprimearr;
+                      document.querySelector('school-creation-card').preprimearr=preprimearr;
                      document.querySelector('school-creation-card').secondarr=secondarr;
                      document.querySelector('school-creation-card').highsecondarr=highsecondarr;
-
-     },
+                 },
      fnsetgrademappingResponse(e){
            var res=e.detail.response.returnval;
          //  alert(JSON.stringify(res));
            document.querySelector('school-creation-card').schoolidarrwww=res;
       },
+
+      schooltypecheck:function(schoolid)
+       {
+        this.schooltypecheckurl=sessionStorage.getItem("addrinfo")+"/schooltypecheck-service";
+        var obj={"schoolid":""};
+        obj.schoolid=schoolid;
+        this.schooltypecheckparam=obj;
+        this.$.schooltypecheckajax.generateRequest();
+
+        this.schooltypecheckgradeurl=sessionStorage.getItem("addrinfo")+"/schooltypecheckgrade-service";
+        var obj={"schoolid":""};
+        obj.schoolid=schoolid;
+      //  alert(JSON.stringify(obj));
+        this.schooltypecheckgradeparam=obj;
+        this.$.schooltypecheckgradeajax.generateRequest();
+     
+      },
+      schooltypecheckgradeResponse:function(e){
+          var arr=e.detail.response.returnval;
+         // alert(JSON.stringify(arr));
+        
+            document.querySelector('school-grade-mapping-card').setgradearrr(arr);
+            document.querySelector('school-creation-item-card').setgradearrr1(arr);
+
+
+
+      },
+      schooltypecheckResponse:function(e){
+           var arr=e.detail.response.returnval;
+          alert(JSON.stringify(arr));
+
+          var graPrimaryarr=[];
+        var grapreprimearr=[];
+        var grasecondarr=[];
+        var grahighsecondarr=[];
+
+                var arr=e.detail.response.returnval;
+                //alert(JSON.stringify(arr));
+                for(var i=0; i< arr.length;i++){
+
+                    if(arr[i].school_type=='Primary'){
+                             graPrimaryarr.push(arr[i]);
+                            // alert(JSON.stringify(Primaryarr));
+                        }
+                    else if(arr[i].school_type =='Pre-primary'){
+                                    grapreprimearr.push(arr[i]);
+                     //alert(JSON.stringify(preprimearr));
+                 
+                        }
+                    else if(arr[i].school_type =='Secondry'){
+                                     grasecondarr.push(arr[i]);
+                                       // alert(JSON.stringify(secondarr));
+                 
+                             
+                    }
+                     else if(arr[i].school_type =='High-Secondry'){
+                               grahighsecondarr.push(arr[i]);
+                               // alert(JSON.stringify(highsecond));
+                   }
+                 }
+                // alert(JSON.stringify(graPrimaryarr));
+                 //alert(JSON.stringify(grapreprimearr));
+                 //alert(JSON.stringify(grasecondarr));
+                 //alert(JSON.stringify(grahighsecondarr));
+                     document.querySelector('school-creation-item-card').graPrimaryarr=graPrimaryarr;
+                     document.querySelector('school-creation-item-card').grapreprimearr=grapreprimearr;
+                     document.querySelector('school-creation-item-card').grasecondarr=grasecondarr;
+                     document.querySelector('school-creation-item-card').grahighsecondarr=grahighsecondarr;
+           
+           
+},
      FnSchoolToGrademapping:function(schoolid1,gradearrr){
         
                   for(var i=0;i<gradearrr.length;i++){
@@ -574,14 +688,13 @@
                           var gunamename=gradearrr[i].gra_name;
                           var scholtype=gradearrr[i].sch_typ;
                       this.FnSchoolToGrademappingurl=sessionStorage.getItem("addrinfo")+"/FnSchoolToGrademapping-service";
-
-                          var obj={"schoolid1":"","gubid":"","gunamename":"","scholtype":""};
+                           var obj={"schoolid1":"","gubid":"","gunamename":"","scholtype":""};
                             obj.schoolid1=schoolid1;
                             obj.gubid=gubid;
                             obj.gunamename=gunamename;
                             obj.scholtype=scholtype;
-                         //   alert(JSON.stringify(obj));
-                         this.FnSchoolToGrademappingparam=obj;
+                            //alert(JSON.stringify(obj));
+                          this.FnSchoolToGrademappingparam=obj;
                           this.$.FnSchoolToGrademappingajax.generateRequest();
                       }
       },

@@ -77,8 +77,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-repeat" items="{{schoolcreatarr}}" as="view">
     <school-creation-item-card schoolname="{{view.name}}" schoolid="{{view.id}}" mobile="{{view.mobile_no}}"  address="{{view.address}}" 
     address1="{{view.address1}}" address2="{{view.address2}}" address3="{{view.address3}}"   affiliationno="{{view.affiliation_no}}" telno="{{view.telno}}" mailid="{{view.email_id}}" wesite="{{view.website}}" hiderolenameinput="true" hiderolenameitem="false"></school-creation-item-card>
-    </div>
     </template>
+    </div>
+    <div class="role">
+      <template is="dom-repeat" items="{{grademaparr}}" as="view">
+         <school-grade-mapping-card ></school-grade-mapping-card>
+      </template>
+    </div>
+    
    
                        
     <paper-dialog id="roledialog">
@@ -149,38 +155,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
            <paper-dialog id="preprimary">
-
-                  <template is="dom-repeat" items="{{preprimearr}}" as="view">
-                <school-creation-mapping-item-card  gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
-                </school-creation-mapping-item-card> 
-                 </template>
-                    <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-                
-           </paper-dialog>
-
-           <paper-dialog id="primary" >
-               <template is="dom-repeat" items="{{Primaryarr}}" as="view">
+               <center>
+                  <h4 style="color:#2874A6" >SELECT THE GRADE</h4>
+              <template is="dom-repeat" items="{{preprimearr}}" as="view">
                 <school-creation-mapping-item-card  gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
                 </school-creation-mapping-item-card> 
                  </template>
                         <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-                  
+                </center>        
+                </paper-dialog>
+
+           <paper-dialog id="primary" >
+                <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
+               <template is="dom-repeat" items="{{Primaryarr}}" as="view">
+                 <school-creation-mapping-item-card  gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                 </school-creation-mapping-item-card> 
+              </template>
+                 <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                 </center>
           </paper-dialog>
            <paper-dialog id="secondry">
+                 <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
                     <template is="dom-repeat" items="{{secondarr}}" as="view">
-                  
-                <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
+                     <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
                                  </school-creation-mapping-item-card> 
                      </template>
-                    <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-                  
+                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                       
+                </center>        
           </paper-dialog>
-           <paper-dialog id="highsecondry" modal>
-                         <template is="dom-repeat" items="{{highsecondarr}}" as="view">
+           <paper-dialog id="highsecondry">
+                 <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
+                  <template is="dom-repeat" items="{{highsecondarr}}" as="view">
             <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
                                  </school-creation-mapping-item-card> 
                        </template>
-                   <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                   <div >               
+                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                        </div>
+             </center>
          </paper-dialog>
  
 
@@ -253,8 +266,8 @@ var gradearrr=[];
       FnSubmit:function()
       {    
          //alert(JSON.stringify(gradearrr));
-           
-           if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""||this.affiliation==""||this.address==""||this.address1==""||this.address2==""||this.address3==""||this.Emailid=="")
+
+if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""||this.affiliation==""||this.address==""||this.address1==""||this.address2==""||this.address3==""||this.Emailid=="")
               {
                 this.$.School.validate();
                 this.$.Telephone.validate();
@@ -267,14 +280,11 @@ var gradearrr=[];
                 this.$.District.validate();
                 this.$.Pincode.validate();
                }
-
-             else{
-          this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation);
-          this.$.uiservice.FnSchoolToGrademapping(this.schoolcreationid,gradearrr);
-         
-
-       }    
-      },     
+         else{
+         this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation);
+          this.$.uiservice.FnSchoolToGrademapping(this.schoolid1,gradearrr);
+          }    
+    },     
      Fncreate:function(){
       this.FnRefresh();
       this.$.roledialog.toggle();

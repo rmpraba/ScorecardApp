@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          var fngradearrr=[];
          var v=[];
          var obj;
-        Polymer({
+        Polymer({  
         
       Fnhighsecondryset:function(e){
        if(document.querySelector('#'+e.target.id).checked==true){
@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    obj.sch_typ=this.schooltyp;
                    fngradearrr.push(obj);
                     v.push(obj);
-                  alert(JSON.stringify(fngradearrr));
+                 
        }
      else if(document.querySelector('#'+e.target.id).checked==false)
         {
@@ -46,8 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         fngradearrr.splice(i,1);
                       }
                     }
-                  alert(JSON.stringify(fngradearrr));
-        }
+                }
          document.querySelector('school-creation-card').FnSetGrademapp(fngradearrr);
            //fngradearrr.splice(obj); 
         },
@@ -55,15 +54,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           fngradearrr.splice(obj);
          },
           fnsetclears2:function(e){
-                alert(JSON.stringify(v));
+                
                 for(var j=0;j<v.length;j++){
                    var gradeid=v[j].gra_id;
                    this.gradeid;
                 document.querySelector('#'+gradeid).checked=false; 
              }
              v.splice(obj);
-               
-           }
+            }
    });
   })();
   </script>

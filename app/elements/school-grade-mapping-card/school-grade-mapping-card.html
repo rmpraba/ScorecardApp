@@ -1,0 +1,108 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="school-grade-mapping-card">
+  <template>  
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <paper-input value="{{graschooltyp}}" hidden></paper-input>
+      <paper-input vlaue="{{graschoolid}}" hidden></paper-input>
+      <paper-checkbox on-change="Fngraset" id="{{gragradeid}}">{{gragradename}}</paper-checkbox>
+      
+
+       <iron-ajax  
+              
+        id="Fngradesetdeletemappingajax"
+        url="{{Fngradesetdeletemappingurl}}"
+        params="{{Fngradesetdeletemappingparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FngradesetdeletemappingResponse"
+        debounce-duration="300"
+        >
+        
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+  var globelgradearr=[];
+  var Fngrasetarr=[];
+    Polymer({
+      is: 'school-grade-mapping-card',
+        setgradearrr:function(arr){
+            globelgradearr=arr;
+             for(var i=0;i<globelgradearr.length;i++){
+              var gradegetid=globelgradearr[i].grade_id;
+              var gradegetgradename=globelgradearr[i].grade_name;
+              var gradegetschooltype=globelgradearr[i].school_type;
+              var gradegetschool=globelgradearr[i].school_id;
+              
+               this.gragradeid;
+               document.querySelector('#'+gradegetid).checked=true; 
+                var obj={"school_id":"","grade_id":"","grade_name":"","grade_type":""};
+                 obj.school_id=gradegetschool;
+                 obj.grade_id=gradegetid;
+                 obj.grade_name=gradegetgradename;
+                 obj.grade_type=gradegetschooltype;
+                 Fngrasetarr.push(obj);
+             }
+            
+          },
+          Fngraset:function(e){
+              if(document.querySelector('#'+e.target.id).checked==true){
+                var obj={"school_id":"","grade_id":"","grade_name":"","grade_type":""};
+                 obj.school_id=this.graschoolid;
+                 obj.grade_id=this.gragradeid;
+                 obj.grade_name=this.gragradename;
+                 obj.grade_type=this.graschooltyp;
+                 Fngrasetarr.push(obj);
+                alert(JSON.stringify(Fngrasetarr));
+                document.querySelector('school-creation-item-card').Fnschoolinsetgrade(Fngrasetarr);
+       
+    }
+              else if(document.querySelector('#'+e.target.id).checked==false){
+                     
+                for(var i=0;i<Fngrasetarr.length;i++){
+
+                 if(Fngrasetarr[i].grade_id==e.target.id){
+
+                  this.Fngradesetdeletemappingurl=sessionStorage.getItem("addrinfo")+"/Fngradesetdeletemapping-service";
+                     var obj={"school_id":"","grade_id":"","grade_name":"","grade_type":""};
+                      obj.school_id=this.graschoolid;
+                      obj.grade_id=this.gragradeid;
+                      obj.grade_name=this.gragradename;
+                      obj.grade_type=this.graschooltyp;
+                      alert(JSON.stringify(obj));
+                      this.Fngradesetdeletemappingparam=obj;
+
+                      this.$.Fngradesetdeletemappingajax.generateRequest();
+                     
+                      Fngrasetarr.splice(i,1);
+                  }
+                }
+              }
+          },
+          FngradesetdeletemappingResponse:function(e){
+              var res=e.detail.response.returnval;
+             
+                 alert(JSON.stringify(res));
+             }
+      });
+  })();
+  </script>
+</dom-module>

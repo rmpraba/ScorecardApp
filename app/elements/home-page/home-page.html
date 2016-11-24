@@ -146,14 +146,16 @@
         </section>
         <section data-category="categorycard">
           <category-card></category-card>
-        </section>
+        </section>   
         <section data-category="school-creation-card">
           <school-creation-card></school-creation-card>
         </section>
          <section data-category="student-to-subject-mapping-card">
           <student-to-subject-mapping-card></student-to-subject-mapping-card>
         </section>
-     
+         <section data-category="working-days-card">
+          <working-days-card></working-days-card>
+        </section>
       </iron-pages>
     </div>
     
@@ -185,6 +187,14 @@
   {    
      // alert(localStorage.getItem("curr_sess_page"));
      if(localStorage.getItem("curr_sess_page")=="student-to-subject-mapping-card")
+    {
+
+      this.page="teacherhomecard";
+     // document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+    if(localStorage.getItem("curr_sess_page")=="working-days-card")
     {
 
       this.page="teacherhomecard";

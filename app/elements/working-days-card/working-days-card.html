@@ -1,0 +1,128 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="working-days-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+        .inputelements{
+    display: inline-block;
+    padding: 0 10px;
+    margin: 3%;
+  }
+    </style>
+    <div>
+ <div>
+         <div><CENTER><h2 style="color:#162BA3;">STUDENTS WORKING DAYS</h2></CENTER></div>
+      <span class="inputelements">
+        <paper-input value="{{workingschoolid}}" hidden></paper-input>
+           <paper-input value="{{workingschoolname}}" ></paper-input>
+     
+      </span>
+     
+      <span class="inputelements">
+        <paper-dropdown-menu label="Academic Year">
+          <paper-menu  id="wacadamicid" class="dropdown-content" on-iron-select="acadamicid">   
+           <paper-item>2016-2017</paper-item>
+           <paper-item>2017-2018</paper-item>
+           <paper-item>2018-2019</paper-item>
+           <paper-item>2019-2020</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+
+       <span class="inputelements">
+        <paper-dropdown-menu label="Select Grade">
+          <paper-menu id="wgradeid"  class="dropdown-content"  on-iron-select="SelectGradeid">   
+            <template is="dom-repeat" items="{{workingarras}}" as="view">
+              <paper-item value="{{view.grade_name}}">{{view.grade_name}}</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+      </span>
+      <span class="inputelements">
+         <!--  <paper-button on-click="Fnterm" style="background-color:#384485;color:white;" id="subid">Teams</paper-button>
+         -->  <paper-button raised class="custom indigo"  on-click="Fnterm" id="Fntermid">TERMS</paper-button>
+
+     </span>
+</div>
+       </br></br>
+       <div id="btn1">
+       <center>
+        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
+        <paper-button on-click="FnUpdate" style="background-color:#384485;color:white;" id="Upid">Delete</paper-button>
+        </center>
+      </div>
+
+
+         <paper-dialog id="fnworkingdialog" modal>
+               <center>
+                  <h4 style="color:#2874A6" >ENTER THE WORKINGDAYS</h4>
+                          <!-- <paper-input label="term1" value="{{term1}}"></paper-input>
+                          <paper-input label="term2" value="{{term2}}"></paper-input>
+                          <paper-input label="term3" value="{{term3}}"></paper-input> -->
+                          <template is="dom-repeat" items="{{gettermarr}}" as="view">
+                                <working-day-item-card></working-day-item-card>
+                             </template>
+                    
+                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                </center>        
+                 </paper-dialog>
+
+    </div>
+      <master-ui-service id="uiservice"></master-ui-service>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+   var temarr=[];
+   var settemarr=[];
+  // var bigterm=[];
+    Polymer({
+      is: 'working-days-card',
+      ready:function(){
+      this.check();
+      },
+      check:function(e){
+        for(var i=0;i<3;i++){
+        
+         temarr.push(i);
+        }
+        this.gettermarr=temarr;
+      },
+      
+      Fnterm:function(e){
+      this.$.fnworkingdialog.open();
+      },
+      acadamicid:function(e){
+       this.acadamicyear=e.target.selectedItem.textContent.trim(); 
+      },
+      SelectGradeid:function(e){
+       this.termgrade=e.target.selectedItem.value;
+      },
+      fnpassarr:function(arr){
+        settemarr=arr;
+      },
+      FnSubmit:function(e){
+       this.$.uiservice.terminsert(this.workingschoolid,this.acadamicyear,this.termgrade,settemarr);
+        // temarr.splice(obj);
+      },
+
+
+      
+    });
+  })();
+  </script>
+</dom-module>

@@ -5469,6 +5469,61 @@ app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
 
 
 
+
+
+
+ app.post('/terminsert-service' , urlencodedParser,function (req, res)
+{  
+    var response={
+
+      school_id:req.query.workingschoolid,
+      academic_year:req.query.acadamicyear,
+      term_name:req.query.gettemname,
+      type:req.query.termgrade,
+      no_of_days:req.query.getterm
+    };
+
+    console.log(JSON.stringify(response));
+    var qur="SELECT * FROM md_workingdays WHERE school_id='"+req.query.workingschoolid+"' and academic_year='"+req.query.acadamicyear+"' and term_name='"+req.query.gettemname+"' and type='"+req.query.termgrade+"'";
+
+    var qur1="update md_workingdays set no_of_days='"+req.query.getterm+"' where school_id='"+req.query.workingschoolid+"' and academic_year='"+req.query.acadamicyear+"' and  term_name='"+req.query.gettemname+"' and type='"+req.query.termgrade+"'";
+
+   /* console.log(qur);
+    console.log(qur1)*/
+   connection.query(qur,
+    function(err, rows)
+    {
+     if(rows.length==0){
+     connection.query("INSERT INTO md_workingdays SET ?",[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Inserted!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else{
+       connection.query(qur1,function(err, rows){  
+          console.log('update');
+        if(!err)
+        res.status(200).json({'returnval': 'updated successfully'});
+        else
+        res.status(200).json({'returnval': 'not updated'});
+        });
+        } 
+      });
+});
+
+
+
+
+
 app.post('/fnsetgrademapping-service',  urlencodedParser,function (req,res)
 {  
      var e={school_id:req.query.schoolid};

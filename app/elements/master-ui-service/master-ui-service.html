@@ -375,6 +375,15 @@
         method="post"
         on-response="FnschoolinsetgrademapResponse"
         debounce-duration="300"
+    ><iron-ajax        
+        id="terminsertajax"
+        url="{{terminserturl}}"
+        params="{{terminsertparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="terminsertResponse"
+        debounce-duration="300"
     >
 
 
@@ -385,6 +394,36 @@
 
     Polymer({
       is: 'master-ui-service',
+
+
+ terminsert:function(workingschoolid,acadamicyear,termgrade,settemarr)
+       {
+           for(var i=0;i<settemarr.length;i++){
+                var getterm=settemarr[i].term;
+                var j=i+1;
+           var gettemname="term"+j;
+        this.terminserturl=sessionStorage.getItem("addrinfo")+"/terminsert-service";
+        var obj={"workingschoolid":"","acadamicyear":"","termgrade":"","gettemname":"","getterm":""};
+        obj.workingschoolid=workingschoolid;
+        obj.acadamicyear=acadamicyear;
+        obj.termgrade=termgrade;
+        obj.gettemname=gettemname;
+        obj.getterm=getterm;
+        alert(JSON.stringify(obj));
+       this.terminsertparam=obj;
+        this.$.terminsertajax.generateRequest();
+                
+             }
+       
+       
+      },
+      terminsertResponse:function(e)
+      {
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+       
+      },
+
        FnSetRoleInfo:function(rolename,roleid)
        {
         this.rolecreationurl=sessionStorage.getItem("addrinfo")+"/rolecreation-service";
@@ -401,6 +440,7 @@
           this.FnFetchRole();
         }
       },
+
       FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation){
        
         this.FnSetschoolInfourl=sessionStorage.getItem("addrinfo")+"/FnSetschoolInfo-service";
@@ -566,9 +606,11 @@
     
      },
      fnschoolgradesetResponse:function(e){
+
       var arr=e.detail.response.returnval;
      // alert(JSON.stringify(arr));
-
+     document.querySelector('working-days-card').workingarras=arr;
+    
 
         var Primaryarr=[];
         var preprimearr=[];
@@ -606,8 +648,9 @@
                  },
      fnsetgrademappingResponse(e){
            var res=e.detail.response.returnval;
-         //  alert(JSON.stringify(res));
+         alert(JSON.stringify(res));
            document.querySelector('school-creation-card').schoolidarrwww=res;
+     
       },
 
       schooltypecheck:function(schoolid)
@@ -1042,19 +1085,17 @@
             var obj={"school_id":""};
             obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
             this.SelectSchoolNameparam=obj;
-           // alert(JSON.stringify(obj));
+            alert(JSON.stringify(obj));
             this.$.SelectSchoolNameajax.generateRequest();
      },
     
        SelectSchoolNameResponse:function(e){
-       
-   
-        
-        var res=e.detail.response.returnval;
+          var res=e.detail.response.returnval;
+        document.querySelector('student-to-subject-mapping-card').subjectselectid=res[0].id;
+        document.querySelector('student-to-subject-mapping-card').subjectselectname=res[0].name;
+        document.querySelector('working-days-card').workingschoolid=res[0].id;
+        document.querySelector('working-days-card').workingschoolname=res[0].name;
 
-
-         document.querySelector('student-to-subject-mapping-card').subjectselectid=res[0].id;
-         document.querySelector('student-to-subject-mapping-card').subjectselectname=res[0].name;
 
       },
 

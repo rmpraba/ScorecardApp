@@ -94,6 +94,9 @@
      </div>
        <div class="card" hidden$="{{subjecttostudent}}">
        <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px"></paper-button>
+      </div>
+      <div class="card" hidden$="{{workingdats}}">
+       <paper-button on-click="Workingdays" no ink><img src="../../images/workingdays.jpg" height="180px" width="180px"></paper-button>
       </div><!-- school-creation-card -->
     
     <!-- </center>   -->
@@ -154,7 +157,7 @@
         this.createsubject=true;
         this.teach_obser=true;
         this.createschool=true;
-
+        this.workingdats=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -277,6 +280,7 @@
           this.createschooltype=false;
           this.createschool=false;
           this.subjecttostudent=false;
+          this.workingdats=false;
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;
@@ -377,10 +381,22 @@
         document.querySelector('home-page').setPage('schooltypecard','');
         document.querySelector('schooltype-card').ready();
       },
+       Workingdays:function(e)
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('working-days-card','');
+        
+        //document.querySelector('schooltype-card').ready();
+         this.$.uiservice.SelectSchoolName();
+        this.$.uiservice.fnsetgrademapping();
+  
+      },
        FnCreateschool:function(e)
       {        
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('school-creation-card','');
+          this.$.uiservice.SelectSchoolName();
+      
        // document.querySelector('category-card').ready();
        //alert("hi");
        this.$.uiservice.fnschoolidgrnerate();

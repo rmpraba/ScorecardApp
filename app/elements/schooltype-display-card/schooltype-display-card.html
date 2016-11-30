@@ -10,20 +10,20 @@
       }
       .card
       {
-        margin-left: 15%;
+        
         @apply(--layout-horizontal);
         border-bottom: 1px solid #dedede;
       }
     </style>   
      <table class="card" id="card{{schooltypeid}}">
       <tr><td hidden>{{schooltypeid}}</td>
-      <td width="40%" hidden$="{{hideschooltypenameitem}}">{{schooltypename}}</td>
-      <td width="40%" hidden$="{{hideschooltypenameinput}}"><paper-input value="{{schooltypename}}"></paper-input></td>
-      <td width="7%" hidden$="{{hideschooltypenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'>       
+      <td width="25%" hidden$="{{hideschooltypenameitem}}">{{schooltypename}}</td>
+      <td width="25%" hidden$="{{hideschooltypenameinput}}"><paper-input value="{{schooltypename}}"></paper-input></td>
+      <td width="5%" hidden$="{{hideschooltypenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'>       
       </paper-icon-button></td>
-      <td width="7%" hidden$="{{hideschooltypenameinput}}"><paper-icon-button icon='save' on-click='FnSave'>       
+      <td width="5%" hidden$="{{hideschooltypenameinput}}"><paper-icon-button icon='save' on-click='FnSave'>       
       </paper-icon-button></td>
-      <td width="7%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+      <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
       </table></tr>
       <master-ui-service id="sclservice"></master-ui-service>
       </template>
@@ -60,7 +60,7 @@
       FnSave:function()
       {
         //alert("test");
-        this.$.sclservice.FnUpdateSchooltypename(this.schoolname,this.schoolid,this.schooltypename,this.schooltypeid);
+        this.$.sclservice.FnUpdateSchooltypename(this.schooltypename,this.schooltypeid);
         this.hideschooltypenameinput=true;
         this.hideschooltypenameitem=false;
       }

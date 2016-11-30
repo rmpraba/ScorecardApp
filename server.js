@@ -5369,7 +5369,7 @@ app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
 });
   
  
-<<<<<<< HEAD
+
  app.post('/categorycreation-service' , urlencodedParser,function (req, res)
  {  
   var collection = {"school_name":req.query.schoolname,"school_id":req.query.schoolid,"category_id":req.query.categoryid,
@@ -5407,8 +5407,6 @@ app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
       res.status(200).json({'returnval': 'Already exists!'});
     });
   });
-=======
->>>>>>> origin/scorecardproductionversion
 
 
 

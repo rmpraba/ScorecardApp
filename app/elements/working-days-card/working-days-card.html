@@ -75,7 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           <template is="dom-repeat" items="{{gettermarr}}" as="view">
                                 <working-day-item-card></working-day-item-card>
                              </template>
-                          <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                          <paper-button  on-click="fnclick" dialog-confirm autofocus>Tap me to close</paper-button>
                 </center>        
                  </paper-dialog>
           </div>
@@ -93,6 +93,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready:function(){
       this.check();
       },
+      fnclick:function(e){
+        alert("1");
+      document.querySelector('working-day-item-card').fnsplice();
+      },
       check:function(e){
         for(var i=0;i<3;i++){
          temarr.push(i);
@@ -109,6 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       SelectGradeid:function(e){
        this.termgrade=e.target.selectedItem.value;
        //this.$.uiservice.searchterm();
+      this.$.uiservice.workingsearchinfo(this.workingschoolid,this.acadamicyear,this.termgrade);
       },
       fnpassarr:function(arr){
         settemarr=arr;

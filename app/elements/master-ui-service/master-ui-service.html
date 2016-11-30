@@ -357,6 +357,17 @@
         on-response="terminsertResponse"
         debounce-duration="300"
         >
+         <iron-ajax        
+        id="workingsearchinfoajax"
+        url="{{ workingsearchinfourl}}"
+        params="{{ workingsearchinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="workingsearchinfoResponse"
+        debounce-duration="300"
+        >
+       
  </template>
   <script>
   (function() {
@@ -382,17 +393,35 @@
         alert(JSON.stringify(obj));
        this.terminsertparam=obj;
         this.$.terminsertajax.generateRequest();
-                
-             }
-       
-       
-      },
+    }
+         },
       terminsertResponse:function(e)
       {
         var res=e.detail.response.returnval;
         alert(JSON.stringify(res));
        
       },
+
+workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
+       {
+        this.workingsearchinfourl=sessionStorage.getItem("addrinfo")+"/workingsearchinfo-service";
+        var obj={"workingschoolid":"","acadamicyear":"","termgrade":""};
+        obj.workingschoolid=workingschoolid;
+        obj.acadamicyear=acadamicyear;
+        obj.termgrade=termgrade;
+        alert(JSON.stringify(obj));
+       this.workingsearchinfoparam=obj;
+        this.$.workingsearchinfoajax.generateRequest();
+    
+         },
+workingsearchinfoResponse:function(e)
+      {
+       
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+       document.querySelector('working-day-item-card').fngetworkingdays(res);          
+   
+         },
 
        FnSetRoleInfo:function(rolename,roleid)
        {

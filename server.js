@@ -5368,7 +5368,7 @@ app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
   var collection = {"school_name":req.query.schoolname,"school_id":req.query.schoolid,"category_id":req.query.categoryid,
   "category_name":req.query.categoryname,"category_type":req.query.categorytype};
 
-   console.log(JSON.stringify(collection));
+   //console.log(JSON.stringify(collection));
 
    connection.query("SELECT * FROM md_category_type WHERE school_name='"+req.query.schoolname+"' and school_id='"+req.query.schoolid+"' and category_name='"+req.query.categoryname+"'and category_id='"+req.query.categoryid+"'and category_type='"+req.query.categorytype+"'",function(err, rows)
     {
@@ -5453,11 +5453,6 @@ app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
         } 
       });
 });
-
-
-
-
-
 app.post('/fnsetgrademapping-service',  urlencodedParser,function (req,res)
 {  
      var e={school_id:req.query.schoolid};
@@ -5475,6 +5470,24 @@ app.post('/fnsetgrademapping-service',  urlencodedParser,function (req,res)
       res.status(200).json({'returnval': ''});
   });
 });
+
+app.post('/workingsearchinfo-service',  urlencodedParser,function (req,res)
+{  
+ 
+  var qur="SELECT * FROM md_workingdays where school_id='"+req.query.workingschoolid+"' and academic_year='"+req.query.acadamicyear+"' and type='"+req.query.termgrade+"' " ;
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': ''});
+  });
+});
+
 app.post('/fnschoolgradeset-service',  urlencodedParser,function (req,res)
 {  
      var e={school_id:req.query.schoolid};
@@ -5549,7 +5562,7 @@ app.post('/FnSetschoolInfo-service' , urlencodedParser,function (req, res)
       
     };   
    
-       console.log(JSON.stringify(response));
+     //  console.log(JSON.stringify(response));
     var qur="SELECT * FROM  md_school WHERE id='"+req.query.schoolid1+"'";
    // var qurr="SELECT subject_type FROM md_language_type_master where subject_id='"+req.query.seclang11+"'";
 var qur1="update md_school set name='"+req.query.school+"',address='"+req.query.address+"',address1='"+req.query.address1+"',address2='"+req.query.address2+"',address3='"+req.query.address3+"',telno='"+req.query.Telephone+"',mobile_no='"+req.query.MobileNumber+"',affiliation_no='"+req.query.affiliation+"',email_id='"+req.query.Emailid+"',Board='"+req.query.Board+"',website='"+req.query.website+"'where id='"+req.query.schoolid1+"'";
@@ -5789,7 +5802,7 @@ app.post('/Fnsaveschoolinfo-service' ,  urlencodedParser,function (req, res)
 {  
    
 var qur="UPDATE  md_school SET name='"+req.query.school+"',telno='"+req.query.telno+"',mobile_no='"+req.query.MobileNumber+"',email_id='"+req.query.Emailid+"',website='"+req.query.Website+"',affiliation_no='"+req.query.affiliation+"',address='"+req.query.address+"',address1='"+req.query.address1+"',Board='"+req.query.Boardselection+"',address2='"+req.query.address2+"',address3='"+req.query.address3+"' where  id='"+req.query.schoolid1+"'";
-console.log(qur);
+//console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -6105,7 +6118,7 @@ app.post('/SelectSchoolName-service' ,urlencodedParser,
     if(!err){
 
       res.status(200).json({'returnval': rows});
-       console.log(rows);
+      // console.log(rows);
     }
 
     else

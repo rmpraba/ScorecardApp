@@ -1,0 +1,79 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="grade-display-card">
+  <template>
+    <style>
+      :host 
+      {
+        display: block;
+      }
+      .card
+      {
+        
+        @apply(--layout-horizontal);     
+        border-bottom: 1px solid #dedede;
+      }
+    </style>
+
+     <table class="card" id="card{{gradeid}}">
+      <tr><td hidden>{{gradeid}}</td>
+      <td width="40%" hidden$="{{hidegradenameitem}}">{{gradename}}</td>
+      <td width="40%" hidden$="{{hidegradenameinput}}"><paper-input value="{{gradename}}"></paper-input></td>
+      <td width="5%" hidden$="{{hidegradenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
+      </td>
+      <td width="5%" hidden$="{{hidegradenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
+      </td>
+      <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+      </table></tr>
+    <master-ui-service id="service"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'grade-display-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'grade-display-card',
+          notify: true
+        }
+      },
+      ready:function()
+      {
+        
+        this.hidegradenameinput=true;
+        this.hidegradenameitem=false;
+      },
+      FnDelete:function()
+      {
+        this.$.service.FnDeleteGrade(this.gradeid);
+      },
+      FnEdit:function()
+      {
+        this.hidegradenameinput=false;
+        this.hidegradenameitem=true;
+      },
+      FnSave:function()
+      {
+        this.$.service.FnUpdateGrade(this.gradeid,this.gradename);
+        this.hidegradenameinput=true;
+        this.hidegradenameitem=false;
+      }
+     
+    });
+  })();
+  </script>
+</dom-module>

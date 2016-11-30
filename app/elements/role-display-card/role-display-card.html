@@ -1,4 +1,5 @@
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="role-display-card">
@@ -8,8 +9,10 @@
       {
         display: block;
       }
-      .card{
-        @apply(--layout-horizontal);
+      .card
+      {
+        
+        @apply(--layout-horizontal);     
         border-bottom: 1px solid #dedede;
       }
     </style>
@@ -40,19 +43,23 @@
           notify: true
         }
       },
-      ready:function(){
+      ready:function()
+      {
         // alert('coming!');
         this.hiderolenameinput=true;
         this.hiderolenameitem=false;
       },
-      FnDelete:function(){
+      FnDelete:function()
+      {
         this.$.service.FnDeleteRole(this.roleid);
       },
-      FnEdit:function(){
+      FnEdit:function()
+      {
         this.hiderolenameinput=false;
         this.hiderolenameitem=true;
       },
-      FnSave:function(){
+      FnSave:function()
+      {
         this.$.service.FnUpdateRole(this.roleid,this.rolename);
         this.hiderolenameinput=true;
         this.hiderolenameitem=false;

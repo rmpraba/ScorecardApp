@@ -145,10 +145,14 @@
           <schooltype-card></schooltype-card>
         </section>
         <section data-category="categorycard">
-          <category-card></category-card>school-creation-card
+          <category-card></category-card>
         </section>
         <section data-category="school-creation-card">
           <school-creation-card></school-creation-card>
+        </section>
+
+        <section data-category="gradecreationcard">
+          <grade-creation-card></grade-creation-card>
         </section>
      
       </iron-pages>
@@ -508,7 +512,17 @@
        document.querySelector('beginner-assesment-card').FnRefresh();
        // document.querySelector('language-enrichment-card').FnRefresh();
     }
+    if(localStorage.getItem("curr_sess_page")=="gradecreationcard")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('grade-creation-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       // document.querySelector('language-enrichment-card').FnRefresh();
+    }
+
   },
+
+
 
   FnsetTitle:function(title){
     this.title=title;

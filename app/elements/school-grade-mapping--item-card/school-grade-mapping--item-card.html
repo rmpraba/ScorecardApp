@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="working-day-item-card">
+<dom-module id="school-grade-mapping--item-card">
   <template>
     <style>
       :host {
@@ -18,27 +18,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div>
-      <paper-input on-change="fngetterm" value="{{getalltermsname}}"></paper-input>
-                              
+    <paper-checkbox>{{mdschooltype}}</paper-checkbox> 
     </div>
   </template>
   <script>
   (function() {
     'use strict';
-var bigterm=[];
-   
+
     Polymer({
-      is: 'working-day-item-card',
+      is: 'school-grade-mapping--item-card',
 
-      fngetterm:function(e){
-        alert("hi");
-        var obj={"term":""};
-          obj.term=this.getalltermsname;
-          bigterm.push(obj);
-          alert(JSON.stringify(bigterm));
-         document.querySelector('working-days-card').fnpassarr(bigterm);
-      },
-
+      properties: {
+        foo: {
+          type: String,
+          value: 'school-grade-mapping--item-card',
+          notify: true
+        }
+      }
     });
   })();
   </script>

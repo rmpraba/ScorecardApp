@@ -10,35 +10,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="working-day-item-card">
+<dom-module id="master-school_type-creation">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <div>
-      <paper-input on-change="fngetterm" value="{{getalltermsname}}"></paper-input>
-                              
-    </div>
+    <div>Hello from <span>{{foo}}</span></div>
   </template>
   <script>
   (function() {
     'use strict';
-var bigterm=[];
-   
+
     Polymer({
-      is: 'working-day-item-card',
+      is: 'master-school_type-creation',
 
-      fngetterm:function(e){
-        alert("hi");
-        var obj={"term":""};
-          obj.term=this.getalltermsname;
-          bigterm.push(obj);
-          alert(JSON.stringify(bigterm));
-         document.querySelector('working-days-card').fnpassarr(bigterm);
-      },
-
+      properties: {
+        foo: {
+          type: String,
+          value: 'master-school_type-creation',
+          notify: true
+        }
+      }
     });
   })();
   </script>

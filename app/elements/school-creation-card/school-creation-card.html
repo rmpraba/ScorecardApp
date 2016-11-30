@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       background-color: #363636;
       color: #ffffff;
       width: 10%;
-      margin-left: 40%;
+      margin-left:5%;
       margin-top: 4%;
       }
       .button paper-button
@@ -52,6 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .role{
         width: 50%;
+         margin-left:25%;
       }
       paper-button{
         margin-left: 50%;
@@ -66,141 +67,94 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <div>
-     <paper-input label="Search here.........." prefix>
+     <!-- <paper-input label="Search here.........." prefix>
       <paper-icon-button prefix icon="search" on-click="FnSearch"></paper-icon-button>
     </paper-input>
-    <div class="rbutton">
+ --> <div>
+     <center><h3 style="color:#1A5276">SCHOOL CREATION</h3></center> 
+    </div>
+    <center>
+      <div class="rbutton">
     <paper-button on-click="Fncreate">Create</paper-button>
+    </center>
      </div>
 
     <div class="role">
     <template is="dom-repeat" items="{{schoolcreatarr}}" as="view">
     <school-creation-item-card schoolname="{{view.name}}" schoolid="{{view.id}}" mobile="{{view.mobile_no}}"  address="{{view.address}}" 
-    address1="{{view.address1}}" address2="{{view.address2}}" address3="{{view.address3}}"   affiliationno="{{view.affiliation_no}}" telno="{{view.telno}}" mailid="{{view.email_id}}" wesite="{{view.website}}" hiderolenameinput="true" hiderolenameitem="false"></school-creation-item-card>
+    address1="{{view.address1}}" address2="{{view.address2}}" address3="{{view.address3}}"   affiliationno="{{view.affiliation_no}}" telno="{{view.telno}}" graprimary="{{view.primary}}"  mailid="{{view.email_id}}" boardselection="{{view.Board}}" wesite="{{view.website}}"  hiderolenameinput="true" hiderolenameitem="false"></school-creation-item-card>
     </template>
-    </div>
-    <div class="role">
-      <template is="dom-repeat" items="{{grademaparr}}" as="view">
-         <school-grade-mapping-card ></school-grade-mapping-card>
-      </template>
+   
     </div>
     
    
-                       
-    <paper-dialog id="roledialog">
+            <paper-dialog id="roledialog" modal style="width:50%;">
        <div class="form-group-heading">
                              <h4>School Details</h4>
-                     </div>
-                      <div class="list-group col-sm-12 panel-body form-category">
+       </div>
+                 <div class="list-group col-sm-12 panel-body form-category">
                             <paper-input value={{schoolid1}} hidden></paper-input>
                           <div class="col-sm-6">
-                         <paper-input label="School Name" id="School" required error-message="needs Schoolname!" value="{{school}}"></paper-input>
+                        <paper-input label="School Name" id="School" required error-message="needs Schoolname!" value="{{school}}"  allowed-pattern="[a-zA-Z ]" ></paper-input>
                         </div>
                         <div class="col-sm-6">
-                      <paper-input label="Telephone Number" id="Telephone" required error-message="needs telepnoneno!" value="{{Telephone}}"></paper-input>
+                      <paper-input label="Telephone Number" id="Telephone" required error-message="needs telepnoneno!" value="{{Telephone}}"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
                         </div>
                         <div class="col-sm-6">
-                         <paper-input label="Mobile Number" id="Mobile" required error-message="needs mobileno" value="{{MobileNumber}}"></paper-input>
+                         <paper-input label="Mobile Number" id="Mobile" required error-message="needs mobileno" value="{{MobileNumber}}" allowed-pattern="[0-9]" maxlength="10"></paper-input>
                         </div>
                          <div class="col-sm-6">
                          <gold-email-input label="Emailid" id="Emailid" required error-message="needs mailid!" value="{{Emailid}}"></gold-email-input>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                          <paper-input label="Website" id="Website" required error-message="needs wevbsite!" value="{{Website}}"></paper-input>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                          <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input>
                         </div>
-                         <div class="col-sm-3">
-                                             <paper-checkbox  id="Pre" on-change="Fnsetpre">Pre-primary</paper-checkbox>
-                             
+                        <div class="col-sm-4">
+                         <!-- <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input> -->
+                          <paper-dropdown-menu label="Board Type">
+                          <paper-listbox id="academicswww" class="dropdown-content" on-iron-select="boardtype">
+                            <paper-item>ICSE</paper-item>
+                            <paper-item>CBSE</paper-item>
+                            <paper-item>State</paper-item>
+                            <paper-item>IB</paper-item>
+                          </paper-listbox>
+                        </paper-dropdown-menu>
                         </div>
                       
-                      <div class="col-sm-3">
-                         <paper-checkbox  id="Primary" on-change="FnSetprmary">Primary</paper-checkbox>
-            
-                        </div>
-                      <div class="col-sm-3">
-                        <paper-checkbox id="Secondry" on-change="Fnsetsecondry">Secondry</paper-checkbox>
-            
-                        </div>
-                      <div class="col-sm-3">
-                         <paper-checkbox id="High" on-change="FnserHighsecondry">High-Secondry</paper-checkbox>
-
-                        </div>
-                        </div>
+                        
+                    </div>
                      <div class="form-group-heading">
                              <h4> School Address Details</h4>
                      </div>
                   
-                    <div class="list-group col-sm-12 panel-body form-category">
+                     <div class="list-group col-sm-12 panel-body form-category">
                         <div class="col-sm-6">
                          <paper-input label="Village/Town" id="Village" required error-message="needs Village/Town!" value="{{address}}"></paper-input>
                         </div>
                         <div class="col-sm-6">
-                        <paper-input label="District" id="District" value="{{address1}}"  required error-message="needs District!"></paper-input>
+                        <paper-input label="District" id="District" value="{{address1}}"  required error-message="needs District!"  allowed-pattern="[a-zA-Z ]"></paper-input>
                         </div>
                        <div class="col-sm-6">
-                         <paper-input label="State" id="State" value="{{address2}}"  required error-message="needs state!"></paper-input>
+                         <paper-input label="State" id="State" value="{{address2}}"  required error-message="needs state!"  allowed-pattern="[a-zA-Z ]"></paper-input>
                        </div>
                       <div class="col-sm-6">
-                       <paper-input label="Pincode" id="Pincode" value="{{address3}}"  required error-message="needs Pincode!"></paper-input>
-                      </div>
-                     <div class="button">
-                          <paper-button on-click="FnSubmit" dialog-confirm autofocus >Submit </paper-button>
-                     </div>
-                      </div>
-                   </div>
-         </paper-dialog>
+                       <paper-input label="Pincode" id="Pincode" value="{{address3}}"  required error-message="needs Pincode!"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
+                      </div></br>
+                      <span style="float:right;color:#1C63C9">
+                          <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+                     </span>
+                     <span class="button" style="float:center;">
+                          <paper-button on-click="FnSubmit">Submit </paper-button>
+                     </span>
+                  </div>
+                </div>
+           </paper-dialog>
 
 
-           <paper-dialog id="preprimary">
-               <center>
-                  <h4 style="color:#2874A6" >SELECT THE GRADE</h4>
-              <template is="dom-repeat" items="{{preprimearr}}" as="view">
-                <school-creation-mapping-item-card  gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
-                </school-creation-mapping-item-card> 
-                 </template>
-                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-                </center>        
-                </paper-dialog>
-
-           <paper-dialog id="primary" >
-                <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
-               <template is="dom-repeat" items="{{Primaryarr}}" as="view">
-                 <school-creation-mapping-item-card  gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
-                 </school-creation-mapping-item-card> 
-              </template>
-                 <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-                 </center>
-          </paper-dialog>
-           <paper-dialog id="secondry">
-                 <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
-                    <template is="dom-repeat" items="{{secondarr}}" as="view">
-                     <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
-                                 </school-creation-mapping-item-card> 
-                     </template>
-                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-                       
-                </center>        
-          </paper-dialog>
-           <paper-dialog id="highsecondry">
-                 <center><h4 style="color:#2874A6" >SELECT THE GRADE</h4>
-                  <template is="dom-repeat" items="{{highsecondarr}}" as="view">
-            <school-creation-mapping-item-card gradeid={{view.grade_id}} gradename="{{view.grade_name}}" schooltyp="{{view.school_type}}">
-                                 </school-creation-mapping-item-card> 
-                       </template>
-                   <div >               
-                        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-                        </div>
-             </center>
-         </paper-dialog>
- 
-
-
-
-
-          </div>
+             </div>
      <master-ui-service id="uiservice"></master-ui-service>
 
   </template>
@@ -214,7 +168,7 @@ var gradearrr=[];
  ready:function()
       {
         this.$.uiservice.fnschoolcreation();
-        //this.$.hidenewrolecard=true;
+       
       this.FnRefresh();
 ///     this.Fnsetsecondry();
       },  
@@ -230,38 +184,17 @@ var gradearrr=[];
        this.address1="";
        this.address2=""; 
        this.address3="";
-       this.$.Pre.checked=false;
-       this.$.Primary.checked=false;
-       this.$.High.checked=false;
-       this.$.Secondry.checked=false;
      
-      },  
+    },  
       FnSearch:function(){
         
       },
-        Fnsetpre:function(e){
-         if(document.querySelector("#Pre").checked==true){
-         this.$.preprimary.open();
-       }
-      },
-      FnSetprmary:function(e){
-        if(document.querySelector("#Primary").checked==true){
-        this.$.primary.open();
-      }
-      },
-     Fnsetsecondry:function(e){
-      if(document.querySelector("#Secondry").checked==true){
-        this.$.secondry.open();
-      }
-      },
-      FnserHighsecondry:function(e){
-        if(document.querySelector("#High").checked==true){
-          this.$.highsecondry.open();
-      }
-      },
-       FnSetGrademapp:function(arr){
-       gradearrr=arr;
-
+       
+      boardtype:function(e){
+        this.Board=e.target.selectedItem.textContent.trim();
+        alert(this.Board);
+        this.$.uiservice.fnschoolidgrnerate();  
+     
       },
       FnSubmit:function()
       {    
@@ -272,7 +205,7 @@ if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""|
                 this.$.School.validate();
                 this.$.Telephone.validate();
                 this.$.Mobile.validate();
-                //this.$.Emailid.validate();
+                this.$.Emailid.validate();
                 this.$.Website.validate();
                 this.$.affiliation.validate();
                 this.$.Village.validate();
@@ -281,17 +214,16 @@ if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""|
                 this.$.Pincode.validate();
                }
          else{
-         this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation);
-          this.$.uiservice.FnSchoolToGrademapping(this.schoolid1,gradearrr);
-          }    
-    },     
+         this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation,this.Board);
+         this.ready();
+          document.querySelector('#academicswww').selected=-1;
+  
+         }    
+      },     
      Fncreate:function(){
       this.FnRefresh();
-      this.$.roledialog.toggle();
-      this.$.uiservice.fnschoolidgrnerate();  
-      document.querySelector('school-creation-mapping-item-card').fnsetclears1();
-        document.querySelector('school-creation-mapping-item-card').fnsetclears2();
-    
+      this.$.roledialog.open();
+     
       }  
 
 

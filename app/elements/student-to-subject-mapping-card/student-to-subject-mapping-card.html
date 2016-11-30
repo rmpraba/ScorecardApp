@@ -1,0 +1,137 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<dom-module id="student-to-subject-mapping-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+       .card{
+      width: 100%;        
+      @apply(--layout-vertical);
+      }
+      .inner{
+      @apply(--layout-horizontal);
+      margin-left:10%;
+      }
+      .list{
+      margin-left:10%;
+      margin-top: 5%;
+      }
+      paper-dropdown-menu{
+        margin-left: 5%;
+      }   
+      paper-dropdown-menu{
+      width: 15%;
+      /*margin-left: 3%;*/
+      --paper-input-container-label: { color: red };
+      text-align:center;
+      }
+    </style>
+          
+      <div class="card">
+          <div class="inner">
+               <paper-input value="{{subjectselectid}}" hidden></paper-input>
+               <paper-input value="{{subjectselectname}}"></paper-input>
+          <paper-dropdown-menu id="term" label="Select Term">
+            <paper-menu id="rtermmm" class="dropdown-content"   on-iron-select="FnStoSterm" attr-for-selected="value" required>
+                <paper-item value="2015-2016">2015-2016</paper-item>     
+                <paper-item value="2016-2017">2016-2017</paper-item>
+                <paper-item value="2017-2018">2017-2018</paper-item>
+                <paper-item value="2018-2019">2018-2019</paper-item>
+                <paper-item value="2019-2020">2019-2020</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+
+          <paper-dropdown-menu id="grade" label="Select Grade">
+            <paper-menu id="rgradewww" class="dropdown-content" on-iron-select="FnStosGrade">     
+              <template is="dom-repeat" items="{{selectgradearr}}">
+                <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+         <paper-dropdown-menu  label="Select Section">
+            <paper-menu  id="rsectionwww" class="dropdown-content"  on-iron-select="FnStoSSection">
+              <template is="dom-repeat" items="{{selectsectionarrr}}">
+                <paper-item value="{{item.id}}">{{item.section}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+         </div>
+         <div class="list" hidden$="{{hidecard}}">
+          <student-list-mapping hidethirdlang="{{hidethirdlang}}"></student-list-mapping>
+        </div>
+    </div>
+
+  <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'student-to-subject-mapping-card',
+
+    TeachertoGradeSelectSchoolid:function(e)
+     {
+             this.subjectselectid;
+             //this.eeeee=e.target.selectedItem.textContent.trim(); 
+           //  alert(this.subjectselectid+this.eeeee);
+             localStorage.setItem("curr_sess_selectedSchool",this.subjectselectid);
+            // alert(this.TtoGempid);
+             this.$.uiservice.TeachertoGradeSectionNames(this.subjectselectid);
+      },
+    FnStoSterm:function(e)
+     {
+      this.FnStoStermid=e.target.selectedItem.textContent.trim(); 
+       localStorage.setItem("curr_sess_selectedTerms",this.FnStoStermid);
+      //alert(this.FnStoStermid);
+     },
+     FnStosGrade:function(e)
+     {     
+         document.querySelector('#rsectionwww').selected=-1;
+         this.FnStosGradeid=e.target.selectedItem.textContent.trim();
+         this.FnStosGradeid2=e.target.selectedItem.value;
+         localStorage.setItem("curr_sess_selectedgrade",this.FnStosGradeid);
+         localStorage.setItem("curr_sess_selectedgrade1",this.FnStosGradeid2);
+        // alert(this.FnStosGradeid);
+         this.$.uiservice.FnselecttoSection(this.subjectselectid,this.FnStosGradeid);
+    
+        if(this.FnStosGradeid=="Grade-5"||this.FnStosGradeid=="Grade-6"||this.FnStosGradeid=="Grade-7"||this.FnStosGradeid=="Grade-8"||this.FnStosGradeid=="Grade-9"||this.FnStosGradeid=="Grade-10")
+          this.hidethirdlang=false;
+        else
+          this.hidethirdlang=true;
+          
+   
+     },
+     FnStoSSection:function(e)
+     {
+       this.FnStoSSectionid=e.target.selectedItem.textContent.trim();
+       this.FnStoSSectionid1=e.target.selectedItem.value;
+      localStorage.setItem("curr_sess_selectedSection",this.FnStoSSectionid);
+      localStorage.setItem("curr_sess_selectedSectionvalue1",this.FnStoSSectionid1);
+     // alert(this.FnStoSSectionid+ this.FnStoSSectionid+ this.FnStoStermid+this.FnStosGradeid);
+      this.$.uiservice.SbjecttoStudentmapping(this.FnStoSSectionid,this.subjectselectid,this.FnStoStermid,this.FnStosGradeid);
+       //  alert(this.FnStoSSectionid+this.FnStoSSectionid1);
+     },
+     fnsetreclear:function(e){
+     // alert("hi");
+      document.querySelector('#rsectionwww').selected=-1;
+      document.querySelector('#rtermmm').selected=-1;
+      document.querySelector('#rgradewww').selected=-1;
+     
+        
+     } 
+    });
+  })();   
+  </script>
+</dom-module>

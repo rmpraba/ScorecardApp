@@ -23,9 +23,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host{
          margin-left: 10%;
-        display: block;
+        display: block;     
          @apply(--layout-left);
-        /*width: 50%;*/
+        /*width: 50%;*/   
       }
       }
       .rolecard
@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       background-color: #363636;
       color: #ffffff;
       width: 10%;
-      margin-left: 40%;
+      margin-left:5%;
       margin-top: 4%;
       }
       .button paper-button
@@ -52,96 +52,127 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .role{
         width: 50%;
+         margin-left:25%;
       }
       paper-button{
         margin-left: 50%;
         margin-top: 5%;
       }
+      .card{
+        @apply(--layout-horizontal);
+              margin-left:30%;
+        
+        
+      } 
 
     </style>
     <div>
-     <paper-input label="Search here.........." prefix>
+     <!-- <paper-input label="Search here.........." prefix>
       <paper-icon-button prefix icon="search" on-click="FnSearch"></paper-icon-button>
     </paper-input>
-    <div class="rbutton">
+ --> <div>
+     <center><h3 style="color:#1A5276">SCHOOL CREATION</h3></center> 
+    </div>
+    <center>
+      <div class="rbutton">
     <paper-button on-click="Fncreate">Create</paper-button>
+    </center>
      </div>
 
     <div class="role">
     <template is="dom-repeat" items="{{schoolcreatarr}}" as="view">
     <school-creation-item-card schoolname="{{view.name}}" schoolid="{{view.id}}" mobile="{{view.mobile_no}}"  address="{{view.address}}" 
-    address1="{{view.address1}}" address2="{{view.address2}}" address3="{{view.address3}}"   affiliationno="{{view.affiliation_no}}" telno="{{view.telno}}" mailid="{{view.email_id}}" wesite="{{view.website}}" hiderolenameinput="true" hiderolenameitem="false"></school-creation-item-card>
-    </div>
+    address1="{{view.address1}}" address2="{{view.address2}}" address3="{{view.address3}}"   affiliationno="{{view.affiliation_no}}" telno="{{view.telno}}" graprimary="{{view.primary}}"  mailid="{{view.email_id}}" boardselection="{{view.Board}}" wesite="{{view.website}}"  hiderolenameinput="true" hiderolenameitem="false"></school-creation-item-card>
     </template>
    
-                       
-    <paper-dialog id="roledialog">
+    </div>
+    
+   
+            <paper-dialog id="roledialog" modal style="width:50%;">
        <div class="form-group-heading">
                              <h4>School Details</h4>
-                     </div>
-                      <div class="list-group col-sm-12 panel-body form-category">
+       </div>
+                 <div class="list-group col-sm-12 panel-body form-category">
                             <paper-input value={{schoolid1}} hidden></paper-input>
                           <div class="col-sm-6">
-                         <paper-input label="School Name" id="School" required error-message="needs Schoolname!" value="{{school}}"></paper-input>
+                        <paper-input label="School Name" id="School" required error-message="needs Schoolname!" value="{{school}}"  allowed-pattern="[a-zA-Z ]" ></paper-input>
                         </div>
                         <div class="col-sm-6">
-                      <paper-input label="Telephone Number" id="Telephone" required error-message="needs telepnoneno!" value="{{Telephone}}"></paper-input>
+                      <paper-input label="Telephone Number" id="Telephone" required error-message="needs telepnoneno!" value="{{Telephone}}"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
                         </div>
                         <div class="col-sm-6">
-                         <paper-input label="Mobile Number" id="Mobile" required error-message="needs mobileno" value="{{MobileNumber}}"></paper-input>
+                         <paper-input label="Mobile Number" id="Mobile" required error-message="needs mobileno" value="{{MobileNumber}}" allowed-pattern="[0-9]" maxlength="10"></paper-input>
                         </div>
                          <div class="col-sm-6">
                          <gold-email-input label="Emailid" id="Emailid" required error-message="needs mailid!" value="{{Emailid}}"></gold-email-input>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                          <paper-input label="Website" id="Website" required error-message="needs wevbsite!" value="{{Website}}"></paper-input>
                         </div>
-                         <div class="col-sm-6">
-                         <paper-input label="affiliation No" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input>
+                        <div class="col-sm-4">
+                         <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input>
                         </div>
+                        <div class="col-sm-4">
+                         <!-- <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input> -->
+                          <paper-dropdown-menu label="Board Type">
+                          <paper-listbox id="academicswww" class="dropdown-content" on-iron-select="boardtype">
+                            <paper-item>ICSE</paper-item>
+                            <paper-item>CBSE</paper-item>
+                            <paper-item>State</paper-item>
+                            <paper-item>IB</paper-item>
+                          </paper-listbox>
+                        </paper-dropdown-menu>
                         </div>
+                      
+                        
+                    </div>
                      <div class="form-group-heading">
                              <h4> School Address Details</h4>
                      </div>
-
-                    <div class="list-group col-sm-12 panel-body form-category">
+                  
+                     <div class="list-group col-sm-12 panel-body form-category">
                         <div class="col-sm-6">
                          <paper-input label="Village/Town" id="Village" required error-message="needs Village/Town!" value="{{address}}"></paper-input>
                         </div>
                         <div class="col-sm-6">
-                        <paper-input label="District" id="District" value="{{address1}}"  required error-message="needs District!"></paper-input>
+                        <paper-input label="District" id="District" value="{{address1}}"  required error-message="needs District!"  allowed-pattern="[a-zA-Z ]"></paper-input>
                         </div>
-                       <div class="col-sm-6">   
-                         <paper-input label="State" id="State" value="{{address2}}"  required error-message="needs state!"></paper-input>
+
+                        <div class="col-sm-6">
+                         <paper-input label="State" id="State" value="{{address2}}"  required error-message="needs state!"  allowed-pattern="[a-zA-Z ]"></paper-input>
+
                        </div>
                       <div class="col-sm-6">
-                       <paper-input label="Pincode" id="Pincode" value="{{address3}}"  required error-message="needs Pincode!"></paper-input>
-                      </div>
-                     <div class="button">
-                          <paper-button on-click="FnSubmit" dialog-confirm autofocus >Submit </paper-button>
-                      </div>
-                      </div>
-                   </div>
-         </paper-dialog>
+                       <paper-input label="Pincode" id="Pincode" value="{{address3}}"  required error-message="needs Pincode!"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
+                      </div></br>
+                      <span style="float:right;color:#1C63C9">
+                          <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+                     </span>
+                     <span class="button" style="float:center;">
+                          <paper-button on-click="FnSubmit">Submit </paper-button>
+                     </span>
+                  </div>
+                </div>
+           </paper-dialog>
 
-   
 
-    </div>
+             </div>
      <master-ui-service id="uiservice"></master-ui-service>
 
   </template>
   <script>
   (function() {
     'use strict';
-
+var gradearrr=[];
     Polymer({
       is: 'school-creation-card',
 
  ready:function()
       {
         this.$.uiservice.fnschoolcreation();
-        //  this.$.hidenewrolecard=true;
-        this.FnRefresh();
+       
+      this.FnRefresh();
+///     this.Fnsetsecondry();
       },  
       FnRefresh:function()
       {
@@ -155,18 +186,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        this.address1="";
        this.address2=""; 
        this.address3="";
-      },  
+     
+    },  
       FnSearch:function(){
         
       },
+       
+      boardtype:function(e){
+        this.Board=e.target.selectedItem.textContent.trim();
+        alert(this.Board);
+        this.$.uiservice.fnschoolidgrnerate();  
+     
+      },
       FnSubmit:function()
-      {      
-           if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""||this.affiliation==""||this.address==""||this.address1==""||this.address2==""||this.address3==""||this.Emailid=="")
+      {    
+         //alert(JSON.stringify(gradearrr));
+
+if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""||this.affiliation==""||this.address==""||this.address1==""||this.address2==""||this.address3==""||this.Emailid=="")
               {
                 this.$.School.validate();
                 this.$.Telephone.validate();
                 this.$.Mobile.validate();
-              //  this.$.Emailid.validate();
+                this.$.Emailid.validate();
                 this.$.Website.validate();
                 this.$.affiliation.validate();
                 this.$.Village.validate();
@@ -174,17 +215,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 this.$.District.validate();
                 this.$.Pincode.validate();
                }
-
-             else{
-         this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation);
-        this.FnRefresh();
-       }    
+         else{
+         this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation,this.Board);
+         this.ready();
+          document.querySelector('#academicswww').selected=-1;
+  
+         }    
       },     
      Fncreate:function(){
       this.FnRefresh();
-      this.$.roledialog.toggle();
-      this.$.uiservice.fnschoolidgrnerate();  
-     }  
+      this.$.roledialog.open();
+     
+      }  
+
 
       });
   })();

@@ -9,6 +9,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- Jquery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
 <dom-module id="school-creation-item-card">
   <template>
@@ -19,37 +27,81 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .card{
         @apply(--layout-horizontal);
         border-bottom: 1px solid #dedede;
-      }
-    </style>
+      }      
+
+    </style>       
     <div> 
     <table class="card" id="card{{schoolid}}">
       <tr><td hidden>{{schoolid}}</td>
-      <td width="40%" hidden$="{{hiderolenameitem}}">{{schoolname}}</td>
-      <td width="40%" hidden$="{{hiderolenameinput}}">
-          <paper-input label="school id" hidden value="{{schoolid}}"></paper-input>
-          <paper-input label="school name" value="{{schoolname}}"></paper-input>
-          <paper-input label="Affiliationno" value="{{affiliationno}}"></paper-input>
-          <paper-input  label="mobilno" value="{{mobile}}"></paper-input>
-          <paper-input label="Telephone number" value="{{telno}}"></paper-input>
-          <paper-input label="Mail Id" value="{{mailid}}"></paper-input>
-          <paper-input label="website" value="{{wesite}}"></paper-input>
-          <paper-input label="Village/Town" value="{{address}}"></paper-input>
-          <paper-input label="District" value="{{address1}}"></paper-input>
-          <paper-input label="State" value="{{address2}}"></paper-input>
-          <paper-input  label="Pincode" value="{{address3}}"></paper-input>
-     </td>
-      <td width="5%" hidden$="{{hiderolenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
-      </td>
-      <td width="5%" hidden$="{{hiderolenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
-      </td>
-      <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
-    </table></tr>
+      <td width="40%" >{{schoolname}}</td>
+      
+      
+   <paper-dialog id="entetroleset" modal style="width:50%;">
+       <div class="form-group-heading">
+                             <h4>School Details</h4>
+       </div>
+                 <div class="list-group col-sm-12 panel-body form-category">
+                            <paper-input value={{schoolid}} hidden></paper-input>
+                          <div class="col-sm-6">
+                        <paper-input label="School Name"  value="{{schoolname}}" ></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                      <paper-input label="Telephone Number" value="{{telno}}"  allowed-pattern="[0-9]"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                         <paper-input label="Mobile Number" value="{{mobile}}" allowed-pattern="[0-9]"></paper-input>
+                        </div>
+                         <div class="col-sm-6">
+                         <gold-email-input label="Emailid" value="{{mailid}}"></gold-email-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <paper-input label="Website" value="{{wesite}}"></paper-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <paper-input label="affiliation" value="{{affiliationno}}"></paper-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <paper-input label="Board Type"  value="{{boardselection}}"></paper-input>
+                        </div>
+                      
+                        
+                    </div>
+                     <div class="form-group-heading">
+                             <h4> School Address Details</h4>
+                     </div>
+                  
+                     <div class="list-group col-sm-12 panel-body form-category">
+                        <div class="col-sm-6">
+                         <paper-input label="Village/Town" value="{{address}}"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                        <paper-input label="District"  value="{{address1}}"></paper-input>
+                        </div>
+                       <div class="col-sm-6">
+                         <paper-input label="State" value="{{address2}}"></paper-input>
+                       </div>
+                      <div class="col-sm-6">
+                       <paper-input label="Pincode" value="{{address3}}"></paper-input>
+                      </div></br>
+                      <span style="float:right;color:#1C63C9">
+                          <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+                     </span>
+                     <span class="button" style="float:center;color:white;background-color:black;">
+                            <paper-button  on-click='FnSave'>Save</paper-button>
+                      </span>
+                  </div>
+                </div>
+           </paper-dialog>
+
+
+
+</div>
     <master-ui-service id="uiservice"></master-ui-service></div>
   </template>
   <script>
   (function() {
     'use strict';
-
+       var getinsertarr=[];
     Polymer({
       is: 'school-creation-item-card',
 
@@ -62,17 +114,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.uiservice.Fndeleteinfo(this.schoolid);
        },
       FnEdit:function(){
+        this.$.entetroleset.open();
         this.hiderolenameinput=false;
         this.hiderolenameitem=true;
-      },
+        },
+      
       FnSave:function(){
-        this.$.uiservice.Fnsaveschoolinfo(this.schoolname,this.schoolid,this.telno,this.mobile,this.mailid,this.wesite,this.address,this.address1,this.address2,this.address3,this.affiliationno);
+        this.$.uiservice.Fnsaveschoolinfo(this.schoolname,this.schoolid,this.telno,this.mobile,this.mailid,this.wesite,this.address,this.address1,this.address2,this.address3,this.affiliationno,this.boardselection);
         this.hiderolenameinput=true;
         this.hiderolenameitem=false;
       },
-      setColor:function(roleid){
-        document.getElementById('card'+schoolname).backgroundColor = "yellow";   
-      }
+
     });
   })();
   </script>

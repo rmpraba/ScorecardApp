@@ -15,19 +15,25 @@
          @apply(--layout-center);
         /*width: 40%;*/
       }
-      .card
+      .card          
       {
          @apply(--layout-center);
-        width: 60%;
-        margin-left: 10%;
+        width: 70%;
+        margin-left: 8%;
+      }
+      .title
+      {
+        @apply(--layout-center);
+        width: 30%;
+        margin-left: 29%; 
       }
       .cnbutton paper-button
       {
       background-color: #363636;
       color: #ffffff;
-      width: 30%;
-      margin-left: 30%;
-      margin-top: 4%;
+      width: 10%;
+      margin-left: 40%;
+      margin-top: 5%;
       }
 
       .button paper-button
@@ -40,44 +46,36 @@
       }
       .category
       {
+        margin-top: 4%;
         width: 50%;
       }  
     </style>
+     
+     <div class="title"> 
+    <h3>MASTER CATEGORY CREATION</h3>
+    </div> 
 
-     <paper-input label="Search here.........." suffix>
-      <paper-icon-button suffix icon="search" on-click="FnSearch"></paper-icon-button>
-    </paper-input>
     <div class="cnbutton">
     <paper-button on-click="Fncreate">Create </paper-button>
     </div>
 
     <div class="category">
     <template is="dom-repeat" items="{{catarr}}" as="ca">
-    <category-display-card schoolname="{{ca.school_name}}" schoolid="{{ca.school_id}}" categoryname="{{ca.category_name}}" categoryid="{{ca.category_id}}"  categorytype="{{ca.category_type}}" hidecategoryinput="true" hidecategoryitem="false">  </category-display-card>
+    <category-display-card  categoryname="{{ca.category_name}}" categoryid="{{ca.category_id}}"  categorytype="{{ca.category_type}}" hidecategoryinput="true" hidecategoryitem="false">  </category-display-card>
     </div>
     </template>
 
     <div hidden>{{temphidden}}</div>
 
-    <paper-dialog id="categorydialog">
+    <paper-dialog id="categorydialog" modal>
     <div class="card">
-    <paper-input value="{{schoolname}}" label="School Name"></paper-input>
-    <paper-input  hidden value="{{schoolid}}" label="School Id"></paper-input>
-
     <paper-input readonly  hidden value="{{categorytype}}" label="Categorytype"></paper-input>
-
-    <paper-dropdown-menu id="categoryname" label="Select Categoryname" disabled="{{read}}" required style="width:100%;">
-            <paper-menu id="category" class="dropdown-content"  on-iron-select="FnSelectcategoryname"  attr-for-selected="value" required>  
-
-      <template is="dom-repeat" items="{{catnamearr}}" as="view">
-      <paper-item value="{{view.subject_category_id}}">{{view.subject_category_name}}</paper-item>                          
-      </template>
-      </paper-menu>
-    </paper-dropdown-menu>
+    <paper-input value="{{categoryname}}" label="Category Name"></paper-input>
     </div>
 
-    <div class="button">
-    <paper-button on-click="FnSubmit">Submit </paper-button>
+    <div class="buttons">
+    <paper-button  autofocus on-click="FnSubmit">Submit </paper-button>
+    <paper-button  dialog-confirm autofocus>Close</paper-button>
     </div>
     </paper-dialog>
     <master-ui-service id="uiservice"></master-ui-service>
@@ -85,62 +83,48 @@
     <script>
     (function() {
     'use strict';
-     var catnames;
-     var catid;
+       
     Polymer({
       is: 'category-card',
 
       ready:function()
       {
-       //alert("test");
-       this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
-       this.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-       this.$.uiservice.category1();   
+       //alert("test");   
        this.$.uiservice.FnFetchCategorySeq();
        this.$.uiservice.FnFetchCategoryname();
-       this.$.hidenewscategorycard=true;
+       this.$.hidenewcategorycard=true;
       },
       FnRefresh:function()
       {
-        document.querySelector('#categoryname').selected=-1;
-        this.schoolname="";
+         this.categoryname=""; 
       },
       
-      fetchmastercategorynameResponse:function(e)
+      /*fetchmastercategorynameResponse:function(e)
       {
         var arr=e.detail.response.returnval;
         //alert(JSON.stringify(arr));     
-      },
-
-       FnSelectcategoryname:function(e)
-      {
-        catnames = (e.target.selectedItem.textContent).trim();
-        catid= e.target.selectedItem.value.trim();
-        alert(catnames);
-      },
+      },*/
 
       FnSubmit:function()
       {
-        if(catnames==null || this.catnames=="")
+        if(this.categoryname==null || this.categoryname=="")
         {          
-          alert("Please enter categoryname befor submit");
+          alert("Please enter categoryname before submit");
         }
         else
         {
         //alert("test");
-        var categoryid = catnames.toLowerCase();
-        //alert(this.schoolname);
-        //alert(this.schoolid);
-        //alert(catnames);
-        //alert(categoryid);
-        this.$.uiservice.FnSetCategoryInfo(this.schoolname,this.schoolid,this.categorytype,catnames,categoryid,this.temphidden);  
-        this.$.categorydialog.toggle();                          
+        var categoryid = (this.categoryname).toLowerCase();
+        //alert(this.categoryname);
+        this.$.uiservice.FnSetCategoryInfo(this.categorytype,this.categoryname,categoryid,this.temphidden);   
+        document.querySelector('category-card').FnRefresh();                        
         }
       },
+      
       Fncreate:function()
       {
-          this.$.categorydialog.toggle();   
-      },
+          this.$.categorydialog.open();   
+      }
       
     });
   })();

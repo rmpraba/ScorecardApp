@@ -18,13 +18,19 @@
         width: 6%;
         margin-left: 10%;
       } 
+      .title
+      {
+        @apply(--layout-center);
+        width: 30%;
+        margin-left: 35%; 
+      }
       .rbutton paper-button
       {
       background-color: #363636;
       color: #ffffff;
       width: 10%;
       margin-left: 40%;
-      margin-top: 4%;
+      margin-top: 5%;
       }
       .button paper-button
       {
@@ -36,30 +42,35 @@
       }
       .role
       {
+        margin-top:3%;
         width: 50%;
       }  
     </style>
+
+     <div class="title"> 
+    <h3> MASTER ROLE  CREATION</h3>
+    </div>
     
-    <paper-input label="Search here.........." suffix>
-      <paper-icon-button suffix icon="search" on-click="FnSearch"></paper-icon-button>
-    </paper-input>
     <div class="rbutton">
     <paper-button on-click="Fncreate">Create</paper-button>
     </div>
 
     <div class="role">
     <template is="dom-repeat" items="{{rolearr}}" as="r">
-    <role-display-card rolename="{{r.role_name}}" roleid="{{r.id}}" hiderolenameinput="true" hiderolenameitem="false">
+    <role-display-card  rolename="{{r.role_name}}" roleid="{{r.id}}" hiderolenameinput="true" hiderolenameitem="false">
     </role-display-card>
     </div>
     </template>
 
-    <paper-dialog id="roledialog">
+    <paper-dialog id="roledialog" modal>
     <div class="card">
-    <paper-input value="{{rolename}}" label="Role Name"></paper-input>
+    
+    <paper-input value="{{rolename}}" label="Role  Name"></paper-input>
     </div>
-    <div class="button">
-    <paper-button on-click="FnSubmit">Submit </paper-button>
+
+    <div class="buttons">
+    <paper-button autofocus on-click="FnSubmit">Submit </paper-button>
+    <paper-button  dialog-confirm autofocus>Close </paper-button>
     </div>
     </paper-dialog>
 
@@ -79,8 +90,7 @@
       },  
       FnRefresh:function()
       {
-       this.rolename="";
-         
+       this.rolename="";        
       },  
       
       FnSubmit:function()
@@ -94,12 +104,13 @@
           //alert("test");
          var roleid = (this.rolename).toLowerCase();         
          this.$.uiservice.FnSetRoleInfo(this.rolename,roleid);
-         this.$.roledialog.toggle();
+         document.querySelector('role-card').FnRefresh(); 
        }    
-      },     
+      },    
+      
       Fncreate:function()
       {
-         this.$.roledialog.toggle();
+         this.$.roledialog.open();
      }
     });
   })();

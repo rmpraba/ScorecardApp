@@ -16,14 +16,14 @@
     </style>
       <table class="card" id="card{{categoryid}}">
       <tr><td hidden>{{categoryid}}</td>
-      <td width="40%" hidden$="{{hidecategoryitem}}">{{categoryname}}</td>
-      <td width="40%" hidden$="{{hidecategoryinput}}"><paper-input value="{{categoryname}}"></paper-input></td>
+      <td width="30%" hidden$="{{hidecategoryitem}}">{{categoryname}}</td>
+      <td width="30%" hidden$="{{hidecategoryinput}}"><paper-input value="{{categoryname}}"></paper-input></td>
       <td width="5%" hidden$="{{hidecategoryitem}}"><paper-icon-button icon='create' on-click='FnEdit'>       
       </paper-icon-button></td>
       <td width="5%" hidden$="{{hidecategoryinput}}"><paper-icon-button icon='save' on-click='FnSave'>       
       </paper-icon-button></td>
       <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
-    </table></tr>
+     </table></tr>
     <master-ui-service id="catservice"></master-ui-service>
   </template>
   <script>
@@ -51,18 +51,19 @@
         //alert("test");
         this.$.catservice.FnDeleteCategoryname(this.categoryid);
       },
-      FnEdit:function(){
+      FnEdit:function()
+      {
         //alert("test");
         this.hidecategoryinput=false;
         this.hidecategoryitem=true;
       },
-      FnSave:function(){
+      FnSave:function()
+      {
         //alert("test");
-        this.$.catservice.FnUpdateCategoryname(this.schoolname,this.schoolid,this.categorytype,this.categoryid,
-          this.categoryname);
+        this.$.catservice.FnUpdateCategoryname(this.categorytype,this.categoryid,this.categoryname);
         this.hidecategoryinput=true;
         this.hidecategoryitem=false;
-      },      
+      }    
     });
   })();
   </script>

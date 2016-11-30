@@ -89,9 +89,17 @@
       <div class="card" hidden$="{{createsubject}}">
        <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px"></paper-button>
      </div>
+
+      <div class="card" hidden$="{{creategrade}}">
+       <paper-button on-click="FnCreategrade" no ink><img src="../../images/grade.jpg" height="180px" width="180px">
+       </paper-button>
+     </div>
+
       <div class="card" hidden$="{{createschool}}">
        <paper-button on-click="FnCreateschool" no ink><img src="../../images/school.jpg" height="180px" width="180px"></paper-button>
-     </div>
+
+     </div><!-- school-creation-card --> 
+    </div>
        <div class="card" hidden$="{{subjecttostudent}}">
        <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px"></paper-button>
       </div>
@@ -99,7 +107,10 @@
        <paper-button on-click="Workingdays" no ink><img src="../../images/workingdays.jpg" height="180px" width="180px"></paper-button>
       </div><!-- school-creation-card -->
     
+
     <!-- </center>   -->
+
+    
     </div>
     <div class="cdialog">      
       <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
@@ -157,6 +168,7 @@
         this.createsubject=true;
         this.teach_obser=true;
         this.createschool=true;
+        this.creategrade=true;
         this.workingdats=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
@@ -275,6 +287,11 @@
           this.createcategory=false;
           this.createschooltype=false;
           this.createsubject=false;      
+
+          this.createschool=false;
+          this.creategrade=false;
+
+
           this.createemployee=false;  
           this.createcategory=false;
           this.createschooltype=false;
@@ -395,6 +412,11 @@
       {        
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('school-creation-card','');
+
+       // document.querySelector('category-card').ready();
+      // alert("hi");
+       this.$.uiservice.fnschoolidgrnerate();
+
          this.$.uiservice.SelectSchoolName();
          this.$.uiservice.fnschoolidgrnerate();
         this.$.uiservice.fnsetgrademapping();
@@ -414,6 +436,13 @@
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('categorycard','');
         document.querySelector('category-card').ready();
+      },
+
+      FnCreategrade:function(e)
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('gradecreationcard','');  
+        document.querySelector('grade-creation-card').ready();  
       }
     });
   })();

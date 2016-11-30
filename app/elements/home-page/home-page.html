@@ -146,7 +146,8 @@
         </section>
         <section data-category="categorycard">
           <category-card></category-card>
-        </section>   
+        </section>
+         </section>   
         <section data-category="school-creation-card">
           <school-creation-card></school-creation-card>
         </section>
@@ -156,6 +157,7 @@
          <section data-category="working-days-card">
           <working-days-card></working-days-card>
         </section>
+
       </iron-pages>
     </div>
     
@@ -528,7 +530,17 @@
        document.querySelector('beginner-assesment-card').FnRefresh();
        // document.querySelector('language-enrichment-card').FnRefresh();
     }
+    if(localStorage.getItem("curr_sess_page")=="gradecreationcard")
+    {      
+       this.page="teacherhomecard";
+       document.querySelector('grade-creation-card').FnRefresh();
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       // document.querySelector('language-enrichment-card').FnRefresh();
+    }
+
   },
+
+
 
   FnsetTitle:function(title){
     this.title=title;

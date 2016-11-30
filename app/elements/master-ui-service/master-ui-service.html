@@ -372,10 +372,7 @@
         method="post"
         on-response="fetchgradeseqResponse"
         debounce-duration="300"
-    >
-
-
-    <iron-ajax        
+    ><iron-ajax        
         id="fetchgradeajax"
         url="{{fetchgradeurl}}"
         params="{{fetchgradeparam}}"
@@ -384,8 +381,7 @@
         method="post"
         on-response="fetchgradeResponse"
         debounce-duration="300"
-    >
-     <iron-ajax        
+    ><iron-ajax        
         id="deletegradeajax"
         url="{{deletegradeurl}}"
         params="{{deletegradeparam}}"
@@ -394,8 +390,7 @@
         method="post"
         on-response="deletegradeResponse"
         debounce-duration="300"
-    >
-    <iron-ajax        
+    ><iron-ajax        
         id="updategradeajax"
         url="{{updategradeurl}}"
         params="{{updategradeparam}}"
@@ -404,7 +399,17 @@
         method="post"
         on-response="updategradeResponse"
         debounce-duration="300"
-    >  </template>
+     ><iron-ajax        
+        id="SchooltypetoGrademappingajax"
+        url="{{SchooltypetoGrademappingurl}}"
+        params="{{SchooltypetoGrademappingparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="SchooltypetoGrademappingResponse"
+        debounce-duration="300"
+        >
+    </template>
 
     </template>
   <script>
@@ -555,6 +560,14 @@ workingsearchinfoResponse:function(e)
         this.fnschoolidgrnerateurl=sessionStorage.getItem("addrinfo")+"/fnschoolidgrnerate-service";
          this.$.fnschoolidgrnerateajax.generateRequest();
        },
+      SchooltypetoGrademapping:function(){
+           this.SchooltypetoGrademappingurl=sessionStorage.getItem("addrinfo")+"/SchooltypetoGrademapping-service";
+          this.$.SchooltypetoGrademappingajax.generateRequest();
+          },
+       SchooltypetoGrademappingResponse:function(e){
+         var res=e.detail.response.returnval;
+        document.querySelector('master-school_type-creation').SchoolToschoolTypearr=res;
+        },
      fnschoolidgrnerateResponse:function(e)
      {
          var res=e.detail.response.returnval;

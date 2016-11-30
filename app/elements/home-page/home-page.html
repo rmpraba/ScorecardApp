@@ -159,6 +159,9 @@
          <section data-category="working-days-card">
           <working-days-card></working-days-card>
         </section>
+         <section data-category="master-school_type-creation">
+          <master-school_type-creation></master-school_type-creation>
+        </section>
 
       </iron-pages>
     </div>
@@ -191,6 +194,14 @@
   {    
      // alert(localStorage.getItem("curr_sess_page"));
      if(localStorage.getItem("curr_sess_page")=="student-to-subject-mapping-card")
+    {
+
+      this.page="teacherhomecard";
+     // document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+    if(localStorage.getItem("curr_sess_page")=="master-school_type-creation")
     {
 
       this.page="teacherhomecard";

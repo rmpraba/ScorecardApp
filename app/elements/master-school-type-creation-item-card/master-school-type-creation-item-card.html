@@ -10,33 +10,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="master-school_type-creation">
+<dom-module id="master-school-type-creation-item-card">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <div> 
-       <h3>School Type To Grade Mapping</h3>
-         <template is="dom-repeat" items="{{SchoolToschoolTypearr}}" as="view">
-           <paper-checkbox>{{view.school_type_name}}</paper-checkbox>
-           <!--   <master-school-type-creation-item-card></master-school-type-creation-item-card>
-         --> </template>
-
-      </div>
+    <div>Hello from <span>{{foo}}</span></div>
   </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'master-school_type-creation',
+      is: 'master-school-type-creation-item-card',
 
       properties: {
         foo: {
           type: String,
-          value: 'master-school_type-creation',
+          value: 'master-school-type-creation-item-card',
           notify: true
         }
       }

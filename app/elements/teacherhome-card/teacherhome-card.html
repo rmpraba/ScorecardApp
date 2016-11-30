@@ -92,38 +92,39 @@
                   <h4>master category Creation</h4>
     </paper-button>
      </div>
- </div>
-     <div class="container">
-
-      <div class="card" hidden$="{{createsubject}}">
+     <div class="card" hidden$="{{createsubject}}">
        <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px">
               <h4>master school subject</h4>
-  </paper-button>
-     </div>
-
-      <div class="card" hidden$="{{creategrade}}">
+      </paper-button>
+    </div>
+  </div>
+     <div class="container">
+     <div class="card" hidden$="{{creategrade}}">
        <paper-button on-click="FnCreategrade" no ink><img src="../../images/grade.jpg" height="180px" width="180px">
               <h4>master Grade</h4>
        </paper-button>
-     </div>
+      </div>
      <div class="card" hidden$="{{createschool}}">
        <paper-button on-click="FnCreateschool" no ink><img src="../../images/school.jpg" height="180px" width="180px">
               <h4>master school</h4>
     </paper-button>
      </div>
-   
-       <div class="card" hidden$="{{subjecttostudent}}">
+     <div class="card" hidden$="{{subjecttostudent}}">
        <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px">
           <h4>  student to subject</h4>
     </paper-button>
-      </div>
+    </div>
       <div class="card" hidden$="{{workingdats}}">
        <paper-button on-click="Workingdays" no ink><img src="../../images/workingdays.jpg" height="180px" width="180px">
               <h4>school Working Days</h4>
-    </paper-button>
+     </paper-button>
       </div><!-- school-creation-card -->
-   
-     </div>
+      <div class="card" hidden$="{{SchooltypettoGrade}}">
+       <paper-button on-click="SchoolTypeToGrade" no ink><img src="../../images/schooltoschoolType.jpg" height="180px" width="180px">
+              <h4>SchoolTypeToGrade</h4>
+     </paper-button>
+      </div><!-- school-creation-card -->
+   </div>
 
     <!-- </center>   -->
 
@@ -187,6 +188,7 @@
         this.createschool=true;
         this.creategrade=true;
         this.workingdats=true;
+        this.SchooltypettoGrade=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
       FnSelectacademicyear:function(e){
@@ -298,17 +300,14 @@
       FnHideView:function(){ 
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='superadmin'){
           this.createrole=false;
-
+          this.SchooltypettoGrade=false;
           this.createemployee=true;  
           this.teach_obser=true;  
           this.createcategory=false;
           this.createschooltype=false;
           this.createsubject=false;      
-
           this.createschool=false;
           this.creategrade=false;
-
-
           this.createemployee=false;  
           this.createcategory=false;
           this.createschooltype=false;
@@ -438,7 +437,14 @@
          this.$.uiservice.fnschoolidgrnerate();
         this.$.uiservice.fnsetgrademapping();
       },
-       SubjectToStudent:function(e){
+     SchoolTypeToGrade:function(e)
+      {
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('master-school_type-creation','');
+       //   document.querySelector('schooltype-card').ready();
+        this.$.uiservice.SchooltypetoGrademapping();
+      },
+     SubjectToStudent:function(e){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('student-to-subject-mapping-card','');
        document.querySelector('student-to-subject-mapping-card').fnsetreclear();

@@ -5757,7 +5757,7 @@ var qur="DELETE FROM  md_school where  id='"+req.query.schoolid1+"'";
     
 });
 
-app.post('/deleteschooltypename-service' ,  urlencodedParser,function (req, res)
+app.post('/deletecategoryname-service' ,  urlencodedParser,function (req, res)
 
 {  
    
@@ -5780,7 +5780,7 @@ app.post('/deleteschooltypename-service' ,  urlencodedParser,function (req, res)
 
 
 
-app.post('/deletecategoryname-service' ,  urlencodedParser,function (req, res)
+app.post('/subjectcreation-service' ,  urlencodedParser,function (req, res)
 
 {  
     var response={"subject_id":req.query.subjectid,
@@ -5788,7 +5788,7 @@ app.post('/deletecategoryname-service' ,  urlencodedParser,function (req, res)
 
     //console.log(JSON.stringify(response));
 
-    connection.query("SELECT * FROM md_subject WHERE subject_id='"+req.query.subjectid+"' or subject_name='"+req.query.subjectname+"'",function(err, rows)
+    connection.query("SELECT * FROM md_subject WHERE subject_id='"+req.query.subjectid+"' or subject_name='"+req.query.subjectname+"'or subject_category='"+req.query.category+"'",function(err, rows)
     {
     if(rows.length==0)
     {
@@ -6224,12 +6224,9 @@ app.post('/FnSubjecttostudentthirdlanguage-service',  urlencodedParser,function 
 });
 
 
-
-
 app.post('/gradecreation-service' ,  urlencodedParser,function (req, res)
 {  
-    var response={"grade_id":req.query.gradeid,
-    "grade_name":req.query.gradename}; 
+    var response={"grade_id":req.query.gradeid,"grade_name":req.query.gradename}; 
 
     //console.log(JSON.stringify(response));
 
@@ -6242,8 +6239,9 @@ app.post('/gradecreation-service' ,  urlencodedParser,function (req, res)
             {
             if(!err)
             {
-              var tempseq=parseInt((req.query.gradeid).substring(1))+1;
-                      connection.query("UPDATE sequence SET grade_seq='"+tempseq+"'", function (err,result){
+              var tempseq={"grade_seq":parseInt((req.query.gradeid).substring(1))+1};
+                      connection.query('UPDATE sequence SET ?',[tempseq],
+                        function (err,result){
                         if(result.affectedRows>0)
                       res.status(200).json({'returnval': 'Inserted!'});
                     });
@@ -6257,6 +6255,7 @@ app.post('/gradecreation-service' ,  urlencodedParser,function (req, res)
     }
     else
     {
+
       res.status(200).json({'returnval': 'failed'});
     }
   });

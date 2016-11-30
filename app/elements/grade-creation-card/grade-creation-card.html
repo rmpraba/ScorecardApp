@@ -71,7 +71,7 @@
     <paper-input value="{{gradename}}" label="Grade Name"></paper-input>
     </div>
 
-      <div class="buttons">
+    <div class="buttons">
     <paper-button autofocus on-click="FnSubmit">Submit </paper-button>
     <paper-button  dialog-confirm autofocus>close </paper-button>
     </div>
@@ -103,26 +103,24 @@
         this.$.hidenewgradecreationcard=true;  
       },
 
-       FnRefresh:function()
-      {
-       
-       this.gradename="";
-       this.gradeid="";       
-      }, 
+      /* FnRefresh:function()
+      {     
+       this.gradename="";      
+      }, */
       FnSubmit:function()
       {
-        //alert(this.gradename);
-        //alert(this.gradeid);
+        if(this.gradename==null || this.gradename=="")
+        {
+          alert("please enter Grade name before save");
+        }
+        else
+        {  
         this.$.uiservice.FnSetGradeCreationInfo(this.gradeid,this.gradename);
-        document.querySelector('grade-creation-card').FnRefresh();
+        this.ready();
+        //document.querySelector('grade-creation-card').FnRefresh();
+        }
         
       },
-     /* FnClose:function()
-      {
-       var id = 'cancel';
-        var dialog = document.getElementById(id);
-        this.$.gradedialog.open();
-      }, */
       Fncreate:function()
       {
         this.$.gradedialog.open();

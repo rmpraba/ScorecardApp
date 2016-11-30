@@ -1,4 +1,5 @@
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
@@ -119,9 +120,16 @@
 
        FnSubmit:function()
       {
+        if(this.subjectname==null || this.subjectname=="")
+        {
+          alert("please enter Subjectname before Submit");
+        }
+        else
+        {
       
-       this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,category);
-       document.querySelector('subject-card').FnRefresh();
+         this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,category);
+         document.querySelector('subject-card').FnRefresh();
+        }
        
       },
       

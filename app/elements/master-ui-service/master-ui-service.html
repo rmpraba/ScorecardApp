@@ -917,46 +917,6 @@ workingsearchinfoResponse:function(e)
 
       },
 
-      FnSetGradeCreationInfo:function(gradeid,gradename)
-      {
-        this.gradecreationurl=sessionStorage.getItem("addrinfo")+"/gradecreation-service";
-        var obj={"gradeid":"","gradename":""};
-        obj.gradeid=gradeid;
-        obj.gradename=gradename;
-        this.gradecreationparam=obj; 
-        //alert(JSON.stringify(obj));
-        this.$.gradecreationajax.generateRequest();
-      },  
-           
-      gradecreationResponse:function(e)
-      {
-        //alert(e.detail.response.returnval);
-       
-        if(e.detail.response.returnval=="Inserted!")
-        {
-          this.FnFetchGrade(); 
-          this.FnFetchGradeSeq(); 
-           document.querySelector('grade-creation-card').FnRefresh();
-        }
-        else if(e.detail.response.returnval=="failed")
-        {
-          alert('Already Exist!');
-        }     
-      },
-
-      FnFetchGradeSeq:function()
-      {        
-        this.fetchgradesequrl=sessionStorage.getItem("addrinfo")+"/fetchgradeseq-service";
-        this.$.fetchgradeseqajax.generateRequest();
-      },
-      fetchgradeseqResponse:function(e)
-      {
-       var arr= e.detail.response.returnval;
-      // alert(JSON.stringify(arr));
-       document.querySelector('grade-creation-card').gradeid="g"+arr[0].grade_seq;
-       
-      },
- 
 
        FnSecondLangSubjectToStudent:function(studentid,studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,Sectionnameseeee){
         this.FnSecondLangSubjectToStudenturl=sessionStorage.getItem("addrinfo")+"/FnSecondLangSubjectToStudent-service";
@@ -1073,8 +1033,47 @@ workingsearchinfoResponse:function(e)
         document.querySelector('student-to-subject-mapping-card').subjectselectname=res[0].name;
         document.querySelector('working-days-card').workingschoolid=res[0].id;
         document.querySelector('working-days-card').workingschoolname=res[0].name;
+      },
 
 
+      FnSetGradeCreationInfo:function(gradeid,gradename)
+      {
+        this.gradecreationurl=sessionStorage.getItem("addrinfo")+"/gradecreation-service";
+        var obj={"gradeid":"","gradename":""};
+        obj.gradeid=gradeid;
+        obj.gradename=gradename;
+        this.gradecreationparam=obj; 
+        //alert(JSON.stringify(obj));
+        this.$.gradecreationajax.generateRequest();
+      },  
+           
+      gradecreationResponse:function(e)
+      {
+        //alert(e.detail.response.returnval);
+       
+        if(e.detail.response.returnval=="Inserted!")
+        {
+          this.FnFetchGrade(); 
+          this.FnFetchGradeSeq(); 
+           document.querySelector('grade-creation-card').FnRefresh();
+        }
+        else if(e.detail.response.returnval=="failed")
+        {
+          //alert('Already Exist!');
+        }     
+      },
+
+      FnFetchGradeSeq:function()
+      {        
+        this.fetchgradesequrl=sessionStorage.getItem("addrinfo")+"/fetchgradeseq-service";
+        this.$.fetchgradeseqajax.generateRequest();
+      },
+      fetchgradeseqResponse:function(e)
+      {
+       var arr= e.detail.response.returnval;
+       //alert(JSON.stringify(arr));
+       document.querySelector('grade-creation-card').gradeid="g"+arr[0].grade_seq;
+       
       },
       
       FnFetchGrade:function()   
@@ -1100,7 +1099,7 @@ workingsearchinfoResponse:function(e)
         if(e.detail.response.returnval=="Deleted!")
         this.FnFetchGrade();
       },
-      FnUpdateRole:function(gradeid,gradename)
+      FnUpdateGrade:function(gradeid,gradename)
       {
         var obj={"gradeid":"","gradename":""};
         obj.gradeid=gradeid;

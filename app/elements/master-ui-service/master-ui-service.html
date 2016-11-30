@@ -608,9 +608,9 @@ workingsearchinfoResponse:function(e)
         if(e.detail.response.returnval=="Deleted!")
         this.FnFetchRole();
       },
-      FnUpdateRole:function(rolename,roleid)
+      FnUpdateRole:function(roleid,rolename)
       {
-        var obj={"rolename":"","rolenid":""};
+        var obj={"roleid":"","rolename":""};
         obj.roleid=roleid;
         obj.rolename=rolename;
         this.updateroleurl=sessionStorage.getItem("addrinfo")+"/updaterole-service";
@@ -778,8 +778,8 @@ workingsearchinfoResponse:function(e)
       {
        var arr= e.detail.response.returnval;
        //alert(JSON.stringify(arr));       
-       document.querySelector('category-card').categorytype="category"+arr[0].category_seq;
-       document.querySelector('category-card').temphidden=arr[0].category_seq;
+       document.querySelector('category-card').categorytype=arr[0].category_prefix+arr[0].category_seq;
+       document.querySelector('category-card').temphidden=arr[0].category_prefix+arr[0].category_seq
 
       },
 
@@ -834,19 +834,9 @@ workingsearchinfoResponse:function(e)
         this.subjectcreationparam=obj; 
         this.$.subjectcreationajax.generateRequest();
       },
-      category1:function()
-      {
-           this.category1url=sessionStorage.getItem("addrinfo")+"/fetchmastersubjectname-service";
-           this.$.category1ajax.generateRequest();
-      },
-      category1Response:function(e)
-      {
-          //alert(JSON.stringify(e.detail.response.returnval));
-          document.querySelector('subject-card').categoryarr=e.detail.response.returnval;          
-      },
       subjectcreationResponse:function(e)
       {
-        //alert(e.detail.response.returnval);
+        alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Inserted!")
         {
           this.FnFetchSubjectname(); 
@@ -859,6 +849,17 @@ workingsearchinfoResponse:function(e)
         }
         
       },
+      category1:function()
+      {
+           this.category1url=sessionStorage.getItem("addrinfo")+"/fetchmastersubjectname-service";
+           this.$.category1ajax.generateRequest();
+      },
+      category1Response:function(e)
+      {
+          //alert(JSON.stringify(e.detail.response.returnval));
+          document.querySelector('subject-card').categoryarr=e.detail.response.returnval;          
+      },
+      
 
       FnFetchSubjectSeq:function()
       {        
@@ -869,7 +870,7 @@ workingsearchinfoResponse:function(e)
       {
        var arr= e.detail.response.returnval;
       // alert(JSON.stringify(arr));
-       document.querySelector('subject-card').subjectid="s"+arr[0].subject_seq;
+       document.querySelector('subject-card').subjectid=arr[0].subject_prefix+arr[0].subject_seq;
        
       },
 
@@ -1072,7 +1073,7 @@ workingsearchinfoResponse:function(e)
       {
        var arr= e.detail.response.returnval;
        //alert(JSON.stringify(arr));
-       document.querySelector('grade-creation-card').gradeid="g"+arr[0].grade_seq;
+       document.querySelector('grade-creation-card').gradeid=arr[0].grade_prefix+arr[0].grade_seq;
        
       },
       

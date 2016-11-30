@@ -5788,7 +5788,7 @@ app.post('/subjectcreation-service' ,  urlencodedParser,function (req, res)
 
     //console.log(JSON.stringify(response));
 
-    connection.query("SELECT * FROM md_subject WHERE subject_id='"+req.query.subjectid+"' or subject_name='"+req.query.subjectname+"'or subject_category='"+req.query.category+"'",function(err, rows)
+    connection.query("SELECT * FROM md_subject WHERE subject_id='"+req.query.subjectid+"' or subject_name='"+req.query.subjectname+"'",function(err, rows)
     {
     if(rows.length==0)
     {
@@ -5810,7 +5810,8 @@ app.post('/subjectcreation-service' ,  urlencodedParser,function (req, res)
             }
             });
     }
-    else{
+    else
+    {
       res.status(200).json({'returnval': 'failed'});
     }
   });

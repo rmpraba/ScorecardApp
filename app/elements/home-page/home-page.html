@@ -535,14 +535,12 @@
     if(localStorage.getItem("curr_sess_page")=="gradecreationcard")
     {      
        this.page="teacherhomecard";
-       document.querySelector('grade-creation-card').FnRefresh();
+       document.querySelector('grade-creation-card').ready();
        document.querySelector('beginner-assesment-card').FnRefresh();
-       // document.querySelector('language-enrichment-card').FnRefresh();
+       
     }
 
   },
-
-
 
   FnsetTitle:function(title){
     this.title=title;

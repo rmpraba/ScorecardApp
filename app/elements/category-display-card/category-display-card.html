@@ -5,13 +5,15 @@
 <dom-module id="category-display-card">
   <template>
     <style>
-      :host {
+      :host 
+      {
         display: block;
       }
       .card
       {
         @apply(--layout-horizontal);
         border-bottom: 1px solid #dedede;
+        width: 70%;
       }
     </style>
       <table class="card" id="card{{categoryid}}">

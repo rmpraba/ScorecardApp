@@ -3,7 +3,9 @@
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+
 
 <dom-module id="schooltype-card">
   <template>
@@ -19,41 +21,64 @@
       .schooltypecard
       {
          @apply(--layout-center);
-        width: 6%;
-        margin-left: 10%;
+        width: 60%;
+        margin-left: 8%;
       } 
+
       .title
       {
         @apply(--layout-center);
          
-          width: 35%;
+          width: 250%;
           margin-left: 27%;
       }
+
       .cbutton paper-button
       {
       background-color: #363636;
       color: #ffffff;
       width: 10%;
-      margin-left: 40%;
-      margin-top: 5%;
+      margin-left: 38%;
+      margin-top: 3%;
       }
+
       
       .buttons paper-button
       {
-      background-color: #363636;
-      
+        @apply(--layout-center);
+      background-color: #363636;    
       color: #ffffff;
       width: 10%;
-      margin-left: 40%;
       margin-top: 4%;
       }
+
        .school
       {
         margin-top: 3%;
-        margin-left: 10%;
         width: 50%;
         
       }
+
+      #schooldialog
+      {
+        width: 40%;
+        margin: 0 auto;
+        box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.75);
+      }
+
+      .popup-btn
+      {
+        margin: 0 auto;
+      }
+
+      .iron-close
+      {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+
+
     </style>
 
 
@@ -72,16 +97,23 @@
     </template>
 
      <paper-dialog id="schooldialog" modal>
-     <div class="card">                                                    
+
+     <div class="card">   
+      <iron-icon dialog-dismiss class="iron-close" icon="icons:close"></iron-icon>
        <paper-input value="{{schooltypename}}" label="Schooltype name"></paper-input>           
     </div>
+
     <div class="buttons">
-    <paper-button autofocus on-click="FnSubmit">Submit </paper-button>
-    <paper-button dialog-confirm autofocus>Close </paper-button>
+    <paper-button class="popup-btn" on-click="FnSubmit">Submit </paper-button>
     </div>
     </paper-dialog>
+
+
     <master-ui-service id="service"></master-ui-service>
+    
+
   </template>
+
   <script>
   (function() 
   {
@@ -124,7 +156,8 @@
         //alert(this.schooltypename);
         //alert(schooltypeid);
         this.$.service.FnSetSchooltypeInfo(this.schooltypename,schooltypeid);        
-        document.querySelector('schooltype-card').FnRefresh();
+        //document.querySelector('schooltype-card').FnRefresh();
+        this.$.schooldialog.toggle();
         }
       },
       

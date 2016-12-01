@@ -3,7 +3,9 @@
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+
 
 <dom-module id="category-card">
   <template>
@@ -33,22 +35,39 @@
       color: #ffffff;
       width: 10%;
       margin-left: 40%;
-      margin-top: 5%;
+      margin-top: 3%;
       }
 
       .buttons paper-button
       {
+        @apply(--layout-center);
       background-color: #363636;
       color: #ffffff;
       width: 10%;
-      margin-left: 40%;
       margin-top: 6%;
       }
       .category
       {
         margin-top: 4%;
         width: 50%;
-      }  
+      } 
+
+      #categorydialog
+      {
+        width: 40%;
+        margin: 0 auto;
+        box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.75);
+      }
+      .popup-btn
+      {
+        margin: 0 auto;
+      }
+      .iron-close
+      {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      } 
       
     </style>
      
@@ -70,13 +89,14 @@
 
     <paper-dialog id="categorydialog" modal>
     <div class="card">
+    <iron-icon dialog-dismiss class="iron-close" icon="icons:close"></iron-icon>
     <paper-input readonly  hidden value="{{categorytype}}" label="Categorytype"></paper-input>
     <paper-input value="{{categoryname}}" label="Category Name"></paper-input>
     </div>
 
     <div class="buttons">
-    <paper-button  autofocus on-click="FnSubmit">Submit </paper-button>
-    <paper-button  dialog-confirm autofocus>Close</paper-button>
+    <paper-button  class="popup-btn" on-click="FnSubmit">Submit </paper-button>
+    
     </div>
     </paper-dialog>
     <master-ui-service id="uiservice"></master-ui-service>
@@ -118,7 +138,8 @@
         var categoryid = (this.categoryname).toLowerCase();
         //alert(this.categoryname);
         this.$.uiservice.FnSetCategoryInfo(this.categorytype,this.categoryname,categoryid,this.temphidden);   
-        document.querySelector('category-card').FnRefresh();                        
+         //document.querySelector('category-card').FnRefresh(); 
+         this.$.categorydialog.toggle();                       
         }
       },
       

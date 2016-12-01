@@ -13,12 +13,14 @@
         
         @apply(--layout-horizontal);
         border-bottom: 1px solid #dedede;
+        width: 70%
+        
       }
     </style>   
      <table class="card" id="card{{schooltypeid}}">
       <tr><td hidden>{{schooltypeid}}</td>
-      <td width="25%" hidden$="{{hideschooltypenameitem}}">{{schooltypename}}</td>
-      <td width="25%" hidden$="{{hideschooltypenameinput}}"><paper-input value="{{schooltypename}}"></paper-input></td>
+      <td width="40%" hidden$="{{hideschooltypenameitem}}">{{schooltypename}}</td>
+      <td width="40%" hidden$="{{hideschooltypenameinput}}"><paper-input value="{{schooltypename}}"></paper-input></td>
       <td width="5%" hidden$="{{hideschooltypenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'>       
       </paper-icon-button></td>
       <td width="5%" hidden$="{{hideschooltypenameinput}}"><paper-icon-button icon='save' on-click='FnSave'>       

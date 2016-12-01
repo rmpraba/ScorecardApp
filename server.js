@@ -5890,6 +5890,27 @@ app.post('/deletesubjectname-service' ,  urlencodedParser,function (req, res)
     
 });
 
+app.post('/updatesubjectname-service' ,  urlencodedParser,function (req, res)
+{  
+   
+var qur="UPDATE  md_subject SET subject_name='"+req.query.subjectname+"' where subject_id='"+req.query.subjectid+"'";
+//console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Updated!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Updated!'});
+    }
+    });
+    
+});
+
 app.post('/FnSecondLangSubjectToStudent-service' , urlencodedParser,function (req, res)
 {  
     var response={

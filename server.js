@@ -5588,7 +5588,6 @@ var qur1="update md_school set name='"+req.query.school+"',address='"+req.query.
 });
 
 
-
  app.post('/categorycreation-service' , urlencodedParser,function (req, res)
  {  
   var collection = {"category_id":req.query.categoryid,
@@ -5607,9 +5606,9 @@ var qur1="update md_school set name='"+req.query.school+"',address='"+req.query.
 
     if(!err)
     {
-      var tempseq=parseInt(req.query.tempno)+1;
+      var tempseq=parseInt((req.query.categorytype).substring(9))+1;
       //console.log(tempseq);
-      connection.query("UPDATE sequence SET category_seq='"+tempseq+"'", 
+      connection.query("UPDATE sequence SET category_seq='"+tempseq+"'",
       function (err,result)
       {
         if(result.affectedRows>0)

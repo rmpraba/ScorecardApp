@@ -758,7 +758,8 @@ workingsearchinfoResponse:function(e)
         this.$.fnschoolcreationajax.generateRequest();
       },
   
-     fnschoolcreationResponse:function(e){
+     fnschoolcreationResponse:function(e)
+     {
           var res=e.detail.response.returnval;
           alert(JSON.stringify(res));
          document.querySelector('school-creation-card').schoolcreatarr=res;
@@ -806,7 +807,8 @@ workingsearchinfoResponse:function(e)
        var arr= e.detail.response.returnval;
        //alert(JSON.stringify(arr));       
        document.querySelector('category-card').categorytype=arr[0].category_prefix+arr[0].category_seq;
-       document.querySelector('category-card').temphidden=arr[0].category_prefix+arr[0].category_seq
+       document.querySelector('category-card').temphidden=arr[0].category_prefix+arr[0].category_seq;
+       //alert(JSON.stringify(arr[0].category_prefix+arr[0].category_seq));
 
       },
 

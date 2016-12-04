@@ -1,4 +1,5 @@
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
@@ -130,17 +131,19 @@
         else
         {
         //alert("test");
-        var categoryid = (this.categoryname).toLowerCase();
+        var categoryid=(this.categoryname).toLowerCase();
         //alert(this.categoryname);
-        this.$.uiservice.FnSetCategoryInfo(this.categorytype,this.categoryname,categoryid,this.temphidden);   
-         //document.querySelector('category-card').FnRefresh(); 
+        this.$.uiservice.FnSetCategoryInfo(this.categorytype,this.categoryname,categoryid);
+       //  this.$.uiservice.FnFetchCategorySeq();
+         document.querySelector('category-card').FnRefresh(); 
          this.$.categorydialog.toggle();                       
         }
       },
       
       Fncreate:function()
       {
-          this.$.categorydialog.open();   
+           this.$.uiservice.FnFetchCategorySeq();
+            this.$.categorydialog.open();   
       }
       
     });

@@ -1,4 +1,5 @@
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
@@ -157,7 +158,7 @@
         //alert(this.schooltypename);
         //alert(schooltypeid);
         this.$.service.FnSetSchooltypeInfo(this.schooltypename,schooltypeid);        
-        //document.querySelector('schooltype-card').FnRefresh();
+        document.querySelector('schooltype-card').FnRefresh();
         this.$.schooldialog.toggle();
         }
       },

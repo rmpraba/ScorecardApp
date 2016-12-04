@@ -777,6 +777,7 @@ workingsearchinfoResponse:function(e)
         obj.categoryname=categoryname;
         obj.tempno=tempno;       
         this.categorycreationparam=obj; 
+        //alert(JSON.stringify(obj));
         this.$.categorycreationajax.generateRequest();
       },
       
@@ -807,7 +808,8 @@ workingsearchinfoResponse:function(e)
        var arr= e.detail.response.returnval;
        //alert(JSON.stringify(arr));       
        document.querySelector('category-card').categorytype=arr[0].category_prefix+arr[0].category_seq;
-       document.querySelector('category-card').temphidden=arr[0].category_prefix+arr[0].category_seq;
+      // alert(JSON.stringify(categorytype));
+      // document.querySelector('category-card').temphidden=arr[0].category_prefix+arr[0].category_seq;
        //alert(JSON.stringify(arr[0].category_prefix+arr[0].category_seq));
 
       },

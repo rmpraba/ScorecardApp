@@ -99,7 +99,7 @@
     <paper-dialog id="gradedialog" modal>
 
     <div class="card"> 
-    <iron-icon dialog-dismiss class="iron-close" icon="icons:close"></iron-icon>
+    <iron-icon dialog-dismiss class="iron-close" on-click="Fnclose" icon="icons:close"></iron-icon>
     <paper-input readonly value="{{gradeid}}" label="Grade ID"></paper-input>
     <paper-input value="{{gradename}}" label="Grade Name"></paper-input>
     </div>
@@ -153,6 +153,10 @@
         this.$.gradedialog.toggle();
         }
         
+      },
+      Fnclose:function()
+      {
+        this.ready();
       },
       Fncreate:function()
       {

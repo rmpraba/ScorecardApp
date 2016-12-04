@@ -108,7 +108,7 @@
             <paper-menu id="category" class="dropdown-content"  on-iron-select="FnSelectcategory"  attr-for-selected="value" required>  
 
       <template is="dom-repeat" items="{{categoryarr}}" as="view">
-      <paper-item value="{{view.category_id}}">{{view.category_name}}</paper-item>                          
+      <paper-item value="{{view.category_type}}">{{view.category_name}}</paper-item>                          
       </template>
             </paper-menu>
           </paper-dropdown-menu> 
@@ -163,7 +163,7 @@
         {
       
          this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,category);
-         //document.querySelector('subject-card').FnRefresh();
+         document.querySelector('subject-card').FnRefresh();
          this.$.subjectdialog.toggle();
         }
        
@@ -171,7 +171,7 @@
       
       FnSelectcategory:function(e)
       {
-        category = e.target.selectedItem.textContent.trim();
+        category = e.target.selectedItem.value.trim();
         
       },
 

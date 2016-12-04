@@ -5259,7 +5259,7 @@ var qur="DELETE FROM  md_school where  id='"+req.query.schoolid1+"'";
 app.post('/updaterole-service' ,  urlencodedParser,function (req, res)
 {  
    
-var qur="UPDATE  md_role SET role_name='"+req.query.rolename+"' where  id='"+req.query.roleid+"'";
+var qur="UPDATE  md_role SET role_name='"+req.query.rolename+"',  id='"+req.query.rolename+"' where  id='"+req.query.roleid+"'";
 //console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -5350,7 +5350,7 @@ app.post('/deleteschooltypename-service' ,  urlencodedParser,function (req, res)
 app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
 {  
    
-   var qur="UPDATE  md_school_type SET school_type_name='"+req.query.schooltypename+"' where school_type_id='"+req.query.schooltypeid+"'"; 
+   var qur="UPDATE  md_school_type SET school_type_name='"+req.query.schooltypename+"', school_type_id='"+req.query.schooltypename+"' WHERE school_type_id='"+req.query.schooltypeid+"' "; 
     //console.log(qur);    
     connection.query(qur,
     function(err, rows)
@@ -5606,7 +5606,7 @@ var qur1="update md_school set name='"+req.query.school+"',address='"+req.query.
 
     if(!err)
     {
-      var tempseq=parseInt((req.query.categorytype).substring(9))+1;
+      var tempseq=parseInt((req.query.categorytype).substring(8))+1;
       //console.log(tempseq);
       connection.query("UPDATE sequence SET category_seq='"+tempseq+"'",
       function (err,result)
@@ -5694,7 +5694,7 @@ app.post('/updatecategoryname-service' ,  urlencodedParser,function (req, res)
 
 {
    
-var qur="UPDATE  md_category_type SET category_name='"+req.query.categoryname+"' where category_id='"+req.query.categoryid+"'";
+var qur="UPDATE  md_category_type SET category_name='"+req.query.categoryname+"', category_id='"+req.query.categoryname+"'  where category_id='"+req.query.categoryid+"'";
 //console.log(qur);
   connection.query(qur,
     function(err, rows)
@@ -5716,7 +5716,7 @@ app.post('/deletecategoryname-service' ,  urlencodedParser,function (req, res)
 
 {  
    
-  var qur="UPDATE  md_category_type SET category_name='"+req.query.categoryname+"' where category_id='"+req.query.categoryid+"'"; 
+  var qur="DELETE  md_category_type SET category_name='"+req.query.categoryname+"' where category_id='"+req.query.categoryid+"'"; 
     //console.log(qur);
     connection.query(qur,function(err, rows)
     {
@@ -5828,7 +5828,7 @@ var qur="UPDATE  md_school SET name='"+req.query.school+"',telno='"+req.query.te
     
 });
 
-app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
+app.post('/updatesubjectname-service' ,  urlencodedParser,function (req, res)
 
 {  
    

@@ -5235,6 +5235,31 @@ console.log(qur);
     });
     
 });
+
+
+app.post('/updaterole-service' ,  urlencodedParser,function (req, res)
+{  
+   
+   var val=(req.query.rolename).toLowerCase();
+var qur="UPDATE  md_role SET role_name='"+req.query.rolename+"', id='"+val+"' where  id='"+req.query.roleid+"'";
+//console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Updated!'});
+    }
+    else
+    {
+    //  console.log(err);
+      res.status(200).json({'returnval': 'Not Updated!'});
+    }
+    });
+    
+});
+
+
 app.post('/Fndeleteinfo-service' ,  urlencodedParser,function (req, res)
 {  
    
@@ -5251,28 +5276,6 @@ var qur="DELETE FROM  md_school where  id='"+req.query.schoolid1+"'";
     {
     //  console.log(err);
       res.status(200).json({'returnval': 'Not Deleted!'});
-    }
-    });
-    
-});
-
-
-app.post('/updaterole-service' ,  urlencodedParser,function (req, res)
-{  
-   
-var qur="UPDATE  md_role SET role_name='"+req.query.rolename+"', id='"+req.query.rolename+"' where  id='"+req.query.roleid+"'";
-//console.log(qur);
-  connection.query(qur,
-    function(err, rows)
-    {
-    if(!err)
-    {
-      res.status(200).json({'returnval': 'Updated!'});
-    }
-    else
-    {
-    //  console.log(err);
-      res.status(200).json({'returnval': 'Not Updated!'});
     }
     });
     
@@ -5350,8 +5353,8 @@ app.post('/deleteschooltypename-service' ,  urlencodedParser,function (req, res)
 
 app.post('/updateschooltypename-service' ,  urlencodedParser,function (req, res)
 {  
-   
-   var qur="UPDATE  md_school_type SET school_type_name='"+req.query.schooltypename+"', school_type_id='"+req.query.schooltypename+"' WHERE school_type_id='"+req.query.schooltypeid+"' "; 
+   var val=(req.query.schooltypename).toLowerCase();
+   var qur="UPDATE  md_school_type SET school_type_name='"+req.query.schooltypename+"', school_type_id='"+val+"' WHERE school_type_id='"+req.query.schooltypeid+"' "; 
     //console.log(qur);    
     connection.query(qur,
     function(err, rows)
@@ -5694,8 +5697,8 @@ app.post('/deletecategoryname-service' ,  urlencodedParser,function (req, res)
 app.post('/updatecategoryname-service' ,  urlencodedParser,function (req, res)
 
 {
-   
-var qur="UPDATE  md_category_type SET category_name='"+req.query.categoryname+"', category_id='"+req.query.categoryname+"'  where category_id='"+req.query.categoryid+"'";
+   var val=(req.query.categoryname).toLowerCase();
+var qur="UPDATE  md_category_type SET category_name='"+req.query.categoryname+"', category_id='"+val+"'  where category_id='"+req.query.categoryid+"'";
 //console.log(qur);
   connection.query(qur,
     function(err, rows)

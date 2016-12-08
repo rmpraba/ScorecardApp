@@ -5147,7 +5147,8 @@ app.post('/rolecreation-service' ,  urlencodedParser,function (req, res)
 
     console.log(JSON.stringify(response));
 
-    connection.query("SELECT * FROM md_role WHERE  id='"+req.query.roleid+"' or role_name='"+req.query.rolename+"'",function(err, rows)
+    connection.query("SELECT * FROM md_role WHERE  id='"+req.query.roleid+"' or role_name='"+req.query.rolename+"'",
+      function(err, rows)
     {
     if(rows.length==0)
     {
@@ -5259,7 +5260,7 @@ var qur="DELETE FROM  md_school where  id='"+req.query.schoolid1+"'";
 app.post('/updaterole-service' ,  urlencodedParser,function (req, res)
 {  
    
-var qur="UPDATE  md_role SET role_name='"+req.query.rolename+"',  id='"+req.query.rolename+"' where  id='"+req.query.roleid+"'";
+var qur="UPDATE  md_role SET role_name='"+req.query.rolename+"', id='"+req.query.rolename+"' where  id='"+req.query.roleid+"'";
 //console.log(qur);
   connection.query(qur,
     function(err, rows)

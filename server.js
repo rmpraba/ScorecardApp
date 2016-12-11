@@ -1,5 +1,4 @@
 
-
  var express    = require("express");
  var mysql      = require('mysql');
  var email   = require("emailjs/email");
@@ -5002,8 +5001,6 @@ connection.query(qur1,function(err, rows){
 });
 
 
-
-
 app.post('/updatestudentinfo-service' ,  urlencodedParser,function (req, res)
 {    
  var qur="update md_student set student_name='"+req.query.name+"' where school_id='"+req.query.schoolid+"' and "+
@@ -5145,7 +5142,7 @@ app.post('/rolecreation-service' ,  urlencodedParser,function (req, res)
 {  
     var response={"id":req.query.roleid,"role_name":req.query.rolename}; 
 
-    console.log(JSON.stringify(response));
+    //console.log(JSON.stringify(response));
 
     connection.query("SELECT * FROM md_role WHERE  id='"+req.query.roleid+"' or role_name='"+req.query.rolename+"'",
       function(err, rows)

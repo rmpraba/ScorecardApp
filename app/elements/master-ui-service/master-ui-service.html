@@ -1,4 +1,5 @@
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="master-ui-service">
@@ -458,7 +459,7 @@ workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
         this.$.workingsearchinfoajax.generateRequest();
     
          },
-workingsearchinfoResponse:function(e)
+       workingsearchinfoResponse:function(e)
       {
        
         var res=e.detail.response.returnval;
@@ -466,23 +467,6 @@ workingsearchinfoResponse:function(e)
        document.querySelector('working-day-item-card').fngetworkingdays(res);          
    
          },
-
-       FnSetRoleInfo:function(rolename,roleid)
-       {
-        this.rolecreationurl=sessionStorage.getItem("addrinfo")+"/rolecreation-service";
-        var obj={"rolename":"","roleid":""};
-        obj.roleid=roleid;
-        obj.rolename=rolename;
-        this.rolecreationparam=obj;
-        this.$.rolecreationajax.generateRequest();
-      },
-      rolecreationResponse:function(e)
-      {
-        if(e.detail.response.returnval=="Inserted!")
-        {
-          this.FnFetchRole();
-        }
-      },
 
       FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Board){
 
@@ -587,16 +571,17 @@ workingsearchinfoResponse:function(e)
       },
       rolecreationResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Inserted!")
         {
+            alert("Inserted");
           this.FnFetchRole();
           document.querySelector('role-card').FnRefresh();
         }
 
         else if(e.detail.response.returnval=="failed")
         {
-          alert('Already Exist!');
+          //alert('Already Exist!');
         }       
       },
        
@@ -620,9 +605,10 @@ workingsearchinfoResponse:function(e)
       },
       deleteroleResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Deleted!")
         {
+            alert("Deleted");
         this.FnFetchRole();
         }
       },
@@ -638,9 +624,10 @@ workingsearchinfoResponse:function(e)
       },
       updateroleResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Updated!")
         {
+            alert("Updated");
           this.FnFetchRole();
         }
       },
@@ -657,16 +644,17 @@ workingsearchinfoResponse:function(e)
       },
       schooltypecreationResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Inserted!")
         {
+            alert("Inserted");
           this.FnFetchSchooltypename();
           document.querySelector('schooltype-card').FnRefresh();
         }
 
         else if(e.detail.response.returnval=="failed")
         {
-          alert('Already Exist!');
+          //alert('Already Exist!');
         }
 
         
@@ -691,9 +679,10 @@ workingsearchinfoResponse:function(e)
       },
       deleteschooltypenameResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Deleted!")
         {
+            alert("Deleted");
           this.FnFetchSchooltypename();
         }
       },
@@ -708,9 +697,10 @@ workingsearchinfoResponse:function(e)
       },
       updateschooltypenameResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Updated!")
         {
+            alert("Updated");
           this.FnFetchSchooltypename();
         }
       },
@@ -784,16 +774,17 @@ workingsearchinfoResponse:function(e)
       
       categorycreationResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Inserted!")
         {
+            alert("Inserted");
           this.FnFetchCategoryname();
           document.querySelector('category-card').FnRefresh();
         }
 
         else if(e.detail.response.returnval=="failed")
         {
-          alert('Already Exist!');
+          //alert('Already Exist!');
         }
         
       },
@@ -835,9 +826,10 @@ workingsearchinfoResponse:function(e)
       },
       deletecategorynameResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Deleted!")
         {
+            alert("Deleted");
           this.FnFetchCategoryname();
         }
       },
@@ -853,10 +845,10 @@ workingsearchinfoResponse:function(e)
       },
       updatecategorynameResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Updated!")
         {
-            //alert("Updated");
+            alert("Updated");
           this.FnFetchCategoryname();
         }
       },
@@ -872,16 +864,17 @@ workingsearchinfoResponse:function(e)
       },
       subjectcreationResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Inserted!")
         {
+            alert("Inserted");
           this.FnFetchSubjectname(); 
           this.FnFetchSubjectSeq(); 
           document.querySelector('subject-card').FnRefresh();
         }
         else if(e.detail.response.returnval=="failed")
         {
-          alert('Already Exist!');
+          //alert('Already Exist!');
         }
         
       },
@@ -931,9 +924,10 @@ workingsearchinfoResponse:function(e)
       },
       deletesubjectnameResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Deleted!")
         {
+            alert("Deleted");
           this.FnFetchSubjectname();
         }
       },
@@ -951,9 +945,10 @@ workingsearchinfoResponse:function(e)
         updatesubjectnameResponse:function(e)
       {
 
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Updated!")
         {
+            alert("Updated");
           this.FnFetchSubjectname();
         }
 
@@ -1091,17 +1086,18 @@ workingsearchinfoResponse:function(e)
            
       gradecreationResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
        
         if(e.detail.response.returnval=="Inserted!")
         {
+            alert("Inserted");
           this.FnFetchGrade(); 
           this.FnFetchGradeSeq(); 
            //document.querySelector('grade-creation-card').FnRefresh();
         }
         else if(e.detail.response.returnval=="failed")
         {
-          alert('Already Exist!');
+          //alert('Already Exist!');
         }     
       },
 
@@ -1138,10 +1134,10 @@ workingsearchinfoResponse:function(e)
       },
       deletegradeResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Deleted!")
         {
-            //alert("deleted");
+            alert("deleted");
             this.FnFetchGrade();
         }
       },
@@ -1156,10 +1152,10 @@ workingsearchinfoResponse:function(e)
       },
       updategradeResponse:function(e)
       {
-        alert(e.detail.response.returnval);
+        //alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="Updated!")
         {
-            //alert("Updated");
+            alert("Updated");
           this.FnFetchGrade();
         }
       }

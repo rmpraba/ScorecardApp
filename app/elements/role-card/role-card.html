@@ -136,8 +136,11 @@
          else 
          {
           //alert("test");
-         var roleid = (this.rolename).toLowerCase();  
-         alert(this.roleid);       
+         var roleid = (this.rolename).toLowerCase(); 
+         //alert("hi"); 
+               
+         //alert("hi2");
+         //alert(roleid);
          this.$.uiservice.FnSetRoleInfo(this.rolename,roleid);
          document.querySelector('role-card').FnRefresh(); 
          this.$.roledialog.toggle();

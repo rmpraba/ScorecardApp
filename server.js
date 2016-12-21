@@ -5776,7 +5776,7 @@ app.post('/subjectcreation-service' ,  urlencodedParser,function (req, res)
   app.post('/fetchmastersubjectname-service',  urlencodedParser,function (req,res)
   {  
   // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
-    var qur="SELECT * FROM md_category_type";
+    var qur="SELECT category_name FROM md_category_type";
      connection.query(qur,
     function(err, rows)
     {
@@ -5792,8 +5792,7 @@ app.post('/subjectcreation-service' ,  urlencodedParser,function (req, res)
 
 app.post('/fetchmastersubject-service',  urlencodedParser,function (req,res)
 {  
-  var qur="SELECT * FROM md_subject";
-  //console.log(qur);
+  var qur="SELECT subject_id,subject_name ,(select category_name from scorecarddb.md_category_type where category_type=subject_category) as category,subject_category from scorecarddb.md_subject";
   connection.query(qur,
     function(err, rows)
     {

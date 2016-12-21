@@ -13,10 +13,35 @@
         @apply(--layout-center);
         @apply(--layout-horizontal);
         border-bottom: 1px solid #dedede;
-        width: 70%
-        
+        width: 200%;        
+      }
+       paper-item,paper-input
+      {
+        width:40%;
+      }
+      paper-icon-button
+      {
+        width:5%;
+      }
+      .itemcard
+      {
+      @apply(--layout-horizontal); 
       }
     </style>   
+
+
+    
+    <div class='itemcard'>
+        <paper-item>{{schooltypeid}}</paper-item>
+        <paper-item hidden$="{{hideschooltypenameitem}}">{{schooltypename}}</paper-item>
+        <paper-input value="{{schooltypename}}" hidden$="{{hideschooltypenameinput}}"></paper-input>
+        <paper-icon-button icon='create' on-click='FnEdit' hidden$="{{hideschooltypenameitem}}"></paper-icon-button>
+        <paper-icon-button icon='save' on-click='FnSave' hidden$="{{hideschooltypenameinput}}"></paper-icon-button>
+        <paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button>
+    </div>
+    
+  
+    <!-- 
      <table class="card" id="card{{schooltypeid}}">
       <tr><td hidden>{{schooltypeid}}</td>
       <td width="40%" hidden$="{{hideschooltypenameitem}}">{{schooltypename}}</td>
@@ -27,8 +52,11 @@
       </paper-icon-button></td>
       <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
       </table></tr>
-      <master-ui-service id="sclservice"></master-ui-service>
-      </template>
+ -->      
+     <master-ui-service id="sclservice"></master-ui-service>
+  </template>
+
+  
   <script>
   (function() {
     'use strict';

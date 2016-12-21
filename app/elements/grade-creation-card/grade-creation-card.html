@@ -22,23 +22,23 @@
       .card
       {
          @apply(--layout-center);
-        width: 70%;
+        width: 55%;
         margin-left: 10%;
       }
 
       .title
       {
         @apply(--layout-center);
-        width: 250%;
-        margin-left: 37%; 
+        width: 255%;
+        margin-left: 30%; 
       }
 
-      .gbutton paper-button
+      .creatediv paper-button
       {
       background-color: #363636;
       color: #ffffff;
-      width: 10%;
-      margin-left: 41%;
+      width: 7%;
+      margin-left: 39%;
       margin-top: 3%;
       }
 
@@ -51,65 +51,74 @@
       margin-top: 6%;
       }
 
-       .grade
-      {
-        margin-top:3%;
-        margin-left:30%;
-        width: 50%;
-      }
-
-      #gradedialog
+      /*#gradedialog
       {
         width: 40%;
         margin: 0 auto;
         box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.75);
-      }
+      }*/
 
       .popup-btn
       {
         margin: 0 auto;
       }
 
-      .iron-close
-      {
-        position: absolute;
-        top: 20px;
-        right: 20px;
+      table{
+         border-collapse: collapse;
+        border: 1px solid #dedede;
+        width: 90%;
+      }
+      .outcard{
+        @apply(--layout-horizontal);
       }
 
+      .creatediv{
+         border-radius: 10px;
+          border: 1px solid #6699ff;
+          padding: 10px; 
+          width: 25%;
+          max-height: 270px;
+          /*height: 150px; */
+      }
       
     </style>
 
 
-
-     <div class="title"> 
-    <h3>GRADE CREATION</h3>
-    </div>
-    
-    <div class="gbutton">
-    <paper-button on-click="Fncreate">Create</paper-button>
+    <div class="title"> 
+        <h3><b>GRADE</b></h3>
     </div>
 
-     <div class="grade">
-    <template is="dom-repeat" items="{{gradearr}}" as="g">
-    <grade-display-card gradeid="{{g.grade_id}}" gradename="{{g.grade_name}}" hidegradenameinput="true" hidegradenameitem="false"> </grade-display-card>
+   <div class="outcard">
+    <div>
+      <table>
+        <tr>
+            <th> <label>Grade ID</label></th>
+            <th> <label>Grade Name</label>    </th>
+            <th></th>
+        </tr>
+
+        <template is="dom-repeat" items="{{gradearr}}" as="g">
+            <tr><td colspan="3">
+            <grade-display-card gradeid="{{g.grade_id}}" gradename="{{g.grade_name}}" hidegradenameinput="true" hidegradenameitem="false"> </grade-display-card></td>
+            </tr>
+        </template>
+      </table>
     </div>
-    </template>
 
-    <paper-dialog id="gradedialog" modal>
+    <div class="creatediv">
+        <div class="card">       
+            <label>Create New Grade</label>
+            <paper-input readonly value="{{gradeid}}" label="Grade ID"></paper-input>
+            <paper-input value="{{gradename}}" label="Grade Name"></paper-input>
+        </div>
 
-    <div class="card"> 
-    <iron-icon dialog-dismiss class="iron-close" on-click="Fnclose" icon="icons:close"></iron-icon>
-    <paper-input readonly value="{{gradeid}}" label="Grade ID"></paper-input>
-    <paper-input value="{{gradename}}" label="Grade Name"></paper-input>
+        <div class="buttons">
+            <paper-button class="popup-btn" on-click="FnSubmit">Submit </paper-button>
+        </div>
     </div>
+  </div> 
 
-    <div class="buttons">
-    <paper-button class="popup-btn" on-click="FnSubmit">Submit </paper-button>
-    </div>
-    </paper-dialog>
-
-    <master-ui-service id="uiservice"></master-ui-service>
+        <master-ui-service id="uiservice"></master-ui-service>
      
    </template>
    <script>
@@ -150,11 +159,11 @@
         this.$.uiservice.FnSetGradeCreationInfo(this.gradeid,this.gradename);
         this.ready();
         //document.querySelector('grade-creation-card').FnRefresh();
-        this.$.gradedialog.toggle();
+        //this.$.gradedialog.toggle();
         }
         
-      },
-      Fnclose:function()
+      }
+     /* Fnclose:function()
       {
         this.ready();
       },
@@ -162,7 +171,7 @@
       {
         this.$.gradedialog.open();
       }
-     
+     */
     });
   })();
 

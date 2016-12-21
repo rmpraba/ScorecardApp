@@ -26,6 +26,7 @@
       .container{
         width: 100%;
         @apply(--layout-horizontal);
+        margin-left: 20%
         @apply(--layout-center-justified);
       }
       .card{
@@ -35,101 +36,124 @@
         /*background-color: #fefefe;*/
       }
     </style>
-    <div class="container-full">
-    <div class="container">
+
+  <div class="container-full">
+  <div class="container">
     <!-- <center> -->
       <div id="entry" class="card" hidden$="{{BA}}">    
-       <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/pre-entry.png" height="180px" width="180px"></paper-button>
+          <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/pre-entry.png" height="180px" width="180px"></paper-button>
       </div>
+
       <div  class="card" hidden$="{{TA}}">
-       <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
+          <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
       </div>
+
       <div class="card" hidden$="{{Report}}">
-       <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
-      </div>  
+          <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
+      </div>
+
       <div class="card" hidden$="{{GenerateReport}}">
-       <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
+          <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
       </div>
+
       <div class="card" hidden$="{{Approve}}">
-       <paper-button on-click="FnApprovecard" no ink><img src="../../images/approve.jpg" height="180px" width="180px"></paper-button>
+          <paper-button on-click="FnApprovecard" no ink><img src="../../images/approve.jpg" height="180px" width="180px"></paper-button>
       </div>
+
       <div class="card" hidden$="{{Analysis}}">
-       <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
+          <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
       </div>
+
       <div class="card" hidden$="{{ConsolidatedReport}}">
-       <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
+          <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
       </div>
+
       <div class="card" hidden$="{{Approvalstatus}}">
-       <paper-button on-click="FnApprovalStatus" no ink><img src="../../images/approvalstatus.jpg" height="180px" width="180px"></paper-button>
+          <paper-button on-click="FnApprovalStatus" no ink><img src="../../images/approvalstatus.jpg" height="180px" width="180px"></paper-button>
       </div>
-       <div class="card" hidden$="{{teach_obser}}">
-       <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
-     </div>
-     <div class="card" hidden$="{{comparison}}">
-       <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
-     </div>
-     <div class="card" hidden$="{{editinfo}}">
-       <paper-button on-click="FnEditInfo" no ink><img src="../../images/edit.jpg" height="180px" width="180px"></paper-button>
-     </div>
-     <div class="card" hidden$="{{createemployee}}">
-       <paper-button on-click="FnCreateEmployee" no ink><img src="../../images/employee.png" height="180px" width="180px">
-             <h4> Employee Creation</h4>
-   </paper-button>
-     </div>
-     <div class="card" hidden$="{{createrole}}">
-       <paper-button on-click="FnCreateRole" no ink><img src="../../images/role.png" height="180px" width="180px">
-          <h4>master role creation</h4>
-     </paper-button>
-     </div>
 
-     <div class="card" hidden$="{{createschooltype}}">
-      <paper-button on-click="FnCreateSchooltype" no ink><img src="../../images/schooltype.jpg" height="180px" width="180px">
-       <h4>master school type</h4>
-      </paper-button>
+      <div class="card" hidden$="{{teach_obser}}">
+          <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
       </div>
-       <div class="card" hidden$="{{createcategory}}">
-     <paper-button on-click="FnCreateCategory" no ink><img src="../../images/category.jpg" height="180px" width="180px">
-                  <h4>master category Creation</h4>
-    </paper-button>
-     </div>
-     <div class="card" hidden$="{{createsubject}}">
-       <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px">
-              <h4>master school subject</h4>
-      </paper-button>
-    </div>
-  </div>
-     <div class="container">
-     <div class="card" hidden$="{{creategrade}}">
-       <paper-button on-click="FnCreategrade" no ink><img src="../../images/grade.jpg" height="180px" width="180px">
-              <h4>master Grade</h4>
-       </paper-button>
+
+      <div class="card" hidden$="{{comparison}}">
+          <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
       </div>
-     <div class="card" hidden$="{{createschool}}">
-       <paper-button on-click="FnCreateschool" no ink><img src="../../images/school.jpg" height="180px" width="180px">
-              <h4>master school</h4>
-    </paper-button>
-     </div>
-     <div class="card" hidden$="{{subjecttostudent}}">
-       <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px">
-          <h4>  student to subject</h4>
-    </paper-button>
-    </div>
-      <div class="card" hidden$="{{workingdats}}">
-       <paper-button on-click="Workingdays" no ink><img src="../../images/workingdays.jpg" height="180px" width="180px">
-              <h4>school Working Days</h4>
-     </paper-button>
-      </div><!-- school-creation-card -->
-      <div class="card" hidden$="{{SchooltypettoGrade}}">
-       <paper-button on-click="SchoolTypeToGrade" no ink><img src="../../images/schooltoschoolType.jpg" height="180px" width="180px">
-              <h4>SchoolTypeToGrade</h4>
-     </paper-button>
-      </div><!-- school-creation-card -->
-   </div>
 
-    <!-- </center>   -->
+      <div class="card" hidden$="{{editinfo}}">
+          <paper-button on-click="FnEditInfo" no ink><img src="../../images/edit.jpg" height="180px" width="180px"></paper-button>
+      </div>
 
+  <div class="container">
+
+      <div class="card" hidden$="{{createschool}}">
+          <paper-button on-click="FnCreateschool" no ink><img src="../../images/school.jpg" height="180px" width="180px">
+          <h4>School</h4>
+          </paper-button>
+      </div>
+
+      <div class="card" hidden$="{{createschooltype}}">
+          <paper-button on-click="FnCreateSchooltype" no ink><img src="../../images/schooltype.jpg" height="180px" width="180px">
+          <h4>School Type</h4>
+          </paper-button>
+      </div>
+
+      <div class="card" hidden$="{{createcategory}}">
+          <paper-button on-click="FnCreateCategory" no ink><img src="../../images/category.jpg" height="180px" width="180px">
+          <h4>Category</h4>
+          </paper-button>
+      </div>
     
-    </div>
+      <div class="card" hidden$="{{creategrade}}">
+          <paper-button on-click="FnCreategrade" no ink><img src="../../images/grade.jpg" height="180px" width="180px">
+          <h4>Grade</h4>
+          </paper-button>
+          
+      </div>
+  
+
+      <div class="card" hidden$="{{createsubject}}">
+          <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px">
+          <h4>Subjects</h4>
+          </paper-button>
+      </div>
+
+     <div class="card" hidden$="{{createrole}}">
+          <paper-button on-click="FnCreateRole" no ink><img src="../../images/role.png" height="180px" width="180px">
+          <h4>Role</h4>
+          </paper-button>
+     </div>
+  
+     <div class="card" hidden$="{{createemployee}}">
+          <paper-button on-click="FnCreateEmployee" no ink><img src="../../images/employee.png" height="180px" width="180px">
+          <h4> Employee</h4>
+          </paper-button>
+     </div>   
+     
+     <div class="card" hidden$="{{subjecttostudent}}">
+          <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px">
+          <h4>Language Preference</h4>
+          </paper-button>
+     </div>
+
+          
+ 
+    <!-- </center>   -->  
+    <div class="container">
+       <div class="card" hidden$="{{SchooltypettoGrade}}">
+          <paper-button on-click="SchoolTypeToGrade" no ink><img src="../../images/schooltoschoolType.jpg" height="180px" width="180px">
+          <h4>School Type To Grade</h4>
+          </paper-button>
+     </div>
+
+     <div class="card" hidden$="{{workingdats}}">
+          <paper-button on-click="Workingdays" no ink><img src="../../images/workingdays.jpg" height="180px" width="180px">
+          <h4>Working Days</h4>
+          </paper-button>
+    </div>  
+   </div>  
+  </div>
+
     <div class="cdialog">      
       <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
          <paper-dropdown-menu id="academicyear" label="Select Academic Year" disabled="{{read}}" required>
@@ -141,6 +165,7 @@
           </paper-dropdown-menu>
       </paper-dialog>
     </div>
+
     <div class="dialog">      
       <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
           <paper-dropdown-menu id="term" label="Select Term" disabled="{{read}}" required>
@@ -152,7 +177,8 @@
           </paper-dropdown-menu>
       </paper-dialog>
     </div>
-    </div>
+
+  </div>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <scorecard-service id="scorecardservice"></scorecard-service>

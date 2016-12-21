@@ -11,23 +11,47 @@
       }
       .card
       {
+        /*margin-top: 4%;*/
         @apply(--layout-center);
         @apply(--layout-horizontal);     
         border-bottom: 1px solid #dedede;
-        width: 70%;
+        width: 200%;
+      }
+      paper-item,paper-input
+      {
+        width:40%;
+      }
+      paper-icon-button
+      {
+        width:5%;
+      }
+      .itemcard
+      {
+      @apply(--layout-horizontal); 
       }
     </style>
 
-     <table class="card" id="card{{gradeid}}">
-      <tr><td hidden>{{gradeid}}</td>
-      <td width="40%" hidden$="{{hidegradenameitem}}">{{gradename}}</td>
-      <td width="40%" hidden$="{{hidegradenameinput}}"><paper-input value="{{gradename}}"></paper-input></td>
-      <td width="5%" hidden$="{{hidegradenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
-      </td>
-      <td width="5%" hidden$="{{hidegradenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
-      </td>
-      <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
-      </table></tr>
+
+    <div class='itemcard'>
+          <paper-item>{{gradeid}}</paper-item>
+          <paper-item hidden$="{{hidegradenameitem}}">{{gradename}}</paper-item>
+          <paper-input value="{{gradename}}" hidden$="{{hidegradenameinput}}"></paper-input>
+          <paper-icon-button icon='create' on-click='FnEdit' hidden$="{{hidegradenameitem}}"></paper-icon-button>
+          <paper-icon-button icon='save' on-click='FnSave' hidden$="{{hidegradenameinput}}"></paper-icon-button>
+          <paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button>
+    </div>
+   <!--  <table class="card" id="card{{gradeid}}">
+      <tr width="200%">
+          <td width="20%">{{gradeid}}</td>
+          <td width="20%" hidden$="{{hidegradenameitem}}">{{gradename}}</td>
+          <td width="20%" hidden$="{{hidegradenameinput}}"><paper-input value="{{gradename}}"></paper-input></td>
+          <td width="5%" hidden$="{{hidegradenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
+          </td>
+          <td width="5%" hidden$="{{hidegradenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
+          </td>
+          <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+      </tr>
+    </table> -->
     <master-ui-service id="service"></master-ui-service>
   </template>
   <script>

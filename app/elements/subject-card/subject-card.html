@@ -7,14 +7,14 @@
 <link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
 
+
 <dom-module id="subject-card">
   <template>
     <style>
-
       :host
       {
          margin-left: 10%;
-         display: block;
+        display: block;
          @apply(--layout-center);
         /*width: 40%;*/
       }
@@ -22,26 +22,25 @@
       .card
       {
          @apply(--layout-center);
-        width: 60%;
-        margin-left: 8%;
+        width: 57%;
+        margin-left: 10%;
       }
 
       .title
       {
         @apply(--layout-center);
-        width: 30%;
-        margin-left: 34%; 
+        width: 255%;
+        margin-left: 30%; 
       }
 
-      .sbbutton paper-button
+      .creatediv paper-button
       {
       background-color: #363636;
       color: #ffffff;
-      width: 10%;
-      margin-left: 40%;
+      width: 7%;
+      margin-left: 39%;
       margin-top: 3%;
       }
-
 
       .buttons paper-button
       {
@@ -52,79 +51,86 @@
       margin-top: 6%;
       }
 
-
-      .subject
-      {
-        margin-top: 4%;
-        margin-left:30%;
-        width: 50%;
-      }
-
-      #subjectdialog
-      {
-        width: 40%;
-        margin: 0 auto;
-        box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.75);
-      }
-
       .popup-btn
       {
         margin: 0 auto;
       }
 
-      .iron-close
+      table
       {
-        position: absolute;
-        top: 20px;
-        right: 20px;
+         border-collapse: collapse;
+        border: 1px solid #dedede;
+        width: 90%;
+      }
+      .outcard
+      {
+        @apply(--layout-horizontal);
       }
 
+      .creatediv
+      {
+         border-radius: 10px;
+          border: 1px solid #6699ff;
+          padding: 10px; 
+          width: 25%;
+          max-height: 330px;
+          /*height: 150px; */
+      }
+      
     </style>
 
 
     <div class="title"> 
-    <h3>SUBJECT CREATION</h3>
+        <h3><b>SUBJECTS</b></h3>
     </div>
 
-    <div class="sbbutton">
-    <paper-button on-click="Fncreate">Create </paper-button>
+   <div class="outcard">
+    <div>
+      <table>
+        <tr>
+            <th> <label>Subject ID</label></th>
+            <th> <label style="margin-left:18%">Subject Name</label></th>
+            <th> <label>Category Type</label>
+            <th></th>
+        </tr>
+
+        <template is="dom-repeat" items="{{subarr}}" as="sb">
+            <tr><td colspan="4">
+             <subject-display-card subjectid="{{sb.subject_id}}" subjectname="{{sb.subject_name}}" subjectcategory="{{sb.category}}" hidesubjectinput="true" hidesubjectitem="false">
+            </subject-display-card></td>
+            </tr>
+        </template>
+      </table>
     </div>
 
-    <div class="subject">
-    <template is="dom-repeat" items="{{subarr}}" as="sb">
-    <subject-display-card subjectid="{{sb.subject_id}}" subjectname="{{sb.subject_name}}" subjectcategory="{{sb.subject_category}}" hidesubjectinput="true" hidesubjectitem="false"></subject-display-card>
-    </div>
-    </template>
+    <div class="creatediv">
+        <div class="card">       
+            <label>Create New Subject</label>
+            <paper-input readonly value="{{subjectid}}" label="Subject ID"></paper-input>
+            <paper-input value="{{subjectname}}" label="Subject Name"></paper-input>
 
-    <paper-dialog id="subjectdialog" modal>
 
-    <div class="card">
+            <paper-dropdown-menu id="subcat" label="Select Subject Category" disabled="{{read}}" required>
+              <paper-menu  id="category" class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>
+                <template is="dom-repeat" items="{{categoryarr}}" as="view">
+                  <paper-item value="{{view.category_type}}">{{view.category_name}}</paper-item>                        
+                </template>
+              </paper-menu>
+            </paper-dropdown-menu> 
+        </div>   
+        
 
-    <iron-icon dialog-dismiss class="iron-close" icon="icons:close"></iron-icon>
-    <paper-input readonly value="{{subjectid}}" label="Subject ID"></paper-input>
-    <paper-input value="{{subjectname}}" label="Subject Name"></paper-input>
-    
-     <paper-dropdown-menu id="subjectcategory" label="Select Category" disabled="{{read}}" required style="width:100%;">
-            <paper-menu id="category" class="dropdown-content"  on-iron-select="FnSelectcategory"  attr-for-selected="value" required>  
+            <div class="buttons">
+              <paper-button class="popup-btn" on-click="FnSubmit">Submit </paper-button>
+            </div>
+      </div>
+    </div> 
 
-      <template is="dom-repeat" items="{{categoryarr}}" as="view">
-      <paper-item value="{{view.category_type}}">{{view.category_name}}</paper-item>                          
-      </template>
-            </paper-menu>
-          </paper-dropdown-menu> 
-    </div>
-
-    
-    <div class="buttons">
-    <paper-button class="popup-btn"  on-click="FnSubmit">Submit </paper-button>
-    </div>
-    </paper-dialog>
-
-    <master-ui-service id="uiservice"></master-ui-service>
+      <master-ui-service id="uiservice"></master-ui-service>
      
-     
-  </template>
-  <script>
+   </template>
+
+   <script>
   (function() {
     'use strict';
      var category;
@@ -164,7 +170,7 @@
       
          this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,category);
          document.querySelector('subject-card').FnRefresh();
-         this.$.subjectdialog.toggle();
+         //this.$.subjectdialog.toggle();
         }
        
       },
@@ -173,13 +179,13 @@
       {
         category = e.target.selectedItem.value.trim();
         
-      },
+      }
 
-       Fncreate:function()
+      /* Fncreate:function()
       {
           this.$.subjectdialog.open();   
       }  
-
+*/
     });
   })();  
   </script>

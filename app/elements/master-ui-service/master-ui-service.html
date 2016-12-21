@@ -751,7 +751,7 @@ workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
      fnschoolcreationResponse:function(e)
      {
           var res=e.detail.response.returnval;
-          alert(JSON.stringify(res));
+          //alert(JSON.stringify(res));
          document.querySelector('school-creation-card').schoolcreatarr=res;
      },
      
@@ -1060,7 +1060,7 @@ workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
             var obj={"school_id":""};
             obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
             this.SelectSchoolNameparam=obj;
-            alert(JSON.stringify(obj));
+            //alert(JSON.stringify(obj));
             this.$.SelectSchoolNameajax.generateRequest();
      },
     

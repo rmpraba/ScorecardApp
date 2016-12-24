@@ -19,7 +19,8 @@
       :host {
         display: block;
       }
-      paper-button{
+      paper-button
+      {
         margin-left: 25%;
         margin-top: 10%;
       }
@@ -139,7 +140,7 @@
           
  
     <!-- </center>   -->  
-    <div class="container">
+    <!-- <div class="container"> -->
        <div class="card" hidden$="{{SchooltypettoGrade}}">
           <paper-button on-click="SchoolTypeToGrade" no ink><img src="../../images/schooltoschoolType.jpg" height="180px" width="180px">
           <h4>School Type To Grade</h4>
@@ -151,7 +152,7 @@
           <h4>Working Days</h4>
           </paper-button>
     </div>  
-   </div>  
+   <!-- </div>  --> 
   </div>
 
     <div class="cdialog">      
@@ -354,6 +355,16 @@
           this.comparison=false;
           this.editinfo=false;
           this.ConsolidatedReport=false;
+        }
+        if(sessionStorage.getItem("curr_sess_loggedroleid")=='master')
+        {
+          this.createrole=false;
+          this.createcategory=false;
+          this.createschooltype=false;
+          this.createsubject=false;      
+          this.creategrade=false;
+          this.createschool=false;
+          this.createemployee=false;
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=="principal"||sessionStorage.getItem("curr_sess_loggedroleid")=="headofedn"||sessionStorage.getItem("curr_sess_loggedroleid")=="headmistress"||sessionStorage.getItem("curr_sess_loggedroleid")=="co-ordinator"){
           // this.BA=false;

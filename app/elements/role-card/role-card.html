@@ -1,5 +1,4 @@
 
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
@@ -65,24 +64,27 @@
         @apply(--layout-right)
       }
 
-      table{
+      table
+      {
          border-collapse: collapse;
-        border: 1px solid #dedede;
-        padding: 10px;
-        width: 90%;
+         border: 1px solid #dedede;
+         padding: 10px;
+         width: 90%;
       }
-      .outcard{
-        @apply(--layout-horizontal);
-      }
+      .outcard
+       {
+         @apply(--layout-horizontal);
+       }
 
-      .creatediv{
-         border-radius: 10px;
+      .creatediv
+       {
+          border-radius: 10px;
           border: 1px solid #6699ff;
           padding: 15px; 
           width: 30%;
           max-height: 240px;
           /*height: 150px; */
-      }
+       }
 
     </style>
 
@@ -109,7 +111,7 @@
 
         <div class="creatediv">
           <div class="card">
-            <label>Create New Role</label>
+              <label>Create New Role</label>
             <paper-input style="width:68%" value="{{rolename}}" label="Role Name"></paper-input>
           </div>
 

@@ -1,3 +1,4 @@
+
 <!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -42,168 +43,336 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       margin-left:5%;
       margin-top: 4%;
       }
-      .button paper-button
+      /*.button paper-button
       {
+        @apply(--layout-right)
       background-color: #363636;
       color: #ffffff;                
       width: 10%;
-      margin-left: 40%;
+      margin-left: 90%;
       margin-top: 4%;
-      }
-      .role{
-        width: 50%;
-         margin-left:25%;
-      }
-      paper-button{
-        margin-left: 50%;
+      }*/
+      
+      paper-button,button
+      {
+        @apply(--layout-right);
+        background-color: #363636;
+        color: #ffffff;
+        /*margin-left: 25%;*/
         margin-top: 5%;
       }
-      .card{
+      .subbutton
+      {
+        margin-left: 12%;
+      }
+      .card
+      {
         @apply(--layout-horizontal);
-              margin-left:30%;
-        
-        
-      } 
+        margin-left:30%;      
+      }
 
+       .card1
+      {
+        width: 100%;
+      }
+
+
+
+       #creatediv paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;
+      width: 7%;
+      margin-left: 70%;
+      margin-top: 3%;
+      }
+
+       table
+      {
+         margin-top: 3%;
+         border-collapse: collapse;
+         margin-left: -20%;
+         border: 1px solid #dedede;
+         width: 550px;
+         padding: 10px;
+         
+         
+      }
+      .outcard
+       {
+         @apply(--layout-horizontal);
+       }
+
+      #creatediv
+       {
+          border-radius: 10px;
+          border: 1px solid #6699ff;
+          padding: 10px;
+          min-height: 300px; 
+          margin-top: 3%;
+          width: 60%;
+          margin-left: 10%;
+          
+          /*height: 150px; */
+       }
+      .title
+      {
+        width: 100%;
+        margin-left: 28%; 
+      }
+
+
+       #updatedetails
+      {
+        @apply(--layout-horizontal);
+        margin-left: 45%
+      }
+      #updatedetails
+      {
+        border-radius: 10px;
+        border: 1px solid #6699ff;
+        padding: 10px;
+        min-height: 600px;
+        margin-top: -18%;
+        width: 95%;
+        margin-left: 45%;
+      }
+      
     </style>
-    <div>
-     <!-- <paper-input label="Search here.........." prefix>
-      <paper-icon-button prefix icon="search" on-click="FnSearch"></paper-icon-button>
-    </paper-input>
- --> <div>
-     <center><h3 style="color:#1A5276">SCHOOL CREATION</h3></center> 
+
+     
+    <div class="title"> 
+        <h3><b>SCHOOL CREATION</b></h3>
     </div>
-    <center>
-      <div class="rbutton">
-    <paper-button on-click="Fncreate">Create</paper-button>
-    </center>
-     </div>
 
-    <div class="role">
-    <template is="dom-repeat" items="{{schoolcreatarr}}" as="view">
-    <school-creation-item-card schoolname="{{view.name}}" schoolid="{{view.id}}" mobile="{{view.mobile_no}}"  address="{{view.address}}" 
-    address1="{{view.address1}}" address2="{{view.address2}}" address3="{{view.address3}}"   affiliationno="{{view.affiliation_no}}" telno="{{view.telno}}" graprimary="{{view.primary}}"  mailid="{{view.email_id}}" boardselection="{{view.Board}}" wesite="{{view.website}}"  hiderolenameinput="true" hiderolenameitem="false"></school-creation-item-card>
-    </template>
-   
-    </div>
-    
-   
-  <paper-dialog id="roledialog" modal style="width:50%;">
-       <div class="form-group-heading">
-                             <h4>School Details</h4>
-       </div>
-                 <div class="list-group col-sm-12 panel-body form-category">
-                            <paper-input value={{schoolid1}} hidden></paper-input>
-                          <div class="col-sm-6">
-                        <paper-input label="School Name" id="School" required error-message="needs Schoolname!" value="{{school}}"  allowed-pattern="[a-zA-Z ]" ></paper-input>
-                        </div>
-                        <div class="col-sm-6">
-                      <paper-input label="Telephone Number" id="Telephone" required error-message="needs telepnoneno!" value="{{Telephone}}"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
-                        </div>
-                        <div class="col-sm-6">
-                         <paper-input label="Mobile Number" id="Mobile" required error-message="needs mobileno" value="{{MobileNumber}}" allowed-pattern="[0-9]" maxlength="10"></paper-input>
-                        </div>
-                         <div class="col-sm-6">
-                         <gold-email-input label="Emailid" id="Emailid" required error-message="needs mailid!" value="{{Emailid}}"></gold-email-input>
-                        </div>
-                        <div class="col-sm-4">
-                         <paper-input label="Website" id="Website" required error-message="needs wevbsite!" value="{{Website}}"></paper-input>
-                        </div>
-                        <div class="col-sm-4">
-                         <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input>
-                        </div>
-                        <div class="col-sm-4">
-                         <!-- <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input> -->
-                          <paper-dropdown-menu label="Board Type">
-                          <paper-listbox id="academicswww" class="dropdown-content" on-iron-select="boardtype">
-                            <paper-item>ICSE</paper-item>
-                            <paper-item>CBSE</paper-item>
-                            <paper-item>State</paper-item>
-                            <paper-item>IB</paper-item>
-                          </paper-listbox>
-                        </paper-dropdown-menu>
-                        </div>
-                      
-                        
-                    </div>
-                     <div class="form-group-heading">
-                             <h4> School Address Details</h4>
-                     </div>
-                  
-                     <div class="list-group col-sm-12 panel-body form-category">
-                        <div class="col-sm-6">
-                         <paper-input label="Village/Town" id="Village" required error-message="needs Village/Town!" value="{{address}}"></paper-input>
-                        </div>
-                        <div class="col-sm-6">
-                        <paper-input label="District" id="District" value="{{address1}}"  required error-message="needs District!"  allowed-pattern="[a-zA-Z ]"></paper-input>
-                        </div>
 
-                       
-                       <div class="col-sm-6">
-                         <paper-input label="State" id="State" value="{{address2}}"  required error-message="needs state!"  allowed-pattern="[a-zA-Z ]"></paper-input>
+    <div class="outcard">
+        
+            <table>
+              <tr>
+                  <th><label>School ID</label></th>
+                  <th><label style="margin-left:-39%">School Name</label></th>
+                  <th></th>
+              </tr>
+              <template is="dom-repeat" items="{{schoolcreatarr}}" as="view">
+                  <tr><td colspan="2">
+                   <school-creation-item-card schoolname="{{view.name}}" schoolid="{{view.id}}" mobile="{{view.mobile_no}}"  address="{{view.address}}" address1="{{view.address1}}" address2="{{view.address2}}" address3="{{view.address3}}"   affiliationno="{{view.affiliation_no}}" telno="{{view.telno}}" graprimary="{{view.primary}}"  mailid="{{view.email_id}}" boardselection="{{view.Board}}" wesite="{{view.website}}"  hiderolenameinput="true" hiderolenameitem="false">   
+                  </school-creation-item-card></td>
+                  </tr>
+              </template>    
+            </table>
 
-                       </div>
-                      <div class="col-sm-6">
-                       <paper-input label="Pincode" id="Pincode" value="{{address3}}"  required error-message="needs Pincode!"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
-                      </div></br>
-                      <span style="float:right;color:#1C63C9">
-                          <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
-                     </span>
-                     <span class="button" style="float:center;">
-                          <paper-button on-click="FnSubmit">Submit </paper-button>
-                     </span>
-                  </div>
+      <div id="creatediv" hidden$="{{hidecreatediv}}">
+          <div>
+
+            <div class="form-group-heading">
+                <h4>School Details</h4>
+            </div>
+          
+          <div class="list-group col-sm-12 panel-body form-category">
+                <paper-input value={{schoolid1}} hidden></paper-input>
+
+                <div class="col-sm-6">
+                    <paper-input label="School Name" id="School" required error-message="needs Schoolname!" value="{{school}}"  allowed-pattern="[a-zA-Z ]" ></paper-input>
                 </div>
-           </paper-dialog>
+
+                <div class="col-sm-6">
+                    <paper-input label="Telephone Number" id="Telephone" required error-message="needs telepnoneno!" value="{{Telephone}}"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
+                </div>
+
+                <div class="col-sm-6">
+                   <paper-input label="Mobile Number" id="Mobile" required error-message="needs mobileno" value="{{MobileNumber}}" allowed-pattern="[0-9]" maxlength="10"></paper-input>
+                </div>
+
+                <div class="col-sm-6">
+                    <gold-email-input label="Emailid" id="Emailid" required error-message="needs mailid!" value="{{Emailid}}"></gold-email-input>
+                </div>
+
+                <div class="col-sm-4">
+                    <paper-input label="Website" id="Website" required error-message="needs wevbsite!" value="{{Website}}"></paper-input>
+                </div>
+
+                <div class="col-sm-4">
+                     <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input>
+                </div>
+
+                <div class="col-sm-4">
+                         <!-- <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input> -->
+                    <paper-dropdown-menu label="Board Type">
+                      <paper-listbox id="academicswww" class="dropdown-content" on-iron-select="boardtype">
+                          <paper-item>ICSE</paper-item>
+                          <paper-item>CBSE</paper-item>
+                          <paper-item>State</paper-item>
+                          <paper-item>IB</paper-item>
+                      </paper-listbox>
+                    </paper-dropdown-menu>
+                </div>                
+          </div>
+        </div>  
+
+        <div>
+          <div class="form-group-heading">
+              <h4> School Address Details</h4>
+          </div>
+
+          <div class="list-group col-sm-12 panel-body form-category">
+                <div class="col-sm-6">
+                    <paper-input label="Village/Town" id="Village" required error-message="needs Village/Town!" value="{{address}}"></paper-input>
+                </div>
+
+                <div class="col-sm-6">
+                    <paper-input label="District" id="District" value="{{address1}}"  required error-message="needs District!"  allowed-pattern="[a-zA-Z ]"></paper-input>
+                </div>
+                       
+                <div class="col-sm-6">
+                    <paper-input label="State" id="State" value="{{address2}}"  required error-message="needs state!"  allowed-pattern="[a-zA-Z ]"></paper-input>
+                </div>
+
+                <div class="col-sm-6">
+                     <paper-input label="Pincode" id="Pincode" value="{{address3}}"  required error-message="needs Pincode!"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
+                </div>
+                <span class="subbutton">
+                     <paper-button style="margin-left:74%" on-click="FnSubmit">Submit </paper-button>
+                </span>
+          </div>
+        </div>   
+      </div>
+    </div>   
 
 
-             </div>
+
+    <div id="updatedetails" modal style="width:50%;" hidden$="{{hideupdatediv}}">
+      <!-- <paper-dialog id="updatedetails"> -->
+        <div> 
+          <!-- <div> -->
+              <div class="form-group-heading">
+                    <h4>School Details</h4>
+              </div>
+
+              <div class="list-group col-sm-12 panel-body form-category">
+                    <paper-input value={{schoolid}} hidden></paper-input>
+
+                    <div class="col-sm-6">
+                        <paper-input label="School Name"  value="{{schoolname}}" ></paper-input>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <paper-input label="Telephone Number" value="{{telno}}"  allowed-pattern="[0-9]"></paper-input>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <paper-input label="Mobile Number" value="{{mobile}}" allowed-pattern="[0-9]"></paper-input>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <gold-email-input label="Emailid" value="{{mailid}}"></gold-email-input>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <paper-input label="Website" value="{{wesite}}"></paper-input>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <paper-input label="affiliation" value="{{affiliationno}}"></paper-input>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <paper-input label="Board Type"  value="{{boardselection}}"></paper-input>
+                    </div>              
+              </div>
+          <!-- </div> -->  
+
+          <div>
+              <div class="form-group-heading">
+                    <h4> School Address Details</h4>
+              </div>
+
+                  
+              <div class="list-group col-sm-12 panel-body form-category">
+                    <div class="col-sm-6">
+                        <paper-input label="Village/Town" value="{{address}}"></paper-input>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <paper-input label="District"  value="{{address1}}"></paper-input>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <paper-input label="State" value="{{address2}}"></paper-input>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <paper-input label="Pincode" value="{{address3}}"></paper-input>
+                    </div>
+
+                    <span class="button">
+                        <paper-button style="margin-left:84%" on-click='FnSave'>Save</paper-button>
+                    </span>
+              </div>
+          </div>
+
+          </div>         
+        </div>
+      </div>
+      <!-- </paper-dialog> -->             
+  
+    
      <master-ui-service id="uiservice"></master-ui-service>
 
   </template>
+
   <script>
   (function() {
     'use strict';
-var gradearrr=[];
+    var gradearrr=[];
     Polymer({
       is: 'school-creation-card',
 
- ready:function()
-      {
-        this.$.uiservice.fnschoolcreation();
-       
-      this.FnRefresh();
-///     this.Fnsetsecondry();
-      },  
-      FnRefresh:function()
-      {
-       this.school="";
-       this.Telephone="";
-       this.MobileNumber="";
-      this.Emailid="";
-       this.Website="";
-       this.affiliation="";
-       this.address="";
-       this.address1="";
-       this.address2=""; 
-       this.address3="";
-     
-    },  
-      FnSearch:function(){
-        
-      },
-       
-      boardtype:function(e){
-        this.Board=e.target.selectedItem.textContent.trim();
-        alert(this.Board);
-        this.$.uiservice.fnschoolidgrnerate();  
-     
-      },
-      FnSubmit:function()
-      {    
-         //alert(JSON.stringify(gradearrr));
+        ready:function()
+        {
+              this.hidecreatediv=true;
+              this.hideupdatediv=true;
+                //alert("test");
+                this.$.uiservice.fnschoolcreation();   
+                this.FnRefresh();
+                //this.showupdetails();
+                //this.getscldetails();
+         },  
+         Fnhidecreatediv:function(){
+          this.hidecreatediv=false;
+          this.hideupdatediv=true;
+         },
+         Fnhideupdatediv:function(){
+          this.hidecreatediv=true;
+          this.hideupdatediv=false;
+         },
+        FnRefresh:function()
+         {
+                this.school="";
+                this.Telephone="";
+                this.MobileNumber="";
+                this.Emailid="";
+                this.Website="";
+                this.affiliation="";
+                this.address="";
+                this.address1="";
+                this.address2=""; 
+                this.address3="";
+          },  
+         
+        boardtype:function(e)
+        {
+                this.Board=e.target.selectedItem.textContent.trim();
+                //alert(this.Board);
+                this.$.uiservice.fnschoolidgrnerate();  
+         
+        },
 
-if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""||this.affiliation==""||this.address==""||this.address1==""||this.address2==""||this.address3==""||this.Emailid=="")
+        FnSubmit:function()
+        {    
+             //alert(JSON.stringify(gradearrr));
+
+            if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""||this.affiliation==""||this.address==""||this.address1==""||this.address2==""||this.address3==""||this.Emailid=="")
               {
                 this.$.School.validate();
                 this.$.Telephone.validate();
@@ -215,20 +384,17 @@ if(this.school==""||this.Telephone==""||this.MobileNumber==""||this.Website==""|
                 this.$.State.validate();
                 this.$.District.validate();
                 this.$.Pincode.validate();
-               }
-         else{
-         this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation,this.Board);
-         this.ready();
-          document.querySelector('#academicswww').selected=-1;
-  
-         }    
-      },     
-     Fncreate:function(){
-      this.FnRefresh();
-      this.$.roledialog.open();
-     
-      }  
+              }
+             else
+             {
+                this.$.uiservice.FnSetschoolInfo(this.school,this.schoolid1,this.Telephone,this.MobileNumber,this.Emailid,this.Website,this.address,this.address1,this.address2,this.address3,this.affiliation,this.Board);
+                this.ready();
+                document.querySelector('#academicswww').selected=-1;
+      
+             }    
+          }
 
+     
 
       });
   })();

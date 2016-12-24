@@ -22,9 +22,14 @@
       .card
       {
          @apply(--layout-center);
-        width: 55%;
+        width: 60%;
         margin-left: 8%;
       } 
+      .headdiv
+      {
+        margin-left: -10%;
+        width: 200%;
+      }
 
       .title
       {
@@ -39,7 +44,7 @@
       background-color: #363636;
       color: #ffffff;
       width: 7%;
-      margin-left: 39%;
+      margin-left: 43%;
       margin-top: 3%;
       }
       
@@ -118,7 +123,9 @@
       </div>
       <div class="creatediv">
         <div class="card">
-          <label style="width:220%">Create New School Type</label>
+          <div class="headdiv">
+              <label>Create New School Type</label>
+           </div> 
           <paper-input value="{{schooltypename}}" label="School type name"></paper-input> 
         </div>
 

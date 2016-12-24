@@ -447,7 +447,7 @@
        
       },
 
-workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
+        workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
        {
         this.workingsearchinfourl=sessionStorage.getItem("addrinfo")+"/workingsearchinfo-service";
         var obj={"workingschoolid":"","acadamicyear":"","termgrade":""};
@@ -463,7 +463,7 @@ workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
       {
        
         var res=e.detail.response.returnval;
-        alert(JSON.stringify(res));
+        //alert(JSON.stringify(res));
        document.querySelector('working-day-item-card').fngetworkingdays(res);          
    
          },
@@ -472,7 +472,7 @@ workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
 
        
         this.FnSetschoolInfourl=sessionStorage.getItem("addrinfo")+"/FnSetschoolInfo-service";
-     var obj={"school":"","Telephone":"","MobileNumber":"","Emailid":"","Website":"","address":"","address1":"","address2":"","address3":"","schoolid1":"","affiliation":"","Board":""};
+         var obj={"school":"","Telephone":"","MobileNumber":"","Emailid":"","Website":"","address":"","address1":"","address2":"","address3":"","schoolid1":"","affiliation":"","Board":""};
         obj.school=school;
         obj.Telephone=Telephone;
         obj.MobileNumber=MobileNumber;
@@ -499,7 +499,7 @@ workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
       Fnsaveschoolinfo:function(school,schoolid1,telno,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Boardselection){
        ;
         this.Fnsaveschoolinfourl=sessionStorage.getItem("addrinfo")+"/Fnsaveschoolinfo-service";
-     var obj={"school":"","Telephone":"","MobileNumber":"","Emailid":"","Website":"","address":"","address1":"","address2":"","address3":"","schoolid1":"","affiliation":"","Boardselection":""};
+        var obj={"school":"","Telephone":"","MobileNumber":"","Emailid":"","Website":"","address":"","address1":"","address2":"","address3":"","schoolid1":"","affiliation":"","Boardselection":""};
         obj.school=school;
         obj.telno=telno;
         obj.MobileNumber=MobileNumber;
@@ -513,7 +513,7 @@ workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
         obj.affiliation=affiliation;
         obj.Boardselection=Boardselection;
        this.Fnsaveschoolinfoparam=obj;
-       alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.Fnsaveschoolinfoajax.generateRequest();
       },
        Fndeleteinfo:function(schoolid1){
@@ -521,7 +521,7 @@ workingsearchinfo:function(workingschoolid,acadamicyear,termgrade)
         this.Fndeleteinfourl=sessionStorage.getItem("addrinfo")+"/Fndeleteinfo-service";
         var obj={"schoolid1":""};
         obj.schoolid1=schoolid1;
-       this.Fndeleteinfoparam=obj;
+        this.Fndeleteinfoparam=obj;
         //alert(JSON.stringify(obj));
         this.$.Fndeleteinfoajax.generateRequest();
       },

@@ -22,8 +22,12 @@
       .card
       {
          @apply(--layout-center);
-        width: 57%;
+        width: 80%;
         margin-left: 10%;
+      }
+      .headdiv
+      {
+        width: 200%;
       }
 
       .title
@@ -37,8 +41,7 @@
       {
       background-color: #363636;
       color: #ffffff;
-      width: 7%;
-      margin-left: 39%;
+      width: 6%;
       margin-top: 3%;
       }
 
@@ -54,6 +57,7 @@
       .popup-btn
       {
         margin: 0 auto;
+        margin-left: 63%;
       }
 
       table
@@ -72,7 +76,7 @@
          border-radius: 10px;
           border: 1px solid #6699ff;
           padding: 10px; 
-          width: 25%;
+          width: 28%;
           max-height: 330px;
           /*height: 150px; */
       }
@@ -104,8 +108,11 @@
     </div>
 
     <div class="creatediv">
-        <div class="card">       
-            <label>Create New Subject</label>
+        <div class="card">    
+          <div class="headdiv">
+              <label>Create New Subject</label>
+          </div>   
+            
             <paper-input readonly value="{{subjectid}}" label="Subject ID"></paper-input>
             <paper-input value="{{subjectname}}" label="Subject Name"></paper-input>
 

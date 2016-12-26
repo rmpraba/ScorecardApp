@@ -39,7 +39,7 @@
     </style>
 
   <div class="container-full">
-  <div class="container">
+    <div class="container">
     <!-- <center> -->
       <div id="entry" class="card" hidden$="{{BA}}">    
           <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/pre-entry.png" height="180px" width="180px"></paper-button>
@@ -125,50 +125,49 @@
           </paper-button>
      </div>
   
-     <div class="card" hidden$="{{createemployee}}">
+      <div class="card" hidden$="{{createemployee}}">
           <paper-button on-click="FnCreateEmployee" no ink><img src="../../images/employee.png" height="180px" width="180px">
           <h4> Employee</h4>
           </paper-button>
-     </div>   
+      </div>   
      
-     <div class="card" hidden$="{{subjecttostudent}}">
+      <div class="card" hidden$="{{subjecttostudent}}">
           <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px">
           <h4>Language Preference</h4>
           </paper-button>
-     </div>
+      </div>
 
           
  
     <!-- </center>   -->  
     <!-- <div class="container"> -->
-       <div class="card" hidden$="{{SchooltypettoGrade}}">
+      <div class="card" hidden$="{{SchooltypettoGrade}}">
           <paper-button on-click="SchoolTypeToGrade" no ink><img src="../../images/schooltoschoolType.jpg" height="180px" width="180px">
           <h4>School Type To Grade</h4>
           </paper-button>
-     </div>
+      </div>
 
-     <div class="card" hidden$="{{workingdats}}">
+      <div class="card" hidden$="{{workingdats}}">
           <paper-button on-click="Workingdays" no ink><img src="../../images/workingdays.jpg" height="180px" width="180px">
           <h4>Working Days</h4>
           </paper-button>
-    </div>  
-   <!-- </div>  --> 
+      </div> 
   </div>
 
-    <div class="cdialog">      
-      <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <div class="cdialog">      
+        <paper-dialog id="cdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
          <paper-dropdown-menu id="academicyear" label="Select Academic Year" disabled="{{read}}" required>
             <paper-menu id="academicyr" class="dropdown-content"  on-iron-select="FnSelectacademicyear"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{academicarr}}">
                 <paper-item value="{{item.year}}">{{item.year}}</paper-item>                               
               </template>
             </paper-menu>
-          </paper-dropdown-menu>
-      </paper-dialog>
-    </div>
+         </paper-dropdown-menu>
+        </paper-dialog>
+      </div>
 
-    <div class="dialog">      
-      <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <div class="dialog">      
+        <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
           <paper-dropdown-menu id="term" label="Select Term" disabled="{{read}}" required>
             <paper-menu id="termtype" class="dropdown-content" on-iron-select="FnSelectTerm" attr-for-selected="value" selected="{{selectterm}}">
               <template is="dom-repeat" items="{{termarr}}">
@@ -176,10 +175,10 @@
               </template>
             </paper-menu>
           </paper-dropdown-menu>
-      </paper-dialog>
+        </paper-dialog>
+      </div>
     </div>
-
-  </div>
+  </div>  
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
@@ -465,14 +464,12 @@
       {        
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('school-creation-card','');
-
-       // document.querySelector('category-card').ready();
-      // alert("hi");
-       this.$.uiservice.fnschoolidgrnerate();
-
-         this.$.uiservice.SelectSchoolName();
-         this.$.uiservice.fnschoolidgrnerate();
-        this.$.uiservice.fnsetgrademapping();
+          this.$.uiservice.fnschoolcreation();   
+          this.$.uiservice.fnschoolidgenerate();
+          this.$.uiservice.SelectSchoolName();
+          this.$.uiservice.fnsetgrademapping();
+            //this.$.uiservice.fnschoolcreation();
+            
       },
      SchoolTypeToGrade:function(e)
       {

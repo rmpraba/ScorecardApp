@@ -5489,7 +5489,7 @@ app.post('/fnschoolgradeset-service',  urlencodedParser,function (req,res)
 });
 
 
-app.post('/fnschoolidgrnerate-service',  urlencodedParser,function (req,res)
+app.post('/fnschoolidgenerate-service',  urlencodedParser,function (req,res)
 {  
   // var qur="SELECT grade FROM MD_GRADE_RATING WHERE lower_limit<='"+req.query.score+"' and higher_limit>='"+req.query.score+"'";
   var qur="SELECT * FROM sequence";
@@ -6121,7 +6121,7 @@ app.post('/SbjecttoStudentmapping-service',  urlencodedParser,function (req,res)
   var schoolid={school_id:req.query.subjectselectid};
   var gradeid={grade_id:req.query.FnStosGradeid};
   var sectionid={section_id:req.query.FnStoSSectionid};
-  console.log(schoolid);
+  //console.log(schoolid);
  var qur="SELECT * FROM md_student where class_id=(select class_id from mp_grade_section where grade_id=(select grade_id from md_grade where grade_name='"+req.query.FnStosGradeid+"') and section_id=(select section_id from md_section where section_name='"+req.query.FnStoSSectionid+"' and school_id='"+req.query.subjectselectid+"')) and school_id='"+req.query.subjectselectid+"'";
   connection.query(qur,
     function(err, rows)
@@ -6141,14 +6141,15 @@ app.post('/SbjecttoStudentmapping-service',  urlencodedParser,function (req,res)
 
 app.post('/SelectSchoolName-service' ,urlencodedParser,
   function (req, res)
-
 {  
+  var e={id:req.query.school_id};
+  console.log(e);
   var qur="select * from md_school where id='"+req.query.school_id+"'";
   connection.query(qur,function(err, rows){
     if(!err){
 
       res.status(200).json({'returnval': rows});
-      // console.log(rows);
+      console.log(rows);
     }
 
     else

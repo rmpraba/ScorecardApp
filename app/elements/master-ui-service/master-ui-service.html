@@ -1,5 +1,4 @@
 
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="master-ui-service">
@@ -180,13 +179,13 @@
         debounce-duration="300"
     >
     <iron-ajax        
-        id="fnschoolidgrnerateajax"
-        url="{{fnschoolidgrnerateurl}}"
-        params="{{fnschoolidgrnerateparam}}"
+        id="fnschoolidgenerateajax"
+        url="{{fnschoolidgenerateurl}}"
+        params="{{fnschoolidgenerateparam}}"
         handle-as="json"
         content-type="application/json"
         method="post"
-        on-response="fnschoolidgrnerateResponse"
+        on-response="fnschoolidgenerateResponse"
         debounce-duration="300"
     ><iron-ajax        
         id="Fnsaveschoolinfoajax"
@@ -540,9 +539,9 @@
           this.fnschoolcreation();
         }
       },
-     fnschoolidgrnerate:function(){
-        this.fnschoolidgrnerateurl=sessionStorage.getItem("addrinfo")+"/fnschoolidgrnerate-service";
-         this.$.fnschoolidgrnerateajax.generateRequest();
+     fnschoolidgenerate:function(){
+        this.fnschoolidgenerateurl=sessionStorage.getItem("addrinfo")+"/fnschoolidgenerate-service";
+         this.$.fnschoolidgenerateajax.generateRequest();
        },
       SchooltypetoGrademapping:function(){
            this.SchooltypetoGrademappingurl=sessionStorage.getItem("addrinfo")+"/SchooltypetoGrademapping-service";
@@ -552,7 +551,7 @@
          var res=e.detail.response.returnval;
         document.querySelector('master-school_type-creation').SchoolToschoolTypearr=res;
         },
-     fnschoolidgrnerateResponse:function(e)
+     fnschoolidgenerateResponse:function(e)
      {
          var res=e.detail.response.returnval;
         //  alert(JSON.stringify(res)); 
@@ -733,7 +732,7 @@
       },
      fnsetgrademappingResponse(e){
            var res=e.detail.response.returnval;
-         alert(JSON.stringify(res));
+           //alert(JSON.stringify(res));
            document.querySelector('school-creation-card').schoolidarrwww=res;
      
       },
@@ -743,7 +742,8 @@
        },
 
 
-      fnschoolcreation:function(){
+      fnschoolcreation:function()
+      {
         this.fnschoolcreationurl=sessionStorage.getItem("addrinfo")+"/fnschoolcreation-service";
         this.$.fnschoolcreationajax.generateRequest();
       },
@@ -751,8 +751,21 @@
      fnschoolcreationResponse:function(e)
      {
           var res=e.detail.response.returnval;
-          //alert(JSON.stringify(res));
+          alert(JSON.stringify(res));
+       /*  document.querySelector('school-creation-card').schoolname=res[0].name;
+         document.querySelector('school-creation-card').telnum=res[0].telno;
+         document.querySelector('school-creation-card').mobile=res[0].mobile_no;
+         document.querySelector('school-creation-card').mailid=res[0].email_id;
+         document.querySelector('school-creation-card').wesite=res[0].website;
+         document.querySelector('school-creation-card').affiliationno=res[0].affiliation_no;
+         document.querySelector('school-creation-card').boardselection=res[0].Board;
+         document.querySelector('school-creation-card').addr=res[0].address;
+         document.querySelector('school-creation-card').addr1=res[0].address1;
+         document.querySelector('school-creation-card').addr2=res[0].address2;
+         document.querySelector('school-creation-card').addr3=res[0].address3;
+       */  
          document.querySelector('school-creation-card').schoolcreatarr=res;
+  
      },
      
       
@@ -1066,10 +1079,9 @@
     
        SelectSchoolNameResponse:function(e){
           var res=e.detail.response.returnval;
+          //alert(JSON.stringify(res));
         document.querySelector('student-to-subject-mapping-card').subjectselectid=res[0].id;
         document.querySelector('student-to-subject-mapping-card').subjectselectname=res[0].name;
-        document.querySelector('working-days-card').workingschoolid=res[0].id;
-        document.querySelector('working-days-card').workingschoolname=res[0].name;
       },
 
 

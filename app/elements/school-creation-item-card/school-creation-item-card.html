@@ -22,67 +22,105 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="school-creation-item-card">
   <template>
     <style>
-      :host {
+      :host 
+      {
         display: block;
       }
-      .card{
-        @apply(--layout-horizontal);
-        border-bottom: 1px solid #dedede;
-      }    
-       /*paper-item
-      {
-        width:40%;
-        margin-left: -15%;
-      }
-      paper-input
-      {
-        width: 50%;
-        margin-left: -10%;
-      }*/
-      paper-icon-button
-      {
-        width:-10%;
-        margin-left: -40%;
-      }
-
+      
       .itemcard
       {
       @apply(--layout-horizontal); 
       }  
-      .id
+
+       paper-button
       {
-        margin-left: -2%;
+        @apply(--layout-right);
+        background-color: #363636;
+        color: #ffffff;
+        margin-top: 5%;
       }
       .sub
       {
-        width: 90%;
-        margin-left: 3%
+        width: 50%;
       }
       
+      
+      .clsbutton
+      {
+        margin-left: 10%;
+      }
+
     </style>
 
-
-      <div class="itemcard">
-          <div class="id">
-              <paper-item>{{schoolid}}</paper-item>
+    <div class="row">  
+    <div class="itemcard col-sm-12">
+      <div class="sclid">
+        <paper-item>{{schoolid}}</paper-item>
+      </div>
+      <div class="sub">
+        <paper-item>{{schoolname}}</paper-item>
+      </div>
+      <div class="clsbutton">
+          <paper-icon-button icon='create' on-click="showupdetails"></paper-icon-button>
+          <paper-icon-button icon='close' on-click="FnDelete"></paper-icon-button>
+      </div>
+    </div>
+    <div id="updatedetails" style="margin-top:-18%" hidden>
+      <div> 
+        <div class="form-group-heading">
+          <h4>School Details</h4>
+        </div>
+        <div class="list-group col-sm-12 panel-body form-category">
+          <paper-input value={{schoolid}} hidden></paper-input>
+          <div class="col-sm-6">
+            <paper-input label="School Name"  value="{{schoolname}}" ></paper-input>
           </div>
-          <div class="sub">
-              <paper-item>{{schoolname}}</paper-item>
+          <div class="col-sm-6">
+            <paper-input label="Telephone Number" value="{{telnum}}"  allowed-pattern="[0-9]"></paper-input>
           </div>
-
-          <div >
-              <paper-icon-button icon="add" on-click="getscldetails"></paper-icon-button>
-              <paper-icon-button style="margin-left:-8%" icon='create' on-click="showupdetails"></paper-icon-button>
-              <paper-icon-button style="margin-left:-10%" icon='close' on-click='FnDelete'></paper-icon-button>
+          <div class="col-sm-6">
+            <paper-input label="Mobile Number" value="{{mobile}}" allowed-pattern="[0-9]"></paper-input>
           </div>
-      </div>    
-       
-
-      
-
+          <div class="col-sm-6">
+            <gold-email-input label="Emailid" value="{{mailid}}"></gold-email-input>
+          </div>
+          <div class="col-sm-4">
+            <paper-input label="Website" value="{{wesite}}"></paper-input>
+          </div>
+          <div class="col-sm-4">
+            <paper-input label="affiliation" value="{{affiliationno}}"></paper-input>
+          </div>
+          <div class="col-sm-4">
+            <paper-input label="Board Type"  value="{{boardselection}}"></paper-input>
+          </div>              
+        </div>
+        <div>
+          <div class="form-group-heading">
+            <h4> School Address Details</h4>
+          </div>
+          <div class="list-group col-sm-12 panel-body form-category">
+            <div class="col-sm-6">
+              <paper-input label="Village/Town" value="{{addr}}"></paper-input>
+            </div>
+            <div class="col-sm-6">
+              <paper-input label="District"  value="{{addr1}}"></paper-input>
+            </div>
+            <div class="col-sm-6">
+              <paper-input label="State" value="{{addr2}}"></paper-input>
+            </div>
+            <div class="col-sm-6">
+              <paper-input label="Pincode" value="{{addr3}}"></paper-input>
+            </div>
+            <span class="button">
+              <paper-button style="margin-left:77%" on-click='FnSave'>Save</paper-button>
+            </span>
+          </div>
+        </div>
+      </div>         
+    </div>
+    </div>
     <master-ui-service id="uiservice"></master-ui-service></div>
   </template>
-
   <script>
   
   (function() 
@@ -94,31 +132,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         ready:function()
         {
-            
+          this.hideupdatediv=true;
         },
         FnDelete:function()
         {
             this.$.uiservice.Fndeleteinfo(this.schoolid);
         },
 
+         /*Fnhideupdatediv:function()
+         {
+          this.hidecreatediv=true;
+          this.hideupdatediv=false;
+         },*/
+
         showupdetails:function()
-        { 
-          
-          document.querySelector('school-creation-card').Fnhideupdatediv();
+        {  
+          // this.hideupdatediv=false;
 
+          document.querySelector('school-creation-card').fn1(this.schoolid,this.schoolname,this.telnum,this.mobile,this.mailid,this.wesite,this.affiliationno,this.boardselection,this.addr,this.addr1,this.addr2,this.addr3);
         },
-
-        getscldetails:function()
+        /*getscldetails:function(e)
         {
-          
-          document.querySelector('school-creation-card').Fnhidecreatediv();
+           this.hideupdatediv=true;
+           document.querySelector('school-creation-card').fn2();
         },
-        
+        */
         FnSave:function()
         {
             this.$.uiservice.Fnsaveschoolinfo(this.schoolname,this.schoolid,this.telno,this.mobile,this.mailid,this.wesite,this.address,this.address1,this.address2,this.address3,this.affiliationno,this.boardselection);
-            document.querySelector('school-creation-card').ready();
-            
         }
 
     });

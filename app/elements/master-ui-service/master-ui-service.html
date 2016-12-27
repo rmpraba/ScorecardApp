@@ -467,8 +467,8 @@
    
          },
 
-      FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Board){
-
+      FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Board)
+      {
        
         this.FnSetschoolInfourl=sessionStorage.getItem("addrinfo")+"/FnSetschoolInfo-service";
          var obj={"school":"","Telephone":"","MobileNumber":"","Emailid":"","Website":"","address":"","address1":"","address2":"","address3":"","schoolid1":"","affiliation":"","Board":""};
@@ -485,7 +485,7 @@
         obj.affiliation=affiliation;
         obj.Board=Board;
         this.FnSetschoolInfoparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.FnSetschoolInfoajax.generateRequest();
       },
       FnSetschoolInfoResponse(e){
@@ -495,25 +495,36 @@
           this.fnschoolcreation();
         }
       },
-      Fnsaveschoolinfo:function(school,schoolid1,telno,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Boardselection){
-       ;
+      Fnsaveschoolinfo:function(school,schoolid1,telnum,MobileNumber,Emailid,Website,addr,addr1,addr2,addr3,affiliation,Boardselection)
+      {
+       
         this.Fnsaveschoolinfourl=sessionStorage.getItem("addrinfo")+"/Fnsaveschoolinfo-service";
-        var obj={"school":"","Telephone":"","MobileNumber":"","Emailid":"","Website":"","address":"","address1":"","address2":"","address3":"","schoolid1":"","affiliation":"","Boardselection":""};
+        var obj={"school":"","telnum":"","MobileNumber":"","Emailid":"","Website":"","addr":"","addr1":"","addr2":"",
+        "addr3":"","schoolid1":"","affiliation":"","Boardselection":""};
         obj.school=school;
-        obj.telno=telno;
+        obj.telnum=telnum;
         obj.MobileNumber=MobileNumber;
         obj.Emailid=Emailid;
         obj.Website=Website;
-        obj.address=address;
-        obj.address1=address1;
-        obj.address2=address2;
-        obj.address3=address3;
+        obj.addr=addr;
+        obj.addr1=addr1;
+        obj.addr2=addr2;
+        obj.addr3=addr3;
         obj.schoolid1=schoolid1;
         obj.affiliation=affiliation;
         obj.Boardselection=Boardselection;
-       this.Fnsaveschoolinfoparam=obj;
-       //alert(JSON.stringify(obj));
+        this.Fnsaveschoolinfoparam=obj;
+        //alert(JSON.stringify(obj));
         this.$.Fnsaveschoolinfoajax.generateRequest();
+      },
+       FnsaveschoolinfoResponse:function(e)
+       {
+ 
+        var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res)); 
+          if(res=="Updated!"){
+          this.fnschoolcreation();
+        }
       },
        Fndeleteinfo:function(schoolid1){
        
@@ -531,14 +542,7 @@
           this.fnschoolcreation();
         }
       },
-    FnsaveschoolinfoResponse:function(e){
- 
-      var res=e.detail.response.returnval;
-        //  alert(JSON.stringify(res)); 
-          if(res=="Updated!"){
-          this.fnschoolcreation();
-        }
-      },
+   
      fnschoolidgenerate:function(){
         this.fnschoolidgenerateurl=sessionStorage.getItem("addrinfo")+"/fnschoolidgenerate-service";
          this.$.fnschoolidgenerateajax.generateRequest();
@@ -751,7 +755,7 @@
      fnschoolcreationResponse:function(e)
      {
           var res=e.detail.response.returnval;
-          alert(JSON.stringify(res));
+          //alert(JSON.stringify(res));
        /*  document.querySelector('school-creation-card').schoolname=res[0].name;
          document.querySelector('school-creation-card').telnum=res[0].telno;
          document.querySelector('school-creation-card').mobile=res[0].mobile_no;

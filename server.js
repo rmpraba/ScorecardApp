@@ -5810,8 +5810,8 @@ app.post('/fetchmastersubject-service',  urlencodedParser,function (req,res)
 app.post('/Fnsaveschoolinfo-service' ,  urlencodedParser,function (req, res)
 {  
    
-var qur="UPDATE  md_school SET name='"+req.query.school+"',telno='"+req.query.telno+"',mobile_no='"+req.query.MobileNumber+"',email_id='"+req.query.Emailid+"',website='"+req.query.Website+"',affiliation_no='"+req.query.affiliation+"',address='"+req.query.address+"',address1='"+req.query.address1+"',Board='"+req.query.Boardselection+"',address2='"+req.query.address2+"',address3='"+req.query.address3+"' where  id='"+req.query.schoolid1+"'";
-//console.log(qur);
+var qur="UPDATE  md_school SET name='"+req.query.school+"',telno='"+req.query.telnum+"',mobile_no='"+req.query.MobileNumber+"',email_id='"+req.query.Emailid+"',website='"+req.query.Website+"',affiliation_no='"+req.query.affiliation+"',address='"+req.query.addr+"',address1='"+req.query.addr1+"',Board='"+req.query.Boardselection+"',address2='"+req.query.addr2+"',address3='"+req.query.addr3+"' where  id='"+req.query.schoolid1+"'";
+console.log(JSON.stringify(qur));
   connection.query(qur,
     function(err, rows)
     {

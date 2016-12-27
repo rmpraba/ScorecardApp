@@ -151,15 +151,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           document.querySelector('school-creation-card').fn1(this.schoolid,this.schoolname,this.telnum,this.mobile,this.mailid,this.wesite,this.affiliationno,this.boardselection,this.addr,this.addr1,this.addr2,this.addr3);
         },
-        /*getscldetails:function(e)
-        {
-           this.hideupdatediv=true;
-           document.querySelector('school-creation-card').fn2();
-        },
-        */
+        
         FnSave:function()
         {
-            this.$.uiservice.Fnsaveschoolinfo(this.schoolname,this.schoolid,this.telno,this.mobile,this.mailid,this.wesite,this.address,this.address1,this.address2,this.address3,this.affiliationno,this.boardselection);
+          /*alert(this.addr);
+          alert(this.addr1);
+          alert(this.addr2);
+          alert(this.addr3);*/
+
+            this.$.uiservice.Fnsaveschoolinfo(this.schoolname,this.schoolid,this.telnum,this.mobile,this.mailid,
+              this.wesite,this.addr,this.addr1,this.addr2,this.addr3,this.affiliationno,this.boardselection);
         }
 
     });

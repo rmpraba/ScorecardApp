@@ -18,40 +18,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div>
-      <paper-input on-change="fngetterm" allowed-pattern="[0-9]" maxlength="10" value="{{getalltermsname}}"></paper-input>
-
-                              
-    </div>
+    </div>  
   </template>
   <script>
   (function() {      
     'use strict';
-var bigterm=[];
-var setarr=[];
    
     Polymer({
       is: 'working-day-item-card',
 
-      fngetterm:function(e){
-        var obj={"term":""};
-          obj.term=this.getalltermsname;
-          bigterm.push(obj);
-          alert(JSON.stringify(bigterm));
-         document.querySelector('working-days-card').fnpassarr(bigterm);
-      },
-      fngetworkingdays:function(arr){
-         setarr=arr;
-         alert(JSON.stringify(setarr));
-            for(var i=0;i<setarr.length;i++){
-              var searchinfo=setarr[i].no_of_days;
-              alert(searchinfo);
-               this.getalltermsname=searchinfo;
-            }
-          },
-          fnsplice:function(e){
-             var obj={"term":""};
-            bigterm.splice(obj);
-          }
 
     });
   })();

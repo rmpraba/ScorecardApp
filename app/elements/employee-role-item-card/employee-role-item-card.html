@@ -1,0 +1,63 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- Jquery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<dom-module id="employee-role-item-card">
+  <template>
+    <style>  
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+         <paper-checkbox class="col-md-3"  on-change="fnsetrole" id="{{emprolename}}">{{emprolename}}</paper-checkbox>
+   </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';  
+      var setrolearr1=[];
+       Polymer({   
+      is: 'employee-role-item-card',
+       fnsetrole:function(e){
+         if(document.querySelector('#'+this.emprolename).checked==true){
+           alert(this.emprolename); 
+            var obj={"role_id":""};
+           obj.splice_role=this.emprolename;
+           setrolearr1.push(obj);
+            document.querySelector('new-employee-creation-card').
+            (setrolearr1);
+           //alert(this.emprolename)
+        }  else if(document.querySelector('#'+this.emprolename).checked==false){
+           for(var i=0;i<setrolearr.length;i++){
+             if(setrolearr[i].role_id==this.emprolename){
+             /* this.a=arr;
+              alert(this.a);*/
+               setrolearr1.splice(i,1);
+                  }
+               }
+     
+       }},
+      setschoolroleclean:function(e){
+        alert('1');
+          for(var i=0;i<setrolearr1.length;i++){
+              var m=setrolearr1[i].role_id;
+              document.querySelector('#'+m).checked=false;
+             }
+             var obj={"splice_role":""};
+                 obj.role_id=this.emprolename;
+                 setrolearr1.splice(obj);    
+           },
+       /* fnspliceemparr:function(e){
+          setrolearr.splice(obj);
+        }*/
+
+  });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,227 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- Jquery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<dom-module id="employe-schooltype-to-category-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+     .card1{
+        margin-left:5%;
+        margin-top: 4%;
+      }
+      .card2{
+        margin-left:40%;
+         margin-top:-17%;
+      }
+      .outcard{
+      width:25% 
+     margin-left:5.0em;
+      }
+       .innercard{     
+      @apply(--layout-horizontal);
+       width:100%
+      margin-left:2.5em;
+     }
+     .innercard1{
+       @apply(--layout-horizontal);
+       width:100%
+      margin-left:5.0em;
+   }
+     .tt{
+      width:70%;
+     }
+   
+    </style>
+      <div>
+            <div class="list-group col-sm-12 panel-body form-category">
+              <div class="col-sm-4">
+                 <div class="form-group-heading">
+                  <h3>SCHOOLTYPE</h3>
+                </div>
+                 <template is="dom-repeat" items="{{getschooltypearr}}" as="view">
+                 <employe-schooltype-to-category-item-card schooltypenamexx="{{view.school_type_name}}" schooltypeidxx="{{view.school_type_id}}"></employe-schooltype-to-category-item-card>
+                 </template>
+              </div>
+                  <div class="col-sm-4">
+                    <div class="form-group-heading">
+                     <h3>SUBJECT CATEGORY</h3>
+                   </div>
+                   <template is="dom-repeat" items="{{getempcategoryarr}}" as="view">
+                    <employee-category-item-card schooltypecategoryid="{{view.subject_category_id}}" schooltypecategoryname=" {{view.subject_category_name}}"></employee-category-item-card>
+                </template>
+                 </div>
+                  <div class="col-sm-4">
+                     <paper-button on-click="grnerate">genernate</paper-button>
+                  </div>
+              </div>
+            <div class="list-group col-sm-12 panel-body form-category">
+              <table class="table table-bordered">
+               <div class="container">
+             <thead> 
+              <tr>
+                 <th></th>
+                    <th class="innercard">
+                      <template is="dom-repeat" items="{{setsubjectarr}}" as="view">
+                        <h4 style="margin-left:6.5%;">{{view.srtarr}}</h4>
+                      </template>
+                    </th>   
+                    <th></th>
+                  </tr>
+            </thead>
+              <tbody>
+                 <template is="dom-repeat" items="{{subjectbigarr}}" as="view">
+                 <tr>
+                    <td class="outcard"> 
+                      <h4>{{view.subject_name}}</h4>
+                   </td>
+                    <td class="innercard">
+                      <template is="dom-repeat" items="{{view.employee}}" as="s">
+                        <employe-creation-card employeesetidz="{{s.emp_id}}" id="{{s.id}}" empsubjectname="{{view.subject_id}}"  empnames="{{s.emp_name}}"></employe-creation-card>
+                      </template>
+                    </td>
+                   <td></td>
+                 </tr>
+              </template>
+            </tbody>
+            </div>
+           </table>
+           </div>
+            <div class="list-group col-sm-12 panel-body form-category">
+            <paper-button on-click="fnsubmit">submit</paper-button>
+            </div>
+
+          </div>
+          </div>      
+                
+    <master-ui-service id="uiservice"></master-ui-service>      
+</template>
+          <script>
+  (function() {
+    'use strict';
+     var empteacharr=[];
+     var getcategory=[];
+     var getgradenames=[];
+   //  var empgradearr=[];
+    Polymer({
+      is: 'employe-schooltype-to-category-card',
+       getgrade:function(arr){
+        empteacharr=arr;
+        this.emparr=empteacharr;
+       },
+       getcategory:function(arr){
+       getcategory=arr;
+       },
+       getemployeegrade:function(arr){
+        empgradearr=arr;
+      },
+      passempgrade:function(arr){
+       getgradenames=arr;
+      },
+      fnsubmit:function(e){
+        alert(JSON.stringify(getgradenames));
+        this.$.uiservice.fnempsubjectdetails(getgradenames);
+       document.querySelector('employe-creation-card').Fnsubjectclean();        
+       
+       },
+        grnerate:function(e){
+
+            var setarrr=[];
+                 for(var i=0;i<empteacharr.length;i++){
+                          var emp_name=empteacharr[i].emp_name;
+                          
+                            var obj={"srtarr":""};
+                                obj.srtarr=emp_name;
+                               setarrr.push(obj);
+                              // alert(JSON.stringify(obj));
+                  
+                          }
+                // alert(JSON.stringify(setarrr));
+                   this.setsubjectarr=setarrr;
+
+          var generatearr=[];
+         var subarr=[];
+                for(var j=0;j<getcategory.length;j++){
+                     for(var i=0;i<empteacharr.length;i++){
+                   var subjectname=getcategory[j].subject_name;
+                    var subject_id=getcategory[j].subject_id;
+                         
+                         var obj={"emp_name":"","subject_name":"","subject_id":"","emp_id":""}; 
+                           var emp_name=empteacharr[i].emp_name;
+                           var emp_id=empteacharr[i].emp_id;
+                           obj.emp_id=emp_id;
+                           obj.subject_name=subjectname;
+                           obj.emp_name=emp_name;
+                           obj.subject_id=subject_id;
+                           generatearr.push(obj);
+                        }}//alert(JSON.stringify(generatearr));
+        var a=[];
+        var overall=[];
+       for(var k=0;k<generatearr.length;k++)
+       {       
+         var nameobj={"subject_name":"","subject_id":""};
+         nameobj.subject_name=generatearr[k].subject_name; 
+         nameobj.subject_id=generatearr[k].subject_id; 
+       
+         var obj={"emp_name":"","emp_id":""};
+        // obj.Grade_name=generatearr[k].gradename;
+        obj.emp_name=generatearr[k].emp_name;
+        obj.emp_id=generatearr[k].emp_id;
+        obj.id=generatearr[k].subject_id+generatearr[k].emp_id;
+        a.push(obj);
+        for(var l=k+1;l<generatearr.length;l++)
+        {
+           if(generatearr[k].subject_name==generatearr[l].subject_name)
+           {
+             var obj1={"emp_id":"","emp_name":""}
+             //obj1.Grade_name=generatearr[l].gradename;
+             obj1.emp_name=generatearr[l].emp_name;
+             obj1.emp_id=generatearr[l].emp_id;
+             obj1.id=generatearr[k].subject_id+generatearr[l].emp_id;
+             //alert('1');
+           //  alert(JSON.stringify(obj1));
+             a.push(obj1);
+      //       alert(JSON.stringify(a));
+             generatearr.splice(l,1);
+             l--;
+           // alert(JSON.stringify(generatearr));
+         }}
+           nameobj.employee=a;
+           overall.push(nameobj);
+          // alert(JSON.stringify(obj1));
+           a=[];
+         }
+        alert(JSON.stringify(overall));
+      // overall.splice(0,1);
+         this.subjectbigarr=overall;
+         document.querySelector('employe-creation-card').Fnsubjectclean();        
+     
+         this.categoryid=sessionStorage.getItem("curr_sess_loggedschoolcategory_id");
+         this.schooltypeid=sessionStorage.getItem("curr_sess_loggedschooltype_ids");
+         this.$.uiservice.fngetempsubject(this.schooltypeid,this.categoryid);
+      
+         overall.splice();
+         generatearr=[];
+        // this.$.uiservice.fngetThefunction();
+        }
+     });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,70 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->    
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="school-type-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+    <paper-checkbox on-change="fnschooltypeget" id="{{schooltypeidxx}}">{{schooltypenamexx}}</paper-checkbox></div>
+     <iron-ajax        
+        id="getschooltypeajax"
+        url="{{getschooltypeurl}}"
+        params="{{getschooltypeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="getschooltypeResponse"
+        debounce-duration="300">
+    </iron-ajax>
+  </template>
+  
+   
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'school-type-item-card',
+
+fnschooltypeget:function(e){
+        //alert(this.schooltypeidxx);
+if(document.querySelector('#'+this.schooltypeidxx).checked==true)
+     {
+       alert(this.schooltypeidxx+this.schooltypenamexx);
+          document.querySelector('school-grade-to-subject-card').getschootypename(this.schooltypeidxx);
+    
+       this.getschooltypeurl=sessionStorage.getItem("addrinfo")+"/getschooltype-service";
+       var obj={"schooltypeid":"","schooltypename":"","school_id":""};
+          obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+          obj.schooltypeid=this.schooltypeidxx;
+          obj.schooltypename=this.schooltypenamexx;
+          this.getschooltypeparam=obj;
+          //  alert(JSON.stringify(obj));
+          this.$.getschooltypeajax.generateRequest();
+        }  
+      },
+      getschooltypeResponse:function(e){
+        var res=e.detail.response.returnval;
+        document.querySelector('school-grade-to-subject-card').getgrade(res);
+    },
+    fnschooltypeclaen:function(e){
+     document.querySelector('#'+this.schooltypeidxx).checked=false;
+    }
+
+     });
+    })();
+  </script>
+</dom-module>

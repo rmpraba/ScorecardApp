@@ -21,15 +21,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .inner{
       @apply(--layout-horizontal);
-      margin-left:10%;
+      margin-left:20%;
       }
       .list{
       margin-left:10%;
       margin-top: 5%;
       }
       paper-dropdown-menu{
-        margin-left: 5%;
-      }   
+        margin-left:5%;
+      }      
       paper-dropdown-menu{
       width: 15%;
       /*margin-left: 3%;*/
@@ -41,8 +41,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="card">
           <div class="inner">
                <paper-input value="{{subjectselectid}}" hidden></paper-input>
-               <paper-input value="{{subjectselectname}}"></paper-input>
-          <paper-dropdown-menu id="term" label="Select Term">
+               <paper-input value="{{subjectselectname}}" hidden></paper-input>
+
+          <paper-dropdown-menu id="term" label="Select Acadamic year">
             <paper-menu id="rtermmm" class="dropdown-content"   on-iron-select="FnStoSterm" attr-for-selected="value" required>
                 <paper-item value="2015-2016">2015-2016</paper-item>     
                 <paper-item value="2016-2017">2016-2017</paper-item>
@@ -51,8 +52,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-item value="2019-2020">2019-2020</paper-item>
             </paper-menu>
           </paper-dropdown-menu>
+           
+         <!--   <paper-dropdown-menu id="term" label="Select Term year">
+            <paper-menu id="rtermmm1" class="dropdown-content"   on-iron-select="FnStoSterms" attr-for-selected="value" required>
+                <paper-item value="term1">Term1</paper-item>     
+                <paper-item value="term2">Term2</paper-item>
+                <paper-item value="term3">Term3</paper-item>
+             </paper-menu>
+          </paper-dropdown-menu>
 
-          <paper-dropdown-menu id="grade" label="Select Grade">
+           <paper-dropdown-menu id="term" label="Select Assesment year">
+            <paper-menu id="assesmentid" class="dropdown-content"   on-iron-select="fnassesmentname" attr-for-selected="value" required>
+                <paper-item value="Assesment1">Assesment1</paper-item>     
+                <paper-item value="Assesment2">Assesment2</paper-item>
+                <paper-item value="Assesment3">Assesment3</paper-item>
+             </paper-menu>
+          </paper-dropdown-menu>
+ -->
+           <paper-dropdown-menu id="grade" label="Select Grade">
             <paper-menu id="rgradewww" class="dropdown-content" on-iron-select="FnStosGrade">     
               <template is="dom-repeat" items="{{selectgradearr}}">
                 <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
@@ -96,6 +113,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        localStorage.setItem("curr_sess_selectedTerms",this.FnStoStermid);
       //alert(this.FnStoStermid);
      },
+     FnStoSterms:function(e){
+       this.FnStoStermid1=e.target.selectedItem.textContent.trim();
+        localStorage.setItem("curr_sess_selectedtemsid",this.FnStoStermid1);
+      },
+      fnassesmentname:function(e){
+      this.fnassesmenid=e.target.selectedItem.textContent.trim();
+      localStorage.setItem("curr_sess_selectassesmetids",this.fnassesmenid);
+      },
      FnStosGrade:function(e)
      {     
          document.querySelector('#rsectionwww').selected=-1;
@@ -110,9 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.hidethirdlang=false;
         else
           this.hidethirdlang=true;
-          
-   
-     },
+      },
      FnStoSSection:function(e)
      {
        this.FnStoSSectionid=e.target.selectedItem.textContent.trim();
@@ -128,6 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#rsectionwww').selected=-1;
       document.querySelector('#rtermmm').selected=-1;
       document.querySelector('#rgradewww').selected=-1;
+   //   document.querySelector('#rtermmm1').selected=-1;
      
         
      } 

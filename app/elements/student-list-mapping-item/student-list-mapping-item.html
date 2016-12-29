@@ -15,7 +15,7 @@
         width: 41%;        
       } 
       .card{
-        @apply(--layout-horizontal);
+        @apply(--layout-horizontal);  
       } 
       p{
         width: 40%;
@@ -33,7 +33,7 @@
     <div class='card'>
       <!-- <table border="1"> -->
         <!-- <tr id="tb1"> -->
-        <p>{{studentid}}</p>
+        <p>{{studentid}}</p>  
         <p>{{studentname}}</p>        
         <p> 
           <paper-dropdown-menu  label="Second Language">
@@ -53,7 +53,7 @@
             </paper-menu>
           </paper-dropdown-menu>
          </p>
-        <p><paper-button id="tb3" on-click="Fnsave" style="background-color:#384485;color:white;height:15px-">Save</paper-button></p>
+        <p><paper-button id="tb3" on-click="Fnsave" style="background-color:#384485;color:white;margin-top:15px">Save</paper-button></p>
         <!-- </tr> -->
       <!-- </table>       -->
         <iron-ajax  
@@ -113,12 +113,15 @@
       },
      Fnsave:function(){   
 
-        var schoolnames=localStorage.getItem("curr_sess_selectedSchool");
+        var schoolnames=sessionStorage.getItem("curr_sess_loggedschoolid");
         var termsname=localStorage.getItem("curr_sess_selectedTerms");
         var gradenames=localStorage.getItem("curr_sess_selectedgrade");
         var Sectionnames=localStorage.getItem("curr_sess_selectedSection");
         var gradenamesssss=localStorage.getItem("curr_sess_selectedgrade1");  
         var Sectionnameseeee=localStorage.getItem("curr_sess_selectedSectionvalue1");
+        var termsname1=localStorage.getItem("curr_sess_selectedtemsid");
+        var assesmentid=localStorage.getItem("curr_sess_selectassesmetids");
+     
         if(thirdlang=="Hindi"&& seclang=="Hindi"||thirdlang=="Kannada"&& seclang=="Kannada") {
           alert("select both are same language");
 
@@ -127,16 +130,17 @@
       else if(localStorage.getItem("curr_sess_selectedgrade")=="U.K.G"||localStorage.getItem("curr_sess_selectedgrade")=="L.K.G"||localStorage.getItem("curr_sess_selectedgrade")=="PRE-K.G"||localStorage.getItem("curr_sess_selectedgrade")=="Grade-1"||localStorage.getItem("curr_sess_selectedgrade")=="Grade-2"||localStorage.getItem("curr_sess_selectedgrade")=="Grade-3"||localStorage.getItem("curr_sess_selectedgrade")=="Grade-4")
        {
       //  alert("hi1");
+      alert(schoolnames);
      //   alert(this.studentid+this.studentname+schoolnames+termsname+gradenamesssss+Sectionnames+seclang11+Sectionnameseeee);
-      this.$.uiservice.FnSecondLangSubjectToStudent(this.studentid,this.studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,Sectionnameseeee);
+      this.$.uiservice.FnSecondLangSubjectToStudent(this.studentid,this.studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,Sectionnameseeee,termsname1,assesmentid);
                   /* alert("hi");
                     document.querySelector('#sectionidsecondwww').selected=-1;
      */
       }
       else
        {
-           this.$.uiservice.FnSecondLangSubjectToStudentsets(this.studentid,this.studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,Sectionnameseeee);
-        this.$.uiservice.FnThirdLangSubjectToStudent(this.studentid,this.studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,thirdlang11,Sectionnameseeee);
+           this.$.uiservice.FnSecondLangSubjectToStudentsets(this.studentid,this.studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,Sectionnameseeee,termsname1,assesmentid);
+        this.$.uiservice.FnThirdLangSubjectToStudent(this.studentid,this.studentname,schoolnames,termsname,gradenamesssss,Sectionnames,seclang11,thirdlang11,Sectionnameseeee,termsname1,assesmentid);
            /*document.querySelector('#sectionidthirdnnn').selected=-1;
            document.querySelector('#sectionidsecondwww').selected=-1;
      */

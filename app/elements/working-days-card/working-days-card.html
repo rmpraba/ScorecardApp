@@ -16,116 +16,141 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-        .inputelements{
-    display: inline-block;
-    padding: 0 10px;
-    margin: 3%;
-  }
+      .inputelements
+      {
+        /*@apply(--layout-vertical);*/
+        @apply(--layout-center);
+        display: inline-block;
+        margin-left: 30%;
+        width: 50%;
+      
+      }
+      .outcard
+      {
+        @apply(--layout-vertical);
+      }
+      .outcard
+      {
+        border-radius: 10px;
+        border: 2px solid #6699ff;
+        padding: 20px;
+        margin-top: 6%;
+        width: 30%;
+        margin-left: 36%;
+        min-height: 300px;
+      }
+      #btn1 paper-button
+      {
+        @apply(--layout-right);
+        background-color: #363636;
+        color: #ffffff;                
+        width: 7%;
+        margin-left: 60%;
+        margin-top: 4%;
+      }
     </style>
+
     <div>
- <div>
-         <div><CENTER><h2 style="color:#162BA3;">STUDENTS WORKING DAYS</h2></CENTER></div>
-      <span class="inputelements">
-        <paper-input value="{{workingschoolid}}" hidden></paper-input>
-           <paper-input value="{{workingschoolname}}" ></paper-input>
-     
-      </span>
-     
-      <span class="inputelements">
-        <paper-dropdown-menu label="Academic Year">
-          <paper-menu  id="wacadamicid" class="dropdown-content" on-iron-select="acadamicid">   
-           <paper-item>2016-2017</paper-item>
-           <paper-item>2017-2018</paper-item>
-           <paper-item>2018-2019</paper-item>
-           <paper-item>2019-2020</paper-item>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </span>
 
-       <span class="inputelements">
-        <paper-dropdown-menu label="Select Grade">
-          <paper-menu id="wgradeid"  class="dropdown-content"  on-iron-select="SelectGradeid">   
-            <template is="dom-repeat" items="{{workingarras}}" as="view">
-              <paper-item value="{{view.grade_name}}">{{view.grade_name}}</paper-item>
-            </template>
-          </paper-menu>
-        </paper-dropdown-menu>
-      </span>
-      <span class="inputelements">
-         <!--  <paper-button on-click="Fnterm" style="background-color:#384485;color:white;" id="subid">Teams</paper-button>
-         -->  <paper-button raised class="custom indigo"  on-click="Fnterm" id="Fntermid">TERMS</paper-button>
+        <div>
+          <CENTER>
+            <h3><b>WORKING DAYS</b></h3>
+          </CENTER>
+        </div>
+        
+        <div class="outcard">
+          <table>
+            <span class="inputelements">
+              <paper-input value="{{workingschoolid}}" hidden></paper-input>
+              <paper-input value="{{workingschoolname}}" hidden></paper-input>
+            </span>
 
-     </span>
-</div>
-       </br></br>
-       <div id="btn1">
-       <center>
-        <paper-button on-click="FnSubmit" style="background-color:#384485;color:white;" id="subid">Submit</paper-button>
-        <paper-button on-click="FnUpdate" style="background-color:#384485;color:white;" id="Upid">Delete</paper-button>
-        </center>
-      </div>
+            <span class="inputelements">
+              <paper-input value="{{academicyears}}" label="Acadamic Year"></paper-input>
+            </span> 
+
+            <span class="inputelements">
+              <paper-dropdown-menu label="Select Grade">
+              <paper-menu id="wgradeid"  class="dropdown-content"  on-iron-select="SelectGradeid">   
+                <template is="dom-repeat" items="{{workingarras}}" as="view">
+                  <paper-item value="{{view.grade_name}}">{{view.grade_name}}</paper-item>
+                </template>
+              </paper-menu>
+              </paper-dropdown-menu>
+            </span>
+
+            <span class="inputelements">
+              <paper-dropdown-menu label="Select Term">
+              <paper-menu  id="termid11" class="dropdown-content" on-iron-select="fnterm">   
+                <paper-item >Term1</paper-item>
+                <paper-item>Term2</paper-item>
+                <paper-item>Term3</paper-item>
+              </paper-menu>
+              </paper-dropdown-menu>
+            </span> 
+
+            <span class="inputelements">
+              <paper-input label="No of working Days" value="{{noofdays}}" allowed-pattern="[0-9]" maxlength="2"></paper-input>
+            </span>
+
+            <div id="btn1">
+              <paper-button on-click="FnSubmit" id="subid">Submit</paper-button> 
+            </div>
+          </table>
+        </div>
+    </div>
 
 
-         <paper-dialog id="fnworkingdialog" modal>
-               <center>
-                  <h4 style="color:#2874A6" >ENTER 3TERM WORKINGDAYS</h4>
-                          <!-- <paper-input label="term1" value="{{term1}}"></paper-input>
-                          <paper-input label="term2" value="{{term2}}"></paper-input>
-                          <paper-input label="term3" value="{{term3}}"></paper-input> -->
-                          <template is="dom-repeat" items="{{gettermarr}}" as="view">
-                                <working-day-item-card></working-day-item-card>
-                             </template>
-                          <paper-button  on-click="fnclick" dialog-confirm autofocus>Tap me to close</paper-button>
-                </center>        
-                 </paper-dialog>
-          </div>
       <master-ui-service id="uiservice"></master-ui-service>
 
   </template>
   <script>
   (function() {
     'use strict';
-   var temarr=[];
-   var settemarr=[];
-  // var bigterm=[];
     Polymer({
       is: 'working-days-card',
-      ready:function(){
-      this.check();
-      },
-      fnclick:function(e){
-        alert("1");
-      document.querySelector('working-day-item-card').fnsplice();
-      },
-      check:function(e){
-        for(var i=0;i<3;i++){
-         temarr.push(i);
-        }
-        this.gettermarr=temarr;
-      },
+      acdemic:function(){
+               this.academicyears="AY-"+localStorage.getItem("curr_sess_academicyear");
+     },
+     
       
-      Fnterm:function(e){
+     /* Fnterm:function(e){
       this.$.fnworkingdialog.open();
       },
-      acadamicid:function(e){
-       this.acadamicyear=e.target.selectedItem.textContent.trim(); 
+     */
+      fnterm:function(e){
+        this.termids=e.target.selectedItem.textContent.trim();
+        this.acadamicyears="AY-"+localStorage.getItem("curr_sess_academicyear");
+        this.noofdays="";
+  
+        this.$.uiservice.termrecovery(this.workingschoolid,this.acadamicyears,this.termids,this.termgrade);
       },
-      SelectGradeid:function(e){
+     SelectGradeid:function(e){
        this.termgrade=e.target.selectedItem.value;
-       //this.$.uiservice.searchterm();
-      this.$.uiservice.workingsearchinfo(this.workingschoolid,this.acadamicyear,this.termgrade);
-      },
-      fnpassarr:function(arr){
-        settemarr=arr;
       },
       FnSubmit:function(e){
-       this.$.uiservice.terminsert(this.workingschoolid,this.acadamicyear,this.termgrade,settemarr);
+            this.acadamicyears="AY-"+localStorage.getItem("curr_sess_academicyear");
+            alert( this.acadamicyears);
+           if(this.termid11==""){
+            alert("select the current section");
+           }
+           else{
+    this.$.uiservice.terminsert(this.workingschoolid,this.acadamicyears,this.termids,this.termgrade,this.noofdays);
+       this.noofdays="";
+      document.querySelector('#termid11').selected=-1;
+      //document.querySelector('#grdj').selected=-1;
+   
         // temarr.splice(obj);
+        }
       },
+      rfclaen:function(e){
+       document.querySelector('#termid11').selected=-1;
+       document.querySelector('#wgradeid').selected=-1;
+      // document.querySelector('#wacadamicid').selected=-1;
+       this.noofdays="";
+   },
 
-
-      
-    });
+ });
   })();
   </script>
 </dom-module>

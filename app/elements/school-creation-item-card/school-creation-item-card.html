@@ -1,12 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
@@ -26,8 +17,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         display: block;
       }
-      
-      .itemcard
+
+      .card{
+        @apply(--layout-horizontal);
+        border-bottom: 1px solid #dedede;   
+      }      
+
+       .itemcard
       {
       @apply(--layout-horizontal); 
       }  
@@ -50,8 +46,73 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 10%;
       }
 
-    </style>
+    </style>       
+    <div> 
+   <!--  <table class="card" id="card{{schoolid}}">
+      <tr><td hidden>{{schoolid}}</td>
+      <td width="40%" >{{schoolname}}</td>
+       <td width="5%"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
+      </td>
+      <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+     </table>
+   <paper-dialog id="entetroleset" modal style="width:50%;">
+       <div class="form-group-heading">
+                             <h4>School Details</h4>
+       </div>
+                 <div class="list-group col-sm-12 panel-body form-category">
+                            <paper-input value={{schoolid}} hidden></paper-input>
+                          <div class="col-sm-6">
+                        <paper-input label="School Name"  value="{{schoolname}}" ></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                      <paper-input label="Telephone Number" value="{{telno}}"  allowed-pattern="[0-9]"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                         <paper-input label="Mobile Number" value="{{mobile}}" allowed-pattern="[0-9]"></paper-input>
+                        </div>
+                         <div class="col-sm-6">
+                         <gold-email-input label="Emailid" value="{{mailid}}"></gold-email-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <paper-input label="Website" value="{{wesite}}"></paper-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <paper-input label="affiliation" value="{{affiliationno}}"></paper-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <paper-input label="Board Type"  value="{{boardselection}}"></paper-input>
+                       </div>
+                      </div>
+                     <div class="form-group-heading">
+                             <h4> School Address Details</h4>
+                     </div>
+                  
+                     <div class="list-group col-sm-12 panel-body form-category">
+                        <div class="col-sm-6">
+                         <paper-input label="Village/Town" value="{{address}}"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                        <paper-input label="District"  value="{{address1}}"></paper-input>
+                        </div>
+                       <div class="col-sm-6">
+                         <paper-input label="State" value="{{address2}}"></paper-input>
+                       </div>
+                      <div class="col-sm-6">
+                       <paper-input label="Pincode" value="{{address3}}"></paper-input>
+                      </div></br>
+                      <span style="float:right;color:#1C63C9">
+                          <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+                     </span>
+                     <span class="button" style="float:center;color:white;background-color:black;">
+                            <paper-button  on-click='FnSave'>Save</paper-button>
+                      </span>
+                  </div>
+                </div>
+           </paper-dialog> -->
 
+    </table>   
+      <div>
+        
     <div class="row">  
     <div class="itemcard col-sm-12">
       <div class="sclid">

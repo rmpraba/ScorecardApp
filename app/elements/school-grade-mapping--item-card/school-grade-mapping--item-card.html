@@ -16,26 +16,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .innercard{
+        @apply(--layout-vertical);
+           border-bottom: 1px solid #dedede;
+         }
     </style>
-    <div>
-    <paper-checkbox>{{mdschooltype}}</paper-checkbox> 
-    </div>
+    <span style="width:50px !important;">
+     <paper-checkbox on-change="fngradechage" id="{{gradeidzzzw}}">{{gradenamezzzw}}</paper-checkbox> 
+   </span>
   </template>
   <script>
   (function() {
     'use strict';
-
-    Polymer({
+   var gradearrs=[];
+     //gradearr=[]; 
+         Polymer({   
       is: 'school-grade-mapping--item-card',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'school-grade-mapping--item-card',
-          notify: true
+     fngradechage:function(e){
+       alert('1');
+       alert(JSON.stringify(this.gradeidzzzw));
+       alert(document.querySelector('#'+this.gradeidzzzw));
+        alert(document.querySelector('#'+this.gradeidzzzw).checked);
+      
+        if(document.querySelector('#'+this.gradeidzzzw).checked==true){
+           // alert("0");
+              var obj={"gradeid":"","gradename":""};
+              obj.gradeid=this.gradeidzzzw;
+              obj.gradename=this.gradenamezzzw;
+              gradearrs.push(obj);
+              document.querySelector('master-school-type-creation-item-card').fnsetpassgrade(gradearrs);
+         }
+       },
+      fnsetclean:function(e){
+        alert('11');
+           document.querySelector('#'+this.gradeidzzzw).checked==false;
+           var obj={"gradeid":"","gradename":""}
+                gradearrs.splice(obj);
         }
-      }
-    });
+     });
   })();
   </script>
 </dom-module>

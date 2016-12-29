@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="master-school_type-creation">
@@ -17,29 +7,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div> 
-       <h3>School Type To Grade Mapping</h3>
-         <template is="dom-repeat" items="{{SchoolToschoolTypearr}}" as="view">
-           <paper-checkbox>{{view.school_type_name}}</paper-checkbox>
-           <!--   <master-school-type-creation-item-card></master-school-type-creation-item-card>
-         --> </template>
-
-      </div>
-  </template>
+      <div class="title"> 
+    <h3>SCHOOLTYPE CREATION TO GRADE MAPPING</h3>
+    </div>
+    <div class="cbutton">
+    <paper-button on-click="Fncreate">Create </paper-button>
+    </div>
+    <div class="school">
+   <template is="dom-repeat" items="{{setschooltypeinfoarr}}" as="s">
+   <master-school-type-creation-item-card  schoolid="{{s.school_id}}" schooltypename="{{s.school_type_name}}" schooltypeid="{{s.school_type_id}}" hideschooltypenameinput="true" hideschooltypenameitem="false">      
+    </master-school-type-creation-item-card>
+    </div>
+    </template>
+     <paper-dialog id="schooldialog" modal>
+     <div class="card">                                                    
+       <paper-input value="{{schoolname}}" label="Schooltype name"></paper-input>  
+        <paper-dropdown-menu  label="Select School Type">
+            <paper-menu id="schooltypename" class="dropdown-content"   on-iron-select="schoolTypeName">
+              <template is="dom-repeat" items="{{SchoolToschoolTypearr}}">
+                <paper-item value="{{item.school_type_id}}">{{item.school_type_name}}</paper-item>
+              </template>    
+            </paper-menu>
+        </paper-dropdown-menu>
+    </div>
+    <div class="buttons">
+    <paper-button autofocus on-click="FnSubmit">Submit</paper-button>
+    <paper-button dialog-confirm autofocus>Close </paper-button>
+    </div>
+    </paper-dialog>
+    <master-ui-service id="service"></master-ui-service>
+  
+</template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
       is: 'master-school_type-creation',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'master-school_type-creation',
-          notify: true
-        }
-      }
+      /*ready:function()
+      {
+       this.$.hidenewschooltypecard=true;
+      }, */
+     schoolTypeName:function(e)
+      {  
+        this.schooltypeid=e.target.selectedItem.value;
+        this.schooltypes=e.target.selectedItem.textContent.trim();
+      },
+      FnSubmit:function()
+      {
+         this.$.service.insertschoolTypename(this.schooltypes,this.schooltypeid,this.schoolid);     
+      },
+       Fncreate:function()
+        {
+          this.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         this.schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+    
+          this.$.schooldialog.open(); 
+        } 
+    
     });
   })();
   </script>

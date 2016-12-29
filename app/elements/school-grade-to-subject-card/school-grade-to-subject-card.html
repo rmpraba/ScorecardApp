@@ -1,0 +1,211 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="school-grade-to-subject-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card1{
+        margin-left:5%;
+        margin-top: 4%;
+      }
+      .card2{
+        margin-left:40%;
+         margin-top:-17%;
+      }
+      .outcard{
+      width:25% 
+     margin-left:5.0em;
+      }
+       .innercard{     
+      @apply(--layout-horizontal);
+       width:100%
+      margin-left:2.5em;
+     }
+     .innercard1{
+       @apply(--layout-horizontal);
+       width:100%
+      margin-left:5.0em;
+   }
+     .tt{
+      width:70%;
+     }   
+    </style>
+    <div>
+        <center><h2>GRADETOSUBJECTMAPPING</h2></center>
+    <div class="card1">
+         <h3> SCHOOLTYPE</h3>
+      <template is="dom-repeat" items="{{schooltypegrarr}}" as="view">
+        <school-type-item-card schooltypenamexx="{{view.school_type_name}}" schooltypeidxx="{{view.school_type_id}}"></school-type-item-card></br>
+      </template>
+    <div>  
+    <div class="card2">
+         <h3> SUBJECT CATEGORY</h3>
+      <template is="dom-repeat" items="{{schoolcategoryarr}}" as="view">
+         <schoolcategory-type-item-card schooltypecategoryid="{{view.subject_category_id}}" schooltypecategoryname="{{view.subject_category_name}}" ></schoolcategory-type-item-card></br>
+    </template>
+    </div>
+     <center><paper-button on-click="Generate" style="background-color:#384485;color:white;">Generate</paper-button>
+     </center>  
+  <div>
+   <table border="0" class="tt">
+     <tbody>
+         <tr>
+             <td class="outcard"></td>
+              <td class="innercard">
+             <template is="dom-repeat" items="{{setsubjectarr}}" as="view">
+                <h4 style="width:22%; margin-left:9%;">{{view.srtarr}}</h4>
+              </template></br>
+             </td>
+             <td class="outcard"></td>
+         </tr>
+           <template is="dom-repeat" items="{{bigarr}}" as="view">
+            <tr>
+              <td class="outcard">
+                <h4>{{view.subject_name}}</h4>
+              </td>
+              <td class="innercard">
+                <template is="dom-repeat" items="{{view.subject}}" as="s">
+                <school_grade-subject-item-card id="{{s.id}}" getsubjectname="{{view.subject_id}}" getgradename="{{s.grade_id}}" cattype="{{s.schooltypenamexx}}" getname="{{schooltypename}}" getschoolcategory="{{schooltypesubjectid}}"></school_grade-subject-item-card>
+               </template>
+              </tr>
+              </template>
+       </tbody>    
+    </table>  
+    </div>  
+    </div>
+       <center>
+                 <paper-button on-click='FnSave' style="background-color:#384485;color:white;">Submit</paper-button> </center>
+       <master-ui-service id="uiservice"></master-ui-service>
+ 
+  </template>
+  <script>
+  (function() {
+    'use strict';
+   var getgradearr=[];
+   var getcategory=[];  
+   var passservicearr=[];
+    Polymer({
+      is: 'school-grade-to-subject-card',
+
+       getgrade:function(arr1){
+         getgradearr=arr1;
+       //  alert(JSON.stringify(getgradearr));
+       },
+       getcategory:function(arr){
+       getcategory=arr;
+           //alert(JSON.stringify(getcategory));
+      },
+      getschootypename:function(arr){
+      this.schooltypename=arr;
+     
+     // alert(this.schooltypename);
+      },
+      fnapssgradedetails:function(arr){
+        passservicearr=arr;  
+      },
+      FnSave:function(e){
+           alert('save');
+           alert(JSON.stringify(passservicearr));
+           this.$.uiservice.fnsubjecttocategorysaving(passservicearr);
+         //  passservicearr=[];
+           document.querySelector('school_grade-subject-item-card').Fngradeclean(); 
+           document.querySelector('schoolcategory-type-item-card').fnschoolcategoryclean(); 
+           document.querySelector('school-type-item-card').fnschooltypeclaen(); 
+     
+       },
+    getschoolcategory:function(arr1){
+   //     alert('2');
+    this.schooltypesubjectid=arr1;
+   // alert(this.schooltypesubjectid);
+      },
+       Generate:function(){
+              var setarrr=[];
+                 for(var i=0;i<getgradearr.length;i++){
+                          var gradename=getgradearr[i].grade_name;
+                          
+                            var obj={"srtarr":""};
+                                obj.srtarr=gradename;
+                               setarrr.push(obj);
+                              // alert(JSON.stringify(obj));
+                          }
+               //  alert(JSON.stringify(setarrr));
+                   this.setsubjectarr=setarrr;
+
+          var generatearr=[];
+         var subarr=[];
+                for(var j=0;j<getcategory.length;j++){
+                     for(var i=0;i<getgradearr.length;i++){
+                   var subjectname=getcategory[j].subject_name;
+                    var subject_id=getcategory[j].subject_id;
+                         
+                         var obj={"Grade_name":"","subject_name":"","subject_id":"","grade_id":""}; 
+                           var gradename=getgradearr[i].grade_name;
+                          var grade_id=getgradearr[i].grade_id;
+                           obj.Grade_name=gradename;
+                           obj.subject_name=subjectname;
+                           obj.grade_id=grade_id;
+                           obj.subject_id=subject_id;
+                           generatearr.push(obj);
+                        }}//alert(JSON.stringify(generatearr));
+        var a=[];
+        var overall=[];
+       for(var k=0;k<generatearr.length;k++)
+       {       
+         var nameobj={"subject_name":"","subject_id":""};
+         nameobj.subject_name=generatearr[k].subject_name; 
+         nameobj.subject_id=generatearr[k].subject_id; 
+       
+         var obj={"Grade_name":"","grade_id":""};
+        // obj.Grade_name=generatearr[k].gradename;
+        obj.Grade_name=generatearr[k].Grade_name;
+        obj.grade_id=generatearr[k].grade_id;
+        obj.id=generatearr[k].subject_id+generatearr[k].grade_id;
+        a.push(obj);
+        for(var l=k+1;l<generatearr.length;l++)
+        {
+           if(generatearr[k].subject_name==generatearr[l].subject_name)
+           {
+             var obj1={"Grade_name":"","grade_id":""}
+             //obj1.Grade_name=generatearr[l].gradename;
+             obj1.Grade_name=generatearr[l].Grade_name;
+             obj1.grade_id=generatearr[l].grade_id;
+             obj1.id=generatearr[k].subject_id+generatearr[l].grade_id;
+
+             //alert('1');
+             //alert(JSON.stringify(obj1));
+             a.push(obj1);
+             //alert(JSON.stringify(a));
+             generatearr.splice(l,1);
+             l--;
+           // alert(JSON.stringify(generatearr));
+         }}
+           nameobj.subject=a;
+           overall.push(nameobj);
+          // alert(JSON.stringify(obj1));
+           a=[];
+
+       }
+   //  alert(JSON.stringify(overall));
+     // overall.splice(0,1);
+         this.bigarr=overall;
+       this.$.uiservice.fngetThefunction(this.schooltypename,this.schooltypesubjectid);
+      overall.splice();
+         generatearr=[];
+        } 
+
+    });
+  })();
+  </script>
+</dom-module>

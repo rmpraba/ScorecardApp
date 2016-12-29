@@ -28,8 +28,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          @apply(--layout-left);
           
       }
+
+      .rolecard
+      {
+         @apply(--layout-center);
+        width: 6%;
+        margin-left: 10%;
+      } 
+      .rbutton paper-button
+
       }
       .button paper-button 
+
       {
         @apply(--layout-right)
       background-color: #363636;
@@ -87,6 +97,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        {
         @apply(--layout-horizontal);
 
+              margin-left:30%;
+        } 
+
+
        }
        .updatediv
        {
@@ -120,6 +134,91 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="title"> 
         <h3><b>SCHOOL CREATION</b></h3>
     </div>
+<!-- <<<<<<< HEAD
+    <center>   
+      <div class="rbutton">
+    <paper-button on-click="Fncreate">Create</paper-button>
+    </center>
+     </div>
+
+    <div class="role">
+    <template is="dom-repeat" items="{{schoolcreatarr}}" as="view">
+    <school-creation-item-card schoolname="{{view.name}}" schoolid="{{view.id}}" mobile="{{view.mobile_no}}"  address="{{view.address}}" 
+    address1="{{view.address1}}" address2="{{view.address2}}" address3="{{view.address3}}"   affiliationno="{{view.affiliation_no}}" telno="{{view.telno}}" graprimary="{{view.primary}}"  mailid="{{view.email_id}}" boardselection="{{view.Board}}" wesite="{{view.website}}"  hiderolenameinput="true" hiderolenameitem="false"></school-creation-item-card>
+    </template>
+   
+    </div>
+    
+   
+  <paper-dialog id="roledialog" modal style="width:50%;">
+       <div class="form-group-heading">
+                             <h4>School Details</h4>
+       </div>
+                 <div class="list-group col-sm-12 panel-body form-category">
+                            <paper-input value={{schoolid1}} hidden></paper-input>
+                          <div class="col-sm-6">
+                        <paper-input label="School Name" id="School" required error-message="needs Schoolname!" value="{{school}}"  allowed-pattern="[a-zA-Z ]" ></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                      <paper-input label="Telephone Number" id="Telephone" required error-message="needs telepnoneno!" value="{{Telephone}}"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                         <paper-input label="Mobile Number" id="Mobile" required error-message="needs mobileno" value="{{MobileNumber}}" allowed-pattern="[0-9]" maxlength="10"></paper-input>
+                        </div>
+                         <div class="col-sm-6">
+                         <gold-email-input label="Emailid" id="Emailid" required error-message="needs mailid!" value="{{Emailid}}"></gold-email-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <paper-input label="Website" id="Website" required error-message="needs wevbsite!" value="{{Website}}"></paper-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input>
+                        </div>
+                        <div class="col-sm-4">
+                         <!-- <paper-input label="affiliation" id="affiliation" required error-message="needs affiliationno!" value="{{affiliation}}"></paper-input> -->
+                         <!--  <paper-dropdown-menu label="Board Type">
+                          <paper-listbox id="academicswww" class="dropdown-content" on-iron-select="boardtype">
+                            <paper-item>ICSE</paper-item>
+                            <paper-item>CBSE</paper-item>
+                            <paper-item>State</paper-item>
+                            <paper-item>IB</paper-item>
+                          </paper-listbox>
+                        </paper-dropdown-menu>
+                        </div>
+                      
+                        
+                    </div>
+                     <div class="form-group-heading">
+                             <h4> School Address Details</h4>
+                     </div>
+                  
+                     <div class="list-group col-sm-12 panel-body form-category">
+                        <div class="col-sm-6">
+                         <paper-input label="Village/Town" id="Village" required error-message="needs Village/Town!" value="{{address}}"></paper-input>
+                        </div>
+                        <div class="col-sm-6">
+                        <paper-input label="District" id="District" value="{{address1}}"  required error-message="needs District!"  allowed-pattern="[a-zA-Z ]"></paper-input>
+                        </div>
+
+                       
+                       <div class="col-sm-6">
+                         <paper-input label="State" id="State" value="{{address2}}"  required error-message="needs state!"  allowed-pattern="[a-zA-Z ]"></paper-input>
+
+                       </div>
+                      <div class="col-sm-6">
+                       <paper-input label="Pincode" id="Pincode" value="{{address3}}"  required error-message="needs Pincode!"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
+                      </div></br>
+                      <span style="float:right;color:#1C63C9">
+                          <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+                     </span>
+                     <span class="button" style="float:center;">
+                          <paper-button on-click="FnSubmit">Submit </paper-button>
+                     </span>   
+                  </div>
+                </div>
+           </paper-dialog>
+          </div>
+     <master-ui-service id="uiservice"></master-ui-service> -->  
     <div class="outcard col-sm-6">
       <table>
         <tr>
@@ -249,6 +348,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
     <master-ui-service id="uiservice"></master-ui-service>
+
   </template>
   <script>
   (function() {

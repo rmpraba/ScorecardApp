@@ -1,0 +1,86 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<dom-module id="new-employee-creation-role-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+        .card{
+        @apply(--layout-horizontal);
+        border-bottom: 1px solid #dedede;   
+      }     
+    </style>
+    <div>
+        <paper-input hidden value={{schoolempgetid}}></paper-input>
+        <paper-input hidden value={{schoolempgetname}}></paper-input>
+        <paper-input hidden value={{emppsw}}></paper-input>
+        <paper-checkbox class="col-md-4" id={{schoolroleids}} on-change="fnroleset" checked="{{check}}">{{schoolroleids}}</paper-checkbox>
+    </div>
+    <iron-ajax        
+        id="getempschoolroleajax"
+        url="{{getempschoolroleurl}}"
+        params="{{getempschoolroleparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="getempschoolroleResponse"
+        debounce-duration="300">
+        </iron-ajax>
+
+     </template>
+  <script>
+  (function() {   
+    'use strict';
+   var getrolearrr=[];
+   Polymer({
+      is: 'new-employee-creation-role-item-card',
+      fnroleset:function(e){
+        alert(this.schoolroleids+this.schoolempgetname+this.schoolempgetid+this.emppsw);
+         if(document.querySelector('#'+e.target.id).checked==true){
+
+              var obj={"emp_id":"","emp_name":"","school_role_id":"","emp_psw":""};
+                  obj.emp_id=this.schoolempgetid;
+                  obj.emp_name=this.schoolempgetname;
+                  obj.school_role_id=this.schoolroleids;
+                  obj.emp_psw=this.emppsw;
+                  getrolearrr.push(obj);
+                  alert(JSON.stringify(getrolearrr));
+               document.querySelector('new-employee-creation-item-card').passrole(getrolearrr);
+          
+         }
+         else if(document.querySelector('#'+e.target.id).checked==false){
+              this.getempschoolroleurl=sessionStorage.getItem("addrinfo")+"/getempschoolrole-service";
+               var obj={"emp_id":"","emp_name":"","school_role_id":"","emp_psw":""};
+                   obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+                   obj.emp_id=this.schoolempgetid;
+                   obj.emp_name=this.schoolempgetname;
+                   obj.school_role_id=this.schoolroleids;
+                   obj.emp_psw=this.emppsw;
+                   this.getempschoolroleparam=obj;
+                   this.$.getempschoolroleajax.generateRequest();
+                   //alert(JSON.stringify(getrolearrr));
+                  }
+             },
+            getempschoolroleResponse:function(e){
+                   var res=e.detail.response.returnval;
+                  alert(JSON.stringify(res));
+                },
+                typesplicerole:function(e){
+                   var obj={"emp_id":"","emp_name":"","school_role_id":"","emp_psw":""};
+                   obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+                   obj.emp_id=this.schoolempgetid;
+                   obj.emp_name=this.schoolempgetname;
+                   obj.school_role_id=this.schoolroleids;
+                   obj.emp_psw=this.emppsw;
+                getrolearrr.splice( obj);
+                }
+      
+      
+  });
+  })();
+  </script>
+</dom-module>

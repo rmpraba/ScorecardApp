@@ -167,11 +167,26 @@
          <section data-category="working-days-card">
           <working-days-card></working-days-card>
         </section>
+        </section>
+         <section data-category="school-grade-to-subject-card">
+          <school-grade-to-subject-card></school-grade-to-subject-card>
+        </section>
          <section data-category="master-school_type-creation">
           <master-school_type-creation></master-school_type-creation>
         </section>
-
-      </iron-pages>
+        <section data-category="employe-schooltype-to-category-card">
+          <employe-schooltype-to-category-card></employe-schooltype-to-category-card>
+        </section>
+        <section data-category="new-employee-creation-card">
+          <new-employee-creation-card></new-employee-creation-card>
+        </section>
+        <section data-category="student-transfer-grade">
+          <student-transfer-grade></student-transfer-grade>
+        </section>
+         <section data-category="employe-category-creation-card">
+          <employe-category-creation-card></employe-category-creation-card>
+        </section>
+  </iron-pages>
     </div>
     
 
@@ -205,6 +220,38 @@
     {
 
       this.page="teacherhomecard";
+      // document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="employe-category-creation-card")
+    {
+
+      this.page="teacherhomecard";
+      // document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+     if(localStorage.getItem("curr_sess_page")=="student-transfer-grade")
+    {
+
+      this.page="teacherhomecard";
+      // document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+    if(localStorage.getItem("curr_sess_page")=="new-employee-creation-card")
+    {
+
+      this.page="teacherhomecard";
+     // document.querySelector('teacherhome-card').fnclear();
+      // document.querySelector('term-assesment-card').FnRefreshcard();
+      // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
+    }
+    if(localStorage.getItem("curr_sess_page")=="employe-schooltype-to-category-card")
+    {
+
+      this.page="teacherhomecard";
      // document.querySelector('teacherhome-card').fnclear();
       // document.querySelector('term-assesment-card').FnRefreshcard();
       // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
@@ -225,6 +272,8 @@
       // document.querySelector('term-assesment-card').FnRefreshcard();
       // document.querySelector('cc-eng-onetofour-card').FnRefresh();      
     }
+     if(localStorage.getItem("curr_sess_page")=="school-grade-to-subject-card")
+    {this.page="teacherhomecard";}
     if(localStorage.getItem("curr_sess_page")=="cc-eng-onetofour-card")
     {
       this.page="teacherhomecard";

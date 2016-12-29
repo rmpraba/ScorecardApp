@@ -1,5 +1,4 @@
 
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="role-display-card">
@@ -11,24 +10,52 @@
       }
       .card
       {
-        
-        @apply(--layout-horizontal);     
+        @apply(--layout-center); 
+        @apply(--layout-horizontal);    
         border-bottom: 1px solid #dedede;
+        width: 210%;
+      }
+       paper-item,paper-input
+      {
+        width:40%;
+      }
+      paper-icon-button
+      {
+        width:5%;
+      }
+      .itemcard
+      {
+      @apply(--layout-horizontal); 
       }
     </style>
 
-      <table class="card" id="card{{roleid}}">
-      <tr><td hidden>{{roleid}}</td>
-      <td width="40%" hidden$="{{hiderolenameitem}}">{{rolename}}</td>
-      <td width="40%" hidden$="{{hiderolenameinput}}"><paper-input value="{{rolename}}"></paper-input></td>
-      <td width="5%" hidden$="{{hiderolenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
-      </td>
-      <td width="5%" hidden$="{{hiderolenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
-      </td>
-      <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
-      </table></tr>
-    <master-ui-service id="service"></master-ui-service>
+    <div class='itemcard'>
+          <paper-item>{{roleid}}</paper-item>
+          <paper-item hidden$="{{hiderolenameitem}}">{{rolename}}</paper-item>
+          <paper-input value="{{rolename}}" hidden$="{{hiderolenameinput}}"></paper-input>
+          <paper-icon-button icon='create' on-click='FnEdit' hidden$="{{hiderolenameitem}}"></paper-icon-button>
+          <paper-icon-button icon='save' on-click='FnSave' hidden$="{{hiderolenameinput}}"></paper-icon-button>
+          <paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button>
+    </div>
+
+
+
+          <!-- <table class="card" id="card{{roleid}}">
+          <tr><td hidden>{{roleid}}</td>
+          <td width="40%" hidden$="{{hiderolenameitem}}">{{rolename}}</td>
+          <td width="40%" hidden$="{{hiderolenameinput}}"><paper-input value="{{rolename}}"></paper-input></td>
+          <td width="5%" hidden$="{{hiderolenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
+          </td>
+          <td width="5%" hidden$="{{hiderolenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
+          </td>
+          <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+          </table></tr> -->
+
+
+        <master-ui-service id="service"></master-ui-service>
   </template>
+
+
   <script>
     (function() {
     'use strict';   

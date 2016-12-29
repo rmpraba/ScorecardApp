@@ -4,7 +4,9 @@
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+
 
 <dom-module id="subject-card">
   <template>
@@ -16,80 +18,126 @@
          @apply(--layout-center);
         /*width: 40%;*/
       }
+
       .card
       {
          @apply(--layout-center);
-        width: 60%;
-        margin-left: 8%;
+        width: 80%;
+        margin-left: 10%;
       }
+      .headdiv
+      {
+        width: 200%;
+      }
+
       .title
       {
         @apply(--layout-center);
-        width: 30%;
-        margin-left: 35%; 
-      }
-      .sbbutton paper-button
-      {
-      background-color: #363636;
-      color: #ffffff;
-      width: 10%;
-      margin-left: 40%;
-      margin-top: 5%;
+        width: 255%;
+        margin-left: 30%; 
       }
 
-      .button paper-button
+      .creatediv paper-button
       {
       background-color: #363636;
       color: #ffffff;
+      width: 6%;
+      margin-top: 3%;
+      }
+
+      .buttons paper-button
+      {
+        @apply(--layout-center);
+      background-color: #363636;
+      color: #ffffff;
       width: 10%;
-      margin-left: 40%;
       margin-top: 6%;
       }
-      .subject
+
+      .popup-btn
       {
-        margin-top: 4%;
-        width: 50%;
+        margin: 0 auto;
+        margin-left: 63%;
       }
 
+      table
+      {
+         border-collapse: collapse;
+        border: 1px solid #dedede;
+        width: 90%;
+      }
+      .outcard
+      {
+        @apply(--layout-horizontal);
+      }
+
+      .creatediv
+      {
+         border-radius: 10px;
+          border: 1px solid #6699ff;
+          padding: 10px; 
+          width: 28%;
+          max-height: 330px;
+          /*height: 150px; */
+      }
+      
     </style>
+
+
     <div class="title"> 
-    <h3>MASTER SUBJECT CREATION</h3>
-    </div>
-    <div class="sbbutton">
-    <paper-button on-click="Fncreate">Create </paper-button>
+        <h3><b>SUBJECTS</b></h3>
     </div>
 
-    <div class="subject">
-    <template is="dom-repeat" items="{{subarr}}" as="sb">
-    <subject-display-card subjectid="{{sb.subject_id}}" subjectname="{{sb.subject_name}}" subjectcategory="{{sb.subject_category}}" hidesubjectinput="true" hidesubjectitem="false"></subject-display-card>
-    </div>
-    </template>
+   <div class="outcard">
+    <div>
+      <table>
+        <tr>
+            <th> <label>Subject ID</label></th>
+            <th> <label style="margin-left:18%">Subject Name</label></th>
+            <th> <label>Category Type</label>
+            <th></th>
+        </tr>
 
-    <paper-dialog id="subjectdialog" modal>
-    <div class="card">
-    <paper-input readonly value="{{subjectid}}" label="Subject ID"></paper-input>
-    <paper-input value="{{subjectname}}" label="Subject Name"></paper-input>
-    
-     <paper-dropdown-menu id="subjectcategory" label="Select Category" disabled="{{read}}" required style="width:100%;">
-            <paper-menu id="category" class="dropdown-content"  on-iron-select="FnSelectcategory"  attr-for-selected="value" required>  
-
-      <template is="dom-repeat" items="{{categoryarr}}" as="view">
-      <paper-item value="{{view.category_id}}">{{view.category_name}}</paper-item>                          
-      </template>
-            </paper-menu>
-          </paper-dropdown-menu> 
+        <template is="dom-repeat" items="{{subarr}}" as="sb">
+            <tr><td colspan="4">
+             <subject-display-card subjectid="{{sb.subject_id}}" subjectname="{{sb.subject_name}}" subjectcategory="{{sb.category}}" hidesubjectinput="true" hidesubjectitem="false">
+            </subject-display-card></td>
+            </tr>
+        </template>
+      </table>
     </div>
-    <div class="buttons">
-    <paper-button autofocus on-click="FnSubmit">Submit </paper-button>
-    <paper-button  dialog-confirm autofocus>Close </paper-button>
-    </div>
-    </paper-dialog>
 
-    <master-ui-service id="uiservice"></master-ui-service>
+    <div class="creatediv">
+        <div class="card">    
+          <div class="headdiv">
+              <label>Create New Subject</label>
+          </div>   
+            
+            <paper-input readonly value="{{subjectid}}" label="Subject ID"></paper-input>
+            <paper-input value="{{subjectname}}" label="Subject Name"></paper-input>
+
+
+            <paper-dropdown-menu id="subcat" label="Select Subject Category" disabled="{{read}}" required>
+              <paper-menu  id="category" class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required>
+                <template is="dom-repeat" items="{{categoryarr}}" as="view">
+                  <paper-item value="{{view.category_type}}">{{view.category_name}}</paper-item>                        
+                </template>
+              </paper-menu>
+            </paper-dropdown-menu> 
+        </div>   
+        
+
+            <div class="buttons">
+              <paper-button class="popup-btn" on-click="FnSubmit">Submit </paper-button>
+            </div>
+      </div>
+    </div> 
+
+      <master-ui-service id="uiservice"></master-ui-service>
      
-     
-  </template>
-  <script>
+   </template>
+
+   <script>
   (function() {
     'use strict';
      var category;
@@ -129,21 +177,22 @@
       
          this.$.uiservice.FnSetSubjectInfo(this.subjectid,this.subjectname,category);
          document.querySelector('subject-card').FnRefresh();
+         //this.$.subjectdialog.toggle();
         }
        
       },
       
       FnSelectcategory:function(e)
       {
-        category = e.target.selectedItem.textContent.trim();
+        category = e.target.selectedItem.value.trim();
         
-      },
+      }
 
-       Fncreate:function()
+      /* Fncreate:function()
       {
           this.$.subjectdialog.open();   
       }  
-
+*/
     });
   })();  
   </script>

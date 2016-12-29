@@ -1,9 +1,12 @@
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu-light/paper-dropdown-menu-light.html">
+
 
 <dom-module id="grade-creation-card">
   <template>
@@ -15,69 +18,107 @@
          @apply(--layout-center);
         /*width: 40%;*/
       }
+
       .card
       {
          @apply(--layout-center);
-        width: 70%;
+        width: 55%;
         margin-left: 10%;
       }
+
       .title
       {
         @apply(--layout-center);
-        width: 30%;
-        margin-left: 29%; 
+        width: 255%;
+        margin-left: 30%; 
       }
-      .gbutton paper-button
+
+      .creatediv paper-button
       {
       background-color: #363636;
       color: #ffffff;
-      width: 10%;
-      margin-left: 40%;
-      margin-top: 5%;
+      width: 7%;
+      margin-left: 39%;
+      margin-top: 3%;
       }
-      .button paper-button
+
+      .buttons paper-button
       {
+        @apply(--layout-center);
       background-color: #363636;
       color: #ffffff;
       width: 10%;
-      margin-left: 40%;
       margin-top: 6%;
       }
-       .grade
+
+      /*#gradedialog
       {
-        margin-top:3%;
-        width: 50%;
-      }  
+        width: 40%;
+        margin: 0 auto;
+        box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.75);
+      }*/
+
+      .popup-btn
+      {
+        margin: 0 auto;
+      }
+
+      table{
+         border-collapse: collapse;
+        border: 1px solid #dedede;
+        width: 90%;
+      }
+      .outcard{
+        @apply(--layout-horizontal);
+      }
+
+      .creatediv{
+         border-radius: 10px;
+          border: 1px solid #6699ff;
+          padding: 10px; 
+          width: 25%;
+          max-height: 270px;
+          /*height: 150px; */
+      }
       
     </style>
 
-     <div class="title"> 
-    <h3>MASTER GRADE CREATION</h3>
-    </div>
-    
-    <div class="gbutton">
-    <paper-button on-click="Fncreate">Create</paper-button>
+
+    <div class="title"> 
+        <h3><b>GRADE</b></h3>
     </div>
 
-     <div class="grade">
-    <template is="dom-repeat" items="{{gradearr}}" as="g">
-    <grade-display-card gradeid="{{g.grade_id}}" gradename="{{g.grade_name}}" hidegradenameinput="true" hidegradenameitem="false"> </grade-display-card>
-    </div>
-    </template>
+   <div class="outcard">
+    <div>
+      <table>
+        <tr>
+            <th> <label>Grade ID</label></th>
+            <th> <label>Grade Name</label>    </th>
+            <th></th>
+        </tr>
 
-    <paper-dialog id="gradedialog" modal>
-    <div class="card"> 
-    <paper-input readonly value="{{gradeid}}" label="Grade ID"></paper-input>
-    <paper-input value="{{gradename}}" label="Grade Name"></paper-input>
+        <template is="dom-repeat" items="{{gradearr}}" as="g">
+            <tr><td colspan="3">
+            <grade-display-card gradeid="{{g.grade_id}}" gradename="{{g.grade_name}}" hidegradenameinput="true" hidegradenameitem="false"> </grade-display-card></td>
+            </tr>
+        </template>
+      </table>
     </div>
 
-    <div class="buttons">
-    <paper-button autofocus on-click="FnSubmit">Submit </paper-button>
-    <paper-button  dialog-confirm autofocus>close </paper-button>
-    </div>
-    </paper-dialog>
+    <div class="creatediv">
+        <div class="card">       
+            <label>Create New Grade</label>
+            <paper-input readonly value="{{gradeid}}" label="Grade ID"></paper-input>
+            <paper-input value="{{gradename}}" label="Grade Name"></paper-input>
+        </div>
 
-    <master-ui-service id="uiservice"></master-ui-service>
+        <div class="buttons">
+            <paper-button class="popup-btn" on-click="FnSubmit">Submit </paper-button>
+        </div>
+    </div>
+  </div> 
+
+        <master-ui-service id="uiservice"></master-ui-service>
      
    </template>
    <script>
@@ -118,14 +159,19 @@
         this.$.uiservice.FnSetGradeCreationInfo(this.gradeid,this.gradename);
         this.ready();
         //document.querySelector('grade-creation-card').FnRefresh();
+        //this.$.gradedialog.toggle();
         }
         
+      }
+     /* Fnclose:function()
+      {
+        this.ready();
       },
       Fncreate:function()
       {
         this.$.gradedialog.open();
       }
-     
+     */
     });
   })();
 

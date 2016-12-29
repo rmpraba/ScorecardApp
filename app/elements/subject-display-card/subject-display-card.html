@@ -11,27 +11,55 @@
       }
       .card
       {
-        @apply(--layout-horizonta0);
-        
+        /*margin-top: 4%;*/
+        @apply(--layout-center);
+        @apply(--layout-horizontal);     
         border-bottom: 1px solid #dedede;
+        width: 200%;
+      }
+      paper-item,paper-input
+      {
+        width:40%;
+      }
+      paper-icon-button
+      {
+        width:5%;
+      }
+      .itemcard
+      {
+      @apply(--layout-horizontal); 
       }
     </style>
 
-    <table class="card" id="card{{subjectid}}"> 
-      <tr><td hidden>{{subjectid}}</td>  
-      <td width="40%" hidden$="{{hidesubjectitem}}">{{subjectname}}</td>
-      <td width="40%" hidden$="{{hidesubjectinput}}"><paper-input value="{{subjectname}}"></paper-input></td>
-      <td width="7%" hidden$="{{hidesubjectitem}}"><paper-icon-button icon='create' on-click='FnEdit'>       
-      </paper-icon-button></td>
-      <td width="7%" hidden$="{{hidesubjectinput}}"><paper-icon-button icon='save' on-click='FnSave'>       
-      </paper-icon-button></td>
-      <td width="7%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
-    </table></tr>
-    <master-ui-service id="subservice"></master-ui-service>
+
+    <div class='itemcard'>
+          <paper-item>{{subjectid}}</paper-item>   
+          <paper-item hidden$="{{hidesubjectitem}}">{{subjectname}}</paper-item>
+          <paper-input value="{{subjectname}}" hidden$="{{hidesubjectinput}}"></paper-input>
+          <paper-item >{{subjectcategory}}</paper-item>
+          <paper-icon-button icon='create' on-click='FnEdit' hidden$="{{hidesubjectitem}}"></paper-icon-button>
+          <paper-icon-button icon='save' on-click='FnSave' hidden$="{{hidesubjectinput}}"></paper-icon-button>
+          <paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button>
+    </div>
+
+
+
+   <!--  <table class="card" id="card{{gradeid}}">
+      <tr width="200%">
+          <td width="20%">{{gradeid}}</td>
+          <td width="20%" hidden$="{{hidegradenameitem}}">{{gradename}}</td>
+          <td width="20%" hidden$="{{hidegradenameinput}}"><paper-input value="{{gradename}}"></paper-input></td>
+          <td width="5%" hidden$="{{hidegradenameitem}}"><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
+          </td>
+          <td width="5%" hidden$="{{hidegradenameinput}}"><paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
+          </td>
+          <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+      </tr>
+    </table> -->
+    <master-ui-service id="service"></master-ui-service>
   </template>
   <script>
-  (function() 
-  {
+  (function() {
     'use strict';
 
     Polymer({
@@ -46,28 +74,26 @@
       },
       ready:function()
       {
-        //alert("test");   
+        
         this.hidesubjectinput=true;     
         this.hidesubjectitem=false;
       },
       FnDelete:function()
       {
-        //alert("test");
-        this.$.subservice.FnDeleteSubjectname(this.subjectid);
+        this.$.service.FnDeleteSubjectname(this.subjectid);
       },
       FnEdit:function()
       {
-        //alert("test");
         this.hidesubjectinput=false;
         this.hidesubjectitem=true;
       },
       FnSave:function()
       {
-        //alert("test");
-        this.$.subservice.FnUpdateSubjectname(this.subjectid,this.subjectname,this.subjectcategory);
+        this.$.service.FnUpdateSubjectname(this.subjectid,this.subjectname,this.subjectcategory);
         this.hidesubjectinput=true;
         this.hidesubjectitem=false;
-      }      
+      }
+     
     });
   })();
   </script>

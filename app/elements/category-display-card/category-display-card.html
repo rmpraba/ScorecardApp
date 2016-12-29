@@ -1,32 +1,47 @@
 
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="category-display-card">
   <template>
     <style>
-      :host {
+      :host 
+      {
         display: block;
       }
       .card
       {
+        /*margin-top: 4%;*/
+        @apply(--layout-center);
         @apply(--layout-horizontal);
         border-bottom: 1px solid #dedede;
+        width: 200%;
       }
+       paper-item,paper-input{
+        width:40%;
+      }
+      paper-icon-button{
+        width:5%;
+      }
+      .itemcard{
+      @apply(--layout-horizontal); 
+      }
+
     </style>
-      <table class="card" id="card{{categoryid}}">
-      <tr><td hidden>{{categoryid}}</td>
-      <td width="30%" hidden$="{{hidecategoryitem}}">{{categoryname}}</td>
-      <td width="30%" hidden$="{{hidecategoryinput}}"><paper-input value="{{categoryname}}"></paper-input></td>
-      <td width="5%" hidden$="{{hidecategoryitem}}"><paper-icon-button icon='create' on-click='FnEdit'>       
-      </paper-icon-button></td>
-      <td width="5%" hidden$="{{hidecategoryinput}}"><paper-icon-button icon='save' on-click='FnSave'>       
-      </paper-icon-button></td>
-      <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
-     </table></tr>
+
+    <div class='itemcard'>
+            <paper-item>{{categoryid}}</paper-item>
+            <paper-item hidden$="{{hidecategoryitem}}">{{categoryname}}</paper-item>
+            <paper-input value="{{categoryname}}" hidden$="{{hidecategoryinput}}"></paper-input>
+            <paper-icon-button icon='create' on-click='FnEdit' hidden$="{{hidecategoryitem}}"></paper-icon-button>
+            <paper-icon-button icon='save' on-click='FnSave' hidden$="{{hidecategoryinput}}"></paper-icon-button>
+            <paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button>
+    </div>
+
     <master-ui-service id="catservice"></master-ui-service>
   </template>
+
   <script>
+
   (function() {
     'use strict';
 
@@ -40,7 +55,7 @@
           notify: true
         }
       },
-    ready:function()
+      ready:function()
       {
         //alert("test");   
         this.hidecategoryinput=true;     

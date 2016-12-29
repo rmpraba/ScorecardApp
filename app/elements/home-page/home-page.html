@@ -27,7 +27,8 @@
   .in
   {
 
-  float:right;
+  position: absolute;
+  right: 0%;
   font-size:12px;
   }
   .backbutton
@@ -57,16 +58,17 @@
   }
   b{
     font-size: 20px;
+    /*margin-left: -5%;*/
   }
   i{
-    margin-left: 10%;
+    right: -20%;
     text-transform: capitalize;
   }
   </style>
   <div class="card">
     <div class="head" id="templateheader">
       <paper-icon-button icon="home" on-click="FnHome"></paper-icon-button>      
-      <label><b>{{title}}</b><i>Hello! {{username}}</i></label>
+      <label><b>{{title}}</b><i>  Hello! {{username}}</i></label>
       <paper-button class="in" on-click="signout">Sign Out</paper-button>
     </div>
 

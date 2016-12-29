@@ -1,0 +1,220 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="new-employee-creation-card">
+  <template>
+    <style>
+     :host{
+         margin-left: 10%;
+        display: block;     
+         @apply(--layout-left);
+        /*width: 50%;*/   
+      }
+      .rolecard
+      {
+         @apply(--layout-center);
+        width: 6%;
+        margin-left: 10%;
+      } 
+      .rbutton paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;
+      width: 10%;
+      margin-left:5%;
+      margin-top: 4%;
+      }
+      .button paper-button
+      {
+      background-color: #363636;
+      color: #ffffff;                
+      width: 10%;
+      margin-left: 40%;
+      margin-top: 4%;
+      }
+      .role{
+        width: 50%;
+         margin-left:25%;
+      }
+      paper-button{
+        margin-left: 50%;
+        margin-top: 5%;
+      }
+      .card{
+        @apply(--layout-horizontal);
+              margin-left:30%;
+        } 
+      .close-icon{
+        padding-right: 20px;
+      }
+      .form-dialog{
+        margin:0;
+      }
+    </style>
+  
+     <!-- <paper-input label="Search here.........." prefix>
+      <paper-icon-button prefix icon="search" on-click="FnSearch"></paper-icon-button>
+    </paper-input>
+ --> <div>
+     <center><h3 style="color:#1A5276">EMPLOYEE CREATION</h3></center> 
+    </div>
+     <center>
+       <div class="rbutton">
+        <paper-button on-click="Fncreate">Create</paper-button>
+       </div>
+     </center>  
+  <div class="role">
+    <template is="dom-repeat" items="{{selectschoolpersonalarr}}" as="view">
+    <new-employee-creation-item-card employeeid="{{view.emp_id}}" employeename="{{view.emp_name}}" employeephone="{{view.emp_phone}}"  employeemail="{{view.emp_mail}}" employeeschool="{{view.school_id}}" employeepassword="{{view.emp_password}}" employeemobile="{{view.emp_mobile}}" hiderolenameinput="true" hiderolenameitem="false"></new-employee-creation-item-card>
+   </template>
+    <!-- <template is="dom-repeat" items="{{selectemployeerolearr}}" as="view">
+    <new-employee-creation-role-item-card roleemployeeid="{{view.eid}}" roleemployeename="{{view.name}}" role="{{view.role_id}}" hiderolenameinput="true" hiderolenameitem="false"></new-employee-creation-role-item-card>
+   </template>  
+  <template is="dom-repeat" items="{{selectemployeeschooltypearr}}" as="view">
+    <new-employee-creation-schooltype-item-card schooltypemployeeid="{{view.emp_id}}" schooltypemployeename="{{view.emp_name}}" schooltyp="{{view.school_type}}" hiderolenameinput="true" hiderolenameitem="false"></new-employee-creation-schooltype-item-card>
+   </template>
+  -->
+  </div>
+    <paper-dialog id="roledialog" modal style="width:70%;">
+      <button type="button" class="close close-icon" dialog-dismiss>&times;</button>
+      <div class="list-group col-sm-12 panel-body form-category form-dialog">
+        <div class="form-group-heading">
+          <h4>Employee Details</h4>
+        </div>  
+        <paper-input value={{empid}} hidden></paper-input>
+        <div class="col-sm-4">
+          <paper-input label="Emplyoee name" id="empname" required error-message="needs emplyoee name!" value="{{name}}"  allowed-pattern="[a-zA-Z ]" ></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Telephone Number" id="empTelephone" required error-message="needs telepnoneno!" value="{{Telephone}}"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Mobile Number" id="empMobile" required error-message="needs mobileno" value="{{MobileNumber}}" allowed-pattern="[0-9]" maxlength="10"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Password" id="emppassword" required error-message="needs password!" value="{{password}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <gold-email-input label="Emailid" id="empmailid" required error-message="needs mailid!" value="{{mailid}}"></gold-email-input>
+        </div>
+       
+      </div>    
+      <div class="list-group col-sm-12 panel-body form-category form-dialog">
+        <div class="form-group-heading">
+          <h4>Emplyoee School Type</h4>
+        </div>  
+        <div class="col-sm-12">
+          <template is="dom-repeat" items="{{selectschooltypearr}}" as="view">
+              <employe-schooltype-creation-card empschooltype="{{view.school_type_id}}"></employe-schooltype-creation-card>
+         </template>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category"> 
+        <div class="form-group-heading">
+          <h4>Employee Role Selection</h4>
+        </div>
+        <template is="dom-repeat" items="{{selectrolearr}}" as="view">
+          <employee-role-item-card emprolename="{{view.role_name}}"></employee-role-item-card>
+        </template>
+      </div> 
+      <div style="float:center;">
+        <paper-button class="btn btn-primary" on-click="FnSubmit">Submit </paper-button>
+      </div>
+    </paper-dialog>
+    <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+   var setrolearr=[];
+   var empschooltypearr=[];
+    Polymer({
+      is: 'new-employee-creation-card',
+     ready:function(){
+       
+       
+        //this.FnRefresh();
+        //this.Fnsetsecondry();
+      },  
+     setschoolrolezz:function(arr){
+          setrolearr=arr;   
+          alert(JSON.stringify(setrolearr));
+         },
+   /*  passsetschoolrole1:function(arr1){
+      for(var i=0;i<setrolearr.length;i++){
+        if(setrolearr[i].role_id==arr1){
+              this.a=arr;
+              alert(this.a);
+               setrolearr.splice(i,1);
+                  }
+               }
+             },
+   */  passetschooltype:function(arr){
+          empschooltypearr=arr;
+       alert(JSON.stringify(empschooltypearr));
+       
+
+     },
+   /*  passetschooltype1:function(arr1){
+      for(var i=0;i<empschooltypearr.length;i++){
+        if(empschooltypearr[i].school_type==arr1){
+              this.a=arr;
+              alert(this.a);
+               empschooltypearr.splice(i,1);
+                  }
+               }
+     },
+   */  FnSearch:function(){
+    },/*boardtype:function(e){
+        this.Board=e.target.selectedItem.textContent.trim();
+        alert(this.Board);
+        this.$.uiservice.fnschoolidgrnerate();  
+     */
+       FnRefresh:function()
+      {
+       this.name="";
+       this.Telephone="";
+       this.MobileNumber="";
+       this.password="";
+       this.mailid="";
+      },  
+      FnSubmit:function()
+      { 
+      
+       if(this.name==""||this.Telephone==""||this.MobileNumber==""||this.password==""||this.mailid==""){
+              this.$.empname.validate();
+              this.$.empTelephone.validate();
+              this.$.empMobile.validate();  
+              this.$.emppassword.validate();
+              this.$.empmailid.validate();
+           }
+        else  {
+           this.$.uiservice.fninsetschoolemployeeinfo(this.empid,this.name,this.Telephone,this.MobileNumber,this.password,this.mailid,empschooltypearr,setrolearr);
+            this.FnRefresh();
+             document.querySelector('employee-role-item-card').setschoolroleclean();
+             document.querySelector('employe-schooltype-creation-card').empschooltypesplice();
+            //empschooltypearr=[];
+            // setrolearr=[];
+             this.$.uiservice.fnempgenerateid();
+        }},     
+     Fncreate:function(){
+      this.FnRefresh();
+      this.$.roledialog.open();
+     
+      }  
+
+
+ 
+    });
+  })();
+  </script>
+</dom-module>

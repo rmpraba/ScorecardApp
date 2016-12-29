@@ -1,0 +1,147 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="employe-creation-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }  
+      .innercard{
+      @apply(--layout-horizontal);
+      margin-left:7.0em;
+      width:100%
+     }
+    </style>
+    <div>
+      <table>
+         <tr>   
+           <td class="innercard">
+            <paper-input value="{{empsubjectname}}" hidden></paper-input>
+            <paper-input value="{{empnames}}" hidden></paper-input>
+            <paper-input value="{{employeesetidz}}" hidden></paper-input>
+            <paper-checkbox on-change="fnempsetsubject" id="{{id}}"></paper-checkbox>
+          </td>
+      </tr>
+      </table>
+      <iron-ajax        
+        id="deletesubjectzajax"
+        url="{{deletesubjectzurl}}"
+        params="{{deletesubjectzparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="deletesubjectzResponse"
+        debounce-duration="300">
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+   var empgetarr=[];
+   var empsubjectarr=[];
+    var v=[];
+    Polymer({
+      is: 'employe-creation-card',
+     fnempsetsubject:function(e){
+      alert(this.employeesetidz);
+        alert(this.id);
+       if(document.querySelector('#'+this.id).checked==true){
+            this.categoryid=sessionStorage.getItem("curr_sess_loggedschoolcategory_id");
+            this.schooltypeid=sessionStorage.getItem("curr_sess_loggedschooltype_ids");
+          var obj={"empid":"","empname":"","subjectid":"","schooltypeid":"","categoryid":""};
+             obj.empid=this.employeesetidz;
+             obj.empname=this.empnames;
+             obj.subjectid=this.empsubjectname;
+             obj.schooltypeid=this.schooltypeid;
+             obj.categoryid=this.categoryid;
+             empgetarr.push(obj);
+             v.push(obj);
+             
+              alert(JSON.stringify(empgetarr));
+            document.querySelector('employe-schooltype-to-category-card').passempgrade(empgetarr);        
+           }
+             else if(document.querySelector('#'+this.id).checked==false){
+               for(var j=0;j<empgetarr.length;j++){
+                   /*   if(empgetarr[i].empid==this.employeesetidz && empgetarr[i].subjectid==this.empsubjectname){
+              */
+                  this.deletesubjectzurl=sessionStorage.getItem("addrinfo")+"/deletesubjectz-service";
+                       var obj={"school_id":"","empid":"","empname":"","subjectid":"","schooltypeid":"","categoryid":""};
+                        obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid"); 
+                         obj.empid=this.employeesetidz;
+                         obj.empname=this.empnames;
+                         obj.subjectid=this.empsubjectname;
+                         obj.schooltypeid=sessionStorage.getItem("curr_sess_loggedschooltype_ids");
+                         obj.categoryid=sessionStorage.getItem("curr_sess_loggedschoolcategory_id");
+                         empgetarr.push(obj);
+                         alert(JSON.stringify(obj));
+                        this.deletesubjectzparam=obj;
+                       this.$.deletesubjectzajax.generateRequest();
+                      empgetarr.splice(i,1);
+                      //}
+                 }
+             }
+      },
+     setempsubject:function(arr){
+             empsubjectarr=arr;
+             alert(JSON.stringify(empsubjectarr));
+           for(var i=0;i<empsubjectarr.length;i++){
+              
+              var empid=empsubjectarr[i].emp_id;
+              var emp_name=empsubjectarr[i].emp_name;
+              var subject_id=empsubjectarr[i].subjectid;
+              var subject_name=empsubjectarr[i].subject_name;
+              var getsubid=empsubjectarr[i].subjectid+empsubjectarr[i].emp_id;
+             alert(getsubid)
+            document.querySelector('#'+getsubid).checked=true; 
+           if(document.querySelector('#'+getsubid).checked==true){
+              var obj={"empid":"","empname":"","subjectid":"","schooltypeid":"","categoryid":""};
+              obj.empid=empid;
+              obj.empname=emp_name;
+              obj.subjectid=subject_id;
+              obj.schooltypeid=sessionStorage.getItem("curr_sess_loggedschooltype_ids");
+              obj.categoryid=sessionStorage.getItem("curr_sess_loggedschoolcategory_id");
+                    
+              empgetarr.push(obj);
+             v.push(obj);
+              alert(JSON.stringify(empgetarr));
+           }
+         
+         }
+         },
+      deletesubjectzResponse:function(e){
+     var res=e.detail.response.returnval; 
+      alert(JSON.stringify(res));
+    
+      },
+         Fnsubjectclean:function(e){
+      //alert('1');
+      for(var j=0;j<v.length;j++){
+         var getsubid=empsubjectarr[j].subjectid+empsubjectarr[j].emp_id;
+          alert(getsubid);
+              document.querySelector('#'+getsubid).checked=false;
+              }
+             v.splice(obj);
+            var obj={"empid":"","empname":"","subjectid":"","schooltypeid":"","categoryid":""};
+             obj.empid=this.employeesetidz;
+             obj.empname=this.empnames;
+             obj.subjectid=this.empsubjectname;
+             obj.schooltypeid=this.schooltypeid;
+             obj.categoryid=this.categoryid;
+             empgetarr.splice(obj);
+             empsubjectarr.splice(obj);
+        }
+  
+  });
+  })();
+  </script>
+</dom-module>

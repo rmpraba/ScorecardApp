@@ -1,0 +1,303 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- Jquery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ <dom-module id="new-employee-creation-item-card">
+   <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card{
+        @apply(--layout-horizontal);
+        border-bottom: 1px solid #dedede;   
+      }      
+    </style>
+  <div>
+    <table class="card" id="card{{schoolid}}" >
+      <tr><td>{{employeeid}}</td><td hidden>{{employeepassword}}</td>
+        <td width="20%">{{employeename}}</td>
+        <td width="5%" ><paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button></td>
+     <!--    <td width="20%">EmployeRole</td>
+        <td width="5%"><paper-icon-button icon='create' on-click='fnrolecreation'></paper-icon-button></td>
+        <td width="20%">EmployeSchooltype</td>
+        <td width="5%"><paper-icon-button icon='create' on-click='fnempschooltype'></paper-icon-button></td>
+      -->  
+       <td width="5%"><paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button></td>
+      </tr>
+    </table>   
+   <paper-dialog id="entetroleset" modal style="width:70%;">
+       <div class="form-group-heading"><h4>employee personal  Details</h4></div>
+                 <div class="list-group col-sm-12 panel-body form-category">
+                            <paper-input value={{schoolid}} hidden></paper-input>
+                           <div class="col-sm-3">
+                         <paper-input label="Employee Name" value="{{employeename}}"></paper-input>
+                        </div>
+                        
+                        <div class="col-sm-3">
+                      <paper-input label="Telephone Number" value="{{employeephone}}"  allowed-pattern="[0-9]"></paper-input>
+                        </div>
+                        <div class="col-sm-3">
+                         <paper-input label="Mobile Number" value="{{employeemobile}}" allowed-pattern="[0-9]"></paper-input>
+                        </div>
+                         <div class="col-sm-3">
+                         <gold-email-input label="Emailid" value="{{employeemail}}"></gold-email-input>
+                        </div>
+                        <div class="col-sm-3">
+                         <paper-input label="EmployeePassword" value="{{employeepassword}}"></paper-input>
+                        </div>
+                     </div>
+
+
+  <div class="form-group-heading">
+              <h4>Employee Role Mapping</h4>
+         </div>
+             <div class="list-group col-sm-12 panel-body form-category">
+                 <paper-input value={{schoolid}} hidden></paper-input>
+        <div class="col-sm-12">
+            <template is="dom-repeat" items="{{selectschoolrolearr}}" as="view">
+              <new-employee-creation-role-item-card schoolroleids="{{view.role_name}}" schoolempgetid="{{employeeid}}" schoolempgetname="{{employeename}}" emppsw="{{employeepassword}}" check="{{view.check}}"></new-employee-creation-role-item-card>
+            </template>   
+         </div>
+             </div>
+              <!-- <span style="float:right;color:#1C63C9">
+               <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+              </span>
+              <span class="button" style="float:center;color:white;background-color:black;">
+               <paper-button  on-click='FnroleSave'>Save</paper-button>
+              </span> -->
+       <iron-ajax          
+        id="selectschoolroleajax"
+        url="{{selectschoolroleurl}}"
+        params="{{selectschoolroleparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="selectschoolroleResponse"
+        debounce-duration="300"
+      ></iron-ajax>
+   <div class="form-group-heading">
+              <h4>Employee schooltype Mapping</h4></div>
+          <div class="list-group col-sm-12 panel-body form-category">
+                <paper-input value={{schoolid}} hidden></paper-input>
+          <div class="col-sm-12">
+                  <template is="dom-repeat" items="{{selectmapschooltypearr}}" as="view">
+                  <new-employee-creation-schooltype-item-card schooltypeids="{{view.school_type_id}}" schoolempschooltypeid="{{employeeid}}" schoolempschooltypename="{{employeename}}" check="{{view.check}}"></new-employee-creation-schooltype-item-card>
+                  </template>   
+          </div>
+          </div><!-- <span style="float:right;color:#1C63C9">
+                 <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+               </span>
+                <span class="button" style="float:center;color:white;background-color:black;">
+                     <paper-button  on-click='FnschooltypeSave'>Save</paper-button>
+               </span> -->
+        <iron-ajax        
+        id="selectschooltypemapajax"
+        url="{{selectschooltypemapurl}}"
+        params="{{selectschooltypemapparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="selectschooltypemapResponse"
+        debounce-duration="300"
+      ></iron-ajax>
+   <span style="float:right;color:#1C63C9">
+                          <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+                     </span>
+                     <span class="button" style="float:center;color:white;background-color:black;">
+                            <paper-button  on-click='FnpersonalSave'>Save</paper-button>
+                    </span>
+ </paper-dialog>
+
+<!--  <paper-dialog id="entetroleset2" modal style="width:50%;">
+         <div class="form-group-heading">
+              <h4>Employee Role Mapping</h4>
+         </div>
+             <div class="list-group col-sm-12 panel-body form-category">
+                 <paper-input value={{schoolid}} hidden></paper-input>
+        <div class="col-sm-12">
+            <template is="dom-repeat" items="{{selectschoolrolearr}}" as="view">
+              <new-employee-creation-role-item-card schoolroleids="{{view.role_name}}" schoolempgetid="{{employeeid}}" schoolempgetname="{{employeename}}" emppsw="{{employeepassword}}" check="{{view.check}}"></new-employee-creation-role-item-card>
+            </template>   
+         </div>
+             </div>
+              <span style="float:right;color:#1C63C9">
+               <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+              </span>
+              <span class="button" style="float:center;color:white;background-color:black;">
+               <paper-button  on-click='FnroleSave'>Save</paper-button>
+              </span>
+       <iron-ajax          
+        id="selectschoolroleajax"
+        url="{{selectschoolroleurl}}"
+        params="{{selectschoolroleparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="selectschoolroleResponse"
+        debounce-duration="300"
+      ></iron-ajax>
+     </paper-dialog>
+     <paper-dialog id="entetroleset1" modal style="width:50%;">
+       <div class="form-group-heading">
+              <h4>Employee schooltype Mapping</h4></div>
+          <div class="list-group col-sm-12 panel-body form-category">
+                <paper-input value={{schoolid}} hidden></paper-input>
+          <div class="col-sm-12">
+                  <template is="dom-repeat" items="{{selectmapschooltypearr}}" as="view">
+                  <new-employee-creation-schooltype-item-card schooltypeids="{{view.school_type_id}}" schoolempschooltypeid="{{employeeid}}" schoolempschooltypename="{{employeename}}" check="{{view.check}}"></new-employee-creation-schooltype-item-card>
+                  </template>   
+          </div>
+          </div><span style="float:right;color:#1C63C9">
+                 <paper-button dialog-confirm autofocus >Tap me to close</paper-button>
+               </span>
+                <span class="button" style="float:center;color:white;background-color:black;">
+                     <paper-button  on-click='FnschooltypeSave'>Save</paper-button>
+               </span>
+        <iron-ajax        
+        id="selectschooltypemapajax"
+        url="{{selectschooltypemapurl}}"
+        params="{{selectschooltypemapparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="selectschooltypemapResponse"
+        debounce-duration="300"
+      ></iron-ajax>
+    </paper-dialog>          
+ -->        <master-ui-service id="uiservice"></master-ui-service>
+    </div>
+    </template>   
+  <script>
+  (function() {
+    'use strict';
+       var getrolearr=[];
+       var schooltypearr=[];
+       var samearr=[];
+       var passrolearr=[];
+       var passschooltypearr=[];
+     
+  Polymer({
+      is: 'new-employee-creation-item-card',
+      FnDelete:function(){
+    /*    this.$.uiservice.Fndeleteinfo(this.schoolid);
+    */   },
+    /*fnrolecreation:function(e){
+       this.$.uiservice.fnschoolemployeerole(this.employeeid,this.employeename);
+       this.selectschoolroleurl=sessionStorage.getItem("addrinfo")+"/selectrolename-service";
+       this.$.selectschoolroleajax.generateRequest();
+       this.$.entetroleset2.open();
+      
+       },
+   */ fnempschooltype:function(e){
+         this.$.uiservice.fnschoolemployeeschooltype(this.employeeid,this.employeename); 
+         this.selectschooltypemapurl=sessionStorage.getItem("addrinfo")+"/selectschooltype-service";
+         var obj={"school_id":""};
+         obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+         this.selectschooltypemapparam=obj;
+         this.$.selectschooltypemapajax.generateRequest();
+        // this.$.entetroleset1.open();
+       },
+    setschooltype:function(arr){
+       schooltypearr=arr;
+      },
+      setschoolrole:function(arr1){
+         getrolearr=arr1;
+       }, 
+      passrole:function(arr1){
+       passrolearr=arr1;
+       //alert(JSON.stringify(passrolearr));   
+      },
+      passschooltype:function(arr){
+       passschooltypearr=arr;
+      },
+      f1:function(e){
+       this.$.uiservice.fnschoolemployeeschooltype(this.employeeid,this.employeename); 
+         this.selectschooltypemapurl=sessionStorage.getItem("addrinfo")+"/selectschooltype-service";
+         var obj={"school_id":""};
+         obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+         this.selectschooltypemapparam=obj;
+         this.$.selectschooltypemapajax.generateRequest();
+        // this.$.entetroleset1.open();
+     },
+      f2:function(e){
+       this.$.uiservice.fnschoolemployeerole(this.employeeid,this.employeename);
+       this.selectschoolroleurl=sessionStorage.getItem("addrinfo")+"/selectrolename-service";
+       this.$.selectschoolroleajax.generateRequest();
+     //  this.$.entetroleset2.open();
+   
+      },
+      FnEdit:function(){
+          this.f1();
+          this.f2();
+     },
+     /*FnschooltypeSave:function(e){
+        // alert(JSON.stringify(passschooltypearr));
+        this.$.uiservice.fnschooltypesaveinfo(passschooltypearr);
+              document.querySelector('new-employee-creation-schooltype-item-card').typesplice();
+ 
+     },*/
+     FnpersonalSave:function(e){
+    this.$.uiservice.Fnpersonalinfo(this.employeeid,this.employeename,this.employeephone,this.employeemobile,this.employeemail,this.employeepassword);
+       this.$.uiservice.fnschooltypesaveinfo(passschooltypearr);
+              document.querySelector('new-employee-creation-schooltype-item-card').typesplice();
+                    this.$.uiservice.fnrolesaveinfo(passrolearr);
+            document.querySelector('new-employee-creation-role-item-card').typesplicerole();
+ 
+ 
+     },
+     /*FnroleSave:function(e){
+       // alert(JSON.stringify(passrolearr));
+        this.$.uiservice.fnrolesaveinfo(passrolearr);
+          document.querySelector('new-employee-creation-role-item-card').typesplicerole();
+ 
+   },*/
+ selectschoolroleResponse:function(e){
+         var res=e.detail.response.returnval; 
+          for(var j=0;j<res.length;j++){
+            var flag=0;
+              for(var i=0;i<getrolearr.length;i++){
+                  
+                  if(res[j].role_name==getrolearr[i].role_id)
+                  {    
+                   flag=1;
+                   res[j].check=true;   
+                  }
+
+                 }
+                 if(flag==0){
+                  res[j].check=false;
+                 }
+               }
+              this.selectschoolrolearr=res;
+              this.$.entetroleset.open();
+   
+        },
+        selectschooltypemapResponse:function(e){
+         var res=e.detail.response.returnval;
+          for(var j=0;j<res.length;j++){
+            var flag=0;
+              // var getschoolroleid=res[j].role_name;
+              for(var i=0;i<schooltypearr.length;i++){
+                  
+                  if(res[j].school_type_id==schooltypearr[i].school_type)
+                  {    
+                   flag=1;
+                   res[j].check=true;   
+                  }
+
+                 }
+                 if(flag==0){
+                  res[j].check=false;
+                 }
+               }
+               this.selectmapschooltypearr=res;
+            }
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,222 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<dom-module id="student-transfer-grade">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .elementsdiv
+      {
+        /*@apply(--layout-vertical);*/
+        @apply(--layout-center);
+        display: inline-block;
+        margin-left: 25%;
+        width: 40%;
+      
+      }
+       .outcard
+      {
+        @apply(--layout-vertical);
+      }
+      .outcard
+      {
+        border-radius: 10px;
+        border: 2px solid #6699ff;
+        padding: 20px;
+        margin-top: 6%;
+        width: 40%;
+        margin-left: 33%;
+        min-height: 300px;
+      }
+      .btn1 paper-button
+      {
+        background-color: #363636;
+        color: #ffffff;                
+        width: 7%;
+        margin-top: 4%;
+      }
+     /* .btn2 paper-button
+      {
+        background-color: #363636;
+        color: #ffffff;                
+        width: 7%;
+        margin-left: 20%;
+        margin-top: 4%;
+      }*/
+    </style>
+
+    <div>
+      <div>
+        <center><h3><b>STUDENT TRANSFER</b></h3></center>
+      </div>
+
+      <div class="outcard">
+        <table>
+            <div class="elementsdiv">
+              <paper-dropdown-menu  label="Select Grade">
+                <paper-menu id="fntranfergradeid" class="dropdown-content"  on-iron-select="fntranfergrade">
+                  <template is="dom-repeat" items="{{tranfergradearr}}">
+                    <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+                  </template>    
+               </paper-menu>
+              </paper-dropdown-menu>
+            </div>
+
+            <div class="elementsdiv">
+              <paper-input  id="locality" required error-message="needs locality!" label="Enter Student Name" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
+              <paper-listbox class="dropdown-content" id="itemlist11" on-iron-select="Fnselected" valueattr="value">
+                <template is="dom-repeat" items="{{itemArray}}" as="item">
+                  <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+                </template>
+              </paper-listbox>
+            </div>
+
+            <div class="elementsdiv">
+              <paper-input value="{{gradename}}" hidden readonly label="Previous Grade"></paper-input>
+              <paper-input value="{{classid}}" hidden></paper-input>
+              <paper-input value="{{section}}" readonly label="Previous section"></paper-input>
+              <paper-input value="{{schooltype}}" hidden></paper-input>
+            </div>
+
+            <div class="elementsdiv">
+              <paper-dropdown-menu  label="Select Section">
+                <paper-menu id="fntranfersectionid" class="dropdown-content"   on-iron-select="fntranfersection">
+                  <template is="dom-repeat" items="{{tranfersectionarr}}">
+                    <paper-item value="{{item.id}}">{{item.section}}</paper-item>
+                  </template>    
+                </paper-menu>
+              </paper-dropdown-menu>
+            </div>             
+            <div class="btn1">
+              <paper-button style= "margin-left:35%;" on-click="fnsubmit">SUBMIT</paper-button>
+              <paper-button style="float:right margin-left:-30%;" on-click="fndelete">DELETE</paper-button>
+            </div>
+            
+          
+        </table>
+      </div>
+    </div>  
+
+    <master-ui-service id="uiservice"></master-ui-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+var namearr=[];
+  Polymer({
+      is: 'student-transfer-grade',
+       
+      autocompletename(nameitem){
+          namearr=nameitem;
+        },
+FnInputChanged:function(e){
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+          var arr=[];
+          arr.push({"itemdes":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflag="true";
+            this.itemval="";
+            //alert('yes');
+            var len=(this.textvalue).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArray="";
+              this.itemval="";
+            }
+            if(len>1){   
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.textvalue).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearr.length;i++)
+              {
+                var subval=((namearr[i].student_name).trim()).substring(0,backsubval.length);
+                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                {
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].student_name;
+                  obj.itemid=namearr[i].id;
+                  arr.push(obj);
+                }
+              }
+              this.itemArray=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflag=="true") {
+              this.itemval = (this.textvalue).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflag="false";
+            }
+            else
+            this.itemval = this.textvalue +String.fromCharCode((e.keyCode));
+            if(this.itemval.length>0)
+            {
+              for(var i=0;i<namearr.length;i++){
+                var subval=((namearr[i].student_name).trim()).substring(0,this.itemval.length);
+                if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].student_name;
+                  obj.itemid=namearr[i].id;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArray=arr;
+              else {
+                var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].student_name;
+                  obj.itemid=namearr[i].id;
+                  arr.push(obj);
+                this.itemArray=arr;
+              }
+            }
+          }
+        },
+Fnselected:function(e)
+        {
+          //alert('s');
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.textvalue=e.target.selectedItem.textContent.trim();
+          this.studentname=e.target.selectedItem.value;
+          alert(this.textvalue+this.textvalue1);
+          this.itemArray=[];
+          document.querySelector('#itemlist11').selected=-1;
+          this.$.uiservice.studentinfo(this.studentname);
+           
+        },
+      fntranfergrade:function(e){
+          this.setgradeid=e.target.selectedItem.textContent.trim();
+          this.$.uiservice.getstudentname(this.setgradeid);
+  
+           /*this.FnStosGradeid=e.target.selectedItem.textContent.trim();
+         this.FnStosGradeid2=
+        */
+         this.$.uiservice.tranfersection(this.setgradeid);
+        },
+        fntranfersection:function(e){
+             this.tranfersection=e.target.selectedItem.value;
+        },
+        fnsubmit:function(e){
+         this.$.uiservice.insertgradeinfo(this.setgradeid,this.tranfersection,this.studentname,this.classid);
+         this.gradename="";
+         this.section="";
+          document.querySelector('#itemlist11').selected=-1;
+          document.querySelector('#fntranfergradeid').selected=-1;
+          document.querySelector('#fntranfersectionid').selected=-1;
+        },
+        fndelete:function(e){
+        this.$.uiservice.deletegradeinfo(this.schooltype,this.classid,this.studentname,this.gradename,this.section);
+        //this.$.uiservice.getstudentname();
+
+        },
+      });
+  })();
+  </script>
+</dom-module>

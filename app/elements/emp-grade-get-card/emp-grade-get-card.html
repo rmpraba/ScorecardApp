@@ -1,0 +1,205 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="emp-grade-get-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+          .innercard{
+         @apply(--layout-horizontal);
+      margin-left:7.0em;
+      width:100%
+     }
+
+  
+    </style>
+    <div class="innercard">
+          <paper-input value="{{employeeidz}}" hidden></paper-input>
+          <paper-input value="{{empgradeidz}}" hidden></paper-input>
+          <paper-input value="{{empsubjectidz}}" hidden></paper-input>
+          <paper-checkbox value="{{employeesectionnamez}}" id="{{id}}" on-change="fnsetsection"></paper-checkbox>
+    </div>
+     <iron-ajax        
+        id="empsectionclassajax"
+        url="{{empsectionclassurl}}"
+        params="{{empsectionclassparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="empsectionclassResponse"
+        debounce-duration="300">
+   </iron-ajax>
+     
+  </template>
+  <script>
+  (function() {
+    'use strict';
+  var empsectionarr=[];
+   var empdbsubjectarr=[];
+   var v=[];
+    Polymer({
+      is: 'emp-grade-get-card',
+          fnsetsection:function(e){
+            alert(this.id);
+            if(document.querySelector('#'+this.id).checked==true){
+                    alert(this.employeeidz+this.empgradeidz+this.empsubjectidz+this.employeesectionnamez);
+              var obj={"employeeidz":"","empgradeidz":"","empsubjectidz":"","employeesectionnamez":""};
+                    obj.employeeidz=this.employeeidz;
+                    obj.empgradeidz=this.empgradeidz;
+                    obj.empsubjectidz=this.empsubjectidz;
+                    obj.employeesectionnamez=this.employeesectionnamez;
+                     empsectionarr.push(obj);
+                     v.push(obj);
+                 document.querySelector('employe-category-creation-card').fnsetempsection(empsectionarr); 
+
+                }
+              else if(document.querySelector('#'+this.id).checked==false){
+                 for(var i=0;i<empsectionarr.length;i++){
+                 this.empsectionclassurl=sessionStorage.getItem("addrinfo")+"/empsectionclass-service";
+                 var obj={"school_id":"","employeeidz":"","empgradeidz":"","empsubjectidz":"","employeesectionnamez":""};
+                     obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+                     obj.employeeidz=this.employeeidz;
+                     obj.empgradeidz=this.empgradeidz;
+                     obj.empsubjectidz=this.empsubjectidz;
+                     obj.employeesectionnamez=this.employeesectionnamez;
+                     alert(JSON.stringify(obj));
+                     this.empsectionclassparam=obj;
+                     this.$.empsectionclassajax.generateRequest();
+                    empsectionarr.splice(i,1);
+          }
+        }
+      },
+    empsectionclassResponse:function(e){
+         var res=e.detail.response.returnval; 
+            alert(JSON.stringify(res));
+   },
+    Fngradecleansection:function(e){
+      //alert('1');
+      for(var j=0;j<v.length;j++){
+             var empdbsubject=v[j].empsubjectidz+v[j].employeesectionnamez;
+            alert(empdbsubject);
+              document.querySelector('#'+empdbsubject).checked=false;
+              document.querySelector('#'+this.id).checked=false;
+               }
+              v.splice(obj);
+                   var obj={"employeeidz":"","empgradeidz":"","empsubjectidz":"","employeesectionnamez":""};
+                     obj.employeeidz=this.employeeidz;
+                     obj.empgradeidz=this.empgradeidz;
+                     obj.empsubjectidz=this.empsubjectidz;
+                     obj.employeesectionnamez=this.employeesectionnamez;
+                      alert(JSON.stringify(obj));
+                     empsectionarr.splice(obj);
+                     empdbsubjectarr.splice(obj);
+             }, 
+      empsctionmaping:function(arr){
+     empdbsubjectarr=arr;
+        for(var i=0;i<empdbsubjectarr.length;i++){
+             //var flag=0;
+              var employeeidz=empdbsubjectarr[i].id;
+              var empgradeidz=empdbsubjectarr[i].grade_id;
+              var empsubjectidz=empdbsubjectarr[i].subject_id;
+              var employeesectionnamez=empdbsubjectarr[i].section_id;
+              var empdbsubject=empdbsubjectarr[i].subject_id+empdbsubjectarr[i].classid;
+              alert(empdbsubject);
+             document.querySelector('#'+empdbsubject).checked=true; 
+           if(document.querySelector('#'+empdbsubject).checked==true){
+           var obj={"employeeidz":"","empgradeidz":"","empsubjectidz":"","employeesectionnamez":""};
+              obj.employeeidz=employeeidz;
+             obj.empgradeidz=empgradeidz;
+             obj.empsubjectidz=empsubjectidz;
+             obj.employeesectionnamez=employeesectionnamez;
+             empsectionarr.push(obj);
+             v.push(obj);
+              alert(JSON.stringify(empsectionarr));
+           }
+          }
+        
+      },
+/*fnsetgradetosubject:function(arr){
+             getcategoryandsubjectarr=arr;
+           for(var i=0;i<getcategoryandsubjectarr.length;i++){
+             // var flag=0;
+              var gradeid=getcategoryandsubjectarr[i].grade_id;
+              var subjectid=getcategoryandsubjectarr[i].subject_id;
+              var subjectcategory=getcategoryandsubjectarr[i].subject_category;
+              var schooltype=getcategoryandsubjectarr[i].school_type_id;
+              var grasubjectid=getcategoryandsubjectarr[i].subject_id+getcategoryandsubjectarr[i].grade_id;
+             document.querySelector('#'+grasubjectid).checked=true; 
+           if(document.querySelector('#'+grasubjectid).checked==true){
+             var obj={"schootypename":"","categoryname":"","gradename":"","subjectname":""};
+             obj.schootypename=schooltype;
+             obj.categoryname=subjectcategory;
+             obj.gradename=gradeid;
+             obj.subjectname=subjectid;
+             passbigarr.push(obj);
+             v.push(obj);
+              alert(JSON.stringify(passbigarr));
+           }
+          }
+          },
+      fnsetgrade:function(e){
+        // document.querySelector('#'+e.target.id).checked=true;
+        // alert('hi');
+        //alert(this.id);
+        // alert(this.getsubjectname+this.getgradename+this.getname+this.getschoolcategory);
+        //alert(document.querySelector('#'+this.id).checked);
+        if(document.querySelector('#'+this.id).checked==true){
+         var obj={"schootypename":"","categoryname":"","gradename":"","subjectname":""};
+             obj.schootypename=this.getname;
+             obj.categoryname=this.getschoolcategory;
+             obj.gradename=this.getgradename;
+             obj.subjectname=this.getsubjectname;
+             passbigarr.push(obj);
+             v.push(obj);
+             // alert(JSON.stringify(passbigarr));
+             document.querySelector('school-grade-to-subject-card').fnapssgradedetails(passbigarr);        
+        }
+        else if(document.querySelector('#'+this.id).checked==false){
+                 for(var i=0;i<passbigarr.length;i++){
+                 if(passbigarr[i].gradename==this.getgradename && passbigarr[i].subjectname==this.getsubjectname){
+                 this.Fngetcategoryandsubjecturl=sessionStorage.getItem("addrinfo")+"/Fngetcategoryandsubject-service";
+                 var obj={"school_id":"","schootypename":"","categoryname":"","gradename":"","subjectname":""};
+                     obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+                     obj.schootypename=this.getname;
+                     obj.categoryname=this.getschoolcategory;
+                     obj.gradename=this.getgradename;
+                     obj.subjectname=this.getsubjectname;
+                     // alert(JSON.stringify(obj));
+                     this.Fngetcategoryandsubjectparam=obj;
+                     this.$.Fngetcategoryandsubjectajax.generateRequest();
+                      passbigarr.splice(i,1);
+                  }
+             }
+        }
+      },
+    Fngradeclean:function(e){
+      //alert('1');
+      for(var j=0;j<v.length;j++){
+            var grasubjectid=v[j].subjectname+v[j].gradename;
+            alert(grasubjectid);
+              document.querySelector('#'+grasubjectid).checked=false;
+               }
+             v.splice(obj);
+               var obj={"schootypename":"","categoryname":"","gradename":"","subjectname":""};
+                     obj.schootypename=this.getname;
+                     obj.categoryname=this.getschoolcategory;
+                     obj.gradename=this.getgradename;
+                     obj.subjectname=this.getsubjectname;
+                     passbigarr.splice(obj);
+                    getcategoryandsubjectarr.splice(obj);
+             },*/
+      });
+  })();
+  </script>
+</dom-module>

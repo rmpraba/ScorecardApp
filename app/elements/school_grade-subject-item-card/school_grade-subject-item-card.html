@@ -1,0 +1,133 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+   
+<dom-module id="school_grade-subject-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .innercard{
+      @apply(--layout-horizontal);
+      margin-left:7.0em;
+      width:100%
+     }
+    </style>
+    <div>
+      <table>
+         <tr>   
+           <td class="innercard">
+           <paper-input value={{getsubjectname}} hidden></paper-input>
+           <paper-input value={{getname}} hidden></paper-input>
+           <paper-input value={{getschoolcategory}} hidden></paper-input>
+           <paper-checkbox on-change="fnsetgrade" id="{{id}}" value="{{getgradename}}"></paper-checkbox>
+          
+         </td>
+      </tr>
+      </table>
+       <iron-ajax  
+        id="Fngetcategoryandsubjectajax"
+        url="{{Fngetcategoryandsubjecturl}}"
+        params="{{Fngetcategoryandsubjectparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FngetcategoryandsubjectResponse"
+        debounce-duration="300">
+     </iron-ajax>
+         
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+   var passbigarr=[];
+   var getcategoryandsubjectarr=[];
+   var v=[];
+  Polymer({
+      is: 'school_grade-subject-item-card',
+      fnsetgradetosubject:function(arr){
+             getcategoryandsubjectarr=arr;
+           for(var i=0;i<getcategoryandsubjectarr.length;i++){
+             // var flag=0;
+              var gradeid=getcategoryandsubjectarr[i].grade_id;
+              var subjectid=getcategoryandsubjectarr[i].subject_id;
+              var subjectcategory=getcategoryandsubjectarr[i].subject_category;
+              var schooltype=getcategoryandsubjectarr[i].school_type_id;
+              var grasubjectid=getcategoryandsubjectarr[i].subject_id+getcategoryandsubjectarr[i].grade_id;
+             document.querySelector('#'+grasubjectid).checked=true; 
+           if(document.querySelector('#'+grasubjectid).checked==true){
+             var obj={"schootypename":"","categoryname":"","gradename":"","subjectname":""};
+             obj.schootypename=schooltype;
+             obj.categoryname=subjectcategory;
+             obj.gradename=gradeid;
+             obj.subjectname=subjectid;
+             passbigarr.push(obj);
+             v.push(obj);
+              alert(JSON.stringify(passbigarr));
+           }
+          }
+          },
+      fnsetgrade:function(e){
+        // document.querySelector('#'+e.target.id).checked=true;
+        // alert('hi');
+        //alert(this.id);
+        // alert(this.getsubjectname+this.getgradename+this.getname+this.getschoolcategory);
+        //alert(document.querySelector('#'+this.id).checked);
+        if(document.querySelector('#'+this.id).checked==true){
+         var obj={"schootypename":"","categoryname":"","gradename":"","subjectname":""};
+             obj.schootypename=this.getname;
+             obj.categoryname=this.getschoolcategory;
+             obj.gradename=this.getgradename;
+             obj.subjectname=this.getsubjectname;
+             passbigarr.push(obj);
+             v.push(obj);
+             // alert(JSON.stringify(passbigarr));
+             document.querySelector('school-grade-to-subject-card').fnapssgradedetails(passbigarr);        
+        }
+        else if(document.querySelector('#'+this.id).checked==false){
+                 for(var i=0;i<passbigarr.length;i++){
+                 if(passbigarr[i].gradename==this.getgradename && passbigarr[i].subjectname==this.getsubjectname){
+                 this.Fngetcategoryandsubjecturl=sessionStorage.getItem("addrinfo")+"/Fngetcategoryandsubject-service";
+                 var obj={"school_id":"","schootypename":"","categoryname":"","gradename":"","subjectname":""};
+                     obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+                     obj.schootypename=this.getname;
+                     obj.categoryname=this.getschoolcategory;
+                     obj.gradename=this.getgradename;
+                     obj.subjectname=this.getsubjectname;
+                     // alert(JSON.stringify(obj));
+                     this.Fngetcategoryandsubjectparam=obj;
+                     this.$.Fngetcategoryandsubjectajax.generateRequest();
+                      passbigarr.splice(i,1);
+                  }
+             }
+        }
+      },
+    Fngradeclean:function(e){
+      //alert('1');
+      for(var j=0;j<v.length;j++){
+            var grasubjectid=v[j].subjectname+v[j].gradename;
+            alert(grasubjectid);
+              document.querySelector('#'+grasubjectid).checked=false;
+               }
+             v.splice(obj);
+               var obj={"schootypename":"","categoryname":"","gradename":"","subjectname":""};
+                     obj.schootypename=this.getname;
+                     obj.categoryname=this.getschoolcategory;
+                     obj.gradename=this.getgradename;
+                     obj.subjectname=this.getsubjectname;
+                     passbigarr.splice(obj);
+                    getcategoryandsubjectarr.splice(obj);
+             },});
+  })();
+  </script>
+</dom-module>

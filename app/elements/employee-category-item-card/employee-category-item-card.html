@@ -1,0 +1,53 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<dom-module id="employee-category-item-card">
+  <template>
+    <style>
+      :host {
+        display: block;     
+      }
+    </style>
+    <div>
+      <paper-checkbox  on-change="FnsetGradename" id="{{schooltypecategoryid}}">{{schooltypecategoryname}}</paper-checkbox>
+    <div>
+       <iron-ajax        
+        id="empschooltypegetcategoryajax"
+        url="{{empschooltypegetcategoryurl}}"
+        params="{{empschooltypegetcategoryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="empschooltypegetcategoryResponse"
+        debounce-duration="300">
+       </iron-ajax>
+        
+  </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'employee-category-item-card',
+    FnsetGradename:function(e){
+       if(document.querySelector('#'+this.schooltypecategoryid).checked==true){
+            alert(this.schooltypecategoryid);
+               sessionStorage.setItem("curr_sess_loggedschoolcategory_id",this.schooltypecategoryid);
+              this.empschooltypegetcategoryurl=sessionStorage.getItem("addrinfo")+"/schooltypegetcategorywww-service";
+               var obj={"schoolcategoryid":""};
+               obj.schoolcategoryid=this.schooltypecategoryid;
+               this.empschooltypegetcategoryparam=obj;
+               this.$.empschooltypegetcategoryajax.generateRequest();
+             }
+    },
+    empschooltypegetcategoryResponse:function(e){
+        var res=e.detail.response.returnval;
+         document.querySelector('employe-schooltype-to-category-card').getcategory(res);
+        
+
+          }
+
+    });
+  })();
+  </script>
+</dom-module>

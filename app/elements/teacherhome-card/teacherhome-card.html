@@ -27,14 +27,14 @@
       .container{
         width: 100%;
         @apply(--layout-horizontal);
-        margin-left: 20%
+        margin-left: -3%;
         @apply(--layout-center-justified);
       }
       .card{
         width: 20%;
       }
       .container-full{
-        /*background-color: #fefefe;*/
+        /*background-colo5 #fefefe;*/
       }
     </style>
 
@@ -75,7 +75,8 @@
 
       <div class="card" hidden$="{{teach_obser}}">
           <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
-      </div>
+      </di
+      v>
 
       <div class="card" hidden$="{{comparison}}">
           <paper-button on-click="FnComparison" no ink><img src="../../images/portfolio.jpg" height="180px" width="180px"></paper-button>
@@ -84,9 +85,9 @@
       <div class="card" hidden$="{{editinfo}}">
           <paper-button on-click="FnEditInfo" no ink><img src="../../images/edit.jpg" height="180px" width="180px"></paper-button>
       </div>
+    </div>  
 
-  <div class="container">
-
+    <div class="container">
       <div class="card" hidden$="{{createschool}}">
           <paper-button on-click="FnCreateschool" no ink><img src="../../images/school.jpg" height="180px" width="180px">
           <h4>School</h4>
@@ -108,22 +109,22 @@
       <div class="card" hidden$="{{creategrade}}">
           <paper-button on-click="FnCreategrade" no ink><img src="../../images/grade.jpg" height="180px" width="180px">
           <h4>Grade</h4>
-          </paper-button>
-          
+          </paper-button>        
       </div>
-  
 
       <div class="card" hidden$="{{createsubject}}">
           <paper-button on-click="FnCreatesubject" no ink><img src="../../images/subject.jpg" height="180px" width="180px">
           <h4>Subjects</h4>
           </paper-button>
       </div>
+    </div>
 
-     <div class="card" hidden$="{{createrole}}">
+    <div class="container">  
+      <div class="card" hidden$="{{createrole}}">
           <paper-button on-click="FnCreateRole" no ink><img src="../../images/role.png" height="180px" width="180px">
           <h4>Role</h4>
           </paper-button>
-     </div>
+      </div>
   
       <div class="card" hidden$="{{createemployee}}">
           <paper-button on-click="FnCreateEmployee" no ink><img src="../../images/employee.png" height="180px" width="180px">
@@ -132,22 +133,27 @@
       </div>   
      
       <div class="card" hidden$="{{subjecttostudent}}">
-          <paper-button on-click="SubjectToStudent" no ink><img src="../../images/studenttosubject.jpg" height="180px" width="180px">
+          <paper-button on-click="SubjectToStudent" no ink><img src="../../images/language.jpg" height="180px"
+
+           width="180px">
           <h4>Language Preference</h4>
           </paper-button>
       </div>
-    
+    <!-- </div> -->
+
+    <!-- <div class="container"> -->
       <div class="card" hidden$="{{SchooltypettoGrade}}">
           <paper-button on-click="SchoolTypeToGrade" no ink><img src="../../images/schooltoschoolType.jpg" height="180px" width="180px">
           <h4>School Type To Grade</h4>
           </paper-button>
       </div>
 
-      <div class="card" hidden$="{{workingdats}}">
+      <div class="card" hidden$="{{workingdays}}">
           <paper-button on-click="Workingdays" no ink><img src="../../images/workingdays.jpg" height="180px" width="180px">
           <h4>Working Days</h4>
           </paper-button>
       </div> 
+    </div>   
   </div>
 
       <div class="cdialog">      
@@ -173,8 +179,6 @@
           </paper-dropdown-menu>
         </paper-dialog>
       </div>
-    </div>
-  </div>  
     <term-assesment-service id="assesmentservice"></term-assesment-service>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
@@ -209,7 +213,7 @@
         this.teach_obser=true;
         this.createschool=true;
         this.creategrade=true;
-        this.workingdats=true;
+        this.workingdays=true;
         this.SchooltypettoGrade=true;
         // localStorage.setItem("curr_sess_page","teacherhome-card");
       },
@@ -335,7 +339,7 @@
           this.createschooltype=false;
           this.createschool=false;
           this.subjecttostudent=false;
-          this.workingdats=false;
+          this.workingdays=false;
         }
         if(sessionStorage.getItem("curr_sess_loggedroleid")=='subject-teacher'){
           this.BA=false;

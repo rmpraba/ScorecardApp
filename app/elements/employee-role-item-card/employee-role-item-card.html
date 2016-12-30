@@ -19,40 +19,52 @@
    </div>
   </template>
   <script>
-  (function() {
+  (function() 
+  {
     'use strict';  
       var setrolearr1=[];
-       Polymer({   
+       Polymer
+      ({   
       is: 'employee-role-item-card',
-       fnsetrole:function(e){
-         if(document.querySelector('#'+this.emprolename).checked==true){
+
+       fnsetrole:function(e)
+       {
+         if(document.querySelector('#'+this.emprolename).checked==true)
+         {
            alert(this.emprolename); 
             var obj={"role_id":""};
            obj.splice_role=this.emprolename;
            setrolearr1.push(obj);
-            document.querySelector('new-employee-creation-card').
-            (setrolearr1);
+            document.querySelector('new-employee-creation-card').setrolearr1;
            //alert(this.emprolename)
-        }  else if(document.querySelector('#'+this.emprolename).checked==false){
-           for(var i=0;i<setrolearr.length;i++){
-             if(setrolearr[i].role_id==this.emprolename){
+         } 
+        else if(document.querySelector('#'+this.emprolename).checked==false)
+         {
+           for(var i=0;i<setrolearr.length;i++)
+           {
+             if(setrolearr[i].role_id==this.emprolename)
+             {
              /* this.a=arr;
               alert(this.a);*/
                setrolearr1.splice(i,1);
-                  }
-               }
-     
-       }},
-      setschoolroleclean:function(e){
+              }
+            }
+          }
+         }, 
+
+      setschoolroleclean:function(e)
+      {
         alert('1');
-          for(var i=0;i<setrolearr1.length;i++){
-              var m=setrolearr1[i].role_id;
-              document.querySelector('#'+m).checked=false;
-             }
-             var obj={"splice_role":""};
-                 obj.role_id=this.emprolename;
-                 setrolearr1.splice(obj);    
-           },
+        for(var i=0;i<setrolearr1.length;i++)
+        {
+         var m=setrolearr1[i].role_id;
+         document.querySelector('#'+m).checked=false;
+        }
+          var obj={"splice_role":""};
+          obj.role_id=this.emprolename;
+          setrolearr1.splice(obj);    
+      }
+
        /* fnspliceemparr:function(e){
           setrolearr.splice(obj);
         }*/

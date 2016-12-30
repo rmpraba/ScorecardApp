@@ -1534,24 +1534,23 @@ FnSetRoleInfo:function(rolename,roleid)
            this.SchooltypetoGrademappingurl=sessionStorage.getItem("addrinfo")+"/SchooltypetoGrademapping-service";
           this.$.SchooltypetoGrademappingajax.generateRequest();
           },
-       SchooltypetoGrademappingResponse:function(e){
+       SchooltypetoGrademappingResponse:function(e)
+       {
          var res=e.detail.response.returnval;
-
-
           document.querySelector('master-school_type-creation').SchoolToschoolTypearr=res;
        },
      fnschoolidgrnerateResponse:function(e)
+     {
 
         document.querySelector('master-school_type-creation').SchoolToschoolTypearr=res;
-        },
+     },
      fnschoolidgenerateResponse:function(e)
 
      {
          var res=e.detail.response.returnval;
         //  alert(JSON.stringify(res)); 
             document.querySelector('school-creation-card').schoolid1=res[0].school_prefix+res[0].school_seq;
-
-            },
+     },
   
 
 

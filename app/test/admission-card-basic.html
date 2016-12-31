@@ -10,30 +10,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <html>
-
 <head>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>Elements Test Runner</title>
-  <meta charset="UTF-8">
+  <title>admission-card</title>
 
-  <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../bower_components/web-component-tester/browser.js"></script>
-</head>
 
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../elements/admission-card/admission-card.html">
+
+</head>
 <body>
 
-  <script>
-    WCT.loadSuites([
-      'my-greeting-basic.html',
-      'my-greeting-basic.html?dom=shadow',
-      'my-list-basic.html',
-      'my-list-basic.html?dom=shadow',
-      'admission-card-basic.html',
-      'admission-card-basic.html?dom=shadow'
-    ]);
-  </script>
+<test-fixture id="basic">
+  <template>
+    <admission-card></admission-card>
+  </template>
+</test-fixture>
 
+<script>
+  describe('admission-card tests', function() {
+    var element;
+
+    before(function() {
+      element = fixture('basic');
+    });
+
+    it('', function() {
+
+    });
+
+  });
+</script>
 
 </body>
-
 </html>

@@ -118,20 +118,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          
          }
          },
-      deletesubjectzResponse:function(e){
-     var res=e.detail.response.returnval; 
-      alert(JSON.stringify(res));
+         deletesubjectzResponse:function(e)
+         {
+            var res=e.detail.response.returnval; 
+            alert(JSON.stringify(res));
     
-      },
-         Fnsubjectclean:function(e){
-      //alert('1');
-      for(var j=0;j<v.length;j++){
-         var getsubid=empsubjectarr[j].subjectid+empsubjectarr[j].emp_id;
-          alert(getsubid);
-              document.querySelector('#'+getsubid).checked=false;
-              }
+         },
+         Fnsubjectclean:function(e)
+         {
+          //alert('1');
+          for(var j=0;j<v.length;j++)
+          {
+            var getsubid=empsubjectarr[j].subjectid+empsubjectarr[j].emp_id;
+            alert(getsubid);
+            document.querySelector('#'+getsubid).checked=false;
+          }
              v.splice(obj);
-            var obj={"empid":"","empname":"","subjectid":"","schooltypeid":"","categoryid":""};
+             var obj={"empid":"","empname":"","subjectid":"","schooltypeid":"","categoryid":""};
              obj.empid=this.employeesetidz;
              obj.empname=this.empnames;
              obj.subjectid=this.empsubjectname;

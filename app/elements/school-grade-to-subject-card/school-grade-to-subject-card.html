@@ -16,77 +16,176 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-      .card1{
+      .card1
+      {
         margin-left:5%;
         margin-top: 4%;
       }
-      .card2{
-        margin-left:40%;
-         margin-top:-17%;
+      .card2
+      {
+        margin-left:5%;
       }
-      .outcard{
+      .outcard
+      {
       width:25% 
-     margin-left:5.0em;
+      margin-left:5.0em;
       }
-       .innercard{     
-      @apply(--layout-horizontal);
-       width:100%
-      margin-left:2.5em;
+       .innercard
+       {     
+        @apply(--layout-horizontal);
+        width:100%
+        margin-left:2.5em;
      }
-     .innercard1{
+     .innercard1
+      {
        @apply(--layout-horizontal);
        width:100%
-      margin-left:5.0em;
-   }
-     .tt{
+       margin-left:5.0em;
+      }
+     .tt
+     {
       width:70%;
      }   
+
+      .subtab
+      {
+        border-radius: 10px;
+        border: 2px solid #6699ff;
+        padding: 20px;
+        margin-top: 6%;
+        width: 35%;
+        margin-left: 33%;
+        min-height: 300px;
+      }
+       .subbutton paper-button
+      {
+        @apply(--layout-right);
+        background-color: #363636;
+        color: #ffffff;                
+        width: 8%;
+        margin-left: 60%;
+        margin-top: 4%;
+      }
     </style>
-    <div>
-        <center><h2>GRADETOSUBJECTMAPPING</h2></center>
+
+
+      <div>
+        <CENTER>
+          <h3><b>GRADE TO SUBJECT MAPPING</b></h3>
+        </CENTER>
+      </div>
+
+      <div>
+        <div class="subtab">
+          <table>
+            <div class="card1">
+              <h4> SCHOOL TYPE</h4>
+                <template is="dom-repeat" items="{{schooltypegrarr}}" as="view">
+                  <school-type-item-card schooltypenamexx="{{view.school_type_name}}" schooltypeidxx="{{view.school_type_id}}"></school-type-item-card>
+                </template>
+            </div>  
+
+            <div class="card2">
+              <h4> SUBJECT CATEGORY</h4>
+                <template is="dom-repeat" items="{{schoolcategoryarr}}" as="view">
+                  <schoolcategory-type-item-card schooltypecategoryid="{{view.subject_category_id}}" schooltypecategoryname="{{view.subject_category_name}}" ></schoolcategory-type-item-card>
+                </template>
+            </div>                
+          </table>
+        </div>
+            <div class="subbutton">
+              <paper-button on-click="Generate">Generate</paper-button>
+            </div>
+      </div>
+
+      <div>
+        <div class="newtab">
+          <table border="0" class="tt">
+            <tbody>
+              <tr>
+                <td class="outcard"></td>
+                <td class="innercard">
+                  <template is="dom-repeat" items="{{setsubjectarr}}" as="view">
+                    <h4 style="width:22%; margin-left:9%;">{{view.srtarr}}</h4>
+                  </template>
+                </td>
+                <td class="outcard"></td>
+              </tr>
+
+              <template is="dom-repeat" items="{{bigarr}}" as="view">
+              <tr>
+                <td class="outcard">
+                  <h4>{{view.subject_name}}</h4>
+                </td>
+                <td class="innercard">
+                  <template is="dom-repeat" items="{{view.subject}}" as="s">
+                    <school_grade-subject-item-card id="{{s.id}}" getsubjectname="{{view.subject_id}}" getgradename="{{s.grade_id}}" cattype="{{s.schooltypenamexx}}" getname="{{schooltypename}}" getschoolcategory="{{schooltypesubjectid}}"></school_grade-subject-item-card>
+                  </template>
+              </tr>
+              </template>
+            </tbody>    
+          </table>  
+        </div>  
+
+            <div class="subbutton">
+              <paper-button on-click="FnSave">SUBMIT</paper-button>
+            </div>
+      </div>
+
+
+
+   <!-- <div>
+        <center><h3>GRADE TO SUBJECT MAPPING</h3></center>
     <div class="card1">
-         <h3> SCHOOLTYPE</h3>
+         <h4> SCHOOL TYPE</h4>
       <template is="dom-repeat" items="{{schooltypegrarr}}" as="view">
         <school-type-item-card schooltypenamexx="{{view.school_type_name}}" schooltypeidxx="{{view.school_type_id}}"></school-type-item-card></br>
       </template>
-    <div>  
+    <div> 
+
     <div class="card2">
-         <h3> SUBJECT CATEGORY</h3>
+         <h4> SUBJECT CATEGORY</h4>
       <template is="dom-repeat" items="{{schoolcategoryarr}}" as="view">
-         <schoolcategory-type-item-card schooltypecategoryid="{{view.subject_category_id}}" schooltypecategoryname="{{view.subject_category_name}}" ></schoolcategory-type-item-card></br>
+         <schoolcategory-type-item-card schooltypecategoryid="{{view.subject_category_id}}" schooltypecategoryname="{{view.subject_category_name}}" ></schoolcategory-type-item-card>
     </template>
     </div>
      <center><paper-button on-click="Generate" style="background-color:#384485;color:white;">Generate</paper-button>
-     </center>  
+     </center>
+
+
   <div>
-   <table border="0" class="tt">
-     <tbody>
-         <tr>
-             <td class="outcard"></td>
-              <td class="innercard">
-             <template is="dom-repeat" items="{{setsubjectarr}}" as="view">
-                <h4 style="width:22%; margin-left:9%;">{{view.srtarr}}</h4>
-              </template></br>
-             </td>
-             <td class="outcard"></td>
-         </tr>
-           <template is="dom-repeat" items="{{bigarr}}" as="view">
-            <tr>
-              <td class="outcard">
-                <h4>{{view.subject_name}}</h4>
-              </td>
-              <td class="innercard">
-                <template is="dom-repeat" items="{{view.subject}}" as="s">
-                <school_grade-subject-item-card id="{{s.id}}" getsubjectname="{{view.subject_id}}" getgradename="{{s.grade_id}}" cattype="{{s.schooltypenamexx}}" getname="{{schooltypename}}" getschoolcategory="{{schooltypesubjectid}}"></school_grade-subject-item-card>
-               </template>
-              </tr>
-              </template>
-       </tbody>    
+    <table border="0" class="tt">
+      <tbody>
+        <tr>
+          <td class="outcard"></td>
+          <td class="innercard">
+            <template is="dom-repeat" items="{{setsubjectarr}}" as="view">
+              <h4 style="width:22%; margin-left:9%;">{{view.srtarr}}</h4>
+            </template>
+          </td>
+          <td class="outcard"></td>
+        </tr>
+
+        <template is="dom-repeat" items="{{bigarr}}" as="view">
+        <tr>
+          <td class="outcard">
+            <h4>{{view.subject_name}}</h4>
+          </td>
+          <td class="innercard">
+            <template is="dom-repeat" items="{{view.subject}}" as="s">
+              <school_grade-subject-item-card id="{{s.id}}" getsubjectname="{{view.subject_id}}" getgradename="{{s.grade_id}}" cattype="{{s.schooltypenamexx}}" getname="{{schooltypename}}" getschoolcategory="{{schooltypesubjectid}}"></school_grade-subject-item-card>
+            </template>
+        </tr>
+        </template>
+      </tbody>    
     </table>  
-    </div>  
+  </div>  
     </div>
        <center>
-                 <paper-button on-click='FnSave' style="background-color:#384485;color:white;">Submit</paper-button> </center>
+        <paper-button on-click='FnSave' style="background-color:#384485;color:white;">Submit</paper-button> 
+        </center> -->
+
+
        <master-ui-service id="uiservice"></master-ui-service>
  
   </template>

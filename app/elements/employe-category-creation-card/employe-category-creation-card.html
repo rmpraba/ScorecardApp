@@ -16,89 +16,145 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-      .card1{
+      .card1
+      {
         margin-left:5%;
         margin-top: 4%;
       }
-      .card2{
+      .card2
+      {
         margin-left:40%;
          margin-top:-17%;
       }
-      .outcard{
+      .outcard
+      {
       width:25% 
-     margin-left:5.0em;
+      margin-left:5.0em;
       }
-       .innercard{     
-      @apply(--layout-horizontal);
-       width:100%
-      margin-left:2.5em;
+       .innercard
+       {     
+        @apply(--layout-horizontal);
+        width:100%
+        margin-left:2.5em;
      }
-     .innercard1{
+     .innercard1
+     {
        @apply(--layout-horizontal);
        width:100%
-      margin-left:5.0em;
-   }
-     .tt{
+       margin-left:5.0em;
+     }
+     .tt
+     {
       width:70%;
      }
-    </style>
-    <div>
-     <template is="dom-repeat" items="{{empschoolarr}}" as="view">
-        <emp-category-get-card empschooltypeids="{{view.school_type_name}}" empschoolnames="{{view.school_type_id}}"></emp-category-get-card>
-       </template>
-      <paper-dropdown-menu  label="select the grade">
-            <paper-menu id="empgradeid" class="dropdown-content"   on-iron-select="fnselectgrade">
-              <template is="dom-repeat" items="{{empschoolgrads}}">
-                <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
-              </template>    
-            </paper-menu>
-          </paper-dropdown-menu>
-        
-          <paper-dropdown-menu  label="select the employee">
-            <paper-menu id="employeeidz" class="dropdown-content"   on-iron-select="fnemployeename">
-              <template is="dom-repeat" items="{{empschoolnamesarr}}">
-                <paper-item value="{{item.emp_id}}">{{item.emp_name}}</paper-item>
-              </template>    
-            </paper-menu>
-          </paper-dropdown-menu>
 
+     .outercard
+      {
+        @apply(--layout-horizontal);
+        border-radius: 10px;
+        border: 2px solid #6699ff;
+        padding: 20px;
+        margin-top: 6%;
+        width: 35%;
+        margin-left: 30%;
+        min-height: 300px;
+      }
+       .subbutton paper-button
+      {
+        @apply(--layout-right);
+        background-color: #363636;
+        color: #ffffff;                
+        width: 8%;
+        margin-left: 60%;
+        margin-top: 4%;
+      }
+      .new1
+      {
+        @apply(--layout-horizontal);
+        margin-left: 10%;
+      }
+    </style>
+
+    <div>
+      <CENTER>
+        <h3><b>EMPLOYEE TO GRADE</b></h3>
+      </CENTER>
     </div>
 
+    <div>
+      <div class="outercard">
+        <table>
+          <div>
+            <template is="dom-repeat" items="{{empschoolarr}}" as="view">
+              <emp-category-get-card empschooltypeids="{{view.school_type_name}}" empschoolnames="{{view.school_type_id}}"></emp-category-get-card>
+            </template>
 
-<table class="table table-bordered">
+            <div class="new1" style="margin-left:10%">
+              <paper-dropdown-menu  label="select the grade">
+                <paper-menu id="empgradeid" class="dropdown-content"   on-iron-select="fnselectgrade">
+                  <template is="dom-repeat" items="{{empschoolgrads}}">
+                    <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+                  </template>    
+                </paper-menu>
+              </paper-dropdown-menu>
+            </div> 
+            
+            <div class="new2" style="margin-left:10%">
+              <paper-dropdown-menu  label="select the employee">
+                <paper-menu id="employeeidz" class="dropdown-content"   on-iron-select="fnemployeename">
+                  <template is="dom-repeat" items="{{empschoolnamesarr}}">
+                    <paper-item value="{{item.emp_id}}">{{item.emp_name}}</paper-item>
+                  </template>    
+                </paper-menu>
+              </paper-dropdown-menu>
+            </div> 
+        </table>
+      </div>
+   
+      <div>
+        <table class="table table-bordered" style="margin-top:5%">
           <div class="container">
-             <thead> 
+            <thead> 
               <tr>
-                  <th></th>
-                    <th class="innercard">
-                      <template is="dom-repeat" items="{{setsectionname}}" as="view">
-                        <h4 style="margin-left:6.5%;">{{view.subjectarr}}</h4>
-                      </template>
-                    </th>
-                    <th></th>
-                  </tr>
+                <th></th>
+                <th class="innercard">
+                  <template is="dom-repeat" items="{{setsectionname}}" as="view">
+                    <h4 style="margin-left:6.5%;">{{view.subjectarr}}</h4>
+                  </template>
+                </th>
+                <th></th>
+              </tr>
             </thead>
-              <tbody>
-                 <template is="dom-repeat" items="{{allarrr}}" as="view">
-                 <tr>
-                    <td class="outcard"> 
-                      <h4>{{view.subject_name}}</h4>
-                   </td>
-                    <td class="innercard">
-                      <template is="dom-repeat" items="{{view.subject}}" as="s">
-                        <emp-grade-get-card employeesectionidz="{{s.section_id}}" id="{{s.id}}" employeesubjectz="{{view.subject_name}}"  empsubjectidz="{{view.subjectid}}" employeesectionnamez="{{s.section_name}}" employeeidz="{{empselectid}}" empgradeidz="{{setgradeidz}}" ></emp-grade-get-card>
-                      </template>
-                    </td>
-                   <td></td>
-                 </tr>
+
+            <tbody>
+              <template is="dom-repeat" items="{{allarrr}}" as="view">
+                <tr>
+                  <td class="outcard"> 
+                    <h4>{{view.subject_name}}</h4>
+                  </td>
+                  <td class="innercard">
+                    <template is="dom-repeat" items="{{view.subject}}" as="s">
+                      <emp-grade-get-card employeesectionidz="{{s.section_id}}" id="{{s.id}}" employeesubjectz="{{view.subject_name}}"  empsubjectidz="{{view.subjectid}}" employeesectionnamez="{{s.section_name}}" employeeidz="{{empselectid}}" empgradeidz="{{setgradeidz}}" >
+                      </emp-grade-get-card>
+                    </template>
+                  </td>
+                  <td></td>
+                </tr>
               </template>
             </tbody>
-        </div>
-  </table>
-<paper-button on-click="fnsubmit">Submit</paper-button>
-<master-ui-service id="uiservice"></master-ui-service>
+          </div>
+        </table>
+      </div>
+            <div class="subbutton">
+              <paper-button on-click="fnsubmit">Submit</paper-button> 
+            </div>
+    </div>  
 
-<iron-ajax        
+       
+
+      <master-ui-service id="uiservice"></master-ui-service>
+
+    <iron-ajax        
         id="fnselectgradezajax"
         url="{{fnselectgradezurl}}"
         params="{{fnselectgradezparam}}"
@@ -107,8 +163,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         method="post"
         on-response="fnselectgradezResponse"
         debounce-duration="300">
-   </iron-ajax>
-   <iron-ajax        
+    </iron-ajax>
+    <iron-ajax        
         id="fnemployeenamezajax"
         url="{{fnemployeenamezurl}}"
         params="{{fnemployeenamezparam}}"
@@ -117,9 +173,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         method="post"
         on-response="fnemployeenamezResponse"
         debounce-duration="300">
-   </iron-ajax>
+    </iron-ajax>
  
   </template>
+
   <script>
   (function() {
     'use strict';
@@ -151,7 +208,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      fnsubmit:function(e){
       this.$.uiservice.fnsavesection(empsectionarr);
-   document.querySelector('emp-grade-get-card').Fngradecleansection(); 
+      document.querySelector('emp-grade-get-card').Fngradecleansection(); 
 
      },
      fnsetempsection:function(arr){

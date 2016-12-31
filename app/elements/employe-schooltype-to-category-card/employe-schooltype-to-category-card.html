@@ -8,6 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -44,12 +45,109 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        @apply(--layout-horizontal);
        width:100%
       margin-left:5.0em;
-   }
+     }
      .tt{
       width:70%;
      }
+     .outercard
+      {
+        border-radius: 10px;
+        border: 2px solid #6699ff;
+        padding: 20px;
+        margin-top: 6%;
+        width: 30%;
+        margin-left: 36%;
+        min-height: 300px;
+      }
+       .subbutton paper-button
+      {
+        @apply(--layout-right);
+        background-color: #363636;
+        color: #ffffff;                
+        width: 7%;
+        margin-left: 60%;
+        margin-top: 4%;
+      }
    
     </style>
+
+      <div>
+        <CENTER>
+          <h3><b>SCHOOL TYPE TO CATEGORY</b></h3>
+        </CENTER>
+      </div>   
+     
+     <div>
+      <div class="outercard">
+        <table>
+          <!-- <div class="list-group col-sm-12 panel-body form-category"> -->
+            <div class="col-sm-4">
+              <div class="form-group-heading">
+                <h3>SCHOOL TYPE</h3>
+              </div>
+              <template is="dom-repeat" items="{{getschooltypearr}}" as="view">
+                <employe-schooltype-to-category-item-card schooltypenamexx="{{view.school_type_name}}" schooltypeidxx="{{view.school_type_id}}"></employe-schooltype-to-category-item-card>
+              </template>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group-heading">
+                <h3>SUBJECT CATEGORY</h3>
+              </div>
+              <template is="dom-repeat" items="{{getempcategoryarr}}" as="view">
+                <employee-category-item-card schooltypecategoryid="{{view.subject_category_id}}" schooltypecategoryname=" {{view.subject_category_name}}"></employee-category-item-card>
+              </template>
+            </div>
+          <!-- </div> -->          
+        </table>
+      </div>
+        
+
+        <div class="subbutton">
+              <paper-button on-click="grnerate">Generate</paper-button>
+        </div>
+        </div>
+
+
+        <div>
+        <div class="list-group col-sm-12 panel-body form-category">
+          <table class="table table-bordered">
+            <div class="container">
+              <thead> 
+              <tr>
+                <th></th>
+                  <th class="innercard">
+                    <template is="dom-repeat" items="{{setsubjectarr}}" as="view">
+                      <h4 style="margin-left:6.5%;">{{view.srtarr}}</h4>
+                    </template>
+                  </th>   
+                  <th></th>
+              </tr>
+              </thead>
+              <tbody>
+                <template is="dom-repeat" items="{{subjectbigarr}}" as="view">
+                <tr>
+                  <td class="outcard"> 
+                    <h4>{{view.subject_name}}</h4>
+                  </td>
+                  <td class="innercard">
+                    <template is="dom-repeat" items="{{view.employee}}" as="s">
+                      <employe-creation-card employeesetidz="{{s.emp_id}}" id="{{s.id}}" empsubjectname="{{view.subject_id}}"  empnames="{{s.emp_name}}"></employe-creation-card>
+                    </template>
+                  </td>
+                  <td></td>
+                </tr>
+                </template>
+              </tbody>
+            </div>
+          </table>
+        </div>
+            <div class="subbutton">
+              <paper-button on-click="fnsubmit">Submit</paper-button>
+            </div>
+        </div>    
+
+    <!-- 
       <div>
             <div class="list-group col-sm-12 panel-body form-category">
               <div class="col-sm-4">
@@ -72,6 +170,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                      <paper-button on-click="grnerate">genernate</paper-button>
                   </div>
               </div>
+
             <div class="list-group col-sm-12 panel-body form-category">
               <table class="table table-bordered">
                <div class="container">
@@ -109,7 +208,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
 
           </div>
-          </div>      
+          </div>   -->    
                 
     <master-ui-service id="uiservice"></master-ui-service>      
 </template>

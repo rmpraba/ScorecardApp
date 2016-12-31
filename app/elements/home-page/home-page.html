@@ -19,7 +19,7 @@
 <link rel="import" href="../consolidated-report-card/consolidated-report-card.html">
 <link rel="import" href="../teacher-observation_card/teacher-observation_card.html">
 <link rel="import" href="../comparisonreport-card/comparisonreport-card.html">
-<link rel="import" href="../fivetotencomparisonreport-card/fivetotencomparisonrepohrt-card.html">
+<link rel="import" href="../fivetotencomparisonreport-card/fivetotencomparisonreport-card.html">
 <link rel="import" href="../approvalstatus-card/approvalstatus-card.html">
   <dom-module id="home-page">
   <template>
@@ -27,11 +27,10 @@
   .in
   {
 
-  position: relative;
-  right: -17%;
+  position: absolute;
+  right: 0%;
   font-size:12px;
   }
- 
   .backbutton
   {
     float:left;
@@ -47,11 +46,8 @@
      background-color: #12A5F4;
      color: white;
   }
-   .card
-  {
+  .card{
     @apply(--layout-vertical);
-    width: 100%;
-    height: 900px;
     /*width: 105%;*/
   }
   label{
@@ -69,12 +65,10 @@
     text-transform: capitalize;
   }
   </style>
-  
   <div class="card">
-    <d
-    iv class="head" id="templateheader">
+    <div class="head" id="templateheader">
       <paper-icon-button icon="home" on-click="FnHome"></paper-icon-button>      
-      <label><b>{{title}}</b><i>   Hello!  {{username}} </i></label>
+      <label><b>{{title}}</b><i>  Hello! {{username}}</i></label>
       <paper-button class="in" on-click="signout">Sign Out</paper-button>
     </div>
 
@@ -604,7 +598,8 @@
     {      
        this.page="teacherhomecard";
        document.querySelector('grade-creation-card').ready();
-       document.querySelector('beginner-assesment-card').FnRefresh();     
+       document.querySelector('beginner-assesment-card').FnRefresh();
+       
     }
 
   },

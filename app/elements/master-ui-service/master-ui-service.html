@@ -875,7 +875,7 @@
              obj.MobileNumber=MobileNumber;
              obj.password=password;
              obj.mailid=mailid;
-            // alert(JSON.stringify(obj));
+             alert(JSON.stringify(obj));
           this.emppersonaldetailsparam=obj;
           this.$.emppersonaldetailsajax.generateRequest();
 
@@ -889,7 +889,7 @@
           obj.name=name;
           obj.schooltypeid=schooltypeid;
          this.empschooltypemappingparam=obj;
-        // alert(JSON.stringify(obj));
+         alert(JSON.stringify(obj));
          this.$.empschooltypemappingajax.generateRequest();
          }
      for(var i=0;i<setrolearr.length;i++){
@@ -914,6 +914,15 @@
           this.fnschoolemployeepersonal();
         }
       },
+
+      empschooltypemappingResponse:function(e){
+        var res=e.detail.response.returnval;
+           alert(JSON.stringify(res));
+       },
+    emprolemappingResponse:function(e){
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+    },
 fnschooltypesaveinfo:function(passschooltypearr)
 {
     for(var i=0;i<passschooltypearr.length;i++){
@@ -1139,7 +1148,7 @@ fnschoolemployeepersonalResponse:function(e){
      },
     selectrolenameResponse:function(e){
         var res=e.detail.response.returnval;
-       // alert(JSON.stringify(res));
+        alert(JSON.stringify(res));
         document.querySelector('new-employee-creation-card').selectrolearr=res; 
      },
    empsubjectTeacher:function(){
@@ -1534,23 +1543,24 @@ FnSetRoleInfo:function(rolename,roleid)
            this.SchooltypetoGrademappingurl=sessionStorage.getItem("addrinfo")+"/SchooltypetoGrademapping-service";
           this.$.SchooltypetoGrademappingajax.generateRequest();
           },
-       SchooltypetoGrademappingResponse:function(e)
-       {
+       SchooltypetoGrademappingResponse:function(e){
          var res=e.detail.response.returnval;
+
+
           document.querySelector('master-school_type-creation').SchoolToschoolTypearr=res;
        },
      fnschoolidgrnerateResponse:function(e)
-     {
-
+{
         document.querySelector('master-school_type-creation').SchoolToschoolTypearr=res;
-     },
+        },
      fnschoolidgenerateResponse:function(e)
 
      {
          var res=e.detail.response.returnval;
         //  alert(JSON.stringify(res)); 
             document.querySelector('school-creation-card').schoolid1=res[0].school_prefix+res[0].school_seq;
-     },
+
+            },
   
 
 

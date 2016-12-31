@@ -5920,7 +5920,40 @@ app.post('/selectschooltype-service',  urlencodedParser,function (req,res)
       res.status(200).json({'returnval': ''});
   });
 });
+app.post('/selectschooltype11-service',urlencodedParser,function (req,res)
+{  
+   var qur="SELECT * FROM master_school_type where school_id='"+req.query.school_id+"'";
+   console.log(qur);
+   var m={"school_id":req.query.school_id};
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+     // console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': ''});
+  });
+});
+
 app.post('/selectrolename-service',  urlencodedParser,function (req,res)
+{  
+   var qur="SELECT * FROM md_role";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+     // console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': ''});
+  });
+});
+app.post('/selectrolename11-service',  urlencodedParser,function (req,res)
 {  
    var qur="SELECT * FROM md_role";
   connection.query(qur,
@@ -6522,10 +6555,10 @@ app.post('/deletesubjectz-service' ,  urlencodedParser,function (req, res)
 });
 app.post('/getempschooltype-service' ,  urlencodedParser,function (req, res)
 {  
-     var obj={"school_id":"","emp_id":"","emp_name":"","emp_schol_type":""};
+     //var obj={"school_id":"","emp_id":"","emp_name":"","emp_schol_type":""};
                
     var qur="DELETE FROM  employee_to_school_type_category_mapping where school_id='"+req.query.school_id+"' and emp_id='"+req.query.emp_id+"' and emp_name='"+req.query.emp_name+"' and school_type='"+req.query.emp_schol_type+"'";
-    //console.log(qur);
+    console.log(qur);
     connection.query(qur,function(err, rows)
     {
     if(!err)

@@ -61,6 +61,7 @@
                    obj.emp_name=this.schoolempschooltypename;
                    obj.emp_schol_type=this.schooltypeids;
                    alert(JSON.stringify(getscooltypdelarr))
+                   c
                    this.getempschooltypeparam=obj;
                    this.$.getempschooltypeajax.generateRequest();
                  }
@@ -71,12 +72,18 @@
 
      },
    typesplice:function(e){
-     var obj={"emp_id":"","emp_name":"","emp_schol_type":""};
+       for(var i=0;i<getschooltypearr;i++){
+         var schooltypexxxxx=getschooltypearr[i].emp_schol_type;
+         alert(schooltypexxxxx);
+         alert(document.querySelector('#'+schooltypexxxxx).checked);
+      document.querySelector('#'+schooltypexxxxx).checked=false; 
+       }        
+       var obj={"emp_id":"","emp_name":"","emp_schol_type":""};
                   obj.emp_id=this.schoolempschooltypeid;
                   obj.emp_name=this.schoolempschooltypename;
                   obj.emp_schol_type=this.schooltypeids;
            getschooltypearr.splice(obj);
-   },
+   },   
 
     
      });

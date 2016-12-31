@@ -189,8 +189,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },  
       FnSubmit:function()
       { 
-      
-       if(this.name==""||this.Telephone==""||this.MobileNumber==""||this.password==""||this.mailid==""){
+      if(this.name==""||this.Telephone==""||this.MobileNumber==""||this.password==""||this.mailid==""){
               this.$.empname.validate();
               this.$.empTelephone.validate();
               this.$.empMobile.validate();  
@@ -198,17 +197,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               this.$.empmailid.validate();
            }
         else  {
-           this.$.uiservice.fninsetschoolemployeeinfo(this.empid,this.name,this.Telephone,this.MobileNumber,this.password,this.mailid,empschooltypearr,setrolearr);
-            this.FnRefresh();
+             this.$.uiservice.fninsetschoolemployeeinfo(this.empid,this.name,this.Telephone,this.MobileNumber,this.password,this.mailid,empschooltypearr,setrolearr);
+             this.FnRefresh();
+             this.$.uiservice.selectschooltype();
+             this.$.uiservice.selectrolename();
+             this.$.uiservice.fnschoolemployeepersonal();
              document.querySelector('employee-role-item-card').setschoolroleclean();
              document.querySelector('employe-schooltype-creation-card').empschooltypesplice();
+           
             //empschooltypearr=[];
             // setrolearr=[];
              this.$.uiservice.fnempgenerateid();
         }},     
      Fncreate:function(){
-      this.FnRefresh();
-      this.$.roledialog.open();
+           this.$.uiservice.selectschooltype();
+           this.$.uiservice.selectrolename();
+           /*document.querySelector('new-employee-creation-schooltype-item-card').typesplice();
+           document.querySelector('new-employee-creation-role-item-card').typesplicerole();
+         */
+       //    document.querySelector('employee-role-item-card').setschoolroleclean();
+         //  document.querySelector('employe-schooltype-creation-card').empschooltypesplice();
+           //this.$.uiservice.fnschoolemployeepersonal();
+          // this.FnRefresh();
+          this.$.roledialog.open();
      
       }  
 

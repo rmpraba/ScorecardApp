@@ -43,6 +43,8 @@
      empschooltypesplice:function(e){
          for(var i=0;i<empschooltypearr1.length;i++){
                 var n=empschooltypearr1[i].school_type;
+                alert(n);
+               alert(document.querySelector('#'+n).checked);
                 document.querySelector('#'+n).checked=false;
             }
              var obj={"school_type":""};

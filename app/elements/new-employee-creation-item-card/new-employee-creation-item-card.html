@@ -193,15 +193,15 @@
        this.$.entetroleset2.open();
       
        },
-   */ fnempschooltype:function(e){
+   *//* fnempschooltype:function(e){
          this.$.uiservice.fnschoolemployeeschooltype(this.employeeid,this.employeename); 
          this.selectschooltypemapurl=sessionStorage.getItem("addrinfo")+"/selectschooltype-service";
          var obj={"school_id":""};
          obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
          this.selectschooltypemapparam=obj;
          this.$.selectschooltypemapajax.generateRequest();
-        // this.$.entetroleset1.open();
-       },
+     */   // this.$.entetroleset1.open();
+       //},
     setschooltype:function(arr){
        schooltypearr=arr;
       },
@@ -217,16 +217,17 @@
       },
       f1:function(e){
        this.$.uiservice.fnschoolemployeeschooltype(this.employeeid,this.employeename); 
-         this.selectschooltypemapurl=sessionStorage.getItem("addrinfo")+"/selectschooltype-service";
+         this.selectschooltypemapurl=sessionStorage.getItem("addrinfo")+"/selectschooltype11-service";
          var obj={"school_id":""};
          obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
          this.selectschooltypemapparam=obj;
+         alert(JSON.stringify(obj));
          this.$.selectschooltypemapajax.generateRequest();
         // this.$.entetroleset1.open();
      },
       f2:function(e){
        this.$.uiservice.fnschoolemployeerole(this.employeeid,this.employeename);
-       this.selectschoolroleurl=sessionStorage.getItem("addrinfo")+"/selectrolename-service";
+       this.selectschoolroleurl=sessionStorage.getItem("addrinfo")+"/selectrolename11-service";
        this.$.selectschoolroleajax.generateRequest();
      //  this.$.entetroleset2.open();
    
@@ -242,11 +243,11 @@
  
      },*/
      FnpersonalSave:function(e){
-    this.$.uiservice.Fnpersonalinfo(this.employeeid,this.employeename,this.employeephone,this.employeemobile,this.employeemail,this.employeepassword);
+       this.$.uiservice.Fnpersonalinfo(this.employeeid,this.employeename,this.employeephone,this.employeemobile,this.employeemail,this.employeepassword);
        this.$.uiservice.fnschooltypesaveinfo(passschooltypearr);
-              document.querySelector('new-employee-creation-schooltype-item-card').typesplice();
-                    this.$.uiservice.fnrolesaveinfo(passrolearr);
-            document.querySelector('new-employee-creation-role-item-card').typesplicerole();
+       this.$.uiservice.fnrolesaveinfo(passrolearr);
+       document.querySelector('new-employee-creation-schooltype-item-card').typesplice();
+       document.querySelector('new-employee-creation-role-item-card').typesplicerole();
  
  
      },
@@ -279,6 +280,7 @@
         },
         selectschooltypemapResponse:function(e){
          var res=e.detail.response.returnval;
+         alert(JSON.stringify(res));      
           for(var j=0;j<res.length;j++){
             var flag=0;
               // var getschoolroleid=res[j].role_name;
